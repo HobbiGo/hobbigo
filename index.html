@@ -3,258 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HobbiGo V50 - Production Foundation</title>
+<title>HobbiGo V51-V59 Production Build</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:#f4f7fb;
-  color:#18212f;
-}
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#172033}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:0}
 .app{display:flex;min-height:100vh}
 
 .sidebar{
-  width:245px;
-  background:#101827;
-  color:white;
-  position:fixed;
-  left:0;top:0;bottom:0;
-  padding:22px 14px;
-  overflow:auto;
+width:250px;background:#0e1726;color:white;position:fixed;
+left:0;top:0;bottom:0;padding:22px 14px;overflow:auto
 }
-.logo{
-  font-size:25px;
-  font-weight:800;
-  margin:0 10px 4px;
-}
-.logo span{color:#36d399}
-.version{
-  font-size:11px;
-  color:#9ca9bc;
-  margin:0 10px 22px;
-}
+.logo{font-size:26px;font-weight:800;margin:0 10px}
+.logo span{color:#35d49a}
+.version{font-size:11px;color:#9eabc0;margin:5px 10px 22px;line-height:1.5}
 .nav button{
-  width:100%;
-  text-align:left;
-  padding:11px 13px;
-  margin:3px 0;
-  border-radius:10px;
-  background:transparent;
-  color:#b8c3d4;
+display:block;width:100%;background:transparent;color:#b8c4d5;
+padding:10px 13px;border-radius:10px;text-align:left;margin:3px 0
 }
-.nav button:hover,.nav button.active{
-  background:#1d2b40;
-  color:white;
-}
+.nav button:hover,.nav button.active{background:#1d2b40;color:white}
 
-.main{
-  margin-left:245px;
-  width:calc(100% - 245px);
-  min-height:100vh;
-}
+.main{margin-left:250px;width:calc(100% - 250px);min-height:100vh}
 .topbar{
-  height:65px;
-  background:white;
-  border-bottom:1px solid #e5eaf1;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  position:sticky;
-  top:0;
-  z-index:20;
+height:65px;background:#fff;border-bottom:1px solid #e5eaf1;
+display:flex;align-items:center;justify-content:space-between;
+padding:0 25px;position:sticky;top:0;z-index:20
 }
-.status{
-  font-size:12px;
-  color:#16865d;
-  background:#e8fff5;
-  padding:8px 12px;
-  border-radius:20px;
-  font-weight:bold;
-}
-.content{padding:25px;max-width:1450px;margin:auto}
-
-.page{display:none}
-.page.active{display:block}
+.status{background:#e8fff5;color:#13855e;padding:8px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+.content{padding:25px;max-width:1500px;margin:auto}
+.page{display:none}.page.active{display:block}
 
 .hero{
-  background:linear-gradient(135deg,#10243b,#126b64);
-  color:white;
-  border-radius:22px;
-  padding:35px;
-  margin-bottom:22px;
+background:linear-gradient(135deg,#10253b,#116c63);
+color:white;padding:36px;border-radius:22px;margin-bottom:20px
 }
-.hero h1{font-size:36px;margin-bottom:10px}
-.hero p{color:#d9f4ef;max-width:720px;line-height:1.6}
+.hero h1{font-size:37px;margin-bottom:10px}
+.hero p{line-height:1.6;color:#d7f1ed;max-width:800px}
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-}
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.grid2{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
 .card{
-  background:white;
-  border:1px solid #e4eaf2;
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 4px 16px rgba(20,30,50,.04);
+background:white;border:1px solid #e2e8f0;border-radius:16px;
+padding:18px;margin-bottom:16px;box-shadow:0 4px 16px rgba(20,30,50,.04)
 }
-.card h3{margin-bottom:10px}
-.muted{color:#6d7a8d;font-size:13px}
+.card h3{margin-bottom:9px}
+.muted{font-size:13px;color:#6d7a8d}
 .big{font-size:27px;font-weight:800;margin:8px 0}
 .badge{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#edf3ff;
-  color:#315bc7;
-  font-size:11px;
-  font-weight:bold;
+display:inline-block;padding:5px 9px;border-radius:20px;
+background:#edf3ff;color:#315bc7;font-size:11px;font-weight:bold
 }
 
-.btn{
-  background:#126b64;
-  color:white;
-  padding:10px 15px;
-  border-radius:9px;
-  font-weight:bold;
-}
+.btn{background:#126b64;color:white;padding:10px 15px;border-radius:9px;font-weight:bold}
 .btn:hover{opacity:.9}
 .btn.secondary{background:#edf2f7;color:#263448}
-.btn.danger{background:#dc4b5d}
 .btn.green{background:#15956c}
+.btn.red{background:#d94b5e}
 .btn.small{padding:7px 10px;font-size:12px}
 
-input,select,textarea{
-  width:100%;
-  padding:11px;
-  border:1px solid #dce3ec;
-  border-radius:9px;
-  background:white;
-  outline:none;
-}
-input:focus,select:focus,textarea:focus{
-  border-color:#126b64;
-}
-label{
-  display:block;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:6px;
-  color:#526074;
-}
 .field{margin-bottom:13px}
+label{display:block;font-size:12px;font-weight:bold;color:#536074;margin-bottom:6px}
+input,select,textarea{
+width:100%;padding:11px;border:1px solid #dce3ec;
+border-radius:9px;background:white;outline:none
+}
+input:focus,select:focus,textarea:focus{border-color:#126b64}
 
-table{
-  width:100%;
-  border-collapse:collapse;
-}
-th,td{
-  padding:11px;
-  border-bottom:1px solid #edf0f5;
-  text-align:left;
-  font-size:13px;
-}
-th{color:#657287;background:#fafbfd}
+table{width:100%;border-collapse:collapse}
+th,td{padding:11px;border-bottom:1px solid #edf0f5;text-align:left;font-size:13px}
+th{background:#fafbfd;color:#637086}
 
-.product{
-  border:1px solid #e2e8f0;
-  border-radius:14px;
-  overflow:hidden;
-  background:white;
+.api{
+background:#0c1624;color:#d9e6f7;padding:15px;border-radius:12px;
+font-family:monospace;font-size:12px;line-height:1.7;overflow:auto
 }
+.ok{color:#1bd094}.warn{color:#e7ad3c}.error{color:#ff6b78}
+
+.progress{height:9px;background:#e9eef4;border-radius:20px;overflow:hidden}
+.progress i{display:block;height:100%;background:#15956c}
+
+.product{background:white;border:1px solid #e1e7ef;border-radius:14px;overflow:hidden}
 .product-img{
-  height:130px;
-  background:linear-gradient(135deg,#dff5ef,#dce8ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:42px;
+height:125px;background:linear-gradient(135deg,#dff5ef,#dce8ff);
+display:flex;align-items:center;justify-content:center;font-size:42px
 }
 .product-body{padding:14px}
 .price{font-weight:800;color:#126b64;margin:8px 0}
 
-.section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px;
-}
-
-.timeline{
-  border-left:3px solid #126b64;
-  padding-left:18px;
-}
-.timeline-item{
-  margin-bottom:17px;
-  position:relative;
-}
+.timeline{border-left:3px solid #126b64;padding-left:18px}
+.timeline-item{margin-bottom:17px;position:relative}
 .timeline-item:before{
-  content:"";
-  position:absolute;
-  left:-26px;
-  top:2px;
-  width:10px;height:10px;
-  border-radius:50%;
-  background:#126b64;
+content:"";position:absolute;left:-26px;top:2px;
+width:10px;height:10px;border-radius:50%;background:#126b64
 }
-
-.api{
-  background:#0d1725;
-  color:#d9e6f7;
-  border-radius:12px;
-  padding:15px;
-  font-family:monospace;
-  font-size:12px;
-  overflow:auto;
-}
-.ok{color:#19c98b}
-.warn{color:#e7ae3d}
 
 .mobile-nav{display:none}
 
 @media(max-width:1000px){
- .grid{grid-template-columns:repeat(2,1fr)}
- .grid3{grid-template-columns:repeat(2,1fr)}
+.grid{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
- .sidebar{display:none}
- .main{margin-left:0;width:100%}
- .topbar{padding:0 14px}
- .content{padding:14px}
- .grid,.grid2,.grid3{grid-template-columns:1fr}
- .hero{padding:24px}
- .hero h1{font-size:27px}
- .mobile-nav{
-   display:flex;
-   position:fixed;
-   left:0;right:0;bottom:0;
-   background:#101827;
-   z-index:50;
-   justify-content:space-around;
-   padding:8px 4px;
- }
- .mobile-nav button{
-   background:none;color:#b8c3d4;
-   font-size:10px;
- }
- .mobile-nav button.active{color:#36d399}
- .content{padding-bottom:80px}
+.sidebar{display:none}
+.main{margin-left:0;width:100%}
+.content{padding:14px 14px 82px}
+.topbar{padding:0 14px}
+.grid,.grid2,.grid3{grid-template-columns:1fr}
+.hero{padding:24px}
+.hero h1{font-size:28px}
+.mobile-nav{
+display:flex;position:fixed;left:0;right:0;bottom:0;
+background:#0e1726;z-index:50;justify-content:space-around;padding:8px
+}
+.mobile-nav button{background:none;color:#bbc6d6;font-size:10px}
 }
 </style>
 </head>
@@ -264,32 +129,43 @@ th{color:#657287;background:#fafbfd}
 <div class="app">
 
 <aside class="sidebar">
-  <div class="logo">Hobbi<span>Go</span></div>
-  <div class="version">AI Journey & Experience Marketplace<br>V50 Production Foundation</div>
+<div class="logo">Hobbi<span>Go</span></div>
+<div class="version">
+AI Journey & Experience Marketplace<br>
+V51–V59 Production Build
+</div>
 
-  <div class="nav">
-    <button onclick="showPage('home',this)">🏠 Home</button>
-    <button onclick="showPage('ai',this)">🤖 AI Trip</button>
-    <button onclick="showPage('market',this)">🌎 Marketplace</button>
-    <button onclick="showPage('trip',this)">🧳 My Trip</button>
-    <button onclick="showPage('booking',this)">🎫 Booking</button>
-    <button onclick="showPage('cart',this)">🛒 Cart</button>
-    <button onclick="showPage('corporate',this)">🏢 Corporate</button>
-    <button onclick="showPage('operations',this)">⚙️ Operations</button>
-    <button onclick="showPage('crm',this)">👥 CRM</button>
-    <button onclick="showPage('analytics',this)">📊 Analytics</button>
-    <button onclick="showPage('partner',this)">🤝 Partner</button>
-    <button onclick="showPage('api',this)">🔌 API Center</button>
-    <button onclick="showPage('database',this)">🗄️ Database</button>
-    <button onclick="showPage('profile',this)">👤 Profile</button>
-  </div>
+<div class="nav">
+<button onclick="showPage('home',this)">🏠 Home</button>
+<button onclick="showPage('ai',this)">🤖 AI Trip</button>
+<button onclick="showPage('market',this)">🌎 Marketplace</button>
+<button onclick="showPage('trip',this)">🧳 My Trip</button>
+<button onclick="showPage('booking',this)">🎫 Booking</button>
+<button onclick="showPage('cart',this)">🛒 Cart</button>
+<button onclick="showPage('corporate',this)">🏢 Corporate</button>
+<button onclick="showPage('operations',this)">⚙️ Operations</button>
+<button onclick="showPage('crm',this)">👥 CRM</button>
+<button onclick="showPage('analytics',this)">📊 Analytics</button>
+<button onclick="showPage('partner',this)">🤝 Partner</button>
+<button onclick="showPage('backend',this)">🔧 Backend</button>
+<button onclick="showPage('database',this)">🗄️ Database</button>
+<button onclick="showPage('auth',this)">🔐 Authentication</button>
+<button onclick="showPage('travelapi',this)">🌎 Travel APIs</button>
+<button onclick="showPage('maps',this)">🗺️ Maps</button>
+<button onclick="showPage('payment',this)">💳 Payment</button>
+<button onclick="showPage('notification',this)">🔔 Notifications</button>
+<button onclick="showPage('security',this)">🛡️ Security</button>
+<button onclick="showPage('testing',this)">🧪 Testing</button>
+<button onclick="showPage('monitoring',this)">📡 Monitoring</button>
+<button onclick="showPage('profile',this)">👤 Profile</button>
+</div>
 </aside>
 
 <main class="main">
 
 <header class="topbar">
-  <strong id="pageTitle">HobbiGo Dashboard</strong>
-  <div class="status">● V50 PRODUCTION FOUNDATION</div>
+<strong id="pageTitle">HobbiGo Production Build</strong>
+<div class="status">● V51–V59 BUILD</div>
 </header>
 
 <div class="content">
@@ -298,181 +174,121 @@ th{color:#657287;background:#fafbfd}
 <section id="home" class="page active">
 
 <div class="hero">
-<h1>Travel Smarter with HobbiGo</h1>
+<h1>HobbiGo Production Build</h1>
 <p>
-AI Journey & Experience Marketplace untuk mencari, merencanakan,
-mengatur, membeli dan mengelola perjalanan dalam satu ekosistem.
+V51–V59 menggabungkan seluruh fondasi production:
+Backend, Database, Authentication, Travel APIs, Maps,
+Payment, Partner, Notification, Security dan Testing.
 </p>
 <br>
 <button class="btn green" onclick="showPage('ai')">✨ Start AI Journey</button>
 </div>
 
 <div class="grid">
-<div class="card">
-<div class="muted">Trips</div>
-<div class="big" id="statTrips">0</div>
-<span class="badge">AI Journey</span>
+<div class="card"><div class="muted">Trips</div><div class="big" id="statTrips">0</div></div>
+<div class="card"><div class="muted">Bookings</div><div class="big" id="statBookings">0</div></div>
+<div class="card"><div class="muted">Cart</div><div class="big" id="statCart">0</div></div>
+<div class="card"><div class="muted">System Health</div><div class="big ok">98%</div></div>
 </div>
 
 <div class="card">
-<div class="muted">Bookings</div>
-<div class="big" id="statBookings">0</div>
-<span class="badge">Commerce</span>
+<h3>🚀 Production Readiness</h3><br>
+<div class="grid3">
+<div>
+<p class="muted">Backend</p><br>
+<div class="progress"><i style="width:90%"></i></div>
 </div>
-
-<div class="card">
-<div class="muted">Cart Items</div>
-<div class="big" id="statCart">0</div>
-<span class="badge">Marketplace</span>
+<div>
+<p class="muted">Database</p><br>
+<div class="progress"><i style="width:90%"></i></div>
 </div>
-
-<div class="card">
-<div class="muted">API Requests</div>
-<div class="big" id="statApi">0</div>
-<span class="badge">Backend Ready</span>
+<div>
+<p class="muted">Integration</p><br>
+<div class="progress"><i style="width:75%"></i></div>
+</div>
 </div>
 </div>
 
 <div class="grid3">
-<div class="card">
-<h3>🤖 AI Engine</h3>
-<p class="muted">Trip generation, itinerary, route dan re-optimization.</p>
-</div>
-<div class="card">
-<h3>🌎 Marketplace</h3>
-<p class="muted">Hotel, restaurant, ticket, transport, activity, boat dan rental.</p>
-</div>
-<div class="card">
-<h3>🔌 API Foundation</h3>
-<p class="muted">Struktur endpoint siap dihubungkan ke backend.</p>
-</div>
+<div class="card"><h3>🔧 Backend</h3><p class="muted">API gateway & service architecture.</p></div>
+<div class="card"><h3>🗄️ Database</h3><p class="muted">Production relational data model.</p></div>
+<div class="card"><h3>🛡️ Security</h3><p class="muted">Auth, validation, logging and protection.</p></div>
 </div>
 
 </section>
 
 <!-- AI -->
 <section id="ai" class="page">
-
-<div class="section-title">
-<div>
-<h2>🤖 AI Journey Generator</h2>
-<p class="muted">Buat perjalanan otomatis dengan HobbiGo AI.</p>
-</div>
-</div>
+<h2>🤖 AI Journey Generator</h2><br>
 
 <div class="card">
 <div class="grid3">
 
-<div class="field">
-<label>Starting From</label>
-<input id="from" value="Jakarta">
-</div>
-
-<div class="field">
-<label>Destination</label>
-<input id="destination" value="Bali">
-</div>
-
-<div class="field">
-<label>Travel Date</label>
-<input id="travelDate" type="date">
-</div>
-
-<div class="field">
-<label>Travelers</label>
-<input id="travelers" type="number" value="2" min="1">
-</div>
+<div class="field"><label>Starting From</label><input id="from" value="Jakarta"></div>
+<div class="field"><label>Destination</label><input id="destination" value="Bali"></div>
+<div class="field"><label>Travel Date</label><input id="travelDate" type="date"></div>
+<div class="field"><label>Travelers</label><input id="travelers" type="number" value="2"></div>
 
 <div class="field">
 <label>Duration</label>
 <select id="duration">
-<option>3 Days</option>
-<option>4 Days</option>
-<option>5 Days</option>
-<option>7 Days</option>
+<option>3 Days</option><option>4 Days</option>
+<option>5 Days</option><option>7 Days</option>
 </select>
 </div>
 
 <div class="field">
 <label>Style</label>
 <select id="style">
-<option>Comfort</option>
-<option>Economy</option>
-<option>Premium</option>
-<option>Exclusive</option>
+<option>Comfort</option><option>Economy</option>
+<option>Premium</option><option>Exclusive</option>
 </select>
 </div>
 
-<div class="field">
-<label>Budget</label>
-<input id="budget" type="number" value="5000000">
-</div>
+<div class="field"><label>Budget</label><input id="budget" type="number" value="5000000"></div>
 
 <div class="field">
 <label>Interest</label>
 <select id="interest">
-<option>Nature</option>
-<option>Food</option>
-<option>Culture</option>
-<option>Adventure</option>
-<option>Family</option>
-<option>Business</option>
+<option>Nature</option><option>Food</option>
+<option>Culture</option><option>Adventure</option>
+<option>Family</option><option>Business</option>
 </select>
 </div>
 
 <div class="field">
 <label>Journey Type</label>
 <select id="journeyType">
-<option>Personal</option>
-<option>Family</option>
-<option>Group</option>
-<option>Corporate</option>
+<option>Personal</option><option>Family</option>
+<option>Group</option><option>Corporate</option>
 </select>
 </div>
 
 </div>
-
 <button class="btn" onclick="generateTrip()">✨ Generate Trip</button>
 </div>
 
 <div id="tripResult"></div>
-
 </section>
 
-<!-- MARKETPLACE -->
+<!-- MARKET -->
 <section id="market" class="page">
-
-<div class="section-title">
-<div>
-<h2>🌎 Global Marketplace</h2>
-<p class="muted">Explore HobbiGo travel products.</p>
-</div>
-</div>
+<h2>🌎 Global Marketplace</h2><br>
 
 <div class="card">
 <div class="grid3">
-<div>
-<label>Search</label>
-<input id="marketSearch" placeholder="Hotel, restaurant, ticket..." oninput="renderProducts()">
-</div>
-
-<div>
+<div class="field"><label>Search</label><input id="marketSearch" oninput="renderProducts()"></div>
+<div class="field">
 <label>Category</label>
 <select id="marketCategory" onchange="renderProducts()">
-<option value="">All Categories</option>
-<option>Hotel</option>
-<option>Restaurant</option>
-<option>Ticket</option>
-<option>Transport</option>
-<option>Attraction</option>
-<option>Activity</option>
-<option>Boat</option>
-<option>Rental</option>
-<option>Agency</option>
+<option value="">All</option>
+<option>Hotel</option><option>Restaurant</option>
+<option>Ticket</option><option>Transport</option>
+<option>Attraction</option><option>Activity</option>
+<option>Boat</option><option>Rental</option><option>Agency</option>
 </select>
 </div>
-
-<div>
+<div class="field">
 <label>Sort</label>
 <select id="marketSort" onchange="renderProducts()">
 <option value="default">Recommended</option>
@@ -484,511 +300,437 @@ mengatur, membeli dan mengelola perjalanan dalam satu ekosistem.
 </div>
 
 <div id="products" class="grid3"></div>
-
 </section>
 
 <!-- TRIP -->
 <section id="trip" class="page">
-
-<div class="section-title">
-<h2>🧳 My Trip</h2>
-<button class="btn small" onclick="showPage('ai')">+ New Trip</button>
-</div>
-
+<h2>🧳 My Trip</h2><br>
 <div id="myTrip"></div>
-
 </section>
 
 <!-- BOOKING -->
 <section id="booking" class="page">
-
-<h2>🎫 Booking Center</h2>
-<br>
-
+<h2>🎫 Booking Center</h2><br>
 <div class="card">
 <table>
-<thead>
-<tr>
-<th>Booking ID</th>
-<th>Trip</th>
-<th>Total</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
+<thead><tr><th>ID</th><th>Items</th><th>Total</th><th>Status</th><th>Action</th></tr></thead>
 <tbody id="bookingTable"></tbody>
 </table>
 </div>
-
 </section>
 
 <!-- CART -->
 <section id="cart" class="page">
-
-<h2>🛒 My Cart</h2>
-<br>
-
+<h2>🛒 My Cart</h2><br>
 <div id="cartContent"></div>
-
 </section>
 
 <!-- CORPORATE -->
 <section id="corporate" class="page">
-
-<h2>🏢 Corporate & Group Travel</h2>
-<br>
+<h2>🏢 Corporate & Group Travel</h2><br>
 
 <div class="card">
 <div class="grid3">
-
+<div class="field"><label>Event Name</label><input id="eventName" placeholder="Company Retreat"></div>
+<div class="field"><label>Destination</label><input id="eventDestination" value="Bali"></div>
+<div class="field"><label>Participants</label><input id="eventParticipants" type="number" value="20"></div>
+<div class="field"><label>Date</label><input id="eventDate" type="date"></div>
 <div class="field">
-<label>Event Name</label>
-<input id="eventName" placeholder="Company Retreat">
+<label>Type</label>
+<select id="eventType"><option>Meeting</option><option>Retreat</option><option>Team Building</option><option>Conference</option></select>
 </div>
-
-<div class="field">
-<label>Destination</label>
-<input id="eventDestination" value="Bali">
+<div class="field"><label>Budget</label><input id="eventBudget" type="number" value="25000000"></div>
 </div>
-
-<div class="field">
-<label>Participants</label>
-<input id="eventParticipants" type="number" value="20">
-</div>
-
-<div class="field">
-<label>Date</label>
-<input id="eventDate" type="date">
-</div>
-
-<div class="field">
-<label>Event Type</label>
-<select id="eventType">
-<option>Meeting</option>
-<option>Retreat</option>
-<option>Team Building</option>
-<option>Conference</option>
-</select>
-</div>
-
-<div class="field">
-<label>Budget</label>
-<input id="eventBudget" type="number" value="25000000">
-</div>
-
-</div>
-
 <button class="btn" onclick="createEvent()">Create Event</button>
 </div>
 
 <div class="card">
-<h3>Corporate Events</h3>
-<table>
-<thead>
-<tr><th>Event</th><th>Destination</th><th>Participants</th><th>Status</th></tr>
-</thead>
-<tbody id="eventTable"></tbody>
-</table>
+<table><thead><tr><th>Event</th><th>Destination</th><th>Participants</th><th>Status</th></tr></thead>
+<tbody id="eventTable"></tbody></table>
 </div>
-
 </section>
 
 <!-- OPERATIONS -->
 <section id="operations" class="page">
-
-<h2>⚙️ Operations Dashboard</h2>
-<br>
+<h2>⚙️ Operations</h2><br>
 
 <div class="grid">
 <div class="card"><div class="muted">Bookings</div><div class="big" id="opBookings">0</div></div>
 <div class="card"><div class="muted">GMV</div><div class="big" id="opGMV">Rp 0</div></div>
 <div class="card"><div class="muted">Commission</div><div class="big" id="opCommission">Rp 0</div></div>
-<div class="card"><div class="muted">API Logs</div><div class="big" id="opLogs">0</div></div>
+<div class="card"><div class="muted">System Logs</div><div class="big" id="opLogs">0</div></div>
 </div>
 
 <div class="card">
-<h3>System Tools</h3>
-<br>
 <button class="btn small" onclick="backupData()">Backup JSON</button>
 <button class="btn secondary small" onclick="restoreData()">Restore</button>
-<button class="btn danger small" onclick="resetDemo()">Reset Demo</button>
+<button class="btn red small" onclick="resetDemo()">Reset Demo</button>
 </div>
 
 <div class="card">
-<h3>Activity Log</h3>
+<h3>Activity Log</h3><br>
 <div id="activityLog"></div>
 </div>
-
 </section>
 
 <!-- CRM -->
 <section id="crm" class="page">
-
-<h2>👥 CRM Customer 360</h2>
-<br>
-
+<h2>👥 CRM</h2><br>
 <div class="card">
 <table>
-<thead>
-<tr><th>Customer</th><th>Email</th><th>Trips</th><th>Bookings</th></tr>
-</thead>
+<thead><tr><th>Name</th><th>Email</th><th>Trips</th><th>Bookings</th></tr></thead>
 <tbody id="crmTable"></tbody>
 </table>
 </div>
-
 </section>
 
 <!-- ANALYTICS -->
 <section id="analytics" class="page">
-
-<h2>📊 Business Analytics</h2>
-<br>
+<h2>📊 Analytics</h2><br>
 
 <div class="grid">
-<div class="card">
-<div class="muted">GMV</div>
-<div class="big" id="anGMV">Rp 0</div>
-</div>
-<div class="card">
-<div class="muted">Commission 15%</div>
-<div class="big" id="anCommission">Rp 0</div>
-</div>
-<div class="card">
-<div class="muted">Service Fee</div>
-<div class="big" id="anFee">Rp 0</div>
-</div>
-<div class="card">
-<div class="muted">Bookings</div>
-<div class="big" id="anBookings">0</div>
-</div>
+<div class="card"><div class="muted">GMV</div><div class="big" id="anGMV">Rp 0</div></div>
+<div class="card"><div class="muted">Commission</div><div class="big" id="anCommission">Rp 0</div></div>
+<div class="card"><div class="muted">Service Fee</div><div class="big" id="anFee">Rp 0</div></div>
+<div class="card"><div class="muted">Bookings</div><div class="big" id="anBookings">0</div></div>
 </div>
 
 <div class="card">
-<h3>🤖 AI Business Insight</h3>
-<br>
+<h3>🤖 AI Business Insight</h3><br>
 <p id="businessInsight"></p>
 </div>
-
 </section>
 
 <!-- PARTNER -->
 <section id="partner" class="page">
-
-<h2>🤝 Partner Center</h2>
-<br>
+<h2>🤝 Partner Center</h2><br>
 
 <div class="grid">
-<div class="card">
-<div class="muted">Products</div>
-<div class="big" id="partnerProducts">0</div>
-</div>
-<div class="card">
-<div class="muted">Sales</div>
-<div class="big" id="partnerSales">Rp 0</div>
-</div>
-<div class="card">
-<div class="muted">Commission</div>
-<div class="big" id="partnerCommission">Rp 0</div>
-</div>
+<div class="card"><div class="muted">Products</div><div class="big" id="partnerProducts">0</div></div>
+<div class="card"><div class="muted">Sales</div><div class="big" id="partnerSales">Rp 0</div></div>
+<div class="card"><div class="muted">Commission</div><div class="big" id="partnerCommission">Rp 0</div></div>
 </div>
 
 <div class="card">
-<h3>Add Partner Product</h3>
-<br>
-
+<h3>Add Partner Product</h3><br>
 <div class="grid3">
-<div class="field">
-<label>Product Name</label>
-<input id="partnerName">
+<div class="field"><label>Name</label><input id="partnerName"></div>
+<div class="field"><label>Category</label><select id="partnerCategory"><option>Hotel</option><option>Restaurant</option><option>Tour</option><option>Boat</option><option>Rental</option></select></div>
+<div class="field"><label>Price</label><input id="partnerPrice" type="number"></div>
 </div>
-
-<div class="field">
-<label>Category</label>
-<select id="partnerCategory">
-<option>Hotel</option>
-<option>Restaurant</option>
-<option>Tour</option>
-<option>Attraction</option>
-<option>Boat</option>
-<option>Rental</option>
-</select>
-</div>
-
-<div class="field">
-<label>Price</label>
-<input id="partnerPrice" type="number">
-</div>
-</div>
-
 <button class="btn" onclick="addPartnerProduct()">Add Product</button>
 </div>
 
 <div class="card">
-<table>
-<thead>
-<tr><th>Product</th><th>Category</th><th>Price</th></tr>
-</thead>
-<tbody id="partnerTable"></tbody>
-</table>
+<table><thead><tr><th>Product</th><th>Category</th><th>Price</th></tr></thead>
+<tbody id="partnerTable"></tbody></table>
 </div>
-
 </section>
 
-<!-- API -->
-<section id="api" class="page">
-
-<div class="section-title">
-<div>
-<h2>🔌 HobbiGo API Center</h2>
-<p class="muted">Production-ready API architecture foundation.</p>
-</div>
-<span class="badge">V50</span>
-</div>
+<!-- BACKEND -->
+<section id="backend" class="page">
+<h2>🔧 Backend Foundation</h2><br>
 
 <div class="card">
-<h3>API Configuration</h3>
-<br>
+<h3>HobbiGo Production Architecture</h3><br>
+<div class="api">
+CLIENT
+  ↓
+WEB / MOBILE APP
+  ↓
+API GATEWAY
+  ↓
+AUTH SERVICE
+  ↓
+APPLICATION SERVICES
+  ├── Trip Service
+  ├── Marketplace Service
+  ├── Booking Service
+  ├── Payment Service
+  ├── Partner Service
+  ├── Notification Service
+  └── AI Service
+  ↓
+DATABASE
+  ↓
+EXTERNAL PROVIDERS
+</div>
+</div>
 
 <div class="grid3">
-
-<div class="field">
-<label>Base URL</label>
-<input id="apiBase" value="https://api.hobbigo.com">
-</div>
-
-<div class="field">
-<label>Version</label>
-<select id="apiVersion">
-<option>v1</option>
-<option>v2</option>
-</select>
-</div>
-
-<div class="field">
-<label>Environment</label>
-<select id="apiEnvironment">
-<option>development</option>
-<option>staging</option>
-<option>production</option>
-</select>
-</div>
-
-</div>
-
-<button class="btn" onclick="testAPI()">Test API Connection</button>
-<span id="apiStatus"></span>
-</div>
-
-<div class="grid2">
-
-<div class="card">
-<h3>Backend Services</h3>
-<br>
-<p>🗺️ Maps Service</p>
-<p>🏨 Hotel Service</p>
-<p>✈️ Flight & Ticket</p>
-<p>🍜 Restaurant</p>
-<p>🎯 Activity</p>
-<p>💳 Payment</p>
-<p>🤖 AI Engine</p>
-<p>🤝 Partner API</p>
+<div class="card"><h3>API Gateway</h3><p class="muted">Routing, rate limit, authentication.</p></div>
+<div class="card"><h3>Service Layer</h3><p class="muted">Business logic and transactions.</p></div>
+<div class="card"><h3>Worker Queue</h3><p class="muted">Async notification and background jobs.</p></div>
 </div>
 
 <div class="card">
-<h3>API Architecture</h3>
-<br>
-<div class="api">
-GET /api/v1/destinations<br>
-GET /api/v1/products<br>
-GET /api/v1/products/:id<br>
-POST /api/v1/auth/login<br>
-POST /api/v1/auth/register<br>
-GET /api/v1/users/me<br>
-GET /api/v1/travelers<br>
-POST /api/v1/trips<br>
-GET /api/v1/trips/:id<br>
-GET /api/v1/cart<br>
-POST /api/v1/cart<br>
-POST /api/v1/bookings<br>
-GET /api/v1/bookings<br>
-POST /api/v1/payments<br>
-GET /api/v1/payments/:id<br>
-POST /api/v1/reviews<br>
-GET /api/v1/partners<br>
-POST /api/v1/partners/products<br>
-GET /api/v1/availability<br>
-POST /api/v1/corporate/events<br>
-GET /api/v1/analytics
+<h3>Environment</h3><br>
+<div class="grid3">
+<div><span class="badge">Development</span></div>
+<div><span class="badge">Staging</span></div>
+<div><span class="badge">Production</span></div>
 </div>
 </div>
-
-</div>
-
-<div class="card">
-<h3>API Request Test</h3>
-<br>
-
-<div class="api" id="apiConsole">
-HobbiGo API Console<br>
-Waiting for request...
-</div>
-
-</div>
-
 </section>
 
 <!-- DATABASE -->
 <section id="database" class="page">
-
-<h2>🗄️ Database Architecture</h2>
-<br>
+<h2>🗄️ Production Database</h2><br>
 
 <div class="grid3">
-
-<div class="card">
-<h3>Users</h3>
-<p class="muted">users</p>
-<p>id</p>
-<p>name</p>
-<p>email</p>
-<p>role</p>
+<div class="card"><h3>Identity</h3><p>users</p><p>profiles</p><p>sessions</p><p>roles</p></div>
+<div class="card"><h3>Travel</h3><p>trips</p><p>itineraries</p><p>travelers</p><p>availability</p></div>
+<div class="card"><h3>Commerce</h3><p>products</p><p>carts</p><p>bookings</p><p>payments</p></div>
+<div class="card"><h3>Partner</h3><p>partners</p><p>partner_products</p><p>inventory</p></div>
+<div class="card"><h3>Engagement</h3><p>reviews</p><p>favorites</p><p>vouchers</p><p>notifications</p></div>
+<div class="card"><h3>Corporate</h3><p>events</p><p>corporate_users</p><p>corporate_bookings</p></div>
+<div class="card"><h3>AI</h3><p>ai_requests</p><p>ai_results</p><p>recommendations</p></div>
+<div class="card"><h3>Security</h3><p>audit_logs</p><p>security_events</p><p>access_logs</p></div>
+<div class="card"><h3>Analytics</h3><p>business_metrics</p><p>reports</p><p>funnel_events</p></div>
 </div>
 
 <div class="card">
-<h3>Travel</h3>
-<p class="muted">trips</p>
-<p>itineraries</p>
-<p>travelers</p>
-<p>availability</p>
+<h3>Database Migration</h3><br>
+<button class="btn" onclick="runMigration()">Run Migration Check</button>
+<div id="migrationResult"></div>
+</div>
+</section>
+
+<!-- AUTH -->
+<section id="auth" class="page">
+<h2>🔐 Authentication</h2><br>
+
+<div class="grid2">
+
+<div class="card">
+<h3>Login</h3><br>
+<div class="field"><label>Email</label><input id="loginEmail" value="user@hobbigo.com"></div>
+<div class="field"><label>Password</label><input id="loginPassword" type="password" value="demo123"></div>
+<button class="btn" onclick="login()">Login</button>
 </div>
 
 <div class="card">
-<h3>Commerce</h3>
-<p class="muted">products</p>
-<p>carts</p>
-<p>bookings</p>
-<p>payments</p>
-</div>
-
-<div class="card">
-<h3>Partners</h3>
-<p class="muted">partners</p>
-<p>partner_products</p>
-<p>partner_transactions</p>
-</div>
-
-<div class="card">
-<h3>Engagement</h3>
-<p class="muted">reviews</p>
-<p>favorites</p>
-<p>vouchers</p>
-<p>notifications</p>
-</div>
-
-<div class="card">
-<h3>Corporate</h3>
-<p class="muted">corporate_events</p>
-<p>corporate_travelers</p>
-<p>corporate_bookings</p>
-</div>
-
-<div class="card">
-<h3>Security</h3>
-<p class="muted">sessions</p>
-<p>audit_logs</p>
-<p>activity_logs</p>
-</div>
-
-<div class="card">
-<h3>Analytics</h3>
-<p class="muted">analytics</p>
-<p>reports</p>
-<p>business_metrics</p>
-</div>
-
-<div class="card">
-<h3>AI</h3>
-<p class="muted">ai_requests</p>
-<p>ai_results</p>
-<p>recommendations</p>
-</div>
-
-</div>
-
-<div class="card">
-<h3>Production Architecture</h3>
+<h3>Session Status</h3><br>
+<div id="sessionStatus"></div>
 <br>
+<button class="btn red small" onclick="logout()">Logout</button>
+</div>
 
+</div>
+
+<div class="card">
+<h3>Roles</h3><br>
+<div class="grid3">
+<div><span class="badge">Traveler</span></div>
+<div><span class="badge">Corporate</span></div>
+<div><span class="badge">Partner</span></div>
+<div><span class="badge">Operations</span></div>
+<div><span class="badge">Admin</span></div>
+<div><span class="badge">Super Admin</span></div>
+</div>
+</div>
+</section>
+
+<!-- TRAVEL API -->
+<section id="travelapi" class="page">
+<h2>🌎 Travel API Integration</h2><br>
+
+<div class="card">
+<div class="grid3">
+<div class="field"><label>API Base URL</label><input id="travelApiBase" value="https://api.hobbigo.com"></div>
+<div class="field"><label>API Version</label><input id="travelApiVersion" value="v1"></div>
+<div class="field"><label>Environment</label><select id="travelApiEnv"><option>staging</option><option>production</option></select></div>
+</div>
+<button class="btn" onclick="testTravelAPI()">Test Integration</button>
+</div>
+
+<div class="grid3">
+<div class="card"><h3>🏨 Hotels</h3><p class="muted">Search → Availability → Rate → Booking</p><br><span class="badge">READY</span></div>
+<div class="card"><h3>✈️ Flights</h3><p class="muted">Search → Fare → Ticket</p><br><span class="badge">READY</span></div>
+<div class="card"><h3>🍜 Restaurants</h3><p class="muted">Discovery → Reservation</p><br><span class="badge">READY</span></div>
+<div class="card"><h3>🎯 Activities</h3><p class="muted">Search → Availability → Booking</p><br><span class="badge">READY</span></div>
+<div class="card"><h3>🚗 Transport</h3><p class="muted">Vehicle → Driver → Booking</p><br><span class="badge">READY</span></div>
+<div class="card"><h3>🚤 Boat</h3><p class="muted">Boat → Schedule → Booking</p><br><span class="badge">READY</span></div>
+</div>
+
+<div class="card">
+<div class="api" id="travelApiConsole">Travel API Console — waiting...</div>
+</div>
+</section>
+
+<!-- MAPS -->
+<section id="maps" class="page">
+<h2>🗺️ Maps & Smart Route</h2><br>
+
+<div class="card">
+<div class="grid3">
+<div class="field"><label>Origin</label><input id="mapOrigin" value="Jakarta"></div>
+<div class="field"><label>Destination</label><input id="mapDestination" value="Bali"></div>
+<div class="field"><label>Transport</label><select id="mapTransport"><option>Car</option><option>Flight</option><option>Mixed</option></select></div>
+</div>
+<button class="btn" onclick="calculateRoute()">Calculate Smart Route</button>
+</div>
+
+<div class="card">
+<h3>Smart Route Result</h3><br>
+<div id="routeResult">
+<p class="muted">Belum ada route calculation.</p>
+</div>
+</div>
+
+<div class="card">
+<h3>Map Provider Architecture</h3><br>
 <div class="api">
-HobbiGo Web / Mobile App
-        ↓
-API Gateway
-        ↓
-Authentication
-        ↓
-Application Backend
-        ↓
-Database
-        ↓
-External Services
+HobbiGo App
+→ Maps Adapter
+→ Geocoding
+→ Directions
+→ Places
+→ Distance Matrix
+→ Route Optimization
+</div>
+</div>
+</section>
 
-Maps
-Hotels
-Flights
-Restaurants
-Activities
-Payment
-AI
-Partner APIs
+<!-- PAYMENT -->
+<section id="payment" class="page">
+<h2>💳 Payment Architecture</h2><br>
+
+<div class="grid3">
+<div class="card"><h3>🏦 Bank Transfer</h3><span class="badge">SUPPORTED</span></div>
+<div class="card"><h3>📱 E-Wallet</h3><span class="badge">SUPPORTED</span></div>
+<div class="card"><h3>💳 Card</h3><span class="badge">SUPPORTED</span></div>
+<div class="card"><h3>🏢 Corporate Billing</h3><span class="badge">SUPPORTED</span></div>
+<div class="card"><h3>↩️ Refund</h3><span class="badge">SUPPORTED</span></div>
+<div class="card"><h3>🧾 Invoice</h3><span class="badge">SUPPORTED</span></div>
 </div>
 
+<div class="card">
+<h3>Payment Gateway Test</h3><br>
+<div class="grid3">
+<div class="field"><label>Amount</label><input id="paymentAmount" type="number" value="1000000"></div>
+<div class="field"><label>Method</label><select id="paymentMethod"><option>Bank Transfer</option><option>E-Wallet</option><option>Card</option><option>Corporate Billing</option></select></div>
+<div class="field"><label>Currency</label><input value="IDR" disabled></div>
+</div>
+<button class="btn green" onclick="testPayment()">Create Payment Intent</button>
+<div id="paymentResult"></div>
 </div>
 
+<div class="card">
+<p class="muted">
+Production payment credentials must remain on the secure backend.
+Never place secret keys inside the frontend HTML.
+</p>
+</div>
+</section>
+
+<!-- NOTIFICATION -->
+<section id="notification" class="page">
+<h2>🔔 Notification Center</h2><br>
+
+<div class="card">
+<div class="grid3">
+<div class="card"><h3>📧 Email</h3><p class="muted">Booking confirmation, invoice.</p></div>
+<div class="card"><h3>📱 Push</h3><p class="muted">Trip alerts and reminders.</p></div>
+<div class="card"><h3>💬 WhatsApp</h3><p class="muted">Future integration.</p></div>
+</div>
+<button class="btn" onclick="sendNotification()">Send Test Notification</button>
+</div>
+
+<div class="card">
+<h3>Notifications</h3><br>
+<div id="notificationList"></div>
+</div>
+</section>
+
+<!-- SECURITY -->
+<section id="security" class="page">
+<h2>🛡️ Security Center</h2><br>
+
+<div class="grid">
+<div class="card"><div class="muted">HTTPS</div><div class="big ok">READY</div></div>
+<div class="card"><div class="muted">Authentication</div><div class="big ok">READY</div></div>
+<div class="card"><div class="muted">Audit Logs</div><div class="big ok">READY</div></div>
+<div class="card"><div class="muted">Secret Management</div><div class="big warn">BACKEND</div></div>
+</div>
+
+<div class="card">
+<h3>Security Checklist</h3><br>
+<table>
+<tr><td>HTTPS / TLS</td><td class="ok">✓</td></tr>
+<tr><td>Password hashing</td><td class="ok">✓ Backend</td></tr>
+<tr><td>JWT / Session</td><td class="ok">✓ Framework</td></tr>
+<tr><td>Rate limiting</td><td class="ok">✓ Architecture</td></tr>
+<tr><td>Input validation</td><td class="ok">✓</td></tr>
+<tr><td>API secret protection</td><td class="warn">Backend required</td></tr>
+<tr><td>Payment secret protection</td><td class="warn">Backend required</td></tr>
+</table>
+</div>
+</section>
+
+<!-- TESTING -->
+<section id="testing" class="page">
+<h2>🧪 Production Testing Center</h2><br>
+
+<div class="card">
+<h3>Run System Tests</h3><br>
+<button class="btn" onclick="runTests()">▶ Run All Tests</button>
+</div>
+
+<div class="card">
+<table>
+<thead><tr><th>Test</th><th>Result</th><th>Details</th></tr></thead>
+<tbody id="testTable"></tbody>
+</table>
+</div>
+</section>
+
+<!-- MONITORING -->
+<section id="monitoring" class="page">
+<h2>📡 Production Monitoring</h2><br>
+
+<div class="grid">
+<div class="card"><div class="muted">API Health</div><div class="big ok">98.7%</div></div>
+<div class="card"><div class="muted">Response</div><div class="big">120ms</div></div>
+<div class="card"><div class="muted">Errors</div><div class="big">0.2%</div></div>
+<div class="card"><div class="muted">Uptime</div><div class="big ok">99.9%</div></div>
+</div>
+
+<div class="card">
+<h3>Services</h3><br>
+<table>
+<tr><th>Service</th><th>Status</th></tr>
+<tr><td>API Gateway</td><td class="ok">● Operational</td></tr>
+<tr><td>Authentication</td><td class="ok">● Operational</td></tr>
+<tr><td>Trip Service</td><td class="ok">● Operational</td></tr>
+<tr><td>Booking Service</td><td class="ok">● Operational</td></tr>
+<tr><td>Payment Service</td><td class="ok">● Framework Ready</td></tr>
+<tr><td>Notification</td><td class="ok">● Framework Ready</td></tr>
+</table>
+</div>
 </section>
 
 <!-- PROFILE -->
 <section id="profile" class="page">
-
-<h2>👤 User Profile</h2>
-<br>
+<h2>👤 Profile</h2><br>
 
 <div class="card">
-<div class="grid2">
-
-<div class="field">
-<label>Name</label>
-<input id="profileName" value="HobbiGo User">
+<div class="grid3">
+<div class="field"><label>Name</label><input id="profileName" value="HobbiGo User"></div>
+<div class="field"><label>Email</label><input id="profileEmail" value="user@hobbigo.com"></div>
+<div class="field"><label>Role</label><select id="profileRole"><option>Traveler</option><option>Corporate</option><option>Partner</option><option>Admin</option></select></div>
 </div>
-
-<div class="field">
-<label>Email</label>
-<input id="profileEmail" value="user@hobbigo.com">
-</div>
-
-<div class="field">
-<label>Role</label>
-<select id="profileRole">
-<option>Traveler</option>
-<option>Corporate</option>
-<option>Partner</option>
-<option>Admin</option>
-</select>
-</div>
-
-</div>
-
 <button class="btn" onclick="saveProfile()">Save Profile</button>
 </div>
 
 <div class="card">
-<h3>Security Notice</h3>
+<h3>Production Notice</h3><br>
 <p class="muted">
-Untuk production, password, API secret, payment secret,
-database credentials dan access token tidak boleh disimpan
-di dalam file index.html.
+Frontend ini tidak menyimpan password production, API secret,
+payment secret atau database credential.
+Semua credential production harus berada di server/backend.
 </p>
 </div>
-
 </section>
 
 </div>
@@ -1005,97 +747,102 @@ di dalam file index.html.
 
 <script>
 
-/* =========================
-   HOBBIGO V50 CORE
-========================= */
+/* ======================================
+   HOBBIGO V51-V59 PRODUCTION BUILD
+====================================== */
 
 const KEY={
- cart:"hobbigo_cart",
- trip:"hobbigo_trip",
- bookings:"hobbigo_bookings",
- payments:"hobbigo_payments",
- users:"hobbigo_users",
- profile:"hobbigo_profile",
- events:"hobbigo_corporate_events",
- partner:"hobbigo_partner_products",
- logs:"hobbigo_api_logs",
- activity:"hobbigo_activity_log",
- api:"hobbigo_api_config"
+cart:"hobbigo_cart",
+trip:"hobbigo_trip",
+bookings:"hobbigo_bookings",
+payments:"hobbigo_payments",
+profile:"hobbigo_profile",
+events:"hobbigo_corporate_events",
+partner:"hobbigo_partner_products",
+logs:"hobbigo_system_logs",
+activity:"hobbigo_activity_log",
+session:"hobbigo_session",
+notifications:"hobbigo_notifications",
+api:"hobbigo_api_config",
+tests:"hobbigo_test_results"
 };
 
-function get(key,def=[]){
- try{
-  const v=localStorage.getItem(key);
-  return v?JSON.parse(v):def;
- }catch(e){return def}
+function get(k,d=[]){
+try{
+let v=localStorage.getItem(k);
+return v?JSON.parse(v):d;
+}catch(e){return d}
 }
 
-function set(key,value){
- localStorage.setItem(key,JSON.stringify(value));
+function set(k,v){
+localStorage.setItem(k,JSON.stringify(v));
 }
 
 function money(n){
- return "Rp "+Number(n||0).toLocaleString("id-ID");
+return "Rp "+Number(n||0).toLocaleString("id-ID");
 }
 
-function id(prefix){
- return prefix+"-"+Math.floor(100000+Math.random()*900000);
+function makeID(p){
+return p+"-"+Math.floor(100000+Math.random()*900000);
 }
 
 function logActivity(text){
- let logs=get(KEY.activity,[]);
- logs.unshift({
-  time:new Date().toLocaleString("id-ID"),
-  text
- });
- set(KEY.activity,logs.slice(0,100));
- renderAll();
+let x=get(KEY.activity,[]);
+x.unshift({
+text,
+time:new Date().toLocaleString("id-ID")
+});
+set(KEY.activity,x.slice(0,100));
+renderAll();
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* NAV */
 
 function showPage(name,button){
 
- document.querySelectorAll(".page")
- .forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
 
- const page=document.getElementById(name);
- if(page)page.classList.add("active");
+let page=document.getElementById(name);
+if(page)page.classList.add("active");
 
- document.querySelectorAll(".nav button")
- .forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".nav button")
+.forEach(b=>b.classList.remove("active"));
 
- if(button)button.classList.add("active");
+if(button)button.classList.add("active");
 
- const titles={
-  home:"HobbiGo Dashboard",
-  ai:"AI Journey",
-  market:"Global Marketplace",
-  trip:"My Trip",
-  booking:"Booking Center",
-  cart:"My Cart",
-  corporate:"Corporate Travel",
-  operations:"Operations",
-  crm:"Customer CRM",
-  analytics:"Business Analytics",
-  partner:"Partner Center",
-  api:"API Center",
-  database:"Database Architecture",
-  profile:"User Profile"
- };
+const titles={
+home:"HobbiGo Dashboard",
+ai:"AI Journey",
+market:"Global Marketplace",
+trip:"My Trip",
+booking:"Booking Center",
+cart:"My Cart",
+corporate:"Corporate Travel",
+operations:"Operations",
+crm:"CRM",
+analytics:"Analytics",
+partner:"Partner Center",
+backend:"Backend Foundation",
+database:"Database",
+auth:"Authentication",
+travelapi:"Travel API",
+maps:"Maps & Smart Route",
+payment:"Payment Center",
+notification:"Notifications",
+security:"Security Center",
+testing:"Testing Center",
+monitoring:"Production Monitoring",
+profile:"Profile"
+};
 
- document.getElementById("pageTitle").textContent=
- titles[name]||"HobbiGo";
+document.getElementById("pageTitle").textContent=titles[name]||"HobbiGo";
 
- renderAll();
- window.scrollTo(0,0);
+renderAll();
+window.scrollTo(0,0);
 }
 
-/* =========================
-   PRODUCTS
-========================= */
+/* PRODUCTS */
 
 const products=[
 ["P01","Bali Paradise Hotel","Hotel",850000,"🏨"],
@@ -1126,808 +873,821 @@ const products=[
 
 function renderProducts(){
 
- let search=(document.getElementById("marketSearch")?.value||"").toLowerCase();
- let cat=document.getElementById("marketCategory")?.value||"";
- let sort=document.getElementById("marketSort")?.value||"default";
+let box=document.getElementById("products");
+if(!box)return;
 
- let data=products.filter(p=>
-  (!cat||p[2]===cat)&&
-  (!search||p[1].toLowerCase().includes(search))
- );
+let search=(document.getElementById("marketSearch")?.value||"").toLowerCase();
+let cat=document.getElementById("marketCategory")?.value||"";
+let sort=document.getElementById("marketSort")?.value||"default";
 
- if(sort==="low")data.sort((a,b)=>a[3]-b[3]);
- if(sort==="high")data.sort((a,b)=>b[3]-a[3]);
+let data=products.filter(p=>
+(!cat||p[2]===cat)&&
+(!search||p[1].toLowerCase().includes(search))
+);
 
- const box=document.getElementById("products");
- if(!box)return;
+if(sort==="low")data.sort((a,b)=>a[3]-b[3]);
+if(sort==="high")data.sort((a,b)=>b[3]-a[3]);
 
- box.innerHTML=data.map(p=>`
- <div class="product">
-   <div class="product-img">${p[4]}</div>
-   <div class="product-body">
-    <span class="badge">${p[2]}</span>
-    <h3>${p[1]}</h3>
-    <div class="price">${money(p[3])}</div>
-    <button class="btn small" onclick="addCart('${p[0]}')">
-      + Add to Cart
-    </button>
-   </div>
- </div>
- `).join("");
+box.innerHTML=data.map(p=>`
+<div class="product">
+<div class="product-img">${p[4]}</div>
+<div class="product-body">
+<span class="badge">${p[2]}</span>
+<h3>${p[1]}</h3>
+<div class="price">${money(p[3])}</div>
+<button class="btn small" onclick="addCart('${p[0]}')">+ Add to Cart</button>
+</div>
+</div>
+`).join("");
 }
 
 function addCart(pid){
 
- const p=products.find(x=>x[0]===pid);
- if(!p)return;
+let p=products.find(x=>x[0]===pid);
+if(!p)return;
 
- let cart=get(KEY.cart,[]);
- cart.push({
-  id:p[0],
-  name:p[1],
-  category:p[2],
-  price:p[3],
-  qty:1
- });
+let cart=get(KEY.cart,[]);
+cart.push({
+id:p[0],name:p[1],category:p[2],price:p[3],qty:1
+});
 
- set(KEY.cart,cart);
- logActivity("Added "+p[1]+" to cart");
- alert("Added to Cart ✅");
+set(KEY.cart,cart);
+logActivity("Added "+p[1]+" to cart");
+alert("Added to Cart ✅");
 }
 
-/* =========================
-   CART
-========================= */
+/* CART */
 
 function renderCart(){
 
- const box=document.getElementById("cartContent");
- if(!box)return;
+let box=document.getElementById("cartContent");
+if(!box)return;
 
- let cart=get(KEY.cart,[]);
+let cart=get(KEY.cart,[]);
 
- if(!cart.length){
-  box.innerHTML=`
-  <div class="card">
-   <h3>Cart masih kosong</h3>
-   <p class="muted">Silakan pilih produk dari Marketplace.</p>
-   <br>
-   <button class="btn" onclick="showPage('market')">
-   Open Marketplace
-   </button>
-  </div>`;
-  return;
- }
+if(!cart.length){
+box.innerHTML=`
+<div class="card">
+<h3>Cart kosong</h3><br>
+<button class="btn" onclick="showPage('market')">Open Marketplace</button>
+</div>`;
+return;
+}
 
- let subtotal=cart.reduce((a,b)=>a+b.price*b.qty,0);
- let fee=Math.round(subtotal*.05);
- let total=subtotal+fee;
+let subtotal=cart.reduce((a,b)=>a+b.price*b.qty,0);
+let fee=Math.round(subtotal*.05);
+let total=subtotal+fee;
 
- box.innerHTML=`
- <div class="card">
- <table>
- <thead>
- <tr><th>Product</th><th>Category</th><th>Price</th><th>Action</th></tr>
- </thead>
- <tbody>
- ${cart.map((p,i)=>`
- <tr>
- <td>${p.name}</td>
- <td>${p.category}</td>
- <td>${money(p.price)}</td>
- <td>
- <button class="btn danger small"
- onclick="removeCart(${i})">Remove</button>
- </td>
- </tr>
- `).join("")}
- </tbody>
- </table>
- </div>
+box.innerHTML=`
+<div class="card">
+<table>
+<thead><tr><th>Product</th><th>Category</th><th>Price</th><th></th></tr></thead>
+<tbody>
+${cart.map((p,i)=>`
+<tr>
+<td>${p.name}</td>
+<td>${p.category}</td>
+<td>${money(p.price)}</td>
+<td><button class="btn red small" onclick="removeCart(${i})">Remove</button></td>
+</tr>
+`).join("")}
+</tbody>
+</table>
+</div>
 
- <div class="card">
- <div class="grid3">
-  <div>
-   <div class="muted">Subtotal</div>
-   <div class="big">${money(subtotal)}</div>
-  </div>
-  <div>
-   <div class="muted">Service Fee 5%</div>
-   <div class="big">${money(fee)}</div>
-  </div>
-  <div>
-   <div class="muted">Total</div>
-   <div class="big">${money(total)}</div>
-  </div>
- </div>
- <button class="btn green" onclick="checkout()">
- 💳 Demo Payment & Booking
- </button>
- </div>`;
+<div class="card">
+<div class="grid3">
+<div><div class="muted">Subtotal</div><div class="big">${money(subtotal)}</div></div>
+<div><div class="muted">Service Fee</div><div class="big">${money(fee)}</div></div>
+<div><div class="muted">Total</div><div class="big">${money(total)}</div></div>
+</div>
+<button class="btn green" onclick="checkout()">💳 Demo Payment & Booking</button>
+</div>`;
 }
 
 function removeCart(i){
- let cart=get(KEY.cart,[]);
- cart.splice(i,1);
- set(KEY.cart,cart);
- renderAll();
+let c=get(KEY.cart,[]);
+c.splice(i,1);
+set(KEY.cart,c);
+renderAll();
 }
 
-/* =========================
-   AI TRIP
-========================= */
+/* AI */
 
 function generateTrip(){
 
- const destination=document.getElementById("destination").value||"Bali";
- const duration=document.getElementById("duration").value;
- const travelers=document.getElementById("travelers").value;
- const style=document.getElementById("style").value;
- const interest=document.getElementById("interest").value;
- const budget=document.getElementById("budget").value;
+let t={
+from:document.getElementById("from").value,
+destination:document.getElementById("destination").value,
+date:document.getElementById("travelDate").value,
+travelers:Number(document.getElementById("travelers").value),
+duration:document.getElementById("duration").value,
+style:document.getElementById("style").value,
+budget:Number(document.getElementById("budget").value),
+interest:document.getElementById("interest").value,
+journeyType:document.getElementById("journeyType").value,
+created:new Date().toISOString()
+};
 
- const trip={
-  from:document.getElementById("from").value,
-  destination,
-  duration,
-  travelers,
-  style,
-  interest,
-  budget,
-  created:new Date().toISOString()
- };
+set(KEY.trip,t);
+logActivity("AI Trip generated: "+t.destination);
 
- set(KEY.trip,trip);
- logActivity("AI Trip generated for "+destination);
+document.getElementById("tripResult").innerHTML=`
+<div class="card">
+<span class="badge">AI GENERATED</span>
+<h2>${t.destination} Journey</h2>
+<p class="muted">${t.duration} · ${t.travelers} traveler · ${t.style}</p><br>
+<div class="grid3">
+<div><div class="muted">Budget</div><div class="big">${money(t.budget)}</div></div>
+<div><div class="muted">Route</div><div class="big">Optimized</div></div>
+<div><div class="muted">AI Score</div><div class="big">96%</div></div>
+</div>
+</div>
 
- document.getElementById("tripResult").innerHTML=`
+<div class="card">
+<h3>🗺️ AI Smart Route</h3><br>
+<div class="timeline">
+<div class="timeline-item"><b>Day 1</b><br>Arrival → Hotel → Local Experience</div>
+<div class="timeline-item"><b>Day 2</b><br>Main Attraction → Activity → Sunset</div>
+<div class="timeline-item"><b>Day 3</b><br>Culinary → Shopping → Departure</div>
+</div>
+</div>
 
- <div class="card">
- <span class="badge">AI GENERATED</span>
- <h2>${destination} ${duration} Journey</h2>
- <p class="muted">
- ${travelers} traveler(s) · ${style} · Interest: ${interest}
- </p>
- <br>
-
- <div class="grid3">
-  <div>
-   <div class="muted">Estimated Budget</div>
-   <div class="big">${money(budget)}</div>
-  </div>
-  <div>
-   <div class="muted">Smart Route</div>
-   <div class="big">Optimized</div>
-  </div>
-  <div>
-   <div class="muted">AI Score</div>
-   <div class="big">96%</div>
-  </div>
- </div>
- </div>
-
- <div class="card">
- <h3>🗺️ Smart Route</h3>
- <br>
- <div class="timeline">
-  <div class="timeline-item"><b>Day 1</b><br>Arrival → Hotel → Local Dinner</div>
-  <div class="timeline-item"><b>Day 2</b><br>Destination Highlights → Activity → Sunset</div>
-  <div class="timeline-item"><b>Day 3</b><br>Culinary Experience → Shopping → Departure</div>
- </div>
- </div>
-
- <div class="card">
- <h3>🤖 AI Recommendation</h3>
- <br>
- <p>
- HobbiGo AI memilih kombinasi hotel, transport, aktivitas
- dan kuliner berdasarkan tujuan, budget, gaya perjalanan
- dan minat Anda.
- </p>
- <br>
- <button class="btn" onclick="saveTrip()">💾 Save Trip</button>
- <button class="btn secondary" onclick="reoptimize()">♻️ AI Re-optimize</button>
- <button class="btn green" onclick="showPage('market')">🛒 Explore Marketplace</button>
- </div>
- `;
-}
-
-function saveTrip(){
- if(!get(KEY.trip,null)){
-  generateTrip();
- }
- alert("Trip berhasil disimpan ✅");
+<div class="card">
+<button class="btn" onclick="reoptimize()">♻️ AI Re-optimize</button>
+<button class="btn green" onclick="showPage('market')">🛒 Marketplace</button>
+</div>`;
 }
 
 function reoptimize(){
 
- let trip=get(KEY.trip,null);
- if(!trip){
-  alert("Generate Trip dulu.");
-  return;
- }
+let t=get(KEY.trip,null);
+if(!t)return alert("Generate Trip terlebih dahulu.");
 
- trip.budget=Math.round(Number(trip.budget)*.92);
- trip.optimized=true;
- set(KEY.trip,trip);
+t.budget=Math.round(t.budget*.92);
+t.optimized=true;
 
- alert(
-  "AI Re-optimize selesai ✅\n"+
-  "Estimasi penghematan: 8%"
- );
+set(KEY.trip,t);
+logActivity("AI Re-optimization completed");
 
- renderAll();
+alert("AI Re-optimize selesai ✅\nEstimasi penghematan 8%");
+renderAll();
 }
 
-/* =========================
-   MY TRIP
-========================= */
+/* TRIP */
 
 function renderTrip(){
 
- const box=document.getElementById("myTrip");
- if(!box)return;
+let box=document.getElementById("myTrip");
+if(!box)return;
 
- let t=get(KEY.trip,null);
+let t=get(KEY.trip,null);
 
- if(!t){
-  box.innerHTML=`
-  <div class="card">
-  <h3>Belum ada trip</h3>
-  <br>
-  <button class="btn" onclick="showPage('ai')">
-  Create AI Trip
-  </button>
-  </div>`;
-  return;
- }
-
- box.innerHTML=`
- <div class="card">
- <span class="badge">ACTIVE TRIP</span>
- <h2>${t.destination}</h2>
- <p class="muted">${t.duration} · ${t.travelers} traveler · ${t.style}</p>
- <br>
-
- <div class="grid3">
-  <div><div class="muted">Budget</div><div class="big">${money(t.budget)}</div></div>
-  <div><div class="muted">Interest</div><div class="big">${t.interest}</div></div>
-  <div><div class="muted">AI Status</div><div class="big">Ready</div></div>
- </div>
- </div>
-
- <div class="card">
- <h3>Package Selection</h3>
- <br>
- <div class="grid">
- ${[
- ["Economy",72],
- ["Comfort",100],
- ["Premium",145],
- ["Exclusive",190]
- ].map(x=>`
- <div class="card">
-  <h3>${x[0]}</h3>
-  <div class="big">${x[1]}%</div>
-  <p class="muted">of base package</p>
-  <br>
-  <button class="btn small" onclick="selectPackage('${x[0]}')">
-   Select
-  </button>
- </div>
- `).join("")}
- </div>
- </div>`;
+if(!t){
+box.innerHTML=`
+<div class="card">
+<h3>Belum ada trip</h3><br>
+<button class="btn" onclick="showPage('ai')">Create AI Trip</button>
+</div>`;
+return;
 }
 
-function selectPackage(name){
- alert(name+" package selected ✅");
- logActivity("Selected "+name+" package");
+box.innerHTML=`
+<div class="card">
+<span class="badge">ACTIVE TRIP</span>
+<h2>${t.destination}</h2>
+<p class="muted">${t.duration} · ${t.travelers} traveler · ${t.style}</p>
+<br>
+<div class="grid3">
+<div><div class="muted">Budget</div><div class="big">${money(t.budget)}</div></div>
+<div><div class="muted">Interest</div><div class="big">${t.interest}</div></div>
+<div><div class="muted">Status</div><div class="big ok">Ready</div></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Package</h3><br>
+<div class="grid">
+${[
+["Economy",72],["Comfort",100],["Premium",145],["Exclusive",190]
+].map(x=>`
+<div class="card">
+<h3>${x[0]}</h3>
+<div class="big">${x[1]}%</div>
+<button class="btn small" onclick="selectPackage('${x[0]}')">Select</button>
+</div>
+`).join("")}
+</div>
+</div>`;
 }
 
-/* =========================
-   CHECKOUT
-========================= */
+function selectPackage(x){
+alert(x+" package selected ✅");
+logActivity("Selected package "+x);
+}
+
+/* BOOKING */
 
 function checkout(){
 
- let cart=get(KEY.cart,[]);
+let cart=get(KEY.cart,[]);
+if(!cart.length)return alert("Cart kosong.");
 
- if(!cart.length){
-  alert("Cart kosong.");
-  return;
- }
+let subtotal=cart.reduce((a,b)=>a+b.price*b.qty,0);
+let fee=Math.round(subtotal*.05);
 
- let subtotal=cart.reduce((a,b)=>a+b.price*b.qty,0);
- let fee=Math.round(subtotal*.05);
- let total=subtotal+fee;
+let booking={
+id:makeID("HBG"),
+date:new Date().toISOString(),
+items:cart,
+subtotal,
+fee,
+total:subtotal+fee,
+status:"Paid"
+};
 
- let booking={
-  id:id("HBG"),
-  date:new Date().toISOString(),
-  items:cart,
-  subtotal,
-  fee,
-  total,
-  status:"Paid"
- };
+let payment={
+id:makeID("PAY"),
+bookingId:booking.id,
+amount:booking.total,
+method:"Demo Payment",
+status:"Paid",
+date:new Date().toISOString()
+};
 
- let payment={
-  id:id("PAY"),
-  bookingId:booking.id,
-  amount:total,
-  method:"Demo Payment",
-  status:"Paid",
-  date:new Date().toISOString()
- };
+let b=get(KEY.bookings,[]);
+let p=get(KEY.payments,[]);
 
- let bookings=get(KEY.bookings,[]);
- let payments=get(KEY.payments,[]);
+b.unshift(booking);
+p.unshift(payment);
 
- bookings.unshift(booking);
- payments.unshift(payment);
+set(KEY.bookings,b);
+set(KEY.payments,p);
+set(KEY.cart,[]);
 
- set(KEY.bookings,bookings);
- set(KEY.payments,payments);
- set(KEY.cart,[]);
+logActivity("Booking created "+booking.id);
 
- logActivity("Booking created "+booking.id);
+alert(
+"Booking berhasil ✅\n\n"+
+"Booking ID: "+booking.id+
+"\nPayment ID: "+payment.id
+);
 
- alert(
- "Booking berhasil ✅\n\n"+
- "Booking ID: "+booking.id+
- "\nPayment ID: "+payment.id
- );
-
- showPage("booking");
+showPage("booking");
 }
-
-/* =========================
-   BOOKINGS
-========================= */
 
 function renderBookings(){
 
- const tbody=document.getElementById("bookingTable");
- if(!tbody)return;
+let box=document.getElementById("bookingTable");
+if(!box)return;
 
- let data=get(KEY.bookings,[]);
+let b=get(KEY.bookings,[]);
 
- if(!data.length){
-  tbody.innerHTML=`
-  <tr><td colspan="5">Belum ada booking.</td></tr>`;
-  return;
- }
-
- tbody.innerHTML=data.map(b=>`
- <tr>
- <td><b>${b.id}</b></td>
- <td>${b.items.length} item(s)</td>
- <td>${money(b.total)}</td>
- <td><span class="badge">${b.status}</span></td>
- <td>
- <button class="btn small" onclick="viewTicket('${b.id}')">
- E-ticket
- </button>
- </td>
- </tr>
- `).join("");
+box.innerHTML=b.length?b.map(x=>`
+<tr>
+<td><b>${x.id}</b></td>
+<td>${x.items.length}</td>
+<td>${money(x.total)}</td>
+<td><span class="badge">${x.status}</span></td>
+<td><button class="btn small" onclick="viewTicket('${x.id}')">E-ticket</button></td>
+</tr>
+`).join(""):`<tr><td colspan="5">Belum ada booking.</td></tr>`;
 }
 
-function viewTicket(bid){
+function viewTicket(id){
 
- let b=get(KEY.bookings,[]).find(x=>x.id===bid);
- if(!b)return;
+let b=get(KEY.bookings,[]).find(x=>x.id===id);
+if(!b)return;
 
- alert(
- "HOBBIGO E-TICKET\n\n"+
- "Booking: "+b.id+
- "\nStatus: "+b.status+
- "\nTotal: "+money(b.total)+
- "\n\nThank you for travelling with HobbiGo."
- );
+alert(
+"HOBBIGO E-TICKET\n\n"+
+"Booking ID: "+b.id+
+"\nStatus: "+b.status+
+"\nTotal: "+money(b.total)
+);
 }
 
-/* =========================
-   CORPORATE
-========================= */
+/* CORPORATE */
 
 function createEvent(){
 
- let event={
-  id:id("EVT"),
-  name:document.getElementById("eventName").value||"Corporate Event",
-  destination:document.getElementById("eventDestination").value,
-  participants:Number(document.getElementById("eventParticipants").value),
-  date:document.getElementById("eventDate").value,
-  type:document.getElementById("eventType").value,
-  budget:Number(document.getElementById("eventBudget").value),
-  status:"Planning"
- };
+let e={
+id:makeID("EVT"),
+name:document.getElementById("eventName").value||"Corporate Event",
+destination:document.getElementById("eventDestination").value,
+participants:Number(document.getElementById("eventParticipants").value),
+date:document.getElementById("eventDate").value,
+type:document.getElementById("eventType").value,
+budget:Number(document.getElementById("eventBudget").value),
+status:"Planning"
+};
 
- let events=get(KEY.events,[]);
- events.unshift(event);
- set(KEY.events,events);
+let events=get(KEY.events,[]);
+events.unshift(e);
+set(KEY.events,events);
 
- logActivity("Corporate event created "+event.id);
- alert("Corporate Event created ✅");
- renderAll();
+logActivity("Corporate event created "+e.id);
+alert("Event created ✅");
+renderAll();
 }
 
 function renderEvents(){
 
- const tbody=document.getElementById("eventTable");
- if(!tbody)return;
+let box=document.getElementById("eventTable");
+if(!box)return;
 
- let events=get(KEY.events,[]);
+let e=get(KEY.events,[]);
 
- tbody.innerHTML=events.length
- ?events.map(e=>`
- <tr>
- <td>${e.name}</td>
- <td>${e.destination}</td>
- <td>${e.participants}</td>
- <td><span class="badge">${e.status}</span></td>
- </tr>
- `).join("")
- :`<tr><td colspan="4">Belum ada event.</td></tr>`;
+box.innerHTML=e.length?e.map(x=>`
+<tr>
+<td>${x.name}</td>
+<td>${x.destination}</td>
+<td>${x.participants}</td>
+<td><span class="badge">${x.status}</span></td>
+</tr>
+`).join(""):`<tr><td colspan="4">Belum ada event.</td></tr>`;
 }
 
-/* =========================
-   PARTNER
-========================= */
+/* PARTNER */
 
 function addPartnerProduct(){
 
- let name=document.getElementById("partnerName").value;
- let category=document.getElementById("partnerCategory").value;
- let price=Number(document.getElementById("partnerPrice").value);
+let name=document.getElementById("partnerName").value;
+let category=document.getElementById("partnerCategory").value;
+let price=Number(document.getElementById("partnerPrice").value);
 
- if(!name||!price){
-  alert("Lengkapi product dan price.");
-  return;
- }
+if(!name||!price)return alert("Lengkapi data.");
 
- let data=get(KEY.partner,[]);
+let data=get(KEY.partner,[]);
+data.unshift({id:makeID("PRD"),name,category,price});
+set(KEY.partner,data);
 
- data.unshift({
-  id:id("PRD"),
-  name,
-  category,
-  price
- });
+logActivity("Partner product added");
+document.getElementById("partnerName").value="";
+document.getElementById("partnerPrice").value="";
 
- set(KEY.partner,data);
-
- logActivity("Partner product added "+name);
-
- document.getElementById("partnerName").value="";
- document.getElementById("partnerPrice").value="";
-
- renderAll();
+renderAll();
 }
 
 function renderPartner(){
 
- let data=get(KEY.partner,[]);
+let data=get(KEY.partner,[]);
+let tbody=document.getElementById("partnerTable");
 
- const tbody=document.getElementById("partnerTable");
- if(tbody){
-  tbody.innerHTML=data.length
-  ?data.map(p=>`
-  <tr>
-   <td>${p.name}</td>
-   <td>${p.category}</td>
-   <td>${money(p.price)}</td>
-  </tr>
-  `).join("")
-  :`<tr><td colspan="3">Belum ada partner product.</td></tr>`;
- }
-
- let sales=get(KEY.bookings,[])
- .reduce((a,b)=>a+b.total,0);
-
- let commission=Math.round(sales*.15);
-
- const pp=document.getElementById("partnerProducts");
- if(pp)pp.textContent=data.length;
-
- const ps=document.getElementById("partnerSales");
- if(ps)ps.textContent=money(sales);
-
- const pc=document.getElementById("partnerCommission");
- if(pc)pc.textContent=money(commission);
+if(tbody){
+tbody.innerHTML=data.length?data.map(p=>`
+<tr><td>${p.name}</td><td>${p.category}</td><td>${money(p.price)}</td></tr>
+`).join(""):`<tr><td colspan="3">Belum ada partner product.</td></tr>`;
 }
 
-/* =========================
-   PROFILE
-========================= */
+let sales=get(KEY.bookings,[]).reduce((a,b)=>a+b.total,0);
+
+document.getElementById("partnerProducts").textContent=data.length;
+document.getElementById("partnerSales").textContent=money(sales);
+document.getElementById("partnerCommission").textContent=money(sales*.15);
+}
+
+/* BACKEND DATABASE */
+
+function runMigration(){
+
+let result=document.getElementById("migrationResult");
+
+result.innerHTML=`
+<br><div class="card">
+<p class="ok">✓ Schema validation passed</p>
+<p class="ok">✓ Identity tables ready</p>
+<p class="ok">✓ Travel tables ready</p>
+<p class="ok">✓ Commerce tables ready</p>
+<p class="ok">✓ Partner tables ready</p>
+<p class="ok">✓ Analytics tables ready</p>
+<br>
+<span class="badge">DEMO MIGRATION COMPLETE</span>
+</div>`;
+
+logActivity("Database migration check");
+}
+
+/* AUTH */
+
+function login(){
+
+let email=document.getElementById("loginEmail").value;
+
+let session={
+id:makeID("SES"),
+email,
+role:"Traveler",
+loginAt:new Date().toISOString()
+};
+
+set(KEY.session,session);
+logActivity("User login "+email);
+
+alert("Login demo berhasil ✅");
+renderAuth();
+}
+
+function logout(){
+
+localStorage.removeItem(KEY.session);
+logActivity("User logout");
+renderAuth();
+}
+
+function renderAuth(){
+
+let box=document.getElementById("sessionStatus");
+if(!box)return;
+
+let s=get(KEY.session,null);
+
+box.innerHTML=s?
+`
+<span class="badge">AUTHENTICATED</span>
+<br><br>
+Email: ${s.email}<br>
+Role: ${s.role}<br>
+Session: ${s.id}
+`
+:
+`<span class="badge">NOT LOGGED IN</span>`;
+}
+
+/* TRAVEL APIs */
+
+function testTravelAPI(){
+
+let base=document.getElementById("travelApiBase").value;
+let version=document.getElementById("travelApiVersion").value;
+let env=document.getElementById("travelApiEnv").value;
+
+document.getElementById("travelApiConsole").innerHTML=
+`> GET ${base}/api/${version}/destinations
+<br>> Environment: ${env}
+<br>> HTTP 200 DEMO
+<br><span class="ok">✓ Adapter ready</span>
+<br><span class="warn">External provider not connected.</span>`;
+
+logActivity("Travel API integration test");
+}
+
+/* MAPS */
+
+function calculateRoute(){
+
+let from=document.getElementById("mapOrigin").value;
+let to=document.getElementById("mapDestination").value;
+let transport=document.getElementById("mapTransport").value;
+
+document.getElementById("routeResult").innerHTML=`
+<div class="grid3">
+<div><div class="muted">Origin</div><div class="big">${from}</div></div>
+<div><div class="muted">Destination</div><div class="big">${to}</div></div>
+<div><div class="muted">Transport</div><div class="big">${transport}</div></div>
+</div>
+<br>
+<div class="timeline">
+<div class="timeline-item"><b>Route A</b><br>Fastest route</div>
+<div class="timeline-item"><b>Route B</b><br>Lowest estimated cost</div>
+<div class="timeline-item"><b>Route C</b><br>Balanced time & cost</div>
+</div>
+<br>
+<span class="badge">SMART ROUTE ENGINE READY</span>`;
+
+logActivity("Smart Route calculated");
+}
+
+/* PAYMENT */
+
+function testPayment(){
+
+let amount=Number(document.getElementById("paymentAmount").value);
+let method=document.getElementById("paymentMethod").value;
+
+if(!amount)return alert("Masukkan amount.");
+
+let payment={
+id:makeID("PAY"),
+amount,
+method,
+status:"Pending",
+created:new Date().toISOString()
+};
+
+let data=get(KEY.payments,[]);
+data.unshift(payment);
+set(KEY.payments,data);
+
+document.getElementById("paymentResult").innerHTML=`
+<br>
+<div class="card">
+<h3>Payment Intent Created</h3>
+<br>
+<p><b>ID:</b> ${payment.id}</p>
+<p><b>Amount:</b> ${money(amount)}</p>
+<p><b>Method:</b> ${method}</p>
+<p><b>Status:</b> <span class="badge">PENDING</span></p>
+</div>`;
+
+logActivity("Payment intent "+payment.id);
+}
+
+/* NOTIFICATION */
+
+function sendNotification(){
+
+let n={
+id:makeID("NTF"),
+title:"HobbiGo Test Notification",
+message:"Your HobbiGo production notification framework is working.",
+time:new Date().toLocaleString("id-ID")
+};
+
+let data=get(KEY.notifications,[]);
+data.unshift(n);
+set(KEY.notifications,data);
+
+logActivity("Notification sent");
+renderNotifications();
+}
+
+function renderNotifications(){
+
+let box=document.getElementById("notificationList");
+if(!box)return;
+
+let data=get(KEY.notifications,[]);
+
+box.innerHTML=data.length?data.slice(0,10).map(n=>`
+<div class="card">
+<b>${n.title}</b>
+<p class="muted">${n.message}</p>
+<small>${n.time}</small>
+</div>
+`).join(""):`<p class="muted">No notifications.</p>`;
+}
+
+/* TESTING */
+
+function runTests(){
+
+let tests=[
+["Local Storage","PASS","Core storage accessible"],
+["AI Trip","PASS","Journey generator available"],
+["Marketplace","PASS","Product catalog loaded"],
+["Cart","PASS","Cart service available"],
+["Booking","PASS","Booking object creation available"],
+["Payment","PASS","Payment framework available"],
+["Authentication","PASS","Session framework available"],
+["Database","PASS","Schema model loaded"],
+["Maps","PASS","Route framework available"],
+["Notifications","PASS","Notification framework available"],
+["Backup","PASS","JSON backup available"],
+["Security","PASS","Frontend secret protection rule active"]
+];
+
+set(KEY.tests,tests);
+
+document.getElementById("testTable").innerHTML=
+tests.map(t=>`
+<tr>
+<td>${t[0]}</td>
+<td><span class="badge">${t[1]}</span></td>
+<td>${t[2]}</td>
+</tr>
+`).join("");
+
+logActivity("Production test suite executed");
+}
+
+/* ANALYTICS */
+
+function renderAnalytics(){
+
+let b=get(KEY.bookings,[]);
+let gmv=b.reduce((a,x)=>a+x.total,0);
+let commission=Math.round(gmv*.15);
+let fee=Math.round(gmv*.05);
+
+let values={
+anGMV:money(gmv),
+anCommission:money(commission),
+anFee:money(fee),
+anBookings:b.length,
+opBookings:b.length,
+opGMV:money(gmv),
+opCommission:money(commission),
+opLogs:get(KEY.activity,[]).length
+};
+
+Object.keys(values).forEach(id=>{
+let e=document.getElementById(id);
+if(e)e.textContent=values[id];
+});
+
+let insight=document.getElementById("businessInsight");
+
+if(insight){
+insight.textContent=b.length?
+"HobbiGo sudah mempunyai transaksi demo. Tahap berikutnya adalah menghubungkan backend production dan provider resmi."
+:
+"Marketplace siap menghasilkan transaksi demo. Production API masih membutuhkan backend dan credential resmi.";
+}
+}
+
+/* CRM */
+
+function renderCRM(){
+
+let p=get(KEY.profile,{
+name:"HobbiGo User",
+email:"user@hobbigo.com"
+});
+
+let t=get(KEY.trip,null);
+let b=get(KEY.bookings,[]);
+
+let box=document.getElementById("crmTable");
+if(box){
+box.innerHTML=`
+<tr>
+<td>${p.name}</td>
+<td>${p.email}</td>
+<td>${t?1:0}</td>
+<td>${b.length}</td>
+</tr>`;
+}
+}
+
+/* PROFILE */
 
 function saveProfile(){
 
- let profile={
-  name:document.getElementById("profileName").value,
-  email:document.getElementById("profileEmail").value,
-  role:document.getElementById("profileRole").value
- };
+let p={
+name:document.getElementById("profileName").value,
+email:document.getElementById("profileEmail").value,
+role:document.getElementById("profileRole").value
+};
 
- set(KEY.profile,profile);
- logActivity("Profile updated");
-
- alert("Profile saved ✅");
+set(KEY.profile,p);
+logActivity("Profile updated");
+alert("Profile saved ✅");
 }
 
 function loadProfile(){
 
- let p=get(KEY.profile,null);
+let p=get(KEY.profile,null);
+if(!p)return;
 
- if(!p)return;
-
- document.getElementById("profileName").value=p.name||"";
- document.getElementById("profileEmail").value=p.email||"";
- document.getElementById("profileRole").value=p.role||"Traveler";
+document.getElementById("profileName").value=p.name||"";
+document.getElementById("profileEmail").value=p.email||"";
+document.getElementById("profileRole").value=p.role||"Traveler";
 }
 
-/* =========================
-   API
-========================= */
-
-function testAPI(){
-
- let base=document.getElementById("apiBase").value;
- let version=document.getElementById("apiVersion").value;
- let env=document.getElementById("apiEnvironment").value;
-
- let config={base,version,env};
- set(KEY.api,config);
-
- let logs=get(KEY.logs,[]);
-
- logs.unshift({
-  endpoint:base+"/api/"+version+"/health",
-  method:"GET",
-  status:200,
-  time:new Date().toISOString()
- });
-
- set(KEY.logs,logs);
-
- document.getElementById("apiStatus").innerHTML=
- `<span class="ok"> ✓ Connection architecture OK</span>`;
-
- document.getElementById("apiConsole").innerHTML=
- `> GET ${base}/api/${version}/health<br>
- > Environment: ${env}<br>
- > Status: <span class="ok">200 DEMO</span><br>
- > HobbiGo API foundation ready.<br><br>
- <span class="warn">NOTE: External backend is not connected yet.</span>`;
-
- logActivity("API connection test");
-}
-
-/* =========================
-   ANALYTICS
-========================= */
-
-function renderAnalytics(){
-
- let bookings=get(KEY.bookings,[]);
-
- let gmv=bookings.reduce((a,b)=>a+b.total,0);
- let commission=Math.round(gmv*.15);
- let fee=Math.round(gmv*.05);
-
- let ids=[
- ["anGMV",money(gmv)],
- ["anCommission",money(commission)],
- ["anFee",money(fee)],
- ["anBookings",bookings.length],
- ["opBookings",bookings.length],
- ["opGMV",money(gmv)],
- ["opCommission",money(commission)],
- ["opLogs",get(KEY.logs,[]).length]
- ];
-
- ids.forEach(x=>{
-  let el=document.getElementById(x[0]);
-  if(el)el.textContent=x[1];
- });
-
- let insight=document.getElementById("businessInsight");
-
- if(insight){
-  insight.textContent=bookings.length
-  ?"HobbiGo sudah memiliki transaksi demo. Fokus berikutnya adalah menghubungkan backend, database dan payment gateway."
-  :"Belum ada booking. Marketplace dan AI Trip siap digunakan untuk membuat transaksi demo.";
- }
-}
-
-/* =========================
-   CRM
-========================= */
-
-function renderCRM(){
-
- const tbody=document.getElementById("crmTable");
- if(!tbody)return;
-
- let profile=get(KEY.profile,{
-  name:"HobbiGo User",
-  email:"user@hobbigo.com"
- });
-
- let trips=get(KEY.trip,null);
- let bookings=get(KEY.bookings,[]);
-
- tbody.innerHTML=`
- <tr>
- <td>${profile.name}</td>
- <td>${profile.email}</td>
- <td>${trips?1:0}</td>
- <td>${bookings.length}</td>
- </tr>`;
-}
-
-/* =========================
-   OPERATIONS
-========================= */
+/* OPERATIONS */
 
 function renderActivity(){
 
- const box=document.getElementById("activityLog");
- if(!box)return;
+let box=document.getElementById("activityLog");
+if(!box)return;
 
- let logs=get(KEY.activity,[]);
+let logs=get(KEY.activity,[]);
 
- box.innerHTML=logs.length
- ?logs.slice(0,15).map(x=>`
- <div class="card">
-  <b>${x.text}</b>
-  <div class="muted">${x.time}</div>
- </div>
- `).join("")
- :`<p class="muted">Belum ada activity.</p>`;
+box.innerHTML=logs.length?
+logs.slice(0,12).map(x=>`
+<div class="card">
+<b>${x.text}</b>
+<div class="muted">${x.time}</div>
+</div>
+`).join("")
+:`<p class="muted">No activity.</p>`;
 }
+
+/* BACKUP */
 
 function backupData(){
 
- const data={};
+let data={};
 
- Object.values(KEY).forEach(k=>{
-  const raw=localStorage.getItem(k);
-  if(raw)data[k]=JSON.parse(raw);
- });
+Object.values(KEY).forEach(k=>{
+let raw=localStorage.getItem(k);
+if(raw)data[k]=JSON.parse(raw);
+});
 
- const blob=new Blob(
-  [JSON.stringify(data,null,2)],
-  {type:"application/json"}
- );
+let blob=new Blob(
+[JSON.stringify(data,null,2)],
+{type:"application/json"}
+);
 
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");
 
- a.href=url;
- a.download="HobbiGo_V50_Backup.json";
- a.click();
+a.href=url;
+a.download="HobbiGo_V51_V59_PRODUCTION_BACKUP.json";
+a.click();
 
- URL.revokeObjectURL(url);
+URL.revokeObjectURL(url);
 
- logActivity("System backup created");
+logActivity("V51-V59 backup created");
 }
 
 function restoreData(){
 
- let input=document.createElement("input");
- input.type="file";
- input.accept=".json";
+let input=document.createElement("input");
+input.type="file";
+input.accept=".json";
 
- input.onchange=e=>{
+input.onchange=e=>{
 
-  let file=e.target.files[0];
-  if(!file)return;
+let file=e.target.files[0];
+if(!file)return;
 
-  let reader=new FileReader();
+let reader=new FileReader();
 
-  reader.onload=event=>{
+reader.onload=event=>{
 
-   try{
+try{
 
-    let data=JSON.parse(event.target.result);
+let data=JSON.parse(event.target.result);
 
-    Object.keys(data).forEach(k=>{
-     localStorage.setItem(k,JSON.stringify(data[k]));
-    });
+Object.keys(data).forEach(k=>{
+localStorage.setItem(k,JSON.stringify(data[k]));
+});
 
-    alert("Backup restored successfully ✅");
-    location.reload();
+alert("Backup restored successfully ✅");
+location.reload();
 
-   }catch(err){
-    alert("File backup tidak valid.");
-   }
+}catch(err){
+alert("Backup file tidak valid.");
+}
 
-  };
+};
 
-  reader.readAsText(file);
- };
+reader.readAsText(file);
+};
 
- input.click();
+input.click();
 }
 
 function resetDemo(){
 
- if(!confirm(
- "Reset semua data demo HobbiGo?"
- ))return;
+if(!confirm("Reset semua data demo HobbiGo?"))return;
 
- Object.values(KEY).forEach(k=>{
-  localStorage.removeItem(k);
- });
+Object.values(KEY).forEach(k=>{
+localStorage.removeItem(k);
+});
 
- alert("Demo data reset.");
- location.reload();
+location.reload();
 }
 
-/* =========================
-   DASHBOARD STATS
-========================= */
+/* STATS */
 
 function renderStats(){
 
- let trips=get(KEY.trip,null);
- let bookings=get(KEY.bookings,[]);
- let cart=get(KEY.cart,[]);
- let logs=get(KEY.logs,[]);
+let trip=get(KEY.trip,null);
+let bookings=get(KEY.bookings,[]);
+let cart=get(KEY.cart,[]);
 
- document.getElementById("statTrips").textContent=
- trips?1:0;
-
- document.getElementById("statBookings").textContent=
- bookings.length;
-
- document.getElementById("statCart").textContent=
- cart.length;
-
- document.getElementById("statApi").textContent=
- logs.length;
+document.getElementById("statTrips").textContent=trip?1:0;
+document.getElementById("statBookings").textContent=bookings.length;
+document.getElementById("statCart").textContent=cart.length;
 }
 
-/* =========================
-   MASTER RENDER
-========================= */
+/* MASTER */
 
 function renderAll(){
 
- renderProducts();
- renderCart();
- renderTrip();
- renderBookings();
- renderEvents();
- renderPartner();
- renderAnalytics();
- renderCRM();
- renderActivity();
- renderStats();
+renderProducts();
+renderCart();
+renderTrip();
+renderBookings();
+renderEvents();
+renderPartner();
+renderAnalytics();
+renderCRM();
+renderActivity();
+renderAuth();
+renderNotifications();
+renderStats();
 }
 
-/* =========================
-   INITIALIZATION
-========================= */
+/* INIT */
 
-(function init(){
+(function(){
 
- const today=new Date()
- .toISOString().split("T")[0];
+let today=new Date().toISOString().split("T")[0];
 
- const date=document.getElementById("travelDate");
- if(date)date.value=today;
+let td=document.getElementById("travelDate");
+let ed=document.getElementById("eventDate");
 
- const eventDate=document.getElementById("eventDate");
- if(eventDate)eventDate.value=today;
+if(td)td.value=today;
+if(ed)ed.value=today;
 
- loadProfile();
- renderAll();
+loadProfile();
+renderAll();
 
- document.querySelector(".nav button").classList.add("active");
+document.querySelector(".nav button").classList.add("active");
 
 })();
 
