@@ -2,296 +2,1064 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>HobbiGo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo | AI Journey & Experience Marketplace</title>
 
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#f4f6f8;
-  color:#172033;
+:root {
+  --green: #087f5b;
+  --dark: #12372a;
+  --orange: #ff9f43;
+  --light: #f3f8f5;
+  --white: #ffffff;
+  --text: #24332c;
+  --muted: #6b7c72;
+  --border: #dce8e0;
 }
-
-header{
-  background:#172033;
-  color:white;
-  text-align:center;
-  padding:25px;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--light);
+  color: var(--text);
 }
-
-.logo{
-  font-size:30px;
-  font-weight:bold;
+header {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 12px #0000000d;
 }
-
-.container{
-  max-width:700px;
-  margin:auto;
-  padding:15px;
+.header-inner {
+  max-width: 1200px;
+  margin: auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-
-.card{
-  background:white;
-  padding:18px;
-  margin-bottom:15px;
-  border-radius:15px;
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  color: var(--green);
 }
-
-input{
-  width:100%;
-  padding:13px;
-  margin:8px 0 15px;
-  box-sizing:border-box;
-  border:1px solid #ccc;
-  border-radius:8px;
+.logo span { color: var(--orange); }
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
-
-button{
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border:0;
-  border-radius:9px;
-  background:#ff6b35;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+nav a {
+  text-decoration: none;
+  color: var(--dark);
+  font-size: 13px;
+  font-weight: bold;
+  padding: 8px;
 }
-
-.route,
-.product{
-  border:2px solid #ddd;
-  padding:15px;
-  margin:10px 0;
-  border-radius:12px;
+nav a:hover { color: var(--green); }
+.hero {
+  background: linear-gradient(120deg, #073b2c, #11956b);
+  color: white;
+  padding: 48px 20px;
 }
-
-.selected{
-  border-color:#ff6b35;
-  background:#fff4ef;
+.hero-inner {
+  max-width: 1150px;
+  margin: auto;
 }
-
-.price{
-  font-size:18px;
-  font-weight:bold;
-  color:#ff6b35;
+.hero h1 {
+  font-size: clamp(30px, 6vw, 52px);
+  margin: 0 0 12px;
+  line-height: 1.1;
 }
-
-.total{
-  background:#172033;
-  color:white;
-  padding:20px;
-  border-radius:12px;
-  margin-top:15px;
+.hero p {
+  line-height: 1.7;
+  max-width: 650px;
 }
-
-.totalNumber{
-  font-size:28px;
-  color:#ffb08d;
-  font-weight:bold;
+.badge {
+  display: inline-block;
+  background: #ffffff20;
+  border: 1px solid #ffffff50;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  margin-bottom: 15px;
 }
-
-.hidden{
-  display:none;
+.container {
+  max-width: 1150px;
+  padding: 22px 16px;
+  margin: auto;
+}
+.section {
+  margin: 24px 0;
+  scroll-margin-top: 90px;
+}
+.section h2 {
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+.subtitle {
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 16px;
+  box-shadow: 0 4px 16px #00000005;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+.field { margin-bottom: 12px; }
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d7e3da;
+  border-radius: 9px;
+  background: white;
+  font-size: 14px;
+  min-height: 43px;
+}
+textarea {
+  resize: vertical;
+  min-height: 75px;
+}
+button, .button {
+  border: none;
+  padding: 12px 16px;
+  background: var(--green);
+  color: white;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .button:hover { opacity: .88; }
+button.orange { background: var(--orange); color: #30230e; }
+button.secondary { background: #e6f3eb; color: var(--green); }
+button.danger { background: #b83232; }
+.card {
+  background: white;
+  border-radius: 15px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.card img {
+  width: 100%;
+  height: 155px;
+  object-fit: cover;
+  background: #dfeae3;
+}
+.card-body { padding: 15px; }
+.card h3 { margin: 0 0 8px; font-size: 17px; }
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.price {
+  color: var(--green);
+  font-weight: 900;
+  font-size: 17px;
+  margin: 12px 0;
+}
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 5px 8px;
+  background: #e7f5ec;
+  color: var(--green);
+  border-radius: 20px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.stat {
+  background: #ffffff18;
+  padding: 14px;
+  border-radius: 12px;
+}
+.stat strong { display: block; font-size: 21px; }
+.stat span { font-size: 12px; }
+.item-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+.item-line:last-child { border-bottom: 0; }
+.total {
+  font-size: 22px;
+  color: var(--green);
+  font-weight: 900;
+}
+.notice {
+  background: #fff6df;
+  border: 1px solid #f4d990;
+  color: #77551b;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+.success {
+  background: #e5f7eb;
+  border: 1px solid #a8dbb8;
+  color: #155d32;
+  padding: 14px;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.ticket {
+  border: 2px dashed var(--green);
+  padding: 20px;
+  border-radius: 16px;
+  background: #fafffb;
+}
+footer {
+  background: var(--dark);
+  color: white;
+  padding: 28px 18px;
+  margin-top: 40px;
+  text-align: center;
+  line-height: 1.8;
+}
+.small { font-size: 12px; color: var(--muted); }
+.hidden { display: none !important; }
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+@media(max-width:600px) {
+  .header-inner { align-items: flex-start; }
+  nav { gap: 2px; }
+  nav a { font-size: 12px; padding: 7px 5px; }
+  .hero { padding: 35px 18px; }
+  .panel { padding: 15px; }
+  .grid { grid-template-columns: 1fr; }
+  .item-line { align-items: flex-start; }
 }
 </style>
 </head>
 
-
 <body>
 
 <header>
-
-<div class="logo">✈️ HobbiGo</div>
-
-<div>
-AI Journey & Experience Marketplace
-</div>
-
+  <div class="header-inner">
+    <div class="logo">Hobbi<span>Go</span> 🌍</div>
+    <nav>
+      <a href="#planner">Trip Planner</a>
+      <a href="#packages">Packages</a>
+      <a href="#marketplace">Marketplace</a>
+      <a href="#cart">My Cart <span id="cartCount">0</span></a>
+      <a href="#booking">Booking</a>
+      <a href="#ticket">E-Ticket</a>
+    </nav>
+  </div>
 </header>
 
+<section class="hero">
+  <div class="hero-inner">
+    <span class="badge">AI JOURNEY & EXPERIENCE MARKETPLACE</span>
+    <h1>Your Journey.<br>Your Hobby. Your World.</h1>
+    <p>
+      Temukan destinasi, susun perjalanan dengan AI,
+      pilih hotel, restoran, aktivitas, transportasi,
+      lalu siapkan booking dalam satu platform.
+    </p>
+    <div class="actions">
+      <a class="button orange" href="#planner">Plan My Trip →</a>
+      <a class="button" href="#marketplace">Explore Marketplace</a>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><strong>AI</strong><span>Trip Planner</span></div>
+      <div class="stat"><strong>360°</strong><span>Travel Marketplace</span></div>
+      <div class="stat"><strong>1</strong><span>Journey Platform</span></div>
+    </div>
+  </div>
+</section>
 
-<div class="container">
+<main class="container">
 
+<section id="planner" class="section">
+  <h2>✈️ 1. AI Trip Planner</h2>
+  <p class="subtitle">Masukkan rencana perjalanan untuk membuat rekomendasi awal.</p>
+  <div class="panel">
+    <div class="grid">
+      <div class="field">
+        <label>Tujuan</label>
+        <input id="destination" value="Bali" placeholder="Contoh: Bali, Bandung, Jepang">
+      </div>
+      <div class="field">
+        <label>Tanggal Berangkat</label>
+        <input type="date" id="travelDate">
+      </div>
+      <div class="field">
+        <label>Jumlah Orang</label>
+        <input type="number" id="guests" value="2" min="1" max="100">
+      </div>
+      <div class="field">
+        <label>Durasi Perjalanan</label>
+        <select id="duration">
+          <option value="1">1 hari</option>
+          <option value="2" selected>2 hari 1 malam</option>
+          <option value="3">3 hari 2 malam</option>
+          <option value="4">4 hari 3 malam</option>
+          <option value="5">5 hari atau lebih</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Gaya Trip</label>
+        <select id="travelStyle">
+          <option>Economy</option>
+          <option selected>Comfort</option>
+          <option>Exclusive</option>
+          <option>Family</option>
+          <option>Corporate</option>
+          <option>Group</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Minat Utama</label>
+        <select id="interest">
+          <option>Pantai & Alam</option>
+          <option>Kuliner Lokal</option>
+          <option>Petualangan</option>
+          <option>Budaya</option>
+          <option>Hobi & Aktivitas</option>
+          <option>Meeting & Team Building</option>
+        </select>
+      </div>
+    </div>
+    <button onclick="generateTrip()">✨ Generate Trip</button>
+    <div id="tripResult" class="panel hidden"></div>
+  </div>
+</section>
 
-<div class="card">
+<section id="packages" class="section">
+  <h2>🧳 2. Smart Travel Packages</h2>
+  <p class="subtitle">Pilih paket sesuai gaya perjalanan. Harga merupakan contoh demo.</p>
+  <div class="grid" id="packageGrid"></div>
+</section>
 
-<h2>🌍 Trip Planner</h2>
+<section id="marketplace" class="section">
+  <h2>🌍 3. HobbiGo Marketplace</h2>
+  <p class="subtitle">Hotel, vila, kuliner, atraksi, aktivitas, transportasi dan rental.</p>
+  <div class="panel">
+    <div class="grid">
+      <div class="field">
+        <label>Cari Destinasi</label>
+        <input id="searchDestination" placeholder="Contoh: Bali" oninput="renderProducts()">
+      </div>
+      <div class="field">
+        <label>Kategori</label>
+        <select id="categoryFilter" onchange="renderProducts()">
+          <option value="All">Semua Kategori</option>
+          <option value="Hotel & Villa">Hotel & Villa</option>
+          <option value="Restaurant & Local Food">Restaurant & Local Food</option>
+          <option value="Attractions & Activities">Attractions & Activities</option>
+          <option value="Transport & Rental">Transport & Rental</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Urutkan Harga</label>
+        <select id="sortPrice" onchange="renderProducts()">
+          <option value="recommended">Rekomendasi</option>
+          <option value="low">Harga Termurah</option>
+          <option value="high">Harga Tertinggi</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div id="productGrid" class="grid"></div>
+</section>
 
-<input
-id="tujuan"
-placeholder="Tujuan, contoh: Bali"
->
+<section id="cart" class="section">
+  <h2>🛒 4. My Cart</h2>
+  <p class="subtitle">Periksa pilihan sebelum melanjutkan booking.</p>
+  <div class="panel" id="cartContent"></div>
+</section>
 
-<input
-id="tanggal"
-type="date"
->
+<section id="booking" class="section">
+  <h2>📋 5. Booking Details</h2>
+  <div class="panel">
+    <div id="bookingSummary" class="subtitle">Belum ada booking baru.</div>
+    <div class="grid">
+      <div class="field">
+        <label>Nama Pemesan</label>
+        <input id="customerName" placeholder="Nama lengkap">
+      </div>
+      <div class="field">
+        <label>Email atau Nomor WhatsApp</label>
+        <input id="customerContact" placeholder="Email atau nomor WhatsApp">
+      </div>
+      <div class="field">
+        <label>Tanggal Perjalanan</label>
+        <input id="bookingDate" type="date">
+      </div>
+      <div class="field">
+        <label>Jumlah Peserta</label>
+        <input id="bookingGuests" type="number" min="1" value="2">
+      </div>
+    </div>
+    <div class="field">
+      <label>Catatan Tambahan</label>
+      <textarea id="bookingNotes" placeholder="Permintaan khusus, titik penjemputan, dan sebagainya"></textarea>
+    </div>
+    <button onclick="createBooking()">Buat Booking Demo</button>
+    <div id="bookingMessage"></div>
+  </div>
+</section>
 
-<input
-id="orang"
-type="number"
-value="2"
-min="1"
->
+<section id="payment" class="section">
+  <h2>💳 6. Payment Demo</h2>
+  <div class="panel">
+    <p class="subtitle">Pembayaran ini hanya simulasi. Tidak ada uang yang ditarik.</p>
+    <div id="paymentSummary">Buat booking terlebih dahulu.</div>
+    <div class="field">
+      <label>Metode Pembayaran Demo</label>
+      <select id="paymentMethod">
+        <option>Virtual Account Demo</option>
+        <option>Transfer Bank Demo</option>
+        <option>Kartu Kredit Demo</option>
+        <option>Company Billing Demo</option>
+      </select>
+    </div>
+    <button onclick="payBooking()">Konfirmasi Pembayaran Demo</button>
+    <div id="paymentMessage"></div>
+  </div>
+</section>
 
-<button id="generate">
-🚀 Generate Trip
-</button>
+<section id="ticket" class="section">
+  <h2>🎫 7. My E-Ticket</h2>
+  <div class="panel" id="ticketContent">
+    <p class="subtitle">E-ticket akan muncul setelah pembayaran demo dikonfirmasi.</p>
+  </div>
+</section>
 
-</div>
+<section id="data" class="section">
+  <h2>💾 Data Demo</h2>
+  <div class="panel">
+    <p class="subtitle">
+      V7 menyimpan keranjang, booking dan tiket demo pada penyimpanan browser
+      perangkat ini. Data tidak otomatis tersinkron ke perangkat lain.
+    </p>
+    <button class="secondary" onclick="exportData()">Ekspor Data Demo</button>
+    <button class="danger" onclick="clearDemoData()">Hapus Data Demo</button>
+    <p class="small">Gunakan tombol hapus hanya jika benar-benar ingin menghapus data demo.</p>
+    <div id="dataMessage"></div>
+  </div>
+</section>
 
+</main>
 
-<div id="trip" class="hidden">
+<footer>
+  <div class="logo" style="color:white">Hobbi<span>Go</span> 🌍</div>
+  AI Journey & Experience Marketplace<br>
+  Search → Plan → Configure → Package → Book → Experience<br>
+  <span class="small" style="color:#d5e5da">
+    Prototype V7 — booking, pembayaran dan produk masih berupa demo.
+  </span>
+</footer>
 
+<script>
+const rupiah = n => new Intl.NumberFormat("id-ID", {
+  style: "currency",
+  currency: "IDR",
+  maximumFractionDigits: 0
+}).format(n);
 
-<div class="card">
+function loadSaved(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
 
-<h2>🗺️ Smart Route</h2>
+function saveData() {
+  try {
+    localStorage.setItem("hobbigo_v7_cart", JSON.stringify(cart));
+    localStorage.setItem("hobbigo_v7_booking", JSON.stringify(booking));
+    localStorage.setItem("hobbigo_v7_ticket", JSON.stringify(ticket));
+    return true;
+  } catch (e) {
+    document.getElementById("dataMessage").textContent =
+      "Browser tidak dapat menyimpan data. Coba gunakan browser biasa.";
+    return false;
+  }
+}
 
-<div class="route" id="routeA">
-<b>🏝️ Route A — Relax</b>
-<br>
-Hotel → Pantai → Restaurant → Sunset
-</div>
+const products = [
+  {
+    id:1, name:"Tropical Resort Bali", category:"Hotel & Villa",
+    destination:"Bali", price:850000, unit:"per malam",
+    rating:"4.8", description:"Resor tropis untuk liburan santai.",
+    image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:2, name:"Private Pool Villa", category:"Hotel & Villa",
+    destination:"Bali", price:1450000, unit:"per malam",
+    rating:"4.9", description:"Vila privat untuk keluarga atau pasangan.",
+    image:"https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:3, name:"Mountain View Hotel", category:"Hotel & Villa",
+    destination:"Bandung", price:550000, unit:"per malam",
+    rating:"4.6", description:"Hotel nyaman dekat kawasan pegunungan.",
+    image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:4, name:"Local Balinese Food", category:"Restaurant & Local Food",
+    destination:"Bali", price:85000, unit:"per orang",
+    rating:"4.7", description:"Pilihan kuliner khas Bali.",
+    image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:5, name:"Local Culinary Tour", category:"Restaurant & Local Food",
+    destination:"Yogyakarta", price:175000, unit:"per orang",
+    rating:"4.8", description:"Jelajahi makanan lokal dan tempat kuliner.",
+    image:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:6, name:"Beach & Sunset Experience", category:"Attractions & Activities",
+    destination:"Bali", price:250000, unit:"per orang",
+    rating:"4.9", description:"Aktivitas menikmati pantai dan matahari terbenam.",
+    image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:7, name:"Nature Adventure", category:"Attractions & Activities",
+    destination:"Bandung", price:200000, unit:"per orang",
+    rating:"4.6", description:"Aktivitas luar ruang dan wisata alam.",
+    image:"https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:8, name:"Car Rental", category:"Transport & Rental",
+    destination:"Bali", price:450000, unit:"per hari",
+    rating:"4.7", description:"Pilihan kendaraan untuk menjelajahi destinasi.",
+    image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:9, name:"Motorbike Rental", category:"Transport & Rental",
+    destination:"Bali", price:100000, unit:"per hari",
+    rating:"4.5", description:"Transportasi praktis untuk perjalanan lokal.",
+    image:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:10, name:"Private Van", category:"Transport & Rental",
+    destination:"Yogyakarta", price:650000, unit:"per hari",
+    rating:"4.7", description:"Transportasi untuk keluarga dan grup.",
+    image:"https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:11, name:"Boat Experience", category:"Transport & Rental",
+    destination:"Lombok", price:900000, unit:"per paket",
+    rating:"4.8", description:"Contoh paket perjalanan menggunakan kapal.",
+    image:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id:12, name:"Cultural Day Tour", category:"Attractions & Activities",
+    destination:"Yogyakarta", price:225000, unit:"per orang",
+    rating:"4.8", description:"Pengalaman budaya dan wisata lokal.",
+    image:"https://images.unsplash.com/photo-1596402184320-417e7178b2cd?auto=format&fit=crop&w=800&q=80"
+  }
+];
 
-<div class="route" id="routeB">
-<b>🏄 Route B — Adventure</b>
-<br>
-Hotel → Water Activity → Adventure Park
-</div>
+const packages = [
+  {
+    id:"pkg1", name:"Economy Explorer", price:750000,
+    description:"Pilihan hemat untuk menjelajahi destinasi.",
+    features:"Aktivitas pilihan • Budget friendly"
+  },
+  {
+    id:"pkg2", name:"Comfort Journey", price:1450000,
+    description:"Kombinasi kenyamanan dan pengalaman.",
+    features:"Hotel pilihan • Kuliner • Aktivitas"
+  },
+  {
+    id:"pkg3", name:"Exclusive Escape", price:2850000,
+    description:"Pilihan perjalanan dengan pengalaman premium.",
+    features:"Vila pilihan • Aktivitas premium"
+  },
+  {
+    id:"pkg4", name:"Family Adventure", price:1950000,
+    description:"Pilihan aktivitas untuk perjalanan keluarga.",
+    features:"Family friendly • Fleksibel"
+  }
+];
 
-<div class="route" id="routeC">
-<b>📸 Route C — Experience</b>
-<br>
-Photo Spot → Culinary → Shopping
-</div>
+let cart = loadSaved("hobbigo_v7_cart", []);
+let booking = loadSaved("hobbigo_v7_booking", null);
+let ticket = loadSaved("hobbigo_v7_ticket", null);
 
-</div>
+if (!Array.isArray(cart)) cart = [];
 
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, function(c) {
+    return {
+      "&":"&amp;", "<":"&lt;", ">":"&gt;",
+      '"':"&quot;", "'":"&#39;"
+    }[c];
+  });
+}
 
-<div class="card">
+function setDefaultDate() {
+  const date = new Date();
+  date.setDate(date.getDate() + 7);
+  const value = date.getFullYear() + "-" +
+    String(date.getMonth()+1).padStart(2,"0") + "-" +
+    String(date.getDate()).padStart(2,"0");
+  document.getElementById("travelDate").value = value;
+  document.getElementById("bookingDate").value = value;
+}
 
-<h2>🏪 Marketplace</h2>
+function generateTrip() {
+  const destination = document.getElementById("destination").value.trim();
+  const date = document.getElementById("travelDate").value;
+  const guests = Math.max(1, Number(document.getElementById("guests").value) || 1);
+  const duration = Number(document.getElementById("duration").value);
+  const style = document.getElementById("travelStyle").value;
+  const interest = document.getElementById("interest").value;
 
+  if (!destination) {
+    alert("Silakan isi tujuan perjalanan.");
+    return;
+  }
 
-<h3>🏨 Hotel</h3>
+  const result = document.getElementById("tripResult");
+  result.classList.remove("hidden");
 
-<div class="product">
+  let days = "";
+  for (let i = 1; i <= duration; i++) {
+    let activity;
+    if (i === 1) activity = "Tiba di destinasi, check-in dan eksplorasi area sekitar.";
+    else if (i === duration) activity = "Sarapan, aktivitas santai dan perjalanan pulang.";
+    else activity = interest + ", kuliner lokal dan waktu bebas.";
+    days += "<div class='item-line'><div><b>Hari " + i +
+      "</b><p class='subtitle'>" + escapeHTML(activity) +
+      "</p></div></div>";
+  }
 
-<b>Bali Comfort Hotel</b>
+  const budget = duration * guests * (
+    style === "Economy" ? 350000 :
+    style === "Exclusive" ? 1200000 : 650000
+  );
 
-<p>Hotel nyaman dekat pusat wisata</p>
+  result.innerHTML = `
+    <span class="tag">DEMO TRIP PLAN</span>
+    <h3>Rencana perjalanan: ${escapeHTML(destination)}</h3>
+    <p>📅 ${escapeHTML(date || "Tanggal belum dipilih")}</p>
+    <p>👥 ${guests} orang • ${duration} hari • ${escapeHTML(style)}</p>
+    <p>❤️ Minat: ${escapeHTML(interest)}</p>
+    <h3>🗺️ Smart Route & Itinerary</h3>
+    ${days}
+    <p class="subtitle">Estimasi awal untuk ${guests} orang. Belum termasuk biaya produk yang belum dipilih.</p>
+    <div class="total">${rupiah(budget)}</div>
+    <button onclick="findProducts()">Cari Produk untuk Trip Ini</button>
+    <button class="secondary" onclick="addPackageToCart()">Tambahkan Paket</button>
+  `;
 
-<div class="price">
-Rp 900.000
-</div>
+  document.getElementById("bookingGuests").value = guests;
+  document.getElementById("bookingDate").value = date;
+  document.getElementById("searchDestination").value = destination;
+  renderProducts();
+}
 
-<button
-class="choose"
-data-type="hotel"
-data-name="Bali Comfort Hotel"
-data-price="900000"
->
-PILIH HOTEL
-</button>
+function findProducts() {
+  document.getElementById("marketplace").scrollIntoView({behavior:"smooth"});
+  renderProducts();
+}
 
-</div>
+function addPackageToCart() {
+  const name = document.getElementById("destination").value.trim();
+  if (!name) {
+    alert("Isi tujuan perjalanan terlebih dahulu.");
+    return;
+  }
+  const duration = Number(document.getElementById("duration").value);
+  const guests = Math.max(1, Number(document.getElementById("guests").value) || 1);
+  const style = document.getElementById("travelStyle").value;
+  const rate = style === "Economy" ? 350000 :
+    style === "Exclusive" ? 1200000 : 650000;
 
+  cart.push({
+    id:"custom-" + Date.now(),
+    name:"Trip Package: " + name,
+    category:"Smart Package",
+    destination:name,
+    price:rate * duration * guests,
+    quantity:1,
+    unit:"paket demo"
+  });
+  saveData();
+  renderCart();
+  document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+}
 
-<div class="product">
+function renderPackages() {
+  document.getElementById("packageGrid").innerHTML = packages.map(p => `
+    <div class="card">
+      <div class="card-body">
+        <span class="tag">SMART PACKAGE</span>
+        <h3>${escapeHTML(p.name)}</h3>
+        <p>${escapeHTML(p.description)}</p>
+        <p>${escapeHTML(p.features)}</p>
+        <div class="price">Mulai ${rupiah(p.price)}</div>
+        <button onclick="addPackage('${p.id}')">Pilih Paket</button>
+      </div>
+    </div>
+  `).join("");
+}
 
-<b>Paradise Resort</b>
+function addPackage(id) {
+  const p = packages.find(x => x.id === id);
+  if (!p) return;
+  cart.push({
+    id:"package-" + p.id + "-" + Date.now(),
+    name:p.name,
+    category:"Smart Package",
+    destination:document.getElementById("destination").value.trim() || "Belum dipilih",
+    price:p.price,
+    quantity:1,
+    unit:"paket demo"
+  });
+  saveData();
+  renderCart();
+  alert("Paket ditambahkan ke My Cart.");
+}
 
-<p>Resort premium</p>
+function renderProducts() {
+  const search = document.getElementById("searchDestination").value.trim().toLowerCase();
+  const category = document.getElementById("categoryFilter").value;
+  const sort = document.getElementById("sortPrice").value;
 
-<div class="price">
-Rp 1.500.000
-</div>
+  let list = products.filter(p =>
+    (!search || p.destination.toLowerCase().includes(search) ||
+      p.name.toLowerCase().includes(search)) &&
+    (category === "All" || p.category === category)
+  );
 
-<button
-class="choose"
-data-type="hotel"
-data-name="Paradise Resort"
-data-price="1500000"
->
-PILIH HOTEL
-</button>
+  if (sort === "low") list.sort((a,b) => a.price - b.price);
+  if (sort === "high") list.sort((a,b) => b.price - a.price);
 
-</div>
+  const grid = document.getElementById("productGrid");
 
+  if (!list.length) {
+    grid.innerHTML = "<div class='panel'>Produk demo tidak ditemukan. Coba kosongkan pencarian atau pilih kategori lain.</div>";
+    return;
+  }
 
-<h3>🍽️ Restaurant</h3>
+  grid.innerHTML = list.map(p => `
+    <div class="card">
+      <img src="${p.image}" alt="${escapeHTML(p.name)}" loading="lazy"
+        onerror="this.style.display='none'">
+      <div class="card-body">
+        <span class="tag">${escapeHTML(p.category)}</span>
+        <h3>${escapeHTML(p.name)}</h3>
+        <p>📍 ${escapeHTML(p.destination)} • ⭐ ${escapeHTML(p.rating)}</p>
+        <p>${escapeHTML(p.description)}</p>
+        <div class="price">${rupiah(p.price)} <span class="small">${escapeHTML(p.unit)}</span></div>
+        <button onclick="addProduct(${p.id})">+ Add to Cart</button>
+      </div>
+    </div>
+  `).join("");
+}
 
-<div class="product">
+function addProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
 
-<b>Local Culinary</b>
+  const nights = Math.max(1, Number(document.getElementById("duration").value) - 1);
+  const guests = Math.max(1, Number(document.getElementById("guests").value) || 1);
+  const isHotel = p.category === "Hotel & Villa";
+  const isPerson = p.category === "Restaurant & Local Food" ||
+    p.category === "Attractions & Activities";
 
-<p>Masakan lokal khas Bali</p>
+  let quantity = isHotel ? nights : isPerson ? guests : 1;
 
-<div class="price">
-Rp 250.000
-</div>
+  cart.push({
+    id:p.id + "-" + Date.now(),
+    productId:p.id,
+    name:p.name,
+    category:p.category,
+    destination:p.destination,
+    price:p.price,
+    quantity:quantity,
+    unit:p.unit
+  });
 
-<button
-class="choose"
-data-type="restaurant"
-data-name="Local Culinary"
-data-price="250000"
->
-PILIH RESTAURANT
-</button>
+  saveData();
+  renderCart();
+  alert(p.name + " berhasil ditambahkan ke My Cart.");
+}
 
-</div>
+function getTotal() {
+  return cart.reduce((sum, item) =>
+    sum + Number(item.price) * Number(item.quantity), 0);
+}
 
+function renderCart() {
+  document.getElementById("cartCount").textContent = cart.length;
+  const content = document.getElementById("cartContent");
 
-<div class="product">
+  if (!cart.length) {
+    content.innerHTML = "<p class='subtitle'>Keranjang masih kosong. Pilih paket atau produk di Marketplace.</p>";
+    return;
+  }
 
-<b>Premium Dinner</b>
+  content.innerHTML = cart.map((item,index) => `
+    <div class="item-line">
+      <div>
+        <b>${escapeHTML(item.name)}</b>
+        <p class="small">${escapeHTML(item.category)} • ${escapeHTML(item.destination)}</p>
+        <p>${rupiah(item.price)} × ${item.quantity} ${escapeHTML(item.unit || "")}</p>
+        <b>${rupiah(item.price * item.quantity)}</b>
+      </div>
+      <button class="danger" onclick="removeItem(${index})">Hapus</button>
+    </div>
+  `).join("") + `
+    <div class="row" style="margin-top:18px">
+      <div>
+        <div class="small">Total estimasi demo</div>
+        <div class="total">${rupiah(getTotal())}</div>
+      </div>
+      <button onclick="goBooking()">Lanjut Booking →</button>
+    </div>
+    <p class="small">Harga contoh. Ketersediaan produk belum terhubung dengan penyedia sebenarnya.</p>
+  `;
+}
 
-<p>Pengalaman makan premium</p>
+function removeItem(index) {
+  cart.splice(index,1);
+  saveData();
+  renderCart();
+}
 
-<div class="price">
-Rp 500.000
-</div>
+function goBooking() {
+  if (!cart.length) {
+    alert("My Cart masih kosong. Tambahkan produk terlebih dahulu.");
+    return;
+  }
+  document.getElementById("bookingSummary").innerHTML =
+    "Pilihan: <b>" + cart.length + " item demo</b> • Total: <b>" + rupiah(getTotal()) + "</b>";
+  document.getElementById("booking").scrollIntoView({behavior:"smooth"});
+}
 
-<button
-class="choose"
-data-type="restaurant"
-data-name="Premium Dinner"
-data-price="500000"
->
-PILIH RESTAURANT
-</button>
+function createBooking() {
+  if (!cart.length) {
+    alert("Keranjang masih kosong. Pilih produk terlebih dahulu.");
+    return;
+  }
 
-</div>
+  const name = document.getElementById("customerName").value.trim();
+  const contact = document.getElementById("customerContact").value.trim();
+  const date = document.getElementById("bookingDate").value;
+  const guests = Math.max(1, Number(document.getElementById("bookingGuests").value) || 1);
 
+  if (!name || !contact || !date) {
+    alert("Isi nama, kontak dan tanggal perjalanan terlebih dahulu.");
+    return;
+  }
 
-<h3>🎟️ Ticket</h3>
+  booking = {
+    code:"HBG-" + Date.now().toString().slice(-8),
+    name:name,
+    contact:contact,
+    date:date,
+    guests:guests,
+    notes:document.getElementById("bookingNotes").value.trim(),
+    items:cart.map(x => ({...x})),
+    total:getTotal(),
+    status:"Menunggu Pembayaran Demo",
+    method:"",
+    createdAt:new Date().toISOString()
+  };
 
-<div class="product">
+  ticket = null;
+  saveData();
+  renderBooking();
+  renderTicket();
 
-<b>Island Tour</b>
+  document.getElementById("bookingMessage").innerHTML =
+    "<div class='success'>Booking demo berhasil dibuat! Nomor booking: <b>" +
+    escapeHTML(booking.code) + "</b>. Lanjutkan ke Payment Demo.</div>";
 
-<p>Tour pulau</p>
+  document.getElementById("payment").scrollIntoView({behavior:"smooth"});
+}
 
-<div class="price">
-Rp 600.000
-</div>
+function renderBooking() {
+  if (!booking) {
+    document.getElementById("bookingSummary").textContent = "Belum ada booking baru.";
+    document.getElementById("paymentSummary").textContent = "Buat booking terlebih dahulu.";
+    return;
+  }
 
-<button
-class="choose"
-data-type="ticket"
-data-name="Island Tour"
-data-price="600000"
->
-PILIH TICKET
-</button>
+  document.getElementById("bookingSummary").innerHTML = `
+    <div class="success">
+      <b>Booking ${escapeHTML(booking.code)}</b><br>
+      Nama: ${escapeHTML(booking.name)}<br>
+      Tanggal: ${escapeHTML(booking.date)}<br>
+      Peserta: ${booking.guests}<br>
+      Status: ${escapeHTML(booking.status)}<br>
+      Total: ${rupiah(booking.total)}
+    </div>
+  `;
 
-</div>
+  document.getElementById("paymentSummary").innerHTML = `
+    <p>Nomor Booking: <b>${escapeHTML(booking.code)}</b></p>
+    <p>Total demo: <span class="total">${rupiah(booking.total)}</span></p>
+    <p>Status: ${escapeHTML(booking.status)}</p>
+  `;
+}
 
+function payBooking() {
+  if (!booking) {
+    alert("Buat booking terlebih dahulu.");
+    return;
+  }
 
-<div
+  if (booking.status === "Lunas Demo") {
+    alert("Pembayaran demo untuk booking ini sudah dikonfirmasi.");
+    return;
+  }
+
+  booking.status = "Lunas Demo";
+  booking.method = document.getElementById("paymentMethod").value;
+
+  ticket = {
+    code:"TKT-" + Date.now().toString().slice(-8),
+    bookingCode:booking.code,
+    name:booking.name,
+    contact:booking.contact,
+    date:booking.date,
+    guests:booking.guests,
+    total:booking.total,
+    method:booking.method,
+    items:booking.items
+  };
+
+  saveData();
+  renderBooking();
+  renderTicket();
+
+  document.getElementById("paymentMessage").innerHTML =
+    "<div class='success'>Pembayaran demo berhasil dikonfirmasi. E-ticket demo sudah tersedia.</div>";
+
+  document.getElementById("ticket").scrollIntoView({behavior:"smooth"});
+}
+
+function renderTicket() {
+  const content = document.getElementById("ticketContent");
+
+  if (!ticket) {
+    content.innerHTML = "<p class='subtitle'>E-ticket akan muncul setelah pembayaran demo dikonfirmasi.</p>";
+    return;
+  }
+
+  content.innerHTML = `
+    <div class="ticket">
+      <span class="tag">HOBBIGO E-TICKET • DEMO</span>
+      <h2>🎫 ${escapeHTML(ticket.code)}</h2>
+      <p><b>Nomor Booking:</b> ${escapeHTML(ticket.bookingCode)}</p>
+      <p><b>Nama:</b> ${escapeHTML(ticket.name)}</p>
+      <p><b>Tanggal:</b> ${escapeHTML(ticket.date)}</p>
+      <p><b>Peserta:</b> ${ticket.guests} orang</p>
+      <p><b>Produk:</b></p>
+      <ul>${ticket.items.map(i => "<li>" + escapeHTML(i.name) +
+        " — " + i.quantity + " × " + rupiah(i.price) + "</li>").join("")}</ul>
+      <p><b>Metode demo:</b> ${escapeHTML(ticket.method)}</p>
+      <div class="total">${rupiah(ticket.total)}</div>
+      <div class="success">Status: Lunas Demo. Tiket ini bukan tiket perjalanan sungguhan.</div>
+      <div class="actions">
+        <button onclick="window.print()">Cetak / Simpan PDF</button>
+        <button class="secondary" onclick="exportData()">Ekspor Data</button>
+      </div>
+    </div>
+  `;
+}
+
+function exportData() {
+  const data = {
+    app:"HobbiGo",
+    version:"V7 Demo",
+    cart:cart,
+    booking:booking,
+    ticket:ticket,
+    exportedAt:new Date().toISOString()
+  };
+
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "HobbiGo_V7_Demo_Data.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function clearDemoData() {
+  if (!confirm("Yakin ingin menghapus keranjang, booking dan tiket demo?")) return;
+
+  cart = [];
+  booking = null;
+  ticket = null;
+
+  try {
+    localStorage.removeItem("hobbigo_v7_cart");
+    localStorage.removeItem("hobbigo_v7_booking");
+    localStorage.removeItem("hobbigo_v7_ticket");
+  } catch(e) {}
+
+  document.getElementById("bookingMessage").innerHTML = "";
+  document.getElementById("paymentMessage").innerHTML = "";
+  document.getElementById("dataMessage").textContent = "Data demo sudah dibersihkan.";
+  renderCart();
+  renderBooking();
+  renderTicket();
+}
+
+setDefaultDate();
+renderPackages();
+renderProducts();
+renderCart();
+renderBooking();
+renderTicket();
+</script>
+
+</body>
+</html>
