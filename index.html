@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>HobbiGo - AI Journey & Experience Marketplace</title>
 
 <style>
@@ -18,25 +19,25 @@ body {
 }
 
 header {
-  background: #111827;
+  background: linear-gradient(135deg,#111827,#26354d);
   color: white;
-  padding: 22px 18px;
+  padding: 25px 18px;
   text-align: center;
 }
 
 .logo {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: bold;
 }
 
 .tagline {
   margin-top: 6px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: .85;
 }
 
 .container {
-  max-width: 700px;
+  max-width: 760px;
   margin: 25px auto;
   padding: 0 16px;
 }
@@ -44,8 +45,9 @@ header {
 .card {
   background: white;
   padding: 22px;
-  border-radius: 18px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  border-radius: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,.08);
+  margin-bottom: 20px;
 }
 
 h2 {
@@ -66,43 +68,92 @@ select {
   border: 1px solid #d5dbe5;
   border-radius: 10px;
   font-size: 16px;
+  background: white;
 }
 
 button {
   width: 100%;
-  margin-top: 22px;
+  margin-top: 20px;
   padding: 15px;
   border: none;
-  border-radius: 10px;
+  border-radius: 11px;
   background: #ff6b35;
   color: white;
   font-size: 17px;
   font-weight: bold;
 }
 
-button:active {
-  transform: scale(0.98);
+button.secondary {
+  background: #172033;
 }
 
 #tripResult {
   display: none;
-  margin-top: 22px;
-  padding: 20px;
-  background: #eef7ff;
-  border-radius: 14px;
 }
 
-.result-item {
+.hero-result {
+  background: linear-gradient(135deg,#fff3ec,#eef7ff);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+.route {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.route-box {
+  min-width: 150px;
   background: white;
-  padding: 14px;
+  padding: 15px;
+  border-radius: 13px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.day {
+  margin-top: 15px;
+  padding: 18px;
+  background: #f8fafc;
+  border-radius: 15px;
+}
+
+.day h3 {
+  margin-top: 0;
+}
+
+.activity {
+  background: white;
   margin-top: 10px;
+  padding: 13px;
   border-radius: 10px;
 }
 
 .price {
-  font-size: 22px;
+  font-size: 25px;
   font-weight: bold;
   color: #ff6b35;
+}
+
+.market {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.market-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,.05);
+}
+
+.small {
+  color: #667085;
+  font-size: 13px;
 }
 </style>
 </head>
@@ -110,4 +161,372 @@ button:active {
 <body>
 
 <header>
-  <div class="logo">✈️ HobbiGo
+
+<div class="logo">✈️ HobbiGo</div>
+
+<div class="tagline">
+AI Journey & Experience Marketplace
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>🌍 AI Trip Planner</h2>
+
+<label>Tujuan</label>
+
+<input
+id="tujuan"
+type="text"
+placeholder="Contoh: Bali"
+/>
+
+<label>Tanggal</label>
+
+<input
+id="tanggal"
+type="date"
+/>
+
+<label>Jumlah Orang</label>
+
+<input
+id="orang"
+type="number"
+value="2"
+min="1"
+/>
+
+<label>Durasi</label>
+
+<select id="durasi">
+
+<option value="2">2 Hari</option>
+<option value="3" selected>3 Hari</option>
+<option value="4">4 Hari</option>
+<option value="5">5 Hari</option>
+<option value="7">7 Hari</option>
+
+</select>
+
+<label>Gaya Trip</label>
+
+<select id="gaya">
+
+<option>Economy</option>
+<option selected>Comfort</option>
+<option>Exclusive</option>
+
+</select>
+
+<label>Minat</label>
+
+<select id="minat">
+
+<option>Pantai & Alam</option>
+<option>Kuliner</option>
+<option>Adventure</option>
+<option>Budaya</option>
+<option>Family</option>
+<option>Shopping</option>
+
+</select>
+
+<button onclick="generateTrip()">
+🚀 Generate Trip
+</button>
+
+</div>
+
+
+<div id="tripResult">
+
+<div class="card">
+
+<div class="hero-result">
+
+<h2>✨ AI Trip Anda Siap!</h2>
+
+<p>
+HobbiGo membuat rencana perjalanan berdasarkan pilihan Anda.
+</p>
+
+<b>📍 <span id="hasilTujuan"></span></b>
+
+<br>
+
+<span class="small">
+👥 <span id="hasilOrang"></span> orang
+</span>
+
+</div>
+
+
+<h2>🗺️ Smart Route</h2>
+
+<div class="route">
+
+<div class="route-box">
+🏨
+<br>
+<b>Hotel</b>
+<br>
+<span class="small">
+Check-in
+</span>
+</div>
+
+<div class="route-box">
+📸
+<br>
+<b>Tourist Spot</b>
+<br>
+<span class="small">
+Explore
+</span>
+</div>
+
+<div class="route-box">
+🍜
+<br>
+<b>Restaurant</b>
+<br>
+<span class="small">
+Culinary
+</span>
+</div>
+
+<div class="route-box">
+🎟️
+<br>
+<b>Activity</b>
+<br>
+<span class="small">
+Experience
+</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📅 AI Itinerary</h2>
+
+
+<div class="day">
+
+<h3>☀️ Day 1 — Arrival & Explore</h3>
+
+<div class="activity">
+✈️ Arrival & Airport Transfer
+</div>
+
+<div class="activity">
+🏨 Hotel Check-in
+</div>
+
+<div class="activity">
+📸 Explore Tourist Spot
+</div>
+
+<div class="activity">
+🍜 Local Culinary
+</div>
+
+</div>
+
+
+<div class="day">
+
+<h3>🌴 Day 2 — Experience</h3>
+
+<div class="activity">
+🌊 Main Attraction
+</div>
+
+<div class="activity">
+🎟️ Activity sesuai minat
+</div>
+
+<div class="activity">
+🍽️ Recommended Restaurant
+</div>
+
+</div>
+
+
+<div class="day">
+
+<h3>☀️ Day 3 — Relax & Return</h3>
+
+<div class="activity">
+☕ Local Breakfast
+</div>
+
+<div class="activity">
+🛍️ Shopping / Souvenir
+</div>
+
+<div class="activity">
+✈️ Departure
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏪 HobbiGo Marketplace</h2>
+
+<div class="market">
+
+<div class="market-box">
+🏨
+<br>
+<b>Hotel</b>
+<br>
+<span class="small">
+Choose Hotel
+</span>
+</div>
+
+<div class="market-box">
+🍽️
+<br>
+<b>Restaurant</b>
+<br>
+<span class="small">
+Choose Food
+</span>
+</div>
+
+<div class="market-box">
+🎟️
+<br>
+<b>Ticket</b>
+<br>
+<span class="small">
+Attraction
+</span>
+</div>
+
+<div class="market-box">
+🚗
+<br>
+<b>Transport</b>
+<br>
+<span class="small">
+Rental / Transfer
+</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>💰 Estimasi Biaya</h2>
+
+<p>
+Hotel + Transport + Attraction + Culinary
+</p>
+
+<div class="price">
+Rp 4.500.000
+</div>
+
+<p class="small">
+*Estimasi awal. Harga marketplace akan dikembangkan pada tahap berikutnya.
+</p>
+
+<button class="secondary" onclick="smartRoute()">
+🗺️ Smart Route
+</button>
+
+<button onclick="bookTrip()">
+🎫 Book Trip
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function generateTrip() {
+
+const tujuan =
+document.getElementById("tujuan").value.trim();
+
+const tanggal =
+document.getElementById("tanggal").value;
+
+const orang =
+document.getElementById("orang").value;
+
+if(tujuan === "") {
+
+alert("Silakan isi tujuan perjalanan.");
+
+return;
+
+}
+
+if(tanggal === "") {
+
+alert("Silakan pilih tanggal perjalanan.");
+
+return;
+
+}
+
+document.getElementById("hasilTujuan").textContent =
+tujuan;
+
+document.getElementById("hasilOrang").textContent =
+orang;
+
+document.getElementById("tripResult").style.display =
+"block";
+
+document.getElementById("tripResult").scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function smartRoute() {
+
+alert(
+"🗺️ Smart Route HobbiGo berhasil dibuat!\n\nHotel → Tourist Spot → Restaurant → Activity"
+);
+
+}
+
+
+function bookTrip() {
+
+alert(
+"🎫 Booking Trip HobbiGo\n\nTahap berikutnya kita akan membuat pilihan hotel, tiket, transportasi dan pembayaran."
+);
+
+}
+
+</script>
+
+</body>
+</html>
