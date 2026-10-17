@@ -4,138 +4,116 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HobbiGo - Marketplace</title>
+<title>HobbiGo - Booking & Payment</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#f4f7fb;
-color:#172033;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
 }
 
 header{
-background:linear-gradient(135deg,#111827,#26354d);
-color:white;
-padding:24px 18px;
-text-align:center;
+  background:linear-gradient(135deg,#111827,#26354d);
+  color:white;
+  padding:25px 18px;
+  text-align:center;
 }
 
 .logo{
-font-size:32px;
-font-weight:bold;
+  font-size:32px;
+  font-weight:bold;
 }
 
 .tagline{
-font-size:14px;
-margin-top:6px;
-opacity:.85;
+  font-size:14px;
+  margin-top:6px;
+  opacity:.85;
 }
 
 .container{
-max-width:800px;
-margin:auto;
-padding:20px 15px;
+  max-width:800px;
+  margin:auto;
+  padding:20px 15px;
 }
 
 .card{
-background:white;
-padding:20px;
-border-radius:18px;
-margin-bottom:18px;
-box-shadow:0 5px 20px rgba(0,0,0,.07);
-}
-
-input,select{
-width:100%;
-padding:13px;
-border:1px solid #d5dbe5;
-border-radius:10px;
-font-size:16px;
-margin-top:7px;
+  background:white;
+  padding:20px;
+  border-radius:18px;
+  margin-bottom:18px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
 label{
-display:block;
-font-weight:bold;
-margin-top:12px;
+  display:block;
+  font-weight:bold;
+  margin-top:14px;
+}
+
+input,select{
+  width:100%;
+  padding:13px;
+  margin-top:7px;
+  border:1px solid #d5dbe5;
+  border-radius:10px;
+  font-size:16px;
 }
 
 button{
-width:100%;
-padding:14px;
-margin-top:18px;
-border:0;
-border-radius:10px;
-background:#ff6b35;
-color:white;
-font-size:16px;
-font-weight:bold;
+  width:100%;
+  padding:15px;
+  margin-top:18px;
+  border:0;
+  border-radius:11px;
+  background:#ff6b35;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
 }
 
-.result{
-display:none;
+.secondary{
+  background:#172033;
 }
 
-.market-title{
-margin-top:0;
+.hidden{
+  display:none;
 }
 
-.products{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.product{
-background:#f8fafc;
-border-radius:14px;
-padding:15px;
-border:2px solid transparent;
-}
-
-.product:hover{
-border-color:#ff6b35;
-}
-
-.product h3{
-margin:5px 0;
-font-size:17px;
-}
-
-.product p{
-font-size:13px;
-color:#667085;
-}
-
-.price{
-font-size:18px;
-font-weight:bold;
-color:#ff6b35;
-}
-
-.product button{
-margin-top:10px;
-padding:10px;
-font-size:14px;
-}
-
-.selected{
-border-color:#ff6b35;
-background:#fff7f2;
+.summary{
+  background:#f8fafc;
+  padding:15px;
+  border-radius:12px;
+  margin-top:12px;
 }
 
 .total{
-font-size:28px;
-font-weight:bold;
-color:#ff6b35;
+  font-size:28px;
+  font-weight:bold;
+  color:#ff6b35;
+}
+
+.success{
+  text-align:center;
+  background:#ecfdf3;
+  padding:25px;
+  border-radius:16px;
+}
+
+.booking-number{
+  font-size:20px;
+  font-weight:bold;
+  margin:12px 0;
 }
 
 .small{
-font-size:13px;
-color:#667085;
+  font-size:13px;
+  color:#667085;
 }
 </style>
 </head>
@@ -144,7 +122,9 @@ color:#667085;
 
 <header>
 
-<div class="logo">✈️ HobbiGo</div>
+<div class="logo">
+✈️ HobbiGo
+</div>
 
 <div class="tagline">
 AI Journey & Experience Marketplace
@@ -152,26 +132,256 @@ AI Journey & Experience Marketplace
 
 </header>
 
+
 <div class="container">
+
+
+<!-- TRIP PLANNER -->
+
+<div id="planner">
 
 <div class="card">
 
 <h2>🌍 AI Trip Planner</h2>
 
 <label>Tujuan</label>
-<input id="tujuan" placeholder="Contoh: Bali">
+
+<input
+id="tujuan"
+type="text"
+placeholder="Contoh: Bali"
+/>
+
 
 <label>Tanggal</label>
-<input id="tanggal" type="date">
+
+<input
+id="tanggal"
+type="date"
+/>
+
 
 <label>Jumlah Orang</label>
-<input id="orang" type="number" value="2" min="1">
+
+<input
+id="orang"
+type="number"
+value="2"
+min="1"
+/>
+
 
 <label>Durasi</label>
 
 <select id="durasi">
+
 <option value="2">2 Hari</option>
 <option value="3" selected>3 Hari</option>
 <option value="4">4 Hari</option>
 <option value="5">5 Hari</option>
-<option value="7">7
+<option value="7">7 Hari</option>
+
+</select>
+
+
+<button onclick="generateTrip()">
+🚀 Generate Trip
+</button>
+
+</div>
+
+
+<div id="tripResult" class="hidden">
+
+<div class="card">
+
+<h2>✨ Trip Anda</h2>
+
+<div class="summary">
+
+📍 Tujuan:
+<b id="showTujuan"></b>
+
+<br><br>
+
+📅 Tanggal:
+<b id="showTanggal"></b>
+
+<br><br>
+
+👥 Peserta:
+<b id="showOrang"></b> orang
+
+<br><br>
+
+🗺️ Itinerary:
+<br>
+Day 1 → Explore
+<br>
+Day 2 → Experience
+<br>
+Day 3 → Culinary & Shopping
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏪 Marketplace</h2>
+
+<div class="summary">
+
+🏨 Hotel
+<br>
+Bali Comfort Hotel
+<br>
+Rp 900.000
+
+<hr>
+
+🍽️ Restaurant
+<br>
+Local Culinary
+<br>
+Rp 250.000
+
+<hr>
+
+🎟️ Ticket
+<br>
+Island Tour
+<br>
+Rp 600.000
+
+<hr>
+
+🚗 Transport
+<br>
+Car Rental
+<br>
+Rp 700.000
+
+</div>
+
+<h3>Total Trip</h3>
+
+<div class="total">
+Rp 2.450.000
+</div>
+
+
+<button onclick="openBooking()">
+🎫 Book Trip
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BOOKING -->
+
+<div id="booking" class="hidden">
+
+<div class="card">
+
+<h2>🎫 Booking Trip</h2>
+
+<p>
+Lengkapi data pemesan.
+</p>
+
+
+<label>Nama Pemesan</label>
+
+<input
+id="nama"
+placeholder="Nama lengkap"
+/>
+
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="nama@email.com"
+/>
+
+
+<label>Nomor WhatsApp</label>
+
+<input
+id="phone"
+type="tel"
+placeholder="08xxxxxxxxxx"
+/>
+
+
+<h3>📋 Ringkasan Booking</h3>
+
+<div class="summary">
+
+📍 <span id="bookingTujuan"></span>
+
+<br><br>
+
+📅 <span id="bookingTanggal"></span>
+
+<br><br>
+
+👥 <span id="bookingOrang"></span> orang
+
+<br><br>
+
+💰 Total:
+
+<div class="total">
+Rp 2.450.000
+</div>
+
+</div>
+
+
+<button onclick="openPayment()">
+Lanjut ke Pembayaran →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- PAYMENT -->
+
+<div id="payment" class="hidden">
+
+<div class="card">
+
+<h2>💳 Pembayaran</h2>
+
+<p>
+Pilih metode pembayaran.
+</p>
+
+
+<select id="method">
+
+<option value="">
+-- Pilih Pembayaran --
+</option>
+
+<option>
+💳 Kartu Debit / Kredit
+</option>
+
+<option>
+🏦 Transfer Bank
+</option>
+
+<option>
+📱 E
