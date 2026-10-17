@@ -13,13 +13,36 @@
   font-family:Arial,Helvetica,sans-serif;
 }
 
-body{
-  background:#f5f7fb;
-  color:#172033;
+:root{
+  --orange:#ff6b35;
+  --dark:#172033;
+  --text:#263247;
+  --muted:#718096;
+  --bg:#f5f7fb;
+  --white:#fff;
+  --border:#e6eaf0;
+  --green:#20a464;
 }
 
-button,input{
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,input,select{
   font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.page{
+  min-height:100vh;
 }
 
 .container{
@@ -29,17 +52,18 @@ button,input{
   padding:0 20px;
 }
 
-/* HEADER */
-.header{
-  background:white;
+/* ================= HEADER ================= */
+
+header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
   position:sticky;
   top:0;
-  z-index:100;
-  border-bottom:1px solid #e9edf3;
+  z-index:1000;
 }
 
 .header-inner{
-  height:72px;
+  height:70px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -47,53 +71,49 @@ button,input{
 }
 
 .logo{
-  font-size:25px;
-  font-weight:800;
-  color:#ff6b35;
-  white-space:nowrap;
+  font-size:26px;
+  font-weight:900;
+  color:var(--orange);
 }
 
 .logo span{
-  color:#172033;
+  color:var(--dark);
 }
 
 .nav{
   display:flex;
-  gap:25px;
-  align-items:center;
+  gap:24px;
 }
 
-.nav a{
-  text-decoration:none;
-  color:#555f72;
-  font-size:14px;
+.nav button{
+  border:0;
+  background:none;
+  color:#566174;
   font-weight:600;
-  cursor:pointer;
 }
 
-.nav a:hover{
-  color:#ff6b35;
+.nav button:hover{
+  color:var(--orange);
 }
 
-.header-actions{
+.header-right{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:10px;
 }
 
 .lang{
-  border:1px solid #e1e6ed;
-  background:white;
-  border-radius:10px;
+  border:1px solid var(--border);
+  background:#fff;
   padding:9px 12px;
-  cursor:pointer;
+  border-radius:10px;
 }
 
 .profile{
   width:38px;
   height:38px;
   border-radius:50%;
-  background:#ff6b35;
+  background:var(--orange);
   color:white;
   display:flex;
   align-items:center;
@@ -101,80 +121,76 @@ button,input{
   font-weight:bold;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero{
   margin-top:25px;
-  border-radius:25px;
-  padding:45px 35px;
-  background:linear-gradient(135deg,#fff2e9,#fff8f4);
-  overflow:hidden;
-}
-
-.hero-content{
-  max-width:720px;
+  border-radius:26px;
+  padding:48px 38px;
+  background:linear-gradient(135deg,#fff0e8,#fffaf7);
 }
 
 .badge{
   display:inline-block;
-  background:white;
-  color:#ff6b35;
-  border-radius:30px;
+  background:#fff;
+  color:var(--orange);
   padding:8px 14px;
+  border-radius:20px;
   font-size:13px;
   font-weight:bold;
   margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:42px;
-  line-height:1.15;
-  margin-bottom:15px;
+  font-size:45px;
+  line-height:1.1;
+  max-width:700px;
 }
 
 .hero h1 span{
-  color:#ff6b35;
+  color:var(--orange);
 }
 
 .hero p{
-  color:#687386;
+  margin-top:15px;
+  color:var(--muted);
   line-height:1.6;
-  margin-bottom:25px;
+  max-width:680px;
 }
 
-/* SEARCH */
-.search-box{
-  background:white;
-  border-radius:16px;
-  padding:12px;
+.hero-search{
+  margin-top:28px;
+  background:#fff;
+  padding:10px;
+  border-radius:15px;
   display:flex;
-  gap:10px;
-  box-shadow:0 8px 25px rgba(20,30,50,.08);
+  max-width:750px;
+  box-shadow:0 10px 30px rgba(0,0,0,.07);
 }
 
-.search-input{
+.hero-search input{
   flex:1;
   border:0;
   outline:0;
   padding:14px;
   font-size:15px;
-  min-width:0;
 }
 
-.search-btn{
+.primary{
   border:0;
-  background:#ff6b35;
-  color:white;
-  padding:0 24px;
+  background:var(--orange);
+  color:#fff;
+  padding:14px 22px;
   border-radius:11px;
   font-weight:bold;
-  cursor:pointer;
 }
 
-.search-btn:hover{
+.primary:hover{
   background:#e95725;
 }
 
-/* SECTION */
+/* ================= SECTION ================= */
+
 .section{
   margin-top:38px;
 }
@@ -190,203 +206,449 @@ button,input{
   font-size:23px;
 }
 
-.section-title a{
-  color:#ff6b35;
-  font-size:14px;
+.section-title button{
+  border:0;
+  background:none;
+  color:var(--orange);
   font-weight:bold;
-  cursor:pointer;
 }
 
-/* QUICK MENU */
+/* ================= QUICK MENU ================= */
+
 .quick-grid{
   display:grid;
   grid-template-columns:repeat(6,1fr);
   gap:14px;
 }
 
-.quick-card{
-  background:white;
-  border:1px solid #edf0f4;
+.quick{
+  background:#fff;
+  border:1px solid var(--border);
   border-radius:16px;
-  padding:20px 10px;
+  padding:20px 8px;
   text-align:center;
-  cursor:pointer;
   transition:.2s;
 }
 
-.quick-card:hover{
+.quick:hover{
   transform:translateY(-3px);
-  box-shadow:0 8px 22px rgba(20,30,50,.08);
+  box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
 .quick-icon{
   width:48px;
   height:48px;
-  margin:auto auto 10px;
   border-radius:14px;
-  background:#fff1ea;
+  background:#fff0e9;
+  margin:auto auto 10px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:24px;
+  font-size:23px;
 }
 
-.quick-card h3{
+.quick h3{
   font-size:13px;
 }
 
-/* AI */
-.ai-card{
-  background:#172033;
+/* ================= AI ================= */
+
+.ai{
+  background:var(--dark);
   color:white;
-  border-radius:22px;
   padding:30px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:25px;
-}
-
-.ai-card h2{
-  font-size:25px;
-  margin-bottom:9px;
-}
-
-.ai-card p{
-  color:#bfc7d5;
-  line-height:1.5;
-}
-
-.ai-button{
-  border:0;
-  background:#ff6b35;
-  color:white;
-  padding:15px 22px;
-  border-radius:12px;
-  font-weight:bold;
-  cursor:pointer;
-  white-space:nowrap;
-}
-
-/* DESTINATION */
-.destination-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
-
-.destination-card{
-  background:white;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid #edf0f4;
-}
-
-.destination-image{
-  height:155px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:45px;
-  background:#e9f2f7;
-}
-
-.destination-info{
-  padding:15px;
-}
-
-.destination-info h3{
-  font-size:17px;
-  margin-bottom:6px;
-}
-
-.destination-info p{
-  color:#737d8e;
-  font-size:13px;
-  margin-bottom:10px;
-}
-
-.price{
-  color:#ff6b35;
-  font-weight:bold;
-  font-size:14px;
-}
-
-/* MY TRIP */
-.trip-card{
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  border:1px solid #edf0f4;
+  border-radius:22px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:20px;
 }
 
-.trip-left{
-  display:flex;
-  align-items:center;
-  gap:15px;
+.ai h2{
+  margin-bottom:8px;
 }
 
-.trip-icon{
-  width:55px;
-  height:55px;
-  border-radius:15px;
-  background:#fff1ea;
+.ai p{
+  color:#bbc4d2;
+  line-height:1.5;
+}
+
+/* ================= DESTINATION ================= */
+
+.dest-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.dest{
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+
+.dest-img{
+  height:150px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:27px;
+  font-size:50px;
+  background:#eaf1f5;
 }
 
-.trip-card h3{
-  margin-bottom:5px;
+.dest-info{
+  padding:15px;
 }
 
-.trip-card p{
-  color:#737d8e;
+.dest-info h3{
+  margin-bottom:6px;
+}
+
+.dest-info p{
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.price{
+  color:var(--orange);
+  font-weight:bold;
+}
+
+/* ================= APP SCREENS ================= */
+
+.screen{
+  display:none;
+  padding-bottom:80px;
+}
+
+.screen.active{
+  display:block;
+}
+
+.screen-head{
+  padding:30px 0 20px;
+}
+
+.screen-head h1{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.screen-head p{
+  color:var(--muted);
+}
+
+/* ================= FORM ================= */
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  border:1px solid var(--border);
+  margin-bottom:20px;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.field{
+  margin-bottom:18px;
+}
+
+.field label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:14px;
+  border:1px solid #dfe4eb;
+  border-radius:11px;
+  outline:none;
+  background:#fff;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--orange);
+}
+
+/* ================= INTEREST ================= */
+
+.interests{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.interest{
+  border:1px solid var(--border);
+  background:#fff;
+  padding:13px 5px;
+  border-radius:10px;
+  text-align:center;
   font-size:13px;
 }
 
-.trip-button{
-  border:1px solid #ff6b35;
-  background:white;
-  color:#ff6b35;
-  border-radius:10px;
-  padding:10px 17px;
+.interest.selected{
+  border-color:var(--orange);
+  background:#fff1eb;
+  color:var(--orange);
   font-weight:bold;
-  cursor:pointer;
 }
 
-/* FOOTER */
-.footer{
-  margin-top:50px;
-  background:#172033;
+/* ================= ROUTE ================= */
+
+.route-grid{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:20px;
+}
+
+.route-list{
+  background:white;
+  border-radius:18px;
+  border:1px solid var(--border);
+  padding:20px;
+}
+
+.route-item{
+  padding:18px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.route-item:last-child{
+  border-bottom:0;
+}
+
+.route-item strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.route-item span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.cost{
+  background:var(--dark);
   color:white;
-  padding:35px 0 90px;
+  border-radius:18px;
+  padding:25px;
+  height:max-content;
 }
 
-.footer-content{
+.cost-row{
   display:flex;
   justify-content:space-between;
-  gap:30px;
+  margin:14px 0;
+  color:#c8cfda;
 }
 
-.footer p{
-  color:#aeb7c7;
+.total{
+  border-top:1px solid #3b4558;
+  padding-top:18px;
+  margin-top:18px;
+  display:flex;
+  justify-content:space-between;
+  font-size:20px;
+  font-weight:bold;
+}
+
+/* ================= PACKAGE ================= */
+
+.package-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+
+.package{
+  background:white;
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  position:relative;
+}
+
+.package.best{
+  border-color:var(--orange);
+}
+
+.package h3{
+  margin-bottom:8px;
+}
+
+.package .tag{
+  display:inline-block;
+  background:#fff0e9;
+  color:var(--orange);
+  font-size:11px;
+  padding:5px 8px;
+  border-radius:10px;
+  margin-bottom:12px;
+}
+
+.package ul{
+  list-style:none;
+  margin:15px 0;
+}
+
+.package li{
+  font-size:13px;
+  margin:10px 0;
+  color:#637084;
+}
+
+/* ================= CART ================= */
+
+.cart-item{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.cart-left{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.cart-icon{
+  width:55px;
+  height:55px;
+  border-radius:13px;
+  background:#fff1eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+}
+
+.cart-item p{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* ================= BOOKING ================= */
+
+.summary{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.summary-row:last-child{
+  border-bottom:0;
+}
+
+.summary-row span{
+  color:var(--muted);
+}
+
+/* ================= PAYMENT ================= */
+
+.payment-options{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.payment{
+  border:2px solid var(--border);
+  border-radius:13px;
+  padding:18px;
+  text-align:center;
+  background:#fff;
+}
+
+.payment.selected{
+  border-color:var(--orange);
+  background:#fff4ef;
+}
+
+/* ================= SUCCESS ================= */
+
+.success{
+  text-align:center;
+  background:white;
+  border-radius:22px;
+  padding:55px 25px;
+  border:1px solid var(--border);
+}
+
+.success-icon{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:#e7f8ef;
+  color:var(--green);
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+}
+
+.booking-number{
+  display:inline-block;
+  margin:18px 0;
+  background:#f4f6f9;
+  padding:12px 20px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:var(--dark);
+  color:white;
+  margin-top:50px;
+  padding:35px 0 100px;
+}
+
+footer p{
+  color:#abb5c4;
   margin-top:8px;
   font-size:13px;
 }
 
-/* MOBILE NAV */
+/* ================= MOBILE NAV ================= */
+
 .mobile-nav{
   display:none;
 }
 
-/* RESPONSIVE */
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:900px){
+
   .nav{
     display:none;
   }
@@ -395,12 +657,22 @@ button,input{
     grid-template-columns:repeat(3,1fr);
   }
 
-  .destination-grid{
+  .dest-grid{
     grid-template-columns:repeat(2,1fr);
   }
+
+  .package-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .route-grid{
+    grid-template-columns:1fr;
+  }
+
 }
 
 @media(max-width:600px){
+
   .container{
     padding:0 14px;
   }
@@ -419,15 +691,15 @@ button,input{
   }
 
   .hero h1{
-    font-size:31px;
+    font-size:32px;
   }
 
-  .search-box{
+  .hero-search{
     flex-direction:column;
   }
 
-  .search-btn{
-    padding:14px;
+  .hero-search button{
+    width:100%;
   }
 
   .quick-grid{
@@ -435,77 +707,94 @@ button,input{
     gap:8px;
   }
 
-  .quick-card{
-    padding:14px 5px;
+  .quick{
+    padding:13px 4px;
   }
 
   .quick-icon{
-    width:42px;
-    height:42px;
-    font-size:21px;
+    width:40px;
+    height:40px;
   }
 
-  .destination-grid{
+  .dest-grid{
     grid-template-columns:1fr 1fr;
     gap:10px;
   }
 
-  .destination-image{
-    height:115px;
+  .dest-img{
+    height:110px;
   }
 
-  .ai-card{
+  .ai{
     flex-direction:column;
     align-items:flex-start;
   }
 
-  .trip-card{
-    align-items:flex-start;
+  .grid2{
+    grid-template-columns:1fr;
+    gap:0;
   }
 
-  .footer-content{
-    flex-direction:column;
+  .interests{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .package-grid{
+    grid-template-columns:1fr;
+  }
+
+  .payment-options{
+    grid-template-columns:1fr;
+  }
+
+  .cart-item{
+    align-items:flex-start;
+    gap:10px;
   }
 
   .mobile-nav{
-    display:flex;
     position:fixed;
     bottom:0;
     left:0;
     right:0;
     height:65px;
-    background:white;
-    border-top:1px solid #e5e8ed;
-    z-index:200;
+    background:#fff;
+    border-top:1px solid var(--border);
+    display:flex;
     justify-content:space-around;
     align-items:center;
+    z-index:2000;
   }
 
-  .mobile-nav div{
-    text-align:center;
-    font-size:11px;
+  .mobile-nav button{
+    border:0;
+    background:none;
     color:#667085;
-    cursor:pointer;
+    font-size:11px;
   }
 
-  .mobile-nav .active{
-    color:#ff6b35;
+  .mobile-nav button.active{
+    color:var(--orange);
     font-weight:bold;
   }
 
   .mobile-icon{
-    font-size:21px;
     display:block;
+    font-size:20px;
     margin-bottom:3px;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="header">
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
   <div class="container header-inner">
 
     <div class="logo">
@@ -513,13 +802,14 @@ button,input{
     </div>
 
     <nav class="nav">
-      <a onclick="goHome()">Home</a>
-      <a onclick="explore()">Explore</a>
-      <a onclick="myTrip()">My Trip</a>
-      <a onclick="openCart()">Cart</a>
+      <button onclick="showScreen('home')">Home</button>
+      <button onclick="showScreen('planner')">AI Trip</button>
+      <button onclick="showScreen('route')">Smart Route</button>
+      <button onclick="showScreen('cart')">Cart</button>
+      <button onclick="showScreen('booking')">Booking</button>
     </nav>
 
-    <div class="header-actions">
+    <div class="header-right">
       <button class="lang">🌐 ID</button>
       <div class="profile">U</div>
     </div>
@@ -528,36 +818,321 @@ button,input{
 </header>
 
 
-<main class="container">
+<!-- =========================================================
+     HOME / DASHBOARD
+========================================================= -->
 
-<!-- HERO -->
-<section class="hero">
+<section id="home" class="screen active">
 
-  <div class="hero-content">
+  <div class="container">
 
-    <div class="badge">✨ AI Journey & Experience Marketplace</div>
+    <div class="hero">
 
-    <h1>
-      Plan your next<br>
-      <span>amazing journey.</span>
-    </h1>
+      <div class="badge">
+        ✨ AI Journey & Experience Marketplace
+      </div>
 
-    <p>
-      Cari destinasi, hotel, restoran, tiket, transportasi,
-      aktivitas dan buat perjalanan lengkap dengan bantuan AI HobbiGo.
-    </p>
+      <h1>
+        Plan your next
+        <span>amazing journey.</span>
+      </h1>
 
-    <div class="search-box">
+      <p>
+        Cari destinasi, hotel, restoran, tiket, transportasi,
+        aktivitas dan buat perjalanan lengkap bersama AI HobbiGo.
+      </p>
 
-      <input
-        id="destinationInput"
-        class="search-input"
-        type="text"
-        placeholder="Mau pergi ke mana? Contoh: Bali"
-      >
+      <div class="hero-search">
 
-      <button class="search-btn" onclick="searchDestination()">
-        🔍 Explore
+        <input
+          id="homeDestination"
+          placeholder="Mau pergi ke mana? Contoh: Bali"
+        >
+
+        <button class="primary" onclick="startFromSearch()">
+          🔍 Explore
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- QUICK MENU -->
+
+    <div class="section">
+
+      <div class="section-title">
+        <h2>Explore HobbiGo</h2>
+      </div>
+
+      <div class="quick-grid">
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🏨</div>
+          <h3>Hotel</h3>
+        </div>
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🍽️</div>
+          <h3>Restaurant</h3>
+        </div>
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🎟️</div>
+          <h3>Ticket</h3>
+        </div>
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🚗</div>
+          <h3>Transport</h3>
+        </div>
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🏝️</div>
+          <h3>Attraction</h3>
+        </div>
+
+        <div class="quick" onclick="showScreen('planner')">
+          <div class="quick-icon">🎯</div>
+          <h3>Activities</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- AI -->
+
+    <div class="section">
+
+      <div class="ai">
+
+        <div>
+          <h2>✨ Create Your Trip with AI</h2>
+
+          <p>
+            HobbiGo membantu membuat itinerary,
+            smart route, package dan estimasi biaya.
+          </p>
+        </div>
+
+        <button
+          class="primary"
+          onclick="showScreen('planner')"
+        >
+          Create My Trip →
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESTINATION -->
+
+    <div class="section">
+
+      <div class="section-title">
+        <h2>Recommended for You</h2>
+      </div>
+
+      <div class="dest-grid">
+
+        <div class="dest">
+          <div class="dest-img">🏝️</div>
+          <div class="dest-info">
+            <h3>Bali</h3>
+            <p>Beach • Culture • Culinary</p>
+            <div class="price">Mulai Rp 500K</div>
+          </div>
+        </div>
+
+        <div class="dest">
+          <div class="dest-img">🌋</div>
+          <div class="dest-info">
+            <h3>Yogyakarta</h3>
+            <p>Culture • Heritage • Food</p>
+            <div class="price">Mulai Rp 350K</div>
+          </div>
+        </div>
+
+        <div class="dest">
+          <div class="dest-img">🏔️</div>
+          <div class="dest-info">
+            <h3>Bandung</h3>
+            <p>Nature • Culinary • Shopping</p>
+            <div class="price">Mulai Rp 300K</div>
+          </div>
+        </div>
+
+        <div class="dest">
+          <div class="dest-img">🌊</div>
+          <div class="dest-info">
+            <h3>Labuan Bajo</h3>
+            <p>Island • Ocean • Adventure</p>
+            <div class="price">Mulai Rp 900K</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     TRIP PLANNER
+========================================================= -->
+
+<section id="planner" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>✨ AI Trip Planner</h1>
+      <p>Buat perjalanan sesuai kebutuhan kamu.</p>
+    </div>
+
+
+    <div class="card">
+
+      <div class="grid2">
+
+        <div class="field">
+
+          <label>📍 Tujuan</label>
+
+          <input
+            id="destination"
+            placeholder="Contoh: Bali"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>📅 Tanggal</label>
+
+          <input
+            id="tripDate"
+            type="date"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="grid2">
+
+        <div class="field">
+
+          <label>👥 Jumlah Orang</label>
+
+          <select id="people">
+
+            <option value="">Pilih jumlah</option>
+            <option>1 Orang</option>
+            <option>2 Orang</option>
+            <option>3 Orang</option>
+            <option>4 Orang</option>
+            <option>5 Orang</option>
+            <option>6+ Orang</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label>🕐 Durasi</label>
+
+          <select id="duration">
+
+            <option value="">Pilih durasi</option>
+            <option>1 Hari</option>
+            <option>2 Hari</option>
+            <option>3 Hari</option>
+            <option>4 Hari</option>
+            <option>5 Hari</option>
+            <option>7 Hari</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>🎒 Gaya Trip</label>
+
+        <select id="tripStyle">
+
+          <option value="">Pilih gaya</option>
+          <option>Economy</option>
+          <option>Comfort</option>
+          <option>Premium</option>
+          <option>Exclusive</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>❤️ Minat</label>
+
+        <div class="interests">
+
+          <div class="interest" onclick="selectInterest(this)">
+            🏖️ Beach
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            🍜 Culinary
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            🏛️ Culture
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            🏔️ Nature
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            🛍️ Shopping
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            🎯 Adventure
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            📸 Photography
+          </div>
+
+          <div class="interest" onclick="selectInterest(this)">
+            👨‍👩‍👧 Family
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <button class="primary" onclick="generateTrip()">
+        ✨ Generate Trip
       </button>
 
     </div>
@@ -567,44 +1142,90 @@ button,input{
 </section>
 
 
-<!-- QUICK MENU -->
-<section class="section">
+<!-- =========================================================
+     SMART ROUTE
+========================================================= -->
 
-  <div class="section-title">
-    <h2>Explore HobbiGo</h2>
-    <a onclick="explore()">View All →</a>
-  </div>
+<section id="route" class="screen">
 
-  <div class="quick-grid">
+  <div class="container">
 
-    <div class="quick-card" onclick="openFeature('Hotel')">
-      <div class="quick-icon">🏨</div>
-      <h3>Hotel</h3>
+    <div class="screen-head">
+      <h1>🗺️ Smart Route</h1>
+      <p>AI HobbiGo mengatur perjalanan berdasarkan tujuan dan minat kamu.</p>
     </div>
 
-    <div class="quick-card" onclick="openFeature('Restaurant')">
-      <div class="quick-icon">🍽️</div>
-      <h3>Restaurant</h3>
-    </div>
 
-    <div class="quick-card" onclick="openFeature('Ticket')">
-      <div class="quick-icon">🎟️</div>
-      <h3>Ticket</h3>
-    </div>
+    <div class="route-grid">
 
-    <div class="quick-card" onclick="openFeature('Transport')">
-      <div class="quick-icon">🚗</div>
-      <h3>Transport</h3>
-    </div>
+      <div class="route-list">
 
-    <div class="quick-card" onclick="openFeature('Attraction')">
-      <div class="quick-icon">🏝️</div>
-      <h3>Attraction</h3>
-    </div>
+        <h2 id="routeDestination">
+          Trip Destination
+        </h2>
 
-    <div class="quick-card" onclick="openFeature('Activities')">
-      <div class="quick-icon">🎯</div>
-      <h3>Activities</h3>
+        <div class="route-item">
+          <strong>🌅 Day 1 — Arrival</strong>
+          <span>Arrival → Hotel → Local Area → Dinner</span>
+        </div>
+
+        <div class="route-item">
+          <strong>🏝️ Day 2 — Main Experience</strong>
+          <span>Tourist Spot → Activity → Culinary</span>
+        </div>
+
+        <div class="route-item">
+          <strong>📸 Day 3 — Explore</strong>
+          <span>Photo Spot → Shopping → Local Experience</span>
+        </div>
+
+        <div class="route-item">
+          <strong>✈️ Final Day — Return</strong>
+          <span>Breakfast → Free Time → Departure</span>
+        </div>
+
+      </div>
+
+
+      <div class="cost">
+
+        <h2>Estimated Cost</h2>
+
+        <div class="cost-row">
+          <span>Hotel</span>
+          <strong id="hotelCost">Rp 1.200.000</strong>
+        </div>
+
+        <div class="cost-row">
+          <span>Transport</span>
+          <strong>Rp 700.000</strong>
+        </div>
+
+        <div class="cost-row">
+          <span>Activities</span>
+          <strong>Rp 500.000</strong>
+        </div>
+
+        <div class="cost-row">
+          <span>Food</span>
+          <strong>Rp 600.000</strong>
+        </div>
+
+        <div class="total">
+          <span>Total</span>
+          <span id="routeTotal">Rp 3.000.000</span>
+        </div>
+
+        <button
+          class="primary"
+          style="width:100%;margin-top:20px"
+          onclick="showScreen('itinerary')"
+        >
+          Continue →
+        </button>
+
+      </div>
+
     </div>
 
   </div>
@@ -612,73 +1233,476 @@ button,input{
 </section>
 
 
-<!-- AI TRIP PLANNER -->
-<section class="section">
+<!-- =========================================================
+     ITINERARY
+========================================================= -->
 
-  <div class="ai-card">
+<section id="itinerary" class="screen">
 
-    <div>
-      <h2>✨ Create Your Trip with AI</h2>
+  <div class="container">
 
-      <p>
-        Biarkan HobbiGo membantu membuat itinerary,
-        smart route dan estimasi biaya perjalanan.
+    <div class="screen-head">
+      <h1>📅 AI Itinerary</h1>
+      <p>Rencana perjalanan yang sudah disusun HobbiGo.</p>
+    </div>
+
+
+    <div class="card">
+
+      <h2 id="itineraryTitle">
+        Your Trip
+      </h2>
+
+      <br>
+
+      <div class="route-item">
+        <strong>Day 1 — Arrival</strong>
+        <span>Airport → Hotel → Check-in → Dinner</span>
+      </div>
+
+      <div class="route-item">
+        <strong>Day 2 — Experience</strong>
+        <span>Attraction → Lunch → Activity → Dinner</span>
+      </div>
+
+      <div class="route-item">
+        <strong>Day 3 — Explore</strong>
+        <span>Local Spot → Shopping → Culinary</span>
+      </div>
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="showScreen('package')"
+      >
+        Choose Package →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PACKAGE
+========================================================= -->
+
+<section id="package" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>📦 Choose Your Package</h1>
+      <p>Pilih paket perjalanan sesuai kebutuhan.</p>
+    </div>
+
+
+    <div class="package-grid">
+
+      <div class="package">
+
+        <span class="tag">VALUE</span>
+
+        <h3>Economy</h3>
+
+        <ul>
+          <li>✓ Hotel basic</li>
+          <li>✓ Transport standard</li>
+          <li>✓ Selected activities</li>
+          <li>✓ Basic itinerary</li>
+        </ul>
+
+        <h3>Rp 2.500.000</h3>
+
+        <button
+          class="primary"
+          style="width:100%;margin-top:15px"
+          onclick="choosePackage('Economy','2500000')"
+        >
+          Choose
+        </button>
+
+      </div>
+
+
+      <div class="package best">
+
+        <span class="tag">⭐ BEST VALUE</span>
+
+        <h3>Comfort</h3>
+
+        <ul>
+          <li>✓ Better hotel</li>
+          <li>✓ Private transport</li>
+          <li>✓ Popular activities</li>
+          <li>✓ Smart itinerary</li>
+        </ul>
+
+        <h3>Rp 3.500.000</h3>
+
+        <button
+          class="primary"
+          style="width:100%;margin-top:15px"
+          onclick="choosePackage('Comfort','3500000')"
+        >
+          Choose
+        </button>
+
+      </div>
+
+
+      <div class="package">
+
+        <span class="tag">PREMIUM</span>
+
+        <h3>Premium</h3>
+
+        <ul>
+          <li>✓ Premium hotel</li>
+          <li>✓ Premium transport</li>
+          <li>✓ Premium activities</li>
+          <li>✓ Priority support</li>
+        </ul>
+
+        <h3>Rp 5.500.000</h3>
+
+        <button
+          class="primary"
+          style="width:100%;margin-top:15px"
+          onclick="choosePackage('Premium','5500000')"
+        >
+          Choose
+        </button>
+
+      </div>
+
+
+      <div class="package">
+
+        <span class="tag">EXCLUSIVE</span>
+
+        <h3>Exclusive</h3>
+
+        <ul>
+          <li>✓ Luxury hotel</li>
+          <li>✓ Private vehicle</li>
+          <li>✓ Exclusive experience</li>
+          <li>✓ VIP support</li>
+        </ul>
+
+        <h3>Rp 8.500.000</h3>
+
+        <button
+          class="primary"
+          style="width:100%;margin-top:15px"
+          onclick="choosePackage('Exclusive','8500000')"
+        >
+          Choose
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CART
+========================================================= -->
+
+<section id="cart" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>🛒 My Cart</h1>
+      <p>Review produk perjalanan kamu.</p>
+    </div>
+
+
+    <div id="cartContent">
+
+      <div class="cart-item">
+
+        <div class="cart-left">
+
+          <div class="cart-icon">📦</div>
+
+          <div>
+            <strong id="cartPackage">
+              Travel Package
+            </strong>
+
+            <p id="cartDestination">
+              Destination
+            </p>
+
+          </div>
+
+        </div>
+
+        <strong id="cartPrice">
+          Rp 0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="summary-row">
+        <strong>Subtotal</strong>
+        <strong id="cartSubtotal">Rp 0</strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Service Fee</span>
+        <span>Rp 50.000</span>
+      </div>
+
+      <div class="summary-row">
+        <strong>Total</strong>
+        <strong id="cartTotal">Rp 50.000</strong>
+      </div>
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="showScreen('booking')"
+      >
+        Continue Booking →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     BOOKING
+========================================================= -->
+
+<section id="booking" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>📝 Booking</h1>
+      <p>Lengkapi data pemesan.</p>
+    </div>
+
+
+    <div class="card">
+
+      <div class="grid2">
+
+        <div class="field">
+
+          <label>Nama Lengkap</label>
+
+          <input
+            id="customerName"
+            placeholder="Nama lengkap"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>No. WhatsApp</label>
+
+          <input
+            id="customerPhone"
+            placeholder="08xxxxxxxxxx"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Email</label>
+
+        <input
+          id="customerEmail"
+          type="email"
+          placeholder="email@example.com"
+        >
+
+      </div>
+
+
+      <div class="summary">
+
+        <div class="summary-row">
+          <span>Destination</span>
+          <strong id="bookingDestination">-</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Package</span>
+          <strong id="bookingPackage">-</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Total</span>
+          <strong id="bookingTotal">Rp 0</strong>
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="goPayment()"
+      >
+        Continue to Payment →
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PAYMENT
+========================================================= -->
+
+<section id="payment" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>💳 Payment</h1>
+      <p>Pilih metode pembayaran.</p>
+    </div>
+
+
+    <div class="card">
+
+      <div class="payment-options">
+
+        <div
+          class="payment"
+          onclick="selectPayment(this)"
+        >
+          💳
+          <br>
+          Credit Card
+        </div>
+
+        <div
+          class="payment"
+          onclick="selectPayment(this)"
+        >
+          🏦
+          <br>
+          Bank Transfer
+        </div>
+
+        <div
+          class="payment"
+          onclick="selectPayment(this)"
+        >
+          📱
+          <br>
+          E-Wallet
+        </div>
+
+      </div>
+
+
+      <div class="summary">
+
+        <div class="summary-row">
+          <span>Package</span>
+          <strong id="paymentPackage">-</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Total Payment</span>
+          <strong id="paymentTotal">Rp 0</strong>
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="primary"
+        onclick="completePayment()"
+      >
+        🔒 Pay & Confirm Booking
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     SUCCESS
+========================================================= -->
+
+<section id="success" class="screen">
+
+  <div class="container">
+
+    <div class="screen-head">
+      <h1>Booking Completed</h1>
+    </div>
+
+    <div class="success">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h1>Booking Berhasil!</h1>
+
+      <p style="margin-top:10px;color:#718096">
+        Terima kasih telah menggunakan HobbiGo.
       </p>
-    </div>
 
-    <button class="ai-button" onclick="createTrip()">
-      Create My Trip →
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- DESTINATIONS -->
-<section class="section">
-
-  <div class="section-title">
-    <h2>Recommended for You</h2>
-    <a onclick="explore()">Explore More →</a>
-  </div>
-
-  <div class="destination-grid">
-
-    <div class="destination-card">
-      <div class="destination-image">🏝️</div>
-      <div class="destination-info">
-        <h3>Bali</h3>
-        <p>Beach • Culture • Culinary</p>
-        <div class="price">Mulai Rp 500K</div>
+      <div class="booking-number">
+        Booking ID:
+        <span id="bookingId">
+          HBG-000000
+        </span>
       </div>
-    </div>
 
-    <div class="destination-card">
-      <div class="destination-image">🌋</div>
-      <div class="destination-info">
-        <h3>Yogyakarta</h3>
-        <p>Culture • Heritage • Food</p>
-        <div class="price">Mulai Rp 350K</div>
-      </div>
-    </div>
+      <p style="color:#718096">
+        Detail perjalanan akan tersedia di My Trip.
+      </p>
 
-    <div class="destination-card">
-      <div class="destination-image">🏔️</div>
-      <div class="destination-info">
-        <h3>Bandung</h3>
-        <p>Nature • Culinary • Shopping</p>
-        <div class="price">Mulai Rp 300K</div>
-      </div>
-    </div>
+      <br>
 
-    <div class="destination-card">
-      <div class="destination-image">🌊</div>
-      <div class="destination-info">
-        <h3>Labuan Bajo</h3>
-        <p>Island • Ocean • Adventure</p>
-        <div class="price">Mulai Rp 900K</div>
-      </div>
+      <button
+        class="primary"
+        onclick="showScreen('home')"
+      >
+        ← Back to HobbiGo
+      </button>
+
     </div>
 
   </div>
@@ -686,167 +1710,461 @@ button,input{
 </section>
 
 
-<!-- MY TRIP -->
-<section class="section">
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
-  <div class="section-title">
-    <h2>My Trip</h2>
-    <a onclick="myTrip()">View Trip →</a>
-  </div>
+<footer>
 
-  <div class="trip-card">
+  <div class="container">
 
-    <div class="trip-left">
+    <h2>HOBBIGO</h2>
 
-      <div class="trip-icon">🧳</div>
+    <p>
+      AI Journey & Experience Marketplace
+    </p>
 
-      <div>
-        <h3>Plan your first trip</h3>
-        <p>Belum ada perjalanan aktif. Yuk mulai membuat trip.</p>
-      </div>
-
-    </div>
-
-    <button class="trip-button" onclick="createTrip()">
-      Start Planning
-    </button>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<!-- FOOTER -->
-<footer class="footer">
-
-  <div class="container footer-content">
-
-    <div>
-      <h2>HOBBIGO</h2>
-      <p>AI Journey & Experience Marketplace</p>
-    </div>
-
-    <div>
-      <strong>Travel smarter.</strong>
-      <p>Search → Plan → Configure → Package → Book → Experience</p>
-    </div>
+    <p>
+      Search → Plan → Configure → Package →
+      Book → Experience → Re-optimize
+    </p>
 
   </div>
 
 </footer>
 
 
-<!-- MOBILE NAV -->
+<!-- =========================================================
+     MOBILE NAV
+========================================================= -->
+
 <div class="mobile-nav">
 
-  <div class="active" onclick="goHome()">
+  <button
+    class="active"
+    onclick="showScreen('home')"
+  >
     <span class="mobile-icon">⌂</span>
     Home
-  </div>
+  </button>
 
-  <div onclick="explore()">
-    <span class="mobile-icon">🔎</span>
-    Explore
-  </div>
-
-  <div onclick="createTrip()">
+  <button onclick="showScreen('planner')">
     <span class="mobile-icon">✨</span>
     AI Trip
-  </div>
+  </button>
 
-  <div onclick="openCart()">
+  <button onclick="showScreen('route')">
+    <span class="mobile-icon">🗺️</span>
+    Route
+  </button>
+
+  <button onclick="showScreen('cart')">
     <span class="mobile-icon">🛒</span>
     Cart
-  </div>
+  </button>
 
-  <div onclick="myTrip()">
+  <button onclick="showScreen('booking')">
     <span class="mobile-icon">🧳</span>
     My Trip
-  </div>
+  </button>
 
 </div>
 
 
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
 
-function goHome(){
+let tripData = {
+
+  destination:"",
+  date:"",
+  people:"",
+  duration:"",
+  style:"",
+  interest:"",
+  package:"",
+  price:0,
+  payment:""
+
+};
+
+
+/* ================= SCREEN ================= */
+
+function showScreen(screen){
+
+  document
+    .querySelectorAll(".screen")
+    .forEach(function(item){
+
+      item.classList.remove("active");
+
+    });
+
+  const target =
+    document.getElementById(screen);
+
+  if(target){
+
+    target.classList.add("active");
+
+  }
+
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
-}
-
-function explore(){
-
-  document.querySelector(".section").scrollIntoView({
-    behavior:"smooth"
-  });
 
 }
 
-function createTrip(){
 
-  alert(
-    "✨ AI Trip Planner\n\n" +
-    "Selanjutnya kita akan menghubungkan tombol ini " +
-    "ke Generate Trip HobbiGo V26."
-  );
+/* ================= HOME SEARCH ================= */
 
-}
+function startFromSearch(){
 
-function myTrip(){
+  const value =
+    document
+      .getElementById("homeDestination")
+      .value
+      .trim();
 
-  alert(
-    "🧳 My Trip\n\n" +
-    "Menu My Trip HobbiGo."
-  );
-
-}
-
-function openCart(){
-
-  alert(
-    "🛒 My Cart\n\n" +
-    "Menu Cart HobbiGo."
-  );
-
-}
-
-function openFeature(feature){
-
-  alert(
-    "HOBBIGO " + feature + "\n\n" +
-    "Menu " + feature + " siap dikembangkan."
-  );
-
-}
-
-function searchDestination(){
-
-  const destination =
-    document.getElementById("destinationInput").value.trim();
-
-  if(destination === ""){
+  if(value===""){
 
     alert("Silakan masukkan tujuan terlebih dahulu.");
 
-    document
-      .getElementById("destinationInput")
-      .focus();
-
     return;
+
   }
 
-  alert(
-    "🔎 Mencari perjalanan ke " +
-    destination +
-    "\n\n" +
-    "Selanjutnya akan kita hubungkan ke Trip Planner HobbiGo."
-  );
+  document
+    .getElementById("destination")
+    .value=value;
+
+  showScreen("planner");
 
 }
+
+
+/* ================= INTEREST ================= */
+
+function selectInterest(element){
+
+  document
+    .querySelectorAll(".interest")
+    .forEach(function(item){
+
+      item.classList.remove("selected");
+
+    });
+
+  element.classList.add("selected");
+
+  tripData.interest =
+    element.innerText.trim();
+
+}
+
+
+/* ================= GENERATE TRIP ================= */
+
+function generateTrip(){
+
+  const destination =
+    document
+      .getElementById("destination")
+      .value
+      .trim();
+
+  const date =
+    document
+      .getElementById("tripDate")
+      .value;
+
+  const people =
+    document
+      .getElementById("people")
+      .value;
+
+  const duration =
+    document
+      .getElementById("duration")
+      .value;
+
+  const style =
+    document
+      .getElementById("tripStyle")
+      .value;
+
+  const interestElement =
+    document.querySelector(".interest.selected");
+
+
+  if(destination===""){
+
+    alert("Silakan isi tujuan.");
+
+    return;
+
+  }
+
+  if(date===""){
+
+    alert("Silakan pilih tanggal.");
+
+    return;
+
+  }
+
+  if(people===""){
+
+    alert("Silakan pilih jumlah orang.");
+
+    return;
+
+  }
+
+  if(duration===""){
+
+    alert("Silakan pilih durasi.");
+
+    return;
+
+  }
+
+  if(style===""){
+
+    alert("Silakan pilih gaya trip.");
+
+    return;
+
+  }
+
+  if(!interestElement){
+
+    alert("Silakan pilih minat perjalanan.");
+
+    return;
+
+  }
+
+
+  tripData.destination=destination;
+  tripData.date=date;
+  tripData.people=people;
+  tripData.duration=duration;
+  tripData.style=style;
+  tripData.interest=interestElement.innerText.trim();
+
+
+  document.getElementById("routeDestination").innerText =
+    "Smart Route — " + destination;
+
+  document.getElementById("itineraryTitle").innerText =
+    destination + " — AI Itinerary";
+
+
+  showScreen("route");
+
+}
+
+
+/* ================= PACKAGE ================= */
+
+function choosePackage(name,price){
+
+  tripData.package=name;
+  tripData.price=parseInt(price);
+
+
+  document.getElementById("cartPackage").innerText =
+    name + " Package";
+
+  document.getElementById("cartDestination").innerText =
+    tripData.destination;
+
+  document.getElementById("cartPrice").innerText =
+    formatRupiah(tripData.price);
+
+  document.getElementById("cartSubtotal").innerText =
+    formatRupiah(tripData.price);
+
+  document.getElementById("cartTotal").innerText =
+    formatRupiah(tripData.price + 50000);
+
+
+  document.getElementById("bookingDestination").innerText =
+    tripData.destination;
+
+  document.getElementById("bookingPackage").innerText =
+    name;
+
+  document.getElementById("bookingTotal").innerText =
+    formatRupiah(tripData.price + 50000);
+
+
+  showScreen("cart");
+
+}
+
+
+/* ================= PAYMENT ================= */
+
+function selectPayment(element){
+
+  document
+    .querySelectorAll(".payment")
+    .forEach(function(item){
+
+      item.classList.remove("selected");
+
+    });
+
+  element.classList.add("selected");
+
+  tripData.payment =
+    element.innerText.trim();
+
+}
+
+
+/* ================= GO PAYMENT ================= */
+
+function goPayment(){
+
+  const name =
+    document
+      .getElementById("customerName")
+      .value
+      .trim();
+
+  const phone =
+    document
+      .getElementById("customerPhone")
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById("customerEmail")
+      .value
+      .trim();
+
+
+  if(name===""){
+
+    alert("Silakan isi nama lengkap.");
+
+    return;
+
+  }
+
+  if(phone===""){
+
+    alert("Silakan isi nomor WhatsApp.");
+
+    return;
+
+  }
+
+  if(email===""){
+
+    alert("Silakan isi email.");
+
+    return;
+
+  }
+
+
+  document.getElementById("paymentPackage").innerText =
+    tripData.package;
+
+  document.getElementById("paymentTotal").innerText =
+    formatRupiah(tripData.price + 50000);
+
+
+  showScreen("payment");
+
+}
+
+
+/* ================= COMPLETE PAYMENT ================= */
+
+function completePayment(){
+
+  const selected =
+    document.querySelector(".payment.selected");
+
+
+  if(!selected){
+
+    alert("Silakan pilih metode pembayaran.");
+
+    return;
+
+  }
+
+
+  const id =
+    "HBG-" +
+    Math.floor(
+      100000 +
+      Math.random()*900000
+    );
+
+
+  document.getElementById("bookingId").innerText=id;
+
+
+  localStorage.setItem(
+    "hobbigo_trip",
+    JSON.stringify(tripData)
+  );
+
+
+  showScreen("success");
+
+}
+
+
+/* ================= FORMAT ================= */
+
+function formatRupiah(number){
+
+  return "Rp " +
+    Number(number)
+      .toLocaleString("id-ID");
+
+}
+
+
+/* ================= INITIAL DATA ================= */
+
+window.addEventListener("load",function(){
+
+  const saved =
+    localStorage.getItem("hobbigo_trip");
+
+  if(saved){
+
+    try{
+
+      const data =
+        JSON.parse(saved);
+
+      tripData=data;
+
+    }catch(error){
+
+      console.log("Data lama tidak dapat dibaca.");
+
+    }
+
+  }
+
+});
 
 </script>
 
