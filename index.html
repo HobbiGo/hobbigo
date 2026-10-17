@@ -3,498 +3,621 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HOBBIGO V21 - AI Journey Experience</title>
+<title>HobbiGo V22 - AI Journey & Experience Marketplace</title>
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  margin:0;
   font-family:Arial,Helvetica,sans-serif;
   background:#f5f7fb;
   color:#172033;
 }
 button,input,select{font:inherit}
-button{cursor:pointer;border:0}
-.topbar{
+button{cursor:pointer}
+header{
   position:sticky;
   top:0;
   z-index:1000;
   background:#fff;
-  border-bottom:1px solid #e7eaf0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  border-bottom:1px solid #e8ebf2;
   padding:14px 5%;
 }
+.nav{
+  max-width:1400px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
 .logo{
-  font-size:24px;
+  font-size:25px;
   font-weight:900;
-  color:#1264e8;
-  letter-spacing:-1px;
+  color:#0b67f0;
+  white-space:nowrap;
 }
 .logo span{color:#111}
-.nav{
+nav{
   display:flex;
-  gap:8px;
+  gap:18px;
+  flex:1;
+}
+nav button,.mobile-nav button{
+  background:none;
+  border:0;
+  color:#526071;
+  font-weight:700;
+  padding:9px 5px;
+}
+nav button:hover,.mobile-nav button:hover{color:#0b67f0}
+.nav-actions{
+  display:flex;
+  gap:9px;
   align-items:center;
 }
-.nav button{
-  background:transparent;
-  padding:9px 12px;
-  color:#344054;
-  border-radius:10px;
-  font-weight:700;
-}
-.nav button:hover{background:#eef4ff;color:#1264e8}
-.iconbtn{
-  position:relative;
-  background:#f3f6fb;
+.icon-btn{
+  border:1px solid #e5e9f1;
+  background:#fff;
   border-radius:12px;
-  padding:10px 12px;
-  margin-left:4px;
+  padding:9px 12px;
+  position:relative;
 }
 .badge{
   position:absolute;
-  top:-5px;
-  right:-5px;
-  background:#1264e8;
+  top:-6px;
+  right:-6px;
+  background:#ff4d67;
   color:white;
-  width:20px;
-  height:20px;
+  font-size:10px;
+  border-radius:20px;
+  padding:3px 6px;
+}
+.avatar{
+  width:38px;
+  height:38px;
   border-radius:50%;
-  font-size:11px;
+  background:#0b67f0;
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-}
-.avatar{
-  background:#111827;
-  color:#fff;
-  border-radius:50%;
-  width:38px;
-  height:38px;
   font-weight:bold;
 }
-.mobile-menu{display:none}
-.page{display:none}
-.page.active{display:block}
-.container{
-  width:90%;
-  max-width:1250px;
+.menu-btn{display:none}
+
+.page{
+  display:none;
+  max-width:1400px;
   margin:auto;
+  padding:30px 5%;
 }
+.page.active{display:block}
+
 .hero{
-  padding:55px 0;
-  background:linear-gradient(135deg,#eaf3ff,#ffffff);
+  background:linear-gradient(135deg,#0b67f0,#5538ee);
+  color:white;
+  border-radius:28px;
+  padding:45px;
+  margin-bottom:25px;
+  overflow:hidden;
 }
 .hero h1{
-  font-size:46px;
-  margin:10px 0;
-  line-height:1.05;
+  font-size:42px;
+  margin-bottom:12px;
 }
-.hero h1 span{color:#1264e8}
-.hero p{font-size:18px;color:#667085}
+.hero p{
+  opacity:.92;
+  max-width:700px;
+  line-height:1.6;
+}
 .eyebrow{
-  color:#1264e8;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:1px;
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1.5px;
+  margin-bottom:12px;
+  opacity:.85;
 }
-.searchbox{
-  background:#fff;
-  padding:14px;
-  border-radius:18px;
-  box-shadow:0 12px 35px rgba(0,0,0,.08);
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr auto;
-  gap:10px;
+.search-box{
   margin-top:25px;
+  background:#fff;
+  padding:10px;
+  border-radius:17px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
-input,select{
-  width:100%;
-  border:1px solid #d9dee8;
-  padding:13px;
-  border-radius:10px;
+.search-box input,.search-box select{
+  border:0;
+  padding:14px;
+  flex:1;
+  min-width:130px;
   outline:none;
-  background:white;
+  color:#172033;
 }
-input:focus,select:focus{border-color:#1264e8}
 .primary{
-  background:#1264e8;
+  border:0;
+  background:#0b67f0;
   color:#fff;
-  padding:12px 18px;
-  border-radius:10px;
-  font-weight:800;
+  padding:13px 20px;
+  border-radius:12px;
+  font-weight:bold;
 }
-.primary:hover{background:#0c51c4}
 .secondary{
-  background:#eef4ff;
-  color:#1264e8;
-  padding:11px 16px;
-  border-radius:10px;
-  font-weight:800;
+  border:1px solid #dfe5ef;
+  background:#fff;
+  color:#172033;
+  padding:12px 17px;
+  border-radius:11px;
+  font-weight:bold;
 }
 .dark{
   background:#172033;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:10px;
-  font-weight:800;
+  color:white;
+  border:0;
 }
-.danger{
-  background:#fff0f0;
-  color:#d92d20;
-  padding:8px 12px;
-  border-radius:8px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
 }
-.section{padding:35px 0}
+.card{
+  background:#fff;
+  border:1px solid #e7eaf0;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 5px 18px rgba(20,35,70,.04);
+}
+.card h3{margin:8px 0}
+.card p{
+  color:#697386;
+  line-height:1.5;
+  font-size:14px;
+}
 .section-title{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:18px;
+  margin:28px 0 15px;
 }
-.section-title h2{margin:0;font-size:27px}
-.dashboard-strip{
+.section-title h2{font-size:25px}
+.section-title span{color:#6b7280;font-size:13px}
+
+.stats{
   display:grid;
   grid-template-columns:repeat(5,1fr);
   gap:12px;
-  margin-top:-20px;
-  position:relative;
+  margin:20px 0;
 }
 .stat{
   background:#fff;
+  border:1px solid #e8ebf2;
   border-radius:16px;
-  padding:18px;
-  box-shadow:0 6px 20px rgba(0,0,0,.06);
+  padding:17px;
 }
 .stat strong{
   display:block;
-  font-size:23px;
-  margin-top:6px;
+  font-size:22px;
+  margin-bottom:5px;
 }
-.stat small{color:#667085}
-.command{
-  background:#111827;
-  color:white;
-  border-radius:22px;
-  padding:28px;
-}
-.command-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-.command-card{
-  background:rgba(255,255,255,.1);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:15px;
-  padding:20px;
-  cursor:pointer;
-}
-.command-card:hover{background:rgba(255,255,255,.18)}
-.command-card b{display:block;margin:10px 0}
-.categories,.destinations,.products{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-}
+.stat small{color:#758096}
+
 .category{
-  background:#fff;
-  padding:22px;
-  border-radius:16px;
   text-align:center;
-  box-shadow:0 5px 18px rgba(0,0,0,.05);
-  cursor:pointer;
+  padding:20px 10px;
 }
-.category .emoji{font-size:32px}
-.destination{
+.category .emoji{font-size:35px}
+.category strong{display:block;margin-top:8px}
+
+.dest{
   min-height:150px;
-  border-radius:18px;
-  padding:22px;
-  color:#fff;
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  cursor:pointer;
-  background:linear-gradient(135deg,#1264e8,#53a0ff);
+  color:#fff;
+  overflow:hidden;
+  position:relative;
 }
-.destination:nth-child(2){background:linear-gradient(135deg,#0f766e,#34d399)}
-.destination:nth-child(3){background:linear-gradient(135deg,#7c3aed,#c084fc)}
-.destination:nth-child(4){background:linear-gradient(135deg,#ea580c,#fb923c)}
+.dest:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.7));
+}
+.dest>*{position:relative}
+.bali{background:linear-gradient(135deg,#13a8a0,#0b67f0)}
+.singapore{background:linear-gradient(135deg,#6b46e5,#ef476f)}
+.tokyo{background:linear-gradient(135deg,#e34b73,#ff9f43)}
+.lombok{background:linear-gradient(135deg,#168aad,#52b788)}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
 .product{
   background:#fff;
-  border-radius:17px;
+  border-radius:18px;
   overflow:hidden;
-  box-shadow:0 6px 20px rgba(0,0,0,.06);
+  border:1px solid #e7eaf0;
 }
 .product-img{
-  height:145px;
+  height:135px;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:55px;
   background:#eef4ff;
-  font-size:60px;
 }
-.product-body{padding:16px}
-.product-body h3{margin:5px 0}
-.product-body p{color:#667085;margin:7px 0}
-.price{font-size:20px;font-weight:900;color:#1264e8}
-.rating{color:#f59e0b;font-weight:bold}
-.tag{
-  display:inline-block;
-  background:#eaf2ff;
-  color:#1264e8;
-  padding:5px 8px;
-  border-radius:7px;
-  font-size:11px;
+.product-body{padding:15px}
+.product-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+}
+.ai-pick{
+  font-size:10px;
+  background:#e9f0ff;
+  color:#0b67f0;
+  padding:4px 7px;
+  border-radius:8px;
   font-weight:bold;
 }
-.product-actions{
+.price{
+  font-size:18px;
+  font-weight:900;
+  margin:10px 0;
+}
+.rating{color:#e99b00;font-weight:bold}
+.actions{
   display:flex;
   gap:7px;
   margin-top:12px;
 }
-.product-actions button{flex:1}
-.filters{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
+.actions button{flex:1}
+
+.filter-bar{
+  display:flex;
   gap:10px;
+  flex-wrap:wrap;
   margin-bottom:20px;
 }
+.filter-bar input,.filter-bar select{
+  padding:12px;
+  border:1px solid #dfe5ef;
+  border-radius:10px;
+  background:#fff;
+}
+
 .planner{
   background:#fff;
-  border-radius:20px;
+  border:1px solid #e7eaf0;
+  border-radius:22px;
   padding:25px;
-  box-shadow:0 7px 25px rgba(0,0,0,.06);
 }
-.formgrid{
+.form-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:13px;
+  gap:15px;
+}
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  color:#667085;
+  margin-bottom:6px;
+}
+.field input,.field select{
+  width:100%;
+  padding:13px;
+  border:1px solid #dfe5ef;
+  border-radius:10px;
 }
 .interests{
   display:flex;
   flex-wrap:wrap;
   gap:8px;
-  margin:15px 0;
+  margin-top:15px;
 }
 .interest{
   padding:9px 13px;
-  border:1px solid #d9dee8;
-  border-radius:20px;
+  border:1px solid #dce2ec;
   background:#fff;
+  border-radius:20px;
 }
 .interest.selected{
-  background:#1264e8;
-  color:#fff;
-  border-color:#1264e8;
+  background:#0b67f0;
+  color:white;
+  border-color:#0b67f0;
 }
-.resultbox{
+.result-box{
   margin-top:20px;
-  padding:22px;
-  border-radius:17px;
-  background:#f5f8ff;
+  background:#f4f7ff;
+  border-radius:18px;
+  padding:20px;
 }
-.route{
-  display:flex;
-  gap:10px;
-  overflow:auto;
-  padding:15px 0;
-}
-.stop{
-  min-width:160px;
-  background:#fff;
-  border-radius:15px;
-  padding:17px;
-  border:1px solid #e4e8f0;
-  position:relative;
-}
-.stop:not(:last-child):after{
-  content:"→";
-  position:absolute;
-  right:-18px;
-  top:42%;
-  font-weight:bold;
-  color:#1264e8;
-}
-.timeline{
-  margin-top:20px;
-}
-.timeline-item{
-  display:flex;
-  gap:15px;
-  margin:0 0 16px;
-}
-.timeline-dot{
-  width:16px;
-  height:16px;
-  min-width:16px;
-  border-radius:50%;
-  background:#1264e8;
-  margin-top:4px;
-}
-.timeline-content{
-  background:#fff;
-  padding:15px;
-  border-radius:13px;
-  width:100%;
-  border:1px solid #e6eaf0;
-}
-.progress{
-  height:10px;
-  background:#e5e7eb;
-  border-radius:20px;
-  overflow:hidden;
-}
-.progress div{
-  height:100%;
-  background:#1264e8;
-  width:0;
-}
+
 .package-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:15px;
+  gap:18px;
 }
 .package{
   background:#fff;
+  border:1px solid #e2e7ef;
+  border-radius:20px;
   padding:25px;
-  border-radius:18px;
-  border:2px solid #edf0f5;
 }
-.package.featured{border-color:#1264e8}
-.package ul{padding-left:20px;color:#667085;line-height:1.9}
+.package.featured{
+  border:2px solid #0b67f0;
+}
+.package ul{
+  list-style:none;
+  margin:17px 0;
+}
+.package li{
+  margin:9px 0;
+  color:#657084;
+}
+.package .big-price{
+  font-size:28px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.cart-layout{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
 .cart-item{
-  background:#fff;
-  padding:17px;
-  border-radius:15px;
-  margin-bottom:10px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
   gap:15px;
+  background:#fff;
+  border:1px solid #e7eaf0;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:10px;
+}
+.cart-icon{
+  width:60px;
+  height:60px;
+  background:#eef4ff;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
 }
 .qty{
   display:flex;
-  align-items:center;
   gap:8px;
+  align-items:center;
+  margin-left:auto;
 }
 .qty button{
   width:30px;
   height:30px;
-  border-radius:8px;
-  background:#edf2f8;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:7px;
 }
 .summary{
   background:#fff;
-  border-radius:17px;
-  padding:22px;
-  box-shadow:0 5px 18px rgba(0,0,0,.05);
+  border:1px solid #e7eaf0;
+  border-radius:18px;
+  padding:20px;
+  height:max-content;
 }
 .summary-row{
   display:flex;
   justify-content:space-between;
-  margin:10px 0;
+  margin:12px 0;
 }
 .total{
-  font-size:24px;
+  font-size:21px;
   font-weight:900;
-  border-top:1px solid #ddd;
+  border-top:1px solid #e5e7eb;
   padding-top:15px;
 }
-.booking-card{
-  background:#fff;
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:15px;
-  border:1px solid #e7eaf0;
-}
-.ticket{
-  max-width:650px;
+
+.checkout{
+  max-width:850px;
   margin:auto;
   background:#fff;
+  padding:25px;
   border-radius:20px;
+}
+.payment{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
+.pay{
+  border:1px solid #dce2eb;
+  padding:15px;
+  border-radius:12px;
+  background:#fff;
+}
+.pay.selected{
+  border:2px solid #0b67f0;
+  background:#f2f6ff;
+}
+
+.ticket{
+  max-width:700px;
+  margin:auto;
+  background:#fff;
+  border-radius:24px;
   overflow:hidden;
-  box-shadow:0 10px 30px rgba(0,0,0,.1);
+  border:1px solid #e4e8f0;
 }
 .ticket-head{
-  background:#1264e8;
+  background:#0b67f0;
   color:#fff;
   padding:25px;
 }
 .ticket-body{padding:25px}
 .qr{
-  width:130px;
-  height:130px;
+  width:150px;
+  height:150px;
   margin:20px auto;
-  border:10px solid #111;
   background:
-  repeating-linear-gradient(45deg,#111 0 5px,#fff 5px 10px);
+  repeating-linear-gradient(45deg,#111 0 4px,#fff 4px 8px);
+  border:12px solid #fff;
+  box-shadow:0 0 0 1px #ddd;
 }
-.live-hero{
-  background:linear-gradient(135deg,#111827,#1d4ed8);
-  color:white;
-  border-radius:25px;
-  padding:30px;
-}
-.live-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:18px;
-  margin-top:20px;
-}
-.live-card{
+
+.live{
   background:#fff;
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 6px 22px rgba(0,0,0,.06);
-}
-.live-status{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  background:#dcfce7;
-  color:#15803d;
-  padding:7px 11px;
   border-radius:20px;
-  font-weight:bold;
+  border:1px solid #e6eaf1;
+  padding:20px;
 }
-.live-dot{
-  width:8px;
+.progress{
+  display:flex;
+  gap:5px;
+  margin:20px 0;
+}
+.progress div{
+  flex:1;
   height:8px;
-  background:#16a34a;
+  background:#e4e8ef;
+  border-radius:20px;
+}
+.progress div.done{background:#0b67f0}
+
+.timeline{
+  border-left:3px solid #dce6fa;
+  margin:20px 10px;
+  padding-left:20px;
+}
+.timeline-item{
+  margin-bottom:18px;
+  position:relative;
+}
+.timeline-item:before{
+  content:"";
+  width:12px;
+  height:12px;
+  background:#0b67f0;
   border-radius:50%;
+  position:absolute;
+  left:-28px;
+  top:4px;
 }
-.budget-number{
-  font-size:32px;
-  font-weight:900;
-  margin:10px 0;
+
+.quick-add{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
 }
-.ai-box{
-  background:#eef4ff;
+.quick-add button{
+  padding:15px 8px;
+  border:1px solid #e1e6ef;
+  background:#fff;
+  border-radius:13px;
+}
+
+.map-layout{
+  display:grid;
+  grid-template-columns:1.4fr .8fr;
+  gap:18px;
+}
+.map-box{
+  background:#dfe9df;
+  min-height:500px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid #d8dfe8;
+  position:relative;
+}
+.map-box iframe{
+  width:100%;
+  height:500px;
+  border:0;
+}
+.map-panel{
+  background:#fff;
+  border:1px solid #e5e9f0;
+  border-radius:22px;
+  padding:20px;
+}
+.destination-select{
+  width:100%;
+  padding:13px;
+  border:1px solid #dce2eb;
+  border-radius:10px;
+  margin:10px 0 15px;
+}
+.map-stop{
+  display:flex;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid #edf0f4;
+}
+.map-stop-icon{
+  width:38px;
+  height:38px;
+  background:#edf4ff;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.map-destination-card{
+  background:#f5f8ff;
   border-radius:15px;
-  padding:18px;
+  padding:16px;
+  margin:15px 0;
+}
+.coordinates{
+  font-size:12px;
+  color:#7a8496;
+}
+.map-actions{
+  display:flex;
+  gap:8px;
   margin-top:15px;
 }
-.empty{
-  text-align:center;
-  padding:45px 15px;
-  color:#667085;
-  background:#fff;
-  border-radius:18px;
+.map-actions button{flex:1}
+
+.route-map{
+  background:#eef4ef;
+  border-radius:20px;
+  min-height:280px;
+  position:relative;
+  overflow:hidden;
+  margin-top:20px;
 }
-footer{
-  margin-top:40px;
-  background:#111827;
-  color:#fff;
-  padding:35px 5%;
+.route-line{
+  position:absolute;
+  height:4px;
+  background:#0b67f0;
+  transform-origin:left center;
+  border-radius:10px;
 }
-.footer-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:25px;
+.marker{
+  position:absolute;
+  width:42px;
+  height:42px;
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  background:#0b67f0;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  box-shadow:0 5px 15px rgba(0,0,0,.15);
 }
+.marker span{transform:rotate(45deg)}
+.marker.m1{left:12%;top:60%}
+.marker.m2{left:32%;top:42%}
+.marker.m3{left:53%;top:52%}
+.marker.m4{left:72%;top:30%}
+.marker.m5{left:86%;top:52%}
+
 .modal{
   display:none;
   position:fixed;
@@ -505,6 +628,7 @@ footer{
   justify-content:center;
   padding:20px;
 }
+.modal.show{display:flex}
 .modal-box{
   background:#fff;
   max-width:600px;
@@ -514,731 +638,950 @@ footer{
   border-radius:20px;
   padding:25px;
 }
+.close{
+  float:right;
+  border:0;
+  background:#f1f3f7;
+  border-radius:8px;
+  padding:6px 10px;
+}
 .toast{
   position:fixed;
   right:20px;
   bottom:20px;
-  background:#111827;
+  background:#172033;
   color:#fff;
-  padding:13px 18px;
-  border-radius:10px;
+  padding:14px 18px;
+  border-radius:12px;
   display:none;
-  z-index:5000;
+  z-index:3000;
 }
-.drawer{
+.toast.show{display:block}
+
+.mobile-drawer{
   display:none;
   position:fixed;
-  top:0;
-  right:0;
-  width:280px;
-  height:100%;
+  inset:0;
+  z-index:2500;
   background:#fff;
-  z-index:3000;
   padding:25px;
-  box-shadow:-8px 0 25px rgba(0,0,0,.15);
 }
-.drawer button{
-  display:block;
-  width:100%;
-  text-align:left;
-  padding:14px;
-  margin:5px 0;
-  background:#f6f8fb;
-  border-radius:10px;
+.mobile-drawer.show{display:block}
+.mobile-nav{
+  display:flex;
+  flex-direction:column;
+  margin-top:30px;
+  gap:10px;
 }
-.close{
-  float:right;
-  background:#eee;
-  border-radius:50%;
-  width:32px;
-  height:32px;
+.mobile-nav button{text-align:left;font-size:17px}
+
+footer{
+  margin-top:40px;
+  background:#172033;
+  color:#fff;
+  padding:35px 5%;
+  text-align:center;
 }
-@media(max-width:900px){
-  .nav{display:none}
-  .mobile-menu{display:block}
-  .dashboard-strip{grid-template-columns:repeat(2,1fr)}
-  .command-grid{grid-template-columns:repeat(2,1fr)}
-  .categories,.destinations,.products{grid-template-columns:repeat(2,1fr)}
-  .searchbox{grid-template-columns:1fr}
-  .filters{grid-template-columns:1fr 1fr}
-  .formgrid{grid-template-columns:1fr}
-  .package-grid{grid-template-columns:1fr}
-  .live-grid{grid-template-columns:1fr}
+footer p{color:#aeb7c8;margin-top:8px}
+
+.empty{
+  text-align:center;
+  padding:50px;
+  background:#fff;
+  border-radius:18px;
+  border:1px dashed #ccd4e2;
 }
-@media(max-width:550px){
-  .hero h1{font-size:34px}
-  .container{width:94%}
-  .dashboard-strip,.categories,.destinations,.products{grid-template-columns:1fr 1fr}
-  .command-grid{grid-template-columns:1fr}
-  .filters{grid-template-columns:1fr}
-  .cart-item{flex-direction:column;align-items:flex-start}
-  .footer-grid{grid-template-columns:1fr}
+
+@media(max-width:1000px){
+  nav{display:none}
+  .menu-btn{display:block}
+  .grid,.product-grid{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .map-layout{grid-template-columns:1fr}
+  .cart-layout{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  header{padding:12px 4%}
+  .nav{gap:10px}
+  .logo{font-size:21px}
+  .nav-actions .icon-btn:nth-child(1){display:none}
+  .hero{padding:28px 20px}
+  .hero h1{font-size:30px}
+  .page{padding:20px 4%}
+  .grid,.product-grid,.package-grid,.form-grid{
+    grid-template-columns:1fr;
+  }
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .quick-add{grid-template-columns:repeat(2,1fr)}
+  .payment{grid-template-columns:1fr}
+  .cart-item{align-items:flex-start}
+  .qty{margin-left:0}
+  .map-box iframe{height:360px}
+  .map-box{min-height:360px}
 }
 </style>
 </head>
 
 <body>
 
-<header class="topbar">
+<header>
+<div class="nav">
   <div class="logo">HOBBI<span>GO</span></div>
 
-  <nav class="nav">
+  <nav>
     <button onclick="home()">Home</button>
     <button onclick="openResults()">Explore</button>
     <button onclick="openPlanner()">AI Trip Planner</button>
+    <button onclick="openMap()">Map Experience</button>
     <button onclick="openLiveJourney()">Live Journey</button>
     <button onclick="openTrips()">My Trips</button>
   </nav>
 
-  <div>
-    <button class="iconbtn" onclick="openWishlist()">♡ <span class="badge" id="wishBadge">0</span></button>
-    <button class="iconbtn" onclick="openCart()">🛒 <span class="badge" id="cartBadge">0</span></button>
-    <button class="avatar" onclick="openProfile()">H</button>
-    <button class="iconbtn mobile-menu" onclick="mobileMenu()">☰</button>
+  <div class="nav-actions">
+    <button class="icon-btn" onclick="openWishlist()">♡<span class="badge" id="wishBadge">0</span></button>
+    <button class="icon-btn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
+    <div class="avatar" onclick="openProfile()">HG</div>
+    <button class="icon-btn menu-btn" onclick="mobileMenu()">☰</button>
   </div>
+</div>
 </header>
 
-<div id="drawer" class="drawer">
-  <button onclick="closeDrawer()">✕ Close</button>
-  <button onclick="home()">🏠 Home</button>
-  <button onclick="openResults()">🔎 Explore</button>
-  <button onclick="openPlanner()">🤖 AI Trip Planner</button>
-  <button onclick="openLiveJourney()">🧭 Live Journey</button>
-  <button onclick="openPackages()">📦 Smart Packages</button>
-  <button onclick="openCart()">🛒 My Cart</button>
-  <button onclick="openTrips()">🎫 My Trips</button>
-  <button onclick="openProfile()">👤 Profile</button>
+<div id="mobileDrawer" class="mobile-drawer">
+  <button class="close" onclick="mobileMenu()">✕</button>
+  <div class="logo">HOBBIGO</div>
+  <div class="mobile-nav">
+    <button onclick="home();mobileMenu()">🏠 Home</button>
+    <button onclick="openResults();mobileMenu()">🔎 Explore</button>
+    <button onclick="openPlanner();mobileMenu()">🤖 AI Trip Planner</button>
+    <button onclick="openMap();mobileMenu()">🗺️ Map Experience</button>
+    <button onclick="openLiveJourney();mobileMenu()">🧭 Live Journey</button>
+    <button onclick="openCart();mobileMenu()">🛒 My Cart</button>
+    <button onclick="openTrips();mobileMenu()">🎫 My Trips</button>
+    <button onclick="openProfile();mobileMenu()">👤 Profile</button>
+  </div>
 </div>
-
-<main>
 
 <!-- HOME -->
 <section id="homePage" class="page active">
 
 <div class="hero">
-<div class="container">
-<div class="eyebrow">HOBBIGO V21 · AI JOURNEY EXPERIENCE</div>
-<h1>Your Journey.<br><span>Your Experience.</span></h1>
-<p>Search, plan, book and experience your journey with one intelligent marketplace.</p>
+  <div class="eyebrow">HOBBIGO V22 · REAL DESTINATION & MAP EXPERIENCE</div>
+  <h1>Your Journey. Your Experience.</h1>
+  <p>AI-powered travel marketplace connecting destinations, routes, experiences, booking and smart journey optimization in one ecosystem.</p>
 
-<div class="searchbox">
-<input id="heroDestination" placeholder="Where do you want to go?">
-<input id="heroDate" type="date">
-<input id="heroTravelers" type="number" min="1" value="2" placeholder="Travelers">
-<button class="primary" onclick="searchNow()">Search Journey</button>
-</div>
-</div>
+  <div class="search-box">
+    <input id="homeDestination" placeholder="Where do you want to go?">
+    <input id="homeDate" type="date">
+    <input id="homeTravelers" type="number" min="1" value="2" placeholder="Travelers">
+    <button class="primary" onclick="searchNow()">Search Journey</button>
+  </div>
 </div>
 
-<div class="container">
-<div class="dashboard-strip">
-<div class="stat">🤖<small>AI Journey Engine</small><strong>ACTIVE</strong></div>
-<div class="stat">🌎<small>Marketplace</small><strong>20+</strong></div>
-<div class="stat">🛒<small>Cart Items</small><strong id="homeCartCount">0</strong></div>
-<div class="stat">🎫<small>My Trips</small><strong id="homeTripCount">0</strong></div>
-<div class="stat">❤️<small>Wishlist</small><strong id="homeWishCount">0</strong></div>
+<div class="stats">
+  <div class="stat"><strong>🤖 AI</strong><small>Journey Engine</small></div>
+  <div class="stat"><strong>20+</strong><small>Marketplace Products</small></div>
+  <div class="stat"><strong id="homeCartCount">0</strong><small>Cart Items</small></div>
+  <div class="stat"><strong id="homeTripCount">0</strong><small>My Trips</small></div>
+  <div class="stat"><strong id="homeWishCount">0</strong><small>Wishlist</small></div>
 </div>
 
-<div class="section">
-<div class="command">
-<div class="eyebrow" style="color:#93c5fd">AI JOURNEY COMMAND CENTER</div>
-<h2>Build your next experience</h2>
-<p>One journey. Multiple experiences. One intelligent marketplace.</p>
-
-<div class="command-grid">
-<div class="command-card" onclick="openPlanner()">
-<div style="font-size:30px">🤖</div>
-<b>Build AI Journey</b>
-<small>Generate itinerary automatically</small>
-</div>
-<div class="command-card" onclick="openResults()">
-<div style="font-size:30px">🌎</div>
-<b>Explore Marketplace</b>
-<small>Hotels, food, activities & more</small>
-</div>
-<div class="command-card" onclick="openPackages()">
-<div style="font-size:30px">📦</div>
-<b>Smart Packages</b>
-<small>Choose the best journey bundle</small>
-</div>
-<div class="command-card" onclick="openLiveJourney()">
-<div style="font-size:30px">🧭</div>
-<b>Live Journey</b>
-<small>Experience & re-optimize</small>
-</div>
-</div>
-</div>
-</div>
-
-<div class="section">
-<div class="section-title"><h2>Marketplace Categories</h2></div>
-<div class="categories">
-<div class="category" onclick="searchCategory('Hotel')"><div class="emoji">🏨</div><b>Hotels</b></div>
-<div class="category" onclick="searchCategory('Restaurant')"><div class="emoji">🍜</div><b>Restaurants</b></div>
-<div class="category" onclick="searchCategory('Ticket')"><div class="emoji">🎟️</div><b>Tickets</b></div>
-<div class="category" onclick="searchCategory('Activity')"><div class="emoji">🏄</div><b>Activities</b></div>
-<div class="category" onclick="searchCategory('Transport')"><div class="emoji">🚗</div><b>Transport</b></div>
-<div class="category" onclick="openPlanner()"><div class="emoji">🤖</div><b>AI Planner</b></div>
-</div>
-</div>
-
-<div class="section">
-<div class="section-title"><h2>Popular Destinations</h2></div>
-<div class="destinations">
-<div class="destination" onclick="destinationSearch('Bali')"><h3>🌴 Bali</h3><span>Island experiences</span></div>
-<div class="destination" onclick="destinationSearch('Singapore')"><h3>🌆 Singapore</h3><span>City experiences</span></div>
-<div class="destination" onclick="destinationSearch('Tokyo')"><h3>🗼 Tokyo</h3><span>Culture & food</span></div>
-<div class="destination" onclick="destinationSearch('Lombok')"><h3>🌊 Lombok</h3><span>Nature & adventure</span></div>
-</div>
-</div>
-
-<div class="section">
 <div class="section-title">
-<h2>AI Recommended For You</h2>
-<button class="secondary" onclick="openResults()">View All</button>
-</div>
-<div id="homeProducts" class="products"></div>
+  <h2>Journey Command Center</h2>
+  <span>Everything in one place</span>
 </div>
 
-<div class="section">
-<div class="live-hero">
-<div class="eyebrow" style="color:#93c5fd">V21 LIVE JOURNEY</div>
-<h2>From booking to experience.</h2>
-<p>Track your route, budget and activities in one Live Journey dashboard.</p>
-<button class="primary" onclick="openLiveJourney()">Open Live Journey →</button>
+<div class="grid">
+  <div class="card" onclick="openPlanner()" style="cursor:pointer">
+    <div style="font-size:35px">🤖</div>
+    <h3>Build AI Journey</h3>
+    <p>Generate itinerary, route and estimated budget.</p>
+  </div>
+  <div class="card" onclick="openMap()" style="cursor:pointer">
+    <div style="font-size:35px">🗺️</div>
+    <h3>Explore Map</h3>
+    <p>Discover real destinations and smart route locations.</p>
+  </div>
+  <div class="card" onclick="openPackages()" style="cursor:pointer">
+    <div style="font-size:35px">📦</div>
+    <h3>Smart Packages</h3>
+    <p>Choose Saver, Comfort or Exclusive Journey.</p>
+  </div>
+  <div class="card" onclick="openTrips()" style="cursor:pointer">
+    <div style="font-size:35px">🎫</div>
+    <h3>Manage My Trips</h3>
+    <p>View bookings and digital travel tickets.</p>
+  </div>
 </div>
+
+<div class="section-title">
+  <h2>Marketplace</h2>
+  <span>Travel everything</span>
 </div>
+
+<div class="grid">
+  <div class="card category" onclick="searchCategory('Hotel')">
+    <div class="emoji">🏨</div><strong>Hotels</strong>
+  </div>
+  <div class="card category" onclick="searchCategory('Restaurant')">
+    <div class="emoji">🍜</div><strong>Restaurants</strong>
+  </div>
+  <div class="card category" onclick="searchCategory('Ticket')">
+    <div class="emoji">🎟️</div><strong>Tickets</strong>
+  </div>
+  <div class="card category" onclick="searchCategory('Activity')">
+    <div class="emoji">🎯</div><strong>Activities</strong>
+  </div>
+  <div class="card category" onclick="searchCategory('Transport')">
+    <div class="emoji">🚗</div><strong>Transport</strong>
+  </div>
+  <div class="card category" onclick="openPlanner()">
+    <div class="emoji">🤖</div><strong>AI Planner</strong>
+  </div>
 </div>
+
+<div class="section-title">
+  <h2>Popular Destinations</h2>
+  <span>V22 Map Ready</span>
+</div>
+
+<div class="grid">
+  <div class="card dest bali" onclick="selectMapDestination('Bali')">
+    <h3>🇮🇩 Bali</h3><p>Island of experiences</p>
+  </div>
+  <div class="card dest singapore" onclick="selectMapDestination('Singapore')">
+    <h3>🇸🇬 Singapore</h3><p>City experiences</p>
+  </div>
+  <div class="card dest tokyo" onclick="selectMapDestination('Tokyo')">
+    <h3>🇯🇵 Tokyo</h3><p>Culture & technology</p>
+  </div>
+  <div class="card dest lombok" onclick="selectMapDestination('Lombok')">
+    <h3>🇮🇩 Lombok</h3><p>Nature & adventure</p>
+  </div>
+</div>
+
+<div class="section-title">
+  <h2>AI Journey Engine</h2>
+</div>
+
+<div class="hero" style="margin-bottom:0">
+  <div class="eyebrow">SEARCH → PLAN → CONFIGURE → PACKAGE → BOOK → EXPERIENCE → RE-OPTIMIZE</div>
+  <h2>One journey. One intelligent ecosystem.</h2>
+  <p>HobbiGo combines destination discovery, marketplace products, smart routes and booking into one travel experience.</p>
+</div>
+
 </section>
+
 
 <!-- EXPLORE -->
 <section id="explorePage" class="page">
-<div class="container section">
+
 <div class="section-title">
-<div>
-<div class="eyebrow">MARKETPLACE</div>
-<h2>Explore Experiences</h2>
-</div>
+  <h2>Explore Marketplace</h2>
+  <span>20+ travel products</span>
 </div>
 
-<div class="filters">
-<input id="searchInput" placeholder="Search hotel, restaurant, activity..." oninput="applyFilters()">
-<select id="categoryFilter" onchange="applyFilters()">
-<option value="All">All Categories</option>
-<option>Hotel</option>
-<option>Restaurant</option>
-<option>Ticket</option>
-<option>Activity</option>
-<option>Transport</option>
-</select>
-<input id="maxPrice" type="number" placeholder="Max price" oninput="applyFilters()">
-<select id="sortFilter" onchange="applyFilters()">
-<option value="Recommended">Recommended</option>
-<option value="low">Price Low</option>
-<option value="high">Price High</option>
-<option value="rating">Top Rated</option>
-</select>
+<div class="filter-bar">
+  <input id="searchInput" placeholder="Search hotel, restaurant, Bali..." oninput="applyFilters()">
+  <select id="categoryFilter" onchange="applyFilters()">
+    <option value="All">All Categories</option>
+    <option>Hotel</option>
+    <option>Restaurant</option>
+    <option>Ticket</option>
+    <option>Activity</option>
+    <option>Transport</option>
+  </select>
+  <select id="ratingFilter" onchange="applyFilters()">
+    <option value="0">All Ratings</option>
+    <option value="4.8">4.8+</option>
+    <option value="4.9">4.9+</option>
+  </select>
+  <select id="sortFilter" onchange="applyFilters()">
+    <option value="recommended">Recommended</option>
+    <option value="low">Price Low</option>
+    <option value="high">Price High</option>
+    <option value="rating">Top Rated</option>
+  </select>
+  <button class="secondary" onclick="resetFilters()">Reset</button>
 </div>
 
-<div style="margin-bottom:15px">
-<button class="secondary" onclick="resetFilters()">Reset Filters</button>
-</div>
-
-<div id="exploreProducts" class="products"></div>
-</div>
+<div id="productGrid" class="product-grid"></div>
 </section>
+
 
 <!-- PLANNER -->
 <section id="plannerPage" class="page">
-<div class="container section">
-<div class="eyebrow">AI TRIP PLANNER</div>
-<h2>Build Your AI Journey</h2>
+
+<div class="hero">
+  <div class="eyebrow">HOBBIGO AI JOURNEY ENGINE</div>
+  <h1>Plan Your Smart Journey</h1>
+  <p>Tell HobbiGo what you want. AI will build your route, itinerary and estimated cost.</p>
+</div>
 
 <div class="planner">
-<div class="formgrid">
-<div><label>Tujuan</label><input id="tripDestination" placeholder="Bali"></div>
-<div><label>Tanggal</label><input id="tripDate" type="date"></div>
-<div><label>Jumlah Orang</label><input id="tripTravelers" type="number" min="1" value="2"></div>
-<div><label>Durasi</label><select id="tripDuration"><option>2 Days</option><option>3 Days</option><option>4 Days</option><option>5 Days</option><option>7 Days</option></select></div>
-<div><label>Gaya Trip</label><select id="tripStyle"><option>Smart Saver</option><option>Comfort</option><option>Premium</option><option>Family</option><option>Adventure</option></select></div>
-<div><label>Budget</label><select id="tripBudget"><option>Economy</option><option>Comfort</option><option>Premium</option></select></div>
+<div class="form-grid">
+  <div class="field">
+    <label>Destination</label>
+    <input id="planDestination" placeholder="Bali">
+  </div>
+  <div class="field">
+    <label>Date</label>
+    <input id="planDate" type="date">
+  </div>
+  <div class="field">
+    <label>Travelers</label>
+    <input id="planTravelers" type="number" value="2" min="1">
+  </div>
+  <div class="field">
+    <label>Duration</label>
+    <select id="planDuration">
+      <option>2 Days</option>
+      <option>3 Days</option>
+      <option>4 Days</option>
+      <option>5 Days</option>
+      <option>7 Days</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Travel Style</label>
+    <select id="planStyle">
+      <option>Smart Saver</option>
+      <option>Smart Comfort</option>
+      <option>Exclusive Journey</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Budget</label>
+    <select id="planBudget">
+      <option>Flexible</option>
+      <option>Under Rp3M</option>
+      <option>Rp3M - Rp7M</option>
+      <option>Above Rp7M</option>
+    </select>
+  </div>
 </div>
 
-<h3>Minat</h3>
+<h3 style="margin-top:20px">Your Interests</h3>
 <div class="interests">
-<button class="interest" onclick="toggleInterest(this)">Beach</button>
-<button class="interest" onclick="toggleInterest(this)">Food</button>
-<button class="interest" onclick="toggleInterest(this)">Culture</button>
-<button class="interest" onclick="toggleInterest(this)">Adventure</button>
-<button class="interest" onclick="toggleInterest(this)">Shopping</button>
-<button class="interest" onclick="toggleInterest(this)">Nature</button>
-<button class="interest" onclick="toggleInterest(this)">Relax</button>
-<button class="interest" onclick="toggleInterest(this)">Family</button>
+  <button class="interest" onclick="toggleInterest(this)">🏖️ Beach</button>
+  <button class="interest" onclick="toggleInterest(this)">🍜 Culinary</button>
+  <button class="interest" onclick="toggleInterest(this)">🏄 Adventure</button>
+  <button class="interest" onclick="toggleInterest(this)">🏛️ Culture</button>
+  <button class="interest" onclick="toggleInterest(this)">🛍️ Shopping</button>
+  <button class="interest" onclick="toggleInterest(this)">🧘 Wellness</button>
 </div>
 
-<button class="primary" onclick="generateTrip()">🤖 Generate My Trip</button>
+<button class="primary" style="margin-top:20px" onclick="generateTrip()">Generate My Trip</button>
 
 <div id="plannerResult"></div>
 </div>
+</section>
+
+
+<!-- MAP -->
+<section id="mapPage" class="page">
+
+<div class="hero">
+  <div class="eyebrow">HOBBIGO V22 · MAP EXPERIENCE</div>
+  <h1>Explore Real Destinations</h1>
+  <p>Discover destination locations, smart route stops and marketplace experiences through the map.</p>
+</div>
+
+<div class="map-layout">
+
+<div>
+  <div class="map-box">
+    <iframe id="mapFrame"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=114.9%2C-8.8%2C115.5%2C-8.1&layer=mapnik&marker=-8.4095%2C115.1889">
+    </iframe>
+  </div>
+
+  <div class="route-map">
+    <div class="marker m1"><span>🏨</span></div>
+    <div class="marker m2"><span>🍜</span></div>
+    <div class="marker m3"><span>🎯</span></div>
+    <div class="marker m4"><span>🎟️</span></div>
+    <div class="marker m5"><span>🚗</span></div>
+
+    <div class="route-line" style="left:15%;top:65%;width:180px;transform:rotate(-24deg)"></div>
+    <div class="route-line" style="left:35%;top:48%;width:170px;transform:rotate(12deg)"></div>
+    <div class="route-line" style="left:55%;top:57%;width:160px;transform:rotate(-22deg)"></div>
+    <div class="route-line" style="left:73%;top:36%;width:130px;transform:rotate(20deg)"></div>
+  </div>
+</div>
+
+<div class="map-panel">
+
+<h2>Destination Map</h2>
+
+<select id="mapDestination" class="destination-select" onchange="selectMapDestination(this.value)">
+  <option>Bali</option>
+  <option>Singapore</option>
+  <option>Tokyo</option>
+  <option>Lombok</option>
+</select>
+
+<div id="mapDestinationInfo" class="map-destination-card"></div>
+
+<h3>Smart Route Stops</h3>
+
+<div class="map-stop">
+  <div class="map-stop-icon">🏨</div>
+  <div><strong>Stay</strong><p>Recommended Hotel</p></div>
+</div>
+
+<div class="map-stop">
+  <div class="map-stop-icon">🍜</div>
+  <div><strong>Eat</strong><p>Local Culinary Experience</p></div>
+</div>
+
+<div class="map-stop">
+  <div class="map-stop-icon">🎯</div>
+  <div><strong>Experience</strong><p>AI Selected Activity</p></div>
+</div>
+
+<div class="map-stop">
+  <div class="map-stop-icon">🎟️</div>
+  <div><strong>Attraction</strong><p>Tourism Ticket</p></div>
+</div>
+
+<div class="map-stop">
+  <div class="map-stop-icon">🚗</div>
+  <div><strong>Transport</strong><p>Smart Route Transport</p></div>
+</div>
+
+<div class="map-actions">
+  <button class="primary" onclick="useMapForPlanner()">Use Destination</button>
+  <button class="secondary" onclick="openResults()">Explore Products</button>
+</div>
+
+</div>
 </div>
 </section>
 
-<!-- PACKAGES -->
-<section id="packagesPage" class="page">
-<div class="container section">
-<div class="eyebrow">AI JOURNEY PACKAGES</div>
-<h2>Smart Packages</h2>
-<p>Choose a journey bundle and continue directly to booking.</p>
-
-<div class="package-grid">
-<div class="package">
-<h2>Smart Saver</h2>
-<div class="price">Rp 2.450.000</div>
-<ul>
-<li>Hotel selection</li>
-<li>Basic transport</li>
-<li>Selected activity</li>
-<li>AI itinerary</li>
-</ul>
-<button class="primary" onclick="choosePackage('Smart Saver',2450000)">Choose Package</button>
-</div>
-
-<div class="package featured">
-<span class="tag">MOST POPULAR</span>
-<h2>Smart Comfort</h2>
-<div class="price">Rp 3.850.000</div>
-<ul>
-<li>Comfort hotel</li>
-<li>Private transfer</li>
-<li>Restaurant experience</li>
-<li>Activities & tickets</li>
-</ul>
-<button class="primary" onclick="choosePackage('Smart Comfort',3850000)">Choose Package</button>
-</div>
-
-<div class="package">
-<h2>Exclusive Journey</h2>
-<div class="price">Rp 6.750.000</div>
-<ul>
-<li>Premium hotel</li>
-<li>Private transport</li>
-<li>Premium dining</li>
-<li>Exclusive experiences</li>
-</ul>
-<button class="dark" onclick="choosePackage('Exclusive Journey',6750000)">Choose Package</button>
-</div>
-</div>
-</div>
-</section>
 
 <!-- LIVE JOURNEY -->
 <section id="livePage" class="page">
-<div class="container section">
 
-<div class="live-hero">
-<div class="eyebrow" style="color:#93c5fd">HOBBIGO V21</div>
-<h1>LIVE JOURNEY EXPERIENCE</h1>
-<p id="liveDestinationText">Your intelligent journey command center.</p>
-<div class="live-status"><span class="live-dot"></span><span id="liveStatusText">Journey Ready</span></div>
+<div class="hero">
+  <div class="eyebrow">HOBBIGO V22 · LIVE JOURNEY</div>
+  <h1>Journey Command Center</h1>
+  <p>Monitor your route, budget, experiences and next actions in one live journey dashboard.</p>
 </div>
 
-<div class="live-grid">
+<div class="live">
 
-<div>
-<div class="live-card">
+<h2 id="liveDestinationTitle">Your Journey</h2>
+
+<div class="progress" id="journeyProgress"></div>
+
 <div class="section-title">
-<h2>🧭 Smart Route</h2>
-<button class="secondary" onclick="reOptimize()">🔄 Re-optimize</button>
+  <h2>Smart Route</h2>
+  <span id="liveStatus">Planning</span>
 </div>
 
-<div class="route" id="liveRoute"></div>
+<div id="liveRoute"></div>
 
-<h3>Journey Progress</h3>
-<div class="progress"><div id="journeyProgress"></div></div>
-<p id="journeyProgressText">0% — Search</p>
-
-<div class="timeline" id="journeyTimeline"></div>
+<div class="section-title">
+  <h2>Journey Timeline</h2>
 </div>
 
-<div class="live-card">
-<h2>🤖 AI Recommendation</h2>
-<div id="aiRecommendation" class="ai-box">
-Generate or book a journey to receive AI recommendations.
-</div>
-</div>
-</div>
-
-<div>
-<div class="live-card">
-<h2>💰 Live Budget Tracker</h2>
-<div class="budget-number" id="liveBudget">Rp 0</div>
-<p>Current journey value</p>
-
-<div class="progress"><div id="budgetProgress"></div></div>
-<div class="summary-row">
-<span>Planned Budget</span>
-<strong id="plannedBudget">Rp 0</strong>
-</div>
-<div class="summary-row">
-<span>Booked / Cart</span>
-<strong id="bookedBudget">Rp 0</strong>
-</div>
-<div class="summary-row">
-<span>Remaining</span>
-<strong id="remainingBudget">Rp 0</strong>
-</div>
-</div>
-
-<div class="live-card" style="margin-top:18px">
-<h2>🎒 Experience Mode</h2>
-<p>Manage your journey while travelling.</p>
-<button class="primary" onclick="experienceMode()">Start Experience Mode</button>
+<div class="timeline">
+  <div class="timeline-item">
+    <strong>Search</strong>
+    <p>Destination selected.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Plan</strong>
+    <p>AI itinerary generated.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Configure</strong>
+    <p>Hotels, restaurants and activities configured.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Package</strong>
+    <p>Smart travel package selected.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Book</strong>
+    <p>Booking and payment completed.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Experience</strong>
+    <p>Enjoy your journey.</p>
+  </div>
+  <div class="timeline-item">
+    <strong>Re-optimize</strong>
+    <p>AI adjusts the journey based on experience.</p>
+  </div>
 </div>
 
-<div class="live-card" style="margin-top:18px">
-<h2>⚡ Quick Add</h2>
-<button class="secondary" style="width:100%;margin:4px 0" onclick="searchCategory('Hotel')">🏨 Add Hotel</button>
-<button class="secondary" style="width:100%;margin:4px 0" onclick="searchCategory('Restaurant')">🍜 Add Restaurant</button>
-<button class="secondary" style="width:100%;margin:4px 0" onclick="searchCategory('Activity')">🎯 Add Activity</button>
-<button class="secondary" style="width:100%;margin:4px 0" onclick="searchCategory('Ticket')">🎟️ Add Ticket</button>
-<button class="secondary" style="width:100%;margin:4px 0" onclick="searchCategory('Transport')">🚗 Add Transport</button>
-</div>
+<div class="section-title">
+  <h2>Live Budget Tracker</h2>
 </div>
 
+<div id="liveBudget"></div>
+
+<div class="section-title">
+  <h2>Quick Add</h2>
 </div>
+
+<div class="quick-add">
+  <button onclick="searchCategory('Hotel')">🏨<br>Hotel</button>
+  <button onclick="searchCategory('Restaurant')">🍜<br>Restaurant</button>
+  <button onclick="searchCategory('Activity')">🎯<br>Activity</button>
+  <button onclick="searchCategory('Ticket')">🎟️<br>Ticket</button>
+  <button onclick="searchCategory('Transport')">🚗<br>Transport</button>
+</div>
+
+<div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+  <button class="primary" onclick="openMap()">🗺️ View Journey Map</button>
+  <button class="secondary" onclick="reOptimize()">🔄 Re-optimize Journey</button>
+  <button class="secondary" onclick="openPackages()">📦 Smart Packages</button>
+</div>
+
 </div>
 </section>
+
+
+<!-- PACKAGES -->
+<section id="packagesPage" class="page">
+
+<div class="section-title">
+  <h2>Smart Journey Packages</h2>
+  <span>AI optimized</span>
+</div>
+
+<div class="package-grid">
+
+<div class="package">
+  <div style="font-size:35px">💰</div>
+  <h2>Smart Saver</h2>
+  <p>Best value for smart travelers.</p>
+  <div class="big-price">Rp2.450.000</div>
+  <ul>
+    <li>✓ Selected Hotel</li>
+    <li>✓ Local Experience</li>
+    <li>✓ Smart Route</li>
+    <li>✓ AI Itinerary</li>
+  </ul>
+  <button class="primary" onclick="choosePackage('Smart Saver',2450000)">Choose Package</button>
+</div>
+
+<div class="package featured">
+  <div style="font-size:35px">⭐</div>
+  <h2>Smart Comfort</h2>
+  <p>Balanced comfort and experience.</p>
+  <div class="big-price">Rp3.850.000</div>
+  <ul>
+    <li>✓ Premium Hotel</li>
+    <li>✓ Culinary Experience</li>
+    <li>✓ Activities</li>
+    <li>✓ Transport</li>
+  </ul>
+  <button class="primary" onclick="choosePackage('Smart Comfort',3850000)">Choose Package</button>
+</div>
+
+<div class="package">
+  <div style="font-size:35px">👑</div>
+  <h2>Exclusive Journey</h2>
+  <p>Premium private travel.</p>
+  <div class="big-price">Rp6.750.000</div>
+  <ul>
+    <li>✓ Premium Stay</li>
+    <li>✓ Private Transport</li>
+    <li>✓ Private Experience</li>
+    <li>✓ Premium Support</li>
+  </ul>
+  <button class="primary" onclick="choosePackage('Exclusive Journey',6750000)">Choose Package</button>
+</div>
+
+</div>
+</section>
+
 
 <!-- CART -->
 <section id="cartPage" class="page">
-<div class="container section">
-<div class="eyebrow">MY CART</div>
-<h2>Journey Cart</h2>
 
-<div class="live-grid">
-<div id="cartItems"></div>
-<div id="cartSummary"></div>
+<div class="section-title">
+  <h2>My Cart</h2>
 </div>
+
+<div class="cart-layout">
+<div id="cartItems"></div>
+<div class="summary" id="cartSummary"></div>
 </div>
 </section>
+
 
 <!-- CHECKOUT -->
 <section id="checkoutPage" class="page">
-<div class="container section">
-<div class="eyebrow">BOOKING</div>
-<h2>Confirm Your Journey</h2>
 
-<div class="live-grid">
-<div class="planner">
-<h3>Traveler Details</h3>
-<div class="formgrid">
-<input id="bookingName" placeholder="Full Name">
-<input id="bookingPhone" placeholder="Phone Number">
-<input id="bookingEmail" placeholder="Email">
-<input id="bookingDate" type="date">
+<div class="checkout">
+<h2>Booking & Payment</h2>
+<p style="color:#667085;margin:8px 0 20px">Complete your traveler information.</p>
+
+<div class="form-grid">
+  <div class="field">
+    <label>Traveler Name</label>
+    <input id="checkoutName" placeholder="Full name">
+  </div>
+  <div class="field">
+    <label>Phone</label>
+    <input id="checkoutPhone" placeholder="+62">
+  </div>
+  <div class="field">
+    <label>Email</label>
+    <input id="checkoutEmail" placeholder="email@example.com">
+  </div>
+  <div class="field">
+    <label>Travel Date</label>
+    <input id="checkoutDate" type="date">
+  </div>
 </div>
-<br>
-<textarea id="specialRequest" placeholder="Special request" style="width:100%;min-height:100px;border:1px solid #ddd;border-radius:10px;padding:12px"></textarea>
 
-<h3>Payment</h3>
-<div class="interests">
-<button class="interest selected" onclick="selectPayment(this)">QRIS</button>
-<button class="interest" onclick="selectPayment(this)">Credit Card</button>
-<button class="interest" onclick="selectPayment(this)">Bank Transfer</button>
+<div class="field" style="margin-top:15px">
+<label>Special Request</label>
+<input id="specialRequest" placeholder="Optional">
 </div>
 
-<button class="primary" onclick="completeBooking()">💳 Confirm & Pay</button>
+<h3 style="margin-top:22px">Payment Method</h3>
+
+<div class="payment">
+  <button class="pay selected" onclick="selectPayment(this,'QRIS')">📱<br>QRIS</button>
+  <button class="pay" onclick="selectPayment(this,'Credit Card')">💳<br>Credit Card</button>
+  <button class="pay" onclick="selectPayment(this,'Bank Transfer')">🏦<br>Bank Transfer</button>
 </div>
 
 <div id="checkoutSummary"></div>
-</div>
+
+<button class="primary" style="width:100%;margin-top:20px" onclick="completeBooking()">Confirm & Pay</button>
 </div>
 </section>
 
-<!-- BOOKING TICKET -->
+
+<!-- TICKET -->
 <section id="ticketPage" class="page">
-<div class="container section">
-<div id="ticketContent"></div>
-</div>
+
+<div id="ticketContainer"></div>
 </section>
 
-<!-- MY TRIPS -->
+
+<!-- TRIPS -->
 <section id="tripsPage" class="page">
-<div class="container section">
-<div class="eyebrow">MY TRIPS</div>
-<h2>Your Journeys</h2>
-<div id="tripsContent"></div>
+
+<div class="section-title">
+  <h2>My Trips</h2>
 </div>
+
+<div id="tripsContainer"></div>
 </section>
+
 
 <!-- WISHLIST -->
 <section id="wishlistPage" class="page">
-<div class="container section">
-<div class="eyebrow">WISHLIST</div>
-<h2>Saved Experiences</h2>
-<div id="wishlistContent" class="products"></div>
+
+<div class="section-title">
+  <h2>My Wishlist</h2>
 </div>
+
+<div id="wishlistContainer" class="product-grid"></div>
 </section>
+
 
 <!-- PROFILE -->
 <section id="profilePage" class="page">
-<div class="container section">
-<div class="live-card">
-<div style="font-size:60px">👤</div>
-<h1>HobbiGo Traveler</h1>
-<p>AI Journey Explorer</p>
-<hr>
-<div class="categories">
-<div class="category" onclick="openTrips()">🎫<br><b>My Trips</b></div>
-<div class="category" onclick="openWishlist()">❤️<br><b>Wishlist</b></div>
-<div class="category" onclick="openCart()">🛒<br><b>Cart</b></div>
-<div class="category" onclick="openPlanner()">🤖<br><b>AI Planner</b></div>
+
+<div class="hero">
+  <div class="eyebrow">TRAVELER PROFILE</div>
+  <h1>HobbiGo Traveler</h1>
+  <p>Your journey data, bookings, wishlist and AI planning center.</p>
 </div>
+
+<div class="grid">
+  <div class="card">
+    <div style="font-size:35px">🎫</div>
+    <h3>My Trips</h3>
+    <p id="profileTrips">0 bookings</p>
+    <button class="secondary" onclick="openTrips()">View Trips</button>
+  </div>
+  <div class="card">
+    <div style="font-size:35px">♡</div>
+    <h3>Wishlist</h3>
+    <p id="profileWishlist">0 saved</p>
+    <button class="secondary" onclick="openWishlist()">View Wishlist</button>
+  </div>
+  <div class="card">
+    <div style="font-size:35px">🛒</div>
+    <h3>Cart</h3>
+    <p id="profileCart">0 items</p>
+    <button class="secondary" onclick="openCart()">Open Cart</button>
+  </div>
+  <div class="card">
+    <div style="font-size:35px">🤝</div>
+    <h3>Partner Center</h3>
+    <p>Global tourism marketplace partner system.</p>
+    <button class="secondary" onclick="toast('Partner Center will be available in V25')">Partner Center</button>
+  </div>
 </div>
-</div>
+
 </section>
 
-</main>
 
 <footer>
-<div class="footer-grid">
-<div>
-<h2>HOBBIGO</h2>
-<p>AI Journey & Experience Marketplace</p>
-<p>Search → Plan → Configure → Package → Book → Experience → Re-optimize</p>
-</div>
-<div>
-<h3>Explore</h3>
-<p>Hotels</p>
-<p>Restaurants</p>
-<p>Activities</p>
-<p>Transport</p>
-</div>
-<div>
-<h3>Journey</h3>
-<p>AI Planner</p>
-<p>Smart Packages</p>
-<p>Live Journey</p>
-<p>My Trips</p>
-</div>
-</div>
+  <strong>HOBBIGO</strong>
+  <p>AI Journey & Experience Marketplace</p>
+  <p>Search → Plan → Configure → Package → Book → Experience → Re-optimize</p>
 </footer>
 
-<div id="modal" class="modal">
+
+<div id="productModal" class="modal">
 <div class="modal-box">
-<button class="close" onclick="closeModal()">×</button>
+<button class="close" onclick="closeModal()">✕</button>
 <div id="modalContent"></div>
 </div>
 </div>
 
 <div id="toast" class="toast"></div>
 
+
 <script>
-/* =========================
-   HOBBIGO V21 DATA
-========================= */
 
 const products=[
-{id:1,name:"Ocean View Resort",cat:"Hotel",city:"Bali",price:1250000,rating:4.9,icon:"🏨"},
-{id:2,name:"Tropical Garden Villa",cat:"Hotel",city:"Ubud, Bali",price:1750000,rating:4.8,icon:"🏡"},
-{id:3,name:"City Premium Hotel",cat:"Hotel",city:"Singapore",price:1950000,rating:4.7,icon:"🏢"},
-{id:4,name:"Mountain Escape Resort",cat:"Hotel",city:"Lombok",price:1100000,rating:4.8,icon:"⛰️"},
-{id:5,name:"Local Kitchen Experience",cat:"Restaurant",city:"Bali",price:175000,rating:4.9,icon:"🍜"},
-{id:6,name:"Japanese Dinner Experience",cat:"Restaurant",city:"Tokyo",price:420000,rating:4.8,icon:"🍣"},
-{id:7,name:"Balinese Food Tour",cat:"Restaurant",city:"Bali",price:250000,rating:4.9,icon:"🥘"},
-{id:8,name:"Sunset Coffee Spot",cat:"Restaurant",city:"Lombok",price:95000,rating:4.7,icon:"☕"},
-{id:9,name:"Adventure Water Sports",cat:"Activity",city:"Bali",price:300000,rating:4.9,icon:"🏄"},
-{id:10,name:"Blue Ocean Diving",cat:"Activity",city:"Lombok",price:650000,rating:4.9,icon:"🤿"},
-{id:11,name:"Bali Cycling Tour",cat:"Activity",city:"Ubud",price:225000,rating:4.8,icon:"🚴"},
-{id:12,name:"Morning Yoga Retreat",cat:"Activity",city:"Ubud",price:180000,rating:4.9,icon:"🧘"},
-{id:13,name:"Bali Adventure Park",cat:"Ticket",city:"Bali",price:350000,rating:4.8,icon:"🎢"},
-{id:14,name:"Singapore City Attraction",cat:"Ticket",city:"Singapore",price:480000,rating:4.7,icon:"🎡"},
-{id:15,name:"Tokyo City Pass",cat:"Ticket",city:"Tokyo",price:750000,rating:4.8,icon:"🗼"},
-{id:16,name:"Lombok Nature Pass",cat:"Ticket",city:"Lombok",price:275000,rating:4.8,icon:"🌊"},
-{id:17,name:"Premium Car Rental",cat:"Transport",city:"Bali",price:550000,rating:4.8,icon:"🚗"},
-{id:18,name:"Scooter Rental",cat:"Transport",city:"Bali",price:100000,rating:4.7,icon:"🛵"},
-{id:19,name:"Family Van Transfer",cat:"Transport",city:"Bali",price:350000,rating:4.9,icon:"🚐"},
-{id:20,name:"Private Boat Experience",cat:"Transport",city:"Lombok",price:2500000,rating:4.9,icon:"🛥️"}
+{id:1,name:"Ocean View Resort",category:"Hotel",location:"Bali",price:1250000,rating:4.9,icon:"🏨"},
+{id:2,name:"Tropical Garden Villa",category:"Hotel",location:"Ubud, Bali",price:1750000,rating:4.8,icon:"🏡"},
+{id:3,name:"City Premium Hotel",category:"Hotel",location:"Singapore",price:1950000,rating:4.7,icon:"🏢"},
+{id:4,name:"Mountain Escape Resort",category:"Hotel",location:"Lombok",price:1100000,rating:4.8,icon:"⛰️"},
+{id:5,name:"Local Kitchen Experience",category:"Restaurant",location:"Bali",price:175000,rating:4.9,icon:"🍜"},
+{id:6,name:"Japanese Dinner Experience",category:"Restaurant",location:"Tokyo",price:420000,rating:4.8,icon:"🍣"},
+{id:7,name:"Balinese Food Tour",category:"Restaurant",location:"Bali",price:250000,rating:4.9,icon:"🥘"},
+{id:8,name:"Sunset Coffee Spot",category:"Restaurant",location:"Lombok",price:95000,rating:4.7,icon:"☕"},
+{id:9,name:"Adventure Water Sports",category:"Activity",location:"Bali",price:300000,rating:4.9,icon:"🏄"},
+{id:10,name:"Blue Ocean Diving",category:"Activity",location:"Lombok",price:650000,rating:4.9,icon:"🤿"},
+{id:11,name:"Bali Cycling Tour",category:"Activity",location:"Ubud",price:225000,rating:4.8,icon:"🚴"},
+{id:12,name:"Morning Yoga Retreat",category:"Activity",location:"Ubud",price:180000,rating:4.9,icon:"🧘"},
+{id:13,name:"Bali Adventure Park",category:"Ticket",location:"Bali",price:350000,rating:4.8,icon:"🎢"},
+{id:14,name:"Singapore City Attraction",category:"Ticket",location:"Singapore",price:480000,rating:4.7,icon:"🎡"},
+{id:15,name:"Tokyo City Pass",category:"Ticket",location:"Tokyo",price:750000,rating:4.8,icon:"🗼"},
+{id:16,name:"Lombok Nature Pass",category:"Ticket",location:"Lombok",price:275000,rating:4.8,icon:"🌊"},
+{id:17,name:"Premium Car Rental",category:"Transport",location:"Bali",price:550000,rating:4.8,icon:"🚗"},
+{id:18,name:"Scooter Rental",category:"Transport",location:"Bali",price:100000,rating:4.7,icon:"🛵"},
+{id:19,name:"Family Van Transfer",category:"Transport",location:"Bali",price:350000,rating:4.9,icon:"🚐"},
+{id:20,name:"Private Boat Experience",category:"Transport",location:"Lombok",price:2500000,rating:4.9,icon:"🛥️"}
 ];
 
 let cart=JSON.parse(localStorage.getItem("hobbigo_cart")||"[]");
 let wishlist=JSON.parse(localStorage.getItem("hobbigo_wishlist")||"[]");
 let bookings=JSON.parse(localStorage.getItem("hobbigo_bookings")||"[]");
 let selectedPackage=JSON.parse(localStorage.getItem("hobbigo_package")||"null");
-let promoDiscount=Number(localStorage.getItem("hobbigo_discount")||0);
 let tripState=JSON.parse(localStorage.getItem("hobbigo_trip_state")||"null");
+let discount=Number(localStorage.getItem("hobbigo_discount")||0);
+let mapDestination=localStorage.getItem("hobbigo_map_destination")||"Bali";
+let paymentMethod="QRIS";
 
-function money(n){
- return "Rp "+Number(n||0).toLocaleString("id-ID");
-}
+const money=n=>"Rp"+Number(n||0).toLocaleString("id-ID");
 
 function saveData(){
  localStorage.setItem("hobbigo_cart",JSON.stringify(cart));
  localStorage.setItem("hobbigo_wishlist",JSON.stringify(wishlist));
  localStorage.setItem("hobbigo_bookings",JSON.stringify(bookings));
  localStorage.setItem("hobbigo_package",JSON.stringify(selectedPackage));
- localStorage.setItem("hobbigo_discount",promoDiscount);
+ localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
+ localStorage.setItem("hobbigo_discount",discount);
  updateBadges();
 }
 
+function toast(msg){
+ const t=document.getElementById("toast");
+ t.textContent=msg;
+ t.classList.add("show");
+ setTimeout(()=>t.classList.remove("show"),2500);
+}
+
 function updateBadges(){
- let qty=cart.reduce((a,b)=>a+(b.qty||1),0);
- document.getElementById("cartBadge").textContent=qty;
+ document.getElementById("cartBadge").textContent=cart.reduce((a,b)=>a+b.qty,0);
  document.getElementById("wishBadge").textContent=wishlist.length;
- document.getElementById("homeCartCount").textContent=qty;
+ document.getElementById("homeCartCount").textContent=cart.reduce((a,b)=>a+b.qty,0);
  document.getElementById("homeTripCount").textContent=bookings.length;
  document.getElementById("homeWishCount").textContent=wishlist.length;
+
+ if(document.getElementById("profileTrips"))
+ document.getElementById("profileTrips").textContent=bookings.length+" bookings";
+ if(document.getElementById("profileWishlist"))
+ document.getElementById("profileWishlist").textContent=wishlist.length+" saved";
+ if(document.getElementById("profileCart"))
+ document.getElementById("profileCart").textContent=cart.reduce((a,b)=>a+b.qty,0)+" items";
 }
 
 function hidePages(){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 }
 
 function showSection(id){
  hidePages();
  document.getElementById(id).classList.add("active");
  window.scrollTo({top:0,behavior:"smooth"});
- closeDrawer();
-}
-
-function toast(msg){
- const t=document.getElementById("toast");
- t.textContent=msg;
- t.style.display="block";
- setTimeout(()=>t.style.display="none",2200);
+ updateBadges();
 }
 
 function home(){
  showSection("homePage");
- renderHome();
 }
 
 function renderHome(){
- const box=document.getElementById("homeProducts");
- box.innerHTML=products.slice(0,8).map(productCard).join("");
  updateBadges();
 }
 
 function searchNow(){
- const d=document.getElementById("heroDestination").value.trim();
+ const d=document.getElementById("homeDestination").value.trim();
  if(d){
-  document.getElementById("searchInput").value=d;
+   document.getElementById("searchInput").value=d;
+   openResults();
+   applyFilters();
+ }else{
+   openResults();
  }
- openResults();
- applyFilters();
 }
 
-function destinationSearch(city){
- document.getElementById("searchInput").value=city;
- openResults();
- applyFilters();
+function destinationSearch(){
+ searchNow();
 }
 
 function searchCategory(cat){
+ showSection("explorePage");
  document.getElementById("categoryFilter").value=cat;
- openResults();
  applyFilters();
 }
 
 function openResults(){
  showSection("explorePage");
- applyFilters();
+ renderProducts(products);
 }
 
 function resetFilters(){
  document.getElementById("searchInput").value="";
  document.getElementById("categoryFilter").value="All";
- document.getElementById("maxPrice").value="";
- document.getElementById("sortFilter").value="Recommended";
+ document.getElementById("ratingFilter").value="0";
+ document.getElementById("sortFilter").value="recommended";
  applyFilters();
 }
 
 function applyFilters(){
- const q=(document.getElementById("searchInput").value||"").toLowerCase();
+ const q=document.getElementById("searchInput").value.toLowerCase();
  const cat=document.getElementById("categoryFilter").value;
- const max=Number(document.getElementById("maxPrice").value||0);
+ const rating=Number(document.getElementById("ratingFilter").value);
  const sort=document.getElementById("sortFilter").value;
 
  let arr=products.filter(p=>{
-  const text=(p.name+" "+p.city+" "+p.cat).toLowerCase();
-  return (!q||text.includes(q)) &&
-         (cat==="All"||p.cat===cat) &&
-         (!max||p.price<=max);
+   const text=(p.name+" "+p.location+" "+p.category).toLowerCase();
+   return text.includes(q) &&
+          (cat==="All"||p.category===cat) &&
+          p.rating>=rating;
  });
 
  if(sort==="low")arr.sort((a,b)=>a.price-b.price);
  if(sort==="high")arr.sort((a,b)=>b.price-a.price);
  if(sort==="rating")arr.sort((a,b)=>b.rating-a.rating);
 
- document.getElementById("exploreProducts").innerHTML=
- arr.length?arr.map(productCard).join(""):
- '<div class="empty" style="grid-column:1/-1">No experiences found.</div>';
+ renderProducts(arr);
+}
+
+function renderProducts(arr){
+ const box=document.getElementById("productGrid");
+
+ if(!arr.length){
+   box.innerHTML='<div class="empty">No products found.</div>';
+   return;
+ }
+
+ box.innerHTML=arr.map(productCard).join("");
 }
 
 function productCard(p){
+ const wished=wishlist.includes(p.id);
+
  return `
  <div class="product">
    <div class="product-img">${p.icon}</div>
    <div class="product-body">
-     <span class="tag">${p.cat}</span>
-     ${p.rating>=4.9?'<span class="tag">AI PICK</span>':''}
-     <h3>${p.name}</h3>
-     <p>📍 ${p.city}</p>
+     <div class="product-top">
+       <div>
+         <strong>${p.name}</strong>
+         <p>${p.location}</p>
+       </div>
+       ${p.rating>=4.9?'<span class="ai-pick">AI PICK</span>':""}
+     </div>
+
      <div class="rating">★ ${p.rating}</div>
      <div class="price">${money(p.price)}</div>
-     <div class="product-actions">
+
+     <div class="actions">
        <button class="secondary" onclick="openProduct(${p.id})">Details</button>
        <button class="primary" onclick="addProduct(${p.id})">Add</button>
-       <button class="secondary" onclick="saveProduct(${p.id})">♡</button>
+       <button class="secondary" onclick="saveProduct(${p.id})">${wished?"♥":"♡"}</button>
      </div>
    </div>
  </div>`;
 }
 
 function findProduct(id){
- return products.find(p=>p.id===Number(id));
+ return products.find(p=>p.id===id);
 }
 
 function openProduct(id){
  const p=findProduct(id);
+
  document.getElementById("modalContent").innerHTML=`
- <div style="font-size:70px;text-align:center">${p.icon}</div>
- <span class="tag">${p.cat}</span>
+ <div style="font-size:60px;text-align:center">${p.icon}</div>
  <h2>${p.name}</h2>
- <p>📍 ${p.city}</p>
- <p class="rating">★ ${p.rating}</p>
- <h2 class="price">${money(p.price)}</h2>
- <p>Experience selected by HOBBIGO AI marketplace.</p>
- <button class="primary" onclick="addProduct(${p.id});closeModal()">Add to Journey</button>
- <button class="secondary" onclick="buyProduct(${p.id});closeModal()">Book Now</button>
- `;
- document.getElementById("modal").style.display="flex";
+ <p style="margin:10px 0">${p.location} · ${p.category}</p>
+ <div class="rating">★ ${p.rating}</div>
+ <div class="price">${money(p.price)}</div>
+ <p>AI recommended marketplace experience available through HobbiGo.</p>
+ <div class="actions">
+   <button class="secondary" onclick="saveProduct(${p.id});closeModal()">♡ Wishlist</button>
+   <button class="primary" onclick="addProduct(${p.id});closeModal()">Add to Cart</button>
+ </div>`;
+ document.getElementById("productModal").classList.add("show");
 }
 
 function closeModal(){
- document.getElementById("modal").style.display="none";
+ document.getElementById("productModal").classList.remove("show");
 }
 
 function addProduct(id){
- const existing=cart.find(x=>x.id===id&&!x.package);
- if(existing)existing.qty++;
- else cart.push({id:id,qty:1});
+ const p=findProduct(id);
+
  selectedPackage=null;
+
+ const existing=cart.find(x=>x.id===id);
+
+ if(existing) existing.qty++;
+ else cart.push({...p,qty:1});
+
  saveData();
- toast("Added to your journey");
+ toast(p.name+" added to cart");
 }
 
 function buyProduct(id){
+ cart=[];
  selectedPackage=null;
  addProduct(id);
- setTimeout(openCheckout,200);
+ openCheckout();
 }
 
 function saveProduct(id){
- if(!wishlist.includes(id))wishlist.push(id);
- else wishlist=wishlist.filter(x=>x!==id);
+ if(wishlist.includes(id)){
+   wishlist=wishlist.filter(x=>x!==id);
+   toast("Removed from wishlist");
+ }else{
+   wishlist.push(id);
+   toast("Added to wishlist");
+ }
  saveData();
- toast("Wishlist updated");
+
+ if(document.getElementById("wishlistPage").classList.contains("active"))
+ renderWishlist();
 }
 
 function openWishlist(){
@@ -1247,10 +1590,15 @@ function openWishlist(){
 }
 
 function renderWishlist(){
- const arr=products.filter(p=>wishlist.includes(p.id));
- document.getElementById("wishlistContent").innerHTML=
- arr.length?arr.map(productCard).join(""):
- '<div class="empty" style="grid-column:1/-1">Your wishlist is empty.</div>';
+ const box=document.getElementById("wishlistContainer");
+ const arr=wishlist.map(findProduct).filter(Boolean);
+
+ if(!arr.length){
+   box.innerHTML='<div class="empty">Your wishlist is empty.</div>';
+   return;
+ }
+
+ box.innerHTML=arr.map(productCard).join("");
 }
 
 function openCart(){
@@ -1261,170 +1609,156 @@ function openCart(){
 function renderCart(){
  const box=document.getElementById("cartItems");
 
- if(!cart.length&&!selectedPackage){
-  box.innerHTML='<div class="empty">Your journey cart is empty.<br><br><button class="primary" onclick="openResults()">Explore Marketplace</button></div>';
- }else{
-  let html="";
-  cart.forEach((item,index)=>{
-   const p=findProduct(item.id);
-   if(!p)return;
-   html+=`
-   <div class="cart-item">
-    <div>
-     <strong>${p.icon} ${p.name}</strong>
-     <div>${p.cat} · ${p.city}</div>
-     <b>${money(p.price)}</b>
-    </div>
-    <div class="qty">
-     <button onclick="changeQty(${index},-1)">−</button>
-     <b>${item.qty}</b>
-     <button onclick="changeQty(${index},1)">+</button>
-     <button class="danger" onclick="removeCart(${index})">Remove</button>
-    </div>
-   </div>`;
-  });
-  box.innerHTML=html;
+ if(!cart.length){
+   box.innerHTML='<div class="empty"><h2>Your cart is empty</h2><p style="margin:10px">Explore the marketplace and add experiences.</p><button class="primary" onclick="openResults()">Explore Marketplace</button></div>';
+   document.getElementById("cartSummary").innerHTML="";
+   return;
  }
 
- let c=calculateCart();
+ box.innerHTML=cart.map((x,i)=>`
+ <div class="cart-item">
+   <div class="cart-icon">${x.icon||"📦"}</div>
+   <div>
+     <strong>${x.name}</strong>
+     <p>${x.location||"HobbiGo Journey"}</p>
+     <b>${money(x.price)}</b>
+   </div>
 
- document.getElementById("cartSummary").innerHTML=`
- <div class="summary">
- <h2>Journey Summary</h2>
- <div class="summary-row"><span>Items</span><strong>${money(c.items)}</strong></div>
- ${selectedPackage?`<div class="summary-row"><span>${selectedPackage.name}</span><strong>${money(selectedPackage.price)}</strong></div>`:""}
- <div class="summary-row"><span>Service Fee</span><strong>${money(c.fee)}</strong></div>
- <div class="summary-row"><span>Discount</span><strong>-${money(c.discount)}</strong></div>
- <div class="summary-row total"><span>Total</span><strong>${money(c.total)}</strong></div>
- <button class="primary" style="width:100%" onclick="openCheckout()">Continue to Booking →</button>
- </div>`;
-}
+   <div class="qty">
+     <button onclick="changeQty(${i},-1)">−</button>
+     <strong>${x.qty}</strong>
+     <button onclick="changeQty(${i},1)">+</button>
+     <button onclick="removeCart(${i})">✕</button>
+   </div>
+ </div>`).join("");
 
-function changeQty(index,n){
- cart[index].qty+=n;
- if(cart[index].qty<=0)cart.splice(index,1);
- saveData();
- renderCart();
-}
-
-function removeCart(index){
- cart.splice(index,1);
- saveData();
- renderCart();
+ renderCartSummary();
 }
 
 function calculateCart(){
- let items=cart.reduce((sum,item)=>{
-  const p=findProduct(item.id);
-  return sum+(p?p.price*item.qty:0);
- },0);
+ return cart.reduce((sum,x)=>sum+x.price*x.qty,0);
+}
 
- let packagePrice=selectedPackage?selectedPackage.price:0;
- let fee=Math.round((items+packagePrice)*0.03);
- let discount=promoDiscount;
- let total=items+packagePrice+fee-discount;
- if(total<0)total=0;
+function renderCartSummary(){
+ const subtotal=calculateCart();
+ const service=Math.round(subtotal*.03);
+ const promo=Math.round(subtotal*discount);
+ const total=subtotal+service-promo;
 
- return {items:items+packagePrice,fee,discount,total};
+ document.getElementById("cartSummary").innerHTML=`
+ <h3>Order Summary</h3>
+ <div class="summary-row"><span>Subtotal</span><strong>${money(subtotal)}</strong></div>
+ <div class="summary-row"><span>Service Fee</span><strong>${money(service)}</strong></div>
+ <div class="summary-row"><span>Promo</span><strong>-${money(promo)}</strong></div>
+ <div class="total summary-row"><span>Total</span><strong>${money(total)}</strong></div>
+
+ <input id="promoCode" placeholder="Promo code"
+   style="width:100%;padding:12px;border:1px solid #ddd;border-radius:9px;margin:12px 0">
+
+ <button class="secondary" style="width:100%" onclick="applyPromo()">Apply HOBBI10</button>
+ <button class="primary" style="width:100%;margin-top:10px" onclick="openCheckout()">Continue to Booking</button>`;
+}
+
+function changeQty(i,n){
+ cart[i].qty+=n;
+ if(cart[i].qty<=0)cart.splice(i,1);
+ saveData();
+ renderCart();
+}
+
+function removeCart(i){
+ cart.splice(i,1);
+ saveData();
+ renderCart();
+ toast("Removed from cart");
 }
 
 function applyPromo(){
  const code=document.getElementById("promoCode").value.trim().toUpperCase();
- const c=calculateCart();
 
  if(code==="HOBBI10"){
-  promoDiscount=Math.round(c.items*0.10);
-  saveData();
-  toast("Promo HOBBI10 applied");
+   discount=.10;
+   saveData();
+   toast("10% promo applied");
+   renderCart();
  }else{
-  promoDiscount=0;
-  saveData();
-  toast("Promo code not valid");
+   toast("Use promo HOBBI10");
  }
- renderCart();
 }
 
 function openPlanner(){
  showSection("plannerPage");
- const state=tripState;
- if(state){
-  document.getElementById("tripDestination").value=state.destination||"";
-  document.getElementById("tripTravelers").value=state.travelers||2;
+
+ if(tripState){
+   document.getElementById("planDestination").value=tripState.destination||"";
+   document.getElementById("planDate").value=tripState.date||"";
+   document.getElementById("planTravelers").value=tripState.travelers||2;
  }
 }
 
-function toggleInterest(btn){
- btn.classList.toggle("selected");
+function toggleInterest(el){
+ el.classList.toggle("selected");
 }
 
 function generateTrip(){
- const destination=document.getElementById("tripDestination").value||"Bali";
- const date=document.getElementById("tripDate").value;
- const travelers=Number(document.getElementById("tripTravelers").value||2);
- const duration=document.getElementById("tripDuration").value;
- const style=document.getElementById("tripStyle").value;
- const budget=document.getElementById("tripBudget").value;
+ const destination=document.getElementById("planDestination").value.trim()||"Bali";
+ const date=document.getElementById("planDate").value;
+ const travelers=Number(document.getElementById("planTravelers").value||2);
+ const duration=document.getElementById("planDuration").value;
+ const style=document.getElementById("planStyle").value;
 
- const selected=[...document.querySelectorAll(".interest.selected")].map(x=>x.textContent);
+ const interest=[...document.querySelectorAll(".interest.selected")].map(x=>x.textContent).join(", ");
 
  tripState={
-  destination,
-  date,
-  travelers,
-  duration,
-  style,
-  budget,
-  interests:selected,
-  generated:true,
-  progress:20
+   destination,
+   date,
+   travelers,
+   duration,
+   style,
+   interest,
+   progress:2
  };
 
- localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
+ saveData();
 
- const cityProducts=products.filter(p=>
-  p.city.toLowerCase().includes(destination.toLowerCase()) ||
-  destination.toLowerCase().includes(p.city.split(",")[0].toLowerCase())
+ const relevant=products.filter(p=>
+   p.location.toLowerCase().includes(destination.toLowerCase()) ||
+   destination.toLowerCase().includes(p.location.split(",")[0].toLowerCase())
  );
 
- const hotel=cityProducts.find(p=>p.cat==="Hotel")||products[0];
- const restaurant=cityProducts.find(p=>p.cat==="Restaurant")||products[4];
- const activity=cityProducts.find(p=>p.cat==="Activity")||products[8];
- const ticket=cityProducts.find(p=>p.cat==="Ticket")||products[12];
- const transport=cityProducts.find(p=>p.cat==="Transport")||products[16];
-
- const cost=hotel.price+restaurant.price+activity.price+ticket.price+transport.price;
+ const picks=relevant.length?relevant.slice(0,5):products.slice(0,5);
+ const cost=picks.reduce((a,b)=>a+b.price,0)*Math.max(1,Math.ceil(travelers/2));
 
  document.getElementById("plannerResult").innerHTML=`
- <div class="resultbox">
- <h2>✨ AI Journey Generated</h2>
- <p><b>${destination}</b> · ${date||"Flexible Date"} · ${travelers} travelers · ${duration}</p>
+ <div class="result-box">
+   <h2>✨ AI Journey Generated</h2>
+   <p style="margin:8px 0"><strong>${destination}</strong> · ${duration} · ${travelers} travelers</p>
+   <p>Style: ${style}</p>
+   <p>Interests: ${interest||"AI recommended experiences"}</p>
 
- <h3>Smart Route</h3>
- <div class="route">
-  ${[
-   ["🏨",hotel],
-   ["🍜",restaurant],
-   ["🎯",activity],
-   ["🎟️",ticket],
-   ["🚗",transport]
-  ].map(x=>`<div class="stop"><div style="font-size:30px">${x[0]}</div><b>${x[1].name}</b><small>${x[1].city}</small></div>`).join("")}
- </div>
+   <div class="section-title">
+     <h3>Smart Route</h3>
+     <button class="secondary" onclick="openMap()">View Map</button>
+   </div>
 
- <h3>AI Itinerary</h3>
- <div class="timeline">
-  <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><b>Day 1</b><br>Arrival → ${hotel.name} → ${restaurant.name}</div></div>
-  <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><b>Day 2</b><br>${activity.name} → ${ticket.name}</div></div>
-  <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><b>Day 3</b><br>Explore → ${transport.name} → Departure</div></div>
- </div>
+   <div class="grid">
+     ${picks.map(p=>`
+       <div class="card">
+         <div style="font-size:30px">${p.icon}</div>
+         <strong>${p.name}</strong>
+         <p>${p.location}</p>
+       </div>`).join("")}
+   </div>
 
- <h3>Estimated Journey Cost</h3>
- <div class="price">${money(cost)}</div>
+   <div style="margin-top:18px">
+     <strong>Estimated Cost</strong>
+     <div class="price">${money(cost)}</div>
+   </div>
 
- <br>
- <button class="primary" onclick="openPackages()">View Smart Packages →</button>
- <button class="secondary" onclick="openLiveJourney()">Open Live Journey</button>
+   <button class="primary" onclick="openPackages()">View Smart Packages</button>
+   <button class="secondary" onclick="openLiveJourney()">Open Live Journey</button>
  </div>`;
- 
+
  toast("AI Journey generated");
 }
 
@@ -1433,113 +1767,120 @@ function openPackages(){
 }
 
 function choosePackage(name,price){
- selectedPackage={name,price};
  cart=[];
- promoDiscount=0;
- tripState=tripState||{
-  destination:"Bali",
-  travelers:2,
-  duration:"3 Days"
- };
- tripState.package=name;
- tripState.progress=55;
+ selectedPackage={name,price,qty:1,icon:"📦"};
 
- localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
+ cart.push({
+   id:"package_"+Date.now(),
+   name:name+" Package",
+   category:"Package",
+   location:tripState?.destination||mapDestination,
+   price:price,
+   rating:5,
+   icon:"📦",
+   qty:1
+ });
+
+ if(tripState)tripState.progress=4;
+
  saveData();
-
  toast(name+" selected");
-
- setTimeout(()=>{
-  openCheckout();
- },400);
+ openCheckout();
 }
 
 function openCheckout(){
+ if(!cart.length){
+   toast("Your cart is empty");
+   return;
+ }
+
  showSection("checkoutPage");
  buildCheckout();
 }
 
 function buildCheckout(){
- const c=calculateCart();
-
+ const total=calculateCart();
  document.getElementById("checkoutSummary").innerHTML=`
- <div class="summary">
- <h2>Booking Summary</h2>
- <div class="summary-row"><span>Journey Items</span><strong>${money(c.items)}</strong></div>
- <div class="summary-row"><span>Service Fee</span><strong>${money(c.fee)}</strong></div>
- <div class="summary-row"><span>Discount</span><strong>-${money(c.discount)}</strong></div>
- <div class="summary-row total"><span>Total</span><strong>${money(c.total)}</strong></div>
+ <div class="summary" style="margin-top:20px">
+   <div class="summary-row"><span>Items</span><strong>${cart.reduce((a,b)=>a+b.qty,0)}</strong></div>
+   <div class="summary-row"><span>Total</span><strong>${money(total)}</strong></div>
  </div>`;
 }
 
-function selectPayment(btn){
- document.querySelectorAll("#checkoutPage .interest").forEach(x=>x.classList.remove("selected"));
- btn.classList.add("selected");
+function selectPayment(el,method){
+ document.querySelectorAll(".pay").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected");
+ paymentMethod=method;
 }
 
 function completeBooking(){
- const name=document.getElementById("bookingName").value.trim();
- const phone=document.getElementById("bookingPhone").value.trim();
-
- if(!name||!phone){
-  toast("Please complete traveler details");
-  return;
+ if(!cart.length){
+   toast("Cart is empty");
+   return;
  }
 
- const c=calculateCart();
+ const name=document.getElementById("checkoutName").value.trim()||"HobbiGo Traveler";
+ const phone=document.getElementById("checkoutPhone").value.trim();
+ const email=document.getElementById("checkoutEmail").value.trim();
+ const date=document.getElementById("checkoutDate").value||new Date().toISOString().slice(0,10);
+ const request=document.getElementById("specialRequest").value.trim();
+
+ const total=calculateCart();
  const code="HBG-"+Math.random().toString(36).substring(2,8).toUpperCase();
 
  const booking={
-  code,
-  name,
-  phone,
-  email:document.getElementById("bookingEmail").value,
-  date:document.getElementById("bookingDate").value,
-  request:document.getElementById("specialRequest").value,
-  total:c.total,
-  package:selectedPackage,
-  items:[...cart],
-  created:new Date().toISOString(),
-  status:"Booked"
+   code,
+   name,
+   phone,
+   email,
+   date,
+   request,
+   payment:paymentMethod,
+   total,
+   items:[...cart],
+   destination:tripState?.destination||mapDestination,
+   created:new Date().toISOString()
  };
 
- bookings.unshift(booking);
+ bookings.push(booking);
 
- tripState=tripState||{};
- tripState.progress=70;
- tripState.status="Booked";
- tripState.bookingCode=code;
-
- localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
+ if(tripState)tripState.progress=5;
 
  cart=[];
  selectedPackage=null;
- promoDiscount=0;
+ discount=0;
+
  saveData();
 
  renderTicket(booking);
  showSection("ticketPage");
+ toast("Booking confirmed");
 }
 
 function renderTicket(b){
- document.getElementById("ticketContent").innerHTML=`
+ document.getElementById("ticketContainer").innerHTML=`
  <div class="ticket">
-  <div class="ticket-head">
-   <div class="eyebrow" style="color:#bfdbfe">HOBBIGO E-TICKET</div>
-   <h1>Booking Confirmed ✓</h1>
-   <p>${b.code}</p>
-  </div>
-  <div class="ticket-body">
-   <h2>${b.name}</h2>
-   <p>📅 ${b.date||"Flexible Date"}</p>
-   <p>📞 ${b.phone}</p>
-   <div class="qr"></div>
-   <div class="summary-row"><span>Booking Code</span><strong>${b.code}</strong></div>
-   <div class="summary-row"><span>Total Paid</span><strong>${money(b.total)}</strong></div>
-   <br>
-   <button class="primary" onclick="openLiveJourney()">🧭 Open Live Journey</button>
-   <button class="secondary" onclick="window.print()">🖨️ Print E-Ticket</button>
-  </div>
+   <div class="ticket-head">
+     <div class="eyebrow">HOBBIGO E-TICKET</div>
+     <h1>Booking Confirmed ✓</h1>
+     <p>${b.destination}</p>
+   </div>
+
+   <div class="ticket-body">
+     <div class="summary-row"><span>Booking Code</span><strong>${b.code}</strong></div>
+     <div class="summary-row"><span>Traveler</span><strong>${b.name}</strong></div>
+     <div class="summary-row"><span>Date</span><strong>${b.date}</strong></div>
+     <div class="summary-row"><span>Payment</span><strong>${b.payment}</strong></div>
+     <div class="summary-row"><span>Total</span><strong>${money(b.total)}</strong></div>
+
+     <div class="qr"></div>
+     <p style="text-align:center;color:#6b7280">Scan at destination / partner checkpoint</p>
+
+     <div style="display:flex;gap:10px;margin-top:20px">
+       <button class="primary" style="flex:1" onclick="window.print()">Print E-Ticket</button>
+       <button class="secondary" style="flex:1" onclick="openTrips()">My Trips</button>
+     </div>
+   </div>
  </div>`;
 }
 
@@ -1549,264 +1890,236 @@ function openTrips(){
 }
 
 function renderTrips(){
- const box=document.getElementById("tripsContent");
+ const box=document.getElementById("tripsContainer");
 
  if(!bookings.length){
-  box.innerHTML='<div class="empty">No trips yet.<br><br><button class="primary" onclick="openPlanner()">Create AI Journey</button></div>';
-  return;
+   box.innerHTML='<div class="empty"><h2>No trips yet</h2><p style="margin:10px">Your confirmed journeys will appear here.</p><button class="primary" onclick="openPlanner()">Create AI Journey</button></div>';
+   return;
  }
 
- box.innerHTML=bookings.map((b,i)=>`
- <div class="booking-card">
-  <div style="display:flex;justify-content:space-between;gap:10px">
-   <div>
-    <span class="tag">BOOKED</span>
-    <h2>${b.code}</h2>
-    <p>👤 ${b.name}</p>
-    <p>📅 ${b.date||"Flexible Date"}</p>
+ box.innerHTML=bookings.slice().reverse().map((b,i)=>`
+ <div class="card" style="margin-bottom:12px">
+   <div style="display:flex;justify-content:space-between;gap:10px">
+     <div>
+       <h3>🧭 ${b.destination}</h3>
+       <p>${b.date} · ${b.name}</p>
+       <p>Booking: <strong>${b.code}</strong></p>
+     </div>
+     <strong>${money(b.total)}</strong>
    </div>
-   <div class="price">${money(b.total)}</div>
-  </div>
-  <button class="primary" onclick="viewBooking(${i})">View E-Ticket</button>
-  <button class="secondary" onclick="openLiveJourney()">Live Journey</button>
- </div>
- `).join("");
+
+   <button class="secondary" style="margin-top:12px" onclick="viewBooking(${bookings.length-1-i})">
+     View E-Ticket
+   </button>
+ </div>`).join("");
 }
 
-function viewBooking(index){
- renderTicket(bookings[index]);
+function viewBooking(i){
+ const b=bookings[i];
+ renderTicket(b);
  showSection("ticketPage");
 }
 
 function openProfile(){
  showSection("profilePage");
+ updateBadges();
 }
 
 function mobileMenu(){
- document.getElementById("drawer").style.display="block";
+ document.getElementById("mobileDrawer").classList.toggle("show");
 }
 
-function closeDrawer(){
- document.getElementById("drawer").style.display="none";
-}
 
 /* =========================
-   V21 LIVE JOURNEY
+   V22 MAP EXPERIENCE
 ========================= */
+
+const destinations={
+ Bali:{
+   lat:-8.4095,
+   lon:115.1889,
+   bbox:"114.9%2C-8.8%2C115.5%2C-8.1",
+   country:"Indonesia",
+   description:"Island destination with beaches, culture, culinary experiences and adventure."
+ },
+ Singapore:{
+   lat:1.3521,
+   lon:103.8198,
+   bbox:"103.55%2C1.15%2C104.05%2C1.50",
+   country:"Singapore",
+   description:"Modern city destination with attractions, culinary experiences and urban activities."
+ },
+ Tokyo:{
+   lat:35.6762,
+   lon:139.6503,
+   bbox:"139.45%2C35.50%2C139.90%2C35.85",
+   country:"Japan",
+   description:"Global city combining technology, culture, food and entertainment."
+ },
+ Lombok:{
+   lat:-8.5833,
+   lon:116.1167,
+   bbox:"115.75%2C-9.0%2C116.55%2C-8.25",
+   country:"Indonesia",
+   description:"Nature, beaches, diving and private island experiences."
+ }
+};
+
+function openMap(){
+ showSection("mapPage");
+ selectMapDestination(mapDestination);
+}
+
+function selectMapDestination(destination){
+ mapDestination=destination;
+ localStorage.setItem("hobbigo_map_destination",destination);
+
+ const d=destinations[destination];
+ if(!d)return;
+
+ const select=document.getElementById("mapDestination");
+ if(select)select.value=destination;
+
+ const frame=document.getElementById("mapFrame");
+
+ if(frame){
+   frame.src=
+   "https://www.openstreetmap.org/export/embed.html?bbox="+
+   d.bbox+
+   "&layer=mapnik&marker="+
+   d.lat+"%2C"+d.lon;
+ }
+
+ const info=document.getElementById("mapDestinationInfo");
+
+ if(info){
+   info.innerHTML=`
+    <div style="font-size:28px">📍</div>
+    <h3>${destination}</h3>
+    <p>${d.country}</p>
+    <p style="margin-top:7px">${d.description}</p>
+    <div class="coordinates" style="margin-top:8px">
+      Coordinates: ${d.lat}, ${d.lon}
+    </div>`;
+ }
+
+ if(document.getElementById("mapPage").classList.contains("active")){
+   window.scrollTo({top:0,behavior:"smooth"});
+ }
+}
+
+function useMapForPlanner(){
+ document.getElementById("planDestination").value=mapDestination;
+ openPlanner();
+ toast(mapDestination+" selected for AI Planner");
+}
+
+function renderLiveJourney(){
+ const destination=tripState?.destination||mapDestination;
+
+ document.getElementById("liveDestinationTitle").textContent=
+ "🧭 "+destination+" Journey";
+
+ const progress=tripState?.progress||1;
+
+ const stages=7;
+
+ document.getElementById("journeyProgress").innerHTML=
+ Array.from({length:stages},(_,i)=>
+ `<div class="${i<progress?'done':''}"></div>`).join("");
+
+ document.getElementById("liveStatus").textContent=
+ progress>=6?"Experience Mode":
+ progress>=5?"Booked":
+ progress>=4?"Package Ready":
+ "Planning";
+
+ const relevant=products.filter(p=>
+   p.location.toLowerCase().includes(destination.toLowerCase()) ||
+   destination.toLowerCase().includes(p.location.split(",")[0].toLowerCase())
+ );
+
+ const route=(relevant.length?relevant:products).slice(0,5);
+
+ document.getElementById("liveRoute").innerHTML=`
+ <div class="grid">
+ ${route.map((p,i)=>`
+   <div class="card">
+     <div style="font-size:30px">${p.icon}</div>
+     <strong>Stop ${i+1} · ${p.name}</strong>
+     <p>${p.location}</p>
+     <p>${money(p.price)}</p>
+   </div>`).join("")}
+ </div>`;
+
+ renderLiveBudget();
+}
+
+function renderLiveBudget(){
+ let total=calculateCart();
+
+ if(bookings.length){
+   total=bookings[bookings.length-1].total;
+ }
+
+ if(selectedPackage){
+   total=selectedPackage.price;
+ }
+
+ document.getElementById("liveBudget").innerHTML=`
+ <div class="card">
+   <div style="display:flex;justify-content:space-between">
+     <span>Current Journey Estimate</span>
+     <strong>${money(total)}</strong>
+   </div>
+   <div style="height:10px;background:#e8edf5;border-radius:20px;margin-top:12px">
+     <div style="width:${Math.min(100,Math.max(10,total/70000))}%;height:100%;background:#0b67f0;border-radius:20px"></div>
+   </div>
+   <p style="margin-top:8px">AI continuously monitors your journey configuration.</p>
+ </div>`;
+}
 
 function openLiveJourney(){
  showSection("livePage");
  renderLiveJourney();
 }
 
-function getJourneyProducts(){
- let ids=[];
-
- if(cart.length){
-  ids=cart.map(x=>x.id);
- }
-
- if(tripState&&tripState.generated){
-  const d=(tripState.destination||"Bali").toLowerCase();
-
-  const local=products.filter(p=>
-   p.city.toLowerCase().includes(d) ||
-   d.includes(p.city.split(",")[0].toLowerCase())
-  );
-
-  ["Hotel","Restaurant","Activity","Ticket","Transport"].forEach(cat=>{
-   const found=local.find(p=>p.cat===cat)||products.find(p=>p.cat===cat);
-   if(found&&!ids.includes(found.id))ids.push(found.id);
-  });
- }
-
- return ids.map(findProduct).filter(Boolean);
-}
-
-function renderLiveJourney(){
- const destination=tripState?.destination||"Bali";
- document.getElementById("liveDestinationText").textContent=
- "AI-managed journey in "+destination+" · Marketplace connected";
-
- const booked=bookings.length>0;
- let progress=tripState?.progress||0;
-
- if(booked)progress=70;
-
- document.getElementById("journeyProgress").style.width=progress+"%";
-
- let stage="Search";
- if(progress>=20)stage="Plan";
- if(progress>=40)stage="Configure";
- if(progress>=55)stage="Package";
- if(progress>=70)stage="Book";
- if(progress>=85)stage="Experience";
- if(progress>=100)stage="Re-optimize";
-
- document.getElementById("journeyProgressText").textContent=
- progress+"% — "+stage;
-
- document.getElementById("liveStatusText").textContent=
- booked?"Booked · Ready to Experience":"Journey Ready";
-
- const routeProducts=getJourneyProducts();
-
- if(!routeProducts.length){
-  document.getElementById("liveRoute").innerHTML=`
-   <div class="empty" style="width:100%">
-    Start by generating an AI Journey or selecting marketplace experiences.
-   </div>`;
- }else{
-  const cats=["Hotel","Restaurant","Activity","Ticket","Transport"];
-
-  const route=cats.map(cat=>{
-   return routeProducts.find(p=>p.cat===cat);
-  }).filter(Boolean);
-
-  document.getElementById("liveRoute").innerHTML=route.map(p=>`
-   <div class="stop">
-    <div style="font-size:30px">${p.icon}</div>
-    <span class="tag">${p.cat}</span>
-    <b>${p.name}</b>
-    <small>📍 ${p.city}</small>
-   </div>
-  `).join("");
- }
-
- const timeline=[
-  ["Search","Destination and experiences discovered",progress>=10],
-  ["Plan","AI itinerary generated",progress>=20],
-  ["Configure","Route and experiences configured",progress>=40],
-  ["Package","Smart package selected",progress>=55],
-  ["Book","Booking and payment completed",progress>=70],
-  ["Experience","Live travel mode",progress>=85],
-  ["Re-optimize","AI adjusts journey",progress>=100]
- ];
-
- document.getElementById("journeyTimeline").innerHTML=timeline.map(x=>`
-  <div class="timeline-item">
-   <div class="timeline-dot" style="background:${x[2]?"#1264e8":"#cbd5e1"}"></div>
-   <div class="timeline-content">
-    <b>${x[0]}</b><br>
-    <span>${x[1]}</span>
-    ${x[2]?"<span style='float:right;color:#16a34a;font-weight:bold'>✓</span>":""}
-   </div>
-  </div>
- `).join("");
-
- renderLiveBudget();
- renderAIRecommendation();
-}
-
-function renderLiveBudget(){
- let c=calculateCart();
-
- let planned=
-  tripState?.budget==="Premium"?6750000:
-  tripState?.budget==="Comfort"?3850000:
-  2450000;
-
- if(selectedPackage)planned=selectedPackage.price;
- if(bookings.length&&bookings[0].total)planned=bookings[0].total;
-
- let current=c.total;
-
- if(bookings.length)current=bookings[0].total;
-
- let remaining=Math.max(planned-current,0);
- let pct=planned?Math.min((current/planned)*100,100):0;
-
- document.getElementById("liveBudget").textContent=money(current);
- document.getElementById("plannedBudget").textContent=money(planned);
- document.getElementById("bookedBudget").textContent=money(current);
- document.getElementById("remainingBudget").textContent=money(remaining);
- document.getElementById("budgetProgress").style.width=pct+"%";
-}
-
-function renderAIRecommendation(){
- const route=getJourneyProducts();
-
- const cats=route.map(x=>x.cat);
- const missing=["Hotel","Restaurant","Activity","Ticket","Transport"].filter(x=>!cats.includes(x));
-
- let html="";
-
- if(missing.length){
-  const cat=missing[0];
-  const rec=products.find(p=>p.cat===cat&&p.rating>=4.8)||products.find(p=>p.cat===cat);
-
-  html=`
-  <b>AI sees one opportunity:</b><br>
-  Your journey is missing <strong>${cat}</strong>.
-  <br><br>
-  Recommended: <strong>${rec.name}</strong><br>
-  ${rec.city} · ★ ${rec.rating} · ${money(rec.price)}
-  <br><br>
-  <button class="primary" onclick="addProduct(${rec.id});renderLiveJourney()">Add Recommendation</button>`;
- }else{
-  html=`
-  <b>✨ Your journey is well connected.</b><br>
-  Hotel, dining, activity, ticket and transport are all represented.
-  <br><br>
-  AI recommendation: optimize timing and route before experience mode.
-  <br><br>
-  <button class="primary" onclick="reOptimize()">Re-optimize Journey</button>`;
- }
-
- document.getElementById("aiRecommendation").innerHTML=html;
-}
-
 function reOptimize(){
  if(!tripState){
-  tripState={
-   destination:"Bali",
-   travelers:2,
-   duration:"3 Days",
-   progress:40
-  };
+   tripState={
+     destination:mapDestination,
+     progress:6
+   };
+ }else{
+   tripState.progress=Math.min(7,(tripState.progress||1)+1);
  }
 
- tripState.progress=Math.min((tripState.progress||40)+15,100);
- tripState.reoptimized=true;
-
- localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
-
+ saveData();
  renderLiveJourney();
  toast("AI Journey re-optimized");
 }
 
-function experienceMode(){
- if(!bookings.length){
-  toast("Complete a booking first");
-  return;
- }
-
- if(!tripState)tripState={};
-
- tripState.progress=85;
- tripState.status="On Journey";
- localStorage.setItem("hobbigo_trip_state",JSON.stringify(tripState));
-
- renderLiveJourney();
- toast("Experience Mode activated");
-}
 
 /* =========================
    INIT
 ========================= */
 
 function init(){
- const today=new Date().toISOString().split("T")[0];
-
- document.getElementById("heroDate").value=today;
- document.getElementById("tripDate").value=today;
- document.getElementById("bookingDate").value=today;
-
  renderHome();
+ renderProducts(products);
+ selectMapDestination(mapDestination);
+
+ document.getElementById("homeDate").value=
+ new Date().toISOString().slice(0,10);
+
+ document.getElementById("planDate").value=
+ new Date().toISOString().slice(0,10);
+
  updateBadges();
 }
 
 init();
+
 </script>
 
 </body>
