@@ -2,113 +2,76 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>HobbiGo - Smart Route</title>
+<title>HobbiGo</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
-
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
+  font-family:Arial;
+  background:#f4f6f8;
   color:#172033;
 }
 
 header{
-  background:linear-gradient(135deg,#111827,#26354d);
+  background:#172033;
   color:white;
-  padding:25px 18px;
   text-align:center;
+  padding:25px;
 }
 
 .logo{
-  font-size:32px;
+  font-size:30px;
   font-weight:bold;
 }
 
-.tagline{
-  font-size:14px;
-  margin-top:6px;
-  opacity:.85;
-}
-
 .container{
-  max-width:850px;
+  max-width:700px;
   margin:auto;
-  padding:20px 15px;
+  padding:15px;
 }
 
 .card{
   background:white;
-  padding:20px;
-  border-radius:18px;
-  margin-bottom:18px;
-  box-shadow:0 5px 20px rgba(0,0,0,.07);
+  padding:18px;
+  margin-bottom:15px;
+  border-radius:15px;
 }
 
-input,select{
+input{
   width:100%;
   padding:13px;
-  margin-top:8px;
-  border:1px solid #d5dbe5;
-  border-radius:10px;
-  font-size:16px;
-}
-
-label{
-  display:block;
-  font-weight:bold;
-  margin-top:14px;
+  margin:8px 0 15px;
+  box-sizing:border-box;
+  border:1px solid #ccc;
+  border-radius:8px;
 }
 
 button{
   width:100%;
   padding:14px;
-  margin-top:15px;
+  margin:8px 0;
   border:0;
-  border-radius:11px;
+  border-radius:9px;
   background:#ff6b35;
   color:white;
   font-size:16px;
   font-weight:bold;
-}
-
-.route{
-  border:2px solid #e5e7eb;
-  border-radius:15px;
-  padding:16px;
-  margin-top:12px;
   cursor:pointer;
 }
 
-.route:hover{
-  border-color:#ff6b35;
-}
-
-.route.selected{
-  border-color:#ff6b35;
-  background:#fff7f3;
-}
-
+.route,
 .product{
-  border:1px solid #e1e5eb;
+  border:2px solid #ddd;
   padding:15px;
-  border-radius:14px;
-  margin-top:12px;
+  margin:10px 0;
+  border-radius:12px;
 }
 
-.product button{
-  margin-top:10px;
-  background:#172033;
-}
-
-.product.selected{
-  border:2px solid #ff6b35;
-  background:#fff8f5;
+.selected{
+  border-color:#ff6b35;
+  background:#fff4ef;
 }
 
 .price{
@@ -117,31 +80,22 @@ button{
   color:#ff6b35;
 }
 
-.totalBox{
-  position:sticky;
-  bottom:10px;
+.total{
   background:#172033;
   color:white;
-  padding:18px;
-  border-radius:16px;
-  margin-top:20px;
+  padding:20px;
+  border-radius:12px;
+  margin-top:15px;
 }
 
-.total{
+.totalNumber{
   font-size:28px;
-  font-weight:bold;
   color:#ffb08d;
+  font-weight:bold;
 }
 
 .hidden{
   display:none;
-}
-
-.success{
-  text-align:center;
-  padding:25px;
-  background:#ecfdf3;
-  border-radius:15px;
 }
 </style>
 </head>
@@ -151,11 +105,9 @@ button{
 
 <header>
 
-<div class="logo">
-✈️ HobbiGo
-</div>
+<div class="logo">✈️ HobbiGo</div>
 
-<div class="tagline">
+<div>
 AI Journey & Experience Marketplace
 </div>
 
@@ -165,32 +117,181 @@ AI Journey & Experience Marketplace
 <div class="container">
 
 
-<!-- TRIP -->
-
 <div class="card">
 
 <h2>🌍 Trip Planner</h2>
 
-<label>Tujuan</label>
-
 <input
 id="tujuan"
-placeholder="Contoh: Bali"
+placeholder="Tujuan, contoh: Bali"
 >
-
-
-<label>Tanggal</label>
 
 <input
 id="tanggal"
 type="date"
 >
 
-
-<label>Jumlah Orang</label>
-
 <input
 id="orang"
 type="number"
 value="2"
-min
+min="1"
+>
+
+<button id="generate">
+🚀 Generate Trip
+</button>
+
+</div>
+
+
+<div id="trip" class="hidden">
+
+
+<div class="card">
+
+<h2>🗺️ Smart Route</h2>
+
+<div class="route" id="routeA">
+<b>🏝️ Route A — Relax</b>
+<br>
+Hotel → Pantai → Restaurant → Sunset
+</div>
+
+<div class="route" id="routeB">
+<b>🏄 Route B — Adventure</b>
+<br>
+Hotel → Water Activity → Adventure Park
+</div>
+
+<div class="route" id="routeC">
+<b>📸 Route C — Experience</b>
+<br>
+Photo Spot → Culinary → Shopping
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>🏪 Marketplace</h2>
+
+
+<h3>🏨 Hotel</h3>
+
+<div class="product">
+
+<b>Bali Comfort Hotel</b>
+
+<p>Hotel nyaman dekat pusat wisata</p>
+
+<div class="price">
+Rp 900.000
+</div>
+
+<button
+class="choose"
+data-type="hotel"
+data-name="Bali Comfort Hotel"
+data-price="900000"
+>
+PILIH HOTEL
+</button>
+
+</div>
+
+
+<div class="product">
+
+<b>Paradise Resort</b>
+
+<p>Resort premium</p>
+
+<div class="price">
+Rp 1.500.000
+</div>
+
+<button
+class="choose"
+data-type="hotel"
+data-name="Paradise Resort"
+data-price="1500000"
+>
+PILIH HOTEL
+</button>
+
+</div>
+
+
+<h3>🍽️ Restaurant</h3>
+
+<div class="product">
+
+<b>Local Culinary</b>
+
+<p>Masakan lokal khas Bali</p>
+
+<div class="price">
+Rp 250.000
+</div>
+
+<button
+class="choose"
+data-type="restaurant"
+data-name="Local Culinary"
+data-price="250000"
+>
+PILIH RESTAURANT
+</button>
+
+</div>
+
+
+<div class="product">
+
+<b>Premium Dinner</b>
+
+<p>Pengalaman makan premium</p>
+
+<div class="price">
+Rp 500.000
+</div>
+
+<button
+class="choose"
+data-type="restaurant"
+data-name="Premium Dinner"
+data-price="500000"
+>
+PILIH RESTAURANT
+</button>
+
+</div>
+
+
+<h3>🎟️ Ticket</h3>
+
+<div class="product">
+
+<b>Island Tour</b>
+
+<p>Tour pulau</p>
+
+<div class="price">
+Rp 600.000
+</div>
+
+<button
+class="choose"
+data-type="ticket"
+data-name="Island Tour"
+data-price="600000"
+>
+PILIH TICKET
+</button>
+
+</div>
+
+
+<div
