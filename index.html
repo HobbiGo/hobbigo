@@ -2,115 +2,147 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HobbiGo V46 - AI Journey & Experience Marketplace</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HobbiGo V47 | AI Journey & Experience Marketplace</title>
 
 <style>
 *{box-sizing:border-box}
 body{
  margin:0;
- font-family:Arial,Helvetica,sans-serif;
- background:#f5f7fb;
- color:#172033
+ font-family:Inter,Arial,sans-serif;
+ background:#f4f7fb;
+ color:#182235
 }
 button,input,select,textarea{font:inherit}
-button{cursor:pointer;border:0}
-
-.topbar{
+button{cursor:pointer}
+.top{
  position:sticky;
  top:0;
- z-index:50;
- background:#fff;
- border-bottom:1px solid #e4e8ef
+ z-index:99;
+ background:rgba(255,255,255,.96);
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid #e8edf4
 }
 .nav{
- max-width:1400px;
+ max-width:1450px;
  margin:auto;
- padding:11px 15px;
+ min-height:68px;
  display:flex;
  align-items:center;
- gap:13px
+ gap:14px;
+ padding:10px 18px
 }
 .logo{
- font-size:27px;
- font-weight:900;
+ font-size:28px;
+ font-weight:950;
  color:#1769e0;
- white-space:nowrap
+ letter-spacing:-1px
 }
-.logo span{color:#0da477}
+.logo span{color:#08a276}
 .navlinks{
  display:flex;
- flex-wrap:wrap;
- gap:2px
+ gap:3px;
+ flex:1;
+ overflow:auto
 }
 .navlinks button{
  background:transparent;
- color:#596579;
- padding:8px 8px;
- border-radius:9px;
- font-size:12px
+ border:0;
+ padding:9px 10px;
+ border-radius:10px;
+ color:#68748a;
+ font-size:12px;
+ white-space:nowrap
 }
 .navlinks button:hover,
 .navlinks button.active{
  background:#eaf2ff;
  color:#1769e0
 }
-.navright{
- margin-left:auto;
- display:flex;
- gap:7px
-}
-
+.navright{display:flex;gap:7px}
 .container{
- max-width:1400px;
+ max-width:1450px;
  margin:auto;
- padding:20px 15px 100px
+ padding:22px 18px 100px
 }
 .page{display:none}
 .page.active{display:block}
 
 .hero{
- background:linear-gradient(135deg,#125fd6,#079879);
- color:#fff;
- border-radius:25px;
- padding:38px;
- margin-bottom:20px
+ position:relative;
+ overflow:hidden;
+ padding:45px;
+ border-radius:30px;
+ color:white;
+ background:linear-gradient(135deg,#125fd8 0%,#1769e0 45%,#08a276 100%);
+ box-shadow:0 18px 50px rgba(23,105,224,.18)
+}
+.hero:after{
+ content:"✈️";
+ position:absolute;
+ right:7%;
+ bottom:-35px;
+ font-size:180px;
+ opacity:.09
 }
 .hero h1{
- font-size:42px;
- margin:10px 0
+ max-width:800px;
+ font-size:clamp(34px,5vw,62px);
+ line-height:1.02;
+ letter-spacing:-2px;
+ margin:14px 0
 }
 .hero p{
- max-width:800px;
- line-height:1.6
+ max-width:750px;
+ line-height:1.7;
+ opacity:.94
 }
-.hero-actions{
+.actions{
  display:flex;
- gap:9px;
  flex-wrap:wrap;
- margin-top:20px
+ gap:9px;
+ margin-top:24px
 }
-
 .btn{
+ border:0;
+ border-radius:11px;
+ padding:11px 16px;
  background:#1769e0;
- color:#fff;
- padding:10px 15px;
- border-radius:10px;
- font-weight:700
+ color:white;
+ font-weight:800
 }
-.btn.secondary{
- background:#edf1f6;
+.btn.green{background:#08a276}
+.btn.orange{background:#e99a08}
+.btn.red{background:#d9364f}
+.btn.dark{background:#182235}
+.btn.light{
+ background:#edf2f8;
  color:#263247
 }
-.btn.green{background:#0da477}
-.btn.orange{background:#f59e0b}
-.btn.red{background:#dc3545}
-.btn.dark{background:#172033}
 .btn.small{
  padding:7px 10px;
  font-size:12px
 }
-
+.pagehead{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:16px
+}
+.pagehead h2{margin:0}
+.badge{
+ display:inline-block;
+ padding:6px 10px;
+ border-radius:20px;
+ background:#eaf2ff;
+ color:#1769e0;
+ font-size:11px;
+ font-weight:800
+}
+.badge.green{background:#e5f8f1;color:#07825f}
+.badge.orange{background:#fff2d8;color:#9a6800}
+.badge.red{background:#ffe7ec;color:#b42138}
 .grid{
  display:grid;
  grid-template-columns:repeat(4,1fr);
@@ -126,126 +158,170 @@ button{cursor:pointer;border:0}
  grid-template-columns:repeat(3,1fr);
  gap:15px
 }
-
 .card{
  background:#fff;
- border:1px solid #e5e9f0;
- border-radius:17px;
- padding:17px;
- box-shadow:0 5px 20px rgba(20,40,80,.04)
+ border:1px solid #e5eaf1;
+ border-radius:19px;
+ padding:18px;
+ box-shadow:0 7px 28px rgba(30,50,90,.045)
 }
 .card h3{margin:0 0 8px}
-.muted{color:#758095}
+.muted{color:#78849a}
 .stat{
- font-size:26px;
- font-weight:900;
- margin-top:7px
+ font-size:27px;
+ font-weight:950;
+ margin-top:6px
 }
-.stat.green{color:#07825f}
-.stat.orange{color:#d58a00}
-.stat.red{color:#d52f40}
-
-.section-title{
+.section{
+ margin-top:26px
+}
+.sectiontitle{
  display:flex;
  justify-content:space-between;
  align-items:center;
- margin:24px 0 13px
+ margin-bottom:13px
 }
-.section-title h2{margin:0}
-
-.badge{
- display:inline-block;
- padding:5px 9px;
- border-radius:20px;
- background:#eaf2ff;
- color:#1769e0;
- font-size:11px;
- font-weight:700
+.sectiontitle h2{margin:0}
+.kpi{
+ border-left:4px solid #1769e0
 }
-.badge.green{
- background:#e5f8f1;
- color:#087d5b
-}
-.badge.orange{
- background:#fff2d8;
- color:#9b6900
-}
-.badge.red{
- background:#ffe7eb;
- color:#b32132
-}
-.badge.dark{
- background:#e9ebef;
- color:#172033
-}
-
 .form{
  display:grid;
  gap:10px
 }
-.form label{
- font-size:13px;
- font-weight:700
+label{
+ font-size:12px;
+ font-weight:800
 }
 input,select,textarea{
  width:100%;
- padding:11px;
- border:1px solid #dce2ec;
- border-radius:10px;
- background:#fff;
+ border:1px solid #dce3ec;
+ border-radius:11px;
+ padding:11px 12px;
+ background:white;
  outline:none
 }
-textarea{
- min-height:90px;
- resize:vertical
-}
+textarea{min-height:90px}
 input:focus,select:focus,textarea:focus{
  border-color:#1769e0
 }
-
 .toolbar{
  display:flex;
  gap:9px;
  flex-wrap:wrap;
- margin-bottom:17px
+ margin-bottom:15px
 }
-.toolbar input{
- flex:1;
- min-width:190px
+.toolbar>*{flex:1;min-width:150px}
+
+.destination{
+ position:relative;
+ overflow:hidden
+}
+.destination .bigicon{
+ height:130px;
+ border-radius:15px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:60px;
+ background:linear-gradient(135deg,#edf4ff,#e9faf5)
+}
+.score{
+ height:8px;
+ background:#e8edf4;
+ border-radius:20px;
+ overflow:hidden
+}
+.score div{
+ height:100%;
+ background:#1769e0
 }
 
 .product{
  position:relative
 }
-.product-icon{
- height:120px;
- border-radius:13px;
- background:linear-gradient(135deg,#eaf2ff,#e6fff7);
+.producticon{
+ height:125px;
+ border-radius:15px;
  display:flex;
  align-items:center;
  justify-content:center;
- font-size:46px;
+ font-size:55px;
+ background:linear-gradient(135deg,#edf4ff,#e8faf5);
  margin-bottom:13px
 }
-.favorite{
+.fav{
  position:absolute;
- right:11px;
- top:11px;
+ top:10px;
+ right:10px;
  width:35px;
  height:35px;
+ border:0;
  border-radius:50%;
  background:#fff;
- box-shadow:0 2px 10px #ddd
+ box-shadow:0 3px 12px #dce1e8
 }
 .price{
- font-size:20px;
- font-weight:900;
- color:#1769e0
+ color:#1769e0;
+ font-size:21px;
+ font-weight:950
 }
-
+.chat{
+ height:290px;
+ overflow:auto;
+ padding:12px;
+ border-radius:15px;
+ background:#f6f8fb
+}
+.msg{
+ padding:9px 12px;
+ border-radius:12px;
+ max-width:85%;
+ margin:7px 0
+}
+.msg.ai{
+ background:white;
+ border:1px solid #e3e8ef
+}
+.msg.user{
+ margin-left:auto;
+ background:#1769e0;
+ color:white
+}
+.route{
+ display:flex;
+ overflow:auto;
+ gap:12px
+}
+.stop{
+ min-width:180px;
+ padding:15px;
+ background:#f7f9fc;
+ border:1px solid #e3e8ef;
+ border-radius:14px
+}
+.timeline{
+ border-left:3px solid #1769e0;
+ padding-left:20px;
+ margin-left:7px
+}
+.event{
+ position:relative;
+ margin-bottom:20px
+}
+.event:before{
+ content:"";
+ position:absolute;
+ width:11px;
+ height:11px;
+ border-radius:50%;
+ background:#1769e0;
+ left:-28px;
+ top:4px
+}
 .progress{
  height:8px;
- background:#e7ebf1;
+ background:#e9edf3;
  border-radius:10px;
  overflow:hidden
 }
@@ -253,138 +329,56 @@ input:focus,select:focus,textarea:focus{
  height:100%;
  background:#1769e0
 }
-
-.route{
- display:flex;
- gap:12px;
- overflow:auto;
- padding:4px
-}
-.route-item{
- min-width:185px;
- background:#f7f9fc;
- border:1px solid #e4e8ef;
- border-radius:13px;
- padding:14px
-}
-
-.timeline{
- border-left:3px solid #1769e0;
- padding-left:20px;
- margin-left:8px
-}
-.timeline-item{
- position:relative;
- margin-bottom:17px
-}
-.timeline-item:before{
- content:"";
- position:absolute;
- left:-28px;
- top:3px;
- width:11px;
- height:11px;
- background:#1769e0;
- border-radius:50%
-}
-
-.chat{
- background:#f7f9fc;
- border-radius:14px;
- padding:13px;
- max-height:290px;
- overflow:auto
-}
-.msg{
- max-width:85%;
- padding:9px 12px;
- border-radius:11px;
- margin:7px 0
-}
-.msg.ai{
- background:#fff;
- border:1px solid #e0e5ed
-}
-.msg.user{
- background:#1769e0;
- color:#fff;
- margin-left:auto
-}
-
 .map{
- height:320px;
- border-radius:18px;
- background:linear-gradient(135deg,#e8f5ff,#e8fff5);
+ height:300px;
  position:relative;
  overflow:hidden;
- border:1px solid #dce5ef
+ border-radius:20px;
+ background:linear-gradient(135deg,#eaf6ff,#e8fff6)
 }
 .map:before{
  content:"";
  position:absolute;
- inset:30px;
+ inset:20px;
  background:
- repeating-linear-gradient(35deg,transparent 0 45px,rgba(23,105,224,.12) 46px 48px),
- repeating-linear-gradient(-35deg,transparent 0 55px,rgba(13,164,119,.1) 56px 58px)
+ repeating-linear-gradient(25deg,transparent 0 42px,rgba(23,105,224,.12) 43px 45px),
+ repeating-linear-gradient(-25deg,transparent 0 53px,rgba(8,162,118,.1) 54px 56px)
 }
-.map-point{
+.pin{
  position:absolute;
  z-index:2;
- width:35px;
- height:35px;
- border-radius:50%;
- background:#1769e0;
- color:#fff;
+ width:36px;
+ height:36px;
  display:flex;
  align-items:center;
  justify-content:center;
- font-weight:bold;
- box-shadow:0 3px 10px #8ba
+ border-radius:50%;
+ color:#fff;
+ background:#1769e0;
+ font-weight:900;
+ box-shadow:0 4px 12px #9aa
 }
-
 .calendar{
  display:grid;
  grid-template-columns:repeat(7,1fr);
  gap:6px
 }
 .day{
- background:#f7f9fc;
- border:1px solid #e5e9f0;
+ min-height:60px;
+ padding:8px;
+ border:1px solid #e4e9f0;
  border-radius:9px;
- padding:10px;
+ background:#fafbfd;
  text-align:center;
- min-height:60px
+ font-size:12px
 }
-.day.active{
- background:#eaf2ff;
- border-color:#1769e0
-}
-.day.booked{
- background:#e6f8f2;
- border-color:#0da477
+.day.available{
+ background:#e7faf3;
+ border-color:#7dd4b6
 }
 .day.today{
- border:2px solid #f59e0b
+ border:2px solid #f0a20a
 }
-
-.qr{
- width:150px;
- height:150px;
- margin:15px auto;
- display:grid;
- grid-template-columns:repeat(10,1fr);
- gap:2px;
- background:#fff;
- padding:7px;
- border:4px solid #172033
-}
-.qr span{background:#172033}
-.qr span:nth-child(3n){background:#fff}
-
-.kpi{
- border-left:4px solid #1769e0
-}
-
 table{
  width:100%;
  border-collapse:collapse
@@ -393,27 +387,26 @@ th,td{
  text-align:left;
  padding:10px;
  border-bottom:1px solid #edf0f4;
- font-size:13px
+ font-size:12px
 }
-
 .modal{
+ display:none;
  position:fixed;
  inset:0;
- background:rgba(0,0,0,.5);
- display:none;
+ z-index:200;
+ background:rgba(12,22,38,.55);
  align-items:center;
  justify-content:center;
- z-index:100;
  padding:18px
 }
 .modal.show{display:flex}
 .modalbox{
  width:100%;
- max-width:760px;
+ max-width:780px;
  max-height:90vh;
  overflow:auto;
  background:#fff;
- border-radius:19px;
+ border-radius:22px;
  padding:22px
 }
 .modalhead{
@@ -422,93 +415,124 @@ th,td{
  align-items:center
 }
 .close{
- width:33px;
- height:33px;
+ border:0;
  border-radius:50%;
- background:#edf1f5
+ width:34px;
+ height:34px
 }
-
 .toast{
+ display:none;
  position:fixed;
+ z-index:300;
  right:18px;
  bottom:18px;
- z-index:200;
- display:none;
- background:#172033;
- color:#fff;
+ background:#182235;
+ color:white;
  padding:12px 16px;
- border-radius:11px
+ border-radius:12px
 }
 .toast.show{display:block}
+.bottom{
+ display:none
+}
+.empty{
+ text-align:center;
+ padding:35px;
+ color:#78849a
+}
+.qr{
+ width:150px;
+ height:150px;
+ margin:15px auto;
+ display:grid;
+ grid-template-columns:repeat(10,1fr);
+ gap:2px;
+ padding:7px;
+ border:4px solid #182235
+}
+.qr i{
+ background:#182235
+}
+.qr i:nth-child(3n),
+.qr i:nth-child(7n){
+ background:white
+}
 
-.bottomnav{display:none}
-
-@media(max-width:1050px){
+@media(max-width:1100px){
  .grid{grid-template-columns:repeat(2,1fr)}
  .grid3{grid-template-columns:repeat(2,1fr)}
  .navlinks{display:none}
 }
-
-@media(max-width:600px){
+@media(max-width:650px){
  .container{padding:14px 11px 90px}
  .grid,.grid2,.grid3{grid-template-columns:1fr}
- .hero{padding:25px}
- .hero h1{font-size:30px}
- .nav{padding:10px}
- .navright .btn{display:none}
- .bottomnav{
+ .hero{padding:27px 22px;border-radius:22px}
+ .hero h1{font-size:34px}
+ .hero:after{font-size:100px}
+ .nav{padding:9px 11px}
+ .logo{font-size:24px}
+ .bottom{
   display:flex;
   position:fixed;
   bottom:0;
   left:0;
   right:0;
-  z-index:60;
+  z-index:100;
   background:#fff;
-  border-top:1px solid #ddd;
+  border-top:1px solid #e2e7ee;
   justify-content:space-around;
   padding:7px 2px
  }
- .bottomnav button{
-  background:transparent;
-  color:#657084;
+ .bottom button{
+  border:0;
+  background:none;
+  color:#69758a;
   font-size:10px
  }
- .bottomnav strong{
+ .bottom strong{
   display:block;
-  font-size:19px
+  font-size:18px
  }
  .calendar{gap:3px}
- .day{padding:7px;font-size:11px}
 }
 </style>
 </head>
 
 <body>
 
-<header class="topbar">
+<header class="top">
 <div class="nav">
 
 <div class="logo">Hobbi<span>Go</span></div>
 
 <div class="navlinks">
-<button onclick="showPage('home')" id="nav-home">Home</button>
-<button onclick="showPage('ai')" id="nav-ai">AI Trip</button>
-<button onclick="showPage('market')" id="nav-market">Marketplace</button>
-<button onclick="showPage('trip')" id="nav-trip">My Trip</button>
-<button onclick="showPage('booking')" id="nav-booking">Booking</button>
-<button onclick="showPage('corporate')" id="nav-corporate">Corporate</button>
-<button onclick="showPage('operations')" id="nav-operations">Operations</button>
-<button onclick="showPage('crm')" id="nav-crm">CRM</button>
-<button onclick="showPage('analytics')" id="nav-analytics">Analytics</button>
-<button onclick="showPage('partner')" id="nav-partner">Partner</button>
-<button onclick="showPage('profile')" id="nav-profile">Profile</button>
+
+<button onclick="page('home')">Home</button>
+<button onclick="page('ai')">AI Trip</button>
+<button onclick="page('market')">Marketplace</button>
+<button onclick="page('trip')">My Trip</button>
+<button onclick="page('booking')">Booking</button>
+<button onclick="page('corporate')">Corporate</button>
+<button onclick="page('operations')">Operations</button>
+<button onclick="page('crm')">CRM</button>
+<button onclick="page('analytics')">Analytics</button>
+<button onclick="page('partner')">Partner</button>
+<button onclick="page('profile')">Profile</button>
+
 </div>
 
 <div class="navright">
-<button class="btn secondary" onclick="showPage('cart')">
+
+<button class="btn light"
+onclick="page('cart')">
 🛒 <span id="cartCount">0</span>
 </button>
-<button class="btn" onclick="openLogin()">Login</button>
+
+<button class="btn"
+onclick="login()">
+Login
+</button>
+
 </div>
 
 </div>
@@ -519,81 +543,117 @@ th,td{
 
 <!-- HOME -->
 
-<section id="home" class="page">
+<section id="home" class="page active">
 
 <div class="hero">
-<span class="badge">AI Journey & Experience Marketplace</span>
 
-<h1>Travel Smarter With HobbiGo V46</h1>
+<span class="badge">
+AI JOURNEY & EXPERIENCE MARKETPLACE
+</span>
+
+<h1>
+Your Journey.<br>
+Your Experience.<br>
+Your HobbiGo.
+</h1>
 
 <p>
-Search → Plan → Configure → Package → Book → Experience → Re-optimize.
-HobbiGo menghubungkan traveler, marketplace, partner dan travel operations
-dalam satu ecosystem.
+Plan, configure, package and book your journey
+dengan AI dan marketplace pengalaman dalam satu platform.
 </p>
 
-<div class="hero-actions">
-<button class="btn" onclick="showPage('ai')">✨ Start AI Trip</button>
-<button class="btn secondary" onclick="showPage('market')">🌎 Explore Marketplace</button>
-<button class="btn secondary" onclick="showPage('trip')">🧳 My Trip</button>
-</div>
+<div class="actions">
+
+<button class="btn"
+onclick="page('ai')">
+✨ Start AI Trip
+</button>
+
+<button class="btn light"
+onclick="page('market')">
+🌎 Explore Marketplace
+</button>
+
+<button class="btn light"
+onclick="page('trip')">
+🧳 My Trip
+</button>
+
 </div>
 
+</div>
+
+
+<div class="section">
 
 <div class="grid">
 
 <div class="card kpi">
 <div class="muted">Bookings</div>
-<div class="stat" id="homeBookings">0</div>
+<div class="stat" id="sBookings">0</div>
 </div>
 
 <div class="card kpi">
-<div class="muted">Cart Items</div>
-<div class="stat" id="homeCart">0</div>
+<div class="muted">Cart</div>
+<div class="stat" id="sCart">0</div>
 </div>
 
 <div class="card kpi">
 <div class="muted">Wishlist</div>
-<div class="stat orange" id="homeFav">0</div>
+<div class="stat" id="sWish">0</div>
 </div>
 
 <div class="card kpi">
 <div class="muted">Trip Budget</div>
-<div class="stat green" id="homeBudget">Rp0</div>
+<div class="stat" id="sBudget">Rp0</div>
 </div>
 
 </div>
 
-
-<div class="section-title">
-<h2>🌏 Destination Intelligence</h2>
 </div>
 
-<div class="grid3" id="destinationGrid"></div>
+
+<div class="section">
+
+<div class="sectiontitle">
+<h2>🌏 AI Destination Picks</h2>
+<span class="badge green">Smart Match</span>
+</div>
+
+<div class="grid3" id="destinations"></div>
+
+</div>
 
 
-<div class="section-title">
-<h2>🚀 V46 Platform</h2>
+<div class="section">
+
+<div class="sectiontitle">
+<h2>⚡ One Platform. Complete Journey.</h2>
 </div>
 
 <div class="grid3">
 
 <div class="card">
-<h3>🗺️ Interactive Trip Map</h3>
-<p class="muted">Visual route, stops dan destination planning.</p>
-<button class="btn small" onclick="showPage('trip')">Open Map</button>
+<h3>🤖 AI Planning</h3>
+<p class="muted">
+AI membantu menyusun destination, route, budget dan itinerary.
+</p>
 </div>
 
 <div class="card">
-<h3>📅 Availability</h3>
-<p class="muted">Partner inventory dan calendar availability.</p>
-<button class="btn small" onclick="showPage('partner')">Open Calendar</button>
+<h3>🛍️ Experience Marketplace</h3>
+<p class="muted">
+Hotel, restaurant, ticket, transport, activity dan boat.
+</p>
 </div>
 
 <div class="card">
-<h3>🎫 Digital E-Ticket</h3>
-<p class="muted">Ticket dengan QR demo dan booking information.</p>
-<button class="btn small" onclick="showPage('booking')">My Tickets</button>
+<h3>🎫 Smart Booking</h3>
+<p class="muted">
+Booking, payment center, invoice dan digital e-ticket.
+</p>
+</div>
+
 </div>
 
 </div>
@@ -605,9 +665,9 @@ dalam satu ecosystem.
 
 <section id="ai" class="page">
 
-<div class="section-title">
+<div class="pagehead">
 <h2>🤖 AI Travel Command Center</h2>
-<span class="badge">V46 AI</span>
+<span class="badge">V47 PREMIUM AI</span>
 </div>
 
 <div class="grid2">
@@ -616,30 +676,41 @@ dalam satu ecosystem.
 
 <h3>AI Travel Copilot</h3>
 
-<div class="chat" id="chatBox"></div>
+<div class="chat" id="chat"></div>
 
-<div style="display:flex;gap:7px;margin-top:9px">
+<div style="display:flex;gap:7px;margin-top:8px">
 
 <input id="chatInput"
-placeholder="Tanya AI Travel Copilot...">
+placeholder="Tanya HobbiGo AI...">
 
-<button class="btn" onclick="sendAI()">Send</button>
+<button class="btn"
+onclick="sendAI()">
+Send
+</button>
 
 </div>
 
 <div class="toolbar" style="margin-top:9px">
 
-<button class="btn small secondary"
-onclick="quickAI('destination')">Destination</button>
+<button class="btn small light"
+onclick="quickAI('destination')">
+Destination
+</button>
 
-<button class="btn small secondary"
-onclick="quickAI('hotel')">Hotel</button>
+<button class="btn small light"
+onclick="quickAI('hotel')">
+Hotel
+</button>
 
-<button class="btn small secondary"
-onclick="quickAI('budget')">Budget</button>
+<button class="btn small light"
+onclick="quickAI('budget')">
+Budget
+</button>
 
-<button class="btn small secondary"
-onclick="quickAI('route')">Route</button>
+<button class="btn small light"
+onclick="quickAI('route')">
+Route
+</button>
 
 </div>
 
@@ -648,23 +719,22 @@ onclick="quickAI('route')">Route</button>
 
 <div class="card">
 
-<h3>✨ Journey Generator</h3>
+<h3>✨ AI Journey Generator</h3>
 
 <div class="form">
 
 <label>Journey Type</label>
-<select id="journeyType">
+<select id="jType">
 <option>Personal</option>
 <option>Group</option>
 <option>Company</option>
 </select>
 
 <label>Starting From</label>
-<input id="from" value="Jakarta">
+<input id="jFrom" value="Jakarta">
 
 <label>Destination</label>
-
-<select id="destination">
+<select id="jDest">
 <option>Bali</option>
 <option>Yogyakarta</option>
 <option>Lombok</option>
@@ -674,14 +744,13 @@ onclick="quickAI('route')">Route</button>
 </select>
 
 <label>Travelers</label>
-<input id="travelers" type="number" value="2" min="1">
+<input id="jPeople" type="number" value="2">
 
 <label>Duration</label>
-<input id="duration" type="number" value="4" min="1">
+<input id="jDays" type="number" value="4">
 
 <label>Travel Style</label>
-
-<select id="style">
+<select id="jStyle">
 <option>Comfort</option>
 <option>Economy</option>
 <option>Premium</option>
@@ -689,11 +758,10 @@ onclick="quickAI('route')">Route</button>
 </select>
 
 <label>Total Budget</label>
-<input id="budget" type="number" value="10000000">
+<input id="jBudget" type="number" value="10000000">
 
 <label>Main Interest</label>
-
-<select id="interest">
+<select id="jInterest">
 <option>Nature</option>
 <option>Food</option>
 <option>Culture</option>
@@ -702,8 +770,9 @@ onclick="quickAI('route')">Route</button>
 <option>Business</option>
 </select>
 
-<button class="btn" onclick="generateTrip()">
-🚀 Generate Trip
+<button class="btn green"
+onclick="generate()">
+🚀 Generate Smart Trip
 </button>
 
 </div>
@@ -712,29 +781,27 @@ onclick="quickAI('route')">Route</button>
 
 </div>
 
-<div id="aiResult" style="margin-top:18px"></div>
+<div id="aiResult" class="section"></div>
 
 </section>
 
 
-<!-- MARKETPLACE -->
+<!-- MARKET -->
 
 <section id="market" class="page">
 
-<div class="section-title">
-<h2>🌎 Global Experience Marketplace</h2>
-<span class="badge">Hotels · Food · Ticket · Transport · Activity · Boat</span>
+<div class="pagehead">
+<h2>🌎 Global Marketplace</h2>
+<span class="badge green">24+ Products</span>
 </div>
 
 <div class="toolbar">
 
-<input id="marketSearch"
-placeholder="Search hotel, food, ticket, boat..."
-oninput="renderMarket()">
+<input id="search"
+placeholder="Search experience..."
+oninput="market()">
 
-<select id="marketCategory"
-onchange="renderMarket()">
-
+<select id="category" onchange="market()">
 <option value="">All Categories</option>
 <option>Hotel</option>
 <option>Restaurant</option>
@@ -744,21 +811,18 @@ onchange="renderMarket()">
 <option>Boat</option>
 <option>Rental</option>
 <option>Agency</option>
-
 </select>
 
-<select id="marketSort" onchange="renderMarket()">
-
+<select id="sort" onchange="market()">
 <option value="popular">Popular</option>
 <option value="low">Lowest Price</option>
 <option value="high">Highest Price</option>
 <option value="rating">Highest Rating</option>
-
 </select>
 
 </div>
 
-<div class="grid3" id="marketGrid"></div>
+<div class="grid3" id="products"></div>
 
 </section>
 
@@ -767,11 +831,11 @@ onchange="renderMarket()">
 
 <section id="cart" class="page">
 
-<div class="section-title">
+<div class="pagehead">
 <h2>🛒 Smart Checkout</h2>
 </div>
 
-<div id="cartContent"></div>
+<div id="cartBox"></div>
 
 </section>
 
@@ -780,11 +844,11 @@ onchange="renderMarket()">
 
 <section id="trip" class="page">
 
-<div class="section-title">
+<div class="pagehead">
 <h2>🧳 My Smart Trip</h2>
 </div>
 
-<div id="tripContent"></div>
+<div id="tripBox"></div>
 
 </section>
 
@@ -793,18 +857,18 @@ onchange="renderMarket()">
 
 <section id="booking" class="page">
 
-<div class="section-title">
+<div class="pagehead">
 <h2>🎫 Booking Center</h2>
 </div>
 
 <div class="toolbar">
 
-<input id="bookingSearch"
-placeholder="Search Booking ID / destination..."
-oninput="renderBookings()">
+<input id="bookSearch"
+placeholder="Booking ID / destination..."
+oninput="bookings()">
 
-<select id="bookingFilter"
-onchange="renderBookings()">
+<select id="bookFilter"
+onchange="bookings()">
 
 <option value="">All Status</option>
 <option>Pending Payment</option>
@@ -818,7 +882,7 @@ onchange="renderBookings()">
 
 </div>
 
-<div id="bookingList"></div>
+<div id="bookingBox"></div>
 
 </section>
 
@@ -827,7 +891,7 @@ onchange="renderBookings()">
 
 <section id="corporate" class="page">
 
-<div class="section-title">
+<div class="pagehead">
 <h2>🏢 Corporate & Group Travel</h2>
 </div>
 
@@ -835,16 +899,15 @@ onchange="renderBookings()">
 
 <div class="card">
 
-<h3>Corporate Trip Builder</h3>
+<h3>Create Corporate Journey</h3>
 
 <div class="form">
 
 <label>Company / Group</label>
-<input id="corpName" placeholder="Company ABC">
+<input id="cName" placeholder="Company ABC">
 
 <label>Event Type</label>
-
-<select id="corpType">
+<select id="cType">
 <option>Corporate Retreat</option>
 <option>Team Building</option>
 <option>Business Meeting</option>
@@ -852,25 +915,26 @@ onchange="renderBookings()">
 </select>
 
 <label>Destination</label>
-<input id="corpDestination" value="Bali">
+<input id="cDest" value="Bali">
 
 <label>Date</label>
-<input id="corpDate" type="date">
+<input id="cDate" type="date">
 
 <label>Participants</label>
-<input id="corpPeople" type="number" value="20">
+<input id="cPeople" type="number" value="20">
 
 <label>Duration</label>
-<input id="corpDuration" type="number" value="3">
+<input id="cDays" type="number" value="3">
 
 <label>Budget</label>
-<input id="corpBudget" type="number" value="50000000">
+<input id="cBudget" type="number" value="50000000">
 
 <label>Requirements</label>
-<textarea id="corpReq"></textarea>
+<textarea id="cReq"></textarea>
 
-<button class="btn green" onclick="createCorporate()">
-Create Corporate Event
+<button class="btn green"
+onclick="createCorporate()">
+Create Event
 </button>
 
 </div>
@@ -881,7 +945,7 @@ Create Corporate Event
 
 <h3>Corporate Events</h3>
 
-<div id="corporateList"></div>
+<div id="corpList"></div>
 
 </div>
 
@@ -894,54 +958,43 @@ Create Corporate Event
 
 <section id="operations" class="page">
 
-<div class="section-title">
-<h2>⚙️ Admin Operations Dashboard</h2>
-<span class="badge orange">ADMIN DEMO</span>
+<div class="pagehead">
+<h2>⚙️ Operations Dashboard</h2>
+<span class="badge orange">ADMIN</span>
 </div>
 
 <div class="grid">
 
 <div class="card">
 <div class="muted">Bookings</div>
-<div class="stat" id="opBookings">0</div>
+<div class="stat" id="opB">0</div>
 </div>
 
 <div class="card">
 <div class="muted">GMV</div>
-<div class="stat green" id="opGMV">Rp0</div>
+<div class="stat" id="opG">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Commission</div>
-<div class="stat orange" id="opCommission">Rp0</div>
+<div class="stat" id="opC">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Refund</div>
-<div class="stat red" id="opRefund">Rp0</div>
+<div class="stat" id="opR">Rp0</div>
 </div>
 
 </div>
 
-
-<div class="section-title">
-<h2>Booking Management</h2>
+<div class="section">
+<div class="card">
+<h3>Booking Management</h3>
+<div id="opBookings"></div>
+</div>
 </div>
 
-<div id="operationBookings"></div>
-
-
-<div class="section-title">
-<h2>💳 Payment Reconciliation</h2>
-</div>
-
-<div id="paymentTable"></div>
-
-
-<div class="section-title">
-<h2>🎟️ Voucher Center</h2>
-</div>
-
+<div class="section">
 <div class="grid2">
 
 <div class="card">
@@ -950,29 +1003,21 @@ Create Corporate Event
 
 <div class="form">
 
-<label>Code</label>
-<input id="voucherCode" placeholder="HOBBIGO10">
+<input id="vCode" placeholder="HOBBIGO10">
 
-<label>Type</label>
-
-<select id="voucherType">
+<select id="vType">
 <option value="percent">Percentage</option>
-<option value="fixed">Fixed Amount</option>
+<option value="fixed">Fixed</option>
 </select>
 
-<label>Value</label>
-<input id="voucherValue" type="number" value="10">
+<input id="vValue" type="number" value="10">
 
-<label>Minimum Purchase</label>
-<input id="voucherMin" type="number" value="1000000">
+<input id="vMin" type="number" value="1000000">
 
-<label>Maximum Discount</label>
-<input id="voucherMax" type="number" value="300000">
+<input id="vMax" type="number" value="300000">
 
-<label>Usage Limit</label>
-<input id="voucherLimit" type="number" value="100">
-
-<button class="btn" onclick="createVoucher()">
+<button class="btn"
+onclick="createVoucher()">
 Create Voucher
 </button>
 
@@ -982,48 +1027,44 @@ Create Voucher
 
 <div class="card">
 
-<h3>Voucher List</h3>
-
-<div id="voucherList"></div>
-
-</div>
+<h3>Voucher Center</h3>
+<div id="vouchers"></div>
 
 </div>
 
-
-<div class="section-title">
-<h2>💾 Backup Center</h2>
 </div>
+</div>
+
+<div class="section">
 
 <div class="card">
 
-<button class="btn green" onclick="backupData()">
-Download Backup V46
+<h3>💾 Backup & Restore</h3>
+
+<button class="btn green"
+onclick="backup()">
+Download Backup V47
 </button>
 
-<button class="btn secondary"
-onclick="document.getElementById('restoreFile').click()">
+<button class="btn light"
+onclick="document.getElementById('restore').click()">
 Restore
 </button>
 
-<input id="restoreFile"
+<input id="restore"
 type="file"
 accept=".json"
 style="display:none"
-onchange="restoreData(event)">
+onchange="restore(event)">
 
-<button class="btn red" onclick="resetDemo()">
+<button class="btn red"
+onclick="resetDemo()">
 Reset Demo
 </button>
 
 </div>
 
-
-<div class="section-title">
-<h2>📝 Activity Log</h2>
 </div>
-
-<div id="activityLog"></div>
 
 </section>
 
@@ -1032,43 +1073,41 @@ Reset Demo
 
 <section id="crm" class="page">
 
-<div class="section-title">
-<h2>👥 Customer 360 CRM</h2>
+<div class="pagehead">
+<h2>👥 Customer 360</h2>
 </div>
 
 <div class="grid">
 
 <div class="card">
 <div class="muted">Customers</div>
-<div class="stat" id="crmCustomers">0</div>
+<div class="stat" id="crm1">0</div>
 </div>
 
 <div class="card">
 <div class="muted">New</div>
-<div class="stat green" id="crmNew">0</div>
+<div class="stat" id="crm2">0</div>
 </div>
 
 <div class="card">
 <div class="muted">Active</div>
-<div class="stat orange" id="crmActive">0</div>
+<div class="stat" id="crm3">0</div>
 </div>
 
 <div class="card">
 <div class="muted">VIP</div>
-<div class="stat" id="crmVip">0</div>
+<div class="stat" id="crm4">0</div>
 </div>
 
 </div>
 
-<div class="card" style="margin-top:18px">
+<div class="card section">
 
-<div class="toolbar">
 <input id="crmSearch"
 placeholder="Search customer..."
-oninput="renderCRM()">
-</div>
+oninput="crm()">
 
-<div id="crmTable"></div>
+<div id="crmBox" style="margin-top:15px"></div>
 
 </div>
 
@@ -1079,36 +1118,36 @@ oninput="renderCRM()">
 
 <section id="analytics" class="page">
 
-<div class="section-title">
-<h2>📈 Business Analytics</h2>
+<div class="pagehead">
+<h2>📊 Business Intelligence</h2>
+<span class="badge green">LIVE DEMO DATA</span>
 </div>
 
 <div class="grid">
 
 <div class="card">
 <div class="muted">GMV</div>
-<div class="stat" id="anGMV">Rp0</div>
+<div class="stat" id="aGMV">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Commission</div>
-<div class="stat green" id="anCommission">Rp0</div>
+<div class="stat" id="aCom">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Service Fee</div>
-<div class="stat orange" id="anFee">Rp0</div>
+<div class="stat" id="aFee">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Estimated Profit</div>
-<div class="stat" id="anProfit">Rp0</div>
+<div class="stat" id="aProfit">Rp0</div>
 </div>
 
 </div>
 
-
-<div class="grid2" style="margin-top:18px">
+<div class="grid2 section">
 
 <div class="card">
 <h3>Booking Funnel</h3>
@@ -1117,27 +1156,40 @@ oninput="renderCRM()">
 
 <div class="card">
 <h3>Destination Intelligence</h3>
-<div id="destinationAnalytics"></div>
+<div id="destAnalytics"></div>
 </div>
 
 </div>
 
-
-<div class="card" style="margin-top:18px">
+<div class="card section">
 
 <h3>🤖 AI Business Copilot</h3>
 
-<div class="toolbar">
+<div class="actions">
 
-<button class="btn small" onclick="businessAI('revenue')">Revenue</button>
-<button class="btn small" onclick="businessAI('booking')">Bookings</button>
-<button class="btn small" onclick="businessAI('promo')">Promo</button>
-<button class="btn small" onclick="businessAI('partner')">Partner</button>
-<button class="btn small" onclick="businessAI('customer')">Customer</button>
+<button class="btn small"
+onclick="business('revenue')">
+Revenue
+</button>
+
+<button class="btn small"
+onclick="business('booking')">
+Booking
+</button>
+
+<button class="btn small"
+onclick="business('promo')">
+Promo
+</button>
+
+<button class="btn small"
+onclick="business('partner')">
+Partner
+</button>
 
 </div>
 
-<div id="businessAIResult"></div>
+<div id="businessBox" style="margin-top:14px"></div>
 
 </div>
 
@@ -1148,54 +1200,47 @@ oninput="renderCRM()">
 
 <section id="partner" class="page">
 
-<div class="section-title">
-
-<h2>🤝 Partner Dashboard</h2>
-
-<span class="badge green">PARTNER DEMO</span>
-
+<div class="pagehead">
+<h2>🤝 Partner Center</h2>
+<span class="badge green">PARTNER</span>
 </div>
-
 
 <div class="grid">
 
 <div class="card">
 <div class="muted">Products</div>
-<div class="stat" id="partnerProducts">0</div>
+<div class="stat" id="pp">0</div>
 </div>
 
 <div class="card">
 <div class="muted">Gross Sales</div>
-<div class="stat green" id="partnerSales">Rp0</div>
+<div class="stat" id="ps">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Commission</div>
-<div class="stat orange" id="partnerCommission">Rp0</div>
+<div class="stat" id="pc">Rp0</div>
 </div>
 
 <div class="card">
 <div class="muted">Partner Net</div>
-<div class="stat" id="partnerNet">Rp0</div>
+<div class="stat" id="pn">Rp0</div>
 </div>
 
 </div>
 
-
-<div class="grid2" style="margin-top:18px">
+<div class="grid2 section">
 
 <div class="card">
 
-<h3>Add Partner Product</h3>
+<h3>Add Product</h3>
 
 <div class="form">
 
-<label>Product Name</label>
-<input id="partnerName" placeholder="Bali Villa Experience">
+<input id="pName"
+placeholder="Bali Villa Experience">
 
-<label>Category</label>
-
-<select id="partnerCategory">
+<select id="pCat">
 <option>Hotel</option>
 <option>Restaurant</option>
 <option>Transport</option>
@@ -1205,16 +1250,19 @@ oninput="renderCRM()">
 <option>Agency</option>
 </select>
 
-<label>Price</label>
-<input id="partnerPrice" type="number">
+<input id="pPrice"
+type="number"
+placeholder="Price">
 
-<label>Location</label>
-<input id="partnerLocation" value="Bali">
+<input id="pLoc"
+value="Bali">
 
-<label>Slots</label>
-<input id="partnerSlots" type="number" value="10">
+<input id="pSlots"
+type="number"
+value="10">
 
-<button class="btn green" onclick="addPartnerProduct()">
+<button class="btn green"
+onclick="addPartner()">
 Add Product
 </button>
 
@@ -1222,76 +1270,69 @@ Add Product
 
 </div>
 
-
 <div class="card">
 
 <h3>Inventory</h3>
 
-<div id="partnerInventory"></div>
+<div id="partnerProducts"></div>
 
 </div>
 
 </div>
 
-
-<div class="section-title">
-<h2>📅 Availability Calendar</h2>
-</div>
+<div class="section">
 
 <div class="card">
 
+<h3>📅 Availability Calendar</h3>
+
 <div class="toolbar">
 
-<select id="availabilityProduct"></select>
+<select id="avProduct"></select>
 
-<input id="availabilityDate" type="date">
+<input id="avDate" type="date">
 
-<input id="availabilitySlots"
+<input id="avSlots"
 type="number"
-value="10"
-placeholder="Slots">
+value="10">
 
-<button class="btn" onclick="saveAvailability()">
-Save Availability
+<button class="btn"
+onclick="saveAvailability()">
+Save
 </button>
 
 </div>
 
-<div id="availabilityCalendar"></div>
-
-<div id="availabilityList"
-style="margin-top:15px"></div>
+<div id="calendar"></div>
 
 </div>
 
-
-<div class="section-title">
-<h2>🤖 AI Partner Assistant</h2>
 </div>
 
-<div class="card">
+<div class="card section">
 
-<div class="toolbar">
+<h3>🤖 AI Partner Assistant</h3>
 
-<button class="btn small" onclick="partnerAI('price')">
+<div class="actions">
+
+<button class="btn small"
+onclick="partnerAI('pricing')">
 Pricing
 </button>
 
-<button class="btn small" onclick="partnerAI('sales')">
+<button class="btn small"
+onclick="partnerAI('sales')">
 Sales
 </button>
 
-<button class="btn small" onclick="partnerAI('bundle')">
+<button class="btn small"
+onclick="partnerAI('bundle')">
 Bundle
-</button>
-
-<button class="btn small" onclick="partnerAI('inventory')">
-Inventory
 </button>
 
 </div>
 
-<div id="partnerAIResult"></div>
+<div id="partnerAIBox"></div>
 
 </div>
 
@@ -1302,30 +1343,29 @@ Inventory
 
 <section id="profile" class="page">
 
-<div class="section-title">
-<h2>👤 Traveler Account</h2>
+<div class="pagehead">
+<h2>👤 My Account</h2>
 </div>
 
 <div class="grid2">
 
 <div class="card">
 
-<h3>Profile</h3>
+<h3>Traveler Profile</h3>
 
 <div class="form">
 
 <label>Name</label>
-<input id="profileName">
+<input id="name">
 
 <label>Email</label>
-<input id="profileEmail">
+<input id="email">
 
 <label>Phone</label>
-<input id="profilePhone">
+<input id="phone">
 
 <label>Main Interest</label>
-
-<select id="profileInterest">
+<select id="pInterest">
 <option>Nature</option>
 <option>Food</option>
 <option>Culture</option>
@@ -1334,28 +1374,29 @@ Inventory
 <option>Business</option>
 </select>
 
-<button class="btn" onclick="saveProfile()">
+<button class="btn"
+onclick="saveProfile()">
 Save Profile
 </button>
 
-<button class="btn secondary"
-onclick="showTravelers()">
+<button class="btn light"
+onclick="travelers()">
 Manage Travelers
 </button>
 
-<button class="btn secondary"
-onclick="showUserDashboard()">
-Open User Dashboard
+<button class="btn light"
+onclick="dashboard()">
+User Dashboard
 </button>
 
-<button class="btn red" onclick="logout()">
+<button class="btn red"
+onclick="logout()">
 Logout
 </button>
 
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -1372,25 +1413,25 @@ Logout
 </main>
 
 
-<div class="bottomnav">
+<div class="bottom">
 
-<button onclick="showPage('home')">
+<button onclick="page('home')">
 <strong>🏠</strong>Home
 </button>
 
-<button onclick="showPage('ai')">
+<button onclick="page('ai')">
 <strong>🤖</strong>AI
 </button>
 
-<button onclick="showPage('market')">
+<button onclick="page('market')">
 <strong>🌎</strong>Market
 </button>
 
-<button onclick="showPage('trip')">
+<button onclick="page('trip')">
 <strong>🧳</strong>Trip
 </button>
 
-<button onclick="showPage('profile')">
+<button onclick="page('profile')">
 <strong>☰</strong>More
 </button>
 
@@ -1406,7 +1447,9 @@ Logout
 <h2 id="modalTitle">HobbiGo</h2>
 
 <button class="close"
-onclick="closeModal()">✕</button>
+onclick="closeModal()">
+✕
+</button>
 
 </div>
 
@@ -1422,256 +1465,194 @@ onclick="closeModal()">✕</button>
 
 <script>
 
-const products=[
+const P=[
 
-{id:1,name:"Bali Paradise Hotel",cat:"Hotel",price:850000,icon:"🏨",rating:4.8,loc:"Bali"},
-{id:2,name:"Ubud Nature Resort",cat:"Hotel",price:1200000,icon:"🌴",rating:4.9,loc:"Bali"},
-{id:3,name:"Jakarta City Hotel",cat:"Hotel",price:700000,icon:"🏙️",rating:4.6,loc:"Jakarta"},
-
-{id:4,name:"Local Bali Kitchen",cat:"Restaurant",price:180000,icon:"🍜",rating:4.8,loc:"Bali"},
-{id:5,name:"Sunset Seafood",cat:"Restaurant",price:250000,icon:"🦐",rating:4.7,loc:"Bali"},
-{id:6,name:"Nusantara Taste",cat:"Restaurant",price:150000,icon:"🍛",rating:4.6,loc:"Yogyakarta"},
-
-{id:7,name:"Bali Attraction Pass",cat:"Ticket",price:450000,icon:"🎟️",rating:4.8,loc:"Bali"},
-{id:8,name:"Water Park Ticket",cat:"Ticket",price:300000,icon:"🎢",rating:4.5,loc:"Bali"},
-{id:9,name:"Museum Culture Pass",cat:"Ticket",price:200000,icon:"🏛️",rating:4.6,loc:"Yogyakarta"},
-
-{id:10,name:"Private Car + Driver",cat:"Transport",price:650000,icon:"🚙",rating:4.9,loc:"Bali"},
-{id:11,name:"Airport Transfer",cat:"Transport",price:250000,icon:"🚐",rating:4.7,loc:"Bali"},
-{id:12,name:"Scooter Rental",cat:"Rental",price:120000,icon:"🛵",rating:4.5,loc:"Bali"},
-
-{id:13,name:"Tegallalang Experience",cat:"Activity",price:300000,icon:"🌾",rating:4.9,loc:"Bali"},
-{id:14,name:"Sunset Beach Experience",cat:"Activity",price:300000,icon:"🌅",rating:4.8,loc:"Bali"},
-{id:15,name:"Borobudur Experience",cat:"Activity",price:500000,icon:"🛕",rating:4.9,loc:"Yogyakarta"},
-{id:16,name:"Surfing Lesson",cat:"Activity",price:350000,icon:"🏄",rating:4.7,loc:"Bali"},
-{id:17,name:"Snorkeling Trip",cat:"Activity",price:550000,icon:"🤿",rating:4.8,loc:"Lombok"},
-{id:18,name:"Balinese Cooking Class",cat:"Activity",price:400000,icon:"👨‍🍳",rating:4.9,loc:"Bali"},
-
-{id:19,name:"Komodo Boat Day Trip",cat:"Boat",price:1500000,icon:"⛵",rating:4.9,loc:"Labuan Bajo"},
-{id:20,name:"Private Yacht Experience",cat:"Boat",price:3500000,icon:"🛥️",rating:5,loc:"Bali"},
-{id:21,name:"Island Hopping Boat",cat:"Boat",price:900000,icon:"🚤",rating:4.8,loc:"Lombok"},
-
-{id:22,name:"Private Villa",cat:"Rental",price:1800000,icon:"🏡",rating:4.9,loc:"Bali"},
-{id:23,name:"Meeting Point Rental",cat:"Rental",price:2500000,icon:"🏢",rating:4.6,loc:"Bali"},
-{id:24,name:"Bali Travel Agency",cat:"Agency",price:500000,icon:"🧭",rating:4.7,loc:"Bali"}
+[1,"Bali Paradise Hotel","Hotel",850000,"🏨",4.8,"Bali"],
+[2,"Ubud Nature Resort","Hotel",1200000,"🌴",4.9,"Bali"],
+[3,"Jakarta City Hotel","Hotel",700000,"🏙️",4.6,"Jakarta"],
+[4,"Local Bali Kitchen","Restaurant",180000,"🍜",4.8,"Bali"],
+[5,"Sunset Seafood","Restaurant",250000,"🦐",4.7,"Bali"],
+[6,"Nusantara Taste","Restaurant",150000,"🍛",4.6,"Yogyakarta"],
+[7,"Bali Attraction Pass","Ticket",450000,"🎟️",4.8,"Bali"],
+[8,"Water Park Ticket","Ticket",300000,"🎢",4.5,"Bali"],
+[9,"Museum Culture Pass","Ticket",200000,"🏛️",4.6,"Yogyakarta"],
+[10,"Private Car + Driver","Transport",650000,"🚙",4.9,"Bali"],
+[11,"Airport Transfer","Transport",250000,"🚐",4.7,"Bali"],
+[12,"Scooter Rental","Rental",120000,"🛵",4.5,"Bali"],
+[13,"Tegallalang Experience","Activity",300000,"🌾",4.9,"Bali"],
+[14,"Sunset Beach Experience","Activity",300000,"🌅",4.8,"Bali"],
+[15,"Borobudur Experience","Activity",500000,"🛕",4.9,"Yogyakarta"],
+[16,"Surfing Lesson","Activity",350000,"🏄",4.7,"Bali"],
+[17,"Snorkeling Trip","Activity",550000,"🤿",4.8,"Lombok"],
+[18,"Balinese Cooking Class","Activity",400000,"👨‍🍳",4.9,"Bali"],
+[19,"Komodo Boat Day Trip","Boat",1500000,"⛵",4.9,"Labuan Bajo"],
+[20,"Private Yacht Experience","Boat",3500000,"🛥️",5,"Bali"],
+[21,"Island Hopping Boat","Boat",900000,"🚤",4.8,"Lombok"],
+[22,"Private Villa","Rental",1800000,"🏡",4.9,"Bali"],
+[23,"Meeting Point Rental","Rental",2500000,"🏢",4.6,"Bali"],
+[24,"Bali Travel Agency","Agency",500000,"🧭",4.7,"Bali"]
 
 ];
 
-
-const destinations=[
-
-{name:"Bali",score:98,icon:"🏝️"},
-{name:"Yogyakarta",score:95,icon:"🛕"},
-{name:"Lombok",score:93,icon:"🌊"},
-{name:"Labuan Bajo",score:92,icon:"⛵"},
-{name:"Bandung",score:89,icon:"🌿"},
-{name:"Jakarta",score:86,icon:"🏙️"}
-
+const DEST=[
+["Bali",98,"🏝️"],
+["Yogyakarta",95,"🛕"],
+["Lombok",93,"🌊"],
+["Labuan Bajo",92,"⛵"],
+["Bandung",89,"🌿"],
+["Jakarta",86,"🏙️"]
 ];
 
-
-const KEY={
-
-cart:"hobbigo_cart",
-trip:"hobbigo_trip",
-bookings:"hobbigo_bookings",
-favorites:"hobbigo_favorites",
-profile:"hobbigo_profile",
-users:"hobbigo_users",
-session:"hobbigo_session",
-payments:"hobbigo_payments",
-vouchers:"hobbigo_vouchers",
-notifications:"hobbigo_notifications",
-logs:"hobbigo_activity_log",
-partner:"hobbigo_partner_products",
-corporate:"hobbigo_corporate_events",
-reviews:"hobbigo_reviews",
-availability:"hobbigo_availability",
-travelers:"hobbigo_travelers"
-
+const K={
+ cart:"hobbigo_cart",
+ trip:"hobbigo_trip",
+ bookings:"hobbigo_bookings",
+ fav:"hobbigo_favorites",
+ profile:"hobbigo_profile",
+ users:"hobbigo_users",
+ session:"hobbigo_session",
+ payments:"hobbigo_payments",
+ vouchers:"hobbigo_vouchers",
+ notes:"hobbigo_notifications",
+ partner:"hobbigo_partner_products",
+ corp:"hobbigo_corporate_events",
+ reviews:"hobbigo_reviews",
+ av:"hobbigo_availability",
+ travelers:"hobbigo_travelers",
+ logs:"hobbigo_activity_log"
 };
 
-
-function load(k,d=[]){
-
-try{
-let x=localStorage.getItem(k);
-return x?JSON.parse(x):d
-}
-catch(e){return d}
-
+function get(k,d=[]){
+ try{
+  return JSON.parse(localStorage.getItem(k))??d
+ }catch(e){return d}
 }
 
-
-function save(k,v){
-localStorage.setItem(k,JSON.stringify(v))
+function set(k,v){
+ localStorage.setItem(k,JSON.stringify(v))
 }
 
-
-function rupiah(n){
-return "Rp"+Number(n||0).toLocaleString("id-ID")
+function money(n){
+ return "Rp"+Number(n||0).toLocaleString("id-ID")
 }
 
-
-function toast(t){
-
-let e=document.getElementById("toast");
-
-e.textContent=t;
-
-e.classList.add("show");
-
-setTimeout(()=>{
-e.classList.remove("show")
-},2400)
-
+function msg(t){
+ let x=document.getElementById("toast");
+ x.textContent=t;
+ x.classList.add("show");
+ setTimeout(()=>x.classList.remove("show"),2300)
 }
 
-
-function logAction(a,e="System"){
-
-let x=load(KEY.logs,[]);
-
-x.unshift({
-time:new Date().toLocaleString("id-ID"),
-action:a,
-entity:e
-});
-
-save(KEY.logs,x.slice(0,100))
-
+function log(a,e=""){
+ let x=get(K.logs,[]);
+ x.unshift({
+  time:new Date().toLocaleString("id-ID"),
+  action:a,
+  entity:e
+ });
+ set(K.logs,x.slice(0,100))
 }
 
-
-function openModal(t,b){
-
-document.getElementById("modalTitle").textContent=t;
-document.getElementById("modalBody").innerHTML=b;
-
-document.getElementById("modal").classList.add("show")
-
+function modal(title,body){
+ modalTitle.textContent=title;
+ modalBody.innerHTML=body;
+ document.getElementById("modal").classList.add("show")
 }
-
 
 function closeModal(){
-
-document.getElementById("modal").classList.remove("show")
-
+ document.getElementById("modal").classList.remove("show")
 }
 
-
-function showPage(id){
+function page(id){
 
 document.querySelectorAll(".page")
 .forEach(x=>x.classList.remove("active"));
 
-document.getElementById(id)?.classList.add("active");
+document.getElementById(id).classList.add("active");
 
-document.querySelectorAll(".navlinks button")
-.forEach(x=>x.classList.remove("active"));
+if(id==="home")home();
+if(id==="ai")ai();
+if(id==="market")market();
+if(id==="cart")cart();
+if(id==="trip")trip();
+if(id==="booking")bookings();
+if(id==="corporate")corporate();
+if(id==="operations")operations();
+if(id==="crm")crm();
+if(id==="analytics")analytics();
+if(id==="partner")partner();
+if(id==="profile")profile();
 
-document.getElementById("nav-"+id)?.classList.add("active");
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-if(id==="home")renderHome();
-if(id==="ai")renderAI();
-if(id==="market")renderMarket();
-if(id==="cart")renderCart();
-if(id==="trip")renderTrip();
-if(id==="booking")renderBookings();
-if(id==="corporate")renderCorporate();
-if(id==="operations")renderOperations();
-if(id==="crm")renderCRM();
-if(id==="analytics")renderAnalytics();
-if(id==="partner")renderPartner();
-if(id==="profile")renderProfile();
+scrollTo(0,0)
 
 }
 
 
-function renderHome(){
+function home(){
 
-let b=load(KEY.bookings,[]);
-let c=load(KEY.cart,[]);
-let f=load(KEY.favorites,[]);
-let t=load(KEY.trip,null);
+let b=get(K.bookings,[]);
+let c=get(K.cart,[]);
+let f=get(K.fav,[]);
+let t=get(K.trip,null);
 
-homeBookings.textContent=b.length;
-homeCart.textContent=c.length;
-homeFav.textContent=f.length;
-homeBudget.textContent=t?rupiah(t.total):"Rp0";
+sBookings.textContent=b.length;
+sCart.textContent=c.length;
+sWish.textContent=f.length;
+sBudget.textContent=t?money(t.total):"Rp0";
 
-destinationGrid.innerHTML=destinations.map(d=>`
+destinations.innerHTML=DEST.map(d=>`
 
-<div class="card">
+<div class="card destination">
 
-<div style="font-size:42px">${d.icon}</div>
+<div class="bigicon">${d[2]}</div>
 
-<h3>${d.name}</h3>
+<h3>${d[0]}</h3>
 
-<p class="muted">AI Match Score</p>
+<p class="muted">
+AI Match Score
+</p>
 
-<div class="progress">
-<div style="width:${d.score}%"></div>
+<div class="score">
+<div style="width:${d[1]}%"></div>
 </div>
 
-<p><b>${d.score}% match</b></p>
+<p><b>${d[1]}%</b> match</p>
 
 <button class="btn small"
-onclick="chooseDestination('${d.name}')">
-Plan Trip
+onclick="goDestination('${d[0]}')">
+Plan Journey
 </button>
 
 </div>
 
-`).join("")
+`).join("");
+
+updateCart()
 
 }
 
 
-function chooseDestination(n){
-
-showPage("ai");
-
-destination.value=n;
-
-toast(n+" dipilih")
+function goDestination(x){
+page("ai");
+jDest.value=x;
+msg(x+" selected")
 
 }
 
 
-function renderAI(){
+function ai(){
 
-if(!chatBox.children.length){
+if(!chat.children.length){
 
-chatBox.innerHTML=`
-
+chat.innerHTML=`
 <div class="msg ai">
-Halo! Saya AI Travel Copilot HobbiGo V46.
-Saya siap membantu destination, route, hotel,
-budget dan package.
+Halo 👋 Saya HobbiGo AI.
+Saya siap membantu destination, hotel,
+budget, route dan itinerary.
 </div>
-
 `
 
 }
-
-}
-
-
-function addChat(t,type){
-
-chatBox.innerHTML+=`
-<div class="msg ${type}">
-${t}
-</div>
-`;
-
-chatBox.scrollTop=chatBox.scrollHeight
 
 }
 
@@ -1679,169 +1660,127 @@ chatBox.scrollTop=chatBox.scrollHeight
 function quickAI(type){
 
 let a={
-
-destination:"Untuk nature + food + relaxation, Bali adalah rekomendasi utama demo.",
-
-hotel:"Ubud Nature Resort cocok untuk comfort trip dengan rating tinggi.",
-
-budget:"AI budget: Hotel 30%, Food 18%, Transport 17%, Activities 20%, Reserve 15%.",
-
-route:"Smart Route demo: Arrival → Hotel → Food → Main Activity → Experience → Departure."
-
+destination:"Bali paling cocok untuk kombinasi nature, food dan relaxation.",
+hotel:"Ubud Nature Resort adalah pilihan comfort dengan rating tinggi.",
+budget:"Smart Budget: Hotel 30%, Food 18%, Transport 17%, Activities 20%, Reserve 15%.",
+route:"Smart Route: Arrival → Hotel → Food → Main Activity → Experience → Departure."
 };
 
-addChat(a[type],"user");
+chat.innerHTML+=`
+<div class="msg user">${a[type]}</div>
+<div class="msg ai">${a[type]}</div>
+`;
 
-setTimeout(()=>{
-addChat(a[type],"ai")
-},250)
+chat.scrollTop=chat.scrollHeight
 
 }
 
 
 function sendAI(){
 
-let i=chatInput;
-let v=i.value.trim();
+let v=chatInput.value.trim();
 
 if(!v)return;
 
-addChat(v,"user");
+chat.innerHTML+=`
+<div class="msg user">${v}</div>
+`;
 
-i.value="";
+chatInput.value="";
 
 setTimeout(()=>{
 
-addChat(
-"AI Demo: permintaan diterima. Pada production version, modul ini dapat terhubung ke AI API dan database travel HobbiGo.",
-"ai"
-)
+chat.innerHTML+=`
+<div class="msg ai">
+AI Demo menerima permintaan Anda.
+Pada production version, modul ini dapat
+terhubung ke AI API dan database HobbiGo.
+</div>
+`;
+
+chat.scrollTop=chat.scrollHeight
 
 },250)
 
 }
 
 
-function generateTrip(){
+function generate(){
 
 let t={
 
 id:"TRIP-"+Date.now(),
-
-journeyType:journeyType.value,
-
-from:from.value,
-
-destination:destination.value,
-
-travelers:Number(travelers.value)||1,
-
-duration:Number(duration.value)||1,
-
-style:style.value,
-
-budget:Number(budget.value)||0,
-
-interest:interest.value,
-
-createdAt:new Date().toISOString()
+type:jType.value,
+from:jFrom.value,
+destination:jDest.value,
+people:Number(jPeople.value)||1,
+days:Number(jDays.value)||1,
+style:jStyle.value,
+budget:Number(jBudget.value)||0,
+interest:jInterest.value,
+total:Number(jBudget.value)||0,
+created:new Date().toISOString()
 
 };
 
-t.total=t.budget;
+set(K.trip,t);
 
-save(KEY.trip,t);
-
-logAction("AI Trip Generated",t.id);
-
-renderAIResult(t);
-
-toast("AI Trip berhasil dibuat")
-
-}
-
-
-function budgetBar(n,p,b){
-
-return`
-
-<div style="margin:10px 0">
-
-<div style="display:flex;justify-content:space-between">
-
-<span>${n}</span>
-
-<b>${rupiah(b*p/100)}</b>
-
-</div>
-
-<div class="progress">
-
-<div style="width:${p}%"></div>
-
-</div>
-
-</div>
-
-`
-
-}
-
-
-function renderAIResult(t){
+log("AI Trip Generated",t.id);
 
 aiResult.innerHTML=`
 
 <div class="card">
 
-<div class="section-title">
+<div class="pagehead">
 
 <h2>✨ ${t.destination} Smart Journey</h2>
 
-<span class="badge green">AI Generated</span>
+<span class="badge green">
+AI GENERATED
+</span>
 
 </div>
 
 <div class="grid">
 
 <div>
-<span class="muted">From</span>
-<h3>${t.from}</h3>
-</div>
-
-<div>
 <span class="muted">Travelers</span>
-<h3>${t.travelers}</h3>
+<h3>${t.people}</h3>
 </div>
 
 <div>
 <span class="muted">Duration</span>
-<h3>${t.duration} Days</h3>
+<h3>${t.days} Days</h3>
+</div>
+
+<div>
+<span class="muted">Style</span>
+<h3>${t.style}</h3>
 </div>
 
 <div>
 <span class="muted">Budget</span>
-<h3>${rupiah(t.total)}</h3>
+<h3>${money(t.total)}</h3>
 </div>
 
 </div>
 
 <h3>Smart Budget</h3>
 
-${budgetBar("Hotel",30,t.total)}
-${budgetBar("Food",18,t.total)}
-${budgetBar("Transport",17,t.total)}
-${budgetBar("Activities",20,t.total)}
-${budgetBar("Reserve",15,t.total)}
+${budget("Hotel",30,t.total)}
+${budget("Food",18,t.total)}
+${budget("Transport",17,t.total)}
+${budget("Activities",20,t.total)}
+${budget("Reserve",15,t.total)}
 
 <h3>Smart Route</h3>
 
 <div class="route">
 
-${["Arrival","Hotel","Food","Main Activity","Experience","Departure"]
+${["Arrival","Hotel","Food","Activity","Experience","Departure"]
 .map((x,i)=>`
 
-<div class="route-item">
+<div class="stop">
 
 <b>Stop ${i+1}</b>
 
@@ -1860,16 +1799,16 @@ ${["Arrival","Hotel","Food","Main Activity","Experience","Departure"]
 <div class="timeline">
 
 ${Array.from(
-{length:Math.min(7,t.duration)},
+{length:Math.min(t.days,7)},
 (_,i)=>`
 
-<div class="timeline-item">
+<div class="event">
 
 <b>Day ${i+1}</b>
 
 <p>
 Explore ${t.destination}
-dengan fokus ${t.interest}.
+with focus on ${t.interest}.
 </p>
 
 </div>
@@ -1879,107 +1818,122 @@ dengan fokus ${t.interest}.
 </div>
 
 <button class="btn"
-onclick="showPage('trip')">
+onclick="page('trip')">
 Open My Trip
 </button>
 
-<button class="btn secondary"
-onclick="reOptimize()">
-AI Re-optimize
+<button class="btn light"
+onclick="optimize()">
+🧠 AI Re-optimize
 </button>
 
 <button class="btn green"
-onclick="showPage('market')">
-Add Marketplace
+onclick="page('market')">
+Add Experience
 </button>
 
 </div>
+`;
 
-`
+msg("AI Trip berhasil dibuat")
 
 }
 
 
-function reOptimize(){
+function budget(name,p,t){
 
-let t=load(KEY.trip,null);
+return`
 
-if(!t)
-return toast("Generate AI Trip dahulu");
+<div style="margin:9px 0">
+
+<div style="
+display:flex;
+justify-content:space-between">
+
+<span>${name}</span>
+
+<b>${money(t*p/100)}</b>
+
+</div>
+
+<div class="progress">
+<div style="width:${p}%"></div>
+</div>
+
+</div>
+
+`;
+
+
+}
+
+
+function optimize(){
+
+let t=get(K.trip,null);
+
+if(!t)return msg("Generate trip dahulu");
 
 t.total=Math.round(t.total*.94);
-
 t.optimized=true;
 
-save(KEY.trip,t);
+set(K.trip,t);
 
-renderTrip();
+trip();
 
-toast("AI optimized -6% demo")
+msg("AI optimized -6%")
 
 }
 
 
-function renderMarket(){
+function market(){
 
-let q=(marketSearch.value||"").toLowerCase();
-let cat=marketCategory.value;
-let sort=marketSort.value;
+let q=(search.value||"").toLowerCase();
+let cat=category.value;
+let so=sort.value;
+let fav=get(K.fav,[]);
 
-let f=load(KEY.favorites,[]);
-
-let d=products.filter(p=>
-(!q||(p.name+" "+p.cat+" "+p.loc)
-.toLowerCase()
-.includes(q))
-&&(!cat||p.cat===cat)
+let d=P.filter(p=>
+(!q||(p[1]+" "+p[2]+" "+p[6]).toLowerCase().includes(q))
+&&(!cat||p[2]===cat)
 );
 
-if(sort==="low")
-d.sort((a,b)=>a.price-b.price);
+if(so==="low")d.sort((a,b)=>a[3]-b[3]);
+if(so==="high")d.sort((a,b)=>b[3]-a[3]);
+if(so==="rating")d.sort((a,b)=>b[5]-a[5]);
 
-if(sort==="high")
-d.sort((a,b)=>b.price-a.price);
-
-if(sort==="rating")
-d.sort((a,b)=>b.rating-a.rating);
-
-marketGrid.innerHTML=d.map(p=>`
+products.innerHTML=d.map(p=>`
 
 <div class="card product">
 
-<button class="favorite"
-onclick="toggleFavorite(${p.id})">
-${f.includes(p.id)?"❤️":"♡"}
+<button class="fav"
+onclick="favorite(${p[0]})">
+${fav.includes(p[0])?"❤️":"♡"}
 </button>
 
-<div class="product-icon">
-${p.icon}
+<div class="producticon">
+${p[4]}
 </div>
 
-<span class="badge">
-${p.cat}
-</span>
+<span class="badge">${p[2]}</span>
 
-<h3>${p.name}</h3>
+<h3>${p[1]}</h3>
 
 <p class="muted">
-📍 ${p.loc} · ⭐ ${p.rating}
+📍 ${p[6]} · ⭐ ${p[5]}
 </p>
 
-<div class="price">
-${rupiah(p.price)}
-</div>
+<div class="price">${money(p[3])}</div>
 
-<div style="display:flex;gap:7px;margin-top:11px">
+<div class="actions">
 
-<button class="btn small secondary"
-onclick="productDetail(${p.id})">
+<button class="btn small light"
+onclick="detail(${p[0]})">
 Detail
 </button>
 
 <button class="btn small"
-onclick="addCart(${p.id})">
+onclick="addCart(${p[0]})">
 Add Cart
 </button>
 
@@ -1988,104 +1942,64 @@ Add Cart
 </div>
 
 `).join("")||`
-
-<div class="card">
-Produk tidak ditemukan.
+<div class="card empty">
+Product tidak ditemukan.
 </div>
+`;
 
-`
+updateCart()
 
 }
 
 
-function toggleFavorite(id){
+function favorite(id){
 
-let f=load(KEY.favorites,[]);
+let a=get(K.fav,[]);
 
-f=f.includes(id)
-?f.filter(x=>x!==id)
-:[...f,id];
+a=a.includes(id)
+?a.filter(x=>x!==id)
+:[...a,id];
 
-save(KEY.favorites,f);
+set(K.fav,a);
 
-renderMarket();
-renderHome();
-
-toast("Wishlist updated")
+market();
+home()
 
 }
 
 
-function productDetail(id){
+function detail(id){
 
-let p=products.find(x=>x.id===id);
+let p=P.find(x=>x[0]===id);
 
-let r=load(KEY.reviews,[])
-.filter(x=>x.productId===id);
+modal(p[1],`
 
-openModal(p.name,`
+<div class="producticon">${p[4]}</div>
 
-<div class="product-icon">
-${p.icon}
-</div>
+<span class="badge">${p[2]}</span>
 
-<span class="badge">
-${p.cat}
-</span>
-
-<h2>${p.name}</h2>
+<h2>${p[1]}</h2>
 
 <p>
-📍 ${p.loc} · ⭐ ${p.rating}
+📍 ${p[6]} · ⭐ ${p[5]}
 </p>
 
 <h2 class="price">
-${rupiah(p.price)}
+${money(p[3])}
 </h2>
 
 <p class="muted">
-Experience marketplace product by HobbiGo partner ecosystem.
+HobbiGo marketplace experience.
+Product ini merupakan data demo.
 </p>
 
 <button class="btn"
-onclick="addCart(${p.id});closeModal()">
+onclick="addCart(${p[0]});closeModal()">
 Add to Cart
 </button>
 
-<button class="btn secondary"
-onclick="addTripItem(${p.id})">
-Add to My Trip
-</button>
-
-<hr>
-
-<h3>⭐ Reviews</h3>
-
-${r.length?
-
-r.map(x=>`
-
-<div class="card"
-style="margin-bottom:8px">
-
-<b>${x.name}</b>
-
-<p>⭐ ${x.rating}</p>
-
-<p>${x.text}</p>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>Belum ada review.</p>"
-
-}
-
-<button class="btn secondary"
-onclick="reviewProduct(${p.id})">
+<button class="btn light"
+onclick="review(${p[0])">
 Write Review
 </button>
 
@@ -2094,29 +2008,15 @@ Write Review
 }
 
 
-function addTripItem(id){
+function review(id){
 
-addCart(id);
-
-toast("Produk ditambahkan ke Trip/Cart");
-
-closeModal()
-
-}
-
-
-function reviewProduct(id){
-
-openModal(
-"⭐ Write Review",
-
-`
+modal("⭐ Review",`
 
 <div class="form">
 
 <label>Rating</label>
 
-<select id="reviewRating">
+<select id="rr">
 <option>5</option>
 <option>4</option>
 <option>3</option>
@@ -2125,13 +2025,10 @@ openModal(
 </select>
 
 <label>Name</label>
-
-<input id="reviewName"
-value="Traveler">
+<input id="rn" value="Traveler">
 
 <label>Review</label>
-
-<textarea id="reviewText"></textarea>
+<textarea id="rt"></textarea>
 
 <button class="btn green"
 onclick="saveReview(${id})">
@@ -2140,196 +2037,135 @@ Save Review
 
 </div>
 
-`
-)
+`)
 
 }
 
 
 function saveReview(id){
 
-let r=load(KEY.reviews,[]);
+let a=get(K.reviews,[]);
 
-r.unshift({
-
+a.unshift({
 productId:id,
-
-rating:Number(reviewRating.value),
-
-name:reviewName.value||"Traveler",
-
-text:reviewText.value||"Great experience.",
-
+rating:Number(rr.value),
+name:rn.value,
+text:rt.value||"Great experience.",
 date:new Date().toISOString()
-
 });
 
-save(KEY.reviews,r);
+set(K.reviews,a);
 
 closeModal();
 
-toast("Review saved");
-
-logAction("Product Review Added",String(id))
+msg("Review saved")
 
 }
 
 
 function addCart(id){
 
-let p=products.find(x=>x.id===id);
+let p=P.find(x=>x[0]===id);
 
-let c=load(KEY.cart,[]);
+let a=get(K.cart,[]);
 
-c.push({
-...p,
-cartId:Date.now()+Math.random()
+a.push({
+id:Date.now()+Math.random(),
+productId:id,
+name:p[1],
+cat:p[2],
+price:p[3],
+icon:p[4],
+location:p[6]
 });
 
-save(KEY.cart,c);
+set(K.cart,a);
 
-updateCartCount();
+updateCart();
 
-logAction("Add Cart",p.name);
-
-toast(p.name+" masuk Cart")
+msg(p[1]+" masuk cart")
 
 }
 
 
-function updateCartCount(){
+function updateCart(){
 
-cartCount.textContent=
-load(KEY.cart,[]).length
+cartCount.textContent=get(K.cart,[]).length
 
 }
 
 
 function removeCart(id){
 
-let c=load(KEY.cart,[])
-.filter(x=>String(x.cartId)!==String(id));
+set(
+K.cart,
+get(K.cart,[]).filter(x=>x.id!=id)
+);
 
-save(KEY.cart,c);
-
-updateCartCount();
-
-renderCart()
+cart()
 
 }
 
 
-function calculateVoucher(sub){
+function cart(){
 
-let code=sessionStorage.getItem("hobbigo_voucher");
+let a=get(K.cart,[]);
 
-let v=load(KEY.vouchers,[])
-.find(x=>x.code===code&&x.active&&sub>=x.min);
+if(!a.length){
 
-if(!v)return 0;
+cartBox.innerHTML=`
+<div class="card empty">
 
-let used=Number(v.used||0);
-
-if(v.limit&&used>=v.limit)
-return 0;
-
-return v.type==="percent"
-?Math.min(sub*v.value/100,v.max||sub)
-:Math.min(v.value,sub)
-
-}
-
-
-function applyVoucher(){
-
-let code=(cartVoucher.value||"")
-.trim()
-.toUpperCase();
-
-let v=load(KEY.vouchers,[])
-.find(x=>x.code===code&&x.active);
-
-if(!v)
-return toast("Voucher tidak ditemukan atau inactive");
-
-sessionStorage.setItem("hobbigo_voucher",code);
-
-renderCart();
-
-toast("Voucher "+code+" aktif")
-
-}
-
-
-function renderCart(){
-
-let c=load(KEY.cart,[]);
-
-if(!c.length){
-
-cartContent.innerHTML=`
-
-<div class="card">
-
-<h3>Cart kosong</h3>
+<h3>🛒 Cart masih kosong</h3>
 
 <button class="btn"
-onclick="showPage('market')">
+onclick="page('market')">
 Explore Marketplace
 </button>
 
 </div>
-
 `;
 
 return
 
 }
 
-let sub=c.reduce((s,x)=>s+x.price,0);
-
+let sub=a.reduce((s,x)=>s+x.price,0);
 let fee=Math.round(sub*.05);
 
-let disc=calculateVoucher(sub);
-
-let total=Math.max(0,sub+fee-disc);
-
-cartContent.innerHTML=`
+cartBox.innerHTML=`
 
 <div class="grid2">
 
 <div class="card">
 
-<h3>Cart Items</h3>
+<h3>Selected Experiences</h3>
 
-${c.map(x=>`
+${a.map(x=>`
 
 <div style="
 display:flex;
 gap:10px;
 padding:12px 0;
-border-bottom:1px solid #eee
-">
+border-bottom:1px solid #eee">
 
-<div style="font-size:34px">
-${x.icon}
-</div>
+<div style="font-size:32px">${x.icon}</div>
 
 <div style="flex:1">
 
 <b>${x.name}</b>
 
 <p class="muted">
-${x.cat} · ${x.loc}
+${x.cat} · ${x.location}
 </p>
 
-<b>${rupiah(x.price)}</b>
+<b>${money(x.price)}</b>
 
 </div>
 
 <button class="btn small red"
-onclick="removeCart('${x.cartId}')">
-Remove
+onclick="removeCart(${x.id})">
+×
 </button>
 
 </div>
@@ -2338,30 +2174,18 @@ Remove
 
 </div>
 
-
 <div class="card">
 
 <h3>Checkout Summary</h3>
 
 <p>
 Subtotal
-<b style="float:right">
-${rupiah(sub)}
-</b>
+<b style="float:right">${money(sub)}</b>
 </p>
 
 <p>
 Service Fee
-<b style="float:right">
-${rupiah(fee)}
-</b>
-</p>
-
-<p>
-Voucher
-<b style="float:right">
--${rupiah(disc)}
-</b>
+<b style="float:right">${money(fee)}</b>
 </p>
 
 <hr>
@@ -2369,67 +2193,48 @@ Voucher
 <h2>
 Total
 <span style="float:right">
-${rupiah(total)}
+${money(sub+fee)}
 </span>
 </h2>
 
-<input id="cartVoucher"
-placeholder="Voucher code">
-
-<button class="btn secondary"
-style="margin-top:8px"
-onclick="applyVoucher()">
-Apply Voucher
-</button>
-
 <button class="btn green"
-style="width:100%;margin-top:14px"
-onclick="demoPayment(${total})">
+style="width:100%"
+onclick="payment(${sub+fee})">
 Continue Payment
 </button>
 
 </div>
 
 </div>
-
-`
+`;
 
 }
 
 
-function demoPayment(total){
+function payment(total){
 
-openModal(
-"💳 Payment Center V46",
+modal("💳 HobbiGo Payment Center",`
 
-`
-
-<h3>
-Total ${rupiah(total)}
-</h3>
+<h2>${money(total)}</h2>
 
 <div class="form">
 
 <label>Payment Method</label>
 
 <select id="payMethod">
-
 <option>Bank Transfer</option>
 <option>E-Wallet</option>
 <option>Card</option>
 <option>Corporate Billing</option>
-
 </select>
 
 <label>Account Holder</label>
 
-<input id="payHolder"
-value="Demo Traveler">
+<input id="payName" value="Demo Traveler">
 
-<label>Email Receipt</label>
+<label>Email</label>
 
-<input id="payEmail"
-value="${load(KEY.profile,{email:"demo@hobbigo.com"}).email||"demo@hobbigo.com"}">
+<input id="payEmail" value="demo@hobbigo.com">
 
 <button class="btn green"
 onclick="confirmPayment(${total})">
@@ -2439,222 +2244,165 @@ Confirm Demo Payment
 </div>
 
 <p class="muted">
-Prototype only. Belum terhubung payment gateway nyata.
+Prototype only. Payment gateway nyata belum terhubung.
 </p>
 
-`
-)
+`)
 
 }
 
 
 function confirmPayment(total){
 
-let c=load(KEY.cart,[]);
-let b=load(KEY.bookings,[]);
-let p=load(KEY.payments,[]);
-let t=load(KEY.trip,null);
+let b=get(K.bookings,[]);
+let pay=get(K.payments,[]);
+let c=get(K.cart,[]);
+let t=get(K.trip,null);
 
 let id="HBG-"+Math.floor(100000+Math.random()*900000);
 
-let booking={
+b.unshift({
 
 id,
-
 date:new Date().toISOString(),
-
 status:"Confirmed",
-
 paymentStatus:"Paid",
-
 total,
-
 destination:t?.destination||"Marketplace",
-
-travelers:t?.travelers||1,
-
+travelers:t?.people||1,
 package:t?.package||"Marketplace",
-
 items:c,
+email:payEmail.value
 
-email:payEmail.value||"demo@hobbigo.com"
+});
 
-};
+set(K.bookings,b);
 
-b.unshift(booking);
-
-save(KEY.bookings,b);
-
-
-let pay={
+pay.unshift({
 
 id:"PAY-"+Math.floor(100000+Math.random()*900000),
-
 bookingId:id,
-
 amount:total,
-
 method:payMethod.value,
-
 status:"Paid",
-
 date:new Date().toISOString()
 
-};
+});
 
-p.unshift(pay);
+set(K.payments,pay);
 
-save(KEY.payments,p);
+set(K.cart,[]);
 
-save(KEY.cart,[]);
-
-updateCartCount();
-
-
-let code=sessionStorage.getItem("hobbigo_voucher");
-
-if(code){
-
-let vs=load(KEY.vouchers,[]);
-
-let v=vs.find(x=>x.code===code);
-
-if(v)
-v.used=(v.used||0)+1;
-
-save(KEY.vouchers,vs)
-
-}
-
-sessionStorage.removeItem("hobbigo_voucher");
-
-
-let n=load(KEY.notifications,[]);
+let n=get(K.notes,[]);
 
 n.unshift({
 
 title:"Booking Confirmed",
-
-text:"Booking "+id+" berhasil dibuat.",
-
-date:new Date().toLocaleString("id-ID"),
-
-read:false
+text:"Booking "+id+" berhasil.",
+date:new Date().toLocaleString("id-ID")
 
 });
 
-save(KEY.notifications,n);
+set(K.notes,n);
 
-logAction("Booking Created",id);
-logAction("Payment Paid",id);
+log("Booking Created",id);
 
 closeModal();
 
-toast("Booking berhasil: "+id);
+updateCart();
 
-showPage("booking")
+msg("Booking "+id+" berhasil");
+
+page("booking")
 
 }
 
 
-function renderTrip(){
+function trip(){
 
-let t=load(KEY.trip,null);
+let t=get(K.trip,null);
 
 if(!t){
 
-tripContent.innerHTML=`
-
-<div class="card">
-
+tripBox.innerHTML=`
+<div class="card empty">
 <h3>Belum ada Smart Trip</h3>
-
-<button class="btn"
-onclick="showPage('ai')">
+<button class="btn" onclick="page('ai')">
 Create AI Trip
 </button>
-
 </div>
-
 `;
 
 return
 
 }
 
-let pk=[
-
-["Economy",.72,"Basic"],
-["Comfort",1,"Recommended"],
-["Premium",1.45,"More Experience"],
-["Exclusive",1.9,"VIP Experience"]
-
+let packages=[
+["Economy",.72],
+["Comfort",1],
+["Premium",1.45],
+["Exclusive",1.9]
 ];
 
-tripContent.innerHTML=`
+tripBox.innerHTML=`
 
 <div class="card">
 
-<div class="section-title">
+<div class="pagehead">
 
 <h2>${t.destination} Journey</h2>
 
 <span class="badge green">
-${t.optimized?"AI Optimized":"Generated"}
+${t.optimized?"AI OPTIMIZED":"READY"}
 </span>
 
 </div>
 
 <p>
-${t.travelers} traveler ·
-${t.duration} days ·
+${t.people} travelers ·
+${t.days} days ·
 ${t.interest}
 </p>
 
 <h2 class="price">
-${rupiah(t.total)}
+${money(t.total)}
 </h2>
 
-<button class="btn secondary"
-onclick="reOptimize()">
-🧠 AI Re-optimize
-</button>
-
-<button class="btn"
-onclick="showPage('market')">
-Add Experience
+<button class="btn light"
+onclick="optimize()">
+🧠 Re-optimize
 </button>
 
 </div>
 
+<div class="section">
 
-<div class="section-title">
+<div class="sectiontitle">
 <h2>Smart Package Builder</h2>
 </div>
 
 <div class="grid">
 
-${pk.map(p=>`
+${packages.map(x=>`
 
-<div class="card package
-${p[0]===t.package?"selected":""}">
+<div class="card">
 
 <span class="badge">
-${p[2]}
+${x[0]==="Comfort"?"Recommended":"Package"}
 </span>
 
-<h3>${p[0]}</h3>
+<h3>${x[0]}</h3>
 
 <div class="price">
-${rupiah(t.budget*p[1])}
+${money(t.budget*x[1])}
 </div>
 
 <p class="muted">
-Smart ${p[0]} package.
+Smart ${x[0]} travel package.
 </p>
 
 <button class="btn small"
-onclick="selectPackage('${p[0]}',${p[1]})">
+onclick="packageSelect('${x[0]}',${x[1]})">
 Select
 </button>
 
@@ -2664,46 +2412,41 @@ Select
 
 </div>
 
+</div>
 
-<div class="section-title">
-<h2>🗺️ Interactive Smart Route</h2>
+<div class="section">
+
+<div class="sectiontitle">
+<h2>🗺️ Smart Trip Map</h2>
 </div>
 
 <div class="card">
 
 <div class="map">
 
-<div class="map-point"
-style="left:12%;top:62%">1</div>
-
-<div class="map-point"
-style="left:30%;top:35%">2</div>
-
-<div class="map-point"
-style="left:50%;top:58%">3</div>
-
-<div class="map-point"
-style="left:70%;top:28%">4</div>
-
-<div class="map-point"
-style="left:87%;top:60%">5</div>
+<div class="pin" style="left:10%;top:60%">1</div>
+<div class="pin" style="left:30%;top:30%">2</div>
+<div class="pin" style="left:50%;top:60%">3</div>
+<div class="pin" style="left:70%;top:28%">4</div>
+<div class="pin" style="left:88%;top:58%">5</div>
 
 </div>
 
 </div>
 
+</div>
+
+<div class="section">
 
 <div class="route">
 
-${["Arrival","Hotel","Food","Activity","Departure"]
+${["Arrival","Hotel","Food","Activity","Experience","Departure"]
 .map((x,i)=>`
 
-<div class="route-item">
+<div class="stop">
 
 <b>Stop ${i+1}</b>
-
 <h3>${x}</h3>
-
 <p>${t.destination}</p>
 
 </div>
@@ -2712,26 +2455,27 @@ ${["Arrival","Hotel","Food","Activity","Departure"]
 
 </div>
 
-
-<div class="section-title">
-<h2>AI Itinerary</h2>
 </div>
 
+<div class="section">
+
 <div class="card">
+
+<h3>AI Itinerary</h3>
 
 <div class="timeline">
 
 ${Array.from(
-{length:Math.min(7,t.duration)},
+{length:Math.min(t.days,7)},
 (_,i)=>`
 
-<div class="timeline-item">
+<div class="event">
 
 <b>Day ${i+1}</b>
 
 <p>
 Explore ${t.destination}
-with ${t.interest} activities.
+with ${t.interest}.
 </p>
 
 </div>
@@ -2741,161 +2485,136 @@ with ${t.interest} activities.
 </div>
 
 <button class="btn green"
-onclick="createBookingFromTrip()">
+onclick="bookTrip()">
 Book This Trip
 </button>
 
 </div>
 
-`
+</div>
+`;
 
 }
 
 
-function selectPackage(n,m){
+function packageSelect(n,m){
 
-let t=load(KEY.trip,null);
+let t=get(K.trip,null);
 
 if(!t)return;
 
 t.package=n;
+t.total=Math.round(t.budget*m);
 
-t.total=Math.round((t.budget||t.total)*m);
+set(K.trip,t);
 
-save(KEY.trip,t);
+trip();
 
-renderTrip();
-
-toast(n+" selected")
+msg(n+" package selected")
 
 }
 
 
-function createBookingFromTrip(){
+function bookTrip(){
 
-let t=load(KEY.trip,null);
+let t=get(K.trip,null);
 
-if(!t)
-return toast("Generate Trip dahulu");
-
-let b=load(KEY.bookings,[]);
+let a=get(K.bookings,[]);
 
 let id="HBG-"+Math.floor(100000+Math.random()*900000);
 
-b.unshift({
+a.unshift({
 
 id,
-
 date:new Date().toISOString(),
-
 status:"Pending Payment",
-
 paymentStatus:"Pending",
-
 total:t.total,
-
 destination:t.destination,
-
-travelers:t.travelers,
-
+travelers:t.people,
 package:t.package||"Comfort",
-
-items:[],
-
-email:load(KEY.profile,{email:"demo@hobbigo.com"}).email
+email:get(K.profile,{email:"demo@hobbigo.com"}).email
 
 });
 
-save(KEY.bookings,b);
+set(K.bookings,a);
 
-logAction("Trip Booking Created",id);
+log("Trip Booking Created",id);
 
-toast("Booking "+id+" dibuat");
+msg("Booking created "+id);
 
-showPage("booking")
+page("booking")
 
 }
 
 
-function renderBookings(){
+function bookings(){
 
-let q=(bookingSearch.value||"").toLowerCase();
+let q=(bookSearch.value||"").toLowerCase();
+let f=bookFilter.value;
 
-let f=bookingFilter.value;
+let a=get(K.bookings,[]);
 
-let data=load(KEY.bookings,[]);
-
-data=data.filter(b=>
-(!q||(b.id+" "+b.destination)
-.toLowerCase()
-.includes(q))
-&&(!f||b.status===f)
+a=a.filter(x=>
+(!q||(x.id+" "+x.destination).toLowerCase().includes(q))
+&&(!f||x.status===f)
 );
 
-bookingList.innerHTML=data.length?
+bookingBox.innerHTML=a.length?
 
-data.map(b=>`
+a.map(x=>`
 
-<div class="card"
-style="margin-bottom:13px">
+<div class="card" style="margin-bottom:12px">
 
-<div class="section-title">
+<div class="pagehead">
 
 <div>
 
-<span class="badge
-${b.status==="Cancelled"||b.status==="Refunded"?"red":"green"}">
-${b.status}
+<span class="badge ${
+x.status==="Cancelled"||x.status==="Refunded"
+?"red":"green"
+}">
+${x.status}
 </span>
 
-<h3>${b.id}</h3>
+<h3>${x.id}</h3>
 
 </div>
 
 <div class="price">
-${rupiah(b.total)}
+${money(x.total)}
 </div>
 
 </div>
 
 <p>
-📍 ${b.destination}
-· 👥 ${b.travelers||1}
+📍 ${x.destination}
+· 👥 ${x.travelers||1}
+· ${x.package||"Marketplace"}
 </p>
 
 <p>
-Package:
-<b>${b.package||"Marketplace"}</b>
-</p>
-
-<p>
-Payment:
-<b>${b.paymentStatus||"Pending"}</b>
+Payment: <b>${x.paymentStatus}</b>
 </p>
 
 <button class="btn small"
-onclick="showTicket('${b.id}')">
-E-ticket
+onclick="ticket('${x.id}')">
+🎫 E-Ticket
 </button>
 
-<button class="btn small secondary"
-onclick="showInvoice('${b.id}')">
+<button class="btn small light"
+onclick="invoice('${x.id}')">
 Invoice
 </button>
 
-${b.status!=="Cancelled"&&b.status!=="Refunded"?
+${x.status!=="Cancelled"&&x.status!=="Refunded"?
 
 `<button class="btn small red"
-onclick="cancelBooking('${b.id}')">
+onclick="cancel('${x.id}')">
 Cancel
 </button>`
 
 :""}
-
-<button class="btn small orange"
-onclick="bookingReview('${b.id}')">
-Rate
-</button>
 
 </div>
 
@@ -2903,34 +2622,22 @@ Rate
 
 :
 
-`<div class="card">
+`<div class="card empty">
 No booking found.
 </div>`
 
 }
 
 
-function findBooking(id){
+function ticket(id){
 
-return load(KEY.bookings,[])
-.find(b=>b.id===id)
-
-}
-
-
-function showTicket(id){
-
-let b=findBooking(id);
+let b=get(K.bookings,[]).find(x=>x.id===id);
 
 if(!b)return;
 
-openModal(
-"🎫 Premium E-Ticket",
+modal("🎫 Premium E-Ticket",`
 
-`
-
-<div class="card"
-style="text-align:center">
+<div class="card" style="text-align:center">
 
 <span class="badge green">
 ${b.status}
@@ -2942,46 +2649,26 @@ ${b.status}
 
 <div class="qr">
 
-${Array.from(
-{length:100},
-()=>"<span></span>"
-).join("")}
+${Array.from({length:100},()=>"<i></i>").join("")}
 
 </div>
 
 <p class="muted">
-Scan QR demo untuk membuka booking.
+Digital QR demo ticket
 </p>
 
 <div style="text-align:left">
 
-<p>
-<b>Destination:</b>
-${b.destination}
-</p>
-
-<p>
-<b>Travelers:</b>
-${b.travelers||1}
-</p>
-
-<p>
-<b>Package:</b>
-${b.package||"Marketplace"}
-</p>
-
-<p>
-<b>Payment:</b>
-${b.paymentStatus}
-</p>
+<p><b>Destination:</b> ${b.destination}</p>
+<p><b>Travelers:</b> ${b.travelers}</p>
+<p><b>Package:</b> ${b.package}</p>
+<p><b>Payment:</b> ${b.paymentStatus}</p>
 
 </div>
 
 <hr>
 
-<h2 class="price">
-${rupiah(b.total)}
-</h2>
+<h2 class="price">${money(b.total)}</h2>
 
 <button class="btn"
 onclick="window.print()">
@@ -2990,50 +2677,33 @@ Print E-Ticket
 
 </div>
 
-`
-
-)
+`)
 
 }
 
 
-function showInvoice(id){
+function invoice(id){
 
-let b=findBooking(id);
+let b=get(K.bookings,[]).find(x=>x.id===id);
 
-if(!b)return;
-
-openModal(
-"🧾 Invoice",
-
-`
+modal("🧾 Invoice",`
 
 <h2>HobbiGo Invoice</h2>
 
-<p>
-<b>Booking:</b> ${b.id}
-</p>
+<p><b>Booking:</b> ${b.id}</p>
 
-<p>
-<b>Date:</b>
+<p><b>Date:</b>
 ${new Date(b.date).toLocaleString("id-ID")}
 </p>
 
-<p>
-<b>Destination:</b>
-${b.destination}
-</p>
+<p><b>Destination:</b> ${b.destination}</p>
 
 <hr>
 
-<p>Trip / Product</p>
-
-<h2>
-${rupiah(b.total)}
-</h2>
+<h2>${money(b.total)}</h2>
 
 <p>
-Payment: ${b.paymentStatus}
+Payment Status: ${b.paymentStatus}
 </p>
 
 <button class="btn"
@@ -3041,16 +2711,14 @@ onclick="window.print()">
 Print Invoice
 </button>
 
-`
-
-)
+`)
 
 }
 
 
-function cancelBooking(id){
+function cancel(id){
 
-let a=load(KEY.bookings,[]);
+let a=get(K.bookings,[]);
 
 let b=a.find(x=>x.id===id);
 
@@ -3060,170 +2728,70 @@ b.status="Cancelled";
 
 b.paymentStatus=
 b.paymentStatus==="Paid"
-?"Refunded"
-:"Cancelled";
+?"Refunded":"Cancelled";
 
-save(KEY.bookings,a);
+set(K.bookings,a);
 
-let n=load(KEY.notifications,[]);
+log("Booking Cancelled",id);
 
-n.unshift({
+msg("Booking cancelled");
 
-title:"Booking Cancelled",
-
-text:"Booking "+id+" dibatalkan.",
-
-date:new Date().toLocaleString("id-ID")
-
-});
-
-save(KEY.notifications,n);
-
-logAction("Booking Cancelled",id);
-
-toast("Booking cancelled");
-
-renderBookings()
-
-}
-
-
-function bookingReview(id){
-
-openModal(
-"⭐ Rate Trip",
-
-`
-
-<div class="form">
-
-<label>Rating</label>
-
-<select id="bookingRating">
-<option>5</option>
-<option>4</option>
-<option>3</option>
-<option>2</option>
-<option>1</option>
-</select>
-
-<label>Review</label>
-
-<textarea id="bookingReviewText"></textarea>
-
-<button class="btn green"
-onclick="saveBookingReview('${id}')">
-Submit Review
-</button>
-
-</div>
-
-`
-
-)
-
-}
-
-
-function saveBookingReview(id){
-
-let r=load(KEY.reviews,[]);
-
-let p=load(KEY.profile,{name:"Traveler"});
-
-r.unshift({
-
-bookingId:id,
-
-rating:Number(bookingRating.value),
-
-name:p.name||"Traveler",
-
-text:bookingReviewText.value||"Great trip.",
-
-date:new Date().toISOString()
-
-});
-
-save(KEY.reviews,r);
-
-closeModal();
-
-toast("Rating saved");
-
-logAction("Trip Review Added",id)
+bookings()
 
 }
 
 
 function createCorporate(){
 
-let a=load(KEY.corporate,[]);
+let a=get(K.corp,[]);
 
 let x={
 
 id:"CORP-"+Date.now(),
-
-name:corpName.value||"Company Demo",
-
-type:corpType.value,
-
-destination:corpDestination.value,
-
-date:corpDate.value,
-
-people:Number(corpPeople.value)||1,
-
-duration:Number(corpDuration.value)||1,
-
-budget:Number(corpBudget.value)||0,
-
-requirements:corpReq.value,
-
+name:cName.value||"Company Demo",
+type:cType.value,
+destination:cDest.value,
+date:cDate.value,
+people:Number(cPeople.value)||1,
+days:Number(cDays.value)||1,
+budget:Number(cBudget.value)||0,
+requirements:cReq.value,
 status:"Planning"
 
 };
 
 a.unshift(x);
 
-save(KEY.corporate,a);
+set(K.corp,a);
 
-logAction("Corporate Event Created",x.id);
+log("Corporate Event Created",x.id);
 
-toast("Corporate event created");
+msg("Corporate event created");
 
-renderCorporate()
+corporate()
 
 }
 
 
-function renderCorporate(){
+function corporate(){
 
-let a=load(KEY.corporate,[]);
+let a=get(K.corp,[]);
 
-corporateList.innerHTML=a.length?
+corpList.innerHTML=a.length?
 
 a.map(x=>`
 
-<div class="card"
-style="margin-bottom:9px">
+<div class="card" style="margin-bottom:8px">
 
-<span class="badge">
-${x.status}
-</span>
+<span class="badge">${x.status}</span>
 
 <h3>${x.name}</h3>
 
-<p>
-${x.type} · ${x.destination}
-</p>
+<p>${x.type} · ${x.destination}</p>
 
-<p>
-👥 ${x.people} ·
-${x.duration} days
-</p>
+<p>👥 ${x.people} · ${x.days} days</p>
 
-<b>${rupiah(x.budget)}</b>
+<b>${money(x.budget)}</b>
 
 </div>
 
@@ -3231,37 +2799,26 @@ ${x.duration} days
 
 :
 
-`<p class="muted">
-Belum ada corporate event.
-</p>`
+"<p class='muted'>Belum ada event.</p>"
 
 }
 
 
-function renderOperations(){
+function operations(){
 
-let b=load(KEY.bookings,[]);
+let a=get(K.bookings,[]);
 
-let p=load(KEY.payments,[]);
-
-let gmv=b.reduce((s,x)=>s+(x.total||0),0);
-
-let com=Math.round(gmv*.15);
-
-let ref=b
-.filter(x=>x.paymentStatus==="Refunded")
+let g=a.reduce((s,x)=>s+(x.total||0),0);
+let c=Math.round(g*.15);
+let r=a.filter(x=>x.paymentStatus==="Refunded")
 .reduce((s,x)=>s+(x.total||0),0);
 
-opBookings.textContent=b.length;
+opB.textContent=a.length;
+opG.textContent=money(g);
+opC.textContent=money(c);
+opR.textContent=money(r);
 
-opGMV.textContent=rupiah(gmv);
-
-opCommission.textContent=rupiah(com);
-
-opRefund.textContent=rupiah(ref);
-
-
-operationBookings.innerHTML=b.length?
+opBookings.innerHTML=a.length?
 
 `<table>
 
@@ -3270,29 +2827,20 @@ operationBookings.innerHTML=b.length?
 <th>Destination</th>
 <th>Total</th>
 <th>Status</th>
-<th>Update</th>
 </tr>
 
-${b.map(x=>`
+${a.map(x=>`
 
 <tr>
 
 <td>${x.id}</td>
-
 <td>${x.destination}</td>
-
-<td>${rupiah(x.total)}</td>
-
-<td>
-<span class="badge">
-${x.status}
-</span>
-</td>
+<td>${money(x.total)}</td>
 
 <td>
 
 <select
-onchange="updateBookingStatus('${x.id}',this.value)">
+onchange="updateStatus('${x.id}',this.value)">
 
 ${[
 "Pending Payment",
@@ -3302,12 +2850,9 @@ ${[
 "Cancelled",
 "Refunded"
 ].map(s=>
-
-`<option
-${s===x.status?"selected":""}>
+`<option ${s===x.status?"selected":""}>
 ${s}
 </option>`
-
 ).join("")}
 
 </select>
@@ -3322,166 +2867,95 @@ ${s}
 
 :
 
-`<p class="muted">
-No bookings.
-</p>`;
+"<p class='muted'>No booking.</p>";
 
-
-paymentTable.innerHTML=p.length?
-
-`<table>
-
-<tr>
-<th>Payment</th>
-<th>Booking</th>
-<th>Amount</th>
-<th>Method</th>
-<th>Status</th>
-</tr>
-
-${p.map(x=>`
-
-<tr>
-
-<td>${x.id}</td>
-<td>${x.bookingId}</td>
-<td>${rupiah(x.amount)}</td>
-<td>${x.method}</td>
-<td>${x.status}</td>
-
-</tr>
-
-`).join("")}
-
-</table>`
-
-:
-
-`<p class="muted">
-No payment records.
-</p>`;
-
-renderVouchers();
-
-renderLogs()
+voucherRender()
 
 }
 
 
-function updateBookingStatus(id,s){
+function updateStatus(id,status){
 
-let a=load(KEY.bookings,[]);
-
+let a=get(K.bookings,[]);
 let b=a.find(x=>x.id===id);
 
 if(!b)return;
 
-b.status=s;
+b.status=status;
 
-if(
-s==="Paid"||
-s==="Confirmed"||
-s==="Completed"
-)
+if(["Paid","Confirmed","Completed"].includes(status))
 b.paymentStatus="Paid";
 
-if(s==="Cancelled")
-b.paymentStatus="Cancelled";
-
-if(s==="Refunded")
+if(status==="Refunded")
 b.paymentStatus="Refunded";
 
-save(KEY.bookings,a);
+set(K.bookings,a);
 
-logAction(
-"Booking Status Updated",
-id+" → "+s
-);
+log("Booking Status Updated",id+" → "+status);
 
-toast("Status updated");
+msg("Status updated");
 
-renderOperations();
-
-renderBookings()
+operations()
 
 }
 
 
 function createVoucher(){
 
-let code=
-voucherCode.value.trim().toUpperCase();
+let code=vCode.value.trim().toUpperCase();
 
-if(!code)
-return toast("Masukkan code");
+if(!code)return msg("Masukkan voucher code");
 
-let a=load(KEY.vouchers,[]);
-
-if(a.some(x=>x.code===code))
-return toast("Voucher sudah ada");
+let a=get(K.vouchers,[]);
 
 a.unshift({
 
 code,
-
-type:voucherType.value,
-
-value:Number(voucherValue.value)||0,
-
-min:Number(voucherMin.value)||0,
-
-max:Number(voucherMax.value)||0,
-
-limit:Number(voucherLimit.value)||0,
-
+type:vType.value,
+value:Number(vValue.value)||0,
+min:Number(vMin.value)||0,
+max:Number(vMax.value)||0,
+limit:100,
 used:0,
-
 active:true
 
 });
 
-save(KEY.vouchers,a);
+set(K.vouchers,a);
 
-logAction("Voucher Created",code);
+msg("Voucher created");
 
-toast("Voucher created");
-
-renderOperations()
+operations()
 
 }
 
 
-function renderVouchers(){
+function voucherRender(){
 
-let a=load(KEY.vouchers,[]);
+let a=get(K.vouchers,[]);
 
-voucherList.innerHTML=a.length?
+vouchers.innerHTML=a.length?
 
 a.map(v=>`
 
-<div class="card"
-style="margin-bottom:8px">
+<div class="card" style="margin-bottom:8px">
 
 <b>${v.code}</b>
 
 <p>
 ${v.type==="percent"
 ?v.value+"%"
-:rupiah(v.value)}
+:money(v.value)}
 discount
 </p>
 
-<p class="muted">
-Min ${rupiah(v.min)}
-· Used ${v.used||0}/${v.limit||"∞"}
-</p>
-
-<span class="badge
-${v.active?"green":"red"}">
+<span class="badge ${
+v.active?"green":"red"
+}">
 ${v.active?"Active":"Inactive"}
 </span>
 
-<button class="btn small secondary"
+<button class="btn small light"
 onclick="toggleVoucher('${v.code}')">
 Toggle
 </button>
@@ -3492,111 +2966,58 @@ Toggle
 
 :
 
-`<p class="muted">
-No voucher.
-</p>`
+"<p class='muted'>No vouchers.</p>"
 
 }
 
 
 function toggleVoucher(code){
 
-let a=load(KEY.vouchers,[]);
-
+let a=get(K.vouchers,[]);
 let v=a.find(x=>x.code===code);
 
-if(v)
-v.active=!v.active;
+if(v)v.active=!v.active;
 
-save(KEY.vouchers,a);
+set(K.vouchers,a);
 
-renderOperations()
-
-}
-
-
-function renderLogs(){
-
-let a=load(KEY.logs,[]);
-
-activityLog.innerHTML=a.length?
-
-`<table>
-
-<tr>
-<th>Time</th>
-<th>Action</th>
-<th>Entity</th>
-</tr>
-
-${a.slice(0,20).map(x=>`
-
-<tr>
-
-<td>${x.time}</td>
-
-<td>${x.action}</td>
-
-<td>${x.entity}</td>
-
-</tr>
-
-`).join("")}
-
-</table>`
-
-:
-
-`<p class="muted">
-No activity.
-</p>`
+operations()
 
 }
 
 
-function renderCRM(){
+function crm(){
 
-let b=load(KEY.bookings,[]);
+let u=get(K.users,[]);
+let p=get(K.profile,{});
 
-let u=load(KEY.users,[]);
+if(!u.length)u=[p];
 
-let p=load(KEY.profile,{
-name:"Demo Traveler",
-email:"demo@hobbigo.com"
-});
-
-let c=u.length?u:[p];
+let b=get(K.bookings,[]);
 
 let q=(crmSearch.value||"").toLowerCase();
 
-c=c.filter(x=>
-!q||
-(x.name+" "+x.email)
+u=u.filter(x=>
+!q||(x.name+" "+x.email)
 .toLowerCase()
 .includes(q)
 );
 
-crmCustomers.textContent=c.length;
+crm1.textContent=u.length;
 
-let active=c.filter(x=>
+crm2.textContent=u.filter(x=>
+!b.some(y=>y.email===x.email)
+).length;
+
+crm3.textContent=u.filter(x=>
 b.some(y=>y.email===x.email)
 ).length;
 
-let vip=c.filter(x=>
+crm4.textContent=u.filter(x=>
 b.filter(y=>y.email===x.email)
 .reduce((s,y)=>s+(y.total||0),0)>=10000000
 ).length;
 
-crmNew.textContent=Math.max(
-0,
-c.length-active
-);
-
-crmActive.textContent=active;
-
-crmVip.textContent=vip;
-
-crmTable.innerHTML=`
+crmBox.innerHTML=`
 
 <table>
 
@@ -3608,40 +3029,29 @@ crmTable.innerHTML=`
 <th>Segment</th>
 </tr>
 
-${c.map(x=>{
+${u.map(x=>{
 
 let z=b.filter(y=>y.email===x.email);
 
-let sp=z.reduce(
+let spend=z.reduce(
 (s,y)=>s+(y.total||0),0
 );
 
-let sg=
-sp>=10000000
-?"VIP"
-:z.length
-?"Active"
-:"New";
+let segment=
+spend>=10000000
+?"VIP":
+z.length
+?"Active":"New";
 
 return`
 
 <tr>
 
-<td>
-<b>${x.name||"Traveler"}</b>
-</td>
-
+<td>${x.name||"Traveler"}</td>
 <td>${x.email||"-"}</td>
-
 <td>${z.length}</td>
-
-<td>${rupiah(sp)}</td>
-
-<td>
-<span class="badge">
-${sg}
-</span>
-</td>
+<td>${money(spend)}</td>
+<td><span class="badge">${segment}</span></td>
 
 </tr>
 
@@ -3656,70 +3066,44 @@ ${sg}
 }
 
 
-function renderAnalytics(){
+function analytics(){
 
-let b=load(KEY.bookings,[]);
+let b=get(K.bookings,[]);
 
-let gmv=b.reduce(
-(s,x)=>s+(x.total||0),0
-);
+let g=b.reduce((s,x)=>s+(x.total||0),0);
+let c=Math.round(g*.15);
+let fee=Math.round(g*.05);
+let refund=b.filter(x=>x.paymentStatus==="Refunded")
+.reduce((s,x)=>s+(x.total||0),0);
 
-let com=Math.round(gmv*.15);
-
-let fee=Math.round(gmv*.05);
-
-let ref=b
-.filter(x=>x.paymentStatus==="Refunded")
-.reduce(
-(s,x)=>s+(x.total||0),0
-);
-
-anGMV.textContent=rupiah(gmv);
-
-anCommission.textContent=rupiah(com);
-
-anFee.textContent=rupiah(fee);
-
-anProfit.textContent=
-rupiah(Math.max(0,com+fee-ref));
-
+aGMV.textContent=money(g);
+aCom.textContent=money(c);
+aFee.textContent=money(fee);
+aProfit.textContent=money(Math.max(0,c+fee-refund));
 
 funnel.innerHTML=[
-
 "Pending Payment",
 "Paid",
 "Confirmed",
 "Completed",
 "Cancelled"
-
 ].map(s=>{
 
-let n=b.filter(
-x=>x.status===s
-).length;
+let n=b.filter(x=>x.status===s).length;
 
 return`
 
-<div style="margin:13px 0">
+<div style="margin:12px 0">
 
 <div style="
 display:flex;
 justify-content:space-between">
-
 <span>${s}</span>
-
 <b>${n}</b>
-
 </div>
 
 <div class="progress">
-
-<div style="
-width:${b.length
-?Math.min(100,n/b.length*100)
-:0}%">
-</div>
-
+<div style="width:${b.length?Math.min(100,n/b.length*100):0}%"></div>
 </div>
 
 </div>
@@ -3728,28 +3112,21 @@ width:${b.length
 
 }).join("");
 
+destAnalytics.innerHTML=DEST.map(d=>`
 
-destinationAnalytics.innerHTML=
-destinations.map(d=>`
-
-<div style="margin:12px 0">
+<div style="margin:11px 0">
 
 <div style="
 display:flex;
 justify-content:space-between">
 
-<b>${d.name}</b>
-
-<span>${d.score}%</span>
+<b>${d[0]}</b>
+<span>${d[1]}%</span>
 
 </div>
 
 <div class="progress">
-
-<div style="
-width:${d.score}%">
-</div>
-
+<div style="width:${d[1]}%"></div>
 </div>
 
 </div>
@@ -3759,42 +3136,24 @@ width:${d.score}%">
 }
 
 
-function businessAI(type){
+function business(x){
 
 let a={
-
-revenue:
-"Fokuskan margin dari commission, service fee dan Premium/Exclusive package.",
-
-booking:
-"Prioritaskan Pending Payment dengan reminder otomatis.",
-
-promo:
-"Gunakan minimum purchase dan maximum discount untuk menjaga margin.",
-
-partner:
-"Partner rating tinggi dan inventory aktif sebaiknya diprioritaskan.",
-
-customer:
-"Segmentasi New, Active dan VIP untuk personalisasi."
-
+revenue:"Naikkan Premium/Exclusive package dan service fee untuk meningkatkan margin.",
+booking:"Prioritaskan conversion Pending Payment melalui reminder.",
+promo:"Gunakan minimum purchase dan maximum discount agar promo tetap sehat.",
+partner:"Prioritaskan partner dengan rating tinggi dan availability aktif."
 };
 
-businessAIResult.innerHTML=`
+businessBox.innerHTML=`
 
 <div class="card">
 
-<h3>
-AI Business Recommendation
-</h3>
-
-<p>
-${a[type]}
-</p>
-
 <span class="badge green">
-Demo Intelligence
+AI BUSINESS INSIGHT
 </span>
+
+<p>${a[x]}</p>
 
 </div>
 
@@ -3803,51 +3162,31 @@ Demo Intelligence
 }
 
 
-function renderPartner(){
+function partner(){
 
-let p=load(KEY.partner,[]);
+let a=get(K.partner,[]);
+let tx=get("hobbigo_partner_transactions",[]);
 
-let t=load(
-"hobbigo_partner_transactions",
-[]
-);
-
-let sales=t.reduce(
-(s,x)=>s+(x.amount||0),0
-);
-
+let sales=tx.reduce((s,x)=>s+(x.amount||0),0);
 let com=Math.round(sales*.15);
 
-partnerProducts.textContent=
-products.length+p.length;
+pp.textContent=P.length+a.length;
+ps.textContent=money(sales);
+pc.textContent=money(com);
+pn.textContent=money(sales-com);
 
-partnerSales.textContent=
-rupiah(sales);
+partnerProducts.innerHTML=a.length?
 
-partnerCommission.textContent=
-rupiah(com);
+a.map(x=>`
 
-partnerNet.textContent=
-rupiah(sales-com);
-
-
-partnerInventory.innerHTML=p.length?
-
-p.map(x=>`
-
-<div class="card"
-style="margin-bottom:8px">
+<div class="card" style="margin-bottom:8px">
 
 <b>${x.name}</b>
 
-<p>
-${x.category}
-· ${rupiah(x.price)}
-</p>
+<p>${x.category} · ${money(x.price)}</p>
 
 <p class="muted">
-📍 ${x.location}
-· Slots ${x.slots}
+${x.location} · ${x.slots} slots
 </p>
 
 <button class="btn small red"
@@ -3861,190 +3200,102 @@ Delete
 
 :
 
-`<p class="muted">
-Belum ada custom partner product.
-</p>`;
+"<p class='muted'>Belum ada custom partner product.</p>";
 
-renderAvailabilityProducts();
+avProduct.innerHTML=
+`<option value="">Select Product</option>`+
+a.map(x=>
+`<option value="${x.id}">${x.name}</option>`
+).join("");
 
-renderAvailability()
+calendarRender()
 
 }
 
 
-function addPartnerProduct(){
+function addPartner(){
 
-let n=partnerName.value.trim();
+let n=pName.value.trim();
+let price=Number(pPrice.value)||0;
 
-let pr=Number(partnerPrice.value)||0;
+if(!n||!price)
+return msg("Isi product dan price");
 
-if(!n||!pr)
-return toast("Isi product dan price");
-
-let a=load(KEY.partner,[]);
+let a=get(K.partner,[]);
 
 a.push({
 
 id:Date.now(),
-
 name:n,
-
-category:partnerCategory.value,
-
-price:pr,
-
-location:
-partnerLocation.value||"Indonesia",
-
-slots:Number(partnerSlots.value)||0,
-
+category:pCat.value,
+price,
+location:pLoc.value,
+slots:Number(pSlots.value)||0,
 active:true
 
 });
 
-save(KEY.partner,a);
+set(K.partner,a);
 
-logAction(
-"Partner Product Added",
-n
-);
+log("Partner Product Added",n);
 
-toast("Partner product added");
+msg("Partner product added");
 
-renderPartner()
+partner()
 
 }
 
 
 function deletePartner(id){
 
-save(
-KEY.partner,
-load(KEY.partner,[])
-.filter(x=>x.id!==id)
+set(
+K.partner,
+get(K.partner,[]).filter(x=>x.id!==id)
 );
 
-renderPartner();
-
-toast("Product deleted")
-
-}
-
-
-function renderAvailabilityProducts(){
-
-let a=load(KEY.partner,[]);
-
-availabilityProduct.innerHTML=
-
-`<option value="">
-Select Partner Product
-</option>`+
-
-a.map(x=>
-
-`<option value="${x.id}">
-${x.name}
-</option>`
-
-).join("")
+partner()
 
 }
 
 
 function saveAvailability(){
 
-let pid=availabilityProduct.value;
+let id=Number(avProduct.value);
 
-if(!pid||!availabilityDate.value)
-return toast("Pilih product dan tanggal");
+if(!id||!avDate.value)
+return msg("Pilih product dan tanggal");
 
-let a=load(KEY.availability,[]);
+let a=get(K.av,[]);
 
 a.unshift({
 
 id:Date.now(),
-
-productId:Number(pid),
-
-date:availabilityDate.value,
-
-slots:Number(availabilitySlots.value)||0
+productId:id,
+date:avDate.value,
+slots:Number(avSlots.value)||0
 
 });
 
-save(KEY.availability,a);
+set(K.av,a);
 
-toast("Availability saved");
+msg("Availability saved");
 
-renderAvailability()
-
-}
-
-
-function renderAvailability(){
-
-let a=load(KEY.availability,[]);
-
-let p=load(KEY.partner,[]);
-
-availabilityList.innerHTML=a.length?
-
-`<table>
-
-<tr>
-<th>Product</th>
-<th>Date</th>
-<th>Slots</th>
-</tr>
-
-${a.slice(0,20).map(x=>`
-
-<tr>
-
-<td>
-${p.find(y=>y.id===x.productId)?.name||"Product"}
-</td>
-
-<td>${x.date}</td>
-
-<td>${x.slots}</td>
-
-</tr>
-
-`).join("")}
-
-</table>`
-
-:
-
-`<p class="muted">
-Belum ada availability.
-</p>`;
-
-renderAvailabilityCalendar(a)
+calendarRender()
 
 }
 
 
-function renderAvailabilityCalendar(data){
+function calendarRender(){
+
+let a=get(K.av,[]);
 
 let now=new Date();
+let y=now.getFullYear();
+let m=now.getMonth();
+let first=new Date(y,m,1).getDay();
+let days=new Date(y,m+1,0).getDate();
 
-let year=now.getFullYear();
-
-let month=now.getMonth();
-
-let first=new Date(year,month,1).getDay();
-
-let days=new Date(year,month+1,0).getDate();
-
-let selected=availabilityProduct.value;
-
-let html="";
-
-html+=`
-
+let h=`
 <div class="card">
 
 <h3>
@@ -4057,46 +3308,32 @@ ${now.toLocaleString("id-ID",{month:"long",year:"numeric"})}
 
 ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
 .forEach(x=>{
-html+=`<div class="day"><b>${x}</b></div>`
+h+=`<div class="day"><b>${x}</b></div>`
 });
 
-for(let i=0;i<first;i++){
-html+=`<div class="day"></div>`
-}
+for(let i=0;i<first;i++)
+h+=`<div class="day"></div>`;
 
 for(let d=1;d<=days;d++){
 
 let date=
-year+"-"+String(month+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
 
-let booked=data.find(x=>
-x.date===date &&
-(!selected||String(x.productId)===String(selected))
-);
+let x=a.find(z=>z.date===date);
 
-let cls=
-"day "+
-(booked?"booked ":"")+
-(
-d===now.getDate()
-?"today":""
-);
+h+=`
 
-html+=`
-
-<div class="${cls}">
+<div class="day ${x?"available":""} ${
+d===now.getDate()?"today":""
+}">
 
 <b>${d}</b>
 
-${booked?
-`<div style="font-size:10px;margin-top:5px">
-${booked.slots} slots
-</div>`
-:
-`<div style="font-size:10px;color:#9aa3b3">
-available
-</div>`
-}
+<div style="font-size:9px;margin-top:4px">
+
+${x?x.slots+" slots":"available"}
+
+</div>
 
 </div>
 
@@ -4104,54 +3341,28 @@ available
 
 }
 
-html+=`
+h+=`</div></div>`;
 
-</div>
-
-<p class="muted">
-🟢 Availability saved · 🟠 Today
-</p>
-
-</div>
-
-`;
-
-availabilityCalendar.innerHTML=html
+calendar.innerHTML=h
 
 }
 
 
-function partnerAI(type){
+function partnerAI(x){
 
 let a={
-
-price:
-"Gunakan dynamic pricing berdasarkan season, demand, rating dan competitor benchmark.",
-
-sales:
-"Optimalkan foto, review, promo dan availability.",
-
-bundle:
-"Bundle Hotel + Transfer + Activity + Restaurant dapat meningkatkan basket value.",
-
-inventory:
-"Pantau slot tersedia, tanggal high demand dan produk yang paling banyak dilihat."
-
+pricing:"Gunakan dynamic pricing berdasarkan season, demand, rating dan inventory.",
+sales:"Perbaiki foto, review, title produk dan availability.",
+bundle:"Bundle hotel + transfer + activity + restaurant untuk meningkatkan basket value."
 };
 
-partnerAIResult.innerHTML=`
+partnerAIBox.innerHTML=`
 
 <div class="card">
 
-<h3>
-AI Partner Recommendation
-</h3>
+<span class="badge green">AI PARTNER INSIGHT</span>
 
-<p>${a[type]}</p>
-
-<span class="badge green">
-Demo Intelligence
-</span>
+<p>${a[x]}</p>
 
 </div>
 
@@ -4160,38 +3371,27 @@ Demo Intelligence
 }
 
 
-function renderProfile(){
+function profile(){
 
-let p=load(KEY.profile,{
-
+let p=get(K.profile,{
 name:"Demo Traveler",
-
 email:"demo@hobbigo.com",
-
 phone:"",
-
 interest:"Nature"
-
 });
 
-profileName.value=p.name||"";
+name.value=p.name||"";
+email.value=p.email||"";
+phone.value=p.phone||"";
+pInterest.value=p.interest||"Nature";
 
-profileEmail.value=p.email||"";
-
-profilePhone.value=p.phone||"";
-
-profileInterest.value=
-p.interest||"Nature";
-
-
-let n=load(KEY.notifications,[]);
+let n=get(K.notes,[]);
 
 notifications.innerHTML=n.length?
 
 n.slice(0,10).map(x=>`
 
-<div class="card"
-style="margin-bottom:8px">
+<div class="card" style="margin-bottom:8px">
 
 <b>${x.title}</b>
 
@@ -4207,9 +3407,7 @@ ${x.date}
 
 :
 
-`<p class="muted">
-Tidak ada notification.
-</p>`
+"<p class='muted'>No notifications.</p>"
 
 }
 
@@ -4217,79 +3415,46 @@ Tidak ada notification.
 function saveProfile(){
 
 let p={
-
-name:profileName.value,
-
-email:profileEmail.value,
-
-phone:profilePhone.value,
-
-interest:profileInterest.value
-
+name:name.value,
+email:email.value,
+phone:phone.value,
+interest:pInterest.value
 };
 
-save(KEY.profile,p);
+set(K.profile,p);
 
-let u=load(KEY.users,[]);
+let u=get(K.users,[]);
 
-let x=u.find(y=>y.email===p.email);
-
-if(!x){
-
+if(!u.some(x=>x.email===p.email))
 u.push({
-
 id:Date.now(),
-
 name:p.name,
-
-email:p.email,
-
-createdAt:new Date().toISOString()
-
+email:p.email
 });
 
-save(KEY.users,u)
+set(K.users,u);
 
-}
-
-logAction(
-"Profile Saved",
-p.email
-);
-
-toast("Profile saved");
-
-renderCRM()
+msg("Profile saved");
 
 }
 
 
-function showTravelers(){
+function travelers(){
 
-let a=load(KEY.travelers,[]);
+let a=get(K.travelers,[]);
 
-openModal(
-
-"👥 Traveler Management",
-
-`
+modal("👥 Traveler Management",`
 
 <div class="form">
 
-<label>Traveler Name</label>
+<input id="tName"
+placeholder="Traveler Name">
 
-<input id="travelerName"
-placeholder="Traveler 2">
-
-<label>Relationship</label>
-
-<select id="travelerRel">
-
+<select id="tRel">
 <option>Family</option>
 <option>Friend</option>
 <option>Colleague</option>
 <option>Other</option>
-
 </select>
 
 <button class="btn"
@@ -4301,14 +3466,11 @@ Add Traveler
 
 <hr>
 
-<h3>Traveler List</h3>
-
 ${a.length?
 
 a.map(x=>`
 
-<div class="card"
-style="margin-bottom:7px">
+<div class="card" style="margin-bottom:7px">
 
 <b>${x.name}</b>
 
@@ -4326,189 +3488,122 @@ Remove
 :
 
 "<p class='muted'>Belum ada traveler.</p>"
-
 }
 
-`
-
-)
+`)
 
 }
 
 
 function addTraveler(){
 
-let n=travelerName.value.trim();
+if(!tName.value.trim())
+return msg("Isi nama traveler");
 
-if(!n)
-return toast("Isi nama traveler");
-
-let a=load(KEY.travelers,[]);
+let a=get(K.travelers,[]);
 
 a.push({
-
 id:Date.now(),
-
-name:n,
-
-rel:travelerRel.value
-
+name:tName.value,
+rel:tRel.value
 });
 
-save(KEY.travelers,a);
+set(K.travelers,a);
 
-toast("Traveler added");
+travelers();
 
-showTravelers()
+msg("Traveler added")
 
 }
 
 
 function removeTraveler(id){
 
-save(
-KEY.travelers,
-load(KEY.travelers,[])
-.filter(x=>x.id!==id)
+set(
+K.travelers,
+get(K.travelers,[]).filter(x=>x.id!==id)
 );
 
-showTravelers()
+travelers()
 
 }
 
 
-function showUserDashboard(){
+function dashboard(){
 
-let p=load(KEY.profile,{
-name:"Traveler"
-});
+let p=get(K.profile,{name:"Traveler"});
+let b=get(K.bookings,[]);
+let c=get(K.cart,[]);
+let f=get(K.fav,[]);
 
-let b=load(KEY.bookings,[]);
-
-let c=load(KEY.cart,[]);
-
-let fav=load(KEY.favorites,[]);
-
-openModal(
-
-"👤 User Dashboard",
-
-`
+modal("👤 User Dashboard",`
 
 <div class="grid">
 
 <div class="card">
-
-<div class="muted">
-Traveler
-</div>
-
-<h3>
-${p.name||"Traveler"}
-</h3>
-
+<div class="muted">Traveler</div>
+<h3>${p.name}</h3>
 </div>
 
 <div class="card">
-
-<div class="muted">
-Bookings
-</div>
-
-<div class="stat">
-${b.length}
-</div>
-
+<div class="muted">Bookings</div>
+<div class="stat">${b.length}</div>
 </div>
 
 <div class="card">
-
-<div class="muted">
-Cart
-</div>
-
-<div class="stat">
-${c.length}
-</div>
-
+<div class="muted">Cart</div>
+<div class="stat">${c.length}</div>
 </div>
 
 <div class="card">
-
-<div class="muted">
-Wishlist
-</div>
-
-<div class="stat">
-${fav.length}
+<div class="muted">Wishlist</div>
+<div class="stat">${f.length}</div>
 </div>
 
 </div>
 
-</div>
+<div class="actions">
 
-<div class="card"
-style="margin-top:15px">
-
-<h3>Quick Access</h3>
-
-<button class="btn small"
-onclick="closeModal();showPage('ai')">
+<button class="btn"
+onclick="closeModal();page('ai')">
 AI Trip
 </button>
 
-<button class="btn small"
-onclick="closeModal();showPage('trip')">
+<button class="btn"
+onclick="closeModal();page('trip')">
 My Trip
 </button>
 
-<button class="btn small"
-onclick="closeModal();showPage('booking')">
+<button class="btn"
+onclick="closeModal();page('booking')">
 Booking
-</button>
-
-<button class="btn small"
-onclick="closeModal();showPage('market')">
-Marketplace
 </button>
 
 </div>
 
-`
-
-)
+`)
 
 }
 
 
-function openLogin(){
+function login(){
 
-openModal(
-
-"🔐 HobbiGo Account",
-
-`
+modal("🔐 HobbiGo Account",`
 
 <div class="form">
 
 <label>Name</label>
-
-<input id="loginName"
-placeholder="Your Name">
+<input id="ln" value="Demo Traveler">
 
 <label>Email</label>
+<input id="le" value="demo@hobbigo.com">
 
-<input id="loginEmail"
-placeholder="email@example.com">
+<label>Role</label>
 
-<label>Demo Role</label>
-
-<select id="loginRole">
-
+<select id="lr">
 <option>User</option>
 <option>Partner</option>
 <option>Admin</option>
-
 </select>
 
 <button class="btn"
@@ -4519,127 +3614,84 @@ Login / Register Demo
 </div>
 
 <p class="muted">
-Demo authentication. Belum menggunakan server authentication.
+Demo authentication. Production nanti menggunakan backend.
 </p>
 
-`
-
-)
+`)
 
 }
 
 
 function loginDemo(){
 
-let n=
-loginName.value||
-"Demo Traveler";
+let n=ln.value;
+let e=le.value;
+let role=lr.value;
 
-let e=
-loginEmail.value||
-"demo@hobbigo.com";
-
-let role=loginRole.value;
-
-let u=load(KEY.users,[]);
+let u=get(K.users,[]);
 
 let x=u.find(y=>y.email===e);
 
 if(!x){
 
 x={
-
 id:Date.now(),
-
 name:n,
-
 email:e,
-
-role,
-
-createdAt:new Date().toISOString()
-
+role
 };
 
 u.push(x);
-
-save(KEY.users,u)
-
-}
-else{
-
-x.role=role;
-
-save(KEY.users,u)
+set(K.users,u)
 
 }
 
-save(KEY.session,x);
+set(K.session,x);
 
-save(KEY.profile,{
-
-name:x.name,
-
-email:x.email,
-
+set(K.profile,{
+name:n,
+email:e,
 phone:"",
-
 interest:"Nature",
-
-role:x.role
-
+role
 });
-
-logAction(
-"Login",
-e+" / "+role
-);
 
 closeModal();
 
-toast(
-"Welcome "+n+" · "+role
-);
+msg("Welcome "+n);
 
-renderProfile();
-
-renderCRM()
+profile()
 
 }
 
 
 function logout(){
 
-localStorage.removeItem(KEY.session);
+localStorage.removeItem(K.session);
 
-logAction("Logout","Session");
-
-toast("Logout berhasil")
+msg("Logout berhasil")
 
 }
 
 
-function backupData(){
+function backup(){
 
-let d={
-
-version:"HobbiGo V46",
-
-exportedAt:new Date().toISOString()
-
+let data={
+version:"HobbiGo V47",
+created:new Date().toISOString()
 };
 
-Object.values(KEY).forEach(k=>{
+Object.values(K).forEach(k=>{
 
-let v=localStorage.getItem(k);
+let x=localStorage.getItem(k);
 
-if(v!==null)
-d[k]=JSON.parse(v)
+if(x!==null)
+data[k]=JSON.parse(x)
 
 });
 
 let blob=new Blob(
-[JSON.stringify(d,null,2)],
+[JSON.stringify(data,null,2)],
 {type:"application/json"}
 );
 
@@ -4648,60 +3700,53 @@ let url=URL.createObjectURL(blob);
 let a=document.createElement("a");
 
 a.href=url;
-
-a.download=
-"HobbiGo_V46_Backup.json";
-
+a.download="HobbiGo_V47_Backup.json";
 a.click();
 
 URL.revokeObjectURL(url);
 
-toast("Backup berhasil")
+msg("Backup V47 berhasil")
 
 }
 
 
-function restoreData(e){
+function restore(e){
 
-let f=e.target.files[0];
+let file=e.target.files[0];
 
-if(!f)return;
+if(!file)return;
 
 let r=new FileReader();
 
-r.onload=function(x){
+r.onload=function(){
 
 try{
 
-let d=JSON.parse(x.target.result);
+let d=JSON.parse(r.result);
 
-Object.values(KEY).forEach(k=>{
+Object.values(K).forEach(k=>{
 
 if(d[k]!==undefined)
-localStorage.setItem(
-k,
-JSON.stringify(d[k])
-)
+localStorage.setItem(k,JSON.stringify(d[k]))
 
 });
 
-toast("Backup restored");
+msg("Restore berhasil");
 
 setTimeout(
 ()=>location.reload(),
 700
 )
 
-}
-catch(err){
+}catch(err){
 
-toast("Backup tidak valid")
+msg("File backup tidak valid")
 
 }
 
 };
 
-r.readAsText(f)
+r.readAsText(file)
 
 }
 
@@ -4709,111 +3754,66 @@ r.readAsText(f)
 function resetDemo(){
 
 if(!confirm(
-"Reset seluruh data demo HobbiGo V46?"
+"Reset seluruh data demo HobbiGo V47?"
 ))
 return;
 
-Object.values(KEY).forEach(k=>
+Object.values(K).forEach(k=>
 localStorage.removeItem(k)
 );
 
-sessionStorage.removeItem(
-"hobbigo_voucher"
-);
-
-toast("Demo reset");
-
-setTimeout(
-()=>location.reload(),
-700
-)
+location.reload()
 
 }
 
 
-function init(){
+function seed(){
 
-if(!localStorage.getItem(KEY.notifications))
+if(!localStorage.getItem(K.vouchers))
 
-save(
-KEY.notifications,
-[{
-
-title:"Welcome to HobbiGo V46",
-
-text:
-"Real Travel Platform V46 berhasil diaktifkan.",
-
-date:new Date().toLocaleString("id-ID"),
-
-read:false
-
-}]
-);
-
-
-if(!localStorage.getItem(KEY.vouchers))
-
-save(
-KEY.vouchers,
-[
+set(K.vouchers,[
 
 {
-
 code:"WELCOME100",
-
 type:"fixed",
-
 value:100000,
-
 min:1000000,
-
 max:100000,
-
 limit:100,
-
 used:0,
-
 active:true
-
 },
 
 {
-
 code:"HOBBIGO10",
-
 type:"percent",
-
 value:10,
-
 min:1500000,
-
 max:300000,
-
 limit:100,
-
 used:0,
-
 active:true
+}
+
+]);
+
+if(!localStorage.getItem(K.notes))
+
+set(K.notes,[{
+
+title:"Welcome to HobbiGo V47",
+text:"Premium UI/UX Edition aktif.",
+date:new Date().toLocaleString("id-ID")
+
+}])
 
 }
 
-]
-);
 
-
-renderHome();
-
-renderAI();
-
-updateCartCount();
-
-showPage("home")
-
-}
-
-
-init();
+seed();
+home();
+ai();
+updateCart();
 
 </script>
 
