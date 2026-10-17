@@ -2,4609 +2,1866 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HobbiGo V48 | Backend Ready Travel Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V49 — AI Journey & Experience Marketplace</title>
 
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#172033;
+  --muted:#718096;
+  --primary:#635bff;
+  --primary2:#8b5cf6;
+  --green:#10b981;
+  --orange:#f59e0b;
+  --red:#ef4444;
+  --blue:#3b82f6;
+  --border:#e6eaf0;
+  --shadow:0 10px 30px rgba(30,41,59,.08);
+}
 body{
- margin:0;
- font-family:Inter,Arial,sans-serif;
- background:#f4f7fb;
- color:#182235
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.top{
- position:sticky;
- top:0;
- z-index:99;
- background:rgba(255,255,255,.96);
- backdrop-filter:blur(14px);
- border-bottom:1px solid #e6ebf2
-}
-.nav{
- max-width:1500px;
- margin:auto;
- min-height:68px;
- display:flex;
- align-items:center;
- gap:12px;
- padding:9px 16px
+button{cursor:pointer;border:0}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;
 }
 .logo{
- font-size:28px;
- font-weight:950;
- color:#1769e0
+  font-size:24px;font-weight:900;
+  color:var(--primary);
 }
-.logo span{color:#08a276}
-.navlinks{
- display:flex;
- flex:1;
- gap:3px;
- overflow:auto
+.logo span{color:#111827}
+.status{
+  font-size:12px;padding:7px 12px;border-radius:20px;
+  background:#ecfdf5;color:#047857;font-weight:700;
 }
-.navlinks button{
- border:0;
- background:transparent;
- padding:9px 10px;
- border-radius:10px;
- color:#66748b;
- font-size:12px;
- white-space:nowrap
+.layout{display:flex;min-height:calc(100vh - 65px)}
+.sidebar{
+  width:245px;background:#fff;border-right:1px solid var(--border);
+  padding:18px 12px;position:fixed;top:65px;bottom:0;overflow:auto;
 }
-.navlinks button:hover,
-.navlinks button.active{
- background:#eaf2ff;
- color:#1769e0
+.nav{
+  width:100%;display:flex;gap:10px;align-items:center;
+  padding:11px 13px;margin-bottom:4px;border-radius:11px;
+  background:transparent;color:#526074;text-align:left;
 }
-.navright{display:flex;gap:7px}
-.container{
- max-width:1500px;
- margin:auto;
- padding:20px 16px 100px
+.nav:hover,.nav.active{background:#eeecff;color:var(--primary);font-weight:700}
+.main{
+  margin-left:245px;width:calc(100% - 245px);padding:24px;
+  max-width:1600px;
 }
 .page{display:none}
 .page.active{display:block}
 .hero{
- padding:45px;
- border-radius:30px;
- color:#fff;
- overflow:hidden;
- position:relative;
- background:linear-gradient(135deg,#115bd2,#1769e0 50%,#08a276)
+  background:linear-gradient(135deg,#312e81,#635bff 55%,#8b5cf6);
+  color:#fff;border-radius:24px;padding:32px;
+  box-shadow:var(--shadow);margin-bottom:22px;
 }
-.hero h1{
- font-size:clamp(36px,5vw,64px);
- line-height:1;
- letter-spacing:-2px;
- max-width:850px
-}
-.hero p{
- max-width:760px;
- line-height:1.7;
- opacity:.94
-}
-.hero:after{
- content:"✈️";
- position:absolute;
- right:5%;
- bottom:-40px;
- font-size:190px;
- opacity:.08
-}
-.actions{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-top:18px
-}
+.hero h1{font-size:34px;margin-bottom:10px}
+.hero p{opacity:.9;max-width:720px;line-height:1.6}
+.hero-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
 .btn{
- border:0;
- border-radius:11px;
- padding:11px 16px;
- background:#1769e0;
- color:#fff;
- font-weight:800
+  padding:11px 16px;border-radius:10px;font-weight:700;
+  background:var(--primary);color:#fff;
 }
-.btn.green{background:#08a276}
-.btn.red{background:#d9364f}
-.btn.orange{background:#e69a08}
-.btn.dark{background:#182235}
-.btn.light{
- background:#edf2f8;
- color:#263247
-}
-.btn.small{
- padding:7px 10px;
- font-size:11px
-}
-.pagehead{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- margin-bottom:16px
-}
-.pagehead h2{margin:0}
+.btn:hover{opacity:.9}
+.btn.light{background:#fff;color:var(--primary)}
+.btn.green{background:var(--green)}
+.btn.orange{background:var(--orange)}
+.btn.red{background:var(--red)}
+.btn.gray{background:#eef1f5;color:#334155}
 .grid{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:14px
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
 }
-.grid2{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:14px
-}
-.grid3{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:14px
-}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.grid2{grid-template-columns:repeat(2,1fr)}
 .card{
- background:#fff;
- border:1px solid #e4eaf1;
- border-radius:19px;
- padding:18px;
- box-shadow:0 7px 28px rgba(30,50,90,.045)
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:18px;box-shadow:var(--shadow);
 }
-.card h3{margin:0 0 8px}
-.muted{color:#78849a}
+.card h3{margin-bottom:8px}
+.muted{color:var(--muted)}
 .stat{
- font-size:28px;
- font-weight:950;
- margin-top:6px
+  font-size:26px;font-weight:900;margin-top:8px;
 }
-.badge{
- display:inline-block;
- padding:6px 10px;
- border-radius:20px;
- background:#eaf2ff;
- color:#1769e0;
- font-size:10px;
- font-weight:900
+.section{margin-top:22px;margin-bottom:10px}
+.section-title{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:12px;
 }
-.badge.green{
- background:#e5f8f1;
- color:#07825f
+.product-img{
+  height:145px;border-radius:14px;
+  background:linear-gradient(135deg,#ddd6fe,#c4b5fd);
+  display:flex;align-items:center;justify-content:center;
+  font-size:54px;margin-bottom:13px;
 }
-.badge.orange{
- background:#fff2d8;
- color:#966300
+.price{font-weight:900;color:var(--primary);font-size:18px}
+.rating{color:#f59e0b}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tag{
+  font-size:11px;padding:5px 8px;border-radius:20px;
+  background:#f1f5f9;color:#475569;
 }
-.badge.red{
- background:#ffe7ec;
- color:#b42138
+.form-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
 }
-.section{margin-top:25px}
-.sectiontitle{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:12px
+.field label{
+  display:block;font-size:12px;font-weight:700;margin-bottom:5px;
 }
-.form{
- display:grid;
- gap:10px
+.field input,.field select,.field textarea{
+  width:100%;padding:11px;border:1px solid var(--border);
+  border-radius:9px;background:#fff;outline:none;
 }
-label{
- font-size:12px;
- font-weight:800
-}
-input,select,textarea{
- width:100%;
- border:1px solid #dce3ec;
- border-radius:11px;
- padding:11px;
- outline:none;
- background:#fff
-}
-textarea{min-height:90px}
-input:focus,select:focus,textarea:focus{
- border-color:#1769e0
-}
-.toolbar{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-bottom:14px
-}
-.toolbar>*{
- flex:1;
- min-width:150px
-}
-.destinationIcon,
-.productIcon{
- height:130px;
- border-radius:15px;
- display:flex;
- justify-content:center;
- align-items:center;
- font-size:58px;
- background:linear-gradient(135deg,#edf4ff,#e8faf5)
-}
-.product{
- position:relative
-}
-.fav{
- position:absolute;
- right:10px;
- top:10px;
- width:35px;
- height:35px;
- border:0;
- border-radius:50%;
- background:#fff;
- box-shadow:0 3px 12px #dce1e8
-}
-.price{
- color:#1769e0;
- font-size:21px;
- font-weight:950
-}
-.chat{
- height:285px;
- overflow:auto;
- background:#f6f8fb;
- padding:10px;
- border-radius:14px
-}
-.msg{
- max-width:85%;
- padding:9px 12px;
- border-radius:12px;
- margin:7px 0
-}
-.msg.ai{
- background:#fff;
- border:1px solid #e2e8ef
-}
-.msg.user{
- margin-left:auto;
- background:#1769e0;
- color:#fff
-}
-.progress{
- height:8px;
- background:#e9edf3;
- border-radius:10px;
- overflow:hidden
-}
-.progress div{
- height:100%;
- background:#1769e0
-}
-.route{
- display:flex;
- gap:10px;
- overflow:auto
-}
-.stop{
- min-width:180px;
- padding:15px;
- border-radius:14px;
- background:#f7f9fc;
- border:1px solid #e2e8ef
-}
-.timeline{
- border-left:3px solid #1769e0;
- padding-left:20px;
- margin-left:7px
-}
-.event{
- position:relative;
- margin-bottom:20px
-}
-.event:before{
- content:"";
- position:absolute;
- left:-28px;
- top:4px;
- width:11px;
- height:11px;
- border-radius:50%;
- background:#1769e0
-}
-.map{
- height:300px;
- border-radius:20px;
- overflow:hidden;
- position:relative;
- background:linear-gradient(135deg,#eaf6ff,#e8fff6)
-}
-.map:before{
- content:"";
- position:absolute;
- inset:20px;
- background:
- repeating-linear-gradient(25deg,transparent 0 42px,rgba(23,105,224,.12) 43px 45px),
- repeating-linear-gradient(-25deg,transparent 0 53px,rgba(8,162,118,.1) 54px 56px)
-}
-.pin{
- position:absolute;
- width:36px;
- height:36px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- background:#1769e0;
- color:#fff;
- font-weight:900;
- z-index:2
-}
-table{
- width:100%;
- border-collapse:collapse
-}
+.field input:focus,.field select:focus{border-color:var(--primary)}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
 th,td{
- padding:10px;
- border-bottom:1px solid #edf0f4;
- text-align:left;
- font-size:12px
+  padding:11px;border-bottom:1px solid var(--border);
+  text-align:left;font-size:13px;white-space:nowrap;
 }
+th{background:#f8fafc}
+.badge{
+  display:inline-block;padding:5px 8px;border-radius:20px;
+  font-size:11px;font-weight:700;background:#eef2ff;color:#4f46e5;
+}
+.badge.green{background:#ecfdf5;color:#047857}
+.badge.orange{background:#fffbeb;color:#b45309}
+.badge.red{background:#fef2f2;color:#b91c1c}
+.timeline{border-left:3px solid #c4b5fd;padding-left:18px}
+.timeline-item{margin-bottom:18px;position:relative}
+.timeline-item:before{
+  content:"";position:absolute;left:-27px;top:3px;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--primary);
+}
+.api-row{
+  display:grid;grid-template-columns:90px 1fr 2fr;
+  gap:12px;padding:12px;border-bottom:1px solid var(--border);
+  align-items:center;
+}
+.method{
+  padding:5px 8px;border-radius:6px;text-align:center;
+  font-size:11px;font-weight:900;background:#dbeafe;color:#1d4ed8;
+}
+.method.POST{background:#dcfce7;color:#15803d}
+.method.PUT{background:#fef3c7;color:#a16207}
+.method.DELETE{background:#fee2e2;color:#b91c1c}
+pre{
+  background:#111827;color:#d1fae5;padding:15px;
+  border-radius:12px;overflow:auto;font-size:12px;
+}
+.code-input{
+  font-family:monospace;background:#0f172a!important;color:#e2e8f0!important;
+}
+.modal-bg{
+  position:fixed;inset:0;background:rgba(15,23,42,.55);
+  z-index:100;display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-bg.show{display:flex}
 .modal{
- display:none;
- position:fixed;
- inset:0;
- z-index:200;
- background:rgba(12,22,38,.55);
- align-items:center;
- justify-content:center;
- padding:15px
+  background:#fff;border-radius:20px;width:min(720px,100%);
+  max-height:90vh;overflow:auto;padding:22px;
 }
-.modal.show{display:flex}
-.modalbox{
- background:#fff;
- width:100%;
- max-width:800px;
- max-height:90vh;
- overflow:auto;
- border-radius:22px;
- padding:22px
+.modal-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
 }
-.modalhead{
- display:flex;
- justify-content:space-between;
- align-items:center
-}
-.close{
- border:0;
- width:34px;
- height:34px;
- border-radius:50%
-}
+.close{background:#f1f5f9;padding:7px 11px;border-radius:8px}
 .toast{
- display:none;
- position:fixed;
- z-index:300;
- right:18px;
- bottom:18px;
- background:#182235;
- color:#fff;
- padding:12px 16px;
- border-radius:12px
+  position:fixed;right:20px;bottom:80px;z-index:200;
+  background:#111827;color:#fff;padding:13px 17px;border-radius:12px;
+  display:none;box-shadow:var(--shadow);
 }
 .toast.show{display:block}
+.mobile-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;
+  background:#fff;border-top:1px solid var(--border);
+  z-index:80;padding:8px;
+}
+.mobile-nav button{
+  background:none;flex:1;color:#64748b;font-size:11px;
+}
+.mobile-nav button.active{color:var(--primary);font-weight:800}
+.product-actions{display:flex;gap:8px;margin-top:12px}
+.product-actions button{flex:1}
 .empty{
- text-align:center;
- padding:35px;
- color:#78849a
+  text-align:center;padding:35px;color:var(--muted)
 }
-.api{
- font-family:monospace;
- background:#182235;
- color:#bfe6ff;
- border-radius:12px;
- padding:13px;
- font-size:11px;
- overflow:auto
+@media(max-width:1000px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .grid3{grid-template-columns:repeat(2,1fr)}
+  .sidebar{width:210px}
+  .main{margin-left:210px;width:calc(100% - 210px)}
 }
-.status{
- display:inline-block;
- padding:5px 8px;
- border-radius:8px;
- font-size:10px;
- font-weight:800
-}
-.status.ok{
- background:#e4f8ef;
- color:#087d5c
-}
-.status.demo{
- background:#fff1d7;
- color:#8b6000
-}
-.bottom{
- display:none
-}
-
-@media(max-width:1100px){
- .grid{grid-template-columns:repeat(2,1fr)}
- .grid3{grid-template-columns:repeat(2,1fr)}
- .navlinks{display:none}
-}
-@media(max-width:650px){
- .container{padding:13px 10px 90px}
- .grid,.grid2,.grid3{grid-template-columns:1fr}
- .hero{
-  padding:28px 21px;
-  border-radius:22px
- }
- .hero h1{font-size:36px}
- .hero:after{font-size:100px}
- .nav{padding:8px 10px}
- .logo{font-size:24px}
- .bottom{
-  display:flex;
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:100;
-  background:#fff;
-  border-top:1px solid #e2e7ee;
-  justify-content:space-around;
-  padding:7px 2px
- }
- .bottom button{
-  border:0;
-  background:none;
-  color:#68748a;
-  font-size:10px
- }
- .bottom strong{
-  display:block;
-  font-size:18px
- }
+@media(max-width:700px){
+  .topbar{padding:12px 16px}
+  .sidebar{display:none}
+  .main{margin-left:0;width:100%;padding:14px;padding-bottom:80px}
+  .grid,.grid2,.grid3,.form-grid{grid-template-columns:1fr}
+  .hero{padding:22px}
+  .hero h1{font-size:26px}
+  .mobile-nav{display:flex}
+  .status{font-size:10px}
+  .api-row{grid-template-columns:70px 1fr}
+  .api-row div:last-child{grid-column:1/-1}
 }
 </style>
 </head>
 
 <body>
 
-<header class="top">
-
-<div class="nav">
-
-<div class="logo">
-Hobbi<span>Go</span>
-</div>
-
-<div class="navlinks">
-
-<button onclick="page('home')">Home</button>
-<button onclick="page('ai')">AI Trip</button>
-<button onclick="page('market')">Marketplace</button>
-<button onclick="page('trip')">My Trip</button>
-<button onclick="page('booking')">Booking</button>
-<button onclick="page('corporate')">Corporate</button>
-<button onclick="page('operations')">Operations</button>
-<button onclick="page('crm')">CRM</button>
-<button onclick="page('analytics')">Analytics</button>
-<button onclick="page('backend')">Backend</button>
-<button onclick="page('partner')">Partner</button>
-<button onclick="page('profile')">Profile</button>
-
-</div>
-
-<div class="navright">
-
-<button class="btn light"
-onclick="page('cart')">
-🛒 <span id="cartCount">0</span>
-</button>
-
-<button class="btn"
-onclick="login()">
-Login
-</button>
-
-</div>
-
-</div>
-
+<header class="topbar">
+  <div class="logo">Hobbi<span>Go</span></div>
+  <div class="status">● V49 API READY — DEMO</div>
 </header>
 
+<div class="layout">
 
-<main class="container">
+<aside class="sidebar">
+  <button class="nav active" onclick="showPage('home',this)">🏠 Home</button>
+  <button class="nav" onclick="showPage('ai',this)">🤖 AI Trip</button>
+  <button class="nav" onclick="showPage('market',this)">🛍️ Marketplace</button>
+  <button class="nav" onclick="showPage('cart',this)">🛒 Cart <span id="cartCount">0</span></button>
+  <button class="nav" onclick="showPage('trip',this)">🗺️ My Trip</button>
+  <button class="nav" onclick="showPage('booking',this)">🎫 Booking</button>
+  <button class="nav" onclick="showPage('corporate',this)">🏢 Corporate</button>
+  <button class="nav" onclick="showPage('operations',this)">⚙️ Operations</button>
+  <button class="nav" onclick="showPage('crm',this)">👥 CRM</button>
+  <button class="nav" onclick="showPage('analytics',this)">📊 Analytics</button>
+  <button class="nav" onclick="showPage('partner',this)">🤝 Partner</button>
+  <button class="nav" onclick="showPage('api',this)">🔌 API Center</button>
+  <button class="nav" onclick="showPage('database',this)">🗄️ Database</button>
+  <button class="nav" onclick="showPage('profile',this)">👤 Profile</button>
+</aside>
 
+<main class="main">
 
 <!-- HOME -->
-
 <section id="home" class="page active">
+  <div class="hero">
+    <h1>AI Journey & Experience Marketplace</h1>
+    <p>
+      HobbiGo menghubungkan traveler, hotel, restaurant, attraction,
+      transport, activity, boat dan partner perjalanan dalam satu ekosistem.
+    </p>
+    <div class="hero-actions">
+      <button class="btn light" onclick="showPage('ai')">🤖 Generate My Trip</button>
+      <button class="btn" onclick="showPage('market')">Explore Marketplace</button>
+    </div>
+  </div>
 
-<div class="hero">
+  <div class="grid">
+    <div class="card"><div class="muted">Trips</div><div class="stat" id="statTrips">0</div></div>
+    <div class="card"><div class="muted">Bookings</div><div class="stat" id="statBookings">0</div></div>
+    <div class="card"><div class="muted">Cart Items</div><div class="stat" id="statCart">0</div></div>
+    <div class="card"><div class="muted">API Status</div><div class="stat" style="color:#10b981">READY</div></div>
+  </div>
 
-<span class="badge">
-HOBBIGO V48 · BACKEND READY
-</span>
+  <div class="section"><div class="section-title"><h2>Global Experience Discovery</h2></div></div>
+  <div class="grid3">
+    <div class="card">
+      <h3>🌴 Bali</h3><p class="muted">98% AI travel match</p>
+      <button class="btn" style="margin-top:12px" onclick="setDestination('Bali')">Explore</button>
+    </div>
+    <div class="card">
+      <h3>🏯 Yogyakarta</h3><p class="muted">95% AI travel match</p>
+      <button class="btn" style="margin-top:12px" onclick="setDestination('Yogyakarta')">Explore</button>
+    </div>
+    <div class="card">
+      <h3>🏝️ Lombok</h3><p class="muted">93% AI travel match</p>
+      <button class="btn" style="margin-top:12px" onclick="setDestination('Lombok')">Explore</button>
+    </div>
+  </div>
 
-<h1>
-From Travel Idea<br>
-to Complete Journey.
-</h1>
-
-<p>
-HobbiGo menghubungkan AI trip planning,
-experience marketplace, booking, partner,
-corporate travel dan operations dalam satu ekosistem.
-</p>
-
-<div class="actions">
-
-<button class="btn"
-onclick="page('ai')">
-✨ Start AI Trip
-</button>
-
-<button class="btn light"
-onclick="page('market')">
-🌎 Marketplace
-</button>
-
-<button class="btn green"
-onclick="page('backend')">
-⚙️ Backend Center
-</button>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="grid">
-
-<div class="card">
-<div class="muted">Bookings</div>
-<div class="stat" id="s1">0</div>
-</div>
-
-<div class="card">
-<div class="muted">Cart Items</div>
-<div class="stat" id="s2">0</div>
-</div>
-
-<div class="card">
-<div class="muted">Wishlist</div>
-<div class="stat" id="s3">0</div>
-</div>
-
-<div class="card">
-<div class="muted">API Modules</div>
-<div class="stat">12</div>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectiontitle">
-<h2>🌏 Destination Intelligence</h2>
-<span class="badge green">AI MATCH</span>
-</div>
-
-<div class="grid3" id="destinations"></div>
-
-</div>
-
-
-<div class="section">
-
-<div class="grid3">
-
-<div class="card">
-<h3>🤖 AI Engine</h3>
-<p class="muted">
-Trip planning, recommendation, itinerary dan optimization.
-</p>
-</div>
-
-<div class="card">
-<h3>🛍️ Commerce Engine</h3>
-<p class="muted">
-Marketplace, cart, package dan checkout.
-</p>
-</div>
-
-<div class="card">
-<h3>🗄️ Data Engine</h3>
-<p class="muted">
-User, partner, product, booking, payment dan analytics.
-</p>
-</div>
-
-</div>
-
-</div>
-
+  <div class="section"><h2>V49 Platform Architecture</h2></div>
+  <div class="grid3">
+    <div class="card"><h3>🤖 AI Layer</h3><p class="muted">Trip planning, optimization and recommendations.</p></div>
+    <div class="card"><h3>🔌 API Layer</h3><p class="muted">Ready for external travel APIs and backend.</p></div>
+    <div class="card"><h3>🗄️ Data Layer</h3><p class="muted">Users, products, trips, orders, payments and partners.</p></div>
+  </div>
 </section>
-
 
 <!-- AI -->
-
 <section id="ai" class="page">
+  <div class="section-title"><h2>🤖 AI Journey Generator</h2></div>
 
-<div class="pagehead">
-<h2>🤖 AI Travel Command Center</h2>
-<span class="badge">AI READY</span>
-</div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field">
+        <label>Starting From</label>
+        <input id="aiFrom" value="Jakarta">
+      </div>
+      <div class="field">
+        <label>Destination</label>
+        <input id="aiDestination" value="Bali">
+      </div>
+      <div class="field">
+        <label>Date</label>
+        <input id="aiDate" type="date">
+      </div>
+      <div class="field">
+        <label>Travelers</label>
+        <input id="aiTravelers" type="number" value="2" min="1">
+      </div>
+      <div class="field">
+        <label>Duration</label>
+        <select id="aiDuration">
+          <option>3 Days</option>
+          <option>4 Days</option>
+          <option>5 Days</option>
+          <option>7 Days</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Travel Style</label>
+        <select id="aiStyle">
+          <option>Comfort</option>
+          <option>Economy</option>
+          <option>Premium</option>
+          <option>Exclusive</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Budget</label>
+        <select id="aiBudget">
+          <option>Rp 3.000.000</option>
+          <option>Rp 5.000.000</option>
+          <option>Rp 10.000.000</option>
+          <option>Rp 20.000.000+</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Main Interest</label>
+        <select id="aiInterest">
+          <option>Nature</option>
+          <option>Culinary</option>
+          <option>Adventure</option>
+          <option>Culture</option>
+          <option>Relaxation</option>
+          <option>Family</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Traveler Type</label>
+        <select id="aiType">
+          <option>Personal</option>
+          <option>Group</option>
+          <option>Company</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" style="margin-top:18px" onclick="generateTrip()">
+      ✨ Generate Smart Trip
+    </button>
+  </div>
 
-<div class="grid2">
-
-<div class="card">
-
-<h3>AI Travel Copilot</h3>
-
-<div class="chat" id="chat"></div>
-
-<div style="display:flex;gap:7px;margin-top:8px">
-
-<input id="chatInput"
-placeholder="Ask HobbiGo AI...">
-
-<button class="btn"
-onclick="sendAI()">
-Send
-</button>
-
-</div>
-
-<div class="actions">
-
-<button class="btn small light"
-onclick="quickAI('destination')">
-Destination
-</button>
-
-<button class="btn small light"
-onclick="quickAI('hotel')">
-Hotel
-</button>
-
-<button class="btn small light"
-onclick="quickAI('budget')">
-Budget
-</button>
-
-<button class="btn small light"
-onclick="quickAI('route')">
-Route
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h3>✨ AI Journey Generator</h3>
-
-<div class="form">
-
-<label>Journey Type</label>
-
-<select id="jType">
-<option>Personal</option>
-<option>Group</option>
-<option>Company</option>
-</select>
-
-<label>Starting From</label>
-<input id="jFrom" value="Jakarta">
-
-<label>Destination</label>
-
-<select id="jDest">
-<option>Bali</option>
-<option>Yogyakarta</option>
-<option>Lombok</option>
-<option>Labuan Bajo</option>
-<option>Bandung</option>
-<option>Jakarta</option>
-</select>
-
-<label>Travelers</label>
-<input id="jPeople" type="number" value="2">
-
-<label>Duration</label>
-<input id="jDays" type="number" value="4">
-
-<label>Travel Style</label>
-
-<select id="jStyle">
-<option>Comfort</option>
-<option>Economy</option>
-<option>Premium</option>
-<option>Exclusive</option>
-</select>
-
-<label>Total Budget</label>
-<input id="jBudget" type="number" value="10000000">
-
-<label>Main Interest</label>
-
-<select id="jInterest">
-<option>Nature</option>
-<option>Food</option>
-<option>Culture</option>
-<option>Adventure</option>
-<option>Relaxation</option>
-<option>Business</option>
-</select>
-
-<button class="btn green"
-onclick="generate()">
-🚀 Generate Smart Trip
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div id="aiResult" class="section"></div>
-
+  <div id="aiResult" style="margin-top:18px"></div>
 </section>
 
-
-<!-- MARKETPLACE -->
-
+<!-- MARKET -->
 <section id="market" class="page">
+  <div class="section-title">
+    <h2>🛍️ Global Marketplace</h2>
+    <button class="btn" onclick="showPage('cart')">Cart 🛒</button>
+  </div>
 
-<div class="pagehead">
-<h2>🌎 Global Marketplace</h2>
-<span class="badge green">MARKETPLACE</span>
-</div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field">
+        <label>Search</label>
+        <input id="marketSearch" placeholder="hotel, restaurant, boat..." oninput="renderMarket()">
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="marketCategory" onchange="renderMarket()">
+          <option value="">All</option>
+          <option>Hotel</option>
+          <option>Restaurant</option>
+          <option>Ticket</option>
+          <option>Transport</option>
+          <option>Attraction</option>
+          <option>Activity</option>
+          <option>Boat</option>
+          <option>Villa</option>
+          <option>Rental</option>
+          <option>Agency</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Sort</label>
+        <select id="marketSort" onchange="renderMarket()">
+          <option value="default">Recommended</option>
+          <option value="low">Price Low</option>
+          <option value="high">Price High</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
-<div class="toolbar">
-
-<input id="search"
-placeholder="Search hotel, food, activity..."
-oninput="market()">
-
-<select id="category"
-onchange="market()">
-
-<option value="">All Categories</option>
-<option>Hotel</option>
-<option>Restaurant</option>
-<option>Ticket</option>
-<option>Transport</option>
-<option>Activity</option>
-<option>Boat</option>
-<option>Rental</option>
-<option>Agency</option>
-
-</select>
-
-<select id="sort"
-onchange="market()">
-
-<option value="popular">Popular</option>
-<option value="low">Lowest Price</option>
-<option value="high">Highest Price</option>
-<option value="rating">Highest Rating</option>
-
-</select>
-
-</div>
-
-<div class="grid3" id="products"></div>
-
+  <div id="marketGrid" class="grid3" style="margin-top:18px"></div>
 </section>
-
 
 <!-- CART -->
-
 <section id="cart" class="page">
-
-<div class="pagehead">
-<h2>🛒 Cart & Checkout</h2>
-</div>
-
-<div id="cartBox"></div>
-
+  <div class="section-title"><h2>🛒 My Cart</h2></div>
+  <div id="cartContent"></div>
 </section>
-
 
 <!-- TRIP -->
-
 <section id="trip" class="page">
-
-<div class="pagehead">
-<h2>🧳 My Smart Trip</h2>
-</div>
-
-<div id="tripBox"></div>
-
+  <div class="section-title"><h2>🗺️ My Trip</h2></div>
+  <div id="tripContent"></div>
 </section>
-
 
 <!-- BOOKING -->
-
 <section id="booking" class="page">
-
-<div class="pagehead">
-<h2>🎫 Booking Center</h2>
-</div>
-
-<div class="toolbar">
-
-<input id="bookSearch"
-placeholder="Booking ID / destination..."
-oninput="bookings()">
-
-<select id="bookFilter"
-onchange="bookings()">
-
-<option value="">All Status</option>
-<option>Pending Payment</option>
-<option>Paid</option>
-<option>Confirmed</option>
-<option>Completed</option>
-<option>Cancelled</option>
-<option>Refunded</option>
-
-</select>
-
-</div>
-
-<div id="bookingBox"></div>
-
+  <div class="section-title"><h2>🎫 Booking Center</h2></div>
+  <div id="bookingContent"></div>
 </section>
-
 
 <!-- CORPORATE -->
-
 <section id="corporate" class="page">
-
-<div class="pagehead">
-<h2>🏢 Corporate & Group Travel</h2>
-</div>
-
-<div class="grid2">
-
-<div class="card">
-
-<h3>Corporate Trip Builder</h3>
-
-<div class="form">
-
-<label>Company / Group</label>
-<input id="cName" placeholder="Company ABC">
-
-<label>Event Type</label>
-
-<select id="cType">
-<option>Corporate Retreat</option>
-<option>Team Building</option>
-<option>Business Meeting</option>
-<option>Group Incentive</option>
-</select>
-
-<label>Destination</label>
-<input id="cDest" value="Bali">
-
-<label>Date</label>
-<input id="cDate" type="date">
-
-<label>Participants</label>
-<input id="cPeople" type="number" value="20">
-
-<label>Duration</label>
-<input id="cDays" type="number" value="3">
-
-<label>Budget</label>
-<input id="cBudget" type="number" value="50000000">
-
-<label>Requirements</label>
-<textarea id="cReq"></textarea>
-
-<button class="btn green"
-onclick="createCorporate()">
-Create Corporate Journey
-</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Corporate Events</h3>
-
-<div id="corpList"></div>
-
-</div>
-
-</div>
-
+  <div class="section-title"><h2>🏢 Corporate & Group Travel</h2></div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field"><label>Company</label><input id="corpCompany" value="HobbiGo Demo Company"></div>
+      <div class="field"><label>Event</label><input id="corpEvent" value="Corporate Retreat"></div>
+      <div class="field"><label>Participants</label><input id="corpPeople" type="number" value="20"></div>
+      <div class="field"><label>Destination</label><input id="corpDestination" value="Bali"></div>
+      <div class="field"><label>Date</label><input id="corpDate" type="date"></div>
+      <div class="field"><label>Budget</label><input id="corpBudget" value="50000000"></div>
+    </div>
+    <button class="btn" style="margin-top:18px" onclick="createCorporateEvent()">Create Corporate Event</button>
+  </div>
+  <div id="corporateList" style="margin-top:18px"></div>
 </section>
-
 
 <!-- OPERATIONS -->
-
 <section id="operations" class="page">
+  <div class="section-title"><h2>⚙️ Operations Center</h2></div>
 
-<div class="pagehead">
-<h2>⚙️ Operations</h2>
-<span class="badge orange">ADMIN</span>
-</div>
+  <div class="grid">
+    <div class="card"><div class="muted">API</div><div class="stat" style="color:#10b981">READY</div></div>
+    <div class="card"><div class="muted">Database</div><div class="stat">LOCAL</div></div>
+    <div class="card"><div class="muted">Sync</div><div class="stat" id="syncStatus">LOCAL</div></div>
+    <div class="card"><div class="muted">Environment</div><div class="stat">DEMO</div></div>
+  </div>
 
-<div class="grid">
+  <div class="section"><h2>Data Operations</h2></div>
+  <div class="card">
+    <div class="hero-actions">
+      <button class="btn" onclick="syncData()">🔄 Sync Data</button>
+      <button class="btn gray" onclick="exportData()">⬇️ Export JSON</button>
+      <button class="btn gray" onclick="document.getElementById('importFile').click()">⬆️ Import JSON</button>
+      <button class="btn red" onclick="resetDemo()">Reset Demo</button>
+      <input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+  </div>
 
-<div class="card">
-<div class="muted">Bookings</div>
-<div class="stat" id="op1">0</div>
-</div>
-
-<div class="card">
-<div class="muted">GMV</div>
-<div class="stat" id="op2">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Commission</div>
-<div class="stat" id="op3">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Refund</div>
-<div class="stat" id="op4">Rp0</div>
-</div>
-
-</div>
-
-<div class="section card">
-
-<h3>Booking Management</h3>
-
-<div id="opBookings"></div>
-
-</div>
-
-<div class="section grid2">
-
-<div class="card">
-
-<h3>Voucher Center</h3>
-
-<div class="form">
-
-<input id="vCode"
-placeholder="HOBBIGO10">
-
-<select id="vType">
-<option value="percent">Percentage</option>
-<option value="fixed">Fixed</option>
-</select>
-
-<input id="vValue"
-type="number"
-value="10">
-
-<input id="vMin"
-type="number"
-value="1000000">
-
-<input id="vMax"
-type="number"
-value="300000">
-
-<button class="btn"
-onclick="createVoucher()">
-Create Voucher
-</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Data Management</h3>
-
-<button class="btn green"
-onclick="backup()">
-Download Backup
-</button>
-
-<button class="btn light"
-onclick="document.getElementById('restore').click()">
-Restore
-</button>
-
-<input id="restore"
-type="file"
-accept=".json"
-style="display:none"
-onchange="restore(event)">
-
-<button class="btn red"
-onclick="resetDemo()">
-Reset Demo
-</button>
-
-</div>
-
-</div>
-
-<div class="section card">
-
-<h3>Activity Log</h3>
-
-<div id="logs"></div>
-
-</div>
-
+  <div class="section"><h2>Recent Activity</h2></div>
+  <div class="card" id="activityList"></div>
 </section>
-
 
 <!-- CRM -->
-
 <section id="crm" class="page">
-
-<div class="pagehead">
-<h2>👥 CRM Customer 360</h2>
-</div>
-
-<div class="grid">
-
-<div class="card">
-<div class="muted">Customers</div>
-<div class="stat" id="crm1">0</div>
-</div>
-
-<div class="card">
-<div class="muted">New</div>
-<div class="stat" id="crm2">0</div>
-</div>
-
-<div class="card">
-<div class="muted">Active</div>
-<div class="stat" id="crm3">0</div>
-</div>
-
-<div class="card">
-<div class="muted">VIP</div>
-<div class="stat" id="crm4">0</div>
-</div>
-
-</div>
-
-<div class="card section">
-
-<input id="crmSearch"
-placeholder="Search customer..."
-oninput="crm()">
-
-<div id="crmBox" style="margin-top:15px"></div>
-
-</div>
-
+  <div class="section-title"><h2>👥 CRM Customer 360</h2></div>
+  <div class="card">
+    <input id="crmSearch" placeholder="Search customer..." oninput="renderCRM()" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px">
+  </div>
+  <div id="crmContent" style="margin-top:18px"></div>
 </section>
-
 
 <!-- ANALYTICS -->
-
 <section id="analytics" class="page">
+  <div class="section-title"><h2>📊 Marketplace Analytics</h2></div>
+  <div class="grid">
+    <div class="card"><div class="muted">GMV</div><div class="stat" id="gmv">Rp 0</div></div>
+    <div class="card"><div class="muted">Commission</div><div class="stat" id="commission">Rp 0</div></div>
+    <div class="card"><div class="muted">Service Fee</div><div class="stat" id="serviceFee">Rp 0</div></div>
+    <div class="card"><div class="muted">Bookings</div><div class="stat" id="analyticsBookings">0</div></div>
+  </div>
 
-<div class="pagehead">
-<h2>📊 Analytics & BI</h2>
-</div>
+  <div class="section"><h2>AI Business Copilot</h2></div>
+  <div class="card">
+    <p id="businessInsight"></p>
+  </div>
 
-<div class="grid">
-
-<div class="card">
-<div class="muted">GMV</div>
-<div class="stat" id="an1">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Commission</div>
-<div class="stat" id="an2">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Service Fee</div>
-<div class="stat" id="an3">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Estimated Profit</div>
-<div class="stat" id="an4">Rp0</div>
-</div>
-
-</div>
-
-<div class="grid2 section">
-
-<div class="card">
-<h3>Booking Funnel</h3>
-<div id="funnel"></div>
-</div>
-
-<div class="card">
-<h3>Destination Intelligence</h3>
-<div id="destAnalytics"></div>
-</div>
-
-</div>
-
-<div class="card section">
-
-<h3>🤖 AI Business Copilot</h3>
-
-<div class="actions">
-
-<button class="btn small"
-onclick="business('revenue')">
-Revenue
-</button>
-
-<button class="btn small"
-onclick="business('booking')">
-Booking
-</button>
-
-<button class="btn small"
-onclick="business('promo')">
-Promo
-</button>
-
-<button class="btn small"
-onclick="business('partner')">
-Partner
-</button>
-
-</div>
-
-<div id="businessBox"></div>
-
-</div>
-
+  <div class="section"><h2>Destination Intelligence</h2></div>
+  <div id="destinationAnalytics" class="grid3"></div>
 </section>
-
-
-<!-- BACKEND -->
-
-<section id="backend" class="page">
-
-<div class="pagehead">
-
-<h2>🗄️ Backend Center</h2>
-
-<span class="badge orange">
-V48 ARCHITECTURE
-</span>
-
-</div>
-
-
-<div class="hero" style="padding:30px">
-
-<span class="badge">
-BACKEND READY
-</span>
-
-<h2>
-HobbiGo Data Architecture
-</h2>
-
-<p>
-V48 menyiapkan struktur data HobbiGo
-agar siap dipindahkan dari localStorage
-ke database online dan API production.
-</p>
-
-</div>
-
-
-<div class="section">
-
-<div class="grid3">
-
-<div class="card">
-
-<h3>👤 User Service</h3>
-
-<p class="muted">
-Users, profiles, travelers, roles dan sessions.
-</p>
-
-<span class="status ok">
-READY
-</span>
-
-</div>
-
-<div class="card">
-
-<h3>🛍️ Marketplace Service</h3>
-
-<p class="muted">
-Products, categories, pricing, reviews dan availability.
-</p>
-
-<span class="status ok">
-READY
-</span>
-
-</div>
-
-<div class="card">
-
-<h3>📦 Booking Service</h3>
-
-<p class="muted">
-Bookings, items, status, cancellation dan refund.
-</p>
-
-<span class="status ok">
-READY
-</span>
-
-</div>
-
-<div class="card">
-
-<h3>💳 Payment Service</h3>
-
-<p class="muted">
-Payment records dan reconciliation.
-</p>
-
-<span class="status demo">
-DEMO
-</span>
-
-</div>
-
-<div class="card">
-
-<h3>🤝 Partner Service</h3>
-
-<p class="muted">
-Partner products, commission dan inventory.
-</p>
-
-<span class="status ok">
-READY
-</span>
-
-</div>
-
-<div class="card">
-
-<h3>🤖 AI Service</h3>
-
-<p class="muted">
-Trip generation, recommendation dan optimization.
-</p>
-
-<span class="status demo">
-DEMO
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="card">
-
-<h3>🗂️ Database Schema</h3>
-
-<div class="api">
-
-users
- ├─ id
- ├─ name
- ├─ email
- ├─ phone
- ├─ role
- └─ created_at
-
-travelers
- ├─ id
- ├─ user_id
- ├─ name
- └─ relationship
-
-products
- ├─ id
- ├─ partner_id
- ├─ category
- ├─ name
- ├─ price
- ├─ location
- ├─ rating
- └─ active
-
-availability
- ├─ id
- ├─ product_id
- ├─ date
- └─ slots
-
-trips
- ├─ id
- ├─ user_id
- ├─ destination
- ├─ travelers
- ├─ duration
- ├─ budget
- └─ itinerary
-
-bookings
- ├─ id
- ├─ user_id
- ├─ trip_id
- ├─ status
- ├─ payment_status
- ├─ total
- └─ created_at
-
-booking_items
- ├─ id
- ├─ booking_id
- ├─ product_id
- ├─ quantity
- └─ price
-
-payments
- ├─ id
- ├─ booking_id
- ├─ method
- ├─ amount
- ├─ status
- └─ paid_at
-
-reviews
- ├─ id
- ├─ user_id
- ├─ product_id
- ├─ rating
- └─ review
-
-partners
- ├─ id
- ├─ name
- ├─ email
- ├─ category
- └─ commission_rate
-
-corporate_events
- ├─ id
- ├─ company
- ├─ destination
- ├─ participants
- ├─ budget
- └─ status
-
-vouchers
- ├─ id
- ├─ code
- ├─ type
- ├─ value
- ├─ minimum
- └─ active
-
-activity_logs
- ├─ id
- ├─ user_id
- ├─ action
- └─ created_at
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="card">
-
-<h3>🔌 API Blueprint</h3>
-
-<div class="api">
-
-GET    /api/v1/destinations
-GET    /api/v1/products
-GET    /api/v1/products/:id
-
-POST   /api/v1/auth/register
-POST   /api/v1/auth/login
-POST   /api/v1/auth/logout
-
-GET    /api/v1/users/me
-PUT    /api/v1/users/me
-
-POST   /api/v1/trips
-GET    /api/v1/trips
-GET    /api/v1/trips/:id
-PUT    /api/v1/trips/:id
-
-POST   /api/v1/cart
-GET    /api/v1/cart
-DELETE /api/v1/cart/:id
-
-POST   /api/v1/bookings
-GET    /api/v1/bookings
-GET    /api/v1/bookings/:id
-PUT    /api/v1/bookings/:id/cancel
-
-POST   /api/v1/payments
-GET    /api/v1/payments/:id
-
-GET    /api/v1/partners
-POST   /api/v1/partners/products
-PUT    /api/v1/partners/products/:id
-
-GET    /api/v1/availability
-POST   /api/v1/availability
-
-POST   /api/v1/reviews
-GET    /api/v1/products/:id/reviews
-
-POST   /api/v1/ai/trip
-POST   /api/v1/ai/recommendation
-POST   /api/v1/ai/optimize
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="grid2">
-
-<div class="card">
-
-<h3>🔐 Security Layer</h3>
-
-<p>Production architecture:</p>
-
-<ul>
-
-<li>Password hashing</li>
-<li>JWT / secure sessions</li>
-<li>Role based access</li>
-<li>API authentication</li>
-<li>Input validation</li>
-<li>Rate limiting</li>
-<li>Audit logs</li>
-
-</ul>
-
-<span class="status demo">
-NOT CONNECTED
-</span>
-
-</div>
-
-
-<div class="card">
-
-<h3>☁️ Production Database</h3>
-
-<p>Recommended structure:</p>
-
-<ul>
-
-<li>PostgreSQL</li>
-<li>Cloud object storage</li>
-<li>Redis cache</li>
-<li>API server</li>
-<li>Background jobs</li>
-<li>Monitoring</li>
-
-</ul>
-
-<span class="status demo">
-NEXT STAGE
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
 
 <!-- PARTNER -->
-
 <section id="partner" class="page">
+  <div class="section-title"><h2>🤝 Partner Center</h2></div>
 
-<div class="pagehead">
-<h2>🤝 Partner Center</h2>
-</div>
+  <div class="grid">
+    <div class="card"><div class="muted">Partner Products</div><div class="stat" id="partnerProducts">0</div></div>
+    <div class="card"><div class="muted">Sales</div><div class="stat" id="partnerSales">Rp 0</div></div>
+    <div class="card"><div class="muted">Commission 15%</div><div class="stat" id="partnerCommission">Rp 0</div></div>
+    <div class="card"><div class="muted">Net Partner</div><div class="stat" id="partnerNet">Rp 0</div></div>
+  </div>
 
-<div class="grid">
+  <div class="section"><h2>Add Partner Product</h2></div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field"><label>Product Name</label><input id="partnerName" value="New Experience"></div>
+      <div class="field"><label>Category</label>
+        <select id="partnerCategory">
+          <option>Hotel</option><option>Restaurant</option><option>Activity</option>
+          <option>Attraction</option><option>Boat</option><option>Transport</option>
+        </select>
+      </div>
+      <div class="field"><label>Price</label><input id="partnerPrice" type="number" value="500000"></div>
+    </div>
+    <button class="btn green" style="margin-top:16px" onclick="addPartnerProduct()">Add Product</button>
+  </div>
 
-<div class="card">
-<div class="muted">Products</div>
-<div class="stat" id="pp">0</div>
-</div>
-
-<div class="card">
-<div class="muted">Gross Sales</div>
-<div class="stat" id="ps">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Commission</div>
-<div class="stat" id="pc">Rp0</div>
-</div>
-
-<div class="card">
-<div class="muted">Partner Net</div>
-<div class="stat" id="pn">Rp0</div>
-</div>
-
-</div>
-
-<div class="grid2 section">
-
-<div class="card">
-
-<h3>Add Partner Product</h3>
-
-<div class="form">
-
-<input id="pName"
-placeholder="Bali Villa Experience">
-
-<select id="pCat">
-<option>Hotel</option>
-<option>Restaurant</option>
-<option>Transport</option>
-<option>Activity</option>
-<option>Boat</option>
-<option>Rental</option>
-<option>Agency</option>
-</select>
-
-<input id="pPrice"
-type="number"
-placeholder="Price">
-
-<input id="pLoc"
-value="Bali">
-
-<input id="pSlots"
-type="number"
-value="10">
-
-<button class="btn green"
-onclick="addPartner()">
-Add Product
-</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Inventory</h3>
-
-<div id="partnerProducts"></div>
-
-</div>
-
-</div>
-
-<div class="section card">
-
-<h3>📅 Availability</h3>
-
-<div class="toolbar">
-
-<select id="avProduct"></select>
-
-<input id="avDate" type="date">
-
-<input id="avSlots" type="number" value="10">
-
-<button class="btn"
-onclick="saveAvailability()">
-Save
-</button>
-
-</div>
-
-<div id="calendar"></div>
-
-</div>
-
-<div class="card section">
-
-<h3>🤖 AI Partner Assistant</h3>
-
-<div class="actions">
-
-<button class="btn small"
-onclick="partnerAI('pricing')">
-Pricing
-</button>
-
-<button class="btn small"
-onclick="partnerAI('sales')">
-Sales
-</button>
-
-<button class="btn small"
-onclick="partnerAI('bundle')">
-Bundle
-</button>
-
-</div>
-
-<div id="partnerAIBox"></div>
-
-</div>
-
+  <div id="partnerList" style="margin-top:18px"></div>
 </section>
 
+<!-- API CENTER -->
+<section id="api" class="page">
+  <div class="section-title"><h2>🔌 V49 API Integration Center</h2></div>
+
+  <div class="hero">
+    <h1>API Gateway Ready</h1>
+    <p>
+      V49 sudah mempunyai service layer untuk menghubungkan frontend
+      HobbiGo ke backend/API eksternal.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="muted">API Gateway</div>
+      <div class="stat" style="color:#10b981">READY</div>
+    </div>
+    <div class="card">
+      <div class="muted">Authentication</div>
+      <div class="stat">DEMO</div>
+    </div>
+    <div class="card">
+      <div class="muted">Payment API</div>
+      <div class="stat">SANDBOX</div>
+    </div>
+    <div class="card">
+      <div class="muted">Travel API</div>
+      <div class="stat">READY</div>
+    </div>
+  </div>
+
+  <div class="section"><h2>API Configuration</h2></div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field">
+        <label>API Base URL</label>
+        <input id="apiBase" value="https://api.example.com">
+      </div>
+      <div class="field">
+        <label>API Version</label>
+        <input id="apiVersion" value="v1">
+      </div>
+      <div class="field">
+        <label>Environment</label>
+        <select id="apiEnvironment">
+          <option>Development</option>
+          <option>Staging</option>
+          <option>Production</option>
+        </select>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn" onclick="saveApiConfig()">Save Configuration</button>
+      <button class="btn green" onclick="testApiConnection()">Test Connection</button>
+    </div>
+  </div>
+
+  <div class="section"><h2>Supported API Endpoints</h2></div>
+  <div class="card" id="endpointList"></div>
+
+  <div class="section"><h2>Example Request</h2></div>
+  <pre id="apiExample"></pre>
+</section>
+
+<!-- DATABASE -->
+<section id="database" class="page">
+  <div class="section-title"><h2>🗄️ Database Architecture</h2></div>
+
+  <div class="hero">
+    <h1>HobbiGo Data Architecture</h1>
+    <p>
+      Struktur data V49 dibuat agar mudah dipindahkan dari localStorage
+      ke database cloud/backend nyata.
+    </p>
+  </div>
+
+  <div id="databaseTables" class="grid2"></div>
+</section>
 
 <!-- PROFILE -->
-
 <section id="profile" class="page">
+  <div class="section-title"><h2>👤 Profile & Account</h2></div>
 
-<div class="pagehead">
-<h2>👤 Profile & Account</h2>
-</div>
+  <div class="card">
+    <div class="form-grid">
+      <div class="field"><label>Name</label><input id="profileName" value="HobbiGo User"></div>
+      <div class="field"><label>Email</label><input id="profileEmail" value="user@hobbigo.demo"></div>
+      <div class="field"><label>Role</label>
+        <select id="profileRole">
+          <option>User</option><option>Partner</option><option>Admin</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" style="margin-top:16px" onclick="saveProfile()">Save Profile</button>
+  </div>
 
-<div class="grid2">
-
-<div class="card">
-
-<h3>Traveler Profile</h3>
-
-<div class="form">
-
-<label>Name</label>
-<input id="name">
-
-<label>Email</label>
-<input id="email">
-
-<label>Phone</label>
-<input id="phone">
-
-<label>Main Interest</label>
-
-<select id="interest">
-<option>Nature</option>
-<option>Food</option>
-<option>Culture</option>
-<option>Adventure</option>
-<option>Relaxation</option>
-<option>Business</option>
-</select>
-
-<button class="btn"
-onclick="saveProfile()">
-Save Profile
-</button>
-
-<button class="btn light"
-onclick="travelers()">
-Manage Travelers
-</button>
-
-<button class="btn light"
-onclick="dashboard()">
-User Dashboard
-</button>
-
-<button class="btn red"
-onclick="logout()">
-Logout
-</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>🔔 Notifications</h3>
-
-<div id="notifications"></div>
-
-</div>
-
-</div>
-
+  <div class="section"><h2>System Information</h2></div>
+  <div class="card">
+    <p><b>Application:</b> HobbiGo</p>
+    <p><b>Version:</b> V49</p>
+    <p><b>Architecture:</b> Frontend + API Service Layer</p>
+    <p><b>Storage:</b> Browser localStorage / Demo</p>
+    <p><b>Payment:</b> Demo / Sandbox</p>
+  </div>
 </section>
 
-
 </main>
-
-
-<div class="bottom">
-
-<button onclick="page('home')">
-<strong>🏠</strong>
-Home
-</button>
-
-<button onclick="page('ai')">
-<strong>🤖</strong>
-AI
-</button>
-
-<button onclick="page('market')">
-<strong>🌎</strong>
-Market
-</button>
-
-<button onclick="page('trip')">
-<strong>🧳</strong>
-Trip
-</button>
-
-<button onclick="page('profile')">
-<strong>☰</strong>
-More
-</button>
-
 </div>
 
-
-<div class="modal" id="modal">
-
-<div class="modalbox">
-
-<div class="modalhead">
-
-<h2 id="modalTitle">HobbiGo</h2>
-
-<button class="close"
-onclick="closeModal()">
-✕
-</button>
-
+<div class="mobile-nav">
+  <button class="active" onclick="showPage('home',this)">🏠<br>Home</button>
+  <button onclick="showPage('ai',this)">🤖<br>AI</button>
+  <button onclick="showPage('market',this)">🛍️<br>Market</button>
+  <button onclick="showPage('trip',this)">🗺️<br>Trip</button>
+  <button onclick="showPage('operations',this)">⚙️<br>More</button>
 </div>
 
-<div id="modalBody"></div>
+<div id="toast" class="toast"></div>
 
+<div id="modalBg" class="modal-bg">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Details</h2>
+      <button class="close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
 </div>
-
-</div>
-
-
-<div class="toast" id="toast"></div>
-
 
 <script>
 
-/* =====================================================
-   HOBBIGO V48
-   BACKEND-READY DATA ARCHITECTURE
-   ===================================================== */
+/* =========================================================
+   HOBBIGO V49
+   REAL API INTEGRATION READY
+   Demo / Sandbox Architecture
+========================================================= */
 
-const PRODUCTS=[
-
-[1,"Bali Paradise Hotel","Hotel",850000,"🏨",4.8,"Bali"],
-[2,"Ubud Nature Resort","Hotel",1200000,"🌴",4.9,"Bali"],
-[3,"Jakarta City Hotel","Hotel",700000,"🏙️",4.6,"Jakarta"],
-[4,"Local Bali Kitchen","Restaurant",180000,"🍜",4.8,"Bali"],
-[5,"Sunset Seafood","Restaurant",250000,"🦐",4.7,"Bali"],
-[6,"Nusantara Taste","Restaurant",150000,"🍛",4.6,"Yogyakarta"],
-[7,"Bali Attraction Pass","Ticket",450000,"🎟️",4.8,"Bali"],
-[8,"Water Park Ticket","Ticket",300000,"🎢",4.5,"Bali"],
-[9,"Museum Culture Pass","Ticket",200000,"🏛️",4.6,"Yogyakarta"],
-[10,"Private Car + Driver","Transport",650000,"🚙",4.9,"Bali"],
-[11,"Airport Transfer","Transport",250000,"🚐",4.7,"Bali"],
-[12,"Scooter Rental","Rental",120000,"🛵",4.5,"Bali"],
-[13,"Tegallalang Experience","Activity",300000,"🌾",4.9,"Bali"],
-[14,"Sunset Beach Experience","Activity",300000,"🌅",4.8,"Bali"],
-[15,"Borobudur Experience","Activity",500000,"🛕",4.9,"Yogyakarta"],
-[16,"Surfing Lesson","Activity",350000,"🏄",4.7,"Bali"],
-[17,"Snorkeling Trip","Activity",550000,"🤿",4.8,"Lombok"],
-[18,"Balinese Cooking Class","Activity",400000,"👨‍🍳",4.9,"Bali"],
-[19,"Komodo Boat Day Trip","Boat",1500000,"⛵",4.9,"Labuan Bajo"],
-[20,"Private Yacht Experience","Boat",3500000,"🛥️",5,"Bali"],
-[21,"Island Hopping Boat","Boat",900000,"🚤",4.8,"Lombok"],
-[22,"Private Villa","Rental",1800000,"🏡",4.9,"Bali"],
-[23,"Meeting Point Rental","Rental",2500000,"🏢",4.6,"Bali"],
-[24,"Bali Travel Agency","Agency",500000,"🧭",4.7,"Bali"]
-
-];
-
-const DESTINATIONS=[
-["Bali",98,"🏝️"],
-["Yogyakarta",95,"🛕"],
-["Lombok",93,"🌊"],
-["Labuan Bajo",92,"⛵"],
-["Bandung",89,"🌿"],
-["Jakarta",86,"🏙️"]
-];
-
-const KEY={
-
-cart:"hobbigo_cart_v48",
-trip:"hobbigo_trip_v48",
-bookings:"hobbigo_bookings_v48",
-favorites:"hobbigo_favorites_v48",
-profile:"hobbigo_profile_v48",
-users:"hobbigo_users_v48",
-session:"hobbigo_session_v48",
-payments:"hobbigo_payments_v48",
-vouchers:"hobbigo_vouchers_v48",
-notifications:"hobbigo_notifications_v48",
-partner:"hobbigo_partner_products_v48",
-transactions:"hobbigo_partner_transactions_v48",
-corporate:"hobbigo_corporate_events_v48",
-reviews:"hobbigo_reviews_v48",
-availability:"hobbigo_availability_v48",
-travelers:"hobbigo_travelers_v48",
-logs:"hobbigo_activity_log_v48"
-
+const STORAGE = {
+  cart:"hobbigo_cart",
+  trip:"hobbigo_trip",
+  bookings:"hobbigo_bookings",
+  favorites:"hobbigo_favorites",
+  profile:"hobbigo_profile",
+  users:"hobbigo_users",
+  session:"hobbigo_session",
+  payments:"hobbigo_payments",
+  vouchers:"hobbigo_vouchers",
+  notifications:"hobbigo_notifications",
+  activity:"hobbigo_activity_log",
+  partnerProducts:"hobbigo_partner_products",
+  corporate:"hobbigo_corporate_events",
+  reviews:"hobbigo_reviews",
+  availability:"hobbigo_availability",
+  travelers:"hobbigo_travelers",
+  apiConfig:"hobbigo_api_config"
 };
 
-function load(k,d=[]){
+const products = [
+ {id:1,name:"Bali Paradise Hotel",cat:"Hotel",price:850000,icon:"🏨",rating:4.8},
+ {id:2,name:"Ubud Nature Resort",cat:"Hotel",price:1200000,icon:"🌿",rating:4.9},
+ {id:3,name:"Jakarta City Hotel",cat:"Hotel",price:700000,icon:"🏙️",rating:4.5},
+ {id:4,name:"Local Bali Kitchen",cat:"Restaurant",price:180000,icon:"🍜",rating:4.8},
+ {id:5,name:"Sunset Seafood",cat:"Restaurant",price:250000,icon:"🦐",rating:4.7},
+ {id:6,name:"Nusantara Taste",cat:"Restaurant",price:150000,icon:"🍛",rating:4.6},
+ {id:7,name:"Bali Attraction Pass",cat:"Ticket",price:450000,icon:"🎟️",rating:4.8},
+ {id:8,name:"Water Park Ticket",cat:"Ticket",price:300000,icon:"🎢",rating:4.5},
+ {id:9,name:"Museum Culture Pass",cat:"Attraction",price:200000,icon:"🏛️",rating:4.6},
+ {id:10,name:"Private Car + Driver",cat:"Transport",price:650000,icon:"🚙",rating:4.9},
+ {id:11,name:"Airport Transfer",cat:"Transport",price:250000,icon:"🚐",rating:4.8},
+ {id:12,name:"Scooter Rental",cat:"Rental",price:120000,icon:"🛵",rating:4.5},
+ {id:13,name:"Tegallalang Experience",cat:"Activity",price:300000,icon:"🌾",rating:4.8},
+ {id:14,name:"Sunset Beach Experience",cat:"Activity",price:300000,icon:"🌅",rating:4.9},
+ {id:15,name:"Borobudur Experience",cat:"Attraction",price:500000,icon:"🛕",rating:4.9},
+ {id:16,name:"Surfing Lesson",cat:"Activity",price:350000,icon:"🏄",rating:4.8},
+ {id:17,name:"Snorkeling Trip",cat:"Activity",price:550000,icon:"🤿",rating:4.8},
+ {id:18,name:"Balinese Cooking Class",cat:"Activity",price:400000,icon:"👨‍🍳",rating:4.9},
+ {id:19,name:"Komodo Boat Day Trip",cat:"Boat",price:1500000,icon:"⛵",rating:4.9},
+ {id:20,name:"Private Yacht Experience",cat:"Boat",price:3500000,icon:"🛥️",rating:5},
+ {id:21,name:"Island Hopping Boat",cat:"Boat",price:900000,icon:"🚤",rating:4.8},
+ {id:22,name:"Private Villa",cat:"Villa",price:1800000,icon:"🏡",rating:4.9},
+ {id:23,name:"Meeting Point Rental",cat:"Rental",price:2500000,icon:"🏢",rating:4.6},
+ {id:24,name:"Bali Travel Agency",cat:"Agency",price:500000,icon:"🧳",rating:4.7}
+];
 
-try{
+const destinations = [
+ {name:"Bali",score:98},
+ {name:"Yogyakarta",score:95},
+ {name:"Lombok",score:93},
+ {name:"Labuan Bajo",score:92},
+ {name:"Bandung",score:89},
+ {name:"Jakarta",score:86}
+];
 
-let x=localStorage.getItem(k);
+const endpoints = [
+ ["GET","/api/v1/destinations","Destination intelligence"],
+ ["GET","/api/v1/products","Marketplace products"],
+ ["GET","/api/v1/products/:id","Product detail"],
+ ["POST","/api/v1/auth/login","User authentication"],
+ ["POST","/api/v1/auth/register","Create user"],
+ ["GET","/api/v1/users/me","Current user"],
+ ["GET","/api/v1/travelers","Traveler management"],
+ ["POST","/api/v1/trips","Create AI trip"],
+ ["GET","/api/v1/trips/:id","Trip detail"],
+ ["POST","/api/v1/cart","Add cart item"],
+ ["GET","/api/v1/cart","Get cart"],
+ ["POST","/api/v1/bookings","Create booking"],
+ ["GET","/api/v1/bookings","Booking history"],
+ ["POST","/api/v1/payments","Payment request"],
+ ["GET","/api/v1/payments/:id","Payment status"],
+ ["POST","/api/v1/reviews","Create review"],
+ ["GET","/api/v1/partners","Partner list"],
+ ["POST","/api/v1/partners/products","Partner product"],
+ ["GET","/api/v1/availability","Availability"],
+ ["POST","/api/v1/corporate/events","Corporate event"],
+ ["GET","/api/v1/notifications","Notifications"],
+ ["GET","/api/v1/analytics","Analytics"]
+];
 
-return x?JSON.parse(x):d
+const databaseTables = {
+ users:["id","name","email","role","status","created_at"],
+ profiles:["id","user_id","phone","country","preferences"],
+ travelers:["id","user_id","name","dob","passport"],
+ partners:["id","user_id","business_name","category","commission"],
+ products:["id","partner_id","name","category","price","status"],
+ availability:["id","product_id","date","slots","status"],
+ trips:["id","user_id","destination","date","travelers","status"],
+ itineraries:["id","trip_id","day","time","activity","cost"],
+ carts:["id","user_id","product_id","qty"],
+ bookings:["id","user_id","trip_id","total","status","created_at"],
+ payments:["id","booking_id","amount","method","status"],
+ reviews:["id","user_id","product_id","rating","comment"],
+ vouchers:["id","code","type","value","limit"],
+ corporate_events:["id","company","destination","participants","budget"],
+ notifications:["id","user_id","title","message","read"],
+ audit_logs:["id","user_id","action","timestamp"]
+};
 
-}catch(e){
+/* =========================
+   HELPERS
+========================= */
 
-return d
-
+function load(key, fallback=[]){
+  try{
+    const v=localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  }catch(e){return fallback}
 }
 
-}
-
-function save(k,v){
-
-localStorage.setItem(k,JSON.stringify(v))
-
+function save(key,value){
+  localStorage.setItem(key,JSON.stringify(value));
 }
 
 function rupiah(n){
-
-return "Rp"+Number(n||0).toLocaleString("id-ID")
-
+  return "Rp "+Number(n||0).toLocaleString("id-ID");
 }
 
-function toast(t){
-
-let x=document.getElementById("toast");
-
-x.textContent=t;
-x.classList.add("show");
-
-setTimeout(
-()=>x.classList.remove("show"),
-2200
-)
-
+function uid(prefix){
+  return prefix+"-"+Math.floor(100000+Math.random()*900000);
 }
 
-function log(action,entity=""){
-
-let a=load(KEY.logs,[]);
-
-a.unshift({
-
-id:Date.now(),
-action,
-entity,
-time:new Date().toLocaleString("id-ID")
-
-});
-
-save(KEY.logs,a.slice(0,100))
-
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2500);
 }
 
-function openModal(title,html){
+function logAction(action){
+  const logs=load(STORAGE.activity,[]);
+  logs.unshift({
+    id:uid("LOG"),
+    action,
+    timestamp:new Date().toLocaleString("id-ID")
+  });
+  save(STORAGE.activity,logs.slice(0,100));
+}
 
-modalTitle.textContent=title;
-modalBody.innerHTML=html;
-modal.classList.add("show")
-
+function openModal(title,body){
+  document.getElementById("modalTitle").textContent=title;
+  document.getElementById("modalBody").innerHTML=body;
+  document.getElementById("modalBg").classList.add("show");
 }
 
 function closeModal(){
-
-modal.classList.remove("show")
-
+  document.getElementById("modalBg").classList.remove("show");
 }
 
+/* =========================
+   NAVIGATION
+========================= */
 
-function page(id){
+function showPage(id,btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const page=document.getElementById(id);
+  if(page) page.classList.add("active");
 
-document.querySelectorAll(".page")
-.forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+  if(btn && btn.classList.contains("nav")) btn.classList.add("active");
 
-document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".mobile-nav button").forEach(n=>n.classList.remove("active"));
 
-if(id==="home")home();
-if(id==="ai")ai();
-if(id==="market")market();
-if(id==="cart")cart();
-if(id==="trip")trip();
-if(id==="booking")bookings();
-if(id==="corporate")corporate();
-if(id==="operations")operations();
-if(id==="crm")crm();
-if(id==="analytics")analytics();
-if(id==="backend")backend();
-if(id==="partner")partner();
-if(id==="profile")profile();
-
-scrollTo(0,0)
-
+  renderAll();
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+/* =========================
+   API SERVICE LAYER
+========================= */
 
-/* HOME */
+const API = {
 
-function home(){
+  async request(method,endpoint,payload=null){
 
-let b=load(KEY.bookings,[]);
-let c=load(KEY.cart,[]);
-let f=load(KEY.favorites,[]);
+    const config=load(STORAGE.apiConfig,{
+      baseUrl:"https://api.example.com",
+      version:"v1",
+      environment:"Development"
+    });
 
-s1.textContent=b.length;
-s2.textContent=c.length;
-s3.textContent=f.length;
+    console.log("HobbiGo API Demo:",{
+      method,
+      endpoint,
+      payload,
+      baseUrl:config.baseUrl
+    });
 
-destinations.innerHTML=
-DESTINATIONS.map(d=>`
+    await new Promise(resolve=>setTimeout(resolve,350));
 
-<div class="card">
+    return {
+      success:true,
+      demo:true,
+      status:200,
+      endpoint,
+      method,
+      data:payload || {},
+      message:"Demo API response"
+    };
+  },
 
-<div class="destinationIcon">
-${d[2]}
-</div>
+  get(endpoint){
+    return this.request("GET",endpoint);
+  },
 
-<h3>${d[0]}</h3>
+  post(endpoint,payload){
+    return this.request("POST",endpoint,payload);
+  },
 
-<p class="muted">
-AI Match Score
-</p>
+  put(endpoint,payload){
+    return this.request("PUT",endpoint,payload);
+  },
 
-<div class="progress">
-<div style="width:${d[1]}%"></div>
-</div>
-
-<p>
-<b>${d[1]}%</b> match
-</p>
-
-<button class="btn small"
-onclick="destination('${d[0]}')">
-Plan Journey
-</button>
-
-</div>
-
-`).join("");
-
-updateCart()
-
-}
-
-
-function destination(x){
-
-page("ai");
-
-jDest.value=x;
-
-toast(x+" selected")
-
-}
-
-
-/* AI */
-
-function ai(){
-
-if(!chat.children.length){
-
-chat.innerHTML=`
-
-<div class="msg ai">
-
-Halo 👋 Saya HobbiGo AI.
-
-Saya siap membantu destination,
-hotel, budget, route dan itinerary.
-
-</div>
-
-`
-
-}
-
-}
-
-
-function quickAI(x){
-
-let r={
-
-destination:
-"Bali sangat cocok untuk nature, food dan relaxation.",
-
-hotel:
-"Ubud Nature Resort cocok untuk gaya Comfort.",
-
-budget:
-"Smart Budget: Hotel 30%, Food 18%, Transport 17%, Activities 20%, Reserve 15%.",
-
-route:
-"Smart Route: Arrival → Hotel → Food → Activity → Experience → Departure."
-
+  delete(endpoint){
+    return this.request("DELETE",endpoint);
+  }
 };
 
-chat.innerHTML+=`
+/* =========================
+   MARKETPLACE
+========================= */
 
-<div class="msg user">
-${r[x]}
-</div>
+function renderMarket(){
 
-<div class="msg ai">
-${r[x]}
-</div>
+  const search=(document.getElementById("marketSearch")?.value||"").toLowerCase();
+  const cat=document.getElementById("marketCategory")?.value||"";
+  const sort=document.getElementById("marketSort")?.value||"default";
 
-`;
+  let list=products.filter(p=>
+    p.name.toLowerCase().includes(search) &&
+    (!cat || p.cat===cat)
+  );
 
-chat.scrollTop=chat.scrollHeight
+  if(sort==="low") list.sort((a,b)=>a.price-b.price);
+  if(sort==="high") list.sort((a,b)=>b.price-a.price);
 
+  const html=list.map(p=>`
+    <div class="card">
+      <div class="product-img">${p.icon}</div>
+      <h3>${p.name}</h3>
+      <div class="tags"><span class="tag">${p.cat}</span></div>
+      <div class="rating">★ ${p.rating}</div>
+      <div class="price">${rupiah(p.price)}</div>
+      <div class="product-actions">
+        <button class="btn gray" onclick="productDetail(${p.id})">Detail</button>
+        <button class="btn" onclick="addCart(${p.id})">Add Cart</button>
+      </div>
+    </div>
+  `).join("");
+
+  document.getElementById("marketGrid").innerHTML=
+    html || `<div class="card empty">Produk tidak ditemukan.</div>`;
 }
-
-
-function sendAI(){
-
-let q=chatInput.value.trim();
-
-if(!q)return;
-
-chat.innerHTML+=`
-<div class="msg user">${q}</div>
-`;
-
-chatInput.value="";
-
-setTimeout(()=>{
-
-chat.innerHTML+=`
-
-<div class="msg ai">
-
-AI V48 menerima permintaan Anda.
-
-Architecture sudah siap untuk
-AI API production pada tahap API integration.
-
-</div>
-
-`;
-
-chat.scrollTop=chat.scrollHeight
-
-},250)
-
-}
-
-
-function generate(){
-
-let t={
-
-id:"TRIP-"+Date.now(),
-
-type:jType.value,
-
-from:jFrom.value,
-
-destination:jDest.value,
-
-people:Number(jPeople.value)||1,
-
-days:Number(jDays.value)||1,
-
-style:jStyle.value,
-
-budget:Number(jBudget.value)||0,
-
-interest:jInterest.value,
-
-total:Number(jBudget.value)||0,
-
-optimized:false,
-
-created:new Date().toISOString()
-
-};
-
-save(KEY.trip,t);
-
-log("AI Trip Created",t.id);
-
-renderAIResult(t);
-
-toast("Smart Trip created")
-
-}
-
-
-function renderAIResult(t){
-
-aiResult.innerHTML=`
-
-<div class="card">
-
-<div class="pagehead">
-
-<h2>
-✨ ${t.destination} Smart Journey
-</h2>
-
-<span class="badge green">
-AI GENERATED
-</span>
-
-</div>
-
-<div class="grid">
-
-<div>
-<div class="muted">Travelers</div>
-<h3>${t.people}</h3>
-</div>
-
-<div>
-<div class="muted">Duration</div>
-<h3>${t.days} Days</h3>
-</div>
-
-<div>
-<div class="muted">Style</div>
-<h3>${t.style}</h3>
-</div>
-
-<div>
-<div class="muted">Budget</div>
-<h3>${rupiah(t.total)}</h3>
-</div>
-
-</div>
-
-<h3>Smart Budget</h3>
-
-${budget("Hotel",30,t.total)}
-${budget("Food",18,t.total)}
-${budget("Transport",17,t.total)}
-${budget("Activities",20,t.total)}
-${budget("Reserve",15,t.total)}
-
-<h3>Smart Route</h3>
-
-<div class="route">
-
-${["Arrival","Hotel","Food","Activity","Experience","Departure"]
-.map((x,i)=>`
-
-<div class="stop">
-
-<b>Stop ${i+1}</b>
-
-<h3>${x}</h3>
-
-<p class="muted">
-${t.destination}
-</p>
-
-</div>
-
-`).join("")}
-
-</div>
-
-<h3>AI Itinerary</h3>
-
-<div class="timeline">
-
-${Array.from(
-{length:Math.min(t.days,7)},
-(_,i)=>`
-
-<div class="event">
-
-<b>Day ${i+1}</b>
-
-<p>
-Explore ${t.destination}
-with focus on ${t.interest}.
-</p>
-
-</div>
-
-`).join("")}
-
-</div>
-
-<button class="btn"
-onclick="page('trip')">
-Open My Trip
-</button>
-
-<button class="btn light"
-onclick="optimize()">
-AI Re-optimize
-</button>
-
-<button class="btn green"
-onclick="page('market')">
-Add Experience
-</button>
-
-</div>
-
-`
-
-}
-
-
-function budget(name,p,total){
-
-return`
-
-<div style="margin:9px 0">
-
-<div style="
-display:flex;
-justify-content:space-between">
-
-<span>${name}</span>
-
-<b>${rupiah(total*p/100)}</b>
-
-</div>
-
-<div class="progress">
-
-<div style="width:${p}%"></div>
-
-</div>
-
-</div>
-
-`
-
-}
-
-
-function optimize(){
-
-let t=load(KEY.trip,null);
-
-if(!t)
-return toast("Generate trip dahulu");
-
-t.total=Math.round(t.total*.94);
-t.optimized=true;
-
-save(KEY.trip,t);
-
-renderAIResult(t);
-
-toast("AI optimized -6%")
-
-}
-
-
-/* MARKETPLACE */
-
-function market(){
-
-let q=(search.value||"").toLowerCase();
-let cat=category.value;
-let so=sort.value;
-
-let f=load(KEY.favorites,[]);
-
-let d=PRODUCTS.filter(p=>
-
-(!q||(p[1]+" "+p[2]+" "+p[6])
-.toLowerCase()
-.includes(q))
-
-&&
-
-(!cat||p[2]===cat)
-
-);
-
-if(so==="low")
-d.sort((a,b)=>a[3]-b[3]);
-
-if(so==="high")
-d.sort((a,b)=>b[3]-a[3]);
-
-if(so==="rating")
-d.sort((a,b)=>b[5]-a[5]);
-
-products.innerHTML=d.map(p=>`
-
-<div class="card product">
-
-<button class="fav"
-onclick="favorite(${p[0]})">
-
-${f.includes(p[0])?"❤️":"♡"}
-
-</button>
-
-<div class="productIcon">
-${p[4]}
-</div>
-
-<span class="badge">
-${p[2]}
-</span>
-
-<h3>${p[1]}</h3>
-
-<p class="muted">
-📍 ${p[6]} · ⭐ ${p[5]}
-</p>
-
-<div class="price">
-${rupiah(p[3])}
-</div>
-
-<div class="actions">
-
-<button class="btn small light"
-onclick="productDetail(${p[0]})">
-Detail
-</button>
-
-<button class="btn small"
-onclick="addCart(${p[0]})">
-Add Cart
-</button>
-
-</div>
-
-</div>
-
-`).join("")||`
-
-<div class="card empty">
-Product tidak ditemukan.
-</div>
-
-`;
-
-updateCart()
-
-}
-
-
-function favorite(id){
-
-let a=load(KEY.favorites,[]);
-
-a=a.includes(id)
-?a.filter(x=>x!==id)
-:[...a,id];
-
-save(KEY.favorites,a);
-
-market();
-home()
-
-}
-
 
 function productDetail(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
 
-let p=PRODUCTS.find(x=>x[0]===id);
-
-openModal(p[1],`
-
-<div class="productIcon">
-${p[4]}
-</div>
-
-<span class="badge">
-${p[2]}
-</span>
-
-<h2>${p[1]}</h2>
-
-<p>
-📍 ${p[6]} · ⭐ ${p[5]}
-</p>
-
-<h2 class="price">
-${rupiah(p[3])}
-</h2>
-
-<p class="muted">
-Marketplace product demo V48.
-</p>
-
-<button class="btn"
-onclick="addCart(${p[0]});closeModal()">
-Add to Cart
-</button>
-
-<button class="btn light"
-onclick="reviewProduct(${p[0]})">
-Write Review
-</button>
-
-`)
-
+  openModal(p.name,`
+    <div class="product-img">${p.icon}</div>
+    <h3>${p.name}</h3>
+    <p class="muted">${p.cat}</p>
+    <p class="rating" style="margin-top:8px">★ ${p.rating}</p>
+    <h2 style="margin-top:10px;color:#635bff">${rupiah(p.price)}</h2>
+    <p style="margin-top:12px">
+      Demo marketplace product. Pada production,
+      data ini dapat berasal dari API partner.
+    </p>
+    <button class="btn" style="margin-top:18px;width:100%" onclick="addCart(${p.id});closeModal()">
+      Add to Cart
+    </button>
+  `);
 }
 
+async function addCart(id){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
 
-function reviewProduct(id){
+  let cart=load(STORAGE.cart,[]);
+  cart.push({
+    ...p,
+    cartId:uid("CART"),
+    qty:1
+  });
 
-openModal("⭐ Product Review",`
+  save(STORAGE.cart,cart);
+  logAction("Add cart: "+p.name);
+  updateCartCount();
+  toast("✓ "+p.name+" masuk Cart");
 
-<div class="form">
-
-<select id="reviewRating">
-
-<option>5</option>
-<option>4</option>
-<option>3</option>
-<option>2</option>
-<option>1</option>
-
-</select>
-
-<input id="reviewName"
-value="Traveler">
-
-<textarea id="reviewText"
-placeholder="Your review"></textarea>
-
-<button class="btn green"
-onclick="saveReview(${id})">
-Save Review
-</button>
-
-</div>
-
-`)
-
+  await API.post("/api/v1/cart",{product_id:id});
 }
 
-
-function saveReview(id){
-
-let a=load(KEY.reviews,[]);
-
-a.unshift({
-
-id:Date.now(),
-productId:id,
-name:reviewName.value,
-rating:Number(reviewRating.value),
-review:reviewText.value,
-createdAt:new Date().toISOString()
-
-});
-
-save(KEY.reviews,a);
-
-closeModal();
-
-toast("Review saved")
-
+function updateCartCount(){
+  const cart=load(STORAGE.cart,[]);
+  const count=cart.reduce((s,x)=>s+(x.qty||1),0);
+  document.getElementById("cartCount").textContent=count;
+  document.getElementById("statCart").textContent=count;
 }
 
+/* =========================
+   CART / PAYMENT
+========================= */
 
-/* CART */
+function renderCart(){
 
-function addCart(id){
+  const cart=load(STORAGE.cart,[]);
 
-let p=PRODUCTS.find(x=>x[0]===id);
+  if(!cart.length){
+    document.getElementById("cartContent").innerHTML=
+      `<div class="card empty">🛒 Cart masih kosong.<br><br>
+       <button class="btn" onclick="showPage('market')">Explore Marketplace</button>
+       </div>`;
+    return;
+  }
 
-let a=load(KEY.cart,[]);
+  const subtotal=cart.reduce((s,x)=>s+x.price*(x.qty||1),0);
+  const service=Math.round(subtotal*.05);
+  const total=subtotal+service;
 
-a.push({
+  document.getElementById("cartContent").innerHTML=`
+    <div class="grid2">
+      <div class="card">
+        <h3>Selected Products</h3>
+        ${cart.map((x,i)=>`
+          <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+            <b>${x.icon} ${x.name}</b>
+            <div class="muted">${x.cat}</div>
+            <div style="display:flex;justify-content:space-between;margin-top:5px">
+              <span>${rupiah(x.price)}</span>
+              <button class="btn red" onclick="removeCart(${i})">Remove</button>
+            </div>
+          </div>
+        `).join("")}
+      </div>
 
-id:Date.now()+Math.random(),
-productId:id,
-name:p[1],
-category:p[2],
-price:p[3],
-icon:p[4],
-location:p[6]
+      <div class="card">
+        <h3>Payment Summary</h3>
+        <p style="margin-top:15px">Subtotal: <b>${rupiah(subtotal)}</b></p>
+        <p style="margin-top:8px">Service Fee 5%: <b>${rupiah(service)}</b></p>
+        <hr style="margin:15px 0;border:0;border-top:1px solid var(--border)">
+        <h2>${rupiah(total)}</h2>
 
-});
+        <div class="field" style="margin-top:15px">
+          <label>Payment Method</label>
+          <select id="paymentMethod">
+            <option>Bank Transfer</option>
+            <option>E-Wallet</option>
+            <option>Credit Card</option>
+            <option>Corporate Billing</option>
+          </select>
+        </div>
 
-save(KEY.cart,a);
-
-updateCart();
-
-toast(p[1]+" added to cart")
-
+        <button class="btn green" style="width:100%;margin-top:15px"
+          onclick="checkout()">
+          💳 Demo Payment
+        </button>
+      </div>
+    </div>
+  `;
 }
 
-
-function updateCart(){
-
-cartCount.textContent=
-load(KEY.cart,[]).length
-
+function removeCart(index){
+  const cart=load(STORAGE.cart,[]);
+  cart.splice(index,1);
+  save(STORAGE.cart,cart);
+  renderCart();
+  updateCartCount();
+  toast("Item dihapus");
 }
 
+async function checkout(){
 
-function removeCart(id){
+  const cart=load(STORAGE.cart,[]);
+  if(!cart.length)return;
 
-save(
-KEY.cart,
-load(KEY.cart,[]).filter(x=>x.id!=id)
-);
+  const subtotal=cart.reduce((s,x)=>s+x.price,0);
+  const service=Math.round(subtotal*.05);
+  const total=subtotal+service;
+  const method=document.getElementById("paymentMethod").value;
 
-cart()
+  const booking={
+    id:uid("HBG"),
+    paymentId:uid("PAY"),
+    date:new Date().toISOString(),
+    destination:"Bali",
+    travelers:2,
+    total,
+    method,
+    status:"Confirmed",
+    items:cart
+  };
 
+  let bookings=load(STORAGE.bookings,[]);
+  bookings.unshift(booking);
+  save(STORAGE.bookings,bookings);
+
+  save(STORAGE.cart,[]);
+
+  let payments=load(STORAGE.payments,[]);
+  payments.unshift({
+    id:booking.paymentId,
+    bookingId:booking.id,
+    amount:total,
+    method,
+    status:"Demo Paid",
+    date:new Date().toISOString()
+  });
+  save(STORAGE.payments,payments);
+
+  logAction("Booking created "+booking.id);
+
+  await API.post("/api/v1/bookings",booking);
+  await API.post("/api/v1/payments",{
+    booking_id:booking.id,
+    amount:total,
+    method
+  });
+
+  updateCartCount();
+
+  openModal("🎉 Booking Berhasil",`
+    <div class="card" style="box-shadow:none">
+      <h2>${booking.id}</h2>
+      <p style="margin-top:8px">Payment ID: ${booking.paymentId}</p>
+      <p style="margin-top:8px">Status: <span class="badge green">Confirmed Demo</span></p>
+      <h2 style="margin-top:15px;color:#635bff">${rupiah(total)}</h2>
+      <button class="btn" style="width:100%;margin-top:18px"
+        onclick="closeModal();showPage('booking')">
+        View E-Ticket
+      </button>
+    </div>
+  `);
 }
 
+/* =========================
+   AI TRIP
+========================= */
 
-function cart(){
+function generateTrip(){
 
-let a=load(KEY.cart,[]);
+  const destination=document.getElementById("aiDestination").value || "Bali";
+  const date=document.getElementById("aiDate").value || new Date().toISOString().slice(0,10);
+  const travelers=Number(document.getElementById("aiTravelers").value||2);
+  const duration=document.getElementById("aiDuration").value;
+  const style=document.getElementById("aiStyle").value;
+  const interest=document.getElementById("aiInterest").value;
+  const type=document.getElementById("aiType").value;
 
-if(!a.length){
+  const trip={
+    id:uid("TRIP"),
+    from:document.getElementById("aiFrom").value,
+    destination,
+    date,
+    travelers,
+    duration,
+    style,
+    interest,
+    type,
+    status:"Planning",
+    createdAt:new Date().toISOString()
+  };
 
-cartBox.innerHTML=`
+  save(STORAGE.trip,trip);
+  logAction("AI Trip generated: "+destination);
 
-<div class="card empty">
+  const base={
+    Economy:1800000,
+    Comfort:2800000,
+    Premium:4200000,
+    Exclusive:6500000
+  }[style] || 2800000;
 
-<h3>🛒 Cart kosong</h3>
+  const total=base*travelers;
 
-<button class="btn"
-onclick="page('market')">
-Explore Marketplace
-</button>
+  document.getElementById("aiResult").innerHTML=`
+    <div class="grid2">
+      <div class="card">
+        <h2>✨ AI Trip Result</h2>
+        <p style="margin-top:10px"><b>${destination}</b></p>
+        <p class="muted">${duration} • ${travelers} traveler(s)</p>
+        <div class="tags">
+          <span class="tag">${style}</span>
+          <span class="tag">${interest}</span>
+          <span class="tag">${type}</span>
+        </div>
+        <h2 style="color:#635bff;margin-top:12px">${rupiah(total)}</h2>
+      </div>
 
-</div>
+      <div class="card">
+        <h3>🤖 AI Recommendation</h3>
+        <div class="timeline" style="margin-top:14px">
+          <div class="timeline-item"><b>Day 1</b><br>Arrival → Hotel → Local Culinary</div>
+          <div class="timeline-item"><b>Day 2</b><br>Top Attraction → ${interest} Experience</div>
+          <div class="timeline-item"><b>Day 3</b><br>Free Time → Shopping → Departure</div>
+        </div>
+      </div>
+    </div>
 
-`;
+    <div class="card" style="margin-top:18px">
+      <h3>Smart Route</h3>
+      <p class="muted" style="margin-top:8px">
+        Airport → Hotel → Attraction → Restaurant → Activity → Airport
+      </p>
+      <div class="hero-actions">
+        <button class="btn" onclick="saveTrip()">Save Trip</button>
+        <button class="btn orange" onclick="reoptimize()">AI Re-optimize -6%</button>
+        <button class="btn green" onclick="bookGeneratedTrip()">Book Trip</button>
+      </div>
+    </div>
+  `;
 
-return
-
+  API.post("/api/v1/trips",trip);
+  toast("✓ AI Trip berhasil dibuat");
 }
 
-let sub=a.reduce(
-(s,x)=>s+x.price,0
-);
-
-let fee=Math.round(sub*.05);
-
-cartBox.innerHTML=`
-
-<div class="grid2">
-
-<div class="card">
-
-<h3>Selected Experiences</h3>
-
-${a.map(x=>`
-
-<div style="
-display:flex;
-gap:10px;
-padding:12px 0;
-border-bottom:1px solid #eee">
-
-<div style="font-size:32px">
-${x.icon}
-</div>
-
-<div style="flex:1">
-
-<b>${x.name}</b>
-
-<p class="muted">
-${x.category} · ${x.location}
-</p>
-
-<b>${rupiah(x.price)}</b>
-
-</div>
-
-<button class="btn small red"
-onclick="removeCart(${x.id})">
-×
-</button>
-
-</div>
-
-`).join("")}
-
-</div>
-
-<div class="card">
-
-<h3>Checkout</h3>
-
-<p>
-Subtotal
-<b style="float:right">
-${rupiah(sub)}
-</b>
-</p>
-
-<p>
-Service Fee
-<b style="float:right">
-${rupiah(fee)}
-</b>
-</p>
-
-<hr>
-
-<h2>
-Total
-<span style="float:right">
-${rupiah(sub+fee)}
-</span>
-</h2>
-
-<button class="btn green"
-style="width:100%"
-onclick="payment(${sub+fee})">
-Continue Payment
-</button>
-
-</div>
-
-</div>
-
-`
-
+function saveTrip(){
+  const trip=load(STORAGE.trip,null);
+  if(!trip)return toast("Generate trip dulu");
+  trip.status="Saved";
+  save(STORAGE.trip,trip);
+  toast("✓ Trip tersimpan");
 }
 
-
-function payment(total){
-
-openModal("💳 Payment Center",`
-
-<h2 class="price">
-${rupiah(total)}
-</h2>
-
-<div class="form">
-
-<label>Payment Method</label>
-
-<select id="paymentMethod">
-
-<option>Bank Transfer</option>
-<option>E-Wallet</option>
-<option>Card</option>
-<option>Corporate Billing</option>
-
-</select>
-
-<label>Account Holder</label>
-
-<input id="paymentName"
-value="Demo Traveler">
-
-<label>Email</label>
-
-<input id="paymentEmail"
-value="demo@hobbigo.com">
-
-<button class="btn green"
-onclick="confirmPayment(${total})">
-Confirm Demo Payment
-</button>
-
-</div>
-
-<p class="muted">
-Payment gateway production belum terhubung.
-</p>
-
-`)
-
+function reoptimize(){
+  toast("🤖 AI sedang mengoptimalkan route dan budget...");
+  setTimeout(()=>toast("✓ Optimasi selesai — estimasi hemat 6%"),1200);
 }
 
+function bookGeneratedTrip(){
 
-function confirmPayment(total){
+  const trip=load(STORAGE.trip,null);
+  if(!trip)return;
 
-let a=load(KEY.bookings,[]);
-let p=load(KEY.payments,[]);
-let c=load(KEY.cart,[]);
-let t=load(KEY.trip,null);
+  const booking={
+    id:uid("HBG"),
+    date:new Date().toISOString(),
+    destination:trip.destination,
+    travelers:trip.travelers,
+    total:2800000*trip.travelers,
+    status:"Confirmed",
+    source:"AI Trip"
+  };
 
-let bookingId=
-"HBG-"+Math.floor(100000+Math.random()*900000);
+  const bookings=load(STORAGE.bookings,[]);
+  bookings.unshift(booking);
+  save(STORAGE.bookings,bookings);
+  logAction("AI Trip booked "+booking.id);
 
-let paymentId=
-"PAY-"+Math.floor(100000+Math.random()*900000);
-
-a.unshift({
-
-id:bookingId,
-
-userId:
-load(KEY.session,{id:"demo"}).id,
-
-destination:t?.destination||"Marketplace",
-
-travelers:t?.people||1,
-
-package:t?.package||"Marketplace",
-
-items:c,
-
-total,
-
-status:"Confirmed",
-
-paymentStatus:"Paid",
-
-email:paymentEmail.value,
-
-createdAt:new Date().toISOString()
-
-});
-
-p.unshift({
-
-id:paymentId,
-
-bookingId,
-
-method:paymentMethod.value,
-
-amount:total,
-
-status:"Paid",
-
-createdAt:new Date().toISOString()
-
-});
-
-save(KEY.bookings,a);
-save(KEY.payments,p);
-save(KEY.cart,[]);
-
-log("Booking Created",bookingId);
-
-closeModal();
-
-updateCart();
-
-toast("Booking "+bookingId+" confirmed");
-
-page("booking")
-
+  toast("✓ Trip berhasil dibooking");
+  setTimeout(()=>showPage("booking"),600);
 }
 
-
-/* TRIP */
-
-function trip(){
-
-let t=load(KEY.trip,null);
-
-if(!t){
-
-tripBox.innerHTML=`
-
-<div class="card empty">
-
-<h3>Belum ada Smart Trip</h3>
-
-<button class="btn"
-onclick="page('ai')">
-Create AI Trip
-</button>
-
-</div>
-
-`;
-
-return
-
+function setDestination(name){
+  document.getElementById("aiDestination").value=name;
+  showPage("ai");
 }
 
-let packs=[
-["Economy",.72],
-["Comfort",1],
-["Premium",1.45],
-["Exclusive",1.9]
-];
-
-tripBox.innerHTML=`
-
-<div class="card">
-
-<div class="pagehead">
-
-<h2>${t.destination} Smart Trip</h2>
-
-<span class="badge green">
-${t.optimized?"AI OPTIMIZED":"READY"}
-</span>
-
-</div>
-
-<p>
-${t.people} travelers ·
-${t.days} days ·
-${t.interest}
-</p>
-
-<h2 class="price">
-${rupiah(t.total)}
-</h2>
-
-<button class="btn light"
-onclick="optimize()">
-AI Re-optimize
-</button>
-
-</div>
-
-
-<div class="section">
-
-<div class="grid">
-
-${packs.map(x=>`
-
-<div class="card">
-
-<span class="badge">
-${x[0]}
-</span>
-
-<h3>${x[0]}</h3>
-
-<div class="price">
-${rupiah(t.budget*x[1])}
-</div>
-
-<p class="muted">
-Smart ${x[0]} package.
-</p>
-
-<button class="btn small"
-onclick="selectPackage('${x[0]}',${x[1]})">
-Select
-</button>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="card">
-
-<h3>🗺️ Interactive Trip Map</h3>
-
-<div class="map">
-
-<div class="pin"
-style="left:10%;top:60%">
-1
-</div>
-
-<div class="pin"
-style="left:30%;top:30%">
-2
-</div>
-
-<div class="pin"
-style="left:50%;top:60%">
-3
-</div>
-
-<div class="pin"
-style="left:70%;top:28%">
-4
-</div>
-
-<div class="pin"
-style="left:88%;top:58%">
-5
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="route">
-
-${[
-"Arrival",
-"Hotel",
-"Food",
-"Activity",
-"Experience",
-"Departure"
-].map((x,i)=>`
-
-<div class="stop">
-
-<b>Stop ${i+1}</b>
-
-<h3>${x}</h3>
-
-<p class="muted">
-${t.destination}
-</p>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-
-
-<div class="section">
-
-<div class="card">
-
-<h3>AI Itinerary</h3>
-
-<div class="timeline">
-
-${Array.from(
-{length:Math.min(t.days,7)},
-(_,i)=>`
-
-<div class="event">
-
-<b>Day ${i+1}</b>
-
-<p>
-Explore ${t.destination}
-with ${t.interest}.
-</p>
-
-</div>
-
-`).join("")}
-
-</div>
-
-<button class="btn green"
-onclick="bookTrip()">
-Book This Trip
-</button>
-
-</div>
-
-</div>
-
-`
-
+/* =========================
+   MY TRIP
+========================= */
+
+function renderTrip(){
+
+  const trip=load(STORAGE.trip,null);
+
+  if(!trip){
+    document.getElementById("tripContent").innerHTML=
+      `<div class="card empty">Belum ada trip.<br><br>
+       <button class="btn" onclick="showPage('ai')">Create AI Trip</button>
+       </div>`;
+    return;
+  }
+
+  document.getElementById("tripContent").innerHTML=`
+    <div class="hero">
+      <h1>${trip.destination}</h1>
+      <p>${trip.duration} • ${trip.travelers} traveler(s) • ${trip.style}</p>
+    </div>
+
+    <div class="grid">
+      <div class="card"><div class="muted">Trip ID</div><div class="stat" style="font-size:18px">${trip.id}</div></div>
+      <div class="card"><div class="muted">Date</div><div class="stat" style="font-size:18px">${trip.date}</div></div>
+      <div class="card"><div class="muted">Interest</div><div class="stat" style="font-size:18px">${trip.interest}</div></div>
+      <div class="card"><div class="muted">Status</div><div class="stat" style="font-size:18px;color:#10b981">${trip.status}</div></div>
+    </div>
+
+    <div class="section"><h2>Smart Route & Itinerary</h2></div>
+    <div class="card">
+      <div class="timeline">
+        <div class="timeline-item"><b>08:00</b> Breakfast & preparation</div>
+        <div class="timeline-item"><b>10:00</b> Main attraction</div>
+        <div class="timeline-item"><b>13:00</b> Local culinary experience</div>
+        <div class="timeline-item"><b>15:00</b> ${trip.interest} activity</div>
+        <div class="timeline-item"><b>19:00</b> Sunset / dinner</div>
+      </div>
+    </div>
+
+    <div class="section"><h2>Package Options</h2></div>
+    <div class="grid">
+      ${[
+        ["Economy",72],
+        ["Comfort",100],
+        ["Premium",145],
+        ["Exclusive",190]
+      ].map(x=>`
+        <div class="card">
+          <h3>${x[0]}</h3>
+          <div class="stat">${x[1]}%</div>
+          <p class="muted">Package multiplier</p>
+          <button class="btn" style="margin-top:12px" onclick="selectPackage('${x[0]}')">Select</button>
+        </div>
+      `).join("")}
+    </div>
+  `;
 }
 
-
-function selectPackage(name,mult){
-
-let t=load(KEY.trip,null);
-
-if(!t)return;
-
-t.package=name;
-t.total=Math.round(t.budget*mult);
-
-save(KEY.trip,t);
-
-trip();
-
-toast(name+" selected")
-
+function selectPackage(name){
+  const trip=load(STORAGE.trip,{});
+  trip.package=name;
+  save(STORAGE.trip,trip);
+  toast("✓ "+name+" package selected");
 }
 
+/* =========================
+   BOOKING
+========================= */
 
-function bookTrip(){
+function renderBooking(){
 
-let t=load(KEY.trip,null);
+  const bookings=load(STORAGE.bookings,[]);
 
-if(!t)return;
+  if(!bookings.length){
+    document.getElementById("bookingContent").innerHTML=
+      `<div class="card empty">Belum ada booking.</div>`;
+    return;
+  }
 
-let a=load(KEY.bookings,[]);
+  document.getElementById("bookingContent").innerHTML=`
+    ${bookings.map(b=>`
+      <div class="card" style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div>
+            <h3>🎫 ${b.id}</h3>
+            <p class="muted">${b.destination||"Bali"} • ${b.travelers||2} traveler(s)</p>
+          </div>
+          <span class="badge green">${b.status}</span>
+        </div>
 
-let id=
-"HBG-"+Math.floor(100000+Math.random()*900000);
+        <div class="grid3" style="margin-top:15px">
+          <div><span class="muted">Total</span><br><b>${rupiah(b.total)}</b></div>
+          <div><span class="muted">Date</span><br><b>${new Date(b.date).toLocaleDateString("id-ID")}</b></div>
+          <div><span class="muted">Source</span><br><b>${b.source||"Marketplace"}</b></div>
+        </div>
 
-a.unshift({
-
-id,
-
-destination:t.destination,
-
-travelers:t.people,
-
-package:t.package||"Comfort",
-
-total:t.total,
-
-status:"Pending Payment",
-
-paymentStatus:"Pending",
-
-email:
-load(KEY.profile,{email:"demo@hobbigo.com"}).email,
-
-createdAt:new Date().toISOString()
-
-});
-
-save(KEY.bookings,a);
-
-log("Trip Booking Created",id);
-
-toast("Booking "+id+" created");
-
-page("booking")
-
+        <div class="hero-actions">
+          <button class="btn" onclick="showETicket('${b.id}')">🎫 E-Ticket</button>
+          <button class="btn gray" onclick="showInvoice('${b.id}')">Invoice</button>
+          <button class="btn orange" onclick="rateBooking('${b.id}')">Rate</button>
+        </div>
+      </div>
+    `).join("")}
+  `;
 }
 
+function showETicket(id){
 
-/* BOOKINGS */
+  const b=load(STORAGE.bookings,[]).find(x=>x.id===id);
+  if(!b)return;
 
-function bookings(){
-
-let q=(bookSearch.value||"").toLowerCase();
-let f=bookFilter.value;
-
-let a=load(KEY.bookings,[]);
-
-a=a.filter(x=>
-
-(!q||
-(x.id+" "+x.destination)
-.toLowerCase()
-.includes(q))
-
-&&
-
-(!f||x.status===f)
-
-);
-
-bookingBox.innerHTML=a.length?
-
-a.map(x=>`
-
-<div class="card" style="margin-bottom:12px">
-
-<div class="pagehead">
-
-<div>
-
-<span class="badge ${
-x.status==="Cancelled"||
-x.status==="Refunded"
-?"red":"green"
-}">
-${x.status}
-</span>
-
-<h3>${x.id}</h3>
-
-</div>
-
-<div class="price">
-${rupiah(x.total)}
-</div>
-
-</div>
-
-<p>
-📍 ${x.destination}
-· 👥 ${x.travelers||1}
-· ${x.package||"Marketplace"}
-</p>
-
-<p>
-Payment:
-<b>${x.paymentStatus}</b>
-</p>
-
-<button class="btn small"
-onclick="ticket('${x.id}')">
-🎫 E-Ticket
-</button>
-
-<button class="btn small light"
-onclick="invoice('${x.id}')">
-Invoice
-</button>
-
-${x.status!=="Cancelled"&&x.status!=="Refunded"?
-
-`<button class="btn small red"
-onclick="cancelBooking('${x.id}')">
-Cancel
-</button>`
-
-:""}
-
-</div>
-
-`).join("")
-
-:
-
-`<div class="card empty">
-No booking found.
-</div>`
-
+  openModal("🎫 Digital E-Ticket",`
+    <div style="text-align:center">
+      <div style="font-size:70px">▦</div>
+      <h2>${b.id}</h2>
+      <p>${b.destination||"Bali"}</p>
+      <p>${b.travelers||2} Traveler(s)</p>
+      <h2 style="color:#635bff;margin:15px">${rupiah(b.total)}</h2>
+      <span class="badge green">VALID — DEMO</span>
+      <p class="muted" style="margin-top:15px">
+        QR/Barcode production nantinya dibuat dari backend ticket service.
+      </p>
+    </div>
+  `);
 }
 
+function showInvoice(id){
 
-function ticket(id){
+  const b=load(STORAGE.bookings,[]).find(x=>x.id===id);
+  if(!b)return;
 
-let b=load(KEY.bookings,[])
-.find(x=>x.id===id);
-
-if(!b)return;
-
-openModal("🎫 Digital E-Ticket",`
-
-<div class="card" style="text-align:center">
-
-<span class="badge green">
-${b.status}
-</span>
-
-<h2>${b.id}</h2>
-
-<div style="
-font-size:55px;
-margin:12px">
-🎫
-</div>
-
-<h3>HobbiGo Travel</h3>
-
-<p>
-${b.destination}
-</p>
-
-<hr>
-
-<p>
-Travelers: ${b.travelers}
-</p>
-
-<p>
-Package: ${b.package}
-</p>
-
-<p>
-Payment: ${b.paymentStatus}
-</p>
-
-<h2 class="price">
-${rupiah(b.total)}
-</h2>
-
-<button class="btn"
-onclick="window.print()">
-Print
-</button>
-
-</div>
-
-`)
-
+  openModal("Invoice",`
+    <p><b>Invoice:</b> INV-${id}</p>
+    <p style="margin-top:8px"><b>Booking:</b> ${id}</p>
+    <p style="margin-top:8px"><b>Destination:</b> ${b.destination||"Bali"}</p>
+    <p style="margin-top:8px"><b>Total:</b> ${rupiah(b.total)}</p>
+    <button class="btn" style="margin-top:18px" onclick="window.print()">Print</button>
+  `);
 }
 
-
-function invoice(id){
-
-let b=load(KEY.bookings,[])
-.find(x=>x.id===id);
-
-openModal("🧾 Invoice",`
-
-<h2>HobbiGo Invoice</h2>
-
-<p>
-Booking ID:
-<b>${b.id}</b>
-</p>
-
-<p>
-Destination:
-<b>${b.destination}</b>
-</p>
-
-<p>
-Date:
-${new Date(b.createdAt)
-.toLocaleString("id-ID")}
-</p>
-
-<hr>
-
-<h2 class="price">
-${rupiah(b.total)}
-</h2>
-
-<p>
-Payment: ${b.paymentStatus}
-</p>
-
-<button class="btn"
-onclick="window.print()">
-Print Invoice
-</button>
-
-`)
-
+function rateBooking(id){
+  openModal("⭐ Rate Your Experience",`
+    <div class="field">
+      <label>Rating</label>
+      <select id="ratingValue">
+        <option value="5">★★★★★ 5</option>
+        <option value="4">★★★★ 4</option>
+        <option value="3">★★★ 3</option>
+        <option value="2">★★ 2</option>
+        <option value="1">★ 1</option>
+      </select>
+    </div>
+    <button class="btn" style="margin-top:15px;width:100%" onclick="saveRating('${id}')">
+      Submit Rating
+    </button>
+  `);
 }
 
-
-function cancelBooking(id){
-
-let a=load(KEY.bookings,[]);
-
-let b=a.find(x=>x.id===id);
-
-if(!b)return;
-
-b.status="Cancelled";
-
-b.paymentStatus=
-b.paymentStatus==="Paid"
-?"Refunded"
-:"Cancelled";
-
-save(KEY.bookings,a);
-
-log("Booking Cancelled",id);
-
-toast("Booking cancelled");
-
-bookings()
-
+function saveRating(id){
+  const rating=document.getElementById("ratingValue").value;
+  const reviews=load(STORAGE.reviews,[]);
+  reviews.push({
+    id:uid("REV"),
+    bookingId:id,
+    rating:Number(rating),
+    date:new Date().toISOString()
+  });
+  save(STORAGE.reviews,reviews);
+  logAction("Rating submitted "+id);
+  closeModal();
+  toast("✓ Terima kasih atas rating");
 }
 
+/* =========================
+   CORPORATE
+========================= */
 
-/* CORPORATE */
+function createCorporateEvent(){
 
-function createCorporate(){
+  const event={
+    id:uid("CORP"),
+    company:document.getElementById("corpCompany").value,
+    event:document.getElementById("corpEvent").value,
+    participants:Number(document.getElementById("corpPeople").value),
+    destination:document.getElementById("corpDestination").value,
+    date:document.getElementById("corpDate").value,
+    budget:Number(document.getElementById("corpBudget").value),
+    status:"Draft"
+  };
 
-let a=load(KEY.corporate,[]);
+  const data=load(STORAGE.corporate,[]);
+  data.unshift(event);
+  save(STORAGE.corporate,data);
 
-let x={
-
-id:"CORP-"+Date.now(),
-
-company:cName.value,
-
-eventType:cType.value,
-
-destination:cDest.value,
-
-date:cDate.value,
-
-participants:Number(cPeople.value)||1,
-
-duration:Number(cDays.value)||1,
-
-budget:Number(cBudget.value)||0,
-
-requirements:cReq.value,
-
-status:"Planning",
-
-createdAt:new Date().toISOString()
-
-};
-
-a.unshift(x);
-
-save(KEY.corporate,a);
-
-log("Corporate Event Created",x.id);
-
-toast("Corporate event created");
-
-corporate()
-
+  API.post("/api/v1/corporate/events",event);
+  logAction("Corporate event created "+event.id);
+  renderCorporate();
+  toast("✓ Corporate event dibuat");
 }
 
+function renderCorporate(){
 
-function corporate(){
+  const data=load(STORAGE.corporate,[]);
 
-let a=load(KEY.corporate,[]);
-
-corpList.innerHTML=a.length?
-
-a.map(x=>`
-
-<div class="card" style="margin-bottom:8px">
-
-<span class="badge">
-${x.status}
-</span>
-
-<h3>${x.company}</h3>
-
-<p>
-${x.eventType} · ${x.destination}
-</p>
-
-<p>
-👥 ${x.participants} ·
-${x.duration} days
-</p>
-
-<b>${rupiah(x.budget)}</b>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>Belum ada corporate event.</p>"
-
+  document.getElementById("corporateList").innerHTML=
+    data.length ?
+    data.map(x=>`
+      <div class="card" style="margin-bottom:12px">
+        <h3>${x.event}</h3>
+        <p class="muted">${x.company} • ${x.destination}</p>
+        <p style="margin-top:8px">${x.participants} participants • ${rupiah(x.budget)}</p>
+        <span class="badge">${x.status}</span>
+      </div>
+    `).join("") :
+    `<div class="card empty">Belum ada corporate event.</div>`;
 }
 
+/* =========================
+   PARTNER
+========================= */
 
-/* OPERATIONS */
+function addPartnerProduct(){
 
-function operations(){
+  const p={
+    id:uid("PART"),
+    name:document.getElementById("partnerName").value,
+    cat:document.getElementById("partnerCategory").value,
+    price:Number(document.getElementById("partnerPrice").value),
+    status:"Active"
+  };
 
-let a=load(KEY.bookings,[]);
+  const data=load(STORAGE.partnerProducts,[]);
+  data.unshift(p);
+  save(STORAGE.partnerProducts,data);
 
-let g=a.reduce(
-(s,x)=>s+(x.total||0),0
-);
-
-let c=Math.round(g*.15);
-
-let r=a.filter(x=>
-x.paymentStatus==="Refunded"
-).reduce(
-(s,x)=>s+(x.total||0),0
-);
-
-op1.textContent=a.length;
-op2.textContent=rupiah(g);
-op3.textContent=rupiah(c);
-op4.textContent=rupiah(r);
-
-opBookings.innerHTML=a.length?
-
-`<table>
-
-<tr>
-<th>Booking</th>
-<th>Destination</th>
-<th>Total</th>
-<th>Status</th>
-</tr>
-
-${a.map(x=>`
-
-<tr>
-
-<td>${x.id}</td>
-<td>${x.destination}</td>
-<td>${rupiah(x.total)}</td>
-
-<td>
-
-<select
-onchange="updateStatus('${x.id}',this.value)">
-
-${[
-"Pending Payment",
-"Paid",
-"Confirmed",
-"Completed",
-"Cancelled",
-"Refunded"
-].map(s=>`
-
-<option ${
-s===x.status?"selected":""
-}>
-${s}
-</option>
-
-`).join("")}
-
-</select>
-
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>`
-
-:
-
-"<p class='muted'>No booking.</p>";
-
-renderLogs()
-
+  API.post("/api/v1/partners/products",p);
+  logAction("Partner product added "+p.name);
+  renderPartner();
+  toast("✓ Product partner berhasil ditambahkan");
 }
 
+function renderPartner(){
 
-function updateStatus(id,status){
+  const data=load(STORAGE.partnerProducts,[]);
+  const sales=data.reduce((s,x)=>s+(x.sales||0),0);
+  const commission=sales*.15;
 
-let a=load(KEY.bookings,[]);
+  document.getElementById("partnerProducts").textContent=data.length;
+  document.getElementById("partnerSales").textContent=rupiah(sales);
+  document.getElementById("partnerCommission").textContent=rupiah(commission);
+  document.getElementById("partnerNet").textContent=rupiah(sales-commission);
 
-let x=a.find(y=>y.id===id);
-
-if(!x)return;
-
-x.status=status;
-
-if(
-["Paid","Confirmed","Completed"]
-.includes(status)
-)
-x.paymentStatus="Paid";
-
-if(status==="Refunded")
-x.paymentStatus="Refunded";
-
-save(KEY.bookings,a);
-
-log("Booking Status Updated",id);
-
-toast("Status updated");
-
-operations()
-
+  document.getElementById("partnerList").innerHTML=
+    data.length ?
+    `<div class="card"><div class="table-wrap"><table>
+      <tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th></tr>
+      ${data.map(x=>`
+        <tr>
+          <td>${x.name}</td>
+          <td>${x.cat}</td>
+          <td>${rupiah(x.price)}</td>
+          <td><span class="badge green">${x.status}</span></td>
+        </tr>
+      `).join("")}
+    </table></div></div>` :
+    `<div class="card empty">Belum ada partner product.</div>`;
 }
 
+/* =========================
+   CRM
+========================= */
 
-function createVoucher(){
+function renderCRM(){
 
-let a=load(KEY.vouchers,[]);
+  const search=(document.getElementById("crmSearch")?.value||"").toLowerCase();
 
-a.unshift({
+  const bookings=load(STORAGE.bookings,[]);
 
-id:Date.now(),
+  const customers=[{
+    name:load(STORAGE.profile,{name:"HobbiGo User"}).name||"HobbiGo User",
+    email:load(STORAGE.profile,{email:"user@hobbigo.demo"}).email||"user@hobbigo.demo",
+    bookings:bookings.length,
+    spend:bookings.reduce((s,b)=>s+(b.total||0),0)
+  }];
 
-code:vCode.value.toUpperCase(),
+  const filtered=customers.filter(x=>
+    x.name.toLowerCase().includes(search) ||
+    x.email.toLowerCase().includes(search)
+  );
 
-type:vType.value,
-
-value:Number(vValue.value)||0,
-
-minimum:Number(vMin.value)||0,
-
-maximum:Number(vMax.value)||0,
-
-active:true,
-
-used:0
-
-});
-
-save(KEY.vouchers,a);
-
-toast("Voucher created")
-
+  document.getElementById("crmContent").innerHTML=`
+    <div class="card">
+      <div class="table-wrap">
+      <table>
+        <tr><th>Customer</th><th>Email</th><th>Bookings</th><th>Total Spend</th></tr>
+        ${filtered.map(x=>`
+          <tr>
+            <td><b>${x.name}</b></td>
+            <td>${x.email}</td>
+            <td>${x.bookings}</td>
+            <td>${rupiah(x.spend)}</td>
+          </tr>
+        `).join("")}
+      </table>
+      </div>
+    </div>
+  `;
 }
 
+/* =========================
+   ANALYTICS
+========================= */
 
-/* CRM */
+function renderAnalytics(){
 
-function crm(){
+  const bookings=load(STORAGE.bookings,[]);
+  const gmv=bookings.reduce((s,b)=>s+(b.total||0),0);
+  const commission=gmv*.15;
+  const service=gmv*.05;
 
-let u=load(KEY.users,[]);
-let b=load(KEY.bookings,[]);
+  document.getElementById("gmv").textContent=rupiah(gmv);
+  document.getElementById("commission").textContent=rupiah(commission);
+  document.getElementById("serviceFee").textContent=rupiah(service);
+  document.getElementById("analyticsBookings").textContent=bookings.length;
 
-let q=(crmSearch.value||"").toLowerCase();
+  document.getElementById("businessInsight").innerHTML=
+    bookings.length ?
+    `🤖 <b>AI Insight:</b> GMV saat ini ${rupiah(gmv)} dari ${bookings.length}
+    booking. Fokus berikutnya dapat diarahkan ke conversion marketplace,
+    repeat booking dan partner supply.` :
+    `🤖 <b>AI Insight:</b> Belum ada booking. Mulai dari AI Trip →
+    Marketplace → Cart → Payment Demo.`;
 
-u=u.filter(x=>
-!q||
-(x.name+" "+x.email)
-.toLowerCase()
-.includes(q)
-);
-
-crm1.textContent=u.length;
-
-crm2.textContent=u.filter(x=>
-!b.some(y=>y.email===x.email)
-).length;
-
-crm3.textContent=u.filter(x=>
-b.some(y=>y.email===x.email)
-).length;
-
-crm4.textContent=u.filter(x=>{
-
-let spend=b.filter(y=>y.email===x.email)
-.reduce((s,y)=>s+(y.total||0),0);
-
-return spend>=10000000
-
-}).length;
-
-crmBox.innerHTML=`
-
-<table>
-
-<tr>
-<th>Customer</th>
-<th>Email</th>
-<th>Bookings</th>
-<th>Spend</th>
-<th>Segment</th>
-</tr>
-
-${u.map(x=>{
-
-let z=b.filter(y=>y.email===x.email);
-
-let spend=z.reduce(
-(s,y)=>s+(y.total||0),0
-);
-
-let segment=
-spend>=10000000
-?"VIP":
-z.length
-?"Active":"New";
-
-return`
-
-<tr>
-
-<td>${x.name||"Traveler"}</td>
-<td>${x.email||"-"}</td>
-<td>${z.length}</td>
-<td>${rupiah(spend)}</td>
-
-<td>
-<span class="badge">
-${segment}
-</span>
-</td>
-
-</tr>
-
-`
-
-}).join("")}
-
-</table>
-
-`
-
+  document.getElementById("destinationAnalytics").innerHTML=
+    destinations.map(d=>`
+      <div class="card">
+        <h3>${d.name}</h3>
+        <div class="stat">${d.score}%</div>
+        <p class="muted">AI Match Score</p>
+      </div>
+    `).join("");
 }
 
+/* =========================
+   API CONFIG
+========================= */
 
-/* ANALYTICS */
+function loadApiConfig(){
 
-function analytics(){
+  const c=load(STORAGE.apiConfig,{
+    baseUrl:"https://api.example.com",
+    version:"v1",
+    environment:"Development"
+  });
 
-let b=load(KEY.bookings,[]);
-
-let g=b.reduce(
-(s,x)=>s+(x.total||0),0
-);
-
-let c=Math.round(g*.15);
-let f=Math.round(g*.05);
-
-let refund=b.filter(
-x=>x.paymentStatus==="Refunded"
-).reduce(
-(s,x)=>s+(x.total||0),0
-);
-
-an1.textContent=rupiah(g);
-an2.textContent=rupiah(c);
-an3.textContent=rupiah(f);
-an4.textContent=rupiah(
-Math.max(0,c+f-refund)
-);
-
-funnel.innerHTML=[
-"Pending Payment",
-"Paid",
-"Confirmed",
-"Completed",
-"Cancelled"
-].map(s=>{
-
-let n=b.filter(x=>x.status===s).length;
-
-return`
-
-<div style="margin:12px 0">
-
-<div style="
-display:flex;
-justify-content:space-between">
-
-<span>${s}</span>
-<b>${n}</b>
-
-</div>
-
-<div class="progress">
-
-<div style="
-width:${b.length?
-Math.min(100,n/b.length*100):0}%
-"></div>
-
-</div>
-
-</div>
-
-`
-
-}).join("");
-
-destAnalytics.innerHTML=
-DESTINATIONS.map(d=>`
-
-<div style="margin:11px 0">
-
-<div style="
-display:flex;
-justify-content:space-between">
-
-<b>${d[0]}</b>
-<span>${d[1]}%</span>
-
-</div>
-
-<div class="progress">
-
-<div style="width:${d[1]}%"></div>
-
-</div>
-
-</div>
-
-`).join("")
-
+  document.getElementById("apiBase").value=c.baseUrl;
+  document.getElementById("apiVersion").value=c.version;
+  document.getElementById("apiEnvironment").value=c.environment;
 }
 
+function saveApiConfig(){
 
-function business(x){
+  const c={
+    baseUrl:document.getElementById("apiBase").value,
+    version:document.getElementById("apiVersion").value,
+    environment:document.getElementById("apiEnvironment").value
+  };
 
-let text={
-
-revenue:
-"Fokus pada Premium dan Exclusive untuk meningkatkan average order value.",
-
-booking:
-"Gunakan reminder otomatis untuk Pending Payment.",
-
-promo:
-"Gunakan minimum purchase agar margin promo tetap sehat.",
-
-partner:
-"Prioritaskan partner dengan rating tinggi dan availability stabil."
-
-};
-
-businessBox.innerHTML=`
-
-<div class="card">
-
-<span class="badge green">
-AI BUSINESS INSIGHT
-</span>
-
-<p>${text[x]}</p>
-
-</div>
-
-`
-
+  save(STORAGE.apiConfig,c);
+  logAction("API configuration saved");
+  toast("✓ API configuration tersimpan");
 }
 
+async function testApiConnection(){
 
-/* BACKEND */
+  toast("Testing API connection...");
 
-function backend(){
+  const result=await API.get("/api/v1/health");
 
+  openModal("API Connection Test",`
+    <div class="card" style="box-shadow:none">
+      <h3 style="color:#10b981">✓ CONNECTION READY</h3>
+      <p style="margin-top:10px">HTTP Status: ${result.status}</p>
+      <p>Environment: ${load(STORAGE.apiConfig,{environment:"Development"}).environment}</p>
+      <p style="margin-top:10px" class="muted">
+        Ini masih Demo API response. Endpoint production
+        belum terhubung ke server nyata.
+      </p>
+    </div>
+  `);
 }
 
-function renderLogs(){
+function renderEndpoints(){
 
-let a=load(KEY.logs,[]);
+  document.getElementById("endpointList").innerHTML=
+    endpoints.map(e=>`
+      <div class="api-row">
+        <span class="method ${e[0]}">${e[0]}</span>
+        <code>${e[1]}</code>
+        <span class="muted">${e[2]}</span>
+      </div>
+    `).join("");
 
-logs.innerHTML=a.length?
+  document.getElementById("apiExample").textContent=
+`POST /api/v1/bookings
 
-a.slice(0,20).map(x=>`
-
-<div style="
-padding:10px 0;
-border-bottom:1px solid #eee">
-
-<b>${x.action}</b>
-
-<div class="muted">
-${x.entity||""}
-</div>
-
-<small>
-${x.time}
-</small>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>No activity yet.</p>"
-
+{
+  "trip_id": "TRIP-123456",
+  "travelers": 2,
+  "destination": "Bali",
+  "payment_method": "E-Wallet",
+  "total": 5600000
 }
 
+Response:
 
-/* PARTNER */
-
-function partner(){
-
-let a=load(KEY.partner,[]);
-let tx=load(KEY.transactions,[]);
-
-let sales=tx.reduce(
-(s,x)=>s+(x.amount||0),0
-);
-
-let com=Math.round(sales*.15);
-
-pp.textContent=PRODUCTS.length+a.length;
-ps.textContent=rupiah(sales);
-pc.textContent=rupiah(com);
-pn.textContent=rupiah(sales-com);
-
-partnerProducts.innerHTML=a.length?
-
-a.map(x=>`
-
-<div class="card" style="margin-bottom:8px">
-
-<b>${x.name}</b>
-
-<p>
-${x.category} · ${rupiah(x.price)}
-</p>
-
-<p class="muted">
-${x.location} · ${x.slots} slots
-</p>
-
-<button class="btn small red"
-onclick="deletePartner(${x.id})">
-Delete
-</button>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>Belum ada custom partner product.</p>";
-
-avProduct.innerHTML=
-`<option value="">Select Product</option>`+
-a.map(x=>
-`<option value="${x.id}">
-${x.name}
-</option>`
-).join("");
-
-calendarRender()
-
+{
+  "success": true,
+  "booking_id": "HBG-123456",
+  "status": "confirmed"
+}`;
 }
 
+/* =========================
+   DATABASE ARCHITECTURE
+========================= */
 
-function addPartner(){
+function renderDatabase(){
 
-let n=pName.value.trim();
-let price=Number(pPrice.value)||0;
-
-if(!n||!price)
-return toast("Isi product dan price");
-
-let a=load(KEY.partner,[]);
-
-a.push({
-
-id:Date.now(),
-
-name:n,
-
-category:pCat.value,
-
-price,
-
-location:pLoc.value,
-
-slots:Number(pSlots.value)||0,
-
-active:true,
-
-createdAt:new Date().toISOString()
-
-});
-
-save(KEY.partner,a);
-
-log("Partner Product Added",n);
-
-toast("Partner product added");
-
-partner()
-
+  document.getElementById("databaseTables").innerHTML=
+    Object.entries(databaseTables).map(([table,fields])=>`
+      <div class="card">
+        <h3>🗄️ ${table}</h3>
+        <div class="tags" style="margin-top:12px">
+          ${fields.map(f=>`<span class="tag">${f}</span>`).join("")}
+        </div>
+      </div>
+    `).join("");
 }
 
-
-function deletePartner(id){
-
-save(
-KEY.partner,
-load(KEY.partner,[])
-.filter(x=>x.id!==id)
-);
-
-partner()
-
-}
-
-
-function saveAvailability(){
-
-let id=Number(avProduct.value);
-
-if(!id||!avDate.value)
-return toast("Pilih product dan tanggal");
-
-let a=load(KEY.availability,[]);
-
-a.push({
-
-id:Date.now(),
-
-productId:id,
-
-date:avDate.value,
-
-slots:Number(avSlots.value)||0
-
-});
-
-save(KEY.availability,a);
-
-log("Availability Updated",String(id));
-
-toast("Availability saved");
-
-calendarRender()
-
-}
-
-
-function calendarRender(){
-
-let a=load(KEY.availability,[]);
-
-let now=new Date();
-
-let y=now.getFullYear();
-let m=now.getMonth();
-
-let first=new Date(y,m,1).getDay();
-let days=new Date(y,m+1,0).getDate();
-
-let h=`
-
-<div class="card">
-
-<h3>
-${now.toLocaleString("id-ID",{
-month:"long",
-year:"numeric"
-})}
-</h3>
-
-<div style="
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:5px">
-
-`;
-
-["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
-.forEach(x=>{
-h+=`
-<div style="
-padding:8px;
-text-align:center;
-font-size:11px">
-<b>${x}</b>
-</div>
-`
-});
-
-for(let i=0;i<first;i++)
-h+=`<div></div>`;
-
-for(let d=1;d<=days;d++){
-
-let date=
-y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
-
-let x=a.find(z=>z.date===date);
-
-h+=`
-
-<div style="
-min-height:58px;
-padding:7px;
-border:1px solid ${
-x?"#7dd4b6":"#e4e9f0"
-};
-border-radius:8px;
-background:${
-x?"#e7faf3":"#fafbfd"
-};
-font-size:11px">
-
-<b>${d}</b>
-
-<div style="font-size:9px">
-${x?x.slots+" slots":"available"}
-</div>
-
-</div>
-
-`
-
-}
-
-h+=`
-
-</div>
-
-</div>
-
-`;
-
-calendar.innerHTML=h
-
-}
-
-
-function partnerAI(x){
-
-let r={
-
-pricing:
-"Gunakan pricing berdasarkan season, demand, rating dan availability.",
-
-sales:
-"Optimalkan title, foto, review dan response speed.",
-
-bundle:
-"Bundle hotel + transfer + activity + restaurant."
-
-};
-
-partnerAIBox.innerHTML=`
-
-<div class="card">
-
-<span class="badge green">
-AI PARTNER INSIGHT
-</span>
-
-<p>${r[x]}</p>
-
-</div>
-
-`
-
-}
-
-
-/* PROFILE */
-
-function profile(){
-
-let p=load(KEY.profile,{
-
-name:"Demo Traveler",
-email:"demo@hobbigo.com",
-phone:"",
-interest:"Nature"
-
-});
-
-name.value=p.name||"";
-email.value=p.email||"";
-phone.value=p.phone||"";
-interest.value=p.interest||"Nature";
-
-let a=load(KEY.notifications,[]);
-
-notifications.innerHTML=a.length?
-
-a.slice(0,10).map(x=>`
-
-<div class="card" style="margin-bottom:8px">
-
-<b>${x.title}</b>
-
-<p>${x.text}</p>
-
-<small class="muted">
-${x.date}
-</small>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>No notifications.</p>"
-
-}
-
+/* =========================
+   PROFILE
+========================= */
 
 function saveProfile(){
 
-let p={
+  const profile={
+    name:document.getElementById("profileName").value,
+    email:document.getElementById("profileEmail").value,
+    role:document.getElementById("profileRole").value
+  };
 
-name:name.value,
-
-email:email.value,
-
-phone:phone.value,
-
-interest:interest.value
-
-};
-
-save(KEY.profile,p);
-
-let u=load(KEY.users,[]);
-
-let x=u.find(y=>y.email===p.email);
-
-if(x){
-
-Object.assign(x,p)
-
-}else{
-
-u.push({
-
-id:Date.now(),
-
-...p,
-
-role:"User",
-
-createdAt:new Date().toISOString()
-
-})
-
+  save(STORAGE.profile,profile);
+  logAction("Profile updated");
+  toast("✓ Profile tersimpan");
 }
 
-save(KEY.users,u);
+/* =========================
+   OPERATIONS
+========================= */
 
-log("Profile Updated",p.email);
+async function syncData(){
 
-toast("Profile saved")
+  document.getElementById("syncStatus").textContent="SYNC...";
 
+  await new Promise(r=>setTimeout(r,1000));
+
+  await API.post("/api/v1/sync",{
+    bookings:load(STORAGE.bookings,[]).length,
+    products:products.length,
+    cart:load(STORAGE.cart,[]).length
+  });
+
+  document.getElementById("syncStatus").textContent="SYNCED";
+  logAction("Data sync executed");
+  renderActivity();
+  toast("✓ Data sync selesai — Demo");
 }
 
+function renderActivity(){
 
-function travelers(){
+  const logs=load(STORAGE.activity,[]);
 
-let a=load(KEY.travelers,[]);
-
-openModal("👥 Traveler Management",`
-
-<div class="form">
-
-<input id="travelerName"
-placeholder="Traveler Name">
-
-<select id="travelerRelation">
-
-<option>Family</option>
-<option>Friend</option>
-<option>Colleague</option>
-<option>Other</option>
-
-</select>
-
-<button class="btn"
-onclick="addTraveler()">
-Add Traveler
-</button>
-
-</div>
-
-<hr>
-
-${a.length?
-
-a.map(x=>`
-
-<div class="card" style="margin-bottom:7px">
-
-<b>${x.name}</b>
-
-<p>${x.relationship}</p>
-
-<button class="btn small red"
-onclick="removeTraveler(${x.id})">
-Remove
-</button>
-
-</div>
-
-`).join("")
-
-:
-
-"<p class='muted'>Belum ada traveler.</p>"
-
+  document.getElementById("activityList").innerHTML=
+    logs.length ?
+    logs.slice(0,15).map(x=>`
+      <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+        <b>${x.action}</b>
+        <div class="muted">${x.timestamp}</div>
+      </div>
+    `).join("") :
+    `<div class="empty">Belum ada aktivitas.</div>`;
 }
 
-`)
+/* =========================
+   BACKUP / RESTORE
+========================= */
 
+function exportData(){
+
+  const data={};
+
+  Object.values(STORAGE).forEach(key=>{
+    data[key]=load(key,null);
+  });
+
+  const blob=new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  );
+
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download="HobbiGo_V49_Backup.json";
+  a.click();
+  URL.revokeObjectURL(url);
+
+  logAction("Backup exported");
+  toast("✓ Backup JSON dibuat");
 }
 
+function importData(event){
 
-function addTraveler(){
+  const file=event.target.files[0];
+  if(!file)return;
 
-if(!travelerName.value.trim())
-return toast("Isi nama traveler");
+  const reader=new FileReader();
 
-let a=load(KEY.travelers,[]);
+  reader.onload=function(e){
+    try{
+      const data=JSON.parse(e.target.result);
 
-a.push({
+      Object.entries(data).forEach(([key,value])=>{
+        if(Object.values(STORAGE).includes(key)){
+          save(key,value);
+        }
+      });
 
-id:Date.now(),
+      logAction("Backup imported");
+      renderAll();
+      toast("✓ Backup berhasil diimport");
+    }catch(err){
+      toast("❌ File backup tidak valid");
+    }
+  };
 
-name:travelerName.value,
-
-relationship:travelerRelation.value
-
-});
-
-save(KEY.travelers,a);
-
-travelers();
-
-toast("Traveler added")
-
+  reader.readAsText(file);
 }
-
-
-function removeTraveler(id){
-
-save(
-KEY.travelers,
-load(KEY.travelers,[])
-.filter(x=>x.id!==id)
-);
-
-travelers()
-
-}
-
-
-function dashboard(){
-
-let p=load(KEY.profile,{name:"Traveler"});
-let b=load(KEY.bookings,[]);
-let c=load(KEY.cart,[]);
-let f=load(KEY.favorites,[]);
-
-openModal("👤 User Dashboard",`
-
-<div class="grid">
-
-<div class="card">
-<div class="muted">Traveler</div>
-<h3>${p.name}</h3>
-</div>
-
-<div class="card">
-<div class="muted">Bookings</div>
-<div class="stat">${b.length}</div>
-</div>
-
-<div class="card">
-<div class="muted">Cart</div>
-<div class="stat">${c.length}</div>
-</div>
-
-<div class="card">
-<div class="muted">Wishlist</div>
-<div class="stat">${f.length}</div>
-</div>
-
-</div>
-
-<div class="actions">
-
-<button class="btn"
-onclick="closeModal();page('ai')">
-AI Trip
-</button>
-
-<button class="btn"
-onclick="closeModal();page('trip')">
-My Trip
-</button>
-
-<button class="btn"
-onclick="closeModal();page('booking')">
-Booking
-</button>
-
-</div>
-
-`)
-
-}
-
-
-/* AUTH */
-
-function login(){
-
-openModal("🔐 HobbiGo Account",`
-
-<div class="form">
-
-<label>Name</label>
-
-<input id="loginName"
-value="Demo Traveler">
-
-<label>Email</label>
-
-<input id="loginEmail"
-value="demo@hobbigo.com">
-
-<label>Role</label>
-
-<select id="loginRole">
-
-<option>User</option>
-<option>Partner</option>
-<option>Admin</option>
-
-</select>
-
-<button class="btn"
-onclick="loginDemo()">
-Login / Register Demo
-</button>
-
-</div>
-
-<p class="muted">
-Authentication masih demo.
-Backend authentication akan dihubungkan pada production.
-</p>
-
-`)
-
-}
-
-
-function loginDemo(){
-
-let n=loginName.value;
-let e=loginEmail.value;
-let r=loginRole.value;
-
-let u=load(KEY.users,[]);
-
-let x=u.find(y=>y.email===e);
-
-if(!x){
-
-x={
-
-id:Date.now(),
-
-name:n,
-
-email:e,
-
-role:r,
-
-createdAt:new Date().toISOString()
-
-};
-
-u.push(x)
-
-}
-
-save(KEY.users,u);
-save(KEY.session,x);
-
-save(KEY.profile,{
-
-name:n,
-email:e,
-phone:"",
-interest:"Nature",
-role:r
-
-});
-
-log("Login",e);
-
-closeModal();
-
-toast("Welcome "+n);
-
-profile()
-
-}
-
-
-function logout(){
-
-localStorage.removeItem(KEY.session);
-
-toast("Logout berhasil")
-
-}
-
-
-/* BACKUP */
-
-function backup(){
-
-let data={
-
-version:"HobbiGo V48",
-
-createdAt:new Date().toISOString(),
-
-data:{}
-
-};
-
-Object.values(KEY).forEach(k=>{
-
-let x=localStorage.getItem(k);
-
-if(x!==null)
-data.data[k]=JSON.parse(x)
-
-});
-
-let blob=new Blob(
-[JSON.stringify(data,null,2)],
-{type:"application/json"}
-);
-
-let url=URL.createObjectURL(blob);
-
-let a=document.createElement("a");
-
-a.href=url;
-
-a.download=
-"HobbiGo_V48_Backup.json";
-
-a.click();
-
-URL.revokeObjectURL(url);
-
-toast("Backup V48 downloaded")
-
-}
-
-
-function restore(e){
-
-let file=e.target.files[0];
-
-if(!file)return;
-
-let reader=new FileReader();
-
-reader.onload=function(){
-
-try{
-
-let d=JSON.parse(reader.result);
-
-let data=d.data||d;
-
-Object.values(KEY).forEach(k=>{
-
-if(data[k]!==undefined){
-
-localStorage.setItem(
-k,
-JSON.stringify(data[k])
-)
-
-}
-
-});
-
-toast("Restore berhasil");
-
-setTimeout(
-()=>location.reload(),
-700
-)
-
-}catch(err){
-
-toast("Backup tidak valid")
-
-}
-
-};
-
-reader.readAsText(file)
-
-}
-
 
 function resetDemo(){
 
-if(!confirm(
-"Reset seluruh data V48?"
-))
-return;
+  if(!confirm("Reset semua data demo HobbiGo?"))return;
 
-Object.values(KEY)
-.forEach(k=>localStorage.removeItem(k));
+  Object.values(STORAGE).forEach(key=>localStorage.removeItem(key));
 
-location.reload()
-
+  location.reload();
 }
 
+/* =========================
+   RENDER ALL
+========================= */
 
-/* SEED */
+function renderAll(){
 
-function seed(){
+  updateCartCount();
+  renderMarket();
+  renderCart();
+  renderTrip();
+  renderBooking();
+  renderCorporate();
+  renderPartner();
+  renderCRM();
+  renderAnalytics();
+  renderActivity();
+  renderEndpoints();
+  renderDatabase();
 
-if(!localStorage.getItem(KEY.vouchers)){
+  const bookings=load(STORAGE.bookings,[]);
+  document.getElementById("statTrips").textContent=
+    load(STORAGE.trip,null)?1:0;
+  document.getElementById("statBookings").textContent=bookings.length;
 
-save(KEY.vouchers,[
+  const profile=load(STORAGE.profile,{
+    name:"HobbiGo User",
+    email:"user@hobbigo.demo",
+    role:"User"
+  });
 
-{
+  document.getElementById("profileName").value=profile.name;
+  document.getElementById("profileEmail").value=profile.email;
+  document.getElementById("profileRole").value=profile.role;
 
-id:1,
-code:"WELCOME100",
-type:"fixed",
-value:100000,
-minimum:1000000,
-maximum:100000,
-active:true,
-used:0
-
-},
-
-{
-
-id:2,
-code:"HOBBIGO10",
-type:"percent",
-value:10,
-minimum:1500000,
-maximum:300000,
-active:true,
-used:0
-
+  loadApiConfig();
 }
 
-])
-
-}
-
-if(!localStorage.getItem(KEY.notifications)){
-
-save(KEY.notifications,[{
-
-id:1,
-
-title:"Welcome to HobbiGo V48",
-
-text:
-"Backend-ready architecture berhasil diaktifkan.",
-
-date:
-new Date().toLocaleString("id-ID")
-
-}])
-
-}
-
-}
-
-
-/* INIT */
+/* =========================
+   INITIAL DEMO DATA
+========================= */
 
 function init(){
 
-seed();
+  if(!localStorage.getItem(STORAGE.profile)){
+    save(STORAGE.profile,{
+      name:"HobbiGo User",
+      email:"user@hobbigo.demo",
+      role:"User"
+    });
+  }
 
-home();
-ai();
-market();
-updateCart();
+  if(!localStorage.getItem(STORAGE.apiConfig)){
+    save(STORAGE.apiConfig,{
+      baseUrl:"https://api.example.com",
+      version:"v1",
+      environment:"Development"
+    });
+  }
 
+  if(!localStorage.getItem(STORAGE.activity)){
+    save(STORAGE.activity,[]);
+  }
+
+  renderAll();
+
+  document.getElementById("apiExample").textContent=
+`POST /api/v1/bookings
+
+{
+  "trip_id": "TRIP-123456",
+  "travelers": 2,
+  "destination": "Bali",
+  "payment_method": "E-Wallet",
+  "total": 5600000
+}`;
+
+  document.getElementById("aiDate").value=
+    new Date().toISOString().slice(0,10);
 }
 
 init();
