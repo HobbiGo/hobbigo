@@ -1,1 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V28</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f5f7fb;
+  color:#172033;
+}
+
+header{
+  background:#ffffff;
+  padding:16px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:800;
+  color:#1264e8;
+}
+
+.logo span{
+  color:#ff8a00;
+}
+
+nav{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+nav button{
+  border:0;
+  background:#f0f3f8;
+  padding:9px 13px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.hero{
+  padding:45px 5%;
+  background:linear-gradient(135deg,#1264e8,#48a9ff);
+  color:white;
+}
+
+.hero h1{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:17px;
+  margin-bottom:25px;
+}
+
+.search-box{
+  background:white;
+  color:#172033;
+  padding:20px;
+  border-radius:18px;
+  max-width:1000px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+
+.tabs button{
+  border:0;
+  padding:11px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  background:#edf2f8;
+}
+
+.tabs button.active{
+  background:#1264e8;
+  color:white;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+}
+
+.field label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d7dce5;
+  border-radius:10px;
+  background:white;
+}
+
+.search-btn{
+  margin-top:15px;
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#ff8a00;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+section{
+  padding:30px 5%;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-top:18px;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 3px 15px rgba(0,0,0,.07);
+}
+
+.card-icon{
+  font-size:35px;
+  margin-bottom:12px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:#667085;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.result{
+  margin-top:22px;
+  display:none;
+}
+
+.hotel-card{
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 3px 15px rgba(0,0,0,.08);
+  margin-top:15px;
+}
+
+.hotel-card h3{
+  margin-bottom:8px;
+}
+
+.price{
+  font-size:21px;
+  font-weight:bold;
+  margin:10px 0;
+}
+
+.book-btn{
+  border:0;
+  padding:11px 18px;
+  border-radius:10px;
+  background:#1264e8;
+  color:white;
+  cursor:pointer;
+}
+
+footer{
+  margin-top:30px;
+  background:#172033;
+  color:white;
+  padding:30px 5%;
+  text-align:center;
+}
+
+@media(max-width:600px){
+  .hero h1{
+    font-size:29px;
+  }
+
+  header{
+    align-items:flex-start;
+    gap:10px;
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Hobbi<span>Go</span></div>
+
+  <nav>
+    <button onclick="showTab('hotel')">🏨 Hotel</button>
+    <button onclick="showTab('flight')">✈️ Flight</button>
+    <button onclick="showTab('car')">🚗 Car Rental</button>
+    <button onclick="showTab('trip')">🧭 Trip Planner</button>
+    <button onclick="showCart()">🛒 My Cart</button>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>AI Journey & Experience Marketplace</h1>
+  <p>Search → Plan → Configure → Package → Book → Experience</p>
+
+  <div class="search-box">
+
+    <div class="tabs">
+      <button id="hotelTab" class="active" onclick="showTab('hotel')">🏨 Hotel</button>
+      <button id="flightTab" onclick="showTab('flight')">✈️ Flight</button>
+      <button id="carTab" onclick="showTab('car')">🚗 Vehicle</button>
+    </div>
+
+    <!-- HOTEL -->
+    <div id="hotelForm">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Tujuan</label>
+          <input id="hotelCity" type="text" placeholder="Contoh: Bali">
+        </div>
+
+        <div class="field">
+          <label>Check-in</label>
+          <input id="checkIn" type="date">
+        </div>
+
+        <div class="field">
+          <label>Check-out</label>
+          <input id="checkOut" type="date">
+        </div>
+
+        <div class="field">
+          <label>Tamu</label>
+          <select id="hotelGuests">
+            <option>1</option>
+            <option selected>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5+</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Kamar</label>
+          <select id="hotelRooms">
+            <option selected>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="search-btn" onclick="searchHotel()">
+        🔎 Search Hotel
+      </button>
+
+      <div id="hotelResult" class="result"></div>
+
+    </div>
+
+    <!-- FLIGHT -->
+    <div id="flightForm" style="display:none">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Dari</label>
+          <input id="flightFrom" placeholder="Jakarta">
+        </div>
+
+        <div class="field">
+          <label>Ke</label>
+          <input id="flightTo" placeholder="Bali">
+        </div>
+
+        <div class="field">
+          <label>Tanggal</label>
+          <input id="flightDate" type="date">
+        </div>
+
+        <div class="field">
+          <label>Penumpang</label>
+          <select id="flightPassengers">
+            <option>1</option>
+            <option selected>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="search-btn" onclick="searchFlight()">
+        🔎 Search Flight
+      </button>
+
+      <div id="flightResult" class="result"></div>
+
+    </div>
+
+    <!-- CAR -->
+    <div id="carForm" style="display:none">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label>Lokasi Pickup</label>
+          <input id="carLocation" placeholder="Bali">
+        </div>
+
+        <div class="field">
+          <label>Tanggal Pickup</label>
+          <input id="carPickup" type="date">
+        </div>
+
+        <div class="field">
+          <label>Tanggal Return</label>
+          <input id="carReturn" type="date">
+        </div>
+
+        <div class="field">
+          <label>Jenis Kendaraan</label>
+          <select id="carType">
+            <option>Motor</option>
+            <option>City Car</option>
+            <option>SUV</option>
+            <option>MPV</option>
+            <option>Luxury Car</option>
+          </select>
+        </div>
+
+      </div>
+
+      <button class="search-btn" onclick="searchCar()">
+        🔎 Search Vehicle
+      </button>
+
+      <div id="carResult" class="result"></div>
+
+    </div>
+
+  </div>
+</div>
+
+<section>
+  <h2>Explore HobbiGo</h2>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-icon">🏨</div>
+      <h3>Hotel</h3>
+      <p>Temukan hotel sesuai tujuan, tanggal check-in dan check-out.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">✈️</div>
+      <h3>Flight</h3>
+      <p>Cari penerbangan berdasarkan kota asal, tujuan dan tanggal.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🚗</div>
+      <h3>Vehicle Rental</h3>
+      <p>Sewa kendaraan untuk perjalanan kamu.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🧭</div>
+      <h3>AI Trip Planner</h3>
+      <p>Buat itinerary dan perjalanan berdasarkan minat dan budget.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <h3>HobbiGo</h3>
+  <p>AI Journey & Experience Marketplace</p>
+  <p style="margin-top:10px;">© 2026 HobbiGo</p>
+</footer>
+
+<script>
+
+let cart = [];
+
+function showTab(type){
+
+  document.getElementById("hotelForm").style.display =
+    type === "hotel" ? "block" : "none";
+
+  document.getElementById("flightForm").style.display =
+    type === "flight" ? "block" : "none";
+
+  document.getElementById("carForm").style.display =
+    type === "car" ? "block" : "none";
+
+  document.getElementById("hotelTab").classList.remove("active");
+  document.getElementById("flightTab").classList.remove("active");
+  document.getElementById("carTab").classList.remove("active");
+
+  if(type === "hotel"){
+    document.getElementById("hotelTab").classList.add("active");
+  }
+
+  if(type === "flight"){
+    document.getElementById("flightTab").classList.add("active");
+  }
+
+  if(type === "car"){
+    document.getElementById("carTab").classList.add("active");
+  }
+
+}
+
+function searchHotel(){
+
+  const city = document.getElementById("hotelCity").value;
+  const checkIn = document.getElementById("checkIn").value;
+  const checkOut = document.getElementById("checkOut").value;
+  const guests = document.getElementById("hotelGuests").value;
+  const rooms = document.getElementById("hotelRooms").value;
+
+  if(!city || !checkIn || !checkOut){
+    alert("Silakan isi tujuan, check-in dan check-out.");
+    return;
+  }
+
+  if(checkOut <= checkIn){
+    alert("Check-out harus setelah check-in.");
+    return;
+  }
+
+  const result = document.getElementById("hotelResult");
+
+  result.style.display = "block";
+
+  result.innerHTML = `
+    <div class="hotel-card">
+      <h3>🏨 HobbiGo Hotel Bali</h3>
+      <p>📍 ${city}</p>
+      <p>📅 ${checkIn} → ${checkOut}</p>
+      <p>👥 ${guests} tamu · 🛏️ ${rooms} kamar</p>
+      <div class="price">Rp 750.000 / malam</div>
+      <button class="book-btn" onclick="addHotel()">
+        Add to Cart
+      </button>
+    </div>
+  `;
+}
+
+function addHotel(){
+
+  cart.push({
+    type:"Hotel",
+    name:"HobbiGo Hotel",
+    price:750000
+  });
+
+  alert("Hotel berhasil masuk ke My Cart 🛒");
+}
+
+function searchFlight(){
+
+  const from = document.getElementById("flightFrom").value;
+  const to = document.getElementById("flightTo").value;
+  const date = document.getElementById("flightDate").value;
+  const passengers = document.getElementById("flightPassengers").value;
+
+  if(!from || !to || !date){
+    alert("Silakan isi asal, tujuan dan tanggal.");
+    return;
+  }
+
+  const result = document.getElementById("flightResult");
+
+  result.style.display = "block";
+
+  result.innerHTML = `
+    <div class="hotel-card">
+      <h3>✈️ HobbiGo Flight</h3>
+      <p>${from} → ${to}</p>
+      <p>📅 ${date}</p>
+      <p>👥 ${passengers} penumpang</p>
+      <div class="price">Mulai Rp 1.250.000</div>
+      <button class="book-btn" onclick="addFlight()">
+        Add to Cart
+      </button>
+    </div>
+  `;
+}
+
+function addFlight(){
+
+  cart.push({
+    type:"Flight",
+    name:"HobbiGo Flight",
+    price:1250000
+  });
+
+  alert("Tiket berhasil masuk ke My Cart 🛒");
+}
+
+function searchCar(){
+
+  const location = document.getElementById("carLocation").value;
+  const pickup = document.getElementById("carPickup").value;
+  const returning = document.getElementById("carReturn").value;
+  const type = document.getElementById("carType").value;
+
+  if(!location || !pickup || !returning){
+    alert("Silakan isi lokasi dan tanggal rental.");
+    return;
+  }
+
+  if(returning <= pickup){
+    alert("Tanggal return harus setelah pickup.");
+    return;
+  }
+
+  const result = document.getElementById("carResult");
+
+  result.style.display = "block";
+
+  result.innerHTML = `
+    <div class="hotel-card">
+      <h3>🚗 ${type}</h3>
+      <p>📍 ${location}</p>
+      <p>📅 ${pickup} → ${returning}</p>
+      <div class="price">Mulai Rp 250.000 / hari</div>
+      <button class="book-btn" onclick="addCar()">
+        Add to Cart
+      </button>
+    </div>
+  `;
+}
+
+function addCar(){
+
+  cart.push({
+    type:"Vehicle",
+    name:"Vehicle Rental",
+    price:250000
+  });
+
+  alert("Kendaraan berhasil masuk ke My Cart 🛒");
+}
+
+function showCart(){
+
+  if(cart.length === 0){
+    alert("My Cart masih kosong.");
+    return;
+  }
+
+  let text = "🛒 MY CART\\n\\n";
+
+  cart.forEach((item,index)=>{
+    text += `${index+1}. ${item.type} - ${item.name} - Rp ${item.price.toLocaleString("id-ID")}\\n`;
+  });
+
+  alert(text);
+}
+
+</script>
+
+</body>
+</html>
