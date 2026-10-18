@@ -1,1 +1,1695 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HobbiGo V55 — AI Journey & Experience Marketplace</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fa;color:#172033}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0}
+header{
+ position:sticky;top:0;z-index:100;
+ background:#07152d;color:#fff;padding:14px 4%;
+ display:flex;align-items:center;gap:22px;flex-wrap:wrap;
+ box-shadow:0 3px 15px #0002
+}
+.logo{font-size:26px;font-weight:900;color:#ff8500}
+.logo span{color:#fff}
+nav{display:flex;gap:8px;flex:1;flex-wrap:wrap}
+nav button{background:transparent;color:#fff;padding:9px 12px}
+nav button:hover{color:#ff9b22}
+.btn{padding:11px 16px;border-radius:10px;font-weight:700}
+.orange{background:#ff8500;color:#fff}
+.blue{background:#123b73;color:#fff}
+.green{background:#0b9b61;color:#fff}
+.red{background:#d9363e;color:#fff}
+.white{background:#fff;color:#172033;border:1px solid #ddd}
+
+.hero{
+ background:linear-gradient(135deg,#06142d,#164b89);
+ color:#fff;padding:60px 5%;
+}
+.hero h1{font-size:44px;margin:0 0 12px}
+.hero p{font-size:18px;max-width:800px;line-height:1.6}
+.searchbox{
+ margin-top:25px;background:#fff;padding:16px;border-radius:18px;
+ display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;
+ max-width:1200px
+}
+input,select{
+ width:100%;padding:12px;border:1px solid #d8deea;
+ border-radius:9px;background:#fff
+}
+.container{max-width:1300px;margin:auto;padding:32px 5%}
+h2{margin-top:0}
+h3{margin-bottom:8px}
+
+.categories{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px
+}
+.cat{
+ background:#fff;border-radius:14px;padding:17px 8px;text-align:center;
+ box-shadow:0 4px 15px #0000000b;border:1px solid #e9edf4
+}
+.cat:hover{transform:translateY(-2px);border-color:#ff8500}
+.cat b{display:block;margin-top:7px;font-size:13px}
+
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px
+}
+.card{
+ background:#fff;border-radius:16px;overflow:hidden;
+ box-shadow:0 5px 20px #14213d12;border:1px solid #e7ebf2
+}
+.card img{width:100%;height:165px;object-fit:cover}
+.cardbody{padding:16px}
+.card h3{font-size:18px}
+.muted{font-size:13px;color:#6d7788}
+.price{font-size:20px;font-weight:900;color:#ef7000}
+.tag{
+ display:inline-block;background:#edf4ff;color:#174b8e;
+ padding:5px 9px;border-radius:20px;font-size:11px;font-weight:700
+}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+
+.panel{
+ background:#fff;border-radius:18px;padding:20px;
+ box-shadow:0 5px 22px #14213d10
+}
+.routegrid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px
+}
+.routecard{
+ background:#fff;border-radius:16px;padding:20px;
+ border:1px solid #e5e9f1;box-shadow:0 4px 15px #00000009
+}
+.routecard strong{font-size:22px}
+
+.maplayout{
+ display:grid;grid-template-columns:330px 1fr;gap:20px
+}
+.mapframe{
+ width:100%;height:500px;border:0;border-radius:16px;
+ background:#e7edf5
+}
+
+.tracker{
+ display:grid;grid-template-columns:330px 1fr;gap:20px
+}
+.trackerbox{
+ background:#fff;padding:20px;border-radius:18px;
+ box-shadow:0 5px 20px #00000010
+}
+.status{
+ display:inline-block;padding:7px 11px;border-radius:20px;
+ background:#dff7ec;color:#087a4d;font-size:12px;font-weight:800
+}
+.coord{
+ background:#07152d;color:#fff;padding:14px;border-radius:10px;
+ font-family:monospace;margin:12px 0
+}
+.progress{
+ height:9px;background:#e5e8ee;border-radius:20px;overflow:hidden
+}
+.progress div{height:100%;width:0;background:#ff8500;transition:.5s}
+
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+
+.modal{
+ display:none;position:fixed;inset:0;background:#0008;
+ z-index:1000;align-items:center;justify-content:center;padding:18px
+}
+.modalbox{
+ width:100%;max-width:720px;max-height:90vh;overflow:auto;
+ background:#fff;border-radius:20px;padding:24px
+}
+.modalhead{
+ display:flex;justify-content:space-between;align-items:center
+}
+
+.success{
+ text-align:center;padding:25px;background:#ecfff6;
+ border-radius:15px
+}
+
+footer{
+ margin-top:40px;background:#07152d;color:#fff;padding:40px 5%
+}
+
+@media(max-width:900px){
+ .searchbox{grid-template-columns:1fr}
+ .maplayout,.tracker{grid-template-columns:1fr}
+ .hero h1{font-size:34px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">HOBBI<span>GO</span></div>
+
+ <nav>
+  <button onclick="go('home')">Home</button>
+  <button onclick="go('market')">Marketplace</button>
+  <button onclick="go('planner')">AI Planner</button>
+  <button onclick="go('mapSection')">Map</button>
+  <button onclick="go('tracking')">Live Tracking</button>
+  <button onclick="showTrips()">My Trips</button>
+  <button onclick="openAdmin()">Admin</button>
+ </nav>
+
+ <button class="btn orange" onclick="showCart()">
+  🛒 Cart <span id="cartCount">0</span>
+ </button>
+</header>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+ <h1>Your World. One Journey.</h1>
+
+ <p>
+  <b>HobbiGo — AI Journey & Experience Marketplace</b><br>
+  Search → Plan → Configure → Package → Book → Experience → Re-optimize
+ </p>
+
+ <div class="searchbox">
+  <input id="searchText" placeholder="Cari Bali, hotel, kendaraan, restaurant...">
+
+  <input id="travelDate" type="date">
+
+  <select id="travellers">
+   <option>1 Traveler</option>
+   <option>2 Travelers</option>
+   <option>3 Travelers</option>
+   <option>4 Travelers</option>
+   <option>5+ Travelers</option>
+  </select>
+
+  <select id="searchCategory">
+   <option value="">Semua</option>
+   <option value="hotel">Hotel</option>
+   <option value="villa">Villa</option>
+   <option value="home">Home Rent</option>
+   <option value="flight">Flight</option>
+   <option value="car">Car Rental</option>
+   <option value="motor">Motor</option>
+   <option value="transport">Transport</option>
+   <option value="boat">Boat</option>
+   <option value="restaurant">Culinary</option>
+   <option value="attraction">Attraction</option>
+   <option value="activity">Activity</option>
+   <option value="hobby">Hobby</option>
+   <option value="tour">Tour</option>
+   <option value="event">Event</option>
+   <option value="package">Package</option>
+  </select>
+
+  <button class="btn orange" onclick="searchProducts()">Search</button>
+ </div>
+</section>
+
+
+<!-- CATEGORY -->
+<section class="container">
+ <h2>Explore HobbiGo</h2>
+
+ <div class="categories">
+
+  <div class="cat" onclick="filterCategory('hotel')">🏨<b>Hotel</b></div>
+  <div class="cat" onclick="filterCategory('villa')">🏡<b>Villa</b></div>
+  <div class="cat" onclick="filterCategory('home')">🏠<b>Home Rent</b></div>
+  <div class="cat" onclick="filterCategory('flight')">✈️<b>Flight</b></div>
+  <div class="cat" onclick="filterCategory('car')">🚗<b>Car Rental</b></div>
+  <div class="cat" onclick="filterCategory('motor')">🏍️<b>Motor</b></div>
+  <div class="cat" onclick="filterCategory('transport')">🚌<b>Transport</b></div>
+  <div class="cat" onclick="filterCategory('boat')">🚤<b>Boat</b></div>
+  <div class="cat" onclick="filterCategory('restaurant')">🍜<b>Culinary</b></div>
+  <div class="cat" onclick="filterCategory('attraction')">🎟️<b>Attraction</b></div>
+  <div class="cat" onclick="filterCategory('activity')">🎯<b>Activity</b></div>
+  <div class="cat" onclick="filterCategory('hobby')">📷<b>Hobby</b></div>
+  <div class="cat" onclick="filterCategory('tour')">🗺️<b>Tour</b></div>
+  <div class="cat" onclick="filterCategory('event')">🏢<b>Event</b></div>
+  <div class="cat" onclick="filterCategory('package')">📦<b>Package</b></div>
+
+ </div>
+</section>
+
+
+<!-- MARKETPLACE -->
+<section class="container" id="market">
+ <h2>Universal Marketplace</h2>
+
+ <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+  <button class="btn white" onclick="renderProducts(products)">All</button>
+  <button class="btn white" onclick="sortPrice()">Price Low → High</button>
+  <button class="btn white" onclick="sortRating()">Rating</button>
+ </div>
+
+ <div id="productGrid" class="grid"></div>
+</section>
+
+
+<!-- AI PLANNER -->
+<section class="container" id="planner">
+
+ <h2>🤖 AI Trip Planner</h2>
+
+ <div class="panel">
+
+  <div class="grid">
+
+   <input id="aiDestination" placeholder="Tujuan — contoh: Bali">
+
+   <input id="aiDate" type="date">
+
+   <input id="aiPeople" type="number" value="2" min="1" placeholder="Jumlah orang">
+
+   <input id="aiDuration" type="number" value="3" min="1" placeholder="Durasi hari">
+
+   <select id="aiStyle">
+    <option>Economy</option>
+    <option>Comfort</option>
+    <option>Exclusive</option>
+    <option>Family</option>
+    <option>Corporate</option>
+   </select>
+
+   <input id="aiInterest" placeholder="Minat: pantai, kuliner, budaya...">
+
+  </div>
+
+  <br>
+
+  <button class="btn orange" onclick="generateTrip()">
+   ✨ Generate Trip
+  </button>
+
+  <div id="aiResult"></div>
+
+ </div>
+</section>
+
+
+<!-- SMART ROUTE -->
+<section class="container">
+ <h2>🧭 Smart Route</h2>
+
+ <div class="routegrid">
+
+  <div class="routecard">
+   <span class="tag">BEST PRICE</span>
+   <h3>Smart Economy</h3>
+   <strong>Rp 2.850.000</strong>
+   <p class="muted">Optimasi harga + lokasi.</p>
+   <button class="btn orange" onclick="alert('Smart Route Best Price dipilih')">Select</button>
+  </div>
+
+  <div class="routecard">
+   <span class="tag">POPULAR</span>
+   <h3>Comfort</h3>
+   <strong>Rp 4.750.000</strong>
+   <p class="muted">Hotel nyaman + transport.</p>
+   <button class="btn orange" onclick="alert('Smart Route Comfort dipilih')">Select</button>
+  </div>
+
+  <div class="routecard">
+   <span class="tag">PREMIUM</span>
+   <h3>Exclusive</h3>
+   <strong>Rp 8.950.000</strong>
+   <p class="muted">Private vehicle + premium stay.</p>
+   <button class="btn orange" onclick="alert('Smart Route Exclusive dipilih')">Select</button>
+  </div>
+
+ </div>
+</section>
+
+
+<!-- MAP -->
+<section class="container" id="mapSection">
+
+ <h2>📍 Exact Location Map</h2>
+
+ <div class="maplayout">
+
+  <div class="panel">
+
+   <h3>Location Information</h3>
+
+   <p class="muted">Produk yang dipilih</p>
+   <b id="mapProductName">Belum dipilih</b>
+
+   <p class="muted">Latitude</p>
+   <b id="mapLat">-</b>
+
+   <p class="muted">Longitude</p>
+   <b id="mapLng">-</b>
+
+   <br><br>
+
+   <button class="btn orange" onclick="openExternalMap()">
+    🌍 Open Google Maps
+   </button>
+
+   <button class="btn blue" onclick="myLocation()">
+    📍 My Location
+   </button>
+
+  </div>
+
+  <iframe
+   id="mapFrame"
+   class="mapframe"
+   src="https://www.google.com/maps?q=Bali&output=embed">
+  </iframe>
+
+ </div>
+</section>
+
+
+<!-- VEHICLE TRACKING -->
+<section class="container" id="tracking">
+
+ <h2>📡 Live Vehicle Tracking</h2>
+
+ <div class="tracker">
+
+  <div class="trackerbox">
+
+   <h3 id="vehicleName">Belum ada kendaraan</h3>
+
+   <span id="vehicleStatus" class="status">
+    READY
+   </span>
+
+   <p class="muted">Vehicle GPS Coordinates</p>
+
+   <div class="coord" id="vehicleCoords">
+    -
+   </div>
+
+   <p class="muted">Kecepatan</p>
+   <b id="vehicleSpeed">-</b>
+
+   <p class="muted">GPS Update</p>
+   <b id="vehicleUpdate">-</b>
+
+   <p class="muted">Trip Progress</p>
+
+   <div class="progress">
+    <div id="tripProgress"></div>
+   </div>
+
+   <p id="trackingMessage">
+    Pilih kendaraan rental untuk mulai tracking.
+   </p>
+
+   <button class="btn green" onclick="startTracking()">
+    ▶ Start Live Tracking
+   </button>
+
+   <button class="btn red" onclick="stopTracking()">
+    ■ Stop
+   </button>
+
+  </div>
+
+  <div>
+   <iframe
+    id="trackingMap"
+    class="mapframe"
+    src="https://www.google.com/maps?q=Bali&output=embed">
+   </iframe>
+  </div>
+
+ </div>
+
+ <br>
+
+ <div class="panel">
+
+  <h3>🚗 Bagaimana Tracking Kendaraan Nyata Bekerja?</h3>
+
+  <p>
+   V55 menyediakan simulasi GPS. Untuk versi production,
+   kendaraan dapat mengirim latitude, longitude, speed dan timestamp
+   ke server HobbiGo.
+  </p>
+
+  <p>
+   <b>GPS Device / HP Driver → HobbiGo Backend → Live Tracking → Customer Map</b>
+  </p>
+
+  <p class="muted">
+   Jadi nanti pelanggan dapat melihat posisi kendaraan selama perjalanan,
+   jika kendaraan memang menggunakan GPS/device dan driver memberikan izin.
+  </p>
+
+ </div>
+
+</section>
+
+
+<!-- PROMO -->
+<section class="container">
+
+ <div class="panel" style="background:#07152d;color:white">
+  <h2>🌎 One App. One Journey.</h2>
+  <p>
+   Hotel • Flight • Vehicle • Boat • Culinary • Attraction • Activity • Tour • Event
+  </p>
+  <button class="btn orange" onclick="go('market')">
+   Explore Marketplace
+  </button>
+ </div>
+
+</section>
+
+
+<footer>
+ <h2 style="color:#ff8500">HOBBIGO</h2>
+ <p>AI Journey & Experience Marketplace</p>
+ <p>Your World. One Journey.</p>
+</footer>
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+ <div class="modalbox">
+
+  <div class="modalhead">
+   <h2 id="modalTitle">HobbiGo</h2>
+   <button class="btn white" onclick="closeModal()">✕</button>
+  </div>
+
+  <div id="modalBody"></div>
+
+ </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   HOBBIGO V55 DATA
+========================= */
+
+const products=[
+
+ {
+  id:"hotel-bali",
+  type:"hotel",
+  name:"HobbiGo Bali Beach Resort",
+  location:"Kuta, Bali",
+  price:850000,
+  rating:4.8,
+  lat:-8.7184,
+  lng:115.1686,
+  image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+  description:"Beach resort dekat pusat Kuta."
+ },
+
+ {
+  id:"hotel-jakarta",
+  type:"hotel",
+  name:"Jakarta Central Business Hotel",
+  location:"Jakarta",
+  price:750000,
+  rating:4.6,
+  lat:-6.1944,
+  lng:106.8229,
+  image:"https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80",
+  description:"Hotel bisnis di pusat Jakarta."
+ },
+
+ {
+  id:"villa-ubud",
+  type:"villa",
+  name:"Ubud Jungle Private Villa",
+  location:"Ubud, Bali",
+  price:1450000,
+  rating:4.9,
+  lat:-8.5069,
+  lng:115.2625,
+  image:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80",
+  description:"Private villa dengan suasana jungle."
+ },
+
+ {
+  id:"home-bali",
+  type:"home",
+  name:"Bali Family Holiday Home",
+  location:"Denpasar, Bali",
+  price:950000,
+  rating:4.7,
+  lat:-8.6705,
+  lng:115.2126,
+  image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80",
+  description:"Rumah liburan untuk keluarga."
+ },
+
+ {
+  id:"flight-cgk-dps",
+  type:"flight",
+  name:"Jakarta → Bali Flight",
+  location:"CGK → DPS",
+  price:1250000,
+  rating:4.5,
+  lat:-6.1256,
+  lng:106.6559,
+  destLat:-8.7482,
+  destLng:115.1675,
+  image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=80",
+  description:"Penerbangan Jakarta ke Bali."
+ },
+
+ {
+  id:"car-innova",
+  type:"car",
+  name:"Toyota Innova Rental + Driver",
+  location:"Denpasar, Bali",
+  price:650000,
+  rating:4.8,
+  lat:-8.6705,
+  lng:115.2126,
+  image:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=900&q=80",
+  description:"Rental kendaraan dengan driver."
+ },
+
+ {
+  id:"car-alphard",
+  type:"car",
+  name:"Toyota Alphard Premium Rental",
+  location:"Bali Airport",
+  price:1500000,
+  rating:4.9,
+  lat:-8.7482,
+  lng:115.1675,
+  image:"https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=900&q=80",
+  description:"Premium vehicle dengan driver."
+ },
+
+ {
+  id:"motor-bali",
+  type:"motor",
+  name:"Bali Scooter Rental",
+  location:"Canggu, Bali",
+  price:100000,
+  rating:4.6,
+  lat:-8.6478,
+  lng:115.1385,
+  image:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=900&q=80",
+  description:"Motor rental harian."
+ },
+
+ {
+  id:"transport-airport",
+  type:"transport",
+  name:"Bali Airport Private Transfer",
+  location:"DPS Airport → Hotel",
+  price:250000,
+  rating:4.8,
+  lat:-8.7482,
+  lng:115.1675,
+  image:"https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80",
+  description:"Private airport transfer."
+ },
+
+ {
+  id:"boat-nusa",
+  type:"boat",
+  name:"Nusa Penida Private Boat",
+  location:"Sanur Harbor, Bali",
+  price:1800000,
+  rating:4.8,
+  lat:-8.7064,
+  lng:115.2625,
+  image:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80",
+  description:"Private boat menuju Nusa Penida."
+ },
+
+ {
+  id:"restaurant-bali",
+  type:"restaurant",
+  name:"Bali Local Culinary Experience",
+  location:"Seminyak, Bali",
+  price:250000,
+  rating:4.8,
+  lat:-8.6856,
+  lng:115.1592,
+  image:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
+  description:"Pengalaman kuliner lokal Bali."
+ },
+
+ {
+  id:"attraction-uluwatu",
+  type:"attraction",
+  name:"Uluwatu Temple Experience",
+  location:"Uluwatu, Bali",
+  price:150000,
+  rating:4.9,
+  lat:-8.8291,
+  lng:115.0849,
+  image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+  description:"Wisata pura Uluwatu."
+ },
+
+ {
+  id:"activity-rafting",
+  type:"activity",
+  name:"Bali Rafting Adventure",
+  location:"Payangan, Bali",
+  price:450000,
+  rating:4.8,
+  lat:-8.4251,
+  lng:115.2795,
+  image:"https://images.unsplash.com/photo-1527489377706-5bf97e608852?auto=format&fit=crop&w=900&q=80",
+  description:"Aktivitas rafting."
+ },
+
+ {
+  id:"hobby-photo",
+  type:"hobby",
+  name:"Bali Photography Experience",
+  location:"Ubud, Bali",
+  price:550000,
+  rating:4.9,
+  lat:-8.5069,
+  lng:115.2625,
+  image:"https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80",
+  description:"Photography experience."
+ },
+
+ {
+  id:"tour-bali",
+  type:"tour",
+  name:"Bali Full Day Tour",
+  location:"Bali",
+  price:750000,
+  rating:4.8,
+  lat:-8.4095,
+  lng:115.1889,
+  image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80",
+  description:"Full day Bali tour."
+ },
+
+ {
+  id:"event-corporate",
+  type:"event",
+  name:"Corporate Retreat Bali",
+  location:"Ubud, Bali",
+  price:4500000,
+  rating:4.9,
+  lat:-8.5069,
+  lng:115.2625,
+  image:"https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=900&q=80",
+  description:"Corporate retreat package."
+ },
+
+ {
+  id:"package-bali",
+  type:"package",
+  name:"Bali Smart 3D2N Package",
+  location:"Bali",
+  price:3950000,
+  rating:4.9,
+  lat:-8.4095,
+  lng:115.1889,
+  image:"https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=900&q=80",
+  description:"Hotel + transport + activity."
+ }
+
+];
+
+
+/* =========================
+   STATE
+========================= */
+
+let cart=[];
+let orders=[];
+let selectedProduct=null;
+let selectedVehicle=null;
+let trackingTimer=null;
+let currentPosition=null;
+let trackingProgress=0;
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function money(value){
+ return new Intl.NumberFormat("id-ID",{
+  style:"currency",
+  currency:"IDR",
+  maximumFractionDigits:0
+ }).format(value);
+}
+
+function go(id){
+ const el=document.getElementById(id);
+ if(el) el.scrollIntoView({behavior:"smooth"});
+}
+
+function getProduct(id){
+ return products.find(p=>p.id===id);
+}
+
+
+/* =========================
+   MARKETPLACE
+========================= */
+
+function renderProducts(list=products){
+
+ const grid=document.getElementById("productGrid");
+
+ grid.innerHTML=list.map(p=>`
+
+  <div class="card">
+
+   <img src="${p.image}" alt="${p.name}">
+
+   <div class="cardbody">
+
+    <span class="tag">${p.type.toUpperCase()}</span>
+
+    <h3>${p.name}</h3>
+
+    <p class="muted">📍 ${p.location}</p>
+
+    <p>⭐ ${p.rating}</p>
+
+    <div class="price">${money(p.price)}</div>
+
+    <div class="actions">
+
+     <button class="btn white"
+      onclick="showDetail('${p.id}')">
+      Detail
+     </button>
+
+     <button class="btn orange"
+      onclick="addCart('${p.id}')">
+      Add Cart
+     </button>
+
+     <button class="btn blue"
+      onclick="focusMap('${p.id}')">
+      📍 Map
+     </button>
+
+     ${["car","motor","transport","boat"].includes(p.type)?`
+
+      <button class="btn green"
+       onclick="selectVehicle('${p.id}')">
+       📡 Track
+      </button>
+
+     `:""}
+
+    </div>
+
+   </div>
+
+  </div>
+
+ `).join("");
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchProducts(){
+
+ const text=document
+  .getElementById("searchText")
+  .value
+  .toLowerCase()
+  .trim();
+
+ const category=document
+  .getElementById("searchCategory")
+  .value;
+
+ const result=products.filter(p=>{
+
+  const matchText=!text ||
+   (p.name+" "+p.location+" "+p.type)
+   .toLowerCase()
+   .includes(text);
+
+  const matchCategory=!category ||
+   p.type===category;
+
+  return matchText&&matchCategory;
+ });
+
+ renderProducts(result);
+ go("market");
+}
+
+function filterCategory(type){
+
+ document.getElementById("searchCategory").value=type;
+
+ renderProducts(
+  products.filter(p=>p.type===type)
+ );
+
+ go("market");
+}
+
+function sortPrice(){
+
+ renderProducts(
+  [...products].sort((a,b)=>a.price-b.price)
+ );
+
+}
+
+function sortRating(){
+
+ renderProducts(
+  [...products].sort((a,b)=>b.rating-a.rating)
+ );
+
+}
+
+
+/* =========================
+   PRODUCT DETAIL
+========================= */
+
+function showDetail(id){
+
+ const p=getProduct(id);
+
+ selectedProduct=p;
+
+ document.getElementById("modalTitle").textContent=p.name;
+
+ document.getElementById("modalBody").innerHTML=`
+
+  <img src="${p.image}"
+   style="width:100%;height:230px;object-fit:cover;border-radius:14px">
+
+  <h3>${p.name}</h3>
+
+  <p>📍 ${p.location}</p>
+
+  <p>⭐ ${p.rating}</p>
+
+  <p>${p.description}</p>
+
+  <h2 style="color:#ef7000">${money(p.price)}</h2>
+
+  <div class="coord">
+   Latitude: ${p.lat}<br>
+   Longitude: ${p.lng}
+  </div>
+
+  <div class="actions">
+
+   <button class="btn orange"
+    onclick="addCart('${p.id}');closeModal()">
+    🛒 Add Cart
+   </button>
+
+   <button class="btn blue"
+    onclick="focusMap('${p.id}');closeModal()">
+    📍 Lihat Koordinat
+   </button>
+
+   ${["car","motor","transport","boat"].includes(p.type)?`
+
+    <button class="btn green"
+     onclick="selectVehicle('${p.id}');closeModal()">
+     📡 Live Tracking
+    </button>
+
+   `:""}
+
+  </div>
+ `;
+
+ document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+ document.getElementById("modal").style.display="none";
+}
+
+
+/* =========================
+   MAP
+========================= */
+
+function focusMap(id){
+
+ const p=getProduct(id);
+
+ selectedProduct=p;
+
+ document.getElementById("mapProductName").textContent=p.name;
+ document.getElementById("mapLat").textContent=p.lat;
+ document.getElementById("mapLng").textContent=p.lng;
+
+ document.getElementById("mapFrame").src=
+  `https://www.google.com/maps?q=${p.lat},${p.lng}&z=15&output=embed`;
+
+ go("mapSection");
+}
+
+function openExternalMap(){
+
+ if(!selectedProduct){
+  alert("Pilih produk terlebih dahulu.");
+  return;
+ }
+
+ window.open(
+  `https://www.google.com/maps/search/?api=1&query=${selectedProduct.lat},${selectedProduct.lng}`,
+  "_blank"
+ );
+}
+
+function myLocation(){
+
+ if(!navigator.geolocation){
+  alert("Browser tidak mendukung GPS.");
+  return;
+ }
+
+ navigator.geolocation.getCurrentPosition(
+
+  position=>{
+
+   const lat=position.coords.latitude;
+   const lng=position.coords.longitude;
+
+   document.getElementById("mapProductName")
+    .textContent="My Current Location";
+
+   document.getElementById("mapLat")
+    .textContent=lat;
+
+   document.getElementById("mapLng")
+    .textContent=lng;
+
+   document.getElementById("mapFrame").src=
+    `https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
+
+  },
+
+  ()=>alert("Lokasi tidak dapat diakses. Pastikan izin lokasi diberikan.")
+
+ );
+}
+
+
+/* =========================
+   VEHICLE TRACKING
+========================= */
+
+function selectVehicle(id){
+
+ const p=getProduct(id);
+
+ selectedVehicle=p;
+
+ currentPosition={
+  lat:p.lat,
+  lng:p.lng
+ };
+
+ trackingProgress=0;
+
+ document.getElementById("vehicleName").textContent=p.name;
+ document.getElementById("vehicleStatus").textContent="GPS READY";
+
+ updateVehicleDisplay();
+
+ go("tracking");
+}
+
+function updateVehicleDisplay(){
+
+ if(!currentPosition)return;
+
+ document.getElementById("vehicleCoords").innerHTML=
+  "LAT "+currentPosition.lat.toFixed(6)+
+  "<br>LNG "+currentPosition.lng.toFixed(6);
+
+ document.getElementById("vehicleSpeed").textContent=
+  Math.floor(25+Math.random()*35)+" km/h";
+
+ document.getElementById("vehicleUpdate").textContent=
+  new Date().toLocaleTimeString("id-ID");
+
+ document.getElementById("tripProgress").style.width=
+  trackingProgress+"%";
+
+ document.getElementById("trackingMap").src=
+  `https://www.google.com/maps?q=${currentPosition.lat},${currentPosition.lng}&z=15&output=embed`;
+}
+
+function startTracking(){
+
+ if(!selectedVehicle){
+
+  alert("Pilih kendaraan rental terlebih dahulu.");
+
+  return;
+ }
+
+ clearInterval(trackingTimer);
+
+ document.getElementById("vehicleStatus")
+  .textContent="LIVE GPS DEMO";
+
+ document.getElementById("trackingMessage")
+  .textContent=
+  "Kendaraan sedang berjalan. Posisi diperbarui setiap 5 detik.";
+
+ trackingTimer=setInterval(()=>{
+
+  /*
+   DEMO MOVEMENT
+
+   Dalam sistem production,
+   bagian ini diganti dengan data GPS
+   dari kendaraan/driver melalui backend.
+  */
+
+  currentPosition.lat+=0.00020;
+  currentPosition.lng+=0.00028;
+
+  trackingProgress+=3;
+
+  if(trackingProgress>100)
+   trackingProgress=100;
+
+  updateVehicleDisplay();
+
+ },5000);
+
+ updateVehicleDisplay();
+}
+
+function stopTracking(){
+
+ clearInterval(trackingTimer);
+
+ document.getElementById("vehicleStatus")
+  .textContent="STOPPED";
+
+ document.getElementById("trackingMessage")
+  .textContent=
+  "Live tracking dihentikan.";
+}
+
+
+/* =========================
+   CART
+========================= */
+
+function addCart(id){
+
+ const p=getProduct(id);
+
+ cart.push({
+  ...p,
+  cartId:Date.now()+Math.random()
+ });
+
+ updateCartCount();
+
+ alert(p.name+" berhasil masuk Cart.");
+}
+
+function updateCartCount(){
+
+ document.getElementById("cartCount").textContent=
+  cart.length;
+}
+
+function removeCart(index){
+
+ cart.splice(index,1);
+
+ showCart();
+ updateCartCount();
+}
+
+function cartTotal(){
+
+ return cart.reduce((sum,p)=>sum+p.price,0);
+}
+
+function showCart(){
+
+ document.getElementById("modalTitle").textContent=
+  "🛒 HobbiGo My Cart";
+
+ if(!cart.length){
+
+  document.getElementById("modalBody").innerHTML=`
+   <p>Cart masih kosong.</p>
+   <button class="btn orange"
+    onclick="closeModal()">Continue</button>
+  `;
+
+ }else{
+
+  document.getElementById("modalBody").innerHTML=`
+
+   ${cart.map((p,i)=>`
+
+    <div style="
+     padding:12px 0;
+     border-bottom:1px solid #eee">
+
+     <b>${p.name}</b>
+
+     <div class="muted">
+      ${p.location}
+     </div>
+
+     <b>${money(p.price)}</b>
+
+     <button class="btn red"
+      style="float:right"
+      onclick="removeCart(${i})">
+      Remove
+     </button>
+
+    </div>
+
+   `).join("")}
+
+   <hr>
+
+   <h2>Total ${money(cartTotal())}</h2>
+
+   <button class="btn orange"
+    onclick="checkout()">
+    Continue Booking
+   </button>
+
+  `;
+ }
+
+ document.getElementById("modal").style.display="flex";
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function checkout(){
+
+ if(!cart.length){
+  alert("Cart kosong.");
+  return;
+ }
+
+ document.getElementById("modalTitle").textContent=
+  "Booking & Payment";
+
+ document.getElementById("modalBody").innerHTML=`
+
+  <h3>Trip Summary</h3>
+
+  ${cart.map(p=>`
+   <p>
+    <b>${p.name}</b><br>
+    ${money(p.price)}
+   </p>
+  `).join("")}
+
+  <hr>
+
+  <h2>Total ${money(cartTotal())}</h2>
+
+  <input id="customerName"
+   placeholder="Nama Customer">
+
+  <br><br>
+
+  <input id="customerEmail"
+   placeholder="Email">
+
+  <br><br>
+
+  <select id="paymentMethod">
+   <option>Credit Card Demo</option>
+   <option>Virtual Account Demo</option>
+   <option>Company Billing Demo</option>
+  </select>
+
+  <br><br>
+
+  <button class="btn orange"
+   onclick="payNow()">
+   💳 Pay Demo
+  </button>
+
+ `;
+}
+
+function payNow(){
+
+ const name=document.getElementById("customerName").value;
+
+ if(!name){
+  alert("Isi nama customer.");
+  return;
+ }
+
+ const order={
+  id:"HG"+Date.now(),
+  customer:name,
+  items:[...cart],
+  total:cartTotal(),
+  date:new Date().toLocaleString("id-ID"),
+  status:"CONFIRMED"
+ };
+
+ orders.push(order);
+
+ showSuccess(order);
+
+ cart=[];
+
+ updateCartCount();
+}
+
+function showSuccess(order){
+
+ document.getElementById("modalTitle").textContent=
+  "Booking Confirmed";
+
+ document.getElementById("modalBody").innerHTML=`
+
+  <div class="success">
+
+   <h1>✅</h1>
+
+   <h2>Booking Berhasil</h2>
+
+   <p>Booking ID</p>
+
+   <h2>${order.id}</h2>
+
+   <p>${order.customer}</p>
+
+   <p>Total</p>
+
+   <h2>${money(order.total)}</h2>
+
+   <p>
+    E-Ticket / Voucher siap digunakan.
+   </p>
+
+   <button class="btn orange"
+    onclick="closeModal()">
+    Done
+   </button>
+
+  </div>
+ `;
+}
+
+
+/* =========================
+   MY TRIPS
+========================= */
+
+function showTrips(){
+
+ document.getElementById("modalTitle").textContent=
+  "✈️ My Trips";
+
+ if(!orders.length){
+
+  document.getElementById("modalBody").innerHTML=
+   "<p>Belum ada booking.</p>";
+
+ }else{
+
+  document.getElementById("modalBody").innerHTML=
+   orders.map(o=>`
+
+    <div class="panel" style="margin-bottom:12px">
+
+     <b>${o.id}</b>
+
+     <p>${o.customer}</p>
+
+     <p>${o.date}</p>
+
+     <p>
+      ${o.items.map(x=>x.name).join("<br>")}
+     </p>
+
+     <h3>${money(o.total)}</h3>
+
+     <span class="status">
+      ${o.status}
+     </span>
+
+    </div>
+
+   `).join("");
+
+ }
+
+ document.getElementById("modal").style.display="flex";
+}
+
+
+/* =========================
+   AI TRIP PLANNER
+========================= */
+
+function generateTrip(){
+
+ const destination=
+  document.getElementById("aiDestination").value ||
+  "Bali";
+
+ const people=
+  document.getElementById("aiPeople").value || 2;
+
+ const duration=
+  document.getElementById("aiDuration").value || 3;
+
+ const style=
+  document.getElementById("aiStyle").value;
+
+ const interest=
+  document.getElementById("aiInterest").value ||
+  "kuliner dan wisata";
+
+ document.getElementById("aiResult").innerHTML=`
+
+  <br>
+
+  <div class="panel">
+
+   <h2>✨ AI Journey: ${destination}</h2>
+
+   <p>
+    ${people} traveler • ${duration} hari • ${style}
+   </p>
+
+   <p>
+    Minat: <b>${interest}</b>
+   </p>
+
+   <hr>
+
+   <h3>Suggested Itinerary</h3>
+
+   <ol>
+
+    <li>
+     <b>Day 1</b> — Arrival + Hotel + Local Culinary
+    </li>
+
+    <li>
+     <b>Day 2</b> — Attraction + Activity + Smart Route
+    </li>
+
+    <li>
+     <b>Day 3</b> — Hobby + Shopping + Airport Transfer
+    </li>
+
+   </ol>
+
+   <h3>AI Recommendation</h3>
+
+   <p>
+    Hotel → Vehicle → Attraction → Restaurant →
+    Activity → Return Transport
+   </p>
+
+   <button class="btn orange"
+    onclick="go('market')">
+    Configure Marketplace
+   </button>
+
+  </div>
+ `;
+}
+
+
+/* =========================
+   ADMIN
+========================= */
+
+function openAdmin(){
+
+ document.getElementById("modalTitle").textContent=
+  "👨‍💼 HobbiGo Admin";
+
+ document.getElementById("modalBody").innerHTML=`
+
+  <p class="muted">
+   Demo Admin — input produk dan koordinat.
+  </p>
+
+  <input id="adminName"
+   placeholder="Nama produk">
+
+  <br><br>
+
+  <select id="adminType">
+
+   <option value="hotel">Hotel</option>
+   <option value="villa">Villa</option>
+   <option value="home">Home Rent</option>
+   <option value="flight">Flight</option>
+   <option value="car">Car Rental</option>
+   <option value="motor">Motor</option>
+   <option value="transport">Transport</option>
+   <option value="boat">Boat</option>
+   <option value="restaurant">Restaurant</option>
+   <option value="attraction">Attraction</option>
+   <option value="activity">Activity</option>
+   <option value="tour">Tour</option>
+
+  </select>
+
+  <br><br>
+
+  <input id="adminLocation"
+   placeholder="Lokasi">
+
+  <br><br>
+
+  <input id="adminPrice"
+   type="number"
+   placeholder="Harga IDR">
+
+  <br><br>
+
+  <input id="adminLat"
+   type="number"
+   step="any"
+   placeholder="Latitude">
+
+  <br><br>
+
+  <input id="adminLng"
+   type="number"
+   step="any"
+   placeholder="Longitude">
+
+  <br><br>
+
+  <input id="adminImage"
+   placeholder="URL gambar">
+
+  <br><br>
+
+  <button class="btn orange"
+   onclick="addAdminProduct()">
+   + Add Product
+  </button>
+
+  <button class="btn red"
+   onclick="resetDemo()">
+   Reset Demo
+  </button>
+
+  <hr>
+
+  <p>
+   <b>Produk saat ini:</b>
+   ${products.length}
+  </p>
+
+ `;
+
+ document.getElementById("modal").style.display="flex";
+}
+
+function addAdminProduct(){
+
+ const name=document.getElementById("adminName").value;
+
+ const type=document.getElementById("adminType").value;
+
+ const location=document.getElementById("adminLocation").value;
+
+ const price=Number(
+  document.getElementById("adminPrice").value
+ );
+
+ const lat=Number(
+  document.getElementById("adminLat").value
+ );
+
+ const lng=Number(
+  document.getElementById("adminLng").value
+ );
+
+ const image=document.getElementById("adminImage").value ||
+  "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=900&q=80";
+
+ if(!name||!location||!price||!lat||!lng){
+
+  alert("Lengkapi nama, lokasi, harga, latitude dan longitude.");
+
+  return;
+ }
+
+ products.push({
+
+  id:"admin-"+Date.now(),
+
+  type,
+
+  name,
+
+  location,
+
+  price,
+
+  rating:5,
+
+  lat,
+
+  lng,
+
+  image,
+
+  description:"Produk yang ditambahkan Admin HobbiGo."
+
+ });
+
+ renderProducts(products);
+
+ alert("Produk berhasil ditambahkan.");
+
+ closeModal();
+}
+
+function resetDemo(){
+
+ if(confirm("Reset data demo?")){
+
+  location.reload();
+
+ }
+}
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function saveLocal(){
+
+ localStorage.setItem(
+  "HOBBIGO_V55_CART",
+  JSON.stringify(cart)
+ );
+
+ localStorage.setItem(
+  "HOBBIGO_V55_ORDERS",
+  JSON.stringify(orders)
+ );
+}
+
+function loadLocal(){
+
+ try{
+
+  cart=JSON.parse(
+   localStorage.getItem("HOBBIGO_V55_CART")
+  )||[];
+
+  orders=JSON.parse(
+   localStorage.getItem("HOBBIGO_V55_ORDERS")
+  )||[];
+
+ }catch(e){
+
+  cart=[];
+  orders=[];
+
+ }
+
+ updateCartCount();
+}
+
+
+/* =========================
+   AUTO SAVE
+========================= */
+
+setInterval(saveLocal,2000);
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+document.getElementById("modal").addEventListener(
+ "click",
+ function(e){
+
+  if(e.target===this){
+   closeModal();
+  }
+
+ }
+);
+
+
+/* =========================
+   INIT
+========================= */
+
+loadLocal();
+renderProducts(products);
+
+</script>
+
+</body>
+</html>
