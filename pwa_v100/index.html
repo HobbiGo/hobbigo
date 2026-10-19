@@ -1,1 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>HOBBIGO — AI Journey & Experience Marketplace</title>
+
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="HOBBIGO AI Journey & Experience Marketplace">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #07111f;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: auto;
+      min-height: 100vh;
+      background: #0b1728;
+      padding-bottom: 90px;
+    }
+
+    header {
+      padding: 18px 18px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #28d7a0;
+      color: #07111f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .menu {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #263a52;
+      border-radius: 12px;
+      background: #101f33;
+      color: white;
+      font-size: 20px;
+    }
+
+    .hero {
+      padding: 22px 18px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 10px;
+      border-radius: 20px;
+      background: #123b3a;
+      color: #45e4b0;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #a8b5c5;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .search-card {
+      margin: 5px 18px 22px;
+      padding: 16px;
+      border-radius: 20px;
+      background: #102239;
+      border: 1px solid #203751;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      color: #93a6bb;
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      border: 1px solid #2b4059;
+      background: #091525;
+      color: white;
+      outline: none;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      border-radius: 13px;
+      background: #28d7a0;
+      color: #06101d;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    section {
+      padding: 0 18px 24px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      font-size: 19px;
+    }
+
+    .section-title span {
+      font-size: 11px;
+      color: #28d7a0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+    }
+
+    .service {
+      background: #102239;
+      border: 1px solid #203751;
+      border-radius: 15px;
+      padding: 13px 5px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .service-icon {
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .service-name {
+      font-size: 10px;
+      color: #cbd5e1;
+    }
+
+    .ai-card {
+      background: linear-gradient(145deg, #12382f, #102239);
+      border: 1px solid #256052;
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .ai-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .ai-card p {
+      color: #a9c0ba;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .package {
+      background: #102239;
+      border: 1px solid #203751;
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .package h3 {
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
+
+    .package p {
+      color: #9fb0c2;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .price {
+      margin-top: 10px;
+      color: #45e4b0;
+      font-weight: bold;
+    }
+
+    .route {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .route-item {
+      background: #102239;
+      border-radius: 13px;
+      padding: 13px;
+      border-left: 3px solid #28d7a0;
+      font-size: 13px;
+    }
+
+    .status {
+      text-align: center;
+      padding: 20px 18px;
+      color: #8fa2b6;
+      font-size: 11px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 520px;
+      background: #091525;
+      border-top: 1px solid #203751;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 9px 5px;
+      z-index: 20;
+    }
+
+    .nav-item {
+      text-align: center;
+      color: #8295aa;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .nav-item div {
+      font-size: 19px;
+      margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+      color: #28d7a0;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 82px;
+      transform: translateX(-50%);
+      background: #16283e;
+      border: 1px solid #2d4661;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: none;
+      z-index: 50;
+      width: max-content;
+      max-width: 90%;
+    }
+
+    @media (min-width: 700px) {
+      body {
+        padding: 20px;
+      }
+
+      .app {
+        border-radius: 25px;
+        overflow: hidden;
+      }
+
+      .bottom-nav {
+        border-radius: 0 0 20px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon">H</div>
+      HOBBIGO
+    </div>
+
+    <button class="menu" onclick="showToast('HOBBIGO Menu')">☰</button>
+  </header>
+
+  <div class="hero">
+    <div class="badge">AI JOURNEY & EXPERIENCE MARKETPLACE</div>
+
+    <h1>Where will your journey take you?</h1>
+
+    <p>
+      Search, plan, configure, package and book your journey
+      with HOBBIGO AI.
+    </p>
+  </div>
+
+  <div class="search-card">
+
+    <div class="field">
+      <label>COUNTRY / DESTINATION</label>
+      <input id="destination" type="text" placeholder="Jakarta, Bali, Tokyo...">
+    </div>
+
+    <div class="field">
+      <label>DATE</label>
+      <input id="travelDate" type="date">
+    </div>
+
+    <div class="field">
+      <label>PEOPLE</label>
+      <select id="people">
+        <option>1 Person</option>
+        <option>2 People</option>
+        <option>4 People</option>
+        <option>8 People</option>
+        <option>20 People</option>
+        <option>50 People</option>
+      </select>
+    </div>
+
+    <button class="primary-btn" onclick="planTrip()">
+      ✨ PLAN WITH AI
+    </button>
+
+  </div>
+
+  <section>
+
+    <div class="section-title">
+      <h2>Marketplace</h2>
+      <span>GLOBAL</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="service" onclick="showToast('Flight Marketplace')">
+        <div class="service-icon">✈️</div>
+        <div class="service-name">Flight</div>
+      </div>
+
+      <div class="service" onclick="showToast('Hotel Marketplace')">
+        <div class="service-icon">🏨</div>
+        <div class="service-name">Hotel</div>
+      </div>
+
+      <div class="service" onclick="showToast('Food Marketplace')">
+        <div class="service-icon">🍜</div>
+        <div class="service-name">Food</div>
+      </div>
+
+      <div class="service" onclick="showToast('Transport Marketplace')">
+        <div class="service-icon">🚐</div>
+        <div class="service-name">Transport</div>
+      </div>
+
+      <div class="service" onclick="showToast('Experience Marketplace')">
+        <div class="service-icon">🌴</div>
+        <div class="service-name">Experience</div>
+      </div>
+
+      <div class="service" onclick="showToast('Attraction Marketplace')">
+        <div class="service-icon">🎟️</div>
+        <div class="service-name">Attraction</div>
+      </div>
+
+      <div class="service" onclick="showToast('Corporate Event')">
+        <div class="service-icon">🏢</div>
+        <div class="service-name">Corporate</div>
+      </div>
+
+      <div class="service" onclick="showToast('AI Super Engine')">
+        <div class="service-icon">🤖</div>
+        <div class="service-name">AI</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      <h2>AI Smart Package</h2>
+      <span>V96 / V99</span>
+    </div>
+
+    <div class="ai-card">
+
+      <h3>AI Trip & Event Planner</h3>
+
+      <p>
+        HOBBIGO AI dapat menggabungkan hotel, flight,
+        transport, food, activity dan experience
+        menjadi satu paket perjalanan.
+      </p>
+
+      <button class="primary-btn" onclick="generatePackage()">
+        GENERATE AI PACKAGE
+      </button>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      <h2>Recommended Packages</h2>
+      <span>SMART MATCH</span>
+    </div>
+
+    <div class="package">
+      <h3>🏢 Jakarta Corporate Smart Package</h3>
+      <p>
+        Hotel + Meeting Venue + Catering +
+        Executive Transport + Team Activity
+      </p>
+      <div class="price">From Rp 8.500.000</div>
+    </div>
+
+    <div class="package">
+      <h3>🌴 Bali Executive Retreat</h3>
+      <p>
+        Villa + Meeting + Dining +
+        Transport + Team Building
+      </p>
+      <div class="price">From Rp 15.500.000</div>
+    </div>
+
+    <div class="package">
+      <h3>🗼 Tokyo Corporate Experience</h3>
+      <p>
+        Hotel + Flight + Transfer +
+        Corporate Experience
+      </p>
+      <div class="price">From Rp 28.500.000</div>
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      <h2>Smart Route</h2>
+      <span>AI OPTIMIZED</span>
+    </div>
+
+    <div class="route">
+
+      <div class="route-item">✈️ Airport</div>
+      <div class="route-item">🚐 Airport Transfer</div>
+      <div class="route-item">🏨 Hotel / Villa</div>
+      <div class="route-item">🏢 Meeting / Venue</div>
+      <div class="route-item">🍽️ Food & Culinary</div>
+      <div class="route-item">🌴 Activity / Experience</div>
+      <div class="route-item">✈️ Airport</div>
+
+    </div>
+
+  </section>
+
+  <section>
+
+    <div class="section-title">
+      <h2>Corporate & MICE</h2>
+      <span>V95</span>
+    </div>
+
+    <div class="ai-card">
+
+      <h3>Create Your Own Event</h3>
+
+      <p>
+        Meeting, retreat, team building,
+        conference, incentive trip dan exhibition.
+      </p>
+
+      <button class="primary-btn" onclick="corporateEvent()">
+        CREATE CORPORATE EVENT
+      </button>
+
+    </div>
+
+  </section>
+
+  <div class="status">
+    HOBBIGO V100 PWA DEMO<br>
+    Demo data — production API & payment gateway
+    akan dihubungkan pada tahap berikutnya.
+  </div>
+
+</div>
+
+<div class="bottom-nav">
+
+  <div class="nav-item active" onclick="showToast('Home')">
+    <div>⌂</div>
+    HOME
+  </div>
+
+  <div class="nav-item" onclick="showToast('Search')">
+    <div>⌕</div>
+    SEARCH
+  </div>
+
+  <div class="nav-item" onclick="generatePackage()">
+    <div>✦</div>
+    AI
+  </div>
+
+  <div class="nav-item" onclick="showToast('Booking')">
+    <div>▣</div>
+    BOOKING
+  </div>
+
+  <div class="nav-item" onclick="showToast('Menu')">
+    <div>☰</div>
+    MENU
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+function showToast(message) {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.style.display = "block";
+
+  setTimeout(function() {
+    toast.style.display = "none";
+  }, 2200);
+
+}
+
+function planTrip() {
+
+  const destination =
+    document.getElementById("destination").value;
+
+  if (!destination) {
+
+    showToast("Masukkan destinasi terlebih dahulu.");
+
+    return;
+  }
+
+  showToast(
+    "AI sedang menyiapkan perjalanan ke " +
+    destination
+  );
+
+}
+
+function generatePackage() {
+
+  showToast(
+    "AI Smart Package berhasil dibuat."
+  );
+
+}
+
+function corporateEvent() {
+
+  showToast(
+    "Corporate Event Planner V95 siap digunakan."
+  );
+
+}
+
+</script>
+
+</body>
+</html>
