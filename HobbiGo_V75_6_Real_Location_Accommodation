@@ -1,1 +1,3277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V75.6 - Real Location Accommodation Engine</title>
 
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:#f5f7fb;
+    line-height:1.5;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1400px,94%);
+    margin:auto;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(5,12,24,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.nav{
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:#35d8ff;
+}
+
+.navlinks{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+}
+
+.navlinks a{
+    color:#b8c7d9;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.navlinks a:hover{
+    color:#35d8ff;
+}
+
+.cartBtn{
+    border:1px solid rgba(53,216,255,.35);
+    background:rgba(53,216,255,.08);
+    color:#fff;
+    padding:10px 16px;
+    border-radius:12px;
+}
+
+.hero{
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    background:
+        linear-gradient(90deg,rgba(3,10,20,.96),rgba(3,10,20,.55)),
+        url("https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+}
+
+.heroContent{
+    max-width:800px;
+    padding:70px 0;
+}
+
+.badge{
+    display:inline-block;
+    padding:7px 12px;
+    border:1px solid rgba(53,216,255,.35);
+    border-radius:999px;
+    background:rgba(53,216,255,.08);
+    color:#35d8ff;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+h1{
+    font-size:clamp(38px,6vw,70px);
+    line-height:1.03;
+    margin-bottom:20px;
+}
+
+.gradient{
+    background:linear-gradient(90deg,#35d8ff,#7c7cff,#b86cff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:#c0ccda;
+    font-size:18px;
+    max-width:720px;
+}
+
+.searchBox{
+    margin-top:-42px;
+    position:relative;
+    z-index:10;
+}
+
+.searchPanel{
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+.searchGrid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr auto;
+    gap:12px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field label{
+    font-size:11px;
+    color:#8ea3b8;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:13px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#081321;
+    color:#fff;
+    outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#35d8ff;
+}
+
+.primary{
+    border:0;
+    border-radius:12px;
+    padding:13px 18px;
+    background:linear-gradient(90deg,#19bfe7,#675cff);
+    color:white;
+    font-weight:bold;
+}
+
+.secondary{
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:11px;
+    padding:10px 14px;
+    background:#101f32;
+    color:#fff;
+}
+
+.section{
+    padding:65px 0;
+}
+
+.sectionTitle{
+    margin-bottom:28px;
+}
+
+.sectionTitle h2{
+    font-size:32px;
+    margin-bottom:7px;
+}
+
+.sectionTitle p{
+    color:#8fa3b8;
+}
+
+.journeyGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.journeyCard{
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.journeyCard:hover{
+    transform:translateY(-3px);
+    border-color:rgba(53,216,255,.35);
+}
+
+.journeyImage{
+    height:190px;
+    background-size:cover;
+    background-position:center;
+}
+
+.journeyBody{
+    padding:18px;
+}
+
+.journeyBody h3{
+    margin-bottom:7px;
+}
+
+.journeyBody p{
+    color:#92a5b8;
+    font-size:14px;
+    margin-bottom:14px;
+}
+
+.mapLayout{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:20px;
+}
+
+.mapBox{
+    min-height:540px;
+    border-radius:20px;
+    overflow:hidden;
+    background:#0c1726;
+    border:1px solid rgba(255,255,255,.1);
+    position:relative;
+}
+
+#map{
+    width:100%;
+    height:540px;
+}
+
+.mapFallback{
+    height:100%;
+    min-height:540px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    color:#9db0c4;
+}
+
+.mapStatus{
+    position:absolute;
+    top:15px;
+    left:15px;
+    z-index:10;
+    background:rgba(4,12,23,.88);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:10px;
+    padding:9px 12px;
+    font-size:12px;
+}
+
+.locationPanel{
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:20px;
+}
+
+.locationPanel h3{
+    margin-bottom:7px;
+}
+
+.muted{
+    color:#8ea3b8;
+    font-size:14px;
+}
+
+.currentJourney{
+    margin:16px 0;
+    padding:15px;
+    border-radius:13px;
+    background:#081321;
+    border:1px solid rgba(255,255,255,.07);
+}
+
+.stopList{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:15px;
+    max-height:390px;
+    overflow:auto;
+}
+
+.stop{
+    padding:13px;
+    background:#101f32;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:12px;
+}
+
+.stop strong{
+    display:block;
+}
+
+.stop small{
+    color:#8197ac;
+}
+
+.accommodationToolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:15px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.toolbarLeft{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.toolbarLeft select,
+.toolbarLeft input{
+    background:#0d1a2b;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.1);
+    padding:11px;
+    border-radius:10px;
+}
+
+.resultsInfo{
+    color:#8fa3b8;
+    font-size:14px;
+}
+
+.hotelGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.hotelCard{
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+.hotelImage{
+    height:190px;
+    background:#111d2d;
+    background-size:cover;
+    background-position:center;
+}
+
+.hotelBody{
+    padding:17px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    flex:1;
+}
+
+.hotelTop{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.hotelName{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.rating{
+    color:#ffd166;
+    white-space:nowrap;
+    font-size:13px;
+}
+
+.hotelLocation{
+    color:#8fa3b8;
+    font-size:13px;
+}
+
+.distance{
+    color:#35d8ff;
+    font-size:13px;
+}
+
+.hotelTags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.tag{
+    padding:4px 8px;
+    border-radius:999px;
+    background:#14253a;
+    color:#a9bfd4;
+    font-size:11px;
+}
+
+.hotelBottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    margin-top:auto;
+    padding-top:10px;
+}
+
+.price{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.price small{
+    color:#8297ab;
+    font-size:11px;
+    font-weight:normal;
+}
+
+.cardActions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.cardActions button{
+    flex:1;
+    min-width:90px;
+}
+
+.empty{
+    padding:35px;
+    text-align:center;
+    background:#0d1a2b;
+    border:1px dashed rgba(255,255,255,.12);
+    border-radius:15px;
+    color:#91a5b8;
+}
+
+.packageBox{
+    background:linear-gradient(135deg,#0d1a2b,#101c35);
+    border:1px solid rgba(53,216,255,.15);
+    border-radius:20px;
+    padding:24px;
+}
+
+.packageItems{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:20px 0;
+}
+
+.packageItem{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    padding:13px;
+    background:#081321;
+    border-radius:11px;
+}
+
+.cartLayout{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:20px;
+}
+
+.cartItems{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.cartItem{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    padding:15px;
+    border-radius:13px;
+}
+
+.qty{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.qty button{
+    width:28px;
+    height:28px;
+    border-radius:7px;
+    border:0;
+    background:#17283d;
+    color:#fff;
+}
+
+.summary{
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:20px;
+    height:max-content;
+}
+
+.summaryRow{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    color:#9eb1c4;
+}
+
+.summaryTotal{
+    border-top:1px solid rgba(255,255,255,.1);
+    padding-top:14px;
+    margin-top:14px;
+    display:flex;
+    justify-content:space-between;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.bookingBox{
+    max-width:800px;
+    margin:auto;
+    background:#0d1a2b;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:25px;
+}
+
+.bookingGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+    margin:18px 0;
+}
+
+.bookingGrid input,
+.bookingGrid select{
+    width:100%;
+    padding:13px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#081321;
+    color:#fff;
+}
+
+footer{
+    border-top:1px solid rgba(255,255,255,.08);
+    padding:30px 0;
+    color:#73879c;
+    text-align:center;
+    font-size:13px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:5000;
+    background:#122238;
+    border:1px solid rgba(53,216,255,.35);
+    color:#fff;
+    padding:13px 16px;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+    opacity:0;
+    transform:translateY(20px);
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@media(max-width:1050px){
+    .searchGrid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .journeyGrid,
+    .hotelGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .mapLayout{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:700px){
+    .navlinks{
+        display:none;
+    }
+
+    .searchGrid,
+    .journeyGrid,
+    .hotelGrid,
+    .cartLayout,
+    .bookingGrid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        min-height:430px;
+    }
+
+    h1{
+        font-size:42px;
+    }
+
+    .section{
+        padding:45px 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container nav">
+
+    <div class="logo">
+        Hobbi<span>Go</span>
+    </div>
+
+    <nav class="navlinks">
+        <a href="#home">Home</a>
+        <a href="#journeys">Journey</a>
+        <a href="#mapSection">Map</a>
+        <a href="#accommodation">Accommodation</a>
+        <a href="#marketplace">Marketplace</a>
+        <a href="#cart">Cart</a>
+    </nav>
+
+    <button class="cartBtn" onclick="go('cart')">
+        🛒 Cart <span id="cartCount">0</span>
+    </button>
+
+</div>
+</header>
+
+
+<section class="hero" id="home">
+
+<div class="container heroContent">
+
+    <span class="badge">
+        V75.6 • REAL LOCATION ACCOMMODATION ENGINE
+    </span>
+
+    <h1>
+        Your Journey.<br>
+        <span class="gradient">Real Places. Real Map.</span>
+    </h1>
+
+    <p>
+        Discover real accommodation around every journey stop.
+        HobbiGo connects Journey, Google Maps, location intelligence
+        and global marketplace products in one travel flow.
+    </p>
+
+</div>
+
+</section>
+
+
+<section class="searchBox">
+
+<div class="container">
+
+<div class="searchPanel">
+
+<div class="searchGrid">
+
+    <div class="field">
+        <label>Destination / Location</label>
+        <input
+            id="destinationInput"
+            value="Bali, Indonesia"
+            placeholder="Example: Bali, Japan, Paris..."
+        >
+    </div>
+
+    <div class="field">
+        <label>Date</label>
+        <input type="date" id="dateInput">
+    </div>
+
+    <div class="field">
+        <label>Travelers</label>
+        <input type="number" id="travelerInput" value="2" min="1">
+    </div>
+
+    <div class="field">
+        <label>Duration</label>
+        <select id="durationInput">
+            <option value="3">3 Days</option>
+            <option value="5" selected>5 Days</option>
+            <option value="7">7 Days</option>
+            <option value="10">10 Days</option>
+            <option value="14">14 Days</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label>&nbsp;</label>
+        <button class="primary" onclick="searchDestination()">
+            🔎 Search
+        </button>
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="journeys">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>Featured Global Journeys</h2>
+    <p>Select a Journey and HobbiGo will search accommodation around its real locations.</p>
+</div>
+
+<div class="journeyGrid" id="journeyGrid"></div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="mapSection">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>Journey Real Location Map</h2>
+    <p>
+        Every Journey stop can become a location search point.
+    </p>
+</div>
+
+<div class="mapLayout">
+
+    <div class="mapBox">
+
+        <div class="mapStatus" id="mapStatus">
+            Google Maps Ready
+        </div>
+
+        <div id="map">
+
+            <div class="mapFallback">
+                <div>
+                    <h3>Google Maps Engine Ready</h3>
+                    <p>
+                        Add your Google Maps API key to activate
+                        the live map and Places search.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="locationPanel">
+
+        <h3 id="selectedJourneyName">
+            Bali Island Escape
+        </h3>
+
+        <div class="muted" id="selectedJourneyLocation">
+            Bali, Indonesia
+        </div>
+
+        <div class="currentJourney">
+
+            <strong>Journey Stops</strong>
+
+            <div class="stopList" id="stopList"></div>
+
+        </div>
+
+        <button
+            class="primary"
+            style="width:100%;"
+            onclick="searchAccommodation()"
+        >
+            🏨 Find Accommodation Near Journey
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="accommodation">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>Real Accommodation Near Your Journey</h2>
+    <p>
+        Search hotels, villas and lodging around selected Journey locations.
+    </p>
+</div>
+
+<div class="accommodationToolbar">
+
+    <div class="toolbarLeft">
+
+        <select id="stopSelector" onchange="searchAccommodation()">
+            <option value="">Select Journey Stop</option>
+        </select>
+
+        <select id="radiusSelector" onchange="searchAccommodation()">
+            <option value="2000">2 km</option>
+            <option value="5000" selected>5 km</option>
+            <option value="10000">10 km</option>
+            <option value="25000">25 km</option>
+        </select>
+
+        <select id="sortSelector" onchange="sortHotels()">
+            <option value="distance">Nearest</option>
+            <option value="rating">Highest Rating</option>
+            <option value="name">Name</option>
+        </select>
+
+    </div>
+
+    <div class="resultsInfo" id="resultsInfo">
+        Ready to search.
+    </div>
+
+</div>
+
+<div id="hotelGrid" class="hotelGrid"></div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="marketplace">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>HobbiGo Global Marketplace</h2>
+    <p>
+        Accommodation selected from location search can become part of the Journey package.
+    </p>
+</div>
+
+<div class="packageBox">
+
+    <h3>Smart Journey Package</h3>
+
+    <p class="muted">
+        Build a package from Journey stops and selected marketplace products.
+    </p>
+
+    <div class="packageItems" id="packageItems">
+
+        <div class="empty">
+            Select an accommodation first.
+        </div>
+
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+        <button class="primary" onclick="addPackageToCart()">
+            Add Package To Cart
+        </button>
+
+        <button class="secondary" onclick="go('cart')">
+            View Cart
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="cart">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>Your Cart</h2>
+    <p>Journey products selected for your travel package.</p>
+</div>
+
+<div class="cartLayout">
+
+    <div class="cartItems" id="cartItems"></div>
+
+    <div class="summary">
+
+        <h3>Booking Summary</h3>
+
+        <div class="summaryRow">
+            <span>Items</span>
+            <span id="summaryItems">0</span>
+        </div>
+
+        <div class="summaryRow">
+            <span>Service Fee</span>
+            <span id="summaryFee">IDR 0</span>
+        </div>
+
+        <div class="summaryTotal">
+            <span>Total</span>
+            <span id="summaryTotal">IDR 0</span>
+        </div>
+
+        <br>
+
+        <button
+            class="primary"
+            style="width:100%;"
+            onclick="go('booking')"
+        >
+            Continue Booking
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="booking">
+
+<div class="container">
+
+<div class="sectionTitle">
+    <h2>Booking Demo</h2>
+    <p>
+        Investor demo booking flow. Real supplier booking will be connected later.
+    </p>
+</div>
+
+<div class="bookingBox">
+
+    <div class="bookingGrid">
+
+        <input id="guestName" placeholder="Guest Name">
+
+        <input id="guestEmail" placeholder="Email">
+
+        <input id="guestPhone" placeholder="Phone">
+
+        <select id="paymentMethod">
+            <option>Credit Card</option>
+            <option>Bank Transfer</option>
+            <option>Company Billing</option>
+        </select>
+
+    </div>
+
+    <div
+        id="bookingSummary"
+        class="currentJourney"
+    >
+        No items selected.
+    </div>
+
+    <button
+        class="primary"
+        style="width:100%;"
+        onclick="confirmBooking()"
+    >
+        Confirm Demo Booking
+    </button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+    <div class="container">
+        HobbiGo © 2026 • AI Journey & Experience Marketplace
+        <br>
+        V75.6 Real Location Accommodation Engine
+    </div>
+</footer>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V75.6
+   REAL LOCATION ACCOMMODATION ENGINE
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   GOOGLE MAPS API KEY
+   --------------------------------------------------------- */
+
+const GOOGLE_MAPS_API_KEY = "YOUR_GOOGLE_MAPS_API_KEY";
+
+
+/* ---------------------------------------------------------
+   STORAGE
+   --------------------------------------------------------- */
+
+const CART_KEY = "hobbigo_v756_cart";
+const BOOKING_KEY = "hobbigo_v756_booking";
+
+
+/* ---------------------------------------------------------
+   JOURNEY DATA
+   --------------------------------------------------------- */
+
+const journeys = [
+
+{
+    id:"bali",
+    name:"Bali Island Escape",
+    location:"Bali, Indonesia",
+    image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Ubud",
+            type:"Culture",
+            lat:-8.5069,
+            lng:115.2625
+        },
+        {
+            day:2,
+            time:"10:00",
+            name:"Tegallalang Rice Terrace",
+            type:"Nature",
+            lat:-8.4316,
+            lng:115.2792
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Kintamani",
+            type:"Mountain",
+            lat:-8.2397,
+            lng:115.4420
+        },
+        {
+            day:4,
+            time:"11:00",
+            name:"Seminyak",
+            type:"Beach",
+            lat:-8.6913,
+            lng:115.1681
+        },
+        {
+            day:5,
+            time:"09:00",
+            name:"Uluwatu",
+            type:"Temple",
+            lat:-8.8291,
+            lng:115.0849
+        }
+    ]
+},
+
+{
+    id:"japan",
+    name:"Japan Spring Discovery",
+    location:"Tokyo, Japan",
+
+    image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Tokyo",
+            type:"City",
+            lat:35.6762,
+            lng:139.6503
+        },
+        {
+            day:2,
+            time:"10:00",
+            name:"Shibuya",
+            type:"City",
+            lat:35.6595,
+            lng:139.7005
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Asakusa",
+            type:"Culture",
+            lat:35.7148,
+            lng:139.7967
+        },
+        {
+            day:4,
+            time:"10:00",
+            name:"Mount Fuji",
+            type:"Nature",
+            lat:35.3606,
+            lng:138.7274
+        }
+    ]
+},
+
+{
+    id:"swiss",
+    name:"Swiss Alpine Journey",
+    location:"Zurich, Switzerland",
+
+    image:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Zurich",
+            type:"City",
+            lat:47.3769,
+            lng:8.5417
+        },
+        {
+            day:2,
+            time:"10:00",
+            name:"Lucerne",
+            type:"Lake",
+            lat:47.0502,
+            lng:8.3093
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Interlaken",
+            type:"Alps",
+            lat:46.6863,
+            lng:7.8632
+        },
+        {
+            day:4,
+            time:"10:00",
+            name:"Grindelwald",
+            type:"Mountain",
+            lat:46.6244,
+            lng:8.0410
+        }
+    ]
+},
+
+{
+    id:"thailand",
+    name:"Thailand Island Route",
+    location:"Phuket, Thailand",
+
+    image:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Phuket",
+            type:"Beach",
+            lat:7.8804,
+            lng:98.3923
+        },
+        {
+            day:2,
+            time:"09:00",
+            name:"Patong",
+            type:"Beach",
+            lat:7.8966,
+            lng:98.2966
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Phi Phi Islands",
+            type:"Island",
+            lat:7.7407,
+            lng:98.7784
+        }
+    ]
+},
+
+{
+    id:"australia",
+    name:"Australia Coastal Drive",
+    location:"Sydney, Australia",
+
+    image:"https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d1?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Sydney",
+            type:"City",
+            lat:-33.8688,
+            lng:151.2093
+        },
+        {
+            day:2,
+            time:"10:00",
+            name:"Bondi Beach",
+            type:"Beach",
+            lat:-33.8915,
+            lng:151.2767
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Blue Mountains",
+            type:"Nature",
+            lat:-33.7148,
+            lng:150.3110
+        }
+    ]
+},
+
+{
+    id:"komodo",
+    name:"Komodo Explorer",
+    location:"Labuan Bajo, Indonesia",
+
+    image:"https://images.unsplash.com/photo-1544550285-f813152fb2fd?auto=format&fit=crop&w=1000&q=85",
+
+    stops:[
+        {
+            day:1,
+            time:"09:00",
+            name:"Labuan Bajo",
+            type:"City",
+            lat:-8.4960,
+            lng:119.8877
+        },
+        {
+            day:2,
+            time:"08:00",
+            name:"Padar Island",
+            type:"Island",
+            lat:-8.6540,
+            lng:119.6157
+        },
+        {
+            day:3,
+            time:"09:00",
+            name:"Komodo National Park",
+            type:"Nature",
+            lat:-8.5892,
+            lng:119.5398
+        }
+    ]
+}
+
+];
+
+
+/* ---------------------------------------------------------
+   DEMO FALLBACK ACCOMMODATIONS
+   --------------------------------------------------------- */
+
+const demoHotels = [
+
+{
+    id:"demo-bali-1",
+    name:"Ubud Luxury Resort",
+    city:"Ubud, Bali",
+    lat:-8.5069,
+    lng:115.2625,
+    rating:4.8,
+    price:1850000,
+    currency:"IDR",
+    image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80",
+    tags:["Luxury","Pool","Spa"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-bali-2",
+    name:"Bali Garden Villa",
+    city:"Ubud, Bali",
+    lat:-8.5180,
+    lng:115.2710,
+    rating:4.6,
+    price:1250000,
+    currency:"IDR",
+    image:"https://images.unsplash.com/photo-1582610116397-edb318620f90?auto=format&fit=crop&w=900&q=80",
+    tags:["Villa","Garden","Family"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-japan-1",
+    name:"Tokyo Central Hotel",
+    city:"Tokyo, Japan",
+    lat:35.6762,
+    lng:139.6503,
+    rating:4.7,
+    price:18000,
+    currency:"JPY",
+    image:"https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80",
+    tags:["City","Business","Central"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-swiss-1",
+    name:"Alpine View Hotel",
+    city:"Interlaken, Switzerland",
+    lat:46.6863,
+    lng:7.8632,
+    rating:4.8,
+    price:210,
+    currency:"CHF",
+    image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+    tags:["Alps","View","Luxury"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-thai-1",
+    name:"Phuket Beach Resort",
+    city:"Phuket, Thailand",
+    lat:7.8804,
+    lng:98.3923,
+    rating:4.7,
+    price:4200,
+    currency:"THB",
+    image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=80",
+    tags:["Beach","Pool","Resort"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-aus-1",
+    name:"Sydney Harbour Hotel",
+    city:"Sydney, Australia",
+    lat:-33.8688,
+    lng:151.2093,
+    rating:4.6,
+    price:240,
+    currency:"AUD",
+    image:"https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80",
+    tags:["Harbour","City","Premium"],
+    source:"HobbiGo Demo"
+},
+
+{
+    id:"demo-komodo-1",
+    name:"Labuan Bajo Eco Resort",
+    city:"Labuan Bajo, Indonesia",
+    lat:-8.4960,
+    lng:119.8877,
+    rating:4.6,
+    price:1450000,
+    currency:"IDR",
+    image:"https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=900&q=80",
+    tags:["Eco","Sea View","Island"],
+    source:"HobbiGo Demo"
+}
+
+];
+
+
+/* ---------------------------------------------------------
+   GLOBAL STATE
+   --------------------------------------------------------- */
+
+let currentJourney = journeys[0];
+
+let accommodationResults = [];
+
+let selectedAccommodation = null;
+
+let map = null;
+
+let mapMarkers = [];
+
+let journeyPolyline = null;
+
+let googleReady = false;
+
+let cart = JSON.parse(
+    localStorage.getItem(CART_KEY) || "[]"
+);
+
+
+/* ---------------------------------------------------------
+   BASIC FUNCTIONS
+   --------------------------------------------------------- */
+
+function go(id){
+
+    const el = document.getElementById(id);
+
+    if(el){
+        el.scrollIntoView({
+            behavior:"smooth"
+        });
+    }
+
+}
+
+
+function toast(message){
+
+    const el = document.getElementById("toast");
+
+    el.textContent = message;
+
+    el.classList.add("show");
+
+    setTimeout(()=>{
+        el.classList.remove("show");
+    },2500);
+
+}
+
+
+function money(value,currency){
+
+    if(currency === "IDR"){
+
+        return "IDR " + Number(value || 0).toLocaleString("id-ID");
+
+    }
+
+    return currency + " " + Number(value || 0).toLocaleString(
+        undefined,
+        {
+            maximumFractionDigits:0
+        }
+    );
+
+}
+
+
+function saveCart(){
+
+    localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(cart)
+    );
+
+}
+
+
+function distanceKm(lat1,lng1,lat2,lng2){
+
+    const R = 6371;
+
+    const dLat =
+        (lat2-lat1) * Math.PI / 180;
+
+    const dLng =
+        (lng2-lng1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat/2) *
+        Math.sin(dLat/2) +
+
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLng/2) *
+        Math.sin(dLng/2);
+
+    const c =
+        2 * Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1-a)
+        );
+
+    return R*c;
+
+}
+
+
+/* ---------------------------------------------------------
+   JOURNEY RENDER
+   --------------------------------------------------------- */
+
+function renderJourneys(){
+
+    const container =
+        document.getElementById("journeyGrid");
+
+    container.innerHTML = journeys.map(j=>`
+
+        <div class="journeyCard">
+
+            <div
+                class="journeyImage"
+                style="background-image:url('${j.image}')"
+            ></div>
+
+            <div class="journeyBody">
+
+                <h3>${j.name}</h3>
+
+                <p>
+                    📍 ${j.location}
+                </p>
+
+                <p>
+                    ${j.stops.length} journey stops
+                    • Real location ready
+                </p>
+
+                <button
+                    class="primary"
+                    style="width:100%"
+                    onclick="selectJourney('${j.id}')"
+                >
+                    Open Journey
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+function selectJourney(id){
+
+    const journey =
+        journeys.find(j=>j.id === id);
+
+    if(!journey) return;
+
+    currentJourney = journey;
+
+    selectedAccommodation = null;
+
+    document.getElementById(
+        "selectedJourneyName"
+    ).textContent = journey.name;
+
+    document.getElementById(
+        "selectedJourneyLocation"
+    ).textContent = journey.location;
+
+    renderStops();
+
+    renderStopSelector();
+
+    renderMapJourney();
+
+    renderPackage();
+
+    go("mapSection");
+
+    toast(
+        journey.name + " selected"
+    );
+
+}
+
+
+function renderStops(){
+
+    const container =
+        document.getElementById("stopList");
+
+    container.innerHTML =
+        currentJourney.stops.map(
+            (stop,index)=>`
+
+            <div
+                class="stop"
+                onclick="selectStop(${index})"
+                style="cursor:pointer"
+            >
+
+                <strong>
+                    Day ${stop.day} • ${stop.name}
+                </strong>
+
+                <small>
+                    ${stop.time} • ${stop.type}
+                </small>
+
+            </div>
+
+        `
+        ).join("");
+
+}
+
+
+function renderStopSelector(){
+
+    const selector =
+        document.getElementById("stopSelector");
+
+    selector.innerHTML =
+        `<option value="">Select Journey Stop</option>` +
+
+        currentJourney.stops.map(
+            (stop,index)=>`
+
+                <option value="${index}">
+                    Day ${stop.day} - ${stop.name}
+                </option>
+
+            `
+        ).join("");
+
+}
+
+
+function selectStop(index){
+
+    document.getElementById(
+        "stopSelector"
+    ).value = index;
+
+    const stop =
+        currentJourney.stops[index];
+
+    if(map){
+
+        map.setCenter({
+            lat:stop.lat,
+            lng:stop.lng
+        });
+
+        map.setZoom(13);
+
+    }
+
+    searchAccommodation();
+
+    go("accommodation");
+
+}
+
+
+/* ---------------------------------------------------------
+   GOOGLE MAPS
+   --------------------------------------------------------- */
+
+function loadGoogleMaps(){
+
+    if(
+        !GOOGLE_MAPS_API_KEY ||
+        GOOGLE_MAPS_API_KEY ===
+        "YOUR_GOOGLE_MAPS_API_KEY"
+    ){
+
+        document.getElementById(
+            "mapStatus"
+        ).textContent =
+            "Google Maps API Key Required";
+
+        return;
+
+    }
+
+    if(
+        document.querySelector(
+            'script[data-hobbigo-google="true"]'
+        )
+    ){
+        return;
+    }
+
+    const script =
+        document.createElement("script");
+
+    script.dataset.hobbigoGoogle = "true";
+
+    script.src =
+        "https://maps.googleapis.com/maps/api/js?key=" +
+        encodeURIComponent(
+            GOOGLE_MAPS_API_KEY
+        ) +
+        "&libraries=places&callback=initGoogleMap";
+
+    script.async = true;
+    script.defer = true;
+
+    document.head.appendChild(script);
+
+}
+
+
+window.initGoogleMap = function(){
+
+    googleReady = true;
+
+    document.getElementById(
+        "mapStatus"
+    ).textContent =
+        "Google Maps Connected";
+
+    initGoogleMap();
+
+};
+
+
+function initGoogleMap(){
+
+    if(
+        typeof google === "undefined" ||
+        !google.maps
+    ){
+        return;
+    }
+
+    const stop =
+        currentJourney.stops[0];
+
+    map =
+        new google.maps.Map(
+            document.getElementById("map"),
+            {
+                center:{
+                    lat:stop.lat,
+                    lng:stop.lng
+                },
+                zoom:10,
+                mapTypeControl:false,
+                streetViewControl:false,
+                fullscreenControl:true
+            }
+        );
+
+    renderMapJourney();
+
+}
+
+
+function clearMapMarkers(){
+
+    mapMarkers.forEach(
+        marker=>{
+            marker.setMap(null);
+        }
+    );
+
+    mapMarkers = [];
+
+}
+
+
+function renderMapJourney(){
+
+    renderStops();
+
+    if(
+        !map ||
+        typeof google === "undefined"
+    ){
+        return;
+    }
+
+    clearMapMarkers();
+
+    const path =
+        currentJourney.stops.map(
+            stop=>({
+                lat:stop.lat,
+                lng:stop.lng
+            })
+        );
+
+    currentJourney.stops.forEach(
+        (stop,index)=>{
+
+            const marker =
+                new google.maps.Marker({
+                    position:{
+                        lat:stop.lat,
+                        lng:stop.lng
+                    },
+                    map:map,
+                    title:
+                        "Day " +
+                        stop.day +
+                        " - " +
+                        stop.name,
+                    label:String(index+1)
+                });
+
+            mapMarkers.push(marker);
+
+        }
+    );
+
+    if(journeyPolyline){
+        journeyPolyline.setMap(null);
+    }
+
+    journeyPolyline =
+        new google.maps.Polyline({
+            path:path,
+            geodesic:true,
+            strokeOpacity:.8,
+            strokeWeight:4,
+            map:map
+        });
+
+    map.fitBounds(
+        new google.maps.LatLngBounds(
+            path.reduce(
+                (bounds,point)=>{
+                    bounds.extend(point);
+                    return bounds;
+                },
+                new google.maps.LatLngBounds()
+            )
+        )
+    );
+
+}
+
+
+function openGoogleDirections(){
+
+    const stops =
+        currentJourney.stops;
+
+    if(!stops.length) return;
+
+    const origin =
+        stops[0].lat +
+        "," +
+        stops[0].lng;
+
+    const destination =
+        stops[stops.length-1].lat +
+        "," +
+        stops[stops.length-1].lng;
+
+    const waypoints =
+        stops
+        .slice(1,-1)
+        .map(
+            s=>s.lat + "," + s.lng
+        )
+        .join("|");
+
+    let url =
+        "https://www.google.com/maps/dir/?api=1" +
+        "&origin=" +
+        encodeURIComponent(origin) +
+        "&destination=" +
+        encodeURIComponent(destination);
+
+    if(waypoints){
+
+        url +=
+            "&waypoints=" +
+            encodeURIComponent(waypoints);
+
+    }
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   REAL ACCOMMODATION SEARCH
+   --------------------------------------------------------- */
+
+function searchAccommodation(){
+
+    const selector =
+        document.getElementById("stopSelector");
+
+    let index =
+        selector.value;
+
+    if(index === ""){
+
+        index = 0;
+
+        selector.value = 0;
+
+    }
+
+    const stop =
+        currentJourney.stops[
+            Number(index)
+        ];
+
+    if(!stop) return;
+
+    if(
+        googleReady &&
+        typeof google !== "undefined" &&
+        google.maps &&
+        google.maps.places
+    ){
+
+        searchGoogleAccommodation(
+            stop
+        );
+
+    }else{
+
+        searchDemoAccommodation(
+            stop
+        );
+
+    }
+
+}
+
+
+function searchGoogleAccommodation(stop){
+
+    document.getElementById(
+        "resultsInfo"
+    ).textContent =
+        "Searching real Google Maps places near " +
+        stop.name + "...";
+
+    const service =
+        new google.maps.places.PlacesService(
+            map
+        );
+
+    const radius =
+        Number(
+            document.getElementById(
+                "radiusSelector"
+            ).value
+        );
+
+    service.nearbySearch(
+        {
+            location:{
+                lat:stop.lat,
+                lng:stop.lng
+            },
+
+            radius:radius,
+
+            type:"lodging"
+
+        },
+
+        function(results,status){
+
+            if(
+                status !==
+                google.maps.places.PlacesServiceStatus.OK
+            ){
+
+                document.getElementById(
+                    "resultsInfo"
+                ).textContent =
+                    "No live accommodation found. Showing fallback demo data.";
+
+                searchDemoAccommodation(
+                    stop
+                );
+
+                return;
+
+            }
+
+            accommodationResults =
+                results.map(
+                    place=>normalizeGooglePlace(
+                        place,
+                        stop
+                    )
+                );
+
+            renderAccommodation();
+
+            addAccommodationMarkers();
+
+        }
+    );
+
+}
+
+
+function normalizeGooglePlace(
+    place,
+    stop
+){
+
+    let image =
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80";
+
+    if(
+        place.photos &&
+        place.photos.length
+    ){
+
+        image =
+            place.photos[0].getUrl({
+                maxWidth:900,
+                maxHeight:600
+            });
+
+    }
+
+    const lat =
+        place.geometry &&
+        place.geometry.location ?
+        place.geometry.location.lat() :
+        stop.lat;
+
+    const lng =
+        place.geometry &&
+        place.geometry.location ?
+        place.geometry.location.lng() :
+        stop.lng;
+
+    return {
+
+        id:
+            "google-" +
+            place.place_id,
+
+        name:
+            place.name ||
+            "Accommodation",
+
+        city:
+            place.vicinity ||
+            currentJourney.location,
+
+        lat:lat,
+
+        lng:lng,
+
+        rating:
+            place.rating ||
+            0,
+
+        priceLevel:
+            place.price_level,
+
+        price:null,
+
+        currency:"",
+
+        image:image,
+
+        tags:[
+            "Google Maps",
+            "Real Location"
+        ],
+
+        source:"Google Places",
+
+        placeId:
+            place.place_id,
+
+        mapsUrl:
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(
+                place.name +
+                " " +
+                (place.vicinity || "")
+            ) +
+            "&query_place_id=" +
+            encodeURIComponent(
+                place.place_id || ""
+            ),
+
+        distance:
+            distanceKm(
+                stop.lat,
+                stop.lng,
+                lat,
+                lng
+            )
+
+    };
+
+}
+
+
+function searchDemoAccommodation(stop){
+
+    accommodationResults =
+        demoHotels
+        .map(
+            hotel=>{
+
+                return {
+                    ...hotel,
+                    distance:
+                        distanceKm(
+                            stop.lat,
+                            stop.lng,
+                            hotel.lat,
+                            hotel.lng
+                        )
+                };
+
+            }
+        )
+        .filter(
+            hotel=>{
+
+                const radius =
+                    Number(
+                        document.getElementById(
+                            "radiusSelector"
+                        ).value
+                    );
+
+                return (
+                    hotel.distance * 1000
+                ) <= radius;
+
+            }
+        );
+
+    if(
+        accommodationResults.length === 0
+    ){
+
+        accommodationResults =
+            demoHotels
+            .map(
+                hotel=>({
+                    ...hotel,
+                    distance:
+                        distanceKm(
+                            stop.lat,
+                            stop.lng,
+                            hotel.lat,
+                            hotel.lng
+                        )
+                })
+            )
+            .sort(
+                (a,b)=>
+                    a.distance-b.distance
+            )
+            .slice(0,6);
+
+    }
+
+    document.getElementById(
+        "resultsInfo"
+    ).textContent =
+        "Demo location data. Add Google Maps API key for live Places results.";
+
+    renderAccommodation();
+
+}
+
+
+/* ---------------------------------------------------------
+   ACCOMMODATION UI
+   --------------------------------------------------------- */
+
+function renderAccommodation(){
+
+    const container =
+        document.getElementById(
+            "hotelGrid"
+        );
+
+    if(
+        !accommodationResults.length
+    ){
+
+        container.innerHTML =
+            `<div class="empty" style="grid-column:1/-1">
+                No accommodation found for this location.
+            </div>`;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        accommodationResults.map(
+            hotel=>{
+
+                const rating =
+                    hotel.rating
+                    ?
+                    "⭐ " +
+                    hotel.rating
+                    :
+                    "Rating unavailable";
+
+                const distance =
+                    hotel.distance !== undefined
+                    ?
+                    hotel.distance.toFixed(1) +
+                    " km from Journey stop"
+                    :
+                    "Location available";
+
+                const price =
+                    hotel.price
+                    ?
+                    money(
+                        hotel.price,
+                        hotel.currency
+                    ) +
+                    `<small> / night</small>`
+                    :
+                    `<span style="color:#8fa3b8;font-size:13px">
+                        Price via supplier API
+                    </span>`;
+
+                return `
+
+                <div class="hotelCard">
+
+                    <div
+                        class="hotelImage"
+                        style="
+                            background-image:url('${hotel.image}')
+                        "
+                    ></div>
+
+                    <div class="hotelBody">
+
+                        <div class="hotelTop">
+
+                            <div class="hotelName">
+                                ${escapeHtml(hotel.name)}
+                            </div>
+
+                            <div class="rating">
+                                ${rating}
+                            </div>
+
+                        </div>
+
+                        <div class="hotelLocation">
+                            📍 ${escapeHtml(hotel.city || "")}
+                        </div>
+
+                        <div class="distance">
+                            📏 ${distance}
+                        </div>
+
+                        <div class="hotelTags">
+
+                            ${(hotel.tags || [])
+                                .slice(0,4)
+                                .map(
+                                    tag=>
+                                        `<span class="tag">
+                                            ${escapeHtml(tag)}
+                                        </span>`
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                        <div class="hotelBottom">
+
+                            <div class="price">
+                                ${price}
+                            </div>
+
+                        </div>
+
+                        <div class="cardActions">
+
+                            <button
+                                class="secondary"
+                                onclick="viewAccommodation('${hotel.id}')"
+                            >
+                                View
+                            </button>
+
+                            <button
+                                class="primary"
+                                onclick="selectAccommodation('${hotel.id}')"
+                            >
+                                Select
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function viewAccommodation(id){
+
+    const hotel =
+        accommodationResults.find(
+            h=>h.id === id
+        );
+
+    if(!hotel) return;
+
+    if(hotel.mapsUrl){
+
+        window.open(
+            hotel.mapsUrl,
+            "_blank"
+        );
+
+    }else if(
+        hotel.lat &&
+        hotel.lng
+    ){
+
+        const url =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(
+                hotel.lat + "," + hotel.lng
+            );
+
+        window.open(
+            url,
+            "_blank"
+        );
+
+    }
+
+}
+
+
+function selectAccommodation(id){
+
+    const hotel =
+        accommodationResults.find(
+            h=>h.id === id
+        );
+
+    if(!hotel) return;
+
+    selectedAccommodation =
+        hotel;
+
+    renderPackage();
+
+    toast(
+        hotel.name +
+        " added to Journey Package"
+    );
+
+    go("marketplace");
+
+}
+
+
+/* ---------------------------------------------------------
+   ACCOMMODATION MARKERS
+   --------------------------------------------------------- */
+
+function addAccommodationMarkers(){
+
+    if(
+        !map ||
+        typeof google === "undefined"
+    ){
+        return;
+    }
+
+    clearMapMarkers();
+
+    currentJourney.stops.forEach(
+        (stop,index)=>{
+
+            const marker =
+                new google.maps.Marker({
+                    position:{
+                        lat:stop.lat,
+                        lng:stop.lng
+                    },
+                    map:map,
+                    title:
+                        "Journey Stop " +
+                        (index+1) +
+                        ": " +
+                        stop.name,
+                    label:String(index+1)
+                });
+
+            mapMarkers.push(marker);
+
+        }
+    );
+
+    accommodationResults
+        .slice(0,30)
+        .forEach(
+            hotel=>{
+
+                const marker =
+                    new google.maps.Marker({
+                        position:{
+                            lat:hotel.lat,
+                            lng:hotel.lng
+                        },
+                        map:map,
+                        title:hotel.name,
+                        icon:{
+                            url:
+                                "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                        }
+                    });
+
+                const info =
+                    new google.maps.InfoWindow({
+                        content:`
+
+                        <div style="min-width:200px">
+
+                            <strong>
+                                ${escapeHtml(hotel.name)}
+                            </strong>
+
+                            <br>
+
+                            ⭐ ${hotel.rating || "N/A"}
+
+                            <br>
+
+                            📏 ${
+                                hotel.distance
+                                ?
+                                hotel.distance.toFixed(1)+" km"
+                                :
+                                ""
+                            }
+
+                        </div>
+
+                        `
+                    });
+
+                marker.addListener(
+                    "click",
+                    ()=>{
+                        info.open(
+                            map,
+                            marker
+                        );
+                    }
+                );
+
+                mapMarkers.push(marker);
+
+            }
+        );
+
+}
+
+
+/* ---------------------------------------------------------
+   SORT
+   --------------------------------------------------------- */
+
+function sortHotels(){
+
+    const mode =
+        document.getElementById(
+            "sortSelector"
+        ).value;
+
+    accommodationResults.sort(
+        (a,b)=>{
+
+            if(mode === "distance"){
+
+                return (
+                    (a.distance || 999) -
+                    (b.distance || 999)
+                );
+
+            }
+
+            if(mode === "rating"){
+
+                return (
+                    (b.rating || 0) -
+                    (a.rating || 0)
+                );
+
+            }
+
+            if(mode === "name"){
+
+                return String(a.name)
+                    .localeCompare(
+                        String(b.name)
+                    );
+
+            }
+
+            return 0;
+
+        }
+    );
+
+    renderAccommodation();
+
+}
+
+
+/* ---------------------------------------------------------
+   PACKAGE ENGINE
+   --------------------------------------------------------- */
+
+function renderPackage(){
+
+    const container =
+        document.getElementById(
+            "packageItems"
+        );
+
+    if(!selectedAccommodation){
+
+        container.innerHTML =
+            `<div class="empty">
+                Select a real accommodation from the location search.
+            </div>`;
+
+        return;
+
+    }
+
+    const stopIndex =
+        Number(
+            document.getElementById(
+                "stopSelector"
+            ).value || 0
+        );
+
+    const stop =
+        currentJourney.stops[
+            stopIndex
+        ];
+
+    container.innerHTML = `
+
+        <div class="packageItem">
+
+            <div>
+
+                <strong>
+                    🗺️ Journey
+                </strong>
+
+                <div class="muted">
+                    ${currentJourney.name}
+                </div>
+
+            </div>
+
+            <strong>
+                Global Journey
+            </strong>
+
+        </div>
+
+
+        <div class="packageItem">
+
+            <div>
+
+                <strong>
+                    📍 Journey Stop
+                </strong>
+
+                <div class="muted">
+                    Day ${stop.day} • ${stop.name}
+                </div>
+
+            </div>
+
+            <strong>
+                ${stop.type}
+            </strong>
+
+        </div>
+
+
+        <div class="packageItem">
+
+            <div>
+
+                <strong>
+                    🏨 Accommodation
+                </strong>
+
+                <div class="muted">
+                    ${escapeHtml(
+                        selectedAccommodation.name
+                    )}
+                </div>
+
+            </div>
+
+            <strong>
+                ${
+                    selectedAccommodation.price
+                    ?
+                    money(
+                        selectedAccommodation.price,
+                        selectedAccommodation.currency
+                    )
+                    :
+                    "Live supplier price"
+                }
+            </strong>
+
+        </div>
+
+    `;
+
+}
+
+
+function addPackageToCart(){
+
+    if(!selectedAccommodation){
+
+        toast(
+            "Please select accommodation first."
+        );
+
+        go("accommodation");
+
+        return;
+
+    }
+
+    const hotel =
+        selectedAccommodation;
+
+    const existing =
+        cart.find(
+            item=>
+                item.id === hotel.id
+        );
+
+    if(existing){
+
+        existing.qty += 1;
+
+    }else{
+
+        cart.push({
+
+            id:hotel.id,
+
+            name:hotel.name,
+
+            type:"Accommodation",
+
+            location:
+                hotel.city,
+
+            price:
+                hotel.price || 0,
+
+            currency:
+                hotel.currency || "IDR",
+
+            qty:1,
+
+            image:
+                hotel.image,
+
+            source:
+                hotel.source
+
+        });
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+    toast(
+        hotel.name +
+        " added to Cart"
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   CART
+   --------------------------------------------------------- */
+
+function renderCart(){
+
+    const container =
+        document.getElementById(
+            "cartItems"
+        );
+
+    if(!cart.length){
+
+        container.innerHTML =
+            `<div class="empty">
+                Your cart is empty.
+            </div>`;
+
+    }else{
+
+        container.innerHTML =
+            cart.map(
+                item=>`
+
+                <div class="cartItem">
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(item.name)}
+                        </strong>
+
+                        <div class="muted">
+                            ${escapeHtml(item.type)}
+                            •
+                            ${escapeHtml(item.location)}
+                        </div>
+
+                        <div>
+                            ${
+                                item.price
+                                ?
+                                money(
+                                    item.price,
+                                    item.currency
+                                )
+                                :
+                                "Supplier price pending"
+                            }
+                        </div>
+
+                    </div>
+
+                    <div class="qty">
+
+                        <button
+                            onclick="changeQty('${item.id}',-1)"
+                        >
+                            −
+                        </button>
+
+                        <span>
+                            ${item.qty}
+                        </span>
+
+                        <button
+                            onclick="changeQty('${item.id}',1)"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            onclick="removeCart('${item.id}')"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </div>
+
+                `
+            ).join("");
+
+    }
+
+    const itemCount =
+        cart.reduce(
+            (sum,item)=>
+                sum + item.qty,
+            0
+        );
+
+    document.getElementById(
+        "cartCount"
+    ).textContent =
+        itemCount;
+
+    document.getElementById(
+        "summaryItems"
+    ).textContent =
+        itemCount;
+
+    /*
+       IMPORTANT:
+       V75.6 is still multi-currency ready.
+       We do NOT pretend JPY/CHF/AUD/THB are IDR.
+       Mixed currency totals are therefore marked
+       as supplier/FX pending below.
+    */
+
+    const currencies =
+        [...new Set(
+            cart
+            .map(
+                item=>item.currency
+            )
+            .filter(Boolean)
+        )];
+
+    if(currencies.length <= 1){
+
+        const currency =
+            currencies[0] || "IDR";
+
+        const subtotal =
+            cart.reduce(
+                (sum,item)=>
+                    sum +
+                    (
+                        Number(item.price || 0) *
+                        item.qty
+                    ),
+                0
+            );
+
+        const fee =
+            subtotal * .03;
+
+        document.getElementById(
+            "summaryFee"
+        ).textContent =
+            money(
+                fee,
+                currency
+            );
+
+        document.getElementById(
+            "summaryTotal"
+        ).textContent =
+            money(
+                subtotal + fee,
+                currency
+            );
+
+    }else{
+
+        document.getElementById(
+            "summaryFee"
+        ).textContent =
+            "FX engine pending";
+
+        document.getElementById(
+            "summaryTotal"
+        ).textContent =
+            "Multi-currency";
+
+    }
+
+    updateBookingSummary();
+
+}
+
+
+function changeQty(id,delta){
+
+    const item =
+        cart.find(
+            item=>item.id === id
+        );
+
+    if(!item) return;
+
+    item.qty += delta;
+
+    if(item.qty <= 0){
+
+        cart =
+            cart.filter(
+                item=>item.id !== id
+            );
+
+    }
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+function removeCart(id){
+
+    cart =
+        cart.filter(
+            item=>item.id !== id
+        );
+
+    saveCart();
+
+    renderCart();
+
+    toast("Item removed");
+
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH DESTINATION
+   --------------------------------------------------------- */
+
+function searchDestination(){
+
+    const query =
+        document.getElementById(
+            "destinationInput"
+        ).value
+        .trim()
+        .toLowerCase();
+
+    if(!query){
+
+        toast(
+            "Please enter destination."
+        );
+
+        return;
+
+    }
+
+    const match =
+        journeys.find(
+            journey=>
+                (
+                    journey.location +
+                    " " +
+                    journey.name
+                )
+                .toLowerCase()
+                .includes(query)
+        );
+
+    if(match){
+
+        selectJourney(match.id);
+
+        return;
+
+    }
+
+    /*
+       If no demo journey matches,
+       show a real Google Maps search.
+    */
+
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(
+            document.getElementById(
+                "destinationInput"
+            ).value
+        );
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+    toast(
+        "Destination opened in Google Maps."
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   BOOKING
+   --------------------------------------------------------- */
+
+function updateBookingSummary(){
+
+    const container =
+        document.getElementById(
+            "bookingSummary"
+        );
+
+    if(!cart.length){
+
+        container.textContent =
+            "No items selected.";
+
+        return;
+
+    }
+
+    container.innerHTML = `
+
+        <strong>
+            ${currentJourney.name}
+        </strong>
+
+        <br>
+
+        <span class="muted">
+            ${cart.length} product type(s)
+            •
+            ${cart.reduce(
+                (s,i)=>s+i.qty,
+                0
+            )} item(s)
+        </span>
+
+        <br><br>
+
+        ${cart.map(
+            item=>`
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                margin:7px 0;
+                gap:15px;
+            ">
+
+                <span>
+                    ${escapeHtml(item.name)}
+                    × ${item.qty}
+                </span>
+
+                <strong>
+                    ${
+                        item.price
+                        ?
+                        money(
+                            item.price *
+                            item.qty,
+                            item.currency
+                        )
+                        :
+                        "Supplier price"
+                    }
+                </strong>
+
+            </div>
+
+            `
+        ).join("")}
+
+    `;
+
+}
+
+
+function confirmBooking(){
+
+    if(!cart.length){
+
+        toast(
+            "Cart is empty."
+        );
+
+        go("cart");
+
+        return;
+
+    }
+
+    const booking = {
+
+        id:
+            "HB-" +
+            Date.now(),
+
+        journey:
+            currentJourney.name,
+
+        guest:
+            document.getElementById(
+                "guestName"
+            ).value,
+
+        email:
+            document.getElementById(
+                "guestEmail"
+            ).value,
+
+        phone:
+            document.getElementById(
+                "guestPhone"
+            ).value,
+
+        payment:
+            document.getElementById(
+                "paymentMethod"
+            ).value,
+
+        items:cart,
+
+        createdAt:
+            new Date().toISOString(),
+
+        status:
+            "DEMO_CONFIRMED"
+
+    };
+
+    localStorage.setItem(
+        BOOKING_KEY,
+        JSON.stringify(booking)
+    );
+
+    toast(
+        "Demo booking confirmed: " +
+        booking.id
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   INIT
+   --------------------------------------------------------- */
+
+function init(){
+
+    renderJourneys();
+
+    renderStops();
+
+    renderStopSelector();
+
+    renderCart();
+
+    renderPackage();
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+    document.getElementById(
+        "dateInput"
+    ).value = today;
+
+    /*
+       Load Google Maps only if key exists.
+       Without key the app remains fully usable
+       with demo fallback accommodation.
+    */
+
+    loadGoogleMaps();
+
+}
+
+
+/* ---------------------------------------------------------
+   START
+   --------------------------------------------------------- */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+</script>
+
+</body>
+</html>
