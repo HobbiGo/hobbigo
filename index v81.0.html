@@ -1,1 +1,2536 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HobbiGo V81.0 - Global Master Data Engine</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#081b33,#0d3b66);
+    color:white;
+    padding:16px 5%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 15px rgba(0,0,0,.2);
+}
+
+.nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+.logo span{
+    color:#38d9ff;
+}
+
+.nav button{
+    background:rgba(255,255,255,.12);
+    color:white;
+    border:1px solid rgba(255,255,255,.25);
+    padding:9px 14px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.hero{
+    background:
+    linear-gradient(rgba(5,25,48,.72),rgba(5,25,48,.72)),
+    url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80");
+    background-size:cover;
+    background-position:center;
+    min-height:470px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    padding:40px 20px;
+}
+
+.hero-content{
+    max-width:900px;
+}
+
+.hero h1{
+    font-size:56px;
+    margin-bottom:12px;
+}
+
+.hero h1 span{
+    color:#42d9ff;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:25px;
+}
+
+.badge{
+    display:inline-block;
+    background:#ffffff20;
+    border:1px solid #ffffff40;
+    padding:9px 16px;
+    border-radius:30px;
+    margin-bottom:20px;
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:35px auto;
+}
+
+.section-title{
+    margin-bottom:18px;
+}
+
+.section-title h2{
+    font-size:28px;
+}
+
+.section-title p{
+    color:#657085;
+    margin-top:5px;
+}
+
+.panel{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:30px;
+    box-shadow:0 8px 30px rgba(20,40,70,.08);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e3e9f2;
+    border-radius:16px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(20,40,70,.12);
+}
+
+.card-img{
+    height:145px;
+    background-size:cover;
+    background-position:center;
+}
+
+.card-body{
+    padding:16px;
+}
+
+.card h3{
+    margin-bottom:8px;
+}
+
+.muted{
+    color:#68758a;
+    font-size:14px;
+}
+
+.price{
+    font-size:21px;
+    font-weight:800;
+    color:#087f5b;
+    margin:10px 0;
+}
+
+.small-price{
+    font-size:14px;
+    color:#087f5b;
+    font-weight:bold;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+}
+
+.btn{
+    padding:11px 17px;
+    border-radius:10px;
+    background:#0d6efd;
+    color:white;
+    font-weight:bold;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+.btn.green{
+    background:#087f5b;
+}
+
+.btn.dark{
+    background:#102a43;
+}
+
+.btn.orange{
+    background:#e67700;
+}
+
+.btn.light{
+    background:#e9eef5;
+    color:#172033;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:20px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd5e2;
+    border-radius:10px;
+    background:white;
+    font-size:14px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+    font-size:13px;
+}
+
+.map{
+    height:440px;
+    border-radius:18px;
+    position:relative;
+    overflow:hidden;
+    background:
+      linear-gradient(35deg,transparent 48%,#d8dee8 49%,#d8dee8 51%,transparent 52%),
+      linear-gradient(-25deg,transparent 48%,#d8dee8 49%,#d8dee8 51%,transparent 52%),
+      #e8f0e6;
+    background-size:180px 180px,220px 220px,auto;
+    border:1px solid #ccd7df;
+}
+
+.map-title{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:white;
+    padding:10px 14px;
+    border-radius:10px;
+    box-shadow:0 4px 15px #0002;
+    z-index:5;
+    font-weight:bold;
+}
+
+.marker{
+    position:absolute;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#0d6efd;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:3px solid white;
+    box-shadow:0 4px 12px #0004;
+    cursor:pointer;
+    z-index:4;
+}
+
+.marker.hotel{
+    background:#e67700;
+}
+
+.marker.activity{
+    background:#087f5b;
+}
+
+.marker.restaurant{
+    background:#d6336c;
+}
+
+.marker.airport{
+    background:#5f3dc4;
+}
+
+.route{
+    position:absolute;
+    height:5px;
+    background:#0d6efd;
+    transform-origin:left center;
+    z-index:2;
+    border-radius:5px;
+}
+
+.map-controls{
+    position:absolute;
+    right:15px;
+    top:15px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    z-index:10;
+}
+
+.map-controls button{
+    width:42px;
+    height:42px;
+    background:white;
+    border-radius:9px;
+    font-size:20px;
+    box-shadow:0 4px 12px #0003;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.stat{
+    padding:20px;
+    background:linear-gradient(135deg,#0d3b66,#1167a8);
+    color:white;
+    border-radius:15px;
+}
+
+.stat strong{
+    display:block;
+    font-size:30px;
+    margin-bottom:5px;
+}
+
+.class-box{
+    background:#f7f9fc;
+    padding:12px;
+    border-radius:10px;
+    margin:8px 0;
+    border:1px solid #e1e7ef;
+}
+
+.class-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:#e7f5ff;
+    color:#087f5b;
+    padding:5px 9px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.trip-result{
+    background:#eef8ff;
+    border-left:5px solid #0d6efd;
+    padding:18px;
+    border-radius:10px;
+    margin-top:15px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    z-index:2000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:700px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:25px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    font-size:25px;
+    background:none;
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    border-bottom:1px solid #e2e7ee;
+    padding:13px 0;
+}
+
+.total{
+    font-size:25px;
+    font-weight:900;
+    margin:20px 0;
+}
+
+footer{
+    background:#071a2d;
+    color:white;
+    text-align:center;
+    padding:35px 20px;
+    margin-top:50px;
+}
+
+@media(max-width:650px){
+    .hero h1{
+        font-size:38px;
+    }
+
+    .nav{
+        flex-wrap:wrap;
+    }
+
+    .hero{
+        min-height:420px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo">Hobbi<span>Go</span></div>
+
+        <div>
+            <button onclick="go('home')">HOME</button>
+            <button onclick="go('planner')">AI TRIP</button>
+            <button onclick="go('marketplace')">MARKETPLACE</button>
+            <button onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+        </div>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="badge">🌍 GLOBAL MASTER DATA ENGINE — V81.0</div>
+
+        <h1>Travel The World With <span>HobbiGo</span></h1>
+
+        <p>
+            AI Journey & Experience Marketplace
+        </p>
+
+        <p>
+            Search → Plan → Configure → Package → Book → Experience → Re-optimize
+        </p>
+
+        <br>
+
+        <button class="btn green" onclick="go('planner')">
+            🤖 START AI TRIP PLANNER
+        </button>
+
+        <button class="btn" onclick="go('marketplace')">
+            🌍 EXPLORE GLOBAL DATA
+        </button>
+    </div>
+</section>
+
+<div class="container">
+
+<!-- GLOBAL MASTER DATA -->
+
+<section class="panel" id="global">
+
+    <div class="section-title">
+        <h2>🌍 Global Master Data</h2>
+        <p>
+            Demo master database — structure ready for future real API integration.
+        </p>
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <strong id="countryCount">195</strong>
+            Countries
+        </div>
+
+        <div class="stat">
+            <strong>1,000+</strong>
+            Demo Cities
+        </div>
+
+        <div class="stat">
+            <strong>10+</strong>
+            Product Categories
+        </div>
+
+        <div class="stat">
+            <strong>API Ready</strong>
+            Real Data Engine
+        </div>
+    </div>
+
+    <br>
+
+    <div class="controls">
+
+        <div>
+            <label>Country</label>
+            <select id="countrySelect" onchange="changeCountry()"></select>
+        </div>
+
+        <div>
+            <label>Destination</label>
+            <select id="destinationSelect"></select>
+        </div>
+
+        <div>
+            <label>Travel Date</label>
+            <input type="date" id="globalDate">
+        </div>
+
+        <div>
+            <label>Currency</label>
+            <select id="currency">
+                <option>IDR</option>
+                <option>USD</option>
+                <option>EUR</option>
+                <option>SGD</option>
+                <option>JPY</option>
+                <option>AUD</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div id="destinationInfo"></div>
+
+</section>
+
+
+<!-- AI TRIP PLANNER -->
+
+<section class="panel" id="planner">
+
+    <div class="section-title">
+        <h2>🤖 AI Trip Planner</h2>
+        <p>Build your trip using Global Master Data.</p>
+    </div>
+
+    <div class="controls">
+
+        <div>
+            <label>Tujuan</label>
+            <select id="tripDestination"></select>
+        </div>
+
+        <div>
+            <label>Tanggal</label>
+            <input type="date" id="tripDate">
+        </div>
+
+        <div>
+            <label>Jumlah Orang</label>
+            <input type="number" id="people" value="2" min="1">
+        </div>
+
+        <div>
+            <label>Durasi</label>
+            <select id="duration">
+                <option value="2">2 Days</option>
+                <option value="3">3 Days</option>
+                <option value="4">4 Days</option>
+                <option value="5">5 Days</option>
+                <option value="7">7 Days</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Gaya Trip</label>
+            <select id="tripStyle">
+                <option>Best Price</option>
+                <option>Economy</option>
+                <option>Comfort</option>
+                <option>Exclusive</option>
+                <option>Luxury</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Minat</label>
+            <select id="interest">
+                <option>Beach</option>
+                <option>Culture</option>
+                <option>Adventure</option>
+                <option>Culinary</option>
+                <option>Shopping</option>
+                <option>Nature</option>
+                <option>Family</option>
+            </select>
+        </div>
+
+    </div>
+
+    <button class="btn green" onclick="generateTrip()">
+        ✨ GENERATE TRIP
+    </button>
+
+    <div id="tripResult"></div>
+
+</section>
+
+
+<!-- MARKETPLACE -->
+
+<section class="panel" id="marketplace">
+
+    <div class="section-title">
+        <h2>🛍️ Global Marketplace</h2>
+        <p>Hotel, Flight, Villa, Restaurant, Transport, Attraction, Activity & Boat.</p>
+    </div>
+
+    <div class="controls">
+
+        <div>
+            <label>Category</label>
+
+            <select id="categoryFilter" onchange="renderProducts()">
+                <option value="all">All Categories</option>
+                <option value="hotel">Hotel</option>
+                <option value="flight">Flight</option>
+                <option value="villa">Villa</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="transport">Transport</option>
+                <option value="attraction">Attraction</option>
+                <option value="activity">Activity</option>
+                <option value="boat">Boat</option>
+                <option value="tour">Tour</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Search</label>
+            <input
+                id="searchInput"
+                placeholder="Search hotel, flight, destination..."
+                oninput="renderProducts()"
+            >
+        </div>
+
+        <div>
+            <label>Date Pricing</label>
+            <input type="date" id="marketDate" onchange="renderProducts()">
+        </div>
+
+    </div>
+
+    <div class="grid" id="productGrid"></div>
+
+</section>
+
+
+<!-- HOTEL ROOM ENGINE -->
+
+<section class="panel">
+
+    <div class="section-title">
+        <h2>🏨 Hotel Room Classification Engine</h2>
+        <p>
+            Demo harga berbeda berdasarkan klasifikasi kamar dan tanggal.
+        </p>
+    </div>
+
+    <div id="hotelClasses"></div>
+
+</section>
+
+
+<!-- FLIGHT CLASS ENGINE -->
+
+<section class="panel">
+
+    <div class="section-title">
+        <h2>✈️ Flight Class Pricing Engine</h2>
+        <p>
+            Demo harga berdasarkan Economy, Business dan First Class.
+        </p>
+    </div>
+
+    <div id="flightClasses"></div>
+
+</section>
+
+
+<!-- SMART MAP -->
+
+<section class="panel" id="mapSection">
+
+    <div class="section-title">
+        <h2>🗺️ HobbiGo Smart Route Map</h2>
+        <p>
+            Airport → Hotel → Restaurant → Activity
+        </p>
+    </div>
+
+    <div class="map" id="map">
+
+        <div class="map-title">
+            📍 Smart Route Demo
+        </div>
+
+        <div class="map-controls">
+            <button onclick="zoomMap(1)">+</button>
+            <button onclick="zoomMap(-1)">−</button>
+            <button onclick="resetMap()">⌂</button>
+        </div>
+
+        <div class="marker airport" style="left:12%;top:70%;">
+            ✈
+        </div>
+
+        <div class="marker hotel" style="left:38%;top:48%;">
+            🏨
+        </div>
+
+        <div class="marker restaurant" style="left:60%;top:60%;">
+            🍽
+        </div>
+
+        <div class="marker activity" style="left:80%;top:30%;">
+            🎯
+        </div>
+
+        <div class="route"
+             style="left:15%;top:68%;width:28%;transform:rotate(-28deg)">
+        </div>
+
+        <div class="route"
+             style="left:41%;top:49%;width:24%;transform:rotate(18deg)">
+        </div>
+
+        <div class="route"
+             style="left:63%;top:58%;width:25%;transform:rotate(-28deg)">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PACKAGE BUILDER -->
+
+<section class="panel">
+
+    <div class="section-title">
+        <h2>📦 Smart Package Builder</h2>
+        <p>Select products and build your own HobbiGo package.</p>
+    </div>
+
+    <div id="packageSummary">
+        No package selected yet.
+    </div>
+
+</section>
+
+</div>
+
+
+<!-- CART MODAL -->
+
+<div class="modal" id="cartModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+            <h2>🛒 My Trip</h2>
+
+            <button class="close" onclick="closeCart()">
+                ×
+            </button>
+        </div>
+
+        <div id="cartItems"></div>
+
+        <div class="total">
+            Total:
+            <span id="cartTotal">IDR 0</span>
+        </div>
+
+        <button class="btn green" onclick="openBooking()">
+            BOOK TRIP
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- BOOKING MODAL -->
+
+<div class="modal" id="bookingModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+            <h2>💳 Booking & Payment</h2>
+
+            <button class="close" onclick="closeBooking()">
+                ×
+            </button>
+        </div>
+
+        <div class="controls">
+
+            <div>
+                <label>Customer Name</label>
+                <input id="customerName" placeholder="Your name">
+            </div>
+
+            <div>
+                <label>Email</label>
+                <input id="customerEmail" placeholder="Email">
+            </div>
+
+            <div>
+                <label>Payment Method</label>
+
+                <select id="paymentMethod">
+                    <option>Credit Card</option>
+                    <option>Virtual Account</option>
+                    <option>Bank Transfer</option>
+                    <option>Company Billing</option>
+                    <option>Demo Payment</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div id="bookingSummary"></div>
+
+        <button class="btn green" onclick="confirmBooking()">
+            CONFIRM DEMO BOOKING
+        </button>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <h2>HobbiGo</h2>
+
+    <p>
+        AI Journey & Experience Marketplace
+    </p>
+
+    <br>
+
+    <p>
+        V81.0 Global Master Data Engine
+    </p>
+
+    <p>
+        Demo System — Real API Ready
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V81.0
+   GLOBAL MASTER DATA
+========================================================= */
+
+const countries = [
+
+    {
+        name:"Indonesia",
+        code:"ID",
+        cities:[
+            {
+                city:"Bali",
+                country:"Indonesia",
+                airport:"DPS",
+                lat:-8.4095,
+                lng:115.1889,
+                image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                city:"Jakarta",
+                country:"Indonesia",
+                airport:"CGK",
+                lat:-6.2088,
+                lng:106.8456,
+                image:"https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                city:"Yogyakarta",
+                country:"Indonesia",
+                airport:"YIA",
+                lat:-7.7956,
+                lng:110.3695,
+                image:"https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"Singapore",
+        code:"SG",
+        cities:[
+            {
+                city:"Singapore",
+                country:"Singapore",
+                airport:"SIN",
+                lat:1.3521,
+                lng:103.8198,
+                image:"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"Japan",
+        code:"JP",
+        cities:[
+            {
+                city:"Tokyo",
+                country:"Japan",
+                airport:"NRT",
+                lat:35.6762,
+                lng:139.6503,
+                image:"https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                city:"Osaka",
+                country:"Japan",
+                airport:"KIX",
+                lat:34.6937,
+                lng:135.5023,
+                image:"https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"France",
+        code:"FR",
+        cities:[
+            {
+                city:"Paris",
+                country:"France",
+                airport:"CDG",
+                lat:48.8566,
+                lng:2.3522,
+                image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"United Kingdom",
+        code:"GB",
+        cities:[
+            {
+                city:"London",
+                country:"United Kingdom",
+                airport:"LHR",
+                lat:51.5074,
+                lng:-0.1278,
+                image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"United Arab Emirates",
+        code:"AE",
+        cities:[
+            {
+                city:"Dubai",
+                country:"United Arab Emirates",
+                airport:"DXB",
+                lat:25.2048,
+                lng:55.2708,
+                image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"Australia",
+        code:"AU",
+        cities:[
+            {
+                city:"Sydney",
+                country:"Australia",
+                airport:"SYD",
+                lat:-33.8688,
+                lng:151.2093,
+                image:"https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d7?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"United States",
+        code:"US",
+        cities:[
+            {
+                city:"New York",
+                country:"United States",
+                airport:"JFK",
+                lat:40.7128,
+                lng:-74.0060,
+                image:"https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                city:"Los Angeles",
+                country:"United States",
+                airport:"LAX",
+                lat:34.0522,
+                lng:-118.2437,
+                image:"https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"Italy",
+        code:"IT",
+        cities:[
+            {
+                city:"Rome",
+                country:"Italy",
+                airport:"FCO",
+                lat:41.9028,
+                lng:12.4964,
+                image:"https://images.unsplash.com/photo-1529260830199-42c24126f198?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    },
+
+    {
+        name:"Thailand",
+        code:"TH",
+        cities:[
+            {
+                city:"Bangkok",
+                country:"Thailand",
+                airport:"BKK",
+                lat:13.7563,
+                lng:100.5018,
+                image:"https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                city:"Phuket",
+                country:"Thailand",
+                airport:"HKT",
+                lat:7.8804,
+                lng:98.3923,
+                image:"https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=800&q=80"
+            }
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   HOTEL ROOM CLASSIFICATION
+========================================================= */
+
+const hotelRooms = [
+
+    {
+        type:"Standard Room",
+        multiplier:1,
+        description:"Comfortable standard room"
+    },
+
+    {
+        type:"Deluxe Room",
+        multiplier:1.35,
+        description:"Larger room with upgraded facilities"
+    },
+
+    {
+        type:"Twin Bed",
+        multiplier:1.45,
+        description:"Two separate beds"
+    },
+
+    {
+        type:"Luxury Room",
+        multiplier:1.8,
+        description:"Premium luxury accommodation"
+    },
+
+    {
+        type:"Executive Room",
+        multiplier:2.25,
+        description:"Executive level room and facilities"
+    },
+
+    {
+        type:"Presidential Suite",
+        multiplier:4.5,
+        description:"Top-level premium suite"
+    }
+
+];
+
+
+/* =========================================================
+   FLIGHT CLASSIFICATION
+========================================================= */
+
+const flightClasses = [
+
+    {
+        type:"Economy Class",
+        multiplier:1,
+        description:"Standard economy ticket"
+    },
+
+    {
+        type:"Business Class",
+        multiplier:2.8,
+        description:"Business class with premium service"
+    },
+
+    {
+        type:"First Class",
+        multiplier:5.5,
+        description:"First class premium experience"
+    }
+
+];
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+const products = [
+
+    {
+        id:"H001",
+        category:"hotel",
+        name:"HobbiGo Bali Beach Resort",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:1200000,
+        image:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"H002",
+        category:"hotel",
+        name:"Tokyo Grand Hotel",
+        city:"Tokyo",
+        country:"Japan",
+        basePrice:1800000,
+        image:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"H003",
+        category:"hotel",
+        name:"Paris Luxury Hotel",
+        city:"Paris",
+        country:"France",
+        basePrice:2300000,
+        image:"https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"H004",
+        category:"hotel",
+        name:"Dubai Royal Hotel",
+        city:"Dubai",
+        country:"United Arab Emirates",
+        basePrice:2800000,
+        image:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"F001",
+        category:"flight",
+        name:"Jakarta → Bali",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:1500000,
+        image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"F002",
+        category:"flight",
+        name:"Jakarta → Singapore",
+        city:"Singapore",
+        country:"Singapore",
+        basePrice:2200000,
+        image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"F003",
+        category:"flight",
+        name:"Singapore → Tokyo",
+        city:"Tokyo",
+        country:"Japan",
+        basePrice:4500000,
+        image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"F004",
+        category:"flight",
+        name:"Singapore → Paris",
+        city:"Paris",
+        country:"France",
+        basePrice:8500000,
+        image:"https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"V001",
+        category:"villa",
+        name:"Private Pool Villa Bali",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:2500000,
+        image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"R001",
+        category:"restaurant",
+        name:"Bali Local Taste",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:250000,
+        image:"https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"R002",
+        category:"restaurant",
+        name:"Tokyo Local Kitchen",
+        city:"Tokyo",
+        country:"Japan",
+        basePrice:450000,
+        image:"https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"T001",
+        category:"transport",
+        name:"Private Car + Driver",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:650000,
+        image:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"A001",
+        category:"attraction",
+        name:"Bali Cultural Experience",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:350000,
+        image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"A002",
+        category:"activity",
+        name:"Bali Snorkeling Experience",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:550000,
+        image:"https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"B001",
+        category:"boat",
+        name:"Private Boat Charter",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:3500000,
+        image:"https://images.unsplash.com/photo-1540946485063-a40da27545f8?auto=format&fit=crop&w=800&q=80"
+    },
+
+    {
+        id:"TO001",
+        category:"tour",
+        name:"Bali Island Tour",
+        city:"Bali",
+        country:"Indonesia",
+        basePrice:950000,
+        image:"https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=800&q=80"
+    }
+
+];
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+let cart = [];
+
+let packageItems = [];
+
+let mapZoom = 1;
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function today(){
+
+    const d = new Date();
+
+    return d.toISOString().split("T")[0];
+
+}
+
+document.getElementById("globalDate").value = today();
+document.getElementById("tripDate").value = today();
+document.getElementById("marketDate").value = today();
+
+
+/* =========================================================
+   GLOBAL SELECT
+========================================================= */
+
+function initCountries(){
+
+    const select = document.getElementById("countrySelect");
+
+    select.innerHTML = "";
+
+    countries.forEach((country,index)=>{
+
+        const option = document.createElement("option");
+
+        option.value = index;
+
+        option.textContent =
+            "🌍 " +
+            country.name;
+
+        select.appendChild(option);
+
+    });
+
+    changeCountry();
+
+}
+
+
+function changeCountry(){
+
+    const index =
+        Number(document.getElementById("countrySelect").value);
+
+    const country =
+        countries[index];
+
+    const destination =
+        document.getElementById("destinationSelect");
+
+    destination.innerHTML = "";
+
+    country.cities.forEach(city=>{
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            city.city;
+
+        option.textContent =
+            city.city;
+
+        destination.appendChild(option);
+
+    });
+
+    renderDestinationInfo();
+
+}
+
+
+document.getElementById("destinationSelect")
+.addEventListener("change",renderDestinationInfo);
+
+
+function renderDestinationInfo(){
+
+    const countryIndex =
+        Number(document.getElementById("countrySelect").value);
+
+    const country =
+        countries[countryIndex];
+
+    const cityName =
+        document.getElementById("destinationSelect").value;
+
+    const city =
+        country.cities.find(c=>c.city===cityName);
+
+    if(!city) return;
+
+    document.getElementById("destinationInfo").innerHTML = `
+
+        <div class="trip-result">
+
+            <h3>📍 ${city.city}, ${city.country}</h3>
+
+            <p class="muted">
+                Airport: ${city.airport}
+            </p>
+
+            <p class="muted">
+                GPS: ${city.lat}, ${city.lng}
+            </p>
+
+            <br>
+
+            <span class="tag">
+                GLOBAL MASTER DESTINATION
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   TRIP DESTINATION
+========================================================= */
+
+function initTripDestination(){
+
+    const select =
+        document.getElementById("tripDestination");
+
+    select.innerHTML = "";
+
+    countries.forEach(country=>{
+
+        country.cities.forEach(city=>{
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                city.city;
+
+            option.textContent =
+                `${city.city}, ${city.country}`;
+
+            select.appendChild(option);
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   PRICE ENGINE
+========================================================= */
+
+function dateFactor(date){
+
+    if(!date){
+        return 1;
+    }
+
+    const day =
+        new Date(date).getDay();
+
+    if(day===5 || day===6){
+        return 1.15;
+    }
+
+    if(day===0){
+        return 1.10;
+    }
+
+    return 1;
+
+}
+
+
+function dynamicPrice(base,date){
+
+    return Math.round(
+        base * dateFactor(date)
+    );
+
+}
+
+
+function formatIDR(value){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:"currency",
+            currency:"IDR",
+            maximumFractionDigits:0
+        }
+    ).format(value);
+
+}
+
+
+/* =========================================================
+   HOTEL ENGINE
+========================================================= */
+
+function renderHotelClasses(){
+
+    const date =
+        document.getElementById("marketDate").value;
+
+    const hotel =
+        products.find(p=>p.category==="hotel");
+
+    if(!hotel) return;
+
+    const container =
+        document.getElementById("hotelClasses");
+
+    container.innerHTML = `
+
+        <div class="class-box">
+
+            <h3>${hotel.name}</h3>
+
+            <p class="muted">
+                ${hotel.city}, ${hotel.country}
+            </p>
+
+        </div>
+
+    `;
+
+    hotelRooms.forEach(room=>{
+
+        const price =
+            dynamicPrice(
+                hotel.basePrice * room.multiplier,
+                date
+            );
+
+        container.innerHTML += `
+
+            <div class="class-box">
+
+                <div class="class-row">
+
+                    <div>
+                        <strong>
+                            🛏️ ${room.type}
+                        </strong>
+
+                        <div class="muted">
+                            ${room.description}
+                        </div>
+
+                    </div>
+
+                    <div style="text-align:right">
+
+                        <div class="price">
+                            ${formatIDR(price)}
+                        </div>
+
+                        <button
+                            class="btn"
+                            onclick="addHotelRoom('${hotel.id}','${room.type}',${price})"
+                        >
+                            SELECT
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   FLIGHT ENGINE
+========================================================= */
+
+function renderFlightClasses(){
+
+    const date =
+        document.getElementById("marketDate").value;
+
+    const flight =
+        products.find(p=>p.category==="flight");
+
+    if(!flight) return;
+
+    const container =
+        document.getElementById("flightClasses");
+
+    container.innerHTML = `
+
+        <div class="class-box">
+
+            <h3>${flight.name}</h3>
+
+            <p class="muted">
+                Demo dynamic ticket pricing
+            </p>
+
+        </div>
+
+    `;
+
+    flightClasses.forEach(cls=>{
+
+        const price =
+            dynamicPrice(
+                flight.basePrice * cls.multiplier,
+                date
+            );
+
+        container.innerHTML += `
+
+            <div class="class-box">
+
+                <div class="class-row">
+
+                    <div>
+
+                        <strong>
+                            ✈️ ${cls.type}
+                        </strong>
+
+                        <div class="muted">
+                            ${cls.description}
+                        </div>
+
+                    </div>
+
+                    <div style="text-align:right">
+
+                        <div class="price">
+                            ${formatIDR(price)}
+                        </div>
+
+                        <button
+                            class="btn green"
+                            onclick="addFlight('${flight.id}','${cls.type}',${price})"
+                        >
+                            SELECT
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   MARKETPLACE
+========================================================= */
+
+function renderProducts(){
+
+    const category =
+        document.getElementById("categoryFilter").value;
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const date =
+        document.getElementById("marketDate").value;
+
+    const grid =
+        document.getElementById("productGrid");
+
+    let list =
+        products.filter(product=>{
+
+            const categoryMatch =
+                category==="all" ||
+                product.category===category;
+
+            const searchMatch =
+                product.name.toLowerCase().includes(search) ||
+                product.city.toLowerCase().includes(search) ||
+                product.country.toLowerCase().includes(search);
+
+            return categoryMatch && searchMatch;
+
+        });
+
+    grid.innerHTML = "";
+
+    list.forEach(product=>{
+
+        let displayPrice =
+            dynamicPrice(
+                product.basePrice,
+                date
+            );
+
+        let extra = "";
+
+        if(product.category==="hotel"){
+
+            extra = hotelRooms.slice(0,3)
+            .map(room=>{
+
+                const price =
+                    dynamicPrice(
+                        product.basePrice *
+                        room.multiplier,
+                        date
+                    );
+
+                return `
+                    <div class="small-price">
+                        ${room.type}: ${formatIDR(price)}
+                    </div>
+                `;
+
+            }).join("");
+
+        }
+
+        if(product.category==="flight"){
+
+            extra = flightClasses.map(cls=>{
+
+                const price =
+                    dynamicPrice(
+                        product.basePrice *
+                        cls.multiplier,
+                        date
+                    );
+
+                return `
+                    <div class="small-price">
+                        ${cls.type}: ${formatIDR(price)}
+                    </div>
+                `;
+
+            }).join("");
+
+        }
+
+        grid.innerHTML += `
+
+            <div class="card">
+
+                <div
+                    class="card-img"
+                    style="background-image:url('${product.image}')"
+                ></div>
+
+                <div class="card-body">
+
+                    <span class="tag">
+                        ${product.category.toUpperCase()}
+                    </span>
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+                    <p class="muted">
+                        📍 ${product.city},
+                        ${product.country}
+                    </p>
+
+                    <div class="price">
+                        ${formatIDR(displayPrice)}
+                    </div>
+
+                    ${extra}
+
+                    <br>
+
+                    <button
+                        class="btn"
+                        onclick="viewProduct('${product.id}')"
+                    >
+                        VIEW
+                    </button>
+
+                    <button
+                        class="btn green"
+                        onclick="addToCart('${product.id}')"
+                    >
+                        ADD
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+    renderHotelClasses();
+    renderFlightClasses();
+
+}
+
+
+/* =========================================================
+   VIEW PRODUCT
+========================================================= */
+
+function viewProduct(id){
+
+    const product =
+        products.find(p=>p.id===id);
+
+    if(!product) return;
+
+    alert(
+        product.name +
+        "\n\n" +
+        product.city +
+        ", " +
+        product.country +
+        "\n\n" +
+        "Category: " +
+        product.category +
+        "\n\n" +
+        "V81.0 Global Master Data"
+    );
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function addToCart(id){
+
+    const product =
+        products.find(p=>p.id===id);
+
+    if(!product) return;
+
+    const date =
+        document.getElementById("marketDate").value;
+
+    const item = {
+
+        id:Date.now(),
+
+        productId:product.id,
+
+        name:product.name,
+
+        category:product.category,
+
+        price:dynamicPrice(
+            product.basePrice,
+            date
+        ),
+
+        date:date,
+
+        detail:"Base Product"
+
+    };
+
+    cart.push(item);
+
+    updateCart();
+
+    alert(
+        product.name +
+        " added to My Trip."
+    );
+
+}
+
+
+function addHotelRoom(
+    productId,
+    roomType,
+    price
+){
+
+    const hotel =
+        products.find(p=>p.id===productId);
+
+    cart.push({
+
+        id:Date.now(),
+
+        productId:productId,
+
+        name:hotel.name,
+
+        category:"hotel",
+
+        price:price,
+
+        date:document.getElementById("marketDate").value,
+
+        detail:roomType
+
+    });
+
+    updateCart();
+
+    alert(
+        roomType +
+        " added to My Trip."
+    );
+
+}
+
+
+function addFlight(
+    productId,
+    flightClass,
+    price
+){
+
+    const flight =
+        products.find(p=>p.id===productId);
+
+    cart.push({
+
+        id:Date.now(),
+
+        productId:productId,
+
+        name:flight.name,
+
+        category:"flight",
+
+        price:price,
+
+        date:document.getElementById("marketDate").value,
+
+        detail:flightClass
+
+    });
+
+    updateCart();
+
+    alert(
+        flightClass +
+        " added to My Trip."
+    );
+
+}
+
+
+function updateCart(){
+
+    document.getElementById("cartCount")
+        .textContent = cart.length;
+
+    renderCartModal();
+
+    renderPackage();
+
+}
+
+
+function renderCartModal(){
+
+    const container =
+        document.getElementById("cartItems");
+
+    const totalElement =
+        document.getElementById("cartTotal");
+
+    if(cart.length===0){
+
+        container.innerHTML =
+            "<p>Your trip is empty.</p>";
+
+        totalElement.textContent =
+            formatIDR(0);
+
+        return;
+
+    }
+
+    container.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach(item=>{
+
+        total += item.price;
+
+        container.innerHTML += `
+
+            <div class="cart-item">
+
+                <div>
+
+                    <strong>
+                        ${item.name}
+                    </strong>
+
+                    <div class="muted">
+                        ${item.detail}
+                    </div>
+
+                    <div class="muted">
+                        Date: ${item.date}
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${formatIDR(item.price)}
+                    </strong>
+
+                    <br>
+
+                    <button
+                        class="btn light"
+                        onclick="removeCart(${item.id})"
+                    >
+                        Remove
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+    totalElement.textContent =
+        formatIDR(total);
+
+}
+
+
+function removeCart(id){
+
+    cart =
+        cart.filter(item=>item.id!==id);
+
+    updateCart();
+
+}
+
+
+function openCart(){
+
+    renderCartModal();
+
+    document.getElementById("cartModal")
+        .style.display="flex";
+
+}
+
+
+function closeCart(){
+
+    document.getElementById("cartModal")
+        .style.display="none";
+
+}
+
+
+/* =========================================================
+   PACKAGE
+========================================================= */
+
+function renderPackage(){
+
+    const box =
+        document.getElementById("packageSummary");
+
+    if(cart.length===0){
+
+        box.innerHTML =
+            "No package selected yet.";
+
+        return;
+
+    }
+
+    let total = 0;
+
+    cart.forEach(item=>{
+        total += item.price;
+    });
+
+    box.innerHTML = `
+
+        <div class="trip-result">
+
+            <h3>
+                📦 HobbiGo Custom Package
+            </h3>
+
+            <p>
+                ${cart.length} products selected
+            </p>
+
+            <p class="price">
+                ${formatIDR(total)}
+            </p>
+
+            <button
+                class="btn orange"
+                onclick="openCart()"
+            >
+                REVIEW PACKAGE
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   AI TRIP
+========================================================= */
+
+function generateTrip(){
+
+    const destination =
+        document.getElementById("tripDestination").value;
+
+    const date =
+        document.getElementById("tripDate").value;
+
+    const people =
+        Number(
+            document.getElementById("people").value
+        );
+
+    const duration =
+        Number(
+            document.getElementById("duration").value
+        );
+
+    const style =
+        document.getElementById("tripStyle").value;
+
+    const interest =
+        document.getElementById("interest").value;
+
+    let hotelBase =
+        1200000;
+
+    if(style==="Comfort"){
+        hotelBase=1800000;
+    }
+
+    if(style==="Exclusive"){
+        hotelBase=3000000;
+    }
+
+    if(style==="Luxury"){
+        hotelBase=5000000;
+    }
+
+    const hotel =
+        hotelBase *
+        duration;
+
+    const activities =
+        450000 *
+        duration *
+        people;
+
+    const transport =
+        650000 *
+        Math.ceil(duration/2);
+
+    const flight =
+        1500000 *
+        people;
+
+    const total =
+        hotel +
+        activities +
+        transport +
+        flight;
+
+    document.getElementById("tripResult")
+        .innerHTML = `
+
+        <div class="trip-result">
+
+            <h3>
+                ✨ AI Generated Trip
+            </h3>
+
+            <br>
+
+            <p>
+                <strong>Destination:</strong>
+                ${destination}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                ${date}
+            </p>
+
+            <p>
+                <strong>Guests:</strong>
+                ${people}
+            </p>
+
+            <p>
+                <strong>Duration:</strong>
+                ${duration} Days
+            </p>
+
+            <p>
+                <strong>Style:</strong>
+                ${style}
+            </p>
+
+            <p>
+                <strong>Interest:</strong>
+                ${interest}
+            </p>
+
+            <hr style="margin:15px 0">
+
+            <h3>
+                🗺️ Suggested Itinerary
+            </h3>
+
+            <p>
+                Day 1 — Airport → Hotel → Local Experience
+            </p>
+
+            <p>
+                Day 2 — ${interest} Experience
+            </p>
+
+            <p>
+                Day 3 — Attraction → Restaurant → Shopping
+            </p>
+
+            <p>
+                Day 4 — Free Time → Local Discovery
+            </p>
+
+            <br>
+
+            <h3>
+                💰 Estimated Total
+            </h3>
+
+            <div class="price">
+                ${formatIDR(total)}
+            </div>
+
+            <button
+                class="btn green"
+                onclick="addAITripToCart(${total},'${destination}')"
+            >
+                ADD AI PACKAGE
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+function addAITripToCart(
+    total,
+    destination
+){
+
+    cart.push({
+
+        id:Date.now(),
+
+        productId:"AI-PACKAGE",
+
+        name:
+            "HobbiGo AI Package - " +
+            destination,
+
+        category:"package",
+
+        price:total,
+
+        date:
+            document.getElementById("tripDate").value,
+
+        detail:
+            "AI Generated Trip"
+
+    });
+
+    updateCart();
+
+    alert(
+        "AI Package added to My Trip."
+    );
+
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+function zoomMap(direction){
+
+    mapZoom +=
+        direction * .1;
+
+    if(mapZoom<.7)
+        mapZoom=.7;
+
+    if(mapZoom>1.6)
+        mapZoom=1.6;
+
+    document.getElementById("map")
+        .style.transform =
+        `scale(${mapZoom})`;
+
+}
+
+
+function resetMap(){
+
+    mapZoom=1;
+
+    document.getElementById("map")
+        .style.transform="scale(1)";
+
+}
+
+
+/* =========================================================
+   BOOKING
+========================================================= */
+
+function openBooking(){
+
+    if(cart.length===0){
+
+        alert(
+            "Please add products to My Trip first."
+        );
+
+        return;
+
+    }
+
+    closeCart();
+
+    let total=0;
+
+    cart.forEach(item=>{
+        total+=item.price;
+    });
+
+    document.getElementById("bookingSummary")
+        .innerHTML = `
+
+        <div class="trip-result">
+
+            <h3>
+                Booking Summary
+            </h3>
+
+            <p>
+                Products:
+                ${cart.length}
+            </p>
+
+            <p class="price">
+                ${formatIDR(total)}
+            </p>
+
+            <p class="muted">
+                This is a V81.0 DEMO payment.
+                No real payment will be processed.
+            </p>
+
+        </div>
+
+    `;
+
+    document.getElementById("bookingModal")
+        .style.display="flex";
+
+}
+
+
+function closeBooking(){
+
+    document.getElementById("bookingModal")
+        .style.display="none";
+
+}
+
+
+function confirmBooking(){
+
+    const name =
+        document.getElementById("customerName").value;
+
+    const email =
+        document.getElementById("customerEmail").value;
+
+    if(!name || !email){
+
+        alert(
+            "Please enter customer name and email."
+        );
+
+        return;
+
+    }
+
+    alert(
+        "HOBBIGO DEMO BOOKING SUCCESSFUL!\n\n" +
+        "Customer: " + name +
+        "\nEmail: " + email +
+        "\n\nPayment is DEMO ONLY."
+    );
+
+    closeBooking();
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function go(id){
+
+    const element =
+        document.getElementById(id);
+
+    if(element){
+
+        element.scrollIntoView({
+            behavior:"smooth"
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+initCountries();
+
+initTripDestination();
+
+renderProducts();
+
+renderPackage();
+
+</script>
+
+</body>
+</html>
