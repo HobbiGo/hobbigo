@@ -1,1 +1,3056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HOBBIGO MASTER 100</title>
 
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#07111f;
+  --panel:#0d1b2d;
+  --panel2:#10243a;
+  --line:#203750;
+  --text:#eef6ff;
+  --muted:#91a6bc;
+  --accent:#35d0ba;
+  --accent2:#6b8cff;
+  --warning:#ffc857;
+  --danger:#ff6b7a;
+  --success:#48e08a;
+}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#06101c,#0b1728 50%,#07111f);
+  color:var(--text);
+}
+button,input,select{
+  font:inherit;
+}
+button{
+  cursor:pointer;
+}
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(6,16,28,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  max-width:1500px;
+  margin:auto;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  color:#06111e;
+  background:linear-gradient(135deg,var(--accent),#7bf2d8);
+}
+.brand h1{
+  margin:0;
+  font-size:20px;
+}
+.brand small{
+  color:var(--muted);
+}
+.badges{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.badge{
+  border:1px solid var(--line);
+  background:#0d1a2b;
+  color:#bcd0e4;
+  padding:7px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+}
+.badge.green{
+  border-color:#246b5f;
+  color:#71efd4;
+}
+.layout{
+  max-width:1500px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:18px;
+}
+.sidebar{
+  background:rgba(13,27,45,.95);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  height:max-content;
+  position:sticky;
+  top:85px;
+}
+.section-title{
+  font-size:12px;
+  color:var(--accent);
+  font-weight:900;
+  letter-spacing:.8px;
+  margin:5px 0 12px;
+}
+.control{
+  margin-bottom:10px;
+}
+.control label{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+input,select{
+  width:100%;
+  background:#081625;
+  color:var(--text);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:10px;
+  outline:none;
+}
+input:focus,select:focus{
+  border-color:var(--accent);
+}
+.btn{
+  border:1px solid var(--line);
+  background:#10243a;
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 13px;
+  font-weight:800;
+  transition:.2s;
+}
+.btn:hover{
+  transform:translateY(-1px);
+  border-color:var(--accent);
+}
+.btn.primary{
+  background:linear-gradient(135deg,#25bda8,#3977d8);
+  color:white;
+  border:none;
+}
+.btn.success{
+  background:#123b2d;
+  border-color:#267c5d;
+  color:#73efae;
+}
+.btn.warning{
+  background:#3b3017;
+  border-color:#806426;
+  color:#ffd978;
+}
+.btn.danger{
+  background:#3b1820;
+  border-color:#77303e;
+  color:#ff9aa6;
+}
+.btn.full{
+  width:100%;
+}
+.btn-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.hero{
+  background:
+    radial-gradient(circle at 90% 10%,rgba(53,208,186,.18),transparent 25%),
+    radial-gradient(circle at 10% 90%,rgba(107,140,255,.16),transparent 28%),
+    var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:24px;
+  margin-bottom:18px;
+}
+.hero h2{
+  margin:0 0 8px;
+  font-size:30px;
+}
+.hero p{
+  color:var(--muted);
+  margin:0 0 18px;
+}
+.flow{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.flow span{
+  padding:8px 10px;
+  border-radius:8px;
+  background:#0a1727;
+  border:1px solid var(--line);
+  color:#b9cce0;
+  font-size:11px;
+  font-weight:800;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  margin-bottom:18px;
+}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:15px;
+}
+.stat strong{
+  display:block;
+  font-size:22px;
+}
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+}
+.module{
+  background:rgba(13,27,45,.95);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+}
+.module-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+.module-head h3{
+  margin:0;
+}
+.module-head small{
+  color:var(--muted);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.card{
+  background:#091827;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+}
+.card.selected{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(53,208,186,.2);
+}
+.card h4{
+  margin:0 0 6px;
+}
+.card p{
+  margin:5px 0;
+  color:var(--muted);
+  font-size:12px;
+}
+.price{
+  font-size:19px;
+  font-weight:900;
+  margin:10px 0;
+}
+.tag{
+  display:inline-block;
+  padding:5px 7px;
+  border-radius:7px;
+  font-size:10px;
+  font-weight:800;
+  margin:2px;
+  background:#14283e;
+  color:#bcd0e4;
+}
+.tag.green{
+  background:#103528;
+  color:#6ff0aa;
+}
+.tag.yellow{
+  background:#3a2d13;
+  color:#ffda75;
+}
+.tag.red{
+  background:#3b1820;
+  color:#ff9aa6;
+}
+.table-wrap{
+  overflow:auto;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:720px;
+}
+th,td{
+  padding:11px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  font-size:12px;
+}
+th{
+  color:#9fb4ca;
+  font-size:11px;
+}
+.timeline{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:8px;
+}
+.step{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  background:#091827;
+}
+.step strong{
+  display:block;
+  font-size:11px;
+}
+.step span{
+  color:var(--muted);
+  font-size:10px;
+}
+.console{
+  background:#050d16;
+  border:1px solid #17283a;
+  border-radius:12px;
+  padding:12px;
+  font-family:monospace;
+  font-size:11px;
+  line-height:1.6;
+  max-height:230px;
+  overflow:auto;
+}
+.ai{
+  background:
+    linear-gradient(135deg,rgba(53,208,186,.08),rgba(107,140,255,.08)),
+    #091827;
+  border:1px solid #245064;
+}
+.ai-score{
+  font-size:30px;
+  font-weight:900;
+  color:var(--accent);
+}
+.json{
+  white-space:pre-wrap;
+  background:#050d16;
+  padding:14px;
+  border-radius:12px;
+  color:#b8d2e9;
+  font-family:monospace;
+  font-size:11px;
+  overflow:auto;
+}
+.notice{
+  border-left:4px solid var(--warning);
+  padding:10px 12px;
+  background:#211c0f;
+  color:#e9d79a;
+  border-radius:8px;
+  font-size:12px;
+}
+.footer{
+  max-width:1500px;
+  margin:auto;
+  padding:20px;
+  color:#6f8499;
+  font-size:11px;
+  text-align:center;
+}
+.hide{
+  display:none!important;
+}
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .timeline{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .header-inner{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">HG</div>
+      <div>
+        <h1>HOBBIGO</h1>
+        <small>AI Journey & Experience Marketplace</small>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span class="badge green">MASTER 100</span>
+      <span class="badge">GLOBAL MARKETPLACE</span>
+      <span class="badge">AI ENGINE</span>
+      <span class="badge">BOOKING</span>
+      <span class="badge">PAYMENT</span>
+      <span class="badge">PARTNER</span>
+      <span class="badge">COMMAND CENTER</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="section-title">GLOBAL SEARCH</div>
+
+  <div class="control">
+    <label>Country</label>
+    <select id="country">
+      <option>Indonesia</option>
+      <option>Singapore</option>
+      <option>Thailand</option>
+      <option>Japan</option>
+      <option>United Arab Emirates</option>
+      <option>Australia</option>
+      <option>United States</option>
+      <option>United Kingdom</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>City</label>
+    <select id="city">
+      <option>Jakarta</option>
+      <option>Bali</option>
+      <option>Singapore</option>
+      <option>Bangkok</option>
+      <option>Tokyo</option>
+      <option>Dubai</option>
+      <option>Sydney</option>
+      <option>London</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>Customer Type</label>
+    <select id="customerType">
+      <option>Corporate</option>
+      <option>Personal</option>
+      <option>Family</option>
+      <option>Group</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>Event / Trip Type</label>
+    <select id="eventType">
+      <option>Corporate Retreat</option>
+      <option>Meeting</option>
+      <option>Conference</option>
+      <option>Team Building</option>
+      <option>Holiday</option>
+      <option>Tour</option>
+      <option>Business Trip</option>
+    </select>
+  </div>
+
+  <div class="control">
+    <label>Participants</label>
+    <input id="participants" type="number" value="100" min="1">
+  </div>
+
+  <div class="control">
+    <label>Check-in / Event Date</label>
+    <input id="checkin" type="date">
+  </div>
+
+  <div class="control">
+    <label>Duration / Nights</label>
+    <input id="duration" type="number" value="3" min="1">
+  </div>
+
+  <div class="control">
+    <label>Budget</label>
+    <input id="budget" type="number" value="500000000">
+  </div>
+
+  <button class="btn primary full" onclick="runMaster()">RUN MASTER 100</button>
+
+  <hr style="border-color:var(--line);margin:18px 0">
+
+  <div class="section-title">ACCOMMODATION</div>
+
+  <div class="control">
+    <label>Property Type</label>
+    <select id="propertyType" onchange="filterProperties()">
+      <option>All</option>
+      <option>Hotel</option>
+      <option>Villa</option>
+      <option>House</option>
+      <option>Apartment</option>
+      <option>Kost</option>
+      <option>Home Rental</option>
+      <option>Serviced Apartment</option>
+    </select>
+  </div>
+
+  <div class="section-title">TICKET</div>
+
+  <div class="control">
+    <label>Ticket Type</label>
+    <select id="ticketType">
+      <option>All</option>
+      <option>Flight</option>
+      <option>Airport Transfer</option>
+      <option>Attraction Ticket</option>
+      <option>Event Ticket</option>
+      <option>Tour Ticket</option>
+      <option>Boat Ticket</option>
+    </select>
+  </div>
+
+  <button class="btn full" onclick="searchTickets()">SEARCH TICKETS</button>
+
+  <hr style="border-color:var(--line);margin:18px 0">
+
+  <div class="section-title">MASTER ACTION</div>
+
+  <div class="btn-row">
+    <button class="btn success" onclick="createBooking()">CREATE BOOKING</button>
+    <button class="btn warning" onclick="simulatePayment()">PAYMENT</button>
+    <button class="btn danger" onclick="simulateCancel()">CANCEL</button>
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>HobbiGo Global Super Marketplace</h2>
+    <p>
+      MASTER 100 — Integrated architecture for travel, accommodation,
+      transportation, culinary, experiences, corporate events, AI,
+      booking, payment, partner and refund.
+    </p>
+
+    <div class="flow">
+      <span>195 COUNTRIES</span>
+      <span>CITY</span>
+      <span>FLIGHT</span>
+      <span>PROPERTY</span>
+      <span>TRANSPORT</span>
+      <span>FOOD</span>
+      <span>EXPERIENCE</span>
+      <span>CORPORATE</span>
+      <span>AI MATCH</span>
+      <span>PACKAGE</span>
+      <span>BOOKING</span>
+      <span>PAYMENT</span>
+      <span>CANCEL</span>
+      <span>REFUND</span>
+      <span>PARTNER</span>
+      <span>AI OPTIMIZATION</span>
+    </div>
+  </section>
+
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat">
+      <strong>195</strong>
+      <span>Country Architecture</span>
+    </div>
+
+    <div class="stat">
+      <strong>50K+</strong>
+      <span>Property Architecture</span>
+    </div>
+
+    <div class="stat">
+      <strong>250K+</strong>
+      <span>Product Architecture</span>
+    </div>
+
+    <div class="stat">
+      <strong id="statBookings">8,420</strong>
+      <span>Demo Bookings</span>
+    </div>
+
+    <div class="stat">
+      <strong>60/40</strong>
+      <span>Demo Commission Model</span>
+    </div>
+
+    <div class="stat">
+      <strong>READY</strong>
+      <span>Master Architecture</span>
+    </div>
+  </section>
+
+
+  <!-- V91 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V91 — Global Flight & Ticket Engine</h3>
+        <small>Flight, ticket, fare, route and refundable ticket architecture</small>
+      </div>
+      <span class="tag green">V91 ACTIVE</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Route</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Refund</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="ticketTable"></tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- V92 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V92 — Global Transport Engine</h3>
+        <small>Airport transfer, car, bus, train, boat and rental</small>
+      </div>
+      <span class="tag green">V92 ACTIVE</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h4>Executive Airport Transfer</h4>
+        <p>CGK → Jakarta Venue</p>
+        <div class="price">Rp850.000</div>
+        <span class="tag">CAR</span>
+        <span class="tag green">AVAILABLE</span>
+      </div>
+
+      <div class="card">
+        <h4>Corporate Executive Bus</h4>
+        <p>Jakarta full-day corporate transport</p>
+        <div class="price">Rp7.500.000</div>
+        <span class="tag">BUS</span>
+        <span class="tag green">AVAILABLE</span>
+      </div>
+
+      <div class="card">
+        <h4>Corporate Boat</h4>
+        <p>Bali private corporate boat</p>
+        <div class="price">Rp12.500.000</div>
+        <span class="tag">BOAT</span>
+        <span class="tag yellow">DEMO</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- V93 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V93 — Food & Culinary Marketplace</h3>
+        <small>Restaurant, cafe, street food, catering and corporate dining</small>
+      </div>
+      <span class="tag green">V93 ACTIVE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Jakarta Corporate Dining</h4>
+        <p>Private corporate dinner</p>
+        <div class="price">Rp350.000 / person</div>
+        <span class="tag">RESTAURANT</span>
+        <span class="tag green">CORPORATE</span>
+      </div>
+
+      <div class="card">
+        <h4>Nusantara Catering</h4>
+        <p>Indonesian food package</p>
+        <div class="price">Rp175.000 / person</div>
+        <span class="tag">CATERING</span>
+        <span class="tag green">GROUP</span>
+      </div>
+
+      <div class="card">
+        <h4>Street Food Experience</h4>
+        <p>Local culinary experience</p>
+        <div class="price">Rp150.000 / person</div>
+        <span class="tag">CULINARY</span>
+        <span class="tag yellow">EXPERIENCE</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- V94 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V94 — Attraction & Experience Marketplace</h3>
+        <small>Tour, attraction, hobby, activity and team building</small>
+      </div>
+      <span class="tag green">V94 ACTIVE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Jakarta Team Challenge</h4>
+        <p>Corporate team building program</p>
+        <div class="price">Rp450.000 / person</div>
+        <span class="tag">TEAM BUILDING</span>
+      </div>
+
+      <div class="card">
+        <h4>Bali Ocean Experience</h4>
+        <p>Private group activity</p>
+        <div class="price">Rp950.000 / person</div>
+        <span class="tag">ACTIVITY</span>
+      </div>
+
+      <div class="card">
+        <h4>Tokyo Corporate Experience</h4>
+        <p>Corporate city experience</p>
+        <div class="price">Rp1.200.000 / person</div>
+        <span class="tag">TOUR</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- V95 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V95 — Corporate Event & MICE Engine</h3>
+        <small>Meeting, conference, retreat, incentive and team building</small>
+      </div>
+      <span class="tag green">V95 ACTIVE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Meeting</h4>
+        <p>Room setup, AV, coffee break and lunch</p>
+        <span class="tag">MEETING</span>
+      </div>
+
+      <div class="card">
+        <h4>Corporate Retreat</h4>
+        <p>Hotel + venue + food + transport + activity</p>
+        <span class="tag">RETREAT</span>
+      </div>
+
+      <div class="card">
+        <h4>Team Building</h4>
+        <p>Venue + facilitator + activity + meals</p>
+        <span class="tag">TEAM BUILDING</span>
+      </div>
+
+      <div class="card">
+        <h4>Conference</h4>
+        <p>Venue + production + registration + catering</p>
+        <span class="tag">CONFERENCE</span>
+      </div>
+
+      <div class="card">
+        <h4>Incentive Trip</h4>
+        <p>Travel + experience + premium accommodation</p>
+        <span class="tag">INCENTIVE</span>
+      </div>
+
+      <div class="card">
+        <h4>Exhibition</h4>
+        <p>Venue + booth + production + visitor management</p>
+        <span class="tag">EXHIBITION</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- V96 AI PACKAGE -->
+  <section class="module ai">
+    <div class="module-head">
+      <div>
+        <h3>V96 — AI Trip & Event Package Engine</h3>
+        <small>AI Smart Match → Route → Package → Price</small>
+      </div>
+      <span class="tag green">AI PACKAGE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>AI Smart Match</h4>
+        <div class="ai-score" id="aiScore">94%</div>
+        <p>Budget fit, capacity, location, rating and experience.</p>
+      </div>
+
+      <div class="card">
+        <h4>Best Package</h4>
+        <div class="price" id="aiPackagePrice">Rp485.000.000</div>
+        <span class="tag green">BEST VALUE</span>
+        <p>Hotel + Venue + Food + Transport + Activity</p>
+      </div>
+
+      <div class="card">
+        <h4>Potential Saving</h4>
+        <div class="price">Rp82.000.000</div>
+        <span class="tag green">OPTIMIZED</span>
+        <p>Demo optimization result.</p>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="aiMatch()">GENERATE BEST PACKAGE</button>
+      <button class="btn" onclick="optimizeBudget()">OPTIMIZE BUDGET</button>
+      <button class="btn" onclick="optimizeRoute()">OPTIMIZE ROUTE</button>
+      <button class="btn" onclick="compareAI()">COMPARE OPTIONS</button>
+    </div>
+  </section>
+
+
+  <!-- V90/V96 PROPERTY MARKET -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Global Accommodation Marketplace</h3>
+        <small>Hotel • Villa • House • Apartment • Kost • Home Rental</small>
+      </div>
+      <span class="tag green">MARKETPLACE</span>
+    </div>
+
+    <div id="propertyGrid" class="grid"></div>
+  </section>
+
+
+  <!-- SELECTED -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Selected Product & Dynamic Pricing</h3>
+        <small>Package calculation based on selected property</small>
+      </div>
+      <span class="tag">DYNAMIC PRICE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4 id="selectedName">No property selected</h4>
+        <p id="selectedType">Select a property above.</p>
+        <div class="price" id="selectedPrice">Rp0</div>
+      </div>
+
+      <div class="card">
+        <h4>Stay Calculation</h4>
+        <p>Duration</p>
+        <div class="price" id="stayTotal">Rp0</div>
+        <span class="tag" id="stayNights">0 nights</span>
+      </div>
+
+      <div class="card">
+        <h4>Refund Policy</h4>
+        <p id="refundPolicyText">-</p>
+        <span class="tag green" id="refundTag">UNKNOWN</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- V97 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V97 — Payment & Financial Engine</h3>
+        <small>Cart → Invoice → Deposit → Payment → Refund → Settlement</small>
+      </div>
+      <span class="tag green">V97 ACTIVE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Cart / Package Total</h4>
+        <div class="price" id="financialTotal">Rp0</div>
+        <p>Dynamic demo calculation</p>
+      </div>
+
+      <div class="card">
+        <h4>Deposit</h4>
+        <div class="price" id="depositValue">Rp0</div>
+        <p>30% demo deposit</p>
+      </div>
+
+      <div class="card">
+        <h4>Partner Settlement</h4>
+        <div class="price" id="partnerValue">Rp0</div>
+        <p>40% demo partner share</p>
+      </div>
+
+      <div class="card">
+        <h4>HobbiGo Commission</h4>
+        <div class="price" id="hobbigoValue">Rp0</div>
+        <p>60% demo operator share</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- V98 -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V98 — Global Partner & Supplier Network</h3>
+        <small>Partner onboarding, products, API, commission and settlement</small>
+      </div>
+      <span class="tag green">V98 ACTIVE</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Partner</th>
+            <th>Category</th>
+            <th>Country</th>
+            <th>API</th>
+            <th>Status</th>
+            <th>Commission</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Grand Jakarta Corporate Hotel</td>
+            <td>Hotel</td>
+            <td>Indonesia</td>
+            <td>Property API</td>
+            <td><span class="tag green">ACTIVE</span></td>
+            <td>60/40 Demo</td>
+          </tr>
+
+          <tr>
+            <td>Bali Ocean Resort</td>
+            <td>Resort</td>
+            <td>Indonesia</td>
+            <td>Property API</td>
+            <td><span class="tag green">ACTIVE</span></td>
+            <td>60/40 Demo</td>
+          </tr>
+
+          <tr>
+            <td>Singapore Corporate Dining</td>
+            <td>Restaurant</td>
+            <td>Singapore</td>
+            <td>Food API</td>
+            <td><span class="tag green">ACTIVE</span></td>
+            <td>60/40 Demo</td>
+          </tr>
+
+          <tr>
+            <td>Tokyo Team Experience</td>
+            <td>Activity</td>
+            <td>Japan</td>
+            <td>Experience API</td>
+            <td><span class="tag yellow">DEMO</span></td>
+            <td>60/40 Demo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <!-- V99 -->
+  <section class="module ai">
+    <div class="module-head">
+      <div>
+        <h3>V99 — HOBBIGO AI SUPER ENGINE</h3>
+        <small>Intelligence • Optimization • Prediction • Risk • Recommendation</small>
+      </div>
+      <span class="tag green">AI CORE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>AI Data Intelligence</h4>
+        <p>Countries → Cities → Products → Prices → Availability → Bookings.</p>
+        <span class="tag green">CONNECTED</span>
+      </div>
+
+      <div class="card">
+        <h4>AI Partner Ranking</h4>
+        <p>Rating + price + availability + reliability + response.</p>
+        <div class="ai-score">92%</div>
+      </div>
+
+      <div class="card">
+        <h4>Demand Forecast</h4>
+        <p>Projected demand and revenue by city.</p>
+        <span class="tag yellow">DEMO FORECAST</span>
+      </div>
+
+      <div class="card">
+        <h4>Risk Monitor</h4>
+        <p>Booking, payment, cancellation, refund and partner risk.</p>
+        <span class="tag green">LOW RISK</span>
+      </div>
+
+      <div class="card">
+        <h4>Route Optimizer</h4>
+        <p>Distance, time, capacity, cost and schedule conflict.</p>
+        <span class="tag green">OPTIMIZED</span>
+      </div>
+
+      <div class="card">
+        <h4>AI Copilot</h4>
+        <p>Suggest package changes based on customer requirements.</p>
+        <span class="tag">READY</span>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="aiMatch()">SMART MATCH</button>
+      <button class="btn" onclick="optimizeBudget()">PRICE OPTIMIZER</button>
+      <button class="btn" onclick="optimizeRoute()">ROUTE OPTIMIZER</button>
+      <button class="btn" onclick="generateAIReport()">AI REPORT</button>
+    </div>
+  </section>
+
+
+  <!-- ROUTE -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Smart Route Engine</h3>
+        <small>V92 + V94 + V95 + V96 integration</small>
+      </div>
+      <span class="tag green">SMART ROUTE</span>
+    </div>
+
+    <div class="timeline">
+      <div class="step">
+        <strong>01 AIRPORT</strong>
+        <span>Arrival</span>
+      </div>
+      <div class="step">
+        <strong>02 TRANSFER</strong>
+        <span>Transport</span>
+      </div>
+      <div class="step">
+        <strong>03 HOTEL</strong>
+        <span>Accommodation</span>
+      </div>
+      <div class="step">
+        <strong>04 VENUE</strong>
+        <span>Meeting</span>
+      </div>
+      <div class="step">
+        <strong>05 FOOD</strong>
+        <span>Lunch / Dinner</span>
+      </div>
+      <div class="step">
+        <strong>06 ACTIVITY</strong>
+        <span>Experience</span>
+      </div>
+      <div class="step">
+        <strong>07 AIRPORT</strong>
+        <span>Departure</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BOOKING -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Booking → Payment → Cancellation → Refund</h3>
+        <small>Integrated transaction lifecycle</small>
+      </div>
+      <span class="tag green" id="bookingStatus">READY</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="step">
+        <strong>1 PRODUCT</strong>
+        <span id="lifeProduct">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>2 AVAILABILITY</strong>
+        <span id="lifeAvailability">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>3 BOOKING</strong>
+        <span id="lifeBooking">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>4 PAYMENT</strong>
+        <span id="lifePayment">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>5 CANCEL</strong>
+        <span id="lifeCancel">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>6 REFUND</strong>
+        <span id="lifeRefund">Waiting</span>
+      </div>
+
+      <div class="step">
+        <strong>7 COMPLETE</strong>
+        <span id="lifeComplete">Waiting</span>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="createBooking()">CREATE BOOKING</button>
+      <button class="btn warning" onclick="simulatePayment()">SIMULATE PAYMENT</button>
+      <button class="btn danger" onclick="simulateCancel()">CANCEL & REFUND</button>
+    </div>
+  </section>
+
+
+  <!-- REFUND -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Cancellation & Auto Refund Engine</h3>
+        <small>Policy-driven refundable product architecture</small>
+      </div>
+      <span class="tag">V90 + V97</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Reminder Schedule</h4>
+        <p>7 days before deadline</p>
+        <p>5 days before deadline</p>
+        <p>3 days before deadline</p>
+        <p>Final cancellation deadline</p>
+      </div>
+
+      <div class="card">
+        <h4>Refund Eligibility</h4>
+        <div class="price" id="refundEligibility">UNKNOWN</div>
+        <p id="refundAmount">Estimated refund: Rp0</p>
+      </div>
+
+      <div class="card">
+        <h4>Cancellation Fee</h4>
+        <div class="price" id="cancelFee">Rp0</div>
+        <p>Calculated from product policy.</p>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="notice">
+      DEMO NOTICE: Refund percentages, cancellation deadlines and fees are simulated.
+      Production must use the actual hotel, airline, ticket, partner and payment-provider
+      cancellation/refund rules.
+    </div>
+
+    <br>
+
+    <div class="btn-row">
+      <button class="btn" onclick="sendReminder(7)">REMINDER 7D</button>
+      <button class="btn" onclick="sendReminder(5)">REMINDER 5D</button>
+      <button class="btn" onclick="sendReminder(3)">REMINDER 3D</button>
+      <button class="btn danger" onclick="simulateCancel()">CANCEL & REFUND</button>
+    </div>
+  </section>
+
+
+  <!-- COMMAND CENTER -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>V100 — HOBBIGO GLOBAL COMMAND CENTER</h3>
+        <small>All engines connected in one master control layer</small>
+      </div>
+      <span class="tag green">MASTER 100</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <h4>Marketplace</h4>
+        <div class="price">GLOBAL</div>
+        <span class="tag green">READY</span>
+      </div>
+
+      <div class="card">
+        <h4>AI Engine</h4>
+        <div class="price">ONLINE</div>
+        <span class="tag green">DEMO</span>
+      </div>
+
+      <div class="card">
+        <h4>Booking Engine</h4>
+        <div class="price" id="ccBooking">0</div>
+        <span class="tag green">READY</span>
+      </div>
+
+      <div class="card">
+        <h4>GMV</h4>
+        <div class="price" id="ccGMV">Rp0</div>
+        <span class="tag yellow">DEMO</span>
+      </div>
+
+      <div class="card">
+        <h4>Refund Engine</h4>
+        <div class="price">READY</div>
+        <span class="tag green">POLICY</span>
+      </div>
+
+      <div class="card">
+        <h4>Partner Network</h4>
+        <div class="price">12K+</div>
+        <span class="tag green">ARCHITECTURE</span>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="runMaster()">RUN MASTER 100</button>
+      <button class="btn" onclick="checkAvailability()">CHECK AVAILABILITY</button>
+      <button class="btn" onclick="generateReport()">GENERATE REPORT</button>
+      <button class="btn" onclick="updateCoreObject()">UPDATE CORE OBJECT</button>
+    </div>
+  </section>
+
+
+  <!-- API -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>Global API Gateway Architecture</h3>
+        <small>Frontend → Backend → Partner APIs → Payment Providers</small>
+      </div>
+      <span class="tag yellow">ARCHITECTURE</span>
+    </div>
+
+    <div class="json">{
+  "apiBase": "/api/v1",
+  "mode": "DEMO",
+  "security": "SERVER_SIDE_KEYS",
+
+  "endpoints": {
+    "countries": "/global/countries",
+    "cities": "/global/cities",
+    "properties": "/properties",
+    "rooms": "/properties/rooms",
+    "availability": "/properties/availability",
+    "prices": "/properties/prices",
+    "flights": "/flights",
+    "tickets": "/tickets",
+    "transport": "/transport",
+    "restaurants": "/restaurants",
+    "activities": "/activities",
+    "events": "/events",
+    "partners": "/partners",
+    "bookings": "/bookings",
+    "payments": "/payments",
+    "cancellations": "/cancellations",
+    "refunds": "/refunds",
+    "notifications": "/notifications",
+    "ai": "/ai/recommendations"
+  }
+}</div>
+
+    <br>
+
+    <div class="notice">
+      API keys are intentionally NOT stored in this frontend demo.
+      Production architecture should use a secure backend/API gateway.
+    </div>
+  </section>
+
+
+  <!-- CORE OBJECT -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>HOBBIGO MASTER TRANSACTION OBJECT</h3>
+        <small>Single object connecting marketplace → booking → payment</small>
+      </div>
+    </div>
+
+    <div id="coreObject" class="json"></div>
+  </section>
+
+
+  <!-- LOG -->
+  <section class="module">
+    <div class="module-head">
+      <div>
+        <h3>MASTER ENGINE LOG</h3>
+        <small>Runtime activity</small>
+      </div>
+      <button class="btn" onclick="clearLog()">CLEAR</button>
+    </div>
+
+    <div id="engineLog" class="console"></div>
+  </section>
+
+</main>
+</div>
+
+
+<footer class="footer">
+  HOBBIGO MASTER 100 • AI Journey & Experience Marketplace •
+  Demo architecture only • Live inventory, payment, airline, hotel and refund APIs are not connected.
+</footer>
+
+
+<script>
+
+/* ============================================================
+   HOBBIGO MASTER 100
+   V90 FOUNDATION + V91–V100
+   DEMO ARCHITECTURE
+============================================================ */
+
+const state = {
+  version:"MASTER_100",
+  mode:"DEMO",
+
+  country:"Indonesia",
+  city:"Jakarta",
+  customerType:"Corporate",
+  eventType:"Corporate Retreat",
+
+  participants:100,
+  checkin:"",
+  duration:3,
+  budget:500000000,
+
+  selectedProperty:null,
+  selectedTicket:null,
+
+  availability:false,
+  booking:null,
+  payment:false,
+  cancelled:false,
+  refundProcessed:false,
+
+  refundAmount:0,
+  cancellationFee:0,
+
+  bookings:0,
+  gmv:0,
+
+  logs:[]
+};
+
+
+/* ============================================================
+   DEMO COUNTRIES
+============================================================ */
+
+const countries = [
+"Indonesia","Singapore","Malaysia","Thailand","Vietnam",
+"Philippines","Brunei","Cambodia","Laos","Myanmar",
+"Japan","South Korea","China","India","Australia",
+"New Zealand","United Arab Emirates","Saudi Arabia","Qatar",
+"United States","Canada","United Kingdom","France","Germany",
+"Italy","Spain","Netherlands","Switzerland","Turkey",
+"South Africa","Egypt","Brazil","Mexico","Argentina"
+];
+
+
+/* ============================================================
+   PROPERTY DATABASE
+============================================================ */
+
+const properties = [
+
+{
+ id:"P001",
+ name:"Grand Jakarta Corporate Hotel",
+ type:"Hotel",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"Deluxe Corporate Room",
+ capacity:2,
+ inventory:120,
+ price:1250000,
+ rating:4.7,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P002",
+ name:"Bali Ocean Resort",
+ type:"Hotel",
+ city:"Bali",
+ country:"Indonesia",
+ product:"Ocean View Corporate Room",
+ capacity:2,
+ inventory:180,
+ price:1850000,
+ rating:4.9,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P003",
+ name:"Jakarta Executive House",
+ type:"House",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"4 Bedroom House",
+ capacity:10,
+ inventory:12,
+ price:4500000,
+ rating:4.6,
+ refundable:true,
+ deadlineDays:5,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P004",
+ name:"Bali Premium Team Villa",
+ type:"Villa",
+ city:"Bali",
+ country:"Indonesia",
+ product:"5 Bedroom Private Villa",
+ capacity:12,
+ inventory:8,
+ price:6500000,
+ rating:4.9,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:90,
+ cancellationFeePercent:10
+},
+
+{
+ id:"P005",
+ name:"Central Jakarta Executive Apartment",
+ type:"Apartment",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"3 Bedroom Apartment",
+ capacity:6,
+ inventory:20,
+ price:2800000,
+ rating:4.5,
+ refundable:true,
+ deadlineDays:5,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P006",
+ name:"Singapore Business Apartment",
+ type:"Serviced Apartment",
+ city:"Singapore",
+ country:"Singapore",
+ product:"2 Bedroom Serviced Apartment",
+ capacity:4,
+ inventory:30,
+ price:4200000,
+ rating:4.8,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:90,
+ cancellationFeePercent:10
+},
+
+{
+ id:"P007",
+ name:"Jakarta Business Kost",
+ type:"Kost",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"Private Room",
+ capacity:1,
+ inventory:50,
+ price:350000,
+ rating:4.3,
+ refundable:true,
+ deadlineDays:3,
+ refundPercent:80,
+ cancellationFeePercent:20
+},
+
+{
+ id:"P008",
+ name:"Jakarta Family Home Rental",
+ type:"Home Rental",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"3 Bedroom Home",
+ capacity:8,
+ inventory:10,
+ price:3200000,
+ rating:4.6,
+ refundable:true,
+ deadlineDays:5,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P009",
+ name:"Jakarta Executive Serviced Residence",
+ type:"Serviced Apartment",
+ city:"Jakarta",
+ country:"Indonesia",
+ product:"2 Bedroom Executive Unit",
+ capacity:4,
+ inventory:25,
+ price:3900000,
+ rating:4.7,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P010",
+ name:"Tokyo Corporate Hotel",
+ type:"Hotel",
+ city:"Tokyo",
+ country:"Japan",
+ product:"Executive Business Room",
+ capacity:2,
+ inventory:80,
+ price:3100000,
+ rating:4.8,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:90,
+ cancellationFeePercent:10
+},
+
+{
+ id:"P011",
+ name:"Dubai Executive Villa",
+ type:"Villa",
+ city:"Dubai",
+ country:"United Arab Emirates",
+ product:"Corporate Villa",
+ capacity:14,
+ inventory:6,
+ price:12500000,
+ rating:4.9,
+ refundable:true,
+ deadlineDays:7,
+ refundPercent:100,
+ cancellationFeePercent:0
+},
+
+{
+ id:"P012",
+ name:"Sydney Harbour Apartment",
+ type:"Apartment",
+ city:"Sydney",
+ country:"Australia",
+ product:"Corporate Harbour Apartment",
+ capacity:6,
+ inventory:15,
+ price:5800000,
+ rating:4.8,
+ refundable:true,
+ deadlineDays:5,
+ refundPercent:90,
+ cancellationFeePercent:10
+}
+
+];
+
+
+/* ============================================================
+   TICKET DATABASE
+============================================================ */
+
+const tickets = [
+
+{
+ id:"T001",
+ name:"Jakarta → Tokyo Corporate Flight",
+ route:"CGK → NRT",
+ type:"Flight",
+ price:8500000,
+ refundable:true,
+ deadlineDays:7
+},
+
+{
+ id:"T002",
+ name:"Jakarta → Singapore Business Flight",
+ route:"CGK → SIN",
+ type:"Flight",
+ price:3200000,
+ refundable:true,
+ deadlineDays:3
+},
+
+{
+ id:"T003",
+ name:"Tokyo Corporate Attraction Pass",
+ route:"Tokyo",
+ type:"Attraction Ticket",
+ price:1200000,
+ refundable:true,
+ deadlineDays:3
+},
+
+{
+ id:"T004",
+ name:"Bali Team Building Experience",
+ route:"Bali",
+ type:"Tour Ticket",
+ price:950000,
+ refundable:true,
+ deadlineDays:5
+},
+
+{
+ id:"T005",
+ name:"Jakarta Airport Executive Transfer",
+ route:"CGK → Jakarta",
+ type:"Airport Transfer",
+ price:850000,
+ refundable:true,
+ deadlineDays:1
+},
+
+{
+ id:"T006",
+ name:"Corporate Boat Experience",
+ route:"Bali",
+ type:"Boat Ticket",
+ price:2500000,
+ refundable:false,
+ deadlineDays:0
+},
+
+{
+ id:"T007",
+ name:"Bangkok Corporate Flight",
+ route:"CGK → BKK",
+ type:"Flight",
+ price:4200000,
+ refundable:true,
+ deadlineDays:5
+},
+
+{
+ id:"T008",
+ name:"Dubai Corporate Flight",
+ route:"CGK → DXB",
+ type:"Flight",
+ price:7800000,
+ refundable:true,
+ deadlineDays:7
+}
+
+];
+
+
+/* ============================================================
+   HELPERS
+============================================================ */
+
+function money(value){
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(value || 0);
+}
+
+function getValue(id){
+  return document.getElementById(id).value;
+}
+
+function log(message){
+  const time = new Date().toLocaleTimeString();
+  state.logs.unshift("["+time+"] "+message);
+  renderLog();
+}
+
+function renderLog(){
+  document.getElementById("engineLog").innerHTML =
+    state.logs.map(x=>escapeHtml(x)).join("<br>");
+}
+
+function escapeHtml(text){
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+
+
+/* ============================================================
+   INPUT SYNC
+============================================================ */
+
+function syncInputs(){
+
+  state.country = getValue("country");
+  state.city = getValue("city");
+  state.customerType = getValue("customerType");
+  state.eventType = getValue("eventType");
+
+  state.participants =
+    Number(getValue("participants")) || 1;
+
+  state.checkin = getValue("checkin");
+
+  state.duration =
+    Number(getValue("duration")) || 1;
+
+  state.budget =
+    Number(getValue("budget")) || 0;
+}
+
+
+/* ============================================================
+   PROPERTY ENGINE
+============================================================ */
+
+function filterProperties(){
+
+  const type = getValue("propertyType");
+
+  const list =
+    type === "All"
+      ? properties
+      : properties.filter(p=>p.type===type);
+
+  renderProperties(list);
+}
+
+function renderProperties(list=properties){
+
+  const grid =
+    document.getElementById("propertyGrid");
+
+  if(!list.length){
+    grid.innerHTML =
+      `<div class="card">
+        <h4>No demo property found</h4>
+        <p>Try another property type.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p=>{
+
+    const selected =
+      state.selectedProperty &&
+      state.selectedProperty.id===p.id
+        ? "selected"
+        : "";
+
+    const refundTag =
+      p.refundable
+        ? `<span class="tag green">
+             REFUND ${p.refundPercent}%
+           </span>`
+        : `<span class="tag red">
+             NON-REFUNDABLE
+           </span>`;
+
+    return `
+      <div class="card ${selected}">
+        <h4>${p.name}</h4>
+
+        <p>
+          ${p.city}, ${p.country}
+        </p>
+
+        <p>
+          ${p.product}
+        </p>
+
+        <div class="price">
+          ${money(p.price)}
+        </div>
+
+        <span class="tag">${p.type}</span>
+
+        <span class="tag">
+          Capacity ${p.capacity}
+        </span>
+
+        <span class="tag">
+          Inventory ${p.inventory}
+        </span>
+
+        <span class="tag">
+          ★ ${p.rating}
+        </span>
+
+        ${refundTag}
+
+        <br><br>
+
+        <button
+          class="btn primary"
+          onclick="selectProperty('${p.id}')">
+          SELECT
+        </button>
+      </div>
+    `;
+
+  }).join("");
+}
+
+
+function selectProperty(id){
+
+  const p =
+    properties.find(x=>x.id===id);
+
+  if(!p) return;
+
+  state.selectedProperty = p;
+
+  document.getElementById("selectedName").textContent =
+    p.name;
+
+  document.getElementById("selectedType").textContent =
+    `${p.type} • ${p.product} • ${p.city}`;
+
+  document.getElementById("selectedPrice").textContent =
+    money(p.price);
+
+  document.getElementById("refundPolicyText").textContent =
+    p.refundable
+      ? `${p.refundPercent}% refund until ${p.deadlineDays} days before deadline`
+      : "Non-refundable";
+
+  document.getElementById("refundTag").textContent =
+    p.refundable
+      ? `REFUND ${p.refundPercent}%`
+      : "NON-REFUNDABLE";
+
+  document.getElementById("refundTag").className =
+    p.refundable
+      ? "tag green"
+      : "tag red";
+
+  calculatePrice();
+  setupRefund();
+  updateCoreObject();
+
+  document.getElementById("lifeProduct").textContent =
+    "SELECTED";
+
+  log("Property selected: "+p.name);
+
+  renderProperties(
+    getValue("propertyType")==="All"
+      ? properties
+      : properties.filter(
+          x=>x.type===getValue("propertyType")
+        )
+  );
+}
+
+
+/* ============================================================
+   PRICE ENGINE
+============================================================ */
+
+function calculatePrice(){
+
+  if(!state.selectedProperty){
+    return;
+  }
+
+  const p = state.selectedProperty;
+
+  const nights =
+    Number(getValue("duration")) || 1;
+
+  const participants =
+    Number(getValue("participants")) || 1;
+
+  let units =
+    Math.ceil(
+      participants /
+      Math.max(1,p.capacity)
+    );
+
+  if(units<1) units=1;
+
+  const accommodation =
+    p.price * nights * units;
+
+  const food =
+    175000 * participants * nights;
+
+  const transport =
+    7500000;
+
+  const activity =
+    450000 * participants;
+
+  const total =
+    accommodation +
+    food +
+    transport +
+    activity;
+
+  document.getElementById("stayTotal").textContent =
+    money(accommodation);
+
+  document.getElementById("stayNights").textContent =
+    `${nights} nights • ${units} unit(s)`;
+
+  document.getElementById("financialTotal").textContent =
+    money(total);
+
+  document.getElementById("depositValue").textContent =
+    money(total*0.30);
+
+  document.getElementById("partnerValue").textContent =
+    money(total*0.40);
+
+  document.getElementById("hobbigoValue").textContent =
+    money(total*0.60);
+
+  document.getElementById("ccGMV").textContent =
+    money(state.gmv + total);
+
+  updateCoreObject();
+
+  return total;
+}
+
+
+/* ============================================================
+   V91 TICKET ENGINE
+============================================================ */
+
+function renderTickets(list=tickets){
+
+  const body =
+    document.getElementById("ticketTable");
+
+  body.innerHTML = list.map(t=>`
+
+    <tr>
+      <td>${t.name}</td>
+      <td>${t.route}</td>
+      <td>${t.type}</td>
+      <td>${money(t.price)}</td>
+      <td>
+        ${
+          t.refundable
+          ? `<span class="tag green">
+              YES • ${t.deadlineDays}D
+             </span>`
+          : `<span class="tag red">
+              NO
+             </span>`
+        }
+      </td>
+      <td>
+        <button
+          class="btn"
+          onclick="selectTicket('${t.id}')">
+          SELECT
+        </button>
+      </td>
+    </tr>
+
+  `).join("");
+}
+
+function searchTickets(){
+
+  const type =
+    getValue("ticketType");
+
+  let list =
+    type==="All"
+      ? tickets
+      : tickets.filter(
+          x=>x.type===type
+        );
+
+  if(!list.length){
+    list=tickets;
+  }
+
+  renderTickets(list);
+
+  log(
+    "Ticket search: "+
+    type+
+    " → "+
+    list.length+
+    " result(s)"
+  );
+}
+
+function selectTicket(id){
+
+  const t =
+    tickets.find(x=>x.id===id);
+
+  if(!t) return;
+
+  state.selectedTicket=t;
+
+  log(
+    "Ticket selected: "+
+    t.name+
+    " / "+
+    money(t.price)
+  );
+
+  alert(
+    "Selected ticket:\n\n"+
+    t.name+
+    "\n"+
+    t.route+
+    "\n"+
+    money(t.price)
+  );
+
+  updateCoreObject();
+}
+
+
+/* ============================================================
+   AVAILABILITY
+============================================================ */
+
+function checkAvailability(){
+
+  if(!state.selectedProperty){
+
+    log("Availability check failed: no property selected");
+
+    alert(
+      "Select accommodation first."
+    );
+
+    return false;
+  }
+
+  state.availability =
+    state.selectedProperty.inventory > 0;
+
+  document.getElementById(
+    "lifeAvailability"
+  ).textContent =
+    state.availability
+      ? "AVAILABLE"
+      : "SOLD OUT";
+
+  log(
+    "Availability checked: "+
+    (state.availability
+      ? "AVAILABLE"
+      : "SOLD OUT")
+  );
+
+  return state.availability;
+}
+
+
+/* ============================================================
+   REFUND ENGINE
+============================================================ */
+
+function setupRefund(){
+
+  if(!state.selectedProperty){
+    return;
+  }
+
+  const p =
+    state.selectedProperty;
+
+  const total =
+    calculatePrice() || 0;
+
+  if(!p.refundable){
+
+    state.refundAmount=0;
+    state.cancellationFee=total;
+
+  }else{
+
+    state.refundAmount =
+      total * p.refundPercent / 100;
+
+    state.cancellationFee =
+      total - state.refundAmount;
+  }
+
+  document.getElementById(
+    "refundAmount"
+  ).textContent =
+    "Estimated refund: "+
+    money(state.refundAmount);
+
+  document.getElementById(
+    "cancelFee"
+  ).textContent =
+    money(state.cancellationFee);
+
+  document.getElementById(
+    "refundEligibility"
+  ).textContent =
+    p.refundable
+      ? "ELIGIBLE*"
+      : "NOT ELIGIBLE";
+
+}
+
+
+/* ============================================================
+   REMINDER
+============================================================ */
+
+function sendReminder(days){
+
+  if(!state.selectedProperty){
+
+    alert(
+      "Select a property first."
+    );
+
+    return;
+  }
+
+  const deadline =
+    state.selectedProperty.deadlineDays;
+
+  if(!state.selectedProperty.refundable){
+
+    log(
+      "Reminder skipped: product is non-refundable."
+    );
+
+    return;
+  }
+
+  log(
+    "DEMO reminder sent: "+
+    days+
+    " days before cancellation deadline. "+
+    "Policy deadline: "+
+    deadline+
+    " days."
+  );
+
+  alert(
+    "DEMO REMINDER\n\n"+
+    days+
+    " days before cancellation deadline."
+  );
+}
+
+
+/* ============================================================
+   BOOKING ENGINE
+============================================================ */
+
+function createBooking(){
+
+  syncInputs();
+
+  if(!state.selectedProperty){
+
+    alert(
+      "Please select an accommodation first."
+    );
+
+    log(
+      "Booking failed: property not selected."
+    );
+
+    return;
+  }
+
+  if(!checkAvailability()){
+    return;
+  }
+
+  const total =
+    calculatePrice();
+
+  const bookingId =
+    "HB100-"+
+
+    Math.random()
+      .toString(36)
+      .substring(2,8)
+      .toUpperCase();
+
+  state.booking = {
+
+    id:bookingId,
+
+    customerType:
+      state.customerType,
+
+    eventType:
+      state.eventType,
+
+    country:
+      state.country,
+
+    city:
+      state.city,
+
+    participants:
+      state.participants,
+
+    duration:
+      state.duration,
+
+    property:
+      state.selectedProperty.name,
+
+    ticket:
+      state.selectedTicket
+        ? state.selectedTicket.name
+        : null,
+
+    total:
+      total,
+
+    status:"RESERVED",
+
+    paymentStatus:"PENDING",
+
+    refundStatus:"NOT_REQUESTED",
+
+    createdAt:
+      new Date().toISOString()
+  };
+
+  state.bookings++;
+  state.gmv += total;
+
+  document.getElementById(
+    "statBookings"
+  ).textContent =
+    (8420+state.bookings).toLocaleString();
+
+  document.getElementById(
+    "ccBooking"
+  ).textContent =
+    state.bookings;
+
+  document.getElementById(
+    "bookingStatus"
+  ).textContent =
+    "RESERVED";
+
+  document.getElementById(
+    "lifeBooking"
+  ).textContent =
+    "CREATED";
+
+  log(
+    "Booking created: "+
+    bookingId+
+    " / "+
+    money(total)
+  );
+
+  updateCoreObject();
+
+  alert(
+    "BOOKING CREATED\n\n"+
+    "Booking ID: "+
+    bookingId+
+    "\nTotal: "+
+    money(total)
+  );
+}
+
+
+/* ============================================================
+   PAYMENT
+============================================================ */
+
+function simulatePayment(){
+
+  if(!state.booking){
+
+    alert(
+      "Create booking first."
+    );
+
+    return;
+  }
+
+  state.payment=true;
+
+  state.booking.paymentStatus=
+    "PAID";
+
+  state.booking.status=
+    "CONFIRMED";
+
+  document.getElementById(
+    "lifePayment"
+  ).textContent =
+    "PAID";
+
+  document.getElementById(
+    "bookingStatus"
+  ).textContent =
+    "CONFIRMED";
+
+  log(
+    "DEMO payment completed for "+
+    state.booking.id
+  );
+
+  updateCoreObject();
+
+  alert(
+    "DEMO PAYMENT SUCCESS\n\n"+
+    state.booking.id
+  );
+}
+
+
+/* ============================================================
+   CANCELLATION + REFUND
+============================================================ */
+
+function simulateCancel(){
+
+  if(!state.booking){
+
+    alert(
+      "No booking exists."
+    );
+
+    return;
+  }
+
+  if(!state.payment){
+
+    alert(
+      "Payment must be completed before cancellation/refund simulation."
+    );
+
+    return;
+  }
+
+  const p =
+    state.selectedProperty;
+
+  if(!p){
+    return;
+  }
+
+  state.cancelled=true;
+
+  document.getElementById(
+    "lifeCancel"
+  ).textContent =
+    "CANCELLED";
+
+  if(!p.refundable){
+
+    state.refundProcessed=false;
+    state.refundAmount=0;
+
+    state.booking.status=
+      "CANCELLED";
+
+    state.booking.refundStatus=
+      "NOT ELIGIBLE";
+
+    document.getElementById(
+      "lifeRefund"
+    ).textContent =
+      "NO REFUND";
+
+    document.getElementById(
+      "bookingStatus"
+    ).textContent =
+      "CANCELLED";
+
+    log(
+      "Booking cancelled. Product is non-refundable."
+    );
+
+    updateCoreObject();
+
+    return;
+  }
+
+  setupRefund();
+
+  state.refundProcessed=true;
+
+  state.booking.status=
+    "CANCELLED";
+
+  state.booking.refundStatus=
+    "REFUND_REQUESTED_DEMO";
+
+  document.getElementById(
+    "lifeRefund"
+  ).textContent =
+    money(state.refundAmount);
+
+  document.getElementById(
+    "lifeComplete"
+  ).textContent =
+    "REFUND REQUESTED";
+
+  document.getElementById(
+    "bookingStatus"
+  ).textContent =
+    "REFUND REQUESTED";
+
+  log(
+    "DEMO refund requested: "+
+    money(state.refundAmount)
+  );
+
+  updateCoreObject();
+
+  alert(
+    "DEMO CANCELLATION\n\n"+
+    "Estimated refund: "+
+    money(state.refundAmount)+
+    "\n\nProduction refund requires provider/payment gateway confirmation."
+  );
+}
+
+
+/* ============================================================
+   AI ENGINE
+============================================================ */
+
+function aiMatch(){
+
+  syncInputs();
+
+  let score=85;
+
+  if(state.customerType==="Corporate"){
+    score+=5;
+  }
+
+  if(state.participants>=50){
+    score+=2;
+  }
+
+  if(state.budget>=300000000){
+    score+=2;
+  }
+
+  score=Math.min(score,99);
+
+  document.getElementById(
+    "aiScore"
+  ).textContent =
+    score+"%";
+
+  log(
+    "AI Smart Match generated: "+
+    score+"% demo confidence."
+  );
+
+  updateCoreObject();
+}
+
+
+function optimizeBudget(){
+
+  syncInputs();
+
+  if(!state.selectedProperty){
+
+    log(
+      "AI budget optimizer: using marketplace benchmark."
+    );
+
+    document.getElementById(
+      "aiPackagePrice"
+    ).textContent =
+      money(
+        Math.min(
+          state.budget,
+          485000000
+        )
+      );
+
+    return;
+  }
+
+  const current =
+    calculatePrice();
+
+  const optimized =
+    Math.min(
+      current,
+      state.budget
+    );
+
+  document.getElementById(
+    "aiPackagePrice"
+  ).textContent =
+    money(optimized);
+
+  log(
+    "AI budget optimizer: "+
+    money(current)+
+    " → "+
+    money(optimized)
+  );
+}
+
+
+function optimizeRoute(){
+
+  log(
+    "AI Route Optimizer: Airport → Transfer → Hotel → Venue → Food → Activity → Airport."
+  );
+
+  alert(
+    "DEMO ROUTE OPTIMIZED\n\n"+
+    "Airport → Transport → Hotel → Venue → Food → Activity → Airport"
+  );
+}
+
+
+function compareAI(){
+
+  const options = [
+    {
+      name:"BEST PRICE",
+      price:418000000,
+      score:87
+    },
+    {
+      name:"BEST VALUE",
+      price:452000000,
+      score:94
+    },
+    {
+      name:"PREMIUM",
+      price:485000000,
+      score:92
+    }
+  ];
+
+  const best =
+    options.sort(
+      (a,b)=>b.score-a.score
+    )[0];
+
+  log(
+    "AI comparison: "+
+    best.name+
+    " selected with score "+
+    best.score
+  );
+
+  alert(
+    "AI COMPARE\n\n"+
+    options.map(
+      x=>
+        x.name+
+        " • "+
+        money(x.price)+
+        " • Score "+
+        x.score
+    ).join("\n")
+  );
+}
+
+
+function generateAIReport(){
+
+  syncInputs();
+
+  const report = {
+
+    engine:"HOBBIGO AI SUPER ENGINE",
+
+    destination:
+      state.city+", "+state.country,
+
+    customer:
+      state.customerType,
+
+    event:
+      state.eventType,
+
+    participants:
+      state.participants,
+
+    duration:
+      state.duration,
+
+    budget:
+      money(state.budget),
+
+    smartMatch:
+      "94% DEMO",
+
+    recommendation:
+      "Integrated accommodation + transport + food + experience package",
+
+    risk:
+      "LOW DEMO RISK",
+
+    status:
+      "DEMO READY"
+  };
+
+  log(
+    "AI report generated."
+  );
+
+  alert(
+    JSON.stringify(
+      report,
+      null,
+      2
+    )
+  );
+}
+
+
+/* ============================================================
+   MASTER ENGINE
+============================================================ */
+
+function runMaster(){
+
+  syncInputs();
+
+  log(
+    "========== HOBBIGO MASTER 100 START =========="
+  );
+
+  log(
+    "Destination: "+
+    state.city+
+    ", "+
+    state.country
+  );
+
+  log(
+    "Event: "+
+    state.eventType+
+    " / "+
+    state.participants+
+    " participants"
+  );
+
+  aiMatch();
+
+  filterProperties();
+
+  if(!state.selectedProperty){
+
+    const compatible =
+      properties.find(
+        p =>
+          p.city===state.city &&
+          p.capacity>=1
+      );
+
+    if(compatible){
+      selectProperty(
+        compatible.id
+      );
+    }
+  }
+
+  checkAvailability();
+
+  calculatePrice();
+
+  setupRefund();
+
+  searchTickets();
+
+  log(
+    "V91 Flight Engine: READY"
+  );
+
+  log(
+    "V92 Transport Engine: READY"
+  );
+
+  log(
+    "V93 Culinary Engine: READY"
+  );
+
+  log(
+    "V94 Experience Engine: READY"
+  );
+
+  log(
+    "V95 Corporate/MICE Engine: READY"
+  );
+
+  log(
+    "V96 AI Package Engine: READY"
+  );
+
+  log(
+    "V97 Payment Engine: READY"
+  );
+
+  log(
+    "V98 Partner Network: READY"
+  );
+
+  log(
+    "V99 AI Super Engine: READY"
+  );
+
+  log(
+    "V100 Global Marketplace: READY"
+  );
+
+  log(
+    "========== MASTER 100 COMPLETE =========="
+  );
+
+  updateCoreObject();
+}
+
+
+/* ============================================================
+   CORE OBJECT
+============================================================ */
+
+function updateCoreObject(){
+
+  const object = {
+
+    platform:"HOBBIGO",
+
+    version:"MASTER_100",
+
+    mode:"DEMO",
+
+    search:{
+      country:state.country,
+      city:state.city,
+      customerType:state.customerType,
+      eventType:state.eventType,
+      participants:state.participants,
+      duration:state.duration,
+      budget:state.budget
+    },
+
+    selectedProperty:
+      state.selectedProperty
+        ? {
+            id:state.selectedProperty.id,
+            name:state.selectedProperty.name,
+            type:state.selectedProperty.type,
+            price:state.selectedProperty.price,
+            refundable:state.selectedProperty.refundable,
+            refundPercent:state.selectedProperty.refundPercent,
+            deadlineDays:state.selectedProperty.deadlineDays
+          }
+        : null,
+
+    selectedTicket:
+      state.selectedTicket
+        ? {
+            id:state.selectedTicket.id,
+            name:state.selectedTicket.name,
+            type:state.selectedTicket.type,
+            price:state.selectedTicket.price,
+            refundable:state.selectedTicket.refundable
+          }
+        : null,
+
+    transaction:{
+      bookingId:
+        state.booking
+          ? state.booking.id
+          : null,
+
+      availability:
+        state.availability,
+
+      payment:
+        state.payment
+          ? "PAID"
+          : "PENDING",
+
+      cancellation:
+        state.cancelled
+          ? "CANCELLED"
+          : "ACTIVE",
+
+      refund:
+        state.refundProcessed
+          ? state.refundAmount
+          : 0
+    },
+
+    engines:{
+      V90:"GLOBAL MARKETPLACE FOUNDATION",
+      V91:"FLIGHT & TICKET",
+      V92:"TRANSPORT",
+      V93:"CULINARY",
+      V94:"EXPERIENCE",
+      V95:"CORPORATE MICE",
+      V96:"AI PACKAGE",
+      V97:"PAYMENT & FINANCIAL",
+      V98:"PARTNER NETWORK",
+      V99:"AI SUPER ENGINE",
+      V100:"GLOBAL SUPER MARKETPLACE"
+    }
+  };
+
+  document.getElementById(
+    "coreObject"
+  ).textContent =
+    JSON.stringify(
+      object,
+      null,
+      2
+    );
+}
+
+
+/* ============================================================
+   REPORT
+============================================================ */
+
+function generateReport(){
+
+  syncInputs();
+
+  const total =
+    state.selectedProperty
+      ? calculatePrice()
+      : 0;
+
+  const report = {
+
+    platform:"HOBBIGO",
+
+    version:"MASTER 100",
+
+    destination:
+      state.city+
+      ", "+
+      state.country,
+
+    event:
+      state.eventType,
+
+    participants:
+      state.participants,
+
+    duration:
+      state.duration,
+
+    selectedProperty:
+      state.selectedProperty
+        ? state.selectedProperty.name
+        : null,
+
+    estimatedPackage:
+      money(total),
+
+    bookings:
+      state.bookings,
+
+    demoGMV:
+      money(state.gmv),
+
+    partnerShare:
+      money(state.gmv*0.40),
+
+    hobbigoShare:
+      money(state.gmv*0.60),
+
+    status:
+      "DEMO"
+  };
+
+  log(
+    "Marketplace report generated."
+  );
+
+  alert(
+    JSON.stringify(
+      report,
+      null,
+      2
+    )
+  );
+}
+
+
+/* ============================================================
+   CLEAR LOG
+============================================================ */
+
+function clearLog(){
+
+  state.logs=[];
+
+  renderLog();
+
+}
+
+
+/* ============================================================
+   INITIALIZATION
+============================================================ */
+
+function init(){
+
+  const today =
+    new Date();
+
+  const yyyy =
+    today.getFullYear();
+
+  const mm =
+    String(
+      today.getMonth()+1
+    ).padStart(2,"0");
+
+  const dd =
+    String(
+      today.getDate()
+    ).padStart(2,"0");
+
+  document.getElementById(
+    "checkin"
+  ).value =
+    `${yyyy}-${mm}-${dd}`;
+
+  renderProperties();
+
+  renderTickets();
+
+  calculatePrice();
+
+  updateCoreObject();
+
+  log(
+    "HOBBIGO MASTER 100 initialized."
+  );
+
+  log(
+    "V90 foundation loaded."
+  );
+
+  log(
+    "V91–V100 engines loaded."
+  );
+
+  log(
+    "Mode: DEMO / API not connected."
+  );
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
