@@ -1,1 +1,3232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>HobbiGo V89 MASTER</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6fa;
+    color:#172033;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.header{
+    background:linear-gradient(135deg,#06142e,#103d68,#087f8c);
+    color:#fff;
+    padding:22px 28px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 5px 22px rgba(0,0,0,.15);
+}
+
+.header-inner{
+    max-width:1500px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.tagline{
+    font-size:13px;
+    opacity:.8;
+    margin-top:4px;
+}
+
+.badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    justify-content:flex-end;
+}
+
+.badge{
+    padding:7px 11px;
+    border-radius:20px;
+    background:rgba(255,255,255,.13);
+    border:1px solid rgba(255,255,255,.2);
+    font-size:10px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1500px;
+    margin:auto;
+    padding:25px;
+}
+
+.hero{
+    background:#fff;
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#687386;
+    line-height:1.6;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:20px;
+}
+
+.flow span{
+    background:#edf4f8;
+    border-radius:20px;
+    padding:8px 12px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#fff;
+    padding:18px;
+    border-radius:16px;
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.stat .number{
+    font-size:24px;
+    font-weight:900;
+}
+
+.stat .label{
+    font-size:10px;
+    color:#778294;
+    margin-top:5px;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:20px;
+}
+
+.sidebar,
+.main{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.055);
+}
+
+.card h2{
+    font-size:19px;
+    margin-bottom:7px;
+}
+
+.card h3{
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.sub{
+    color:#788394;
+    font-size:11px;
+    line-height:1.5;
+    margin-bottom:15px;
+}
+
+.tag{
+    display:inline-block;
+    background:#e8f6f7;
+    color:#087f8c;
+    border-radius:20px;
+    padding:5px 9px;
+    font-size:9px;
+    font-weight:900;
+    margin-bottom:9px;
+}
+
+.form-group{
+    margin-bottom:11px;
+}
+
+label{
+    display:block;
+    font-size:10px;
+    font-weight:bold;
+    color:#687386;
+    margin-bottom:5px;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #dce2e9;
+    border-radius:10px;
+    outline:none;
+    background:#fff;
+}
+
+input:focus,
+select:focus{
+    border-color:#087f8c;
+}
+
+.grid2{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.grid3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.grid4{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:11px;
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.primary{
+    background:#087f8c;
+    color:#fff;
+}
+
+.dark{
+    background:#14213d;
+    color:#fff;
+}
+
+.green{
+    background:#24873d;
+    color:#fff;
+}
+
+.orange{
+    background:#df8617;
+    color:#fff;
+}
+
+.red{
+    background:#c53d3d;
+    color:#fff;
+}
+
+.light{
+    background:#edf2f5;
+    color:#263346;
+}
+
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.kpi{
+    background:#f7f9fb;
+    border-radius:13px;
+    padding:15px;
+}
+
+.kpi .big{
+    font-size:22px;
+    font-weight:900;
+}
+
+.kpi .caption{
+    color:#788394;
+    font-size:9px;
+    margin-top:4px;
+}
+
+.score{
+    font-size:28px;
+    font-weight:900;
+}
+
+.progress{
+    height:8px;
+    background:#e8edf1;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#087f8c;
+    transition:.4s;
+}
+
+.score-item{
+    background:#f7f9fb;
+    padding:13px;
+    border-radius:12px;
+}
+
+.score-item strong{
+    font-size:12px;
+}
+
+.score-item small{
+    display:block;
+    color:#778294;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.product{
+    border:1px solid #e2e7ec;
+    border-radius:14px;
+    padding:15px;
+}
+
+.product:hover{
+    box-shadow:0 7px 20px rgba(0,0,0,.07);
+}
+
+.product-title{
+    font-weight:900;
+    font-size:13px;
+}
+
+.product-meta{
+    color:#778294;
+    font-size:10px;
+    line-height:1.5;
+    margin:7px 0;
+}
+
+.price{
+    font-size:14px;
+    font-weight:900;
+}
+
+.pill{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    background:#edf2f5;
+    font-size:9px;
+    font-weight:bold;
+    margin:2px;
+}
+
+.pill.green{
+    background:#e4f6e8;
+    color:#22783a;
+}
+
+.pill.orange{
+    background:#fff1da;
+    color:#9a630f;
+}
+
+.pill.blue{
+    background:#e4f2ff;
+    color:#176c9f;
+}
+
+.alert{
+    padding:12px;
+    border-radius:11px;
+    font-size:11px;
+    line-height:1.5;
+    margin-top:10px;
+}
+
+.info{
+    background:#e8f5fb;
+    color:#17627c;
+}
+
+.success{
+    background:#e8f7eb;
+    color:#23723a;
+}
+
+.warning{
+    background:#fff3dd;
+    color:#8a5b13;
+}
+
+.danger{
+    background:#fdeaea;
+    color:#963838;
+}
+
+.timeline{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.timeline-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    padding:11px;
+    background:#f7f9fb;
+    border-radius:10px;
+}
+
+.timeline-num{
+    width:28px;
+    height:28px;
+    min-width:28px;
+    border-radius:50%;
+    background:#087f8c;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.timeline-item strong{
+    font-size:11px;
+}
+
+.timeline-item small{
+    display:block;
+    color:#778294;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:10px;
+}
+
+th{
+    background:#f1f4f7;
+    text-align:left;
+    padding:9px;
+}
+
+td{
+    border-bottom:1px solid #edf0f3;
+    padding:9px;
+}
+
+.json{
+    background:#101827;
+    color:#d7e9ff;
+    padding:15px;
+    border-radius:12px;
+    font-family:monospace;
+    font-size:9px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    overflow:auto;
+    max-height:400px;
+}
+
+.log{
+    background:#101827;
+    color:#bde8cc;
+    border-radius:12px;
+    padding:14px;
+    min-height:110px;
+    max-height:220px;
+    overflow:auto;
+    font-family:monospace;
+    font-size:9px;
+    line-height:1.6;
+}
+
+.recommendation{
+    border:2px solid #087f8c;
+    background:#f2fbfb;
+    border-radius:15px;
+    padding:16px;
+}
+
+.recommendation h3{
+    color:#087f8c;
+}
+
+.big-result{
+    font-size:27px;
+    font-weight:900;
+}
+
+.footer{
+    text-align:center;
+    color:#788394;
+    font-size:10px;
+    padding:35px;
+}
+
+@media(max-width:1100px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .badges{
+        justify-content:flex-start;
+    }
+
+    .stats,
+    .grid2,
+    .grid3,
+    .grid4{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+<div class="header-inner">
+
+<div>
+
+<div class="logo">
+HOBBIGO
+</div>
+
+<div class="tagline">
+AI Journey & Experience Marketplace
+</div>
+
+</div>
+
+
+<div class="badges">
+
+<span class="badge">V89 MASTER</span>
+<span class="badge">AI INTELLIGENCE</span>
+<span class="badge">SMART MATCH</span>
+<span class="badge">OPTIMIZER</span>
+<span class="badge">FORECAST</span>
+<span class="badge">RISK ENGINE</span>
+<span class="badge">COMMAND CENTER</span>
+
+</div>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<section class="hero">
+
+<span class="tag">
+V89 GLOBAL AI OPTIMIZATION & DECISION ENGINE
+</span>
+
+<h1>
+HobbiGo AI Intelligence & Optimization
+</h1>
+
+<p>
+V89 menggabungkan data marketplace, partner, availability,
+booking dan transaction dari V85–V88 menjadi sebuah
+AI Decision Engine untuk membantu memilih package,
+mengoptimalkan budget, route, partner dan operational risk.
+</p>
+
+
+<div class="flow">
+
+<span>DATA</span>
+<span>SMART MATCH</span>
+<span>BUDGET</span>
+<span>ROUTE</span>
+<span>PACKAGE</span>
+<span>PARTNER</span>
+<span>FORECAST</span>
+<span>RISK</span>
+<span>COMMAND CENTER</span>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<div class="number">195</div>
+<div class="label">COUNTRIES</div>
+</div>
+
+<div class="stat">
+<div class="number">12,500</div>
+<div class="label">PARTNERS</div>
+</div>
+
+<div class="stat">
+<div class="number">185K</div>
+<div class="label">PRODUCTS</div>
+</div>
+
+<div class="stat">
+<div class="number" id="statBookings">8,420</div>
+<div class="label">BOOKINGS</div>
+</div>
+
+<div class="stat">
+<div class="number">95%</div>
+<div class="label">AI MATCH DEMO</div>
+</div>
+
+<div class="stat">
+<div class="number" id="riskStat">LOW</div>
+<div class="label">SYSTEM RISK</div>
+</div>
+
+</section>
+
+
+<div class="layout">
+
+
+<aside class="sidebar">
+
+
+<!-- V89.1 -->
+
+<section class="card">
+
+<span class="tag">V89.1</span>
+
+<h2>
+AI Data Intelligence
+</h2>
+
+<div class="sub">
+Masukkan kebutuhan perjalanan/event dan AI membaca
+data marketplace untuk membuat decision profile.
+</div>
+
+
+<div class="form-group">
+
+<label>COUNTRY</label>
+
+<select id="country">
+
+<option>Indonesia</option>
+<option>Singapore</option>
+<option>Thailand</option>
+<option>Japan</option>
+<option>United Arab Emirates</option>
+<option>Australia</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>CITY</label>
+
+<select id="city">
+
+<option>Jakarta</option>
+<option>Bali</option>
+<option>Singapore</option>
+<option>Bangkok</option>
+<option>Tokyo</option>
+<option>Dubai</option>
+<option>Sydney</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>EVENT TYPE</label>
+
+<select id="eventType">
+
+<option>Corporate Retreat</option>
+<option>Meeting</option>
+<option>Team Building</option>
+<option>Conference</option>
+<option>Incentive Trip</option>
+<option>Family Group</option>
+<option>Tour Group</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>PARTICIPANTS</label>
+
+<input
+id="participants"
+type="number"
+value="100"
+min="1"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>DURATION</label>
+
+<select id="duration">
+
+<option value="1">1 Day</option>
+<option value="2">2 Days</option>
+<option value="3" selected>3 Days</option>
+<option value="4">4 Days</option>
+<option value="5">5 Days</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>BUDGET</label>
+
+<input
+id="budget"
+type="number"
+value="500000000"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>TRIP STYLE</label>
+
+<select id="style">
+
+<option>Economy</option>
+<option selected>Comfort</option>
+<option>Premium</option>
+<option>Exclusive</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>INTEREST</label>
+
+<select id="interest">
+
+<option>Food & Culinary</option>
+<option>Team Building</option>
+<option>Nature</option>
+<option>Culture</option>
+<option>Luxury Experience</option>
+<option>Adventure</option>
+
+</select>
+
+</div>
+
+
+<button
+class="btn primary"
+onclick="runAIEngine()"
+>
+RUN HOBBIGO AI
+</button>
+
+
+</section>
+
+
+<!-- V89.2 -->
+
+<section class="card">
+
+<span class="tag">V89.2</span>
+
+<h2>
+AI Smart Match 2.0
+</h2>
+
+<div class="sub">
+AI scoring simulation untuk memilih kombinasi
+yang paling sesuai dengan kebutuhan user.
+</div>
+
+
+<div class="grid2">
+
+<div class="score-item">
+
+<strong>Budget Fit</strong>
+
+<div
+class="score"
+id="budgetScore"
+>
+--
+</div>
+
+<div class="progress">
+<div
+id="budgetBar"
+class="progress-bar"
+></div>
+</div>
+
+</div>
+
+
+<div class="score-item">
+
+<strong>Location Fit</strong>
+
+<div
+class="score"
+id="locationScore"
+>
+--
+</div>
+
+<div class="progress">
+<div
+id="locationBar"
+class="progress-bar"
+></div>
+</div>
+
+</div>
+
+
+<div class="score-item">
+
+<strong>Capacity Fit</strong>
+
+<div
+class="score"
+id="capacityScore"
+>
+--
+</div>
+
+<div class="progress">
+<div
+id="capacityBar"
+class="progress-bar"
+></div>
+</div>
+
+</div>
+
+
+<div class="score-item">
+
+<strong>Experience</strong>
+
+<div
+class="score"
+id="experienceScore"
+>
+--
+</div>
+
+<div class="progress">
+<div
+id="experienceBar"
+class="progress-bar"
+></div>
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="recommendation"
+style="margin-top:12px"
+>
+
+<h3>
+AI BEST MATCH
+</h3>
+
+<div
+id="bestMatch"
+class="big-result"
+>
+Run AI first
+</div>
+
+<div
+id="matchDescription"
+class="sub"
+style="margin-top:5px"
+>
+--
+</div>
+
+</div>
+
+</section>
+
+
+</aside>
+
+
+<main class="main">
+
+
+<!-- V89.3 -->
+
+<section class="card">
+
+<span class="tag">V89.3</span>
+
+<h2>
+AI Price & Budget Optimizer
+</h2>
+
+<div class="sub">
+AI simulation mencoba beberapa kombinasi package
+untuk menemukan nilai yang lebih efisien.
+</div>
+
+
+<div class="grid3">
+
+<div class="kpi">
+
+<div
+class="big"
+id="originalBudget"
+>
+Rp500M
+</div>
+
+<div class="caption">
+USER BUDGET
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="optimizedCost"
+>
+--
+</div>
+
+<div class="caption">
+OPTIMIZED PACKAGE
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="saving"
+>
+--
+</div>
+
+<div class="caption">
+POTENTIAL SAVING
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="budgetOptimization"
+class="alert info"
+>
+Jalankan AI Engine untuk menghitung optimasi budget.
+</div>
+
+
+</section>
+
+
+<!-- V89.4 -->
+
+<section class="card">
+
+<span class="tag">V89.4</span>
+
+<h2>
+AI Route & Schedule Optimizer
+</h2>
+
+<div class="sub">
+Optimasi perjalanan berdasarkan urutan lokasi,
+waktu dan kebutuhan event.
+</div>
+
+
+<div class="timeline">
+
+<div class="timeline-item">
+
+<div class="timeline-num">1</div>
+
+<div>
+<strong>Airport / Arrival</strong>
+<small id="routeAirport">
+Destination Airport
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">2</div>
+
+<div>
+<strong>Airport Transfer</strong>
+<small>
+Private / Executive Transport
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">3</div>
+
+<div>
+<strong>Hotel Check-in</strong>
+<small>
+Corporate Accommodation
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">4</div>
+
+<div>
+<strong>Meeting / Venue</strong>
+<small>
+Main Corporate Event
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">5</div>
+
+<div>
+<strong>Lunch / Culinary</strong>
+<small>
+Restaurant / Local Experience
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">6</div>
+
+<div>
+<strong>Team Activity</strong>
+<small>
+Experience / Team Building
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">7</div>
+
+<div>
+<strong>Dinner</strong>
+<small>
+Corporate Dinner
+</small>
+</div>
+
+</div>
+
+
+<div class="timeline-item">
+
+<div class="timeline-num">8</div>
+
+<div>
+<strong>Return Airport</strong>
+<small>
+Departure Transfer
+</small>
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="routeOptimization"
+class="alert info"
+>
+Route optimizer waiting for AI calculation.
+</div>
+
+
+</section>
+
+
+<!-- V89.5 -->
+
+<section class="card">
+
+<span class="tag">V89.5</span>
+
+<h2>
+AI Package Optimizer
+</h2>
+
+<div class="sub">
+Dynamic package yang dapat mengubah hotel, venue,
+restaurant, transport dan activity.
+</div>
+
+
+<div class="grid2">
+
+<div class="product">
+
+<div class="product-title">
+🏨 Hotel
+</div>
+
+<div
+id="packageHotel"
+class="product-meta"
+>
+Waiting
+</div>
+
+</div>
+
+
+<div class="product">
+
+<div class="product-title">
+🏢 Venue
+</div>
+
+<div
+id="packageVenue"
+class="product-meta"
+>
+Waiting
+</div>
+
+</div>
+
+
+<div class="product">
+
+<div class="product-title">
+🍽️ Restaurant
+</div>
+
+<div
+id="packageRestaurant"
+class="product-meta"
+>
+Waiting
+</div>
+
+</div>
+
+
+<div class="product">
+
+<div class="product-title">
+🚌 Transport
+</div>
+
+<div
+id="packageTransport"
+class="product-meta"
+>
+Waiting
+</div>
+
+</div>
+
+
+<div class="product">
+
+<div class="product-title">
+🎯 Activity
+</div>
+
+<div
+id="packageActivity"
+class="product-meta"
+>
+Waiting
+</div>
+
+</div>
+
+
+<div class="product">
+
+<div class="product-title">
+💰 Package Total
+</div>
+
+<div
+id="packageTotal"
+class="price"
+>
+--
+</div>
+
+</div>
+
+</div>
+
+
+<div class="button-row">
+
+<button
+class="btn primary"
+onclick="optimizePackage()"
+>
+OPTIMIZE PACKAGE
+</button>
+
+<button
+class="btn light"
+onclick="swapPackage()"
+>
+SWAP PACKAGE
+</button>
+
+</div>
+
+
+<div
+id="packageResult"
+class="alert info"
+>
+Package optimizer waiting.
+</div>
+
+
+</section>
+
+
+<!-- V89.6 -->
+
+<section class="card">
+
+<span class="tag">V89.6</span>
+
+<h2>
+AI Partner Ranking
+</h2>
+
+<div class="sub">
+Partner ranking menggunakan rating, price,
+availability, reliability dan historical performance.
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Rank</th>
+<th>Partner</th>
+<th>Category</th>
+<th>Rating</th>
+<th>Availability</th>
+<th>AI Score</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="partnerRanking">
+
+<tr>
+<td colspan="6">
+Run AI Engine to generate ranking.
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+
+<!-- V89.7 -->
+
+<section class="card">
+
+<span class="tag">V89.7</span>
+
+<h2>
+AI Demand & Revenue Forecast
+</h2>
+
+<div class="sub">
+Demo forecasting engine untuk demand, bookings,
+GMV dan potential commission.
+</div>
+
+
+<div class="grid4">
+
+<div class="kpi">
+
+<div
+class="big"
+id="forecastBookings"
+>
+--
+</div>
+
+<div class="caption">
+PROJECTED BOOKINGS
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="forecastGMV"
+>
+--
+</div>
+
+<div class="caption">
+PROJECTED GMV
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="forecastCommission"
+>
+--
+</div>
+
+<div class="caption">
+PROJECTED COMMISSION
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="forecastDemand"
+>
+--
+</div>
+
+<div class="caption">
+DEMAND INDEX
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="forecastResult"
+class="alert info"
+>
+Forecast engine waiting.
+</div>
+
+
+</section>
+
+
+<!-- V89.8 -->
+
+<section class="card">
+
+<span class="tag">V89.8</span>
+
+<h2>
+AI Risk & Transaction Monitor
+</h2>
+
+<div class="sub">
+Monitoring terhadap availability, payment,
+partner, API, booking dan refund.
+</div>
+
+
+<div class="grid3">
+
+<div class="kpi">
+
+<div
+id="riskLevel"
+class="big"
+>
+LOW
+</div>
+
+<div class="caption">
+OVERALL RISK
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+id="apiRisk"
+class="big"
+>
+LOW
+</div>
+
+<div class="caption">
+API RISK
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+id="transactionRisk"
+class="big"
+>
+LOW
+</div>
+
+<div class="caption">
+TRANSACTION RISK
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="riskResult"
+class="alert success"
+>
+No major demo risk detected.
+</div>
+
+
+</section>
+
+
+<!-- V89.9 -->
+
+<section class="card">
+
+<span class="tag">V89.9</span>
+
+<h2>
+HOBBIGO AI COMMAND CENTER
+</h2>
+
+<div class="sub">
+Central decision dashboard untuk seluruh V89 engine.
+</div>
+
+
+<div class="dashboard grid4">
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdMatch"
+>
+--
+</div>
+
+<div class="caption">
+AI MATCH
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdSaving"
+>
+--
+</div>
+
+<div class="caption">
+AI SAVING
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdRoute"
+>
+--
+</div>
+
+<div class="caption">
+ROUTE SCORE
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdPartner"
+>
+--
+</div>
+
+<div class="caption">
+PARTNER SCORE
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdDemand"
+>
+--
+</div>
+
+<div class="caption">
+DEMAND
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdRisk"
+>
+--
+</div>
+
+<div class="caption">
+RISK
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdPackage"
+>
+--
+</div>
+
+<div class="caption">
+PACKAGE
+</div>
+
+</div>
+
+
+<div class="kpi">
+
+<div
+class="big"
+id="cmdStatus"
+>
+READY
+</div>
+
+<div class="caption">
+AI ENGINE STATUS
+</div>
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="button-row">
+
+<button
+class="btn primary"
+onclick="runAIEngine()"
+>
+GENERATE BEST PACKAGE
+</button>
+
+<button
+class="btn dark"
+onclick="optimizePackage()"
+>
+OPTIMIZE BUDGET
+</button>
+
+<button
+class="btn green"
+onclick="runRiskScan()"
+>
+RUN RISK SCAN
+</button>
+
+<button
+class="btn orange"
+onclick="generateReport()"
+>
+GENERATE AI REPORT
+</button>
+
+</div>
+
+
+<div
+id="commandResult"
+class="alert success"
+>
+HobbiGo AI Command Center ready.
+</div>
+
+
+</section>
+
+
+<!-- CORE OBJECT -->
+
+<section class="card">
+
+<span class="tag">
+HOBBIGO AI CORE OBJECT
+</span>
+
+<h2>
+V89 Decision Object
+</h2>
+
+<div
+id="coreObject"
+class="json"
+></div>
+
+</section>
+
+
+<!-- API -->
+
+<section class="card">
+
+<span class="tag">
+V89 API ARCHITECTURE
+</span>
+
+<h2>
+AI Optimization Endpoints
+</h2>
+
+<div class="json">/api/v1/ai
+│
+├── /data-intelligence
+├── /smart-match
+├── /budget-optimizer
+├── /route-optimizer
+├── /package-optimizer
+├── /partner-ranking
+├── /demand-forecast
+├── /revenue-forecast
+├── /risk-monitor
+├── /recommendations
+├── /decision-engine
+│
+├── /marketplace
+├── /partners
+├── /availability
+├── /bookings
+├── /transactions
+├── /commissions
+│
+└── /command-center</div>
+
+</section>
+
+
+<!-- LOG -->
+
+<section class="card">
+
+<span class="tag">
+ENGINE LOG
+</span>
+
+<h2>
+HobbiGo V89 AI System Log
+</h2>
+
+<div
+id="engineLog"
+class="log"
+></div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<div class="footer">
+
+<strong>HOBBIGO V89 MASTER</strong><br><br>
+
+AI Journey & Experience Marketplace<br>
+
+AI Global Optimization & Decision Engine<br><br>
+
+DEMO AI / DEMO FORECAST / DEMO SCORING<br>
+Real AI model, real-time APIs and production backend
+are not connected in this prototype.
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V89 MASTER
+   AI GLOBAL OPTIMIZATION & DECISION ENGINE
+========================================================= */
+
+
+const state={
+
+version:"V89 MASTER",
+
+mode:"DEMO",
+
+country:"Indonesia",
+
+city:"Jakarta",
+
+eventType:"Corporate Retreat",
+
+participants:100,
+
+duration:3,
+
+budget:500000000,
+
+style:"Comfort",
+
+interest:"Food & Culinary",
+
+scores:{
+budget:0,
+location:0,
+capacity:0,
+experience:0,
+overall:0
+},
+
+optimizedCost:0,
+
+saving:0,
+
+routeScore:0,
+
+partnerScore:0,
+
+demandIndex:0,
+
+risk:"LOW",
+
+packageVersion:1,
+
+logs:[]
+
+};
+
+
+/* =========================================================
+   DEMO PARTNERS
+========================================================= */
+
+const partners=[
+
+{
+name:"Grand Jakarta Hotel",
+category:"Hotel",
+rating:4.7,
+availability:97,
+reliability:95,
+priceFit:92
+},
+
+{
+name:"Jakarta Convention Center",
+category:"Venue",
+rating:4.8,
+availability:96,
+reliability:94,
+priceFit:89
+},
+
+{
+name:"Corporate Dining Jakarta",
+category:"Restaurant",
+rating:4.6,
+availability:93,
+reliability:91,
+priceFit:94
+},
+
+{
+name:"Executive Transport Jakarta",
+category:"Transport",
+rating:4.7,
+availability:98,
+reliability:96,
+priceFit:91
+},
+
+{
+name:"Jakarta Team Experience",
+category:"Activity",
+rating:4.9,
+availability:94,
+reliability:93,
+priceFit:88
+},
+
+{
+name:"Bali Ocean Resort",
+category:"Hotel",
+rating:4.9,
+availability:95,
+reliability:96,
+priceFit:82
+},
+
+{
+name:"Singapore Corporate Venue",
+category:"Venue",
+rating:4.8,
+availability:97,
+reliability:95,
+priceFit:86
+}
+
+];
+
+
+/* =========================================================
+   MONEY
+========================================================= */
+
+function money(value){
+
+return new Intl.NumberFormat(
+"id-ID",
+{
+style:"currency",
+currency:"IDR",
+maximumFractionDigits:0
+}
+).format(value);
+
+}
+
+
+/* =========================================================
+   LOG
+========================================================= */
+
+function log(message){
+
+const time=
+new Date().toLocaleTimeString();
+
+state.logs.unshift(
+"["+time+"] "+message
+);
+
+state.logs=
+state.logs.slice(0,60);
+
+document.getElementById(
+"engineLog"
+).innerHTML=
+state.logs.join("<br>");
+
+}
+
+
+/* =========================================================
+   READ INPUT
+========================================================= */
+
+function readInputs(){
+
+state.country=
+document.getElementById("country").value;
+
+state.city=
+document.getElementById("city").value;
+
+state.eventType=
+document.getElementById("eventType").value;
+
+state.participants=
+Number(
+document.getElementById("participants").value
+)||1;
+
+state.duration=
+Number(
+document.getElementById("duration").value
+)||1;
+
+state.budget=
+Number(
+document.getElementById("budget").value
+)||0;
+
+state.style=
+document.getElementById("style").value;
+
+state.interest=
+document.getElementById("interest").value;
+
+}
+
+
+/* =========================================================
+   V89.1 DATA INTELLIGENCE
+========================================================= */
+
+function dataIntelligence(){
+
+let profileFactor=0;
+
+if(state.eventType==="Corporate Retreat")
+profileFactor+=10;
+
+if(state.eventType==="Team Building")
+profileFactor+=8;
+
+if(state.eventType==="Conference")
+profileFactor+=7;
+
+if(state.style==="Premium")
+profileFactor+=4;
+
+if(state.style==="Exclusive")
+profileFactor+=6;
+
+if(state.interest==="Food & Culinary")
+profileFactor+=4;
+
+if(state.interest==="Team Building")
+profileFactor+=5;
+
+const dataConfidence=
+Math.min(
+99,
+82+profileFactor
+);
+
+log(
+"V89.1 Data Intelligence analyzed input. Confidence "
++dataConfidence+"%"
+);
+
+return dataConfidence;
+
+}
+
+
+/* =========================================================
+   V89.2 SMART MATCH
+========================================================= */
+
+function smartMatch(){
+
+let budgetScore=90;
+
+if(state.budget<100000000)
+budgetScore=78;
+
+if(state.budget>=300000000)
+budgetScore=92;
+
+if(state.budget>=500000000)
+budgetScore=96;
+
+let locationScore=92;
+
+if(
+state.city==="Jakarta" ||
+state.city==="Bali" ||
+state.city==="Singapore" ||
+state.city==="Tokyo"
+){
+locationScore=95;
+}
+
+let capacityScore=90;
+
+if(state.participants<=100)
+capacityScore=96;
+
+if(state.participants>300)
+capacityScore=86;
+
+let experienceScore=91;
+
+if(
+state.interest==="Team Building"
+){
+experienceScore=96;
+}
+
+if(
+state.interest==="Luxury Experience"
+){
+experienceScore=95;
+}
+
+const overall=
+Math.round(
+(
+budgetScore+
+locationScore+
+capacityScore+
+experienceScore
+)/4
+);
+
+state.scores={
+budget:budgetScore,
+location:locationScore,
+capacity:capacityScore,
+experience:experienceScore,
+overall
+};
+
+
+setScore(
+"budgetScore",
+"budgetBar",
+budgetScore
+);
+
+setScore(
+"locationScore",
+"locationBar",
+locationScore
+);
+
+setScore(
+"capacityScore",
+"capacityBar",
+capacityScore
+);
+
+setScore(
+"experienceScore",
+"experienceBar",
+experienceScore
+);
+
+
+document.getElementById(
+"bestMatch"
+).textContent=
+overall>=94
+? "BEST MATCH — HIGH CONFIDENCE"
+: "GOOD MATCH — OPTIMIZE FURTHER";
+
+
+document.getElementById(
+"matchDescription"
+).textContent=
+state.city+
+" / "+
+state.eventType+
+" / "+
+state.participants+
+" participants / "+
+state.style+
+" package";
+
+
+document.getElementById(
+"cmdMatch"
+).textContent=
+overall+"%";
+
+
+log(
+"V89.2 Smart Match generated: "
++overall+"%"
+);
+
+}
+
+
+function setScore(
+scoreId,
+barId,
+value
+){
+
+document.getElementById(scoreId)
+.textContent=
+value+"%";
+
+document.getElementById(barId)
+.style.width=
+value+"%";
+
+}
+
+
+/* =========================================================
+   V89.3 BUDGET OPTIMIZER
+========================================================= */
+
+function optimizeBudget(){
+
+let factor=0.86;
+
+if(state.style==="Economy")
+factor=0.72;
+
+if(state.style==="Comfort")
+factor=0.84;
+
+if(state.style==="Premium")
+factor=0.94;
+
+if(state.style==="Exclusive")
+factor=1.04;
+
+let optimized=
+state.budget*factor;
+
+if(
+state.participants>300
+){
+optimized*=1.12;
+}
+
+optimized=
+Math.round(
+optimized/1000000
+)*1000000;
+
+if(
+optimized>state.budget
+){
+optimized=state.budget;
+}
+
+state.optimizedCost=
+optimized;
+
+state.saving=
+Math.max(
+0,
+state.budget-optimized
+);
+
+
+document.getElementById(
+"originalBudget"
+).textContent=
+money(state.budget);
+
+
+document.getElementById(
+"optimizedCost"
+).textContent=
+money(optimized);
+
+
+document.getElementById(
+"saving"
+).textContent=
+money(state.saving);
+
+
+document.getElementById(
+"budgetOptimization"
+).innerHTML=`
+
+<strong>
+AI Budget Optimization Complete
+</strong><br>
+
+Estimated package:
+${money(optimized)}<br>
+
+Potential saving:
+<strong>${money(state.saving)}</strong><br>
+
+Efficiency:
+${Math.round((optimized/state.budget)*100)}%
+`;
+
+document.getElementById(
+"cmdSaving"
+).textContent=
+money(state.saving);
+
+log(
+"V89.3 Budget optimized. Saving "
++money(state.saving)
+);
+
+}
+
+
+/* =========================================================
+   V89.4 ROUTE OPTIMIZER
+========================================================= */
+
+function optimizeRoute(){
+
+let routeScore=92;
+
+if(state.city==="Jakarta")
+routeScore=95;
+
+if(state.city==="Singapore")
+routeScore=96;
+
+if(state.city==="Tokyo")
+routeScore=94;
+
+if(state.city==="Bali")
+routeScore=93;
+
+if(state.participants>300)
+routeScore-=3;
+
+state.routeScore=
+routeScore;
+
+
+document.getElementById(
+"routeAirport"
+).textContent=
+state.city+
+" International Airport";
+
+
+document.getElementById(
+"routeOptimization"
+).innerHTML=`
+
+<strong>
+AI Route Optimization Complete
+</strong><br>
+
+Route Score:
+<strong>${routeScore}%</strong><br>
+
+Estimated route strategy:
+Airport → Transfer → Hotel → Venue →
+Food → Activity → Dinner → Airport.
+
+`;
+
+document.getElementById(
+"cmdRoute"
+).textContent=
+routeScore+"%";
+
+
+log(
+"V89.4 Route optimized: "
++routeScore+"%"
+);
+
+}
+
+
+/* =========================================================
+   V89.5 PACKAGE OPTIMIZER
+========================================================= */
+
+function optimizePackage(){
+
+readInputs();
+
+if(state.scores.overall===0){
+smartMatch();
+}
+
+optimizeBudget();
+
+optimizeRoute();
+
+
+let city=
+state.city;
+
+let packageName=
+state.style+
+" Corporate Package";
+
+
+document.getElementById(
+"packageHotel"
+).innerHTML=
+"<strong>Grand "+city+
+" Corporate Hotel</strong><br>Selected by AI";
+
+document.getElementById(
+"packageVenue"
+).innerHTML=
+"<strong>"+city+
+" Corporate Venue</strong><br>Capacity matched";
+
+document.getElementById(
+"packageRestaurant"
+).innerHTML=
+"<strong>Executive Restaurant</strong><br>Food preference matched";
+
+document.getElementById(
+"packageTransport"
+).innerHTML=
+"<strong>Executive Transport</strong><br>Capacity optimized";
+
+document.getElementById(
+"packageActivity"
+).innerHTML=
+"<strong>"+state.interest+
+"</strong><br>Experience optimized";
+
+
+document.getElementById(
+"packageTotal"
+).textContent=
+money(state.optimizedCost);
+
+
+document.getElementById(
+"packageResult"
+).innerHTML=`
+
+<strong>
+${packageName}
+</strong><br>
+
+AI Match:
+${state.scores.overall}%<br>
+
+Route:
+${state.routeScore}%<br>
+
+Package:
+<strong>${money(state.optimizedCost)}</strong>
+
+`;
+
+
+document.getElementById(
+"cmdPackage"
+).textContent=
+money(state.optimizedCost);
+
+
+log(
+"V89.5 Dynamic package optimized."
+);
+
+updateCoreObject();
+
+}
+
+
+/* =========================================================
+   PACKAGE SWAP
+========================================================= */
+
+function swapPackage(){
+
+state.packageVersion++;
+
+let options=[
+
+"VALUE OPTIMIZED",
+
+"LOCATION OPTIMIZED",
+
+"EXPERIENCE OPTIMIZED",
+
+"PREMIUM OPTIMIZED"
+
+];
+
+let selected=
+options[
+(state.packageVersion-1)%
+options.length
+];
+
+
+document.getElementById(
+"packageResult"
+).innerHTML=`
+
+<strong>
+Package variant switched:
+${selected}
+</strong><br>
+
+AI recalculating package combination.
+
+`;
+
+log(
+"Package swap executed: "
++selected
+);
+
+}
+
+
+/* =========================================================
+   V89.6 PARTNER RANKING
+========================================================= */
+
+function rankPartners(){
+
+const cityFactor=
+state.city==="Jakarta"
+?2
+:0;
+
+
+const ranked=
+partners.map(p=>{
+
+let score=
+(
+p.rating*20
++
+p.availability*.25
++
+p.reliability*.25
++
+p.priceFit*.25
+)/2;
+
+score=
+Math.min(
+99,
+Math.round(
+score+cityFactor
+)
+);
+
+return{
+...p,
+score
+};
+
+})
+.sort(
+(a,b)=>b.score-a.score
+);
+
+
+document.getElementById(
+"partnerRanking"
+).innerHTML=
+ranked.map(
+(p,index)=>`
+
+<tr>
+
+<td>
+<strong>#${index+1}</strong>
+</td>
+
+<td>
+${p.name}
+</td>
+
+<td>
+${p.category}
+</td>
+
+<td>
+⭐ ${p.rating}
+</td>
+
+<td>
+${p.availability}%
+</td>
+
+<td>
+<strong>${p.score}%</strong>
+</td>
+
+</tr>
+
+`
+).join("");
+
+
+state.partnerScore=
+ranked[0].score;
+
+document.getElementById(
+"cmdPartner"
+).textContent=
+state.partnerScore+"%";
+
+
+log(
+"V89.6 Partner ranking generated. Top score "
++state.partnerScore+"%"
+);
+
+}
+
+
+/* =========================================================
+   V89.7 FORECAST
+========================================================= */
+
+function forecast(){
+
+let demand=72;
+
+if(
+state.eventType==="Corporate Retreat"
+)demand+=10;
+
+if(
+state.eventType==="Conference"
+)demand+=12;
+
+if(
+state.city==="Bali"
+)demand+=8;
+
+if(
+state.city==="Singapore"
+)demand+=6;
+
+if(
+state.interest==="Team Building"
+)demand+=5;
+
+demand=
+Math.min(
+99,
+demand
+);
+
+state.demandIndex=
+demand;
+
+
+const projectedBookings=
+Math.round(
+8420*(1+demand/500)
+);
+
+const projectedGMV=
+state.optimizedCost*
+projectedBookings;
+
+const projectedCommission=
+projectedGMV*
+0.12;
+
+
+document.getElementById(
+"forecastBookings"
+).textContent=
+projectedBookings.toLocaleString();
+
+
+document.getElementById(
+"forecastGMV"
+).textContent=
+formatCompactMoney(projectedGMV);
+
+
+document.getElementById(
+"forecastCommission"
+).textContent=
+formatCompactMoney(projectedCommission);
+
+
+document.getElementById(
+"forecastDemand"
+).textContent=
+demand+"%";
+
+
+document.getElementById(
+"forecastResult"
+).innerHTML=`
+
+<strong>
+DEMO FORECAST
+</strong><br>
+
+Demand index:
+${demand}%<br>
+
+Projected booking growth:
+${Math.round(demand/5)}%<br>
+
+Potential commission model:
+12% demo average.
+
+`;
+
+
+document.getElementById(
+"cmdDemand"
+).textContent=
+demand+"%";
+
+
+log(
+"V89.7 Demand forecast generated: "
++demand+"%"
+);
+
+}
+
+
+function formatCompactMoney(value){
+
+if(value>=1000000000000)
+return "Rp"+(value/1000000000000).toFixed(1)+"T";
+
+if(value>=1000000000)
+return "Rp"+(value/1000000000).toFixed(1)+"B";
+
+if(value>=1000000)
+return "Rp"+(value/1000000).toFixed(1)+"M";
+
+return money(value);
+
+}
+
+
+/* =========================================================
+   V89.8 RISK ENGINE
+========================================================= */
+
+function runRiskScan(){
+
+let risk="LOW";
+
+let apiRisk="LOW";
+
+let transactionRisk="LOW";
+
+
+if(state.participants>500){
+
+risk="MEDIUM";
+transactionRisk="MEDIUM";
+
+}
+
+if(state.budget>1000000000){
+
+transactionRisk="MEDIUM";
+
+}
+
+if(state.city==="Tokyo"){
+
+apiRisk="LOW";
+
+}
+
+
+state.risk=risk;
+
+
+document.getElementById(
+"riskLevel"
+).textContent=
+risk;
+
+
+document.getElementById(
+"apiRisk"
+).textContent=
+apiRisk;
+
+
+document.getElementById(
+"transactionRisk"
+).textContent=
+transactionRisk;
+
+
+document.getElementById(
+"riskStat"
+).textContent=
+risk;
+
+
+let className=
+risk==="LOW"
+? "success"
+: risk==="MEDIUM"
+? "warning"
+: "danger";
+
+
+document.getElementById(
+"riskResult"
+).className=
+"alert "+className;
+
+
+document.getElementById(
+"riskResult"
+).innerHTML=`
+
+<strong>
+AI Risk Scan Complete
+</strong><br>
+
+Overall Risk:
+${risk}<br>
+
+API Risk:
+${apiRisk}<br>
+
+Transaction Risk:
+${transactionRisk}<br><br>
+
+Recommendation:
+${
+risk==="LOW"
+? "Continue to availability and booking."
+: "Review capacity, partner availability and transaction limits."
+}
+
+`;
+
+
+document.getElementById(
+"cmdRisk"
+).textContent=
+risk;
+
+
+log(
+"V89.8 Risk scan completed: "
++risk
+);
+
+}
+
+
+/* =========================================================
+   RUN COMPLETE AI ENGINE
+========================================================= */
+
+function runAIEngine(){
+
+readInputs();
+
+log(
+"V89 AI Engine started."
+);
+
+dataIntelligence();
+
+smartMatch();
+
+optimizeBudget();
+
+optimizeRoute();
+
+rankPartners();
+
+forecast();
+
+runRiskScan();
+
+optimizePackage();
+
+document.getElementById(
+"cmdStatus"
+).textContent=
+"OPTIMIZED";
+
+
+document.getElementById(
+"commandResult"
+).innerHTML=`
+
+<strong>
+HOBBIGO AI DECISION COMPLETE
+</strong><br><br>
+
+Best Match:
+${state.scores.overall}%<br>
+
+Optimized Cost:
+${money(state.optimizedCost)}<br>
+
+Potential Saving:
+${money(state.saving)}<br>
+
+Route Score:
+${state.routeScore}%<br>
+
+Partner Score:
+${state.partnerScore}%<br>
+
+Demand:
+${state.demandIndex}%<br>
+
+Risk:
+${state.risk}
+
+`;
+
+updateCoreObject();
+
+log(
+"V89 AI Command Center completed."
+);
+
+}
+
+
+/* =========================================================
+   AI REPORT
+========================================================= */
+
+function generateReport(){
+
+readInputs();
+
+const report={
+
+version:"V89 MASTER",
+
+mode:"DEMO",
+
+input:{
+country:state.country,
+city:state.city,
+eventType:state.eventType,
+participants:state.participants,
+duration:state.duration,
+budget:state.budget,
+style:state.style,
+interest:state.interest
+},
+
+AI:{
+smartMatch:state.scores.overall+"%",
+budgetOptimization:money(state.optimizedCost),
+saving:money(state.saving),
+routeScore:state.routeScore+"%",
+partnerScore:state.partnerScore+"%",
+demandIndex:state.demandIndex+"%",
+risk:state.risk
+},
+
+modules:[
+"V89.1 AI Data Intelligence",
+"V89.2 AI Smart Match 2.0",
+"V89.3 AI Price & Budget Optimizer",
+"V89.4 AI Route & Schedule Optimizer",
+"V89.5 AI Package Optimizer",
+"V89.6 AI Partner Ranking",
+"V89.7 AI Demand & Revenue Forecast",
+"V89.8 AI Risk & Transaction Monitor",
+"V89.9 AI Command Center"
+]
+
+};
+
+
+document.getElementById(
+"commandResult"
+).innerHTML=`
+
+<strong>
+AI REPORT GENERATED
+</strong><br><br>
+
+Destination:
+${state.city}, ${state.country}<br>
+
+Event:
+${state.eventType}<br>
+
+Participants:
+${state.participants}<br>
+
+AI Match:
+${state.scores.overall}%<br>
+
+Optimized Cost:
+${money(state.optimizedCost)}<br>
+
+Potential Saving:
+${money(state.saving)}<br>
+
+Route:
+${state.routeScore}%<br>
+
+Partner:
+${state.partnerScore}%<br>
+
+Demand:
+${state.demandIndex}%<br>
+
+Risk:
+${state.risk}
+
+`;
+
+
+log(
+"AI report generated."
+);
+
+}
+
+
+/* =========================================================
+   CORE OBJECT
+========================================================= */
+
+function updateCoreObject(){
+
+const object={
+
+hobbigo:"HOBBIGO",
+
+version:"V89 MASTER",
+
+engine:
+"AI GLOBAL OPTIMIZATION & DECISION ENGINE",
+
+mode:"DEMO",
+
+input:{
+country:state.country,
+city:state.city,
+eventType:state.eventType,
+participants:state.participants,
+duration:state.duration,
+budget:state.budget,
+style:state.style,
+interest:state.interest
+},
+
+intelligence:{
+smartMatch:state.scores,
+optimizedCost:state.optimizedCost,
+saving:state.saving,
+routeScore:state.routeScore,
+partnerScore:state.partnerScore,
+demandIndex:state.demandIndex,
+risk:state.risk
+},
+
+modules:[
+"AI Data Intelligence",
+"AI Smart Match",
+"AI Budget Optimizer",
+"AI Route Optimizer",
+"AI Package Optimizer",
+"AI Partner Ranking",
+"AI Demand Forecast",
+"AI Risk Monitor",
+"AI Command Center"
+],
+
+apiEndpoints:[
+
+"/api/v1/ai/data-intelligence",
+"/api/v1/ai/smart-match",
+"/api/v1/ai/budget-optimizer",
+"/api/v1/ai/route-optimizer",
+"/api/v1/ai/package-optimizer",
+"/api/v1/ai/partner-ranking",
+"/api/v1/ai/demand-forecast",
+"/api/v1/ai/revenue-forecast",
+"/api/v1/ai/risk-monitor",
+"/api/v1/ai/decision-engine",
+"/api/v1/ai/command-center"
+
+]
+
+};
+
+
+document.getElementById(
+"coreObject"
+).textContent=
+JSON.stringify(
+object,
+null,
+2
+);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+function init(){
+
+document.getElementById(
+"originalBudget"
+).textContent=
+money(state.budget);
+
+log(
+"HobbiGo V89 MASTER initialized."
+);
+
+log(
+"V89.1 AI Data Intelligence ready."
+);
+
+log(
+"V89.2 AI Smart Match ready."
+);
+
+log(
+"V89.3 AI Budget Optimizer ready."
+);
+
+log(
+"V89.4 AI Route Optimizer ready."
+);
+
+log(
+"V89.5 AI Package Optimizer ready."
+);
+
+log(
+"V89.6 AI Partner Ranking ready."
+);
+
+log(
+"V89.7 AI Forecast ready."
+);
+
+log(
+"V89.8 AI Risk Monitor ready."
+);
+
+log(
+"V89.9 AI Command Center ready."
+);
+
+updateCoreObject();
+
+}
+
+init();
+
+</script>
+
+</body>
+</html>
