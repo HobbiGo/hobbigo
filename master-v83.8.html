@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V83.8 - AI Multi Package Comparison</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#101827,#24456d);
+    color:#fff;
+    padding:18px 5%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:800;
+}
+
+.logo span{color:#45e3b1}
+
+.version{
+    background:#ffffff20;
+    padding:7px 13px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.hero{
+    padding:48px 5%;
+    color:white;
+    background:
+    radial-gradient(circle at 90% 20%,#43e5b555,transparent 30%),
+    linear-gradient(135deg,#0f172a,#24476d);
+}
+
+.hero h1{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.hero p{
+    max-width:900px;
+    line-height:1.6;
+    color:#dbeafe;
+}
+
+.container{
+    width:92%;
+    max-width:1450px;
+    margin:30px auto;
+}
+
+.card{
+    background:white;
+    padding:24px;
+    border-radius:18px;
+    margin-bottom:24px;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+}
+
+.card h2{
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d8dee9;
+    border-radius:10px;
+    background:#fff;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary{
+    background:#12b886;
+    color:white;
+}
+
+.dark{
+    background:#172033;
+    color:white;
+}
+
+.secondary{
+    background:#e8eef7;
+    color:#172033;
+}
+
+.btn-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:12px;
+}
+
+.theme{
+    border:1px solid #dce4ee;
+    border-radius:14px;
+    padding:15px;
+    cursor:pointer;
+    text-align:center;
+}
+
+.theme.selected{
+    border:2px solid #12b886;
+    background:#effdf8;
+}
+
+.theme-icon{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.package-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.package{
+    border:1px solid #dce4ee;
+    border-radius:18px;
+    padding:22px;
+    position:relative;
+}
+
+.package.best{
+    border:3px solid #12b886;
+    box-shadow:0 12px 30px rgba(18,184,134,.15);
+}
+
+.package h3{
+    margin:8px 0;
+    font-size:22px;
+}
+
+.badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#e9f8f3;
+    color:#08795d;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.price{
+    font-size:28px;
+    font-weight:800;
+    margin:14px 0 4px;
+}
+
+.perperson{
+    color:#64748b;
+    font-size:13px;
+}
+
+.score{
+    font-size:32px;
+    font-weight:bold;
+    color:#0f9d77;
+}
+
+.details{
+    margin:18px 0;
+    line-height:1.9;
+    font-size:13px;
+}
+
+.details div{
+    border-bottom:1px solid #edf0f4;
+    padding:3px 0;
+}
+
+.package.selected{
+    background:#f0fdf9;
+}
+
+.compare-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.compare-table th,
+.compare-table td{
+    border-bottom:1px solid #e5e7eb;
+    padding:12px;
+    text-align:left;
+    font-size:13px;
+}
+
+.compare-table th{
+    background:#f8fafc;
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.stat{
+    padding:18px;
+    border-radius:14px;
+    background:#f8fafc;
+}
+
+.stat small{
+    color:#64748b;
+}
+
+.stat strong{
+    display:block;
+    font-size:21px;
+    margin-top:6px;
+}
+
+.ai{
+    background:linear-gradient(135deg,#ecfdf5,#eff6ff);
+    border:1px solid #b7ead9;
+    border-radius:16px;
+    padding:22px;
+}
+
+.ai-score{
+    font-size:36px;
+    font-weight:bold;
+    color:#0f9d77;
+    margin-bottom:8px;
+}
+
+.notice{
+    margin-top:15px;
+    background:#fff7ed;
+    color:#9a3412;
+    padding:13px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+.hidden{display:none}
+
+.footer{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+@media(max-width:1000px){
+    .grid,
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .theme-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .package-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+    .grid,
+    .summary-grid,
+    .theme-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:30px;
+    }
+
+    .container{
+        width:94%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Hobbi<span>Go</span></div>
+    <div class="version">V83.8 • AI Multi-Package Engine</div>
+</header>
+
+<section class="hero">
+    <h1>AI Multi-Package Comparison</h1>
+
+    <p>
+        Compare three complete corporate travel packages in one search:
+        Lowest Price, Best Value and Premium Experience.
+        HobbiGo automatically calculates venue, food, hotel, transport,
+        activity, route and total cost.
+    </p>
+</section>
+
+<div class="container">
+
+<!-- CONFIGURATION -->
+
+<div class="card">
+
+    <h2>🔎 1. Corporate Trip Configuration</h2>
+
+    <div class="grid">
+
+        <div class="field">
+            <label>Company Name</label>
+            <input id="company" value="HobbiGo Corporate Client">
+        </div>
+
+        <div class="field">
+            <label>Country</label>
+            <select id="country">
+                <option>Indonesia</option>
+                <option>Singapore</option>
+                <option>Malaysia</option>
+                <option>Thailand</option>
+                <option>Japan</option>
+                <option>Australia</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>City</label>
+            <select id="city">
+                <option>Jakarta</option>
+                <option>Bali</option>
+                <option>Bandung</option>
+                <option>Surabaya</option>
+                <option>Singapore</option>
+                <option>Kuala Lumpur</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Event Type</label>
+            <select id="eventType">
+                <option>Corporate Meeting</option>
+                <option>Corporate Dinner</option>
+                <option>Team Building</option>
+                <option>Company Retreat</option>
+                <option>Conference</option>
+                <option>Product Launch</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Event Date</label>
+            <input type="date" id="eventDate">
+        </div>
+
+        <div class="field">
+            <label>Duration</label>
+            <select id="duration">
+                <option value="1">1 Day</option>
+                <option value="2">2 Days</option>
+                <option value="3">3 Days</option>
+                <option value="4">4 Days</option>
+                <option value="5">5 Days</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Participants</label>
+            <input type="number" id="people" value="30" min="1">
+        </div>
+
+        <div class="field">
+            <label>Package Strategy</label>
+            <select id="strategy">
+                <option value="auto">AI Auto Compare</option>
+                <option value="lowest">Lowest Price</option>
+                <option value="best">Best Value</option>
+                <option value="premium">Premium Experience</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="btn-row">
+
+        <button class="primary" onclick="generatePackages()">
+            🤖 Generate 3 AI Packages
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOOD -->
+
+<div class="card">
+
+    <h2>🍽️ 2. Food Theme</h2>
+
+    <div class="theme-grid" id="foodThemes"></div>
+
+</div>
+
+
+<!-- PACKAGE RESULT -->
+
+<div class="card">
+
+    <h2>📦 3. AI Package Comparison</h2>
+
+    <div class="package-grid" id="packageGrid"></div>
+
+</div>
+
+
+<!-- COMPARISON -->
+
+<div class="card">
+
+    <h2>📊 4. Package Comparison</h2>
+
+    <div style="overflow-x:auto">
+
+        <table class="compare-table">
+
+            <thead>
+
+                <tr>
+                    <th>Feature</th>
+                    <th>Lowest Price</th>
+                    <th>Best Value</th>
+                    <th>Premium Experience</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="comparisonBody"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- SELECTED PACKAGE -->
+
+<div class="card">
+
+    <h2>✅ 5. Selected Corporate Package</h2>
+
+    <div class="summary-grid">
+
+        <div class="stat">
+            <small>Package</small>
+            <strong id="selectedName">-</strong>
+        </div>
+
+        <div class="stat">
+            <small>Total Cost</small>
+            <strong id="selectedTotal">Rp 0</strong>
+        </div>
+
+        <div class="stat">
+            <small>Cost / Person</small>
+            <strong id="selectedPerson">Rp 0</strong>
+        </div>
+
+        <div class="stat">
+            <small>AI Score</small>
+            <strong id="selectedScore">-</strong>
+        </div>
+
+    </div>
+
+    <div class="btn-row">
+
+        <button class="primary" onclick="generateProposal()">
+            📄 Generate Corporate Proposal
+        </button>
+
+        <button class="dark" onclick="downloadProposal()">
+            ⬇️ Download Proposal
+        </button>
+
+    </div>
+
+    <div id="proposal" class="hidden"></div>
+
+</div>
+
+
+<!-- AI -->
+
+<div class="card">
+
+    <h2>🧠 6. HobbiGo AI Decision Engine</h2>
+
+    <div class="ai">
+
+        <div class="ai-score" id="aiScore">
+            97/100
+        </div>
+
+        <p id="aiMessage">
+            HobbiGo AI compares price, venue capacity,
+            food experience, hotel level, vehicle capacity,
+            activity and estimated route efficiency.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ROUTE -->
+
+<div class="card">
+
+    <h2>🗺️ 7. Smart Route Summary</h2>
+
+    <div class="summary-grid">
+
+        <div class="stat">
+            <small>Airport → Hotel</small>
+            <strong>18 km</strong>
+        </div>
+
+        <div class="stat">
+            <small>Hotel → Venue</small>
+            <strong>10 km</strong>
+        </div>
+
+        <div class="stat">
+            <small>Venue → Food</small>
+            <strong>7 km</strong>
+        </div>
+
+        <div class="stat">
+            <small>Total Route</small>
+            <strong id="routeTotal">48 km</strong>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>🚀 Future API Architecture</h2>
+
+    <p style="line-height:1.7;color:#64748b">
+
+        V83.8 is designed as a marketplace engine.
+        Demo data can later be replaced by real partner APIs:
+
+        <br><br>
+
+        ✈️ Flight API →
+        🏨 Hotel API →
+        🏢 Venue API →
+        🍽️ Restaurant/Catering API →
+        🚐 Fleet API →
+        🗺️ Maps/GPS API →
+        🎯 Activity API →
+        💳 Payment API →
+        📦 Booking API
+
+    </p>
+
+    <div class="notice">
+        DEMO MODE — prices, availability and route information are simulated.
+        Production version will use live partner/API data.
+    </div>
+
+</div>
+
+</div>
+
+<div class="footer">
+    HobbiGo V83.8<br>
+    AI Journey & Experience Marketplace<br><br>
+    Search → Plan → Configure → Package → Compare → Book → Experience
+</div>
+
+
+<script>
+
+/* =====================================
+   DATABASE
+===================================== */
+
+const foodData = [
+
+    {
+        id:"indonesian",
+        icon:"🍛",
+        name:"Indonesian Heritage",
+        price:275000
+    },
+
+    {
+        id:"asian",
+        icon:"🍜",
+        name:"Asian Fusion",
+        price:325000
+    },
+
+    {
+        id:"western",
+        icon:"🥩",
+        name:"Western Business",
+        price:425000
+    },
+
+    {
+        id:"bbq",
+        icon:"🔥",
+        name:"BBQ & Grill",
+        price:375000
+    },
+
+    {
+        id:"buffet",
+        icon:"🍽️",
+        name:"International Buffet",
+        price:450000
+    },
+
+    {
+        id:"fine",
+        icon:"🥂",
+        name:"Premium Fine Dining",
+        price:650000
+    }
+
+];
+
+
+const venues = [
+
+    {
+        name:"Executive Meeting Room",
+        size:120,
+        capacity:60,
+        price:7500000,
+        score:88
+    },
+
+    {
+        name:"Corporate Ballroom",
+        size:350,
+        capacity:180,
+        price:14500000,
+        score:94
+    },
+
+    {
+        name:"Premium Resort Ballroom",
+        size:500,
+        capacity:250,
+        price:19500000,
+        score:97
+    },
+
+    {
+        name:"Grand Convention Hall",
+        size:800,
+        capacity:500,
+        price:25000000,
+        score:98
+    },
+
+    {
+        name:"Outdoor Garden Event",
+        size:1200,
+        capacity:600,
+        price:22000000,
+        score:95
+    },
+
+    {
+        name:"Luxury Private Estate",
+        size:2000,
+        capacity:800,
+        price:35000000,
+        score:100
+    }
+
+];
+
+
+const hotels = [
+
+    {
+        name:"HobbiGo Business Hotel",
+        price:850000,
+        rating:4.6
+    },
+
+    {
+        name:"Executive City Hotel",
+        price:1100000,
+        rating:4.8
+    },
+
+    {
+        name:"Premium Corporate Resort",
+        price:1750000,
+        rating:4.9
+    },
+
+    {
+        name:"Luxury Business Resort",
+        price:2500000,
+        rating:5
+    }
+
+];
+
+
+const transports = [
+
+    {
+        name:"Executive Car",
+        capacity:3,
+        price:750000,
+        score:80
+    },
+
+    {
+        name:"Executive SUV",
+        capacity:5,
+        price:900000,
+        score:84
+    },
+
+    {
+        name:"Executive Van",
+        capacity:12,
+        price:1350000,
+        score:92
+    },
+
+    {
+        name:"Luxury Van",
+        capacity:10,
+        price:1850000,
+        score:95
+    },
+
+    {
+        name:"Medium Executive Bus",
+        capacity:30,
+        price:3200000,
+        score:96
+    },
+
+    {
+        name:"Large Executive Coach",
+        capacity:45,
+        price:4500000,
+        score:98
+    }
+
+];
+
+
+const restaurants = [
+
+    {
+        name:"Corporate Indonesian Restaurant",
+        price:275000,
+        rating:4.7
+    },
+
+    {
+        name:"Asian Fusion Restaurant",
+        price:325000,
+        rating:4.8
+    },
+
+    {
+        name:"Premium Western Restaurant",
+        price:425000,
+        rating:4.8
+    },
+
+    {
+        name:"International Buffet Hall",
+        price:450000,
+        rating:4.9
+    },
+
+    {
+        name:"Luxury Fine Dining",
+        price:650000,
+        rating:5
+    }
+
+];
+
+
+const activities = [
+
+    {
+        name:"Corporate Team Building",
+        price:450000,
+        rating:4.8
+    },
+
+    {
+        name:"City Experience Tour",
+        price:350000,
+        rating:4.7
+    },
+
+    {
+        name:"Island Adventure",
+        price:650000,
+        rating:4.9
+    },
+
+    {
+        name:"Golf & Networking",
+        price:950000,
+        rating:4.8
+    },
+
+    {
+        name:"Premium Cultural Experience",
+        price:750000,
+        rating:4.9
+    }
+
+];
+
+
+let selectedFood = foodData[0];
+let selectedPackage = null;
+let packages = [];
+
+
+/* =====================================
+   FORMAT
+===================================== */
+
+function money(value){
+
+    return "Rp " +
+        Math.round(value)
+        .toLocaleString("id-ID");
+
+}
+
+
+/* =====================================
+   FOOD THEME
+===================================== */
+
+function renderFood(){
+
+    const box =
+        document.getElementById("foodThemes");
+
+    box.innerHTML="";
+
+    foodData.forEach((food,index)=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "theme " +
+            (selectedFood.id===food.id
+                ? "selected":"");
+
+        div.innerHTML = `
+
+            <div class="theme-icon">
+                ${food.icon}
+            </div>
+
+            <strong>
+                ${food.name}
+            </strong>
+
+            <div style="font-size:12px;
+                        color:#64748b;
+                        margin-top:5px">
+                ${money(food.price)}
+                / person
+            </div>
+
+        `;
+
+        div.onclick = function(){
+
+            selectedFood =
+                food;
+
+            renderFood();
+
+            generatePackages();
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================
+   BUILD PACKAGE
+===================================== */
+
+function buildPackage(type){
+
+    const people =
+        Number(
+            document.getElementById("people").value
+        );
+
+    const duration =
+        Number(
+            document.getElementById("duration").value
+        );
+
+
+    let multiplier = 1;
+
+    if(type==="lowest")
+        multiplier=.85;
+
+    if(type==="best")
+        multiplier=1;
+
+    if(type==="premium")
+        multiplier=1.22;
+
+
+    /* VENUE */
+
+    let suitableVenues =
+        venues.filter(v =>
+            v.capacity >= people
+        );
+
+    if(!suitableVenues.length)
+        suitableVenues = venues;
+
+
+    let venue;
+
+    if(type==="lowest"){
+
+        venue =
+            [...suitableVenues]
+            .sort((a,b)=>a.price-b.price)[0];
+
+    }
+
+    else if(type==="premium"){
+
+        venue =
+            [...suitableVenues]
+            .sort((a,b)=>b.score-a.score)[0];
+
+    }
+
+    else{
+
+        venue =
+            [...suitableVenues]
+            .sort((a,b)=>{
+
+                const sa =
+                    a.score -
+                    (a.price/1000000);
+
+                const sb =
+                    b.score -
+                    (b.price/1000000);
+
+                return sb-sa;
+
+            })[0];
+
+    }
+
+
+    /* HOTEL */
+
+    let hotel;
+
+    if(type==="lowest")
+        hotel=hotels[0];
+
+    else if(type==="premium")
+        hotel=hotels[3];
+
+    else
+        hotel=hotels[1];
+
+
+    /* TRANSPORT */
+
+    let transportOptions =
+        transports.filter(t =>
+            t.capacity >= people
+        );
+
+    let transport;
+
+    if(!transportOptions.length)
+        transport=transports[transports.length-1];
+
+    else if(type==="lowest"){
+
+        transport =
+            [...transportOptions]
+            .sort((a,b)=>{
+
+                return a.price-b.price;
+
+            })[0];
+
+    }
+
+    else if(type==="premium"){
+
+        transport =
+            [...transportOptions]
+            .sort((a,b)=>b.score-a.score)[0];
+
+    }
+
+    else{
+
+        transport =
+            [...transportOptions]
+            .sort((a,b)=>{
+
+                const sa =
+                    a.score -
+                    a.price/100000;
+
+                const sb =
+                    b.score -
+                    b.price/100000;
+
+                return sb-sa;
+
+            })[0];
+
+    }
+
+
+    const units =
+        Math.ceil(
+            people /
+            transport.capacity
+        );
+
+
+    /* RESTAURANT */
+
+    let restaurant;
+
+    if(type==="lowest")
+        restaurant=restaurants[0];
+
+    else if(type==="premium")
+        restaurant=restaurants[4];
+
+    else
+        restaurant=restaurants[1];
+
+
+    /* ACTIVITY */
+
+    let activity;
+
+    if(type==="lowest")
+        activity=activities[1];
+
+    else if(type==="premium")
+        activity=activities[3];
+
+    else
+        activity=activities[0];
+
+
+    /* COST */
+
+    const venueCost =
+        venue.price * multiplier;
+
+    const rooms =
+        Math.ceil(people/2);
+
+    const nights =
+        Math.max(1,duration-1);
+
+    const hotelCost =
+        hotel.price *
+        rooms *
+        nights *
+        multiplier;
+
+    const transportCost =
+        transport.price *
+        units *
+        duration *
+        multiplier;
+
+    const foodCost =
+        selectedFood.price *
+        people *
+        multiplier;
+
+    const restaurantCost =
+        restaurant.price *
+        people *
+        multiplier;
+
+    const activityCost =
+        activity.price *
+        people *
+        multiplier;
+
+
+    const total =
+        venueCost +
+        hotelCost +
+        transportCost +
+        foodCost +
+        restaurantCost +
+        activityCost;
+
+
+    const scoreBase = {
+
+        lowest:91,
+        best:97,
+        premium:96
+
+    };
+
+
+    return {
+
+        type,
+
+        name:
+            type==="lowest"
+            ? "Lowest Price"
+            : type==="best"
+            ? "Best Value"
+            : "Premium Experience",
+
+        badge:
+            type==="lowest"
+            ? "💰 LOWEST PRICE"
+            : type==="best"
+            ? "⭐ AI RECOMMENDED"
+            : "👑 PREMIUM EXPERIENCE",
+
+        venue,
+        hotel,
+        transport,
+        restaurant,
+        activity,
+
+        units,
+        rooms,
+        nights,
+
+        venueCost,
+        hotelCost,
+        transportCost,
+        foodCost,
+        restaurantCost,
+        activityCost,
+
+        total,
+
+        perPerson:
+            total/people,
+
+        score:
+            scoreBase[type],
+
+        people,
+        duration
+
+    };
+
+}
+
+
+/* =====================================
+   GENERATE ALL
+===================================== */
+
+function generatePackages(){
+
+    packages = [
+
+        buildPackage("lowest"),
+        buildPackage("best"),
+        buildPackage("premium")
+
+    ];
+
+    renderPackages();
+
+    renderComparison();
+
+    selectPackage(
+        packages[1]
+    );
+
+}
+
+
+/* =====================================
+   PACKAGE CARDS
+===================================== */
+
+function renderPackages(){
+
+    const box =
+        document.getElementById("packageGrid");
+
+    box.innerHTML="";
+
+    packages.forEach((p,index)=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "package " +
+            (p.type==="best"
+                ? "best":"");
+
+        div.innerHTML = `
+
+            <span class="badge">
+                ${p.badge}
+            </span>
+
+            <h3>
+                ${p.name}
+            </h3>
+
+            <div class="score">
+                ${p.score}/100
+            </div>
+
+            <div class="price">
+                ${money(p.total)}
+            </div>
+
+            <div class="perperson">
+                ${money(p.perPerson)}
+                / person
+            </div>
+
+            <div class="details">
+
+                <div>
+                    🏢
+                    ${p.venue.name}
+                </div>
+
+                <div>
+                    📐
+                    ${p.venue.size} m²
+                </div>
+
+                <div>
+                    👥
+                    Capacity ${p.venue.capacity}
+                </div>
+
+                <div>
+                    🏨
+                    ${p.hotel.name}
+                </div>
+
+                <div>
+                    🍽️
+                    ${selectedFood.name}
+                </div>
+
+                <div>
+                    🍴
+                    ${p.restaurant.name}
+                </div>
+
+                <div>
+                    🚐
+                    ${p.transport.name}
+                </div>
+
+                <div>
+                    🚐
+                    ${p.units} vehicle(s)
+                </div>
+
+                <div>
+                    🎯
+                    ${p.activity.name}
+                </div>
+
+                <div>
+                    👥
+                    ${p.people} participants
+                </div>
+
+            </div>
+
+            <button class="primary"
+                onclick="selectPackage(packages[${index}])">
+
+                Select This Package
+
+            </button>
+
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================
+   COMPARISON
+===================================== */
+
+function renderComparison(){
+
+    const body =
+        document.getElementById("comparisonBody");
+
+    const a=packages[0];
+    const b=packages[1];
+    const c=packages[2];
+
+    body.innerHTML = `
+
+        <tr>
+            <td><strong>Total Price</strong></td>
+            <td>${money(a.total)}</td>
+            <td>${money(b.total)}</td>
+            <td>${money(c.total)}</td>
+        </tr>
+
+        <tr>
+            <td><strong>Price / Person</strong></td>
+            <td>${money(a.perPerson)}</td>
+            <td>${money(b.perPerson)}</td>
+            <td>${money(c.perPerson)}</td>
+        </tr>
+
+        <tr>
+            <td>Venue</td>
+            <td>${a.venue.name}</td>
+            <td>${b.venue.name}</td>
+            <td>${c.venue.name}</td>
+        </tr>
+
+        <tr>
+            <td>Venue Area</td>
+            <td>${a.venue.size} m²</td>
+            <td>${b.venue.size} m²</td>
+            <td>${c.venue.size} m²</td>
+        </tr>
+
+        <tr>
+            <td>Hotel</td>
+            <td>${a.hotel.name}</td>
+            <td>${b.hotel.name}</td>
+            <td>${c.hotel.name}</td>
+        </tr>
+
+        <tr>
+            <td>Food</td>
+            <td>${selectedFood.name}</td>
+            <td>${selectedFood.name}</td>
+            <td>${selectedFood.name}</td>
+        </tr>
+
+        <tr>
+            <td>Restaurant</td>
+            <td>${a.restaurant.name}</td>
+            <td>${b.restaurant.name}</td>
+            <td>${c.restaurant.name}</td>
+        </tr>
+
+        <tr>
+            <td>Transport</td>
+            <td>${a.transport.name}</td>
+            <td>${b.transport.name}</td>
+            <td>${c.transport.name}</td>
+        </tr>
+
+        <tr>
+            <td>Vehicle Units</td>
+            <td>${a.units}</td>
+            <td>${b.units}</td>
+            <td>${c.units}</td>
+        </tr>
+
+        <tr>
+            <td>Activity</td>
+            <td>${a.activity.name}</td>
+            <td>${b.activity.name}</td>
+            <td>${c.activity.name}</td>
+        </tr>
+
+        <tr>
+            <td>AI Score</td>
+            <td>${a.score}/100</td>
+            <td>${b.score}/100</td>
+            <td>${c.score}/100</td>
+        </tr>
+
+    `;
+
+}
+
+
+/* =====================================
+   SELECT PACKAGE
+===================================== */
+
+function selectPackage(p){
+
+    selectedPackage=p;
+
+    document.getElementById("selectedName")
+        .innerText=p.name;
+
+    document.getElementById("selectedTotal")
+        .innerText=money(p.total);
+
+    document.getElementById("selectedPerson")
+        .innerText=money(p.perPerson);
+
+    document.getElementById("selectedScore")
+        .innerText=p.score+"/100";
+
+
+    let message="";
+
+    if(p.type==="lowest"){
+
+        message=
+        "AI selected the lowest-cost combination while maintaining venue capacity and basic corporate travel requirements.";
+
+    }
+
+    else if(p.type==="best"){
+
+        message=
+        "AI recommends Best Value because it balances venue quality, food experience, hotel standard, transport capacity and total cost.";
+
+    }
+
+    else{
+
+        message=
+        "Premium Experience prioritizes higher venue quality, premium hospitality, upgraded transport and enhanced corporate experience.";
+
+    }
+
+    document.getElementById("aiMessage")
+        .innerText=message;
+
+    document.getElementById("aiScore")
+        .innerText=p.score+"/100";
+
+}
+
+
+/* =====================================
+   PROPOSAL
+===================================== */
+
+function generateProposal(){
+
+    if(!selectedPackage){
+
+        generatePackages();
+
+    }
+
+    const p =
+        selectedPackage;
+
+    const company =
+        document.getElementById("company").value;
+
+    const city =
+        document.getElementById("city").value;
+
+    const event =
+        document.getElementById("eventType").value;
+
+
+    const box =
+        document.getElementById("proposal");
+
+    box.classList.remove("hidden");
+
+    box.innerHTML = `
+
+        <div class="ai" style="margin-top:20px">
+
+            <h3>📄 HobbiGo Corporate Proposal</h3>
+
+            <br>
+
+            <strong>Company:</strong>
+            ${company}
+
+            <br>
+
+            <strong>Destination:</strong>
+            ${city}
+
+            <br>
+
+            <strong>Event:</strong>
+            ${event}
+
+            <br>
+
+            <strong>Participants:</strong>
+            ${p.people}
+
+            <br>
+
+            <strong>Duration:</strong>
+            ${p.duration} day(s)
+
+            <hr style="margin:15px 0">
+
+            <strong>Selected Package:</strong>
+            ${p.name}
+
+            <br><br>
+
+            🏢 ${p.venue.name}
+
+            <br>
+
+            📐 ${p.venue.size} m²
+
+            <br>
+
+            🏨 ${p.hotel.name}
+
+            <br>
+
+            🍽️ ${selectedFood.name}
+
+            <br>
+
+            🍴 ${p.restaurant.name}
+
+            <br>
+
+            🚐 ${p.transport.name}
+            × ${p.units}
+
+            <br>
+
+            🎯 ${p.activity.name}
+
+            <br><br>
+
+            <strong>Total:</strong>
+
+            <div class="price">
+                ${money(p.total)}
+            </div>
+
+            <strong>Per Person:</strong>
+
+            <div class="perperson">
+                ${money(p.perPerson)}
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================
+   DOWNLOAD
+===================================== */
+
+function downloadProposal(){
+
+    if(!selectedPackage){
+
+        generatePackages();
+
+    }
+
+    const p=selectedPackage;
+
+    const company =
+        document.getElementById("company").value;
+
+    const city =
+        document.getElementById("city").value;
+
+    const event =
+        document.getElementById("eventType").value;
+
+
+    const text = `
+
+HOBBIGO CORPORATE PROPOSAL
+V83.8
+==========================
+
+COMPANY
+${company}
+
+DESTINATION
+${city}
+
+EVENT
+${event}
+
+PARTICIPANTS
+${p.people}
+
+DURATION
+${p.duration} DAY(S)
+
+
+SELECTED PACKAGE
+${p.name}
+
+AI SCORE
+${p.score}/100
+
+
+VENUE
+${p.venue.name}
+Area: ${p.venue.size} m2
+Capacity: ${p.venue.capacity}
+
+HOTEL
+${p.hotel.name}
+
+FOOD THEME
+${selectedFood.name}
+
+RESTAURANT
+${p.restaurant.name}
+
+TRANSPORT
+${p.transport.name}
+Vehicles: ${p.units}
+
+ACTIVITY
+${p.activity.name}
+
+
+TOTAL PACKAGE
+${money(p.total)}
+
+COST PER PERSON
+${money(p.perPerson)}
+
+
+HOBBIGO AI JOURNEY & EXPERIENCE MARKETPLACE
+
+Search
+Plan
+Configure
+Package
+Compare
+Book
+Experience
+Re-optimize
+
+
+DEMO MODE
+Prices and availability are simulated.
+Final pricing requires live partner/API confirmation.
+
+`;
+
+    const blob =
+        new Blob(
+            [text],
+            {type:"text/plain"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "HobbiGo_Corporate_Proposal_V83.8.txt";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================
+   INITIALIZE
+===================================== */
+
+document.getElementById("eventDate").value =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+renderFood();
+
+generatePackages();
+
+</script>
+
+</body>
+</html>
