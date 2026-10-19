@@ -1,1 +1,918 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HobbiGo V76.6 - Real Map Journey</title>
+
+<!-- LEAFLET -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f7fb;
+  color: #172033;
+}
+
+.header {
+  background: linear-gradient(135deg, #071a33, #123b67);
+  color: white;
+  padding: 18px 22px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.tagline {
+  font-size: 12px;
+  opacity: .8;
+  margin-top: 4px;
+}
+
+.container {
+  max-width: 1250px;
+  margin: auto;
+  padding: 18px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 18px;
+}
+
+.panel {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 20px;
+}
+
+.field {
+  margin-bottom: 13px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #667085;
+}
+
+select,
+button {
+  width: 100%;
+  border: 1px solid #d8dee8;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+}
+
+select {
+  background: white;
+}
+
+button {
+  background: #0b63ce;
+  color: white;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #084e9f;
+}
+
+.secondary {
+  background: #eef4fb;
+  color: #12416e;
+  margin-top: 8px;
+}
+
+#map {
+  height: 620px;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.status {
+  margin-top: 14px;
+  padding: 12px;
+  background: #f2f7fc;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.route-info {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.info-box {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.info-title {
+  font-size: 11px;
+  color: #667085;
+}
+
+.info-value {
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.legend {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.legend-item {
+  margin: 7px 0;
+}
+
+.dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.airport {
+  background: #d62828;
+}
+
+.vehicle {
+  background: #f77f00;
+}
+
+.hotel {
+  background: #0077b6;
+}
+
+.restaurant {
+  background: #7b2cbf;
+}
+
+.activity {
+  background: #008000;
+}
+
+.footer {
+  text-align: center;
+  color: #777;
+  font-size: 11px;
+  padding: 20px;
+}
+
+@media(max-width: 850px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  #map {
+    height: 500px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div class="logo">HOBBIGO</div>
+  <div class="tagline">
+    AI Journey & Experience Marketplace
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="dashboard">
+
+    <!-- LEFT PANEL -->
+    <div class="panel">
+
+      <h2>V76.6 Real Journey Map</h2>
+
+      <div class="field">
+        <label>AIRPORT</label>
+        <select id="airport">
+          <option value="airport">Bali - Ngurah Rai International Airport</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>RENTAL VEHICLE</label>
+        <select id="vehicle">
+          <option value="vehicle1">Toyota Avanza Rental</option>
+          <option value="vehicle2">Toyota Innova Rental</option>
+          <option value="vehicle3">Honda BR-V Rental</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>HOTEL</label>
+        <select id="hotel">
+          <option value="hotel1">Hotel in Seminyak</option>
+          <option value="hotel2">Hotel in Kuta</option>
+          <option value="hotel3">Hotel in Ubud</option>
+          <option value="hotel4">Hotel in Sanur</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>RESTAURANT</label>
+        <select id="restaurant">
+          <option value="restaurant1">Seminyak Restaurant</option>
+          <option value="restaurant2">Kuta Local Restaurant</option>
+          <option value="restaurant3">Ubud Culinary Restaurant</option>
+          <option value="restaurant4">Sanur Seafood Restaurant</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>ACTIVITY</label>
+        <select id="activity">
+          <option value="activity1">Seminyak Beach Activity</option>
+          <option value="activity2">Ubud Yoga Experience</option>
+          <option value="activity3">Water Activity - Tanjung Benoa</option>
+          <option value="activity4">Uluwatu Sunset Experience</option>
+        </select>
+      </div>
+
+      <button onclick="buildRoute()">
+        UPDATE REAL ROUTE
+      </button>
+
+      <button class="secondary" onclick="fitJourney()">
+        FIT ALL JOURNEY
+      </button>
+
+      <div class="route-info">
+
+        <div class="info-box">
+          <div class="info-title">TOTAL DISTANCE</div>
+          <div class="info-value" id="distance">
+            -
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-title">EST. DRIVE TIME</div>
+          <div class="info-value" id="duration">
+            -
+          </div>
+        </div>
+
+      </div>
+
+      <div class="status" id="status">
+        Ready. Select your journey and update the route.
+      </div>
+
+      <div class="legend">
+
+        <div class="legend-item">
+          <span class="dot airport"></span>
+          Airport
+        </div>
+
+        <div class="legend-item">
+          <span class="dot vehicle"></span>
+          Rental Vehicle
+        </div>
+
+        <div class="legend-item">
+          <span class="dot hotel"></span>
+          Hotel
+        </div>
+
+        <div class="legend-item">
+          <span class="dot restaurant"></span>
+          Restaurant
+        </div>
+
+        <div class="legend-item">
+          <span class="dot activity"></span>
+          Activity
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- MAP -->
+    <div class="panel">
+
+      <div id="map"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  HOBBIGO V76.6 • Real Map Journey Demo
+</div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V76.6
+   REAL BALI MAP + REAL ROAD ROUTE
+   ========================================================= */
+
+
+/* -----------------------------
+   LOCATION DATABASE
+----------------------------- */
+
+const locations = {
+
+  airport: {
+    name: "Ngurah Rai International Airport",
+    lat: -8.748169,
+    lng: 115.167172
+  },
+
+  vehicle1: {
+    name: "Toyota Avanza Rental",
+    lat: -8.7378,
+    lng: 115.1745
+  },
+
+  vehicle2: {
+    name: "Toyota Innova Rental",
+    lat: -8.7355,
+    lng: 115.1765
+  },
+
+  vehicle3: {
+    name: "Honda BR-V Rental",
+    lat: -8.7390,
+    lng: 115.1715
+  },
+
+  hotel1: {
+    name: "Hotel - Seminyak",
+    lat: -8.6905,
+    lng: 115.1680
+  },
+
+  hotel2: {
+    name: "Hotel - Kuta",
+    lat: -8.7183,
+    lng: 115.1688
+  },
+
+  hotel3: {
+    name: "Hotel - Ubud",
+    lat: -8.5069,
+    lng: 115.2625
+  },
+
+  hotel4: {
+    name: "Hotel - Sanur",
+    lat: -8.7050,
+    lng: 115.2620
+  },
+
+  restaurant1: {
+    name: "Restaurant - Seminyak",
+    lat: -8.6818,
+    lng: 115.1567
+  },
+
+  restaurant2: {
+    name: "Restaurant - Kuta",
+    lat: -8.7205,
+    lng: 115.1742
+  },
+
+  restaurant3: {
+    name: "Restaurant - Ubud",
+    lat: -8.5060,
+    lng: 115.2635
+  },
+
+  restaurant4: {
+    name: "Restaurant - Sanur",
+    lat: -8.7040,
+    lng: 115.2640
+  },
+
+  activity1: {
+    name: "Seminyak Beach Activity",
+    lat: -8.6895,
+    lng: 115.1550
+  },
+
+  activity2: {
+    name: "Ubud Yoga Experience",
+    lat: -8.5180,
+    lng: 115.2640
+  },
+
+  activity3: {
+    name: "Tanjung Benoa Water Activity",
+    lat: -8.7585,
+    lng: 115.2230
+  },
+
+  activity4: {
+    name: "Uluwatu Sunset Experience",
+    lat: -8.8290,
+    lng: 115.0845
+  }
+
+};
+
+
+/* -----------------------------
+   CREATE REAL MAP
+----------------------------- */
+
+const map = L.map("map").setView(
+  [-8.6500, 115.2167],
+  11
+);
+
+
+/* OPENSTREETMAP REAL MAP */
+
+L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 19,
+    attribution:
+      '&copy; OpenStreetMap contributors'
+  }
+).addTo(map);
+
+
+/* -----------------------------
+   VARIABLES
+----------------------------- */
+
+let markers = [];
+let routeLayers = [];
+let journeyPoints = [];
+
+
+/* -----------------------------
+   CUSTOM MARKER
+----------------------------- */
+
+function createMarker(point, type) {
+
+  let iconColor = "#0077b6";
+
+  if (type === "airport") {
+    iconColor = "#d62828";
+  }
+
+  if (type === "vehicle") {
+    iconColor = "#f77f00";
+  }
+
+  if (type === "hotel") {
+    iconColor = "#0077b6";
+  }
+
+  if (type === "restaurant") {
+    iconColor = "#7b2cbf";
+  }
+
+  if (type === "activity") {
+    iconColor = "#008000";
+  }
+
+  const icon = L.divIcon({
+
+    className: "",
+
+    html:
+      `<div style="
+        width:18px;
+        height:18px;
+        background:${iconColor};
+        border:3px solid white;
+        border-radius:50%;
+        box-shadow:0 2px 8px rgba(0,0,0,.5);
+      "></div>`,
+
+    iconSize: [18,18],
+
+    iconAnchor: [9,9]
+
+  });
+
+  const marker = L.marker(
+    [point.lat, point.lng],
+    { icon: icon }
+  ).addTo(map);
+
+  marker.bindPopup(
+    `<b>${point.name}</b>
+     <br>
+     Latitude: ${point.lat}
+     <br>
+     Longitude: ${point.lng}`
+  );
+
+  return marker;
+}
+
+
+/* -----------------------------
+   CLEAR MAP
+----------------------------- */
+
+function clearMapObjects() {
+
+  markers.forEach(
+    marker => map.removeLayer(marker)
+  );
+
+  routeLayers.forEach(
+    layer => map.removeLayer(layer)
+  );
+
+  markers = [];
+  routeLayers = [];
+}
+
+
+/* -----------------------------
+   GET SELECTED JOURNEY
+----------------------------- */
+
+function getJourney() {
+
+  const airport =
+    locations[
+      document.getElementById("airport").value
+    ];
+
+  const vehicle =
+    locations[
+      document.getElementById("vehicle").value
+    ];
+
+  const hotel =
+    locations[
+      document.getElementById("hotel").value
+    ];
+
+  const restaurant =
+    locations[
+      document.getElementById("restaurant").value
+    ];
+
+  const activity =
+    locations[
+      document.getElementById("activity").value
+    ];
+
+  return [
+
+    {
+      ...airport,
+      type: "airport",
+      step: "1"
+    },
+
+    {
+      ...vehicle,
+      type: "vehicle",
+      step: "2"
+    },
+
+    {
+      ...hotel,
+      type: "hotel",
+      step: "3"
+    },
+
+    {
+      ...restaurant,
+      type: "restaurant",
+      step: "4"
+    },
+
+    {
+      ...activity,
+      type: "activity",
+      step: "5"
+    }
+
+  ];
+}
+
+
+/* -----------------------------
+   BUILD REAL ROAD ROUTE
+----------------------------- */
+
+async function buildRoute() {
+
+  clearMapObjects();
+
+  journeyPoints = getJourney();
+
+  document.getElementById("status").innerHTML =
+    "Calculating real road route...";
+
+  /*
+    CREATE MARKERS
+  */
+
+  journeyPoints.forEach(point => {
+
+    const marker =
+      createMarker(
+        point,
+        point.type
+      );
+
+    markers.push(marker);
+
+  });
+
+
+  /*
+    BUILD ROUTES BETWEEN
+    EVERY TWO POINTS
+  */
+
+  let totalDistance = 0;
+  let totalDuration = 0;
+
+  for (
+    let i = 0;
+    i < journeyPoints.length - 1;
+    i++
+  ) {
+
+    const from =
+      journeyPoints[i];
+
+    const to =
+      journeyPoints[i + 1];
+
+
+    try {
+
+      const url =
+        `https://router.project-osrm.org/route/v1/driving/` +
+        `${from.lng},${from.lat};` +
+        `${to.lng},${to.lat}` +
+        `?overview=full&geometries=geojson`;
+
+
+      const response =
+        await fetch(url);
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        data.routes &&
+        data.routes.length > 0
+      ) {
+
+        const route =
+          data.routes[0];
+
+
+        totalDistance +=
+          route.distance;
+
+
+        totalDuration +=
+          route.duration;
+
+
+        const geo =
+          route.geometry;
+
+
+        const line =
+          L.geoJSON(
+            geo,
+            {
+              style: {
+                weight: 5,
+                opacity: 0.85
+              }
+            }
+          ).addTo(map);
+
+
+        routeLayers.push(line);
+
+      }
+
+    } catch(error) {
+
+      console.log(
+        "Route error:",
+        error
+      );
+
+    }
+
+  }
+
+
+  /*
+    DISTANCE
+  */
+
+  const km =
+    totalDistance / 1000;
+
+
+  document.getElementById(
+    "distance"
+  ).innerHTML =
+    km.toFixed(1) + " km";
+
+
+  /*
+    TIME
+  */
+
+  const minutes =
+    Math.round(
+      totalDuration / 60
+    );
+
+
+  const hours =
+    Math.floor(
+      minutes / 60
+    );
+
+  const mins =
+    minutes % 60;
+
+
+  let timeText = "";
+
+  if (hours > 0) {
+
+    timeText =
+      hours +
+      " hr " +
+      mins +
+      " min";
+
+  } else {
+
+    timeText =
+      mins +
+      " min";
+
+  }
+
+
+  document.getElementById(
+    "duration"
+  ).innerHTML =
+    timeText;
+
+
+  document.getElementById(
+    "status"
+  ).innerHTML =
+    "✓ Real route created: Airport → Rental Vehicle → Hotel → Restaurant → Activity";
+
+
+  fitJourney();
+
+}
+
+
+/* -----------------------------
+   FIT ALL JOURNEY
+----------------------------- */
+
+function fitJourney() {
+
+  if (
+    journeyPoints.length === 0
+  ) {
+
+    journeyPoints =
+      getJourney();
+
+  }
+
+
+  const bounds =
+    L.latLngBounds(
+      journeyPoints.map(
+        point =>
+          [point.lat, point.lng]
+      )
+    );
+
+
+  map.fitBounds(
+    bounds,
+    {
+      padding: [40,40]
+    }
+  );
+
+}
+
+
+/* -----------------------------
+   INITIAL JOURNEY
+----------------------------- */
+
+setTimeout(
+  () => {
+
+    buildRoute();
+
+  },
+  700
+);
+
+
+/* -----------------------------
+   AUTO UPDATE
+----------------------------- */
+
+document
+  .getElementById("hotel")
+  .addEventListener(
+    "change",
+    buildRoute
+  );
+
+document
+  .getElementById("restaurant")
+  .addEventListener(
+    "change",
+    buildRoute
+  );
+
+document
+  .getElementById("activity")
+  .addEventListener(
+    "change",
+    buildRoute
+  );
+
+document
+  .getElementById("vehicle")
+  .addEventListener(
+    "change",
+    buildRoute
+  );
+
+
+</script>
+
+</body>
+</html>
