@@ -1,1 +1,2621 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V84.0 - Unified Real Booking Engine</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#071b3a,#0c3972,#1479b8);
+  color:white;
+  padding:20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 4px 15px rgba(0,0,0,.15);
+}
+
+.header-inner{
+  max-width:1400px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:#42d9ff;
+}
+
+.tagline{
+  font-size:12px;
+  opacity:.85;
+  margin-top:4px;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.header-btn{
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.12);
+  color:white;
+  padding:9px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.header-btn:hover{
+  background:rgba(255,255,255,.22);
+}
+
+.container{
+  max-width:1400px;
+  margin:auto;
+  padding:25px 18px 60px;
+}
+
+.hero{
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  margin-bottom:22px;
+  box-shadow:0 8px 30px rgba(25,50,80,.08);
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#657083;
+  line-height:1.6;
+}
+
+.badge{
+  display:inline-block;
+  background:#e7f6ff;
+  color:#0875b1;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:8px;
+  margin-top:25px;
+}
+
+.step{
+  background:#edf1f7;
+  padding:12px 7px;
+  border-radius:10px;
+  text-align:center;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.step.active{
+  background:#0c75b9;
+  color:white;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:1.45fr .75fr;
+  gap:22px;
+  align-items:start;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 6px 25px rgba(25,50,80,.07);
+}
+
+.card h2{
+  font-size:21px;
+  margin-bottom:17px;
+}
+
+.card h3{
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.field{
+  margin-bottom:13px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:6px;
+  color:#556176;
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d7deea;
+  border-radius:10px;
+  outline:none;
+  background:white;
+  font-size:14px;
+}
+
+input:focus,select:focus{
+  border-color:#1590d0;
+  box-shadow:0 0 0 3px rgba(21,144,208,.1);
+}
+
+.customer-types{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.type-btn{
+  border:1px solid #dbe2ec;
+  background:#fafcff;
+  padding:16px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  text-align:center;
+  transition:.2s;
+}
+
+.type-btn:hover{
+  border-color:#1590d0;
+  transform:translateY(-2px);
+}
+
+.type-btn.active{
+  background:#e7f6ff;
+  border:2px solid #087dc0;
+  color:#076ea8;
+}
+
+.type-icon{
+  font-size:25px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.type-name{
+  font-size:13px;
+  font-weight:bold;
+}
+
+.type-desc{
+  font-size:10px;
+  color:#748095;
+  margin-top:4px;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.product{
+  border:1px solid #dce3ed;
+  border-radius:14px;
+  padding:15px;
+  background:#fff;
+  position:relative;
+}
+
+.product:hover{
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.product .icon{
+  font-size:27px;
+}
+
+.product-title{
+  font-weight:bold;
+  margin:7px 0;
+}
+
+.product-desc{
+  color:#707b8d;
+  font-size:12px;
+  line-height:1.45;
+  min-height:36px;
+}
+
+.price{
+  color:#0675b4;
+  font-size:17px;
+  font-weight:800;
+  margin:10px 0;
+}
+
+.small{
+  font-size:11px;
+  color:#788497;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.btn-primary{
+  background:#087dc0;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#06679d;
+}
+
+.btn-secondary{
+  background:#edf3f8;
+  color:#1b4561;
+}
+
+.btn-success{
+  background:#138a5b;
+  color:white;
+}
+
+.btn-danger{
+  background:#e85050;
+  color:white;
+}
+
+.btn-warning{
+  background:#efb429;
+  color:#312100;
+}
+
+.btn-block{
+  width:100%;
+}
+
+.product-actions{
+  display:flex;
+  gap:7px;
+  margin-top:10px;
+}
+
+.cart-summary{
+  position:sticky;
+  top:105px;
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid #edf0f5;
+  font-size:13px;
+}
+
+.summary-row:last-child{
+  border-bottom:0;
+}
+
+.summary-total{
+  font-size:24px;
+  font-weight:900;
+  color:#087dc0;
+}
+
+.total-box{
+  background:#eef8ff;
+  border-radius:14px;
+  padding:17px;
+  margin:15px 0;
+}
+
+.status{
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.status-draft{
+  background:#fff3d6;
+  color:#936700;
+}
+
+.status-configured{
+  background:#e8f5ff;
+  color:#086fa8;
+}
+
+.status-locked{
+  background:#e5f8ef;
+  color:#13724d;
+}
+
+.status-confirmed{
+  background:#dff7e9;
+  color:#08733f;
+}
+
+.booking-card{
+  border:1px solid #dce4ee;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:10px;
+  background:#fbfdff;
+}
+
+.booking-header{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.booking-ref{
+  font-size:12px;
+  color:#087dc0;
+  font-weight:bold;
+}
+
+.booking-items{
+  margin-top:10px;
+  font-size:12px;
+  color:#637086;
+  line-height:1.7;
+}
+
+.hidden{
+  display:none !important;
+}
+
+.notice{
+  padding:14px;
+  border-radius:12px;
+  background:#fff9e8;
+  border:1px solid #f2df9b;
+  color:#755d10;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:12px;
+}
+
+.empty{
+  text-align:center;
+  padding:25px 10px;
+  color:#778397;
+  font-size:13px;
+}
+
+.cart-count{
+  background:#ffca28;
+  color:#222;
+  min-width:20px;
+  height:20px;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.footer{
+  text-align:center;
+  color:#7a8596;
+  font-size:11px;
+  padding:25px;
+}
+
+@media(max-width:1000px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .cart-summary{
+    position:static;
+  }
+
+  .steps{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .grid,
+  .grid3,
+  .product-grid{
+    grid-template-columns:1fr;
+  }
+
+  .customer-types{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .steps{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo">Hobbi<span>Go</span></div>
+      <div class="tagline">AI Journey & Experience Marketplace</div>
+    </div>
+
+    <div class="header-actions">
+      <button class="header-btn" onclick="scrollToSection('bookingForm')">
+        My Trip
+      </button>
+
+      <button class="header-btn" onclick="scrollToSection('myBookings')">
+        My Booking
+        <span class="cart-count" id="bookingCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="hero">
+
+    <span class="badge">V84.0 UNIFIED BOOKING ENGINE</span>
+
+    <h1>One HobbiGo Booking System</h1>
+
+    <p>
+      Unified booking engine untuk Personal, Family, Group dan Corporate.
+      Semua komponen perjalanan dapat dikonfigurasi, dimasukkan ke booking cart,
+      dihitung ulang, dikunci dan dipersiapkan untuk payment.
+    </p>
+
+    <div class="steps">
+
+      <div class="step active">1<br>Customer</div>
+      <div class="step active">2<br>Trip</div>
+      <div class="step active">3<br>Products</div>
+      <div class="step">4<br>Configure</div>
+      <div class="step">5<br>Cart</div>
+      <div class="step">6<br>Payment</div>
+      <div class="step">7<br>Confirmation</div>
+
+    </div>
+
+  </section>
+
+  <div class="layout">
+
+    <main>
+
+      <!-- CUSTOMER TYPE -->
+
+      <section class="card">
+
+        <div class="section-title">
+          <h2>1. Customer Type</h2>
+          <span class="small">Select journey profile</span>
+        </div>
+
+        <div class="customer-types">
+
+          <button class="type-btn active" onclick="selectCustomerType('Personal',this)">
+            <span class="type-icon">👤</span>
+            <span class="type-name">Personal</span>
+            <span class="type-desc">Individual journey</span>
+          </button>
+
+          <button class="type-btn" onclick="selectCustomerType('Family',this)">
+            <span class="type-icon">👨‍👩‍👧‍👦</span>
+            <span class="type-name">Family</span>
+            <span class="type-desc">Family vacation</span>
+          </button>
+
+          <button class="type-btn" onclick="selectCustomerType('Group',this)">
+            <span class="type-icon">👥</span>
+            <span class="type-name">Group</span>
+            <span class="type-desc">Friends / community</span>
+          </button>
+
+          <button class="type-btn" onclick="selectCustomerType('Corporate',this)">
+            <span class="type-icon">🏢</span>
+            <span class="type-name">Corporate</span>
+            <span class="type-desc">Meeting / event / business</span>
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- BOOKING FORM -->
+
+      <section class="card" id="bookingForm">
+
+        <div class="section-title">
+          <h2>2. Trip / Booking Profile</h2>
+          <span class="badge" id="profileBadge">PERSONAL</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Customer / Company Name</label>
+            <input id="customerName" placeholder="Enter name">
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input id="customerEmail" type="email" placeholder="name@email.com">
+          </div>
+
+          <div class="field">
+            <label>Phone</label>
+            <input id="customerPhone" placeholder="+62">
+          </div>
+
+          <div class="field">
+            <label>Country</label>
+            <input id="country" value="Indonesia">
+          </div>
+
+          <div class="field">
+            <label>Destination</label>
+            <input id="destination" value="Bali">
+          </div>
+
+          <div class="field">
+            <label>City / Area</label>
+            <input id="city" value="Denpasar">
+          </div>
+
+          <div class="field">
+            <label>Start Date</label>
+            <input id="startDate" type="date">
+          </div>
+
+          <div class="field">
+            <label>Duration</label>
+            <select id="duration">
+              <option value="1">1 Day</option>
+              <option value="2">2 Days / 1 Night</option>
+              <option value="3" selected>3 Days / 2 Nights</option>
+              <option value="4">4 Days / 3 Nights</option>
+              <option value="5">5 Days / 4 Nights</option>
+              <option value="7">7 Days / 6 Nights</option>
+              <option value="10">10 Days / 9 Nights</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Number of Participants</label>
+            <input id="participants" type="number" min="1" value="2" onchange="updateBookingCalculation()">
+          </div>
+
+          <div class="field">
+            <label>Trip Style</label>
+            <select id="tripStyle">
+              <option>Best Value</option>
+              <option>Lowest Price</option>
+              <option>Comfort</option>
+              <option>Premium Experience</option>
+              <option>Luxury</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div id="corporateFields" class="hidden">
+
+          <h3>🏢 Corporate Event Information</h3>
+
+          <div class="grid">
+
+            <div class="field">
+              <label>Event Type</label>
+              <select id="eventType">
+                <option>Meeting</option>
+                <option>Conference</option>
+                <option>Retreat</option>
+                <option>Team Building</option>
+                <option>Company Gathering</option>
+                <option>Product Launch</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Food Theme</label>
+              <select id="foodTheme">
+                <option>Indonesian Heritage</option>
+                <option>Asian Fusion</option>
+                <option>Western Business</option>
+                <option>BBQ & Grill</option>
+                <option>International Buffet</option>
+                <option>Premium Fine Dining</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Venue Size</label>
+              <select id="venueSize">
+                <option>Small</option>
+                <option selected>Medium</option>
+                <option>Large</option>
+                <option>Grand</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Meeting Setup</label>
+              <select id="meetingSetup">
+                <option>Classroom</option>
+                <option>U-Shape</option>
+                <option>Theatre</option>
+                <option>Boardroom</option>
+                <option>Round Table</option>
+                <option>Outdoor</option>
+              </select>
+            </div>
+
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary" onclick="saveTripProfile()">
+          Save Trip Profile
+        </button>
+
+        <div id="profileMessage"></div>
+
+      </section>
+
+
+      <!-- PRODUCT MARKETPLACE -->
+
+      <section class="card">
+
+        <div class="section-title">
+          <h2>3. HobbiGo Marketplace</h2>
+          <span class="small">Choose products to build your trip</span>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+
+      </section>
+
+
+      <!-- CONFIGURATION -->
+
+      <section class="card">
+
+        <div class="section-title">
+          <h2>4. Smart Configuration</h2>
+          <button class="btn btn-secondary" onclick="autoConfigure()">
+            🤖 AI Auto Configure
+          </button>
+        </div>
+
+        <div class="grid3">
+
+          <div class="field">
+            <label>Budget Strategy</label>
+            <select id="budgetStrategy" onchange="updateBookingCalculation()">
+              <option value="value">Best Value</option>
+              <option value="lowest">Lowest Price</option>
+              <option value="comfort">Comfort</option>
+              <option value="premium">Premium</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Transport Preference</label>
+            <select id="transportPreference">
+              <option>Economy</option>
+              <option selected>Executive</option>
+              <option>Premium</option>
+              <option>Luxury</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Food Preference</label>
+            <select id="foodPreference">
+              <option>Local Food</option>
+              <option selected>Business Dining</option>
+              <option>International</option>
+              <option>Fine Dining</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div id="aiMessage" class="notice">
+          AI configuration ready. Select marketplace products or use AI Auto Configure.
+        </div>
+
+      </section>
+
+
+      <!-- CART -->
+
+      <section class="card">
+
+        <div class="section-title">
+          <h2>5. Booking Cart</h2>
+          <button class="btn btn-danger" onclick="clearCart()">
+            Clear Cart
+          </button>
+        </div>
+
+        <div id="cartItems"></div>
+
+      </section>
+
+
+      <!-- PAYMENT PREPARATION -->
+
+      <section class="card">
+
+        <div class="section-title">
+          <h2>6. Payment Preparation</h2>
+          <span class="small">Demo only — no real payment</span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Payment Method</label>
+
+            <select id="paymentMethod">
+              <option>Corporate Billing</option>
+              <option>Credit Card</option>
+              <option>Bank Transfer</option>
+              <option>Payment Gateway</option>
+            </select>
+
+          </div>
+
+          <div class="field">
+            <label>Currency</label>
+
+            <select id="currency">
+              <option>IDR</option>
+              <option>USD</option>
+              <option>SGD</option>
+              <option>EUR</option>
+              <option>AUD</option>
+            </select>
+
+          </div>
+
+        </div>
+
+        <button class="btn btn-warning btn-block" onclick="lockBooking()">
+          🔒 Lock Booking
+        </button>
+
+      </section>
+
+
+      <!-- CONFIRMATION -->
+
+      <section class="card hidden" id="confirmationSection">
+
+        <div class="section-title">
+          <h2>7. Booking Confirmation</h2>
+          <span class="badge">CONFIRMED</span>
+        </div>
+
+        <div id="confirmationContent"></div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;">
+
+          <button class="btn btn-success" onclick="downloadConfirmation()">
+            Download Confirmation
+          </button>
+
+          <button class="btn btn-secondary" onclick="createNewTrip()">
+            + Create New Trip
+          </button>
+
+        </div>
+
+      </section>
+
+
+      <!-- MY BOOKINGS -->
+
+      <section class="card" id="myBookings">
+
+        <div class="section-title">
+          <h2>My Booking</h2>
+          <span class="small">Saved booking history</span>
+        </div>
+
+        <div id="bookingHistory"></div>
+
+      </section>
+
+
+      <!-- API ROADMAP -->
+
+      <section class="card">
+
+        <h2>Production API Roadmap</h2>
+
+        <div class="grid3">
+
+          <div class="product">
+            <div class="icon">🏨</div>
+            <div class="product-title">Hotel API</div>
+            <div class="product-desc">
+              Availability, room, rate and booking.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">✈️</div>
+            <div class="product-title">Flight API</div>
+            <div class="product-desc">
+              Route, schedule, fare and ticket.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">🗺️</div>
+            <div class="product-title">Maps API</div>
+            <div class="product-desc">
+              GPS, route and distance calculation.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">🚗</div>
+            <div class="product-title">Transport API</div>
+            <div class="product-desc">
+              Vehicle, driver and fleet availability.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">🍽️</div>
+            <div class="product-title">Restaurant API</div>
+            <div class="product-desc">
+              Dining, menu and group reservation.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">🎯</div>
+            <div class="product-title">Activity API</div>
+            <div class="product-desc">
+              Attraction, tour and experience.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">💳</div>
+            <div class="product-title">Payment API</div>
+            <div class="product-desc">
+              Gateway, invoice and settlement.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">📧</div>
+            <div class="product-title">Notification API</div>
+            <div class="product-desc">
+              Email, WhatsApp and booking notifications.
+            </div>
+          </div>
+
+          <div class="product">
+            <div class="icon">🤖</div>
+            <div class="product-title">AI Engine</div>
+            <div class="product-desc">
+              Planning, recommendation and optimization.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="notice">
+          V84.0 menggunakan demo database lokal. Pada tahap production,
+          database dan provider API dapat menggantikan data demo tanpa mengubah
+          struktur utama booking engine.
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- RIGHT SIDEBAR -->
+
+    <aside>
+
+      <div class="card cart-summary">
+
+        <div class="section-title">
+          <h2>Booking Summary</h2>
+          <span id="summaryType" class="badge">PERSONAL</span>
+        </div>
+
+        <div id="summaryStatus" class="status status-draft">
+          DRAFT BOOKING
+        </div>
+
+        <div class="summary-row">
+          <span>Customer Type</span>
+          <strong id="sumType">Personal</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Destination</span>
+          <strong id="sumDestination">Bali</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Participants</span>
+          <strong id="sumPeople">2</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Duration</span>
+          <strong id="sumDuration">3 Days</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Products</span>
+          <strong id="sumProducts">0</strong>
+        </div>
+
+        <div class="total-box">
+
+          <div class="small">Estimated Total</div>
+
+          <div class="summary-total" id="sumTotal">
+            Rp0
+          </div>
+
+          <div class="small" id="sumPerPerson">
+            Rp0 / person
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary btn-block" onclick="scrollToSection('cartItems')">
+          View Booking Cart
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <h2>AI Trip Score</h2>
+
+        <div class="total-box">
+
+          <div class="small">Current Package Score</div>
+
+          <div class="summary-total" id="aiScore">
+            85/100
+          </div>
+
+        </div>
+
+        <div class="small">
+          Score based on estimated value, product mix,
+          duration, participant count and selected strategy.
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <h2>Booking Status</h2>
+
+        <div class="summary-row">
+          <span>Profile</span>
+          <strong id="statusProfile">Pending</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Products</span>
+          <strong id="statusProducts">0 selected</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Cart</span>
+          <strong id="statusCart">Empty</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Payment</span>
+          <strong id="statusPayment">Pending</strong>
+        </div>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+</div>
+
+<div class="footer">
+  HobbiGo V84.0 — Unified Real Booking Engine Demo<br>
+  AI Journey & Experience Marketplace
+</div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V84.0
+   UNIFIED REAL BOOKING ENGINE
+   ========================================================= */
+
+
+/* -----------------------------
+   GLOBAL STATE
+------------------------------ */
+
+let customerType = "Personal";
+
+let cart = [];
+
+let bookingHistory = [];
+
+let bookingLocked = false;
+
+let currentBooking = null;
+
+
+/* -----------------------------
+   DEMO MARKETPLACE DATABASE
+------------------------------ */
+
+const products = [
+
+  {
+    id:"hotel1",
+    category:"Hotel",
+    icon:"🏨",
+    name:"HobbiGo Business Hotel",
+    description:"Business hotel with comfortable rooms and central location.",
+    price:850000,
+    unit:"room/night"
+  },
+
+  {
+    id:"hotel2",
+    category:"Hotel",
+    icon:"🏨",
+    name:"Executive City Hotel",
+    description:"4-star city hotel for business and leisure travelers.",
+    price:1100000,
+    unit:"room/night"
+  },
+
+  {
+    id:"hotel3",
+    category:"Hotel",
+    icon:"🏨",
+    name:"Premium Corporate Resort",
+    description:"Corporate resort with meeting facilities and premium rooms.",
+    price:1750000,
+    unit:"room/night"
+  },
+
+  {
+    id:"flight1",
+    category:"Flight",
+    icon:"✈️",
+    name:"Jakarta → Bali Flight",
+    description:"Demo return flight package.",
+    price:1850000,
+    unit:"person"
+  },
+
+  {
+    id:"flight2",
+    category:"Flight",
+    icon:"✈️",
+    name:"International Flight",
+    description:"Demo international return flight package.",
+    price:6500000,
+    unit:"person"
+  },
+
+  {
+    id:"transport1",
+    category:"Transport",
+    icon:"🚗",
+    name:"Executive Car",
+    description:"Private executive car with driver.",
+    price:750000,
+    unit:"vehicle/day"
+  },
+
+  {
+    id:"transport2",
+    category:"Transport",
+    icon:"🚙",
+    name:"Executive SUV",
+    description:"Premium SUV with driver.",
+    price:900000,
+    unit:"vehicle/day"
+  },
+
+  {
+    id:"transport3",
+    category:"Transport",
+    icon:"🚐",
+    name:"Executive Van",
+    description:"12-seat executive van.",
+    price:1350000,
+    unit:"vehicle/day"
+  },
+
+  {
+    id:"transport4",
+    category:"Transport",
+    icon:"🚌",
+    name:"Executive Coach",
+    description:"45-seat group coach.",
+    price:4500000,
+    unit:"vehicle/day"
+  },
+
+  {
+    id:"restaurant1",
+    category:"Restaurant",
+    icon:"🍽️",
+    name:"Indonesian Corporate Restaurant",
+    description:"Indonesian menu suitable for corporate groups.",
+    price:275000,
+    unit:"person"
+  },
+
+  {
+    id:"restaurant2",
+    category:"Restaurant",
+    icon:"🍜",
+    name:"Asian Fusion Restaurant",
+    description:"Modern Asian dining experience.",
+    price:325000,
+    unit:"person"
+  },
+
+  {
+    id:"restaurant3",
+    category:"Restaurant",
+    icon:"🥩",
+    name:"Premium Western Restaurant",
+    description:"Premium Western business dining.",
+    price:425000,
+    unit:"person"
+  },
+
+  {
+    id:"activity1",
+    category:"Activity",
+    icon:"🎯",
+    name:"Corporate Team Building",
+    description:"Team building activity package.",
+    price:450000,
+    unit:"person"
+  },
+
+  {
+    id:"activity2",
+    category:"Activity",
+    icon:"🌴",
+    name:"Island Experience",
+    description:"Island and coastal experience.",
+    price:650000,
+    unit:"person"
+  },
+
+  {
+    id:"activity3",
+    category:"Activity",
+    icon:"⛳",
+    name:"Golf & Networking",
+    description:"Golf experience for networking.",
+    price:950000,
+    unit:"person"
+  },
+
+  {
+    id:"attraction1",
+    category:"Attraction",
+    icon:"📸",
+    name:"Bali Cultural Experience",
+    description:"Cultural attraction and local experience.",
+    price:350000,
+    unit:"person"
+  },
+
+  {
+    id:"tour1",
+    category:"Tour",
+    icon:"🗺️",
+    name:"Bali Private Tour",
+    description:"Private guided destination tour.",
+    price:750000,
+    unit:"person"
+  },
+
+  {
+    id:"venue1",
+    category:"Venue",
+    icon:"🏢",
+    name:"Corporate Meeting Room",
+    description:"120 m² meeting venue for up to 60 people.",
+    price:7500000,
+    unit:"event"
+  },
+
+  {
+    id:"venue2",
+    category:"Venue",
+    icon:"🏢",
+    name:"Corporate Ballroom",
+    description:"350 m² ballroom for corporate events.",
+    price:14500000,
+    unit:"event"
+  },
+
+  {
+    id:"venue3",
+    category:"Venue",
+    icon:"🏛️",
+    name:"Grand Convention Hall",
+    description:"800 m² convention venue.",
+    price:25000000,
+    unit:"event"
+  }
+
+];
+
+
+/* -----------------------------
+   INITIALIZATION
+------------------------------ */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+  setDefaultDate();
+
+  renderProducts();
+
+  renderCart();
+
+  renderBookingHistory();
+
+  updateSummary();
+
+});
+
+
+function setDefaultDate(){
+
+  const today = new Date();
+
+  const yyyy = today.getFullYear();
+
+  const mm = String(today.getMonth()+1).padStart(2,"0");
+
+  const dd = String(today.getDate()).padStart(2,"0");
+
+  document.getElementById("startDate").value =
+    `${yyyy}-${mm}-${dd}`;
+
+}
+
+
+/* -----------------------------
+   CUSTOMER TYPE
+------------------------------ */
+
+function selectCustomerType(type,button){
+
+  customerType = type;
+
+  document.querySelectorAll(".type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document.getElementById("profileBadge").innerText =
+    type.toUpperCase();
+
+  document.getElementById("summaryType").innerText =
+    type.toUpperCase();
+
+  document.getElementById("sumType").innerText =
+    type;
+
+  if(type === "Corporate"){
+
+    document
+      .getElementById("corporateFields")
+      .classList.remove("hidden");
+
+  }else{
+
+    document
+      .getElementById("corporateFields")
+      .classList.add("hidden");
+
+  }
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   RENDER PRODUCTS
+------------------------------ */
+
+function renderProducts(){
+
+  const container =
+    document.getElementById("productGrid");
+
+  container.innerHTML = "";
+
+  products.forEach(product => {
+
+    const card = document.createElement("div");
+
+    card.className = "product";
+
+    card.innerHTML = `
+
+      <div class="icon">${product.icon}</div>
+
+      <div class="small">
+        ${product.category}
+      </div>
+
+      <div class="product-title">
+        ${product.name}
+      </div>
+
+      <div class="product-desc">
+        ${product.description}
+      </div>
+
+      <div class="price">
+        ${formatRupiah(product.price)}
+      </div>
+
+      <div class="small">
+        ${product.unit}
+      </div>
+
+      <div class="product-actions">
+
+        <button
+          class="btn btn-primary"
+          onclick="addProduct('${product.id}')">
+          + Add
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* -----------------------------
+   ADD PRODUCT
+------------------------------ */
+
+function addProduct(productId){
+
+  if(bookingLocked){
+
+    alert("Booking is locked. Unlock or create a new trip first.");
+
+    return;
+
+  }
+
+  const product =
+    products.find(p => p.id === productId);
+
+  if(!product) return;
+
+  const existing =
+    cart.find(item => item.id === productId);
+
+  if(existing){
+
+    existing.qty += 1;
+
+  }else{
+
+    cart.push({
+
+      id:product.id,
+      category:product.category,
+      icon:product.icon,
+      name:product.name,
+      price:product.price,
+      unit:product.unit,
+      qty:1
+
+    });
+
+  }
+
+  renderCart();
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   REMOVE PRODUCT
+------------------------------ */
+
+function removeProduct(productId){
+
+  if(bookingLocked){
+
+    alert("Booking is locked.");
+
+    return;
+
+  }
+
+  cart =
+    cart.filter(item => item.id !== productId);
+
+  renderCart();
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   CHANGE QTY
+------------------------------ */
+
+function changeQty(productId,delta){
+
+  if(bookingLocked){
+
+    alert("Booking is locked.");
+
+    return;
+
+  }
+
+  const item =
+    cart.find(item => item.id === productId);
+
+  if(!item) return;
+
+  item.qty += delta;
+
+  if(item.qty <= 0){
+
+    cart =
+      cart.filter(item => item.id !== productId);
+
+  }
+
+  renderCart();
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   CART RENDER
+------------------------------ */
+
+function renderCart(){
+
+  const container =
+    document.getElementById("cartItems");
+
+  if(cart.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Booking cart is empty.<br>
+        Add hotel, flight, transport, restaurant,
+        activity, venue or tour from marketplace.
+      </div>
+    `;
+
+    document.getElementById("statusCart").innerText =
+      "Empty";
+
+    return;
+
+  }
+
+  let html = "";
+
+  cart.forEach(item => {
+
+    const lineTotal =
+      item.price * item.qty;
+
+    html += `
+
+      <div class="booking-card">
+
+        <div class="booking-header">
+
+          <div>
+
+            <strong>
+              ${item.icon} ${item.name}
+            </strong>
+
+            <div class="small">
+              ${item.category} · ${item.unit}
+            </div>
+
+          </div>
+
+          <strong>
+            ${formatRupiah(lineTotal)}
+          </strong>
+
+        </div>
+
+        <div
+          style="
+          display:flex;
+          align-items:center;
+          gap:8px;
+          margin-top:12px;
+          "
+        >
+
+          <button
+            class="btn btn-secondary"
+            onclick="changeQty('${item.id}',-1)">
+            −
+          </button>
+
+          <strong>${item.qty}</strong>
+
+          <button
+            class="btn btn-secondary"
+            onclick="changeQty('${item.id}',1)">
+            +
+          </button>
+
+          <button
+            class="btn btn-danger"
+            onclick="removeProduct('${item.id}')">
+            Remove
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  container.innerHTML = html;
+
+  document.getElementById("statusCart").innerText =
+    cart.length + " product(s)";
+
+}
+
+
+/* -----------------------------
+   CLEAR CART
+------------------------------ */
+
+function clearCart(){
+
+  if(bookingLocked){
+
+    alert("Booking is locked.");
+
+    return;
+
+  }
+
+  if(!confirm("Clear all products from booking cart?")){
+
+    return;
+
+  }
+
+  cart = [];
+
+  renderCart();
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   TRIP PROFILE
+------------------------------ */
+
+function saveTripProfile(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const destination =
+    document.getElementById("destination").value.trim();
+
+  if(!name || !destination){
+
+    alert("Please enter customer/company name and destination.");
+
+    return;
+
+  }
+
+  document.getElementById("statusProfile").innerText =
+    "Saved";
+
+  document.getElementById("profileMessage").innerHTML = `
+
+    <div class="notice">
+      ✓ Trip profile saved successfully for
+      <strong>${escapeHtml(name)}</strong>.
+      Customer type:
+      <strong>${customerType}</strong>.
+    </div>
+
+  `;
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   AI AUTO CONFIGURE
+------------------------------ */
+
+function autoConfigure(){
+
+  if(bookingLocked){
+
+    alert("Booking is locked.");
+
+    return;
+
+  }
+
+  const people =
+    Number(document.getElementById("participants").value) || 1;
+
+  const duration =
+    Number(document.getElementById("duration").value) || 1;
+
+  cart = [];
+
+  function add(id,qty){
+
+    const p =
+      products.find(x => x.id === id);
+
+    if(!p) return;
+
+    cart.push({
+
+      id:p.id,
+      category:p.category,
+      icon:p.icon,
+      name:p.name,
+      price:p.price,
+      unit:p.unit,
+      qty:qty
+
+    });
+
+  }
+
+  /* HOTEL */
+
+  const rooms =
+    Math.max(1,Math.ceil(people / 2));
+
+  const nights =
+    Math.max(1,duration - 1);
+
+  add(
+    people >= 20 ? "hotel3" : "hotel1",
+    rooms * nights
+  );
+
+
+  /* FLIGHT */
+
+  add(
+    "flight1",
+    people
+  );
+
+
+  /* TRANSPORT */
+
+  if(people <= 3){
+
+    add("transport1",duration);
+
+  }else if(people <= 5){
+
+    add("transport2",duration);
+
+  }else if(people <= 12){
+
+    add(
+      "transport3",
+      Math.ceil(people / 12) * duration
+    );
+
+  }else{
+
+    add(
+      "transport4",
+      Math.ceil(people / 45) * duration
+    );
+
+  }
+
+
+  /* RESTAURANT */
+
+  add(
+    people >= 10 ? "restaurant2" : "restaurant1",
+    people * duration
+  );
+
+
+  /* ACTIVITY */
+
+  add(
+    customerType === "Corporate"
+      ? "activity1"
+      : "tour1",
+    people
+  );
+
+
+  /* CORPORATE VENUE */
+
+  if(customerType === "Corporate"){
+
+    let venue = "venue1";
+
+    if(people > 60 && people <= 180){
+
+      venue = "venue2";
+
+    }
+
+    if(people > 180){
+
+      venue = "venue3";
+
+    }
+
+    add(venue,1);
+
+  }
+
+
+  document.getElementById("aiMessage").innerHTML = `
+
+    <div class="notice">
+      🤖 <strong>AI Auto Configure completed.</strong><br>
+      Package created for ${people} participant(s),
+      ${duration} day(s), ${customerType}.
+      Products have been added automatically.
+    </div>
+
+  `;
+
+  renderCart();
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   CALCULATION
+------------------------------ */
+
+function calculateTotal(){
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    total += item.price * item.qty;
+
+  });
+
+  return total;
+
+}
+
+
+function updateBookingCalculation(){
+
+  updateSummary();
+
+}
+
+
+/* -----------------------------
+   SUMMARY
+------------------------------ */
+
+function updateSummary(){
+
+  const destination =
+    document.getElementById("destination").value ||
+    "-";
+
+  const people =
+    Number(document.getElementById("participants").value) || 1;
+
+  const duration =
+    Number(document.getElementById("duration").value) || 1;
+
+  const total =
+    calculateTotal();
+
+  const perPerson =
+    total / people;
+
+  document.getElementById("sumDestination").innerText =
+    destination;
+
+  document.getElementById("sumPeople").innerText =
+    people;
+
+  document.getElementById("sumDuration").innerText =
+    duration + " Days";
+
+  document.getElementById("sumProducts").innerText =
+    cart.length;
+
+  document.getElementById("sumTotal").innerText =
+    formatRupiah(total);
+
+  document.getElementById("sumPerPerson").innerText =
+    formatRupiah(perPerson) + " / person";
+
+  document.getElementById("statusProducts").innerText =
+    cart.length + " selected";
+
+  calculateAIScore(total,people);
+
+}
+
+
+/* -----------------------------
+   AI SCORE
+------------------------------ */
+
+function calculateAIScore(total,people){
+
+  let score = 82;
+
+  if(cart.length >= 3){
+    score += 4;
+  }
+
+  if(cart.length >= 5){
+    score += 4;
+  }
+
+  if(customerType === "Corporate"){
+    score += 4;
+  }
+
+  if(people >= 5){
+    score += 2;
+  }
+
+  if(total > 0 && total < 10000000){
+    score += 2;
+  }
+
+  if(score > 100){
+    score = 100;
+  }
+
+  document.getElementById("aiScore").innerText =
+    score + "/100";
+
+}
+
+
+/* -----------------------------
+   LOCK BOOKING
+------------------------------ */
+
+function lockBooking(){
+
+  if(bookingLocked){
+
+    alert("This booking is already locked.");
+
+    return;
+
+  }
+
+  if(cart.length === 0){
+
+    alert("Please add at least one product before locking.");
+
+    return;
+
+  }
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const email =
+    document.getElementById("customerEmail").value.trim();
+
+  const destination =
+    document.getElementById("destination").value.trim();
+
+  if(!name || !email || !destination){
+
+    alert(
+      "Please complete customer/company name, email and destination."
+    );
+
+    return;
+
+  }
+
+  bookingLocked = true;
+
+  const reference =
+    generateBookingReference();
+
+  currentBooking = {
+
+    reference:reference,
+
+    customerType:customerType,
+
+    customerName:name,
+
+    email:email,
+
+    phone:
+      document.getElementById("customerPhone").value,
+
+    country:
+      document.getElementById("country").value,
+
+    destination:destination,
+
+    city:
+      document.getElementById("city").value,
+
+    startDate:
+      document.getElementById("startDate").value,
+
+    duration:
+      Number(document.getElementById("duration").value),
+
+    participants:
+      Number(document.getElementById("participants").value),
+
+    paymentMethod:
+      document.getElementById("paymentMethod").value,
+
+    currency:
+      document.getElementById("currency").value,
+
+    total:
+      calculateTotal(),
+
+    products:
+      JSON.parse(JSON.stringify(cart)),
+
+    createdAt:
+      new Date().toLocaleString()
+
+  };
+
+
+  bookingHistory.unshift(currentBooking);
+
+  renderBookingHistory();
+
+  showConfirmation();
+
+  updateBookingStatus();
+
+}
+
+
+/* -----------------------------
+   BOOKING STATUS
+------------------------------ */
+
+function updateBookingStatus(){
+
+  document.getElementById("summaryStatus").className =
+    "status status-confirmed";
+
+  document.getElementById("summaryStatus").innerText =
+    "BOOKING CONFIRMED";
+
+  document.getElementById("statusPayment").innerText =
+    "Prepared";
+
+}
+
+
+/* -----------------------------
+   CONFIRMATION
+------------------------------ */
+
+function showConfirmation(){
+
+  const b = currentBooking;
+
+  document
+    .getElementById("confirmationSection")
+    .classList.remove("hidden");
+
+  let items = "";
+
+  b.products.forEach(item => {
+
+    items += `
+
+      <div class="summary-row">
+
+        <span>
+          ${item.icon} ${item.name}
+          × ${item.qty}
+        </span>
+
+        <strong>
+          ${formatRupiah(item.price * item.qty)}
+        </strong>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById("confirmationContent").innerHTML = `
+
+    <div class="booking-card">
+
+      <div class="booking-header">
+
+        <div>
+
+          <div class="small">
+            BOOKING REFERENCE
+          </div>
+
+          <div class="booking-ref">
+            ${b.reference}
+          </div>
+
+        </div>
+
+        <span class="badge">
+          ${b.customerType}
+        </span>
+
+      </div>
+
+      <div class="booking-items">
+
+        <strong>
+          ${escapeHtml(b.customerName)}
+        </strong><br>
+
+        Destination:
+        ${escapeHtml(b.destination)}
+        ${b.city ? ", " + escapeHtml(b.city) : ""}<br>
+
+        Participants:
+        ${b.participants}<br>
+
+        Duration:
+        ${b.duration} days<br>
+
+        Start Date:
+        ${b.startDate}<br>
+
+        Payment:
+        ${b.paymentMethod}
+
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+
+      <h3>Booked Products</h3>
+
+      ${items}
+
+      <div class="total-box">
+
+        <div class="small">
+          TOTAL ESTIMATED BOOKING
+        </div>
+
+        <div class="summary-total">
+          ${formatRupiah(b.total)}
+        </div>
+
+      </div>
+
+      <div class="notice">
+        This is a demonstration confirmation.
+        No real payment or external reservation has been processed.
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* -----------------------------
+   BOOKING HISTORY
+------------------------------ */
+
+function renderBookingHistory(){
+
+  const container =
+    document.getElementById("bookingHistory");
+
+  document.getElementById("bookingCount").innerText =
+    bookingHistory.length;
+
+  if(bookingHistory.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        No confirmed booking yet.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  let html = "";
+
+  bookingHistory.forEach((booking,index) => {
+
+    html += `
+
+      <div class="booking-card">
+
+        <div class="booking-header">
+
+          <div>
+
+            <strong>
+              ${escapeHtml(booking.destination)}
+            </strong>
+
+            <div class="booking-ref">
+              ${booking.reference}
+            </div>
+
+          </div>
+
+          <span class="badge">
+            ${booking.customerType}
+          </span>
+
+        </div>
+
+        <div class="booking-items">
+
+          Customer:
+          ${escapeHtml(booking.customerName)}<br>
+
+          Participants:
+          ${booking.participants}<br>
+
+          Duration:
+          ${booking.duration} days<br>
+
+          Total:
+          <strong>
+            ${formatRupiah(booking.total)}
+          </strong>
+
+        </div>
+
+        <div style="margin-top:10px;">
+
+          <button
+            class="btn btn-secondary"
+            onclick="viewBooking(${index})">
+            View Booking
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  container.innerHTML = html;
+
+}
+
+
+/* -----------------------------
+   VIEW OLD BOOKING
+------------------------------ */
+
+function viewBooking(index){
+
+  const booking =
+    bookingHistory[index];
+
+  if(!booking) return;
+
+  currentBooking =
+    JSON.parse(JSON.stringify(booking));
+
+  showConfirmation();
+
+  scrollToSection("confirmationSection");
+
+}
+
+
+/* -----------------------------
+   CREATE NEW TRIP
+------------------------------ */
+
+function createNewTrip(){
+
+  bookingLocked = false;
+
+  currentBooking = null;
+
+  cart = [];
+
+  document.getElementById("confirmationSection")
+    .classList.add("hidden");
+
+  document.getElementById("summaryStatus").className =
+    "status status-draft";
+
+  document.getElementById("summaryStatus").innerText =
+    "DRAFT BOOKING";
+
+  document.getElementById("statusPayment").innerText =
+    "Pending";
+
+  document.getElementById("statusCart").innerText =
+    "Empty";
+
+  document.getElementById("customerName").value = "";
+
+  document.getElementById("customerEmail").value = "";
+
+  document.getElementById("customerPhone").value = "";
+
+  cart = [];
+
+  renderCart();
+
+  updateSummary();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* -----------------------------
+   DOWNLOAD CONFIRMATION
+------------------------------ */
+
+function downloadConfirmation(){
+
+  if(!currentBooking){
+
+    alert("No booking confirmation available.");
+
+    return;
+
+  }
+
+  const b = currentBooking;
+
+  let text = "";
+
+  text += "HOBBIGO BOOKING CONFIRMATION\n";
+
+  text += "====================================\n\n";
+
+  text += "Booking Reference: " + b.reference + "\n";
+
+  text += "Customer Type: " + b.customerType + "\n";
+
+  text += "Customer: " + b.customerName + "\n";
+
+  text += "Email: " + b.email + "\n";
+
+  text += "Phone: " + b.phone + "\n";
+
+  text += "Destination: " + b.destination + "\n";
+
+  text += "City: " + b.city + "\n";
+
+  text += "Start Date: " + b.startDate + "\n";
+
+  text += "Duration: " + b.duration + " days\n";
+
+  text += "Participants: " + b.participants + "\n";
+
+  text += "Payment Method: " + b.paymentMethod + "\n\n";
+
+  text += "PRODUCTS\n";
+
+  text += "------------------------------------\n";
+
+  b.products.forEach(item => {
+
+    text +=
+      item.name +
+      " x " +
+      item.qty +
+      " = " +
+      formatRupiah(item.price * item.qty) +
+      "\n";
+
+  });
+
+  text += "\n";
+
+  text +=
+    "TOTAL: " +
+    formatRupiah(b.total) +
+    "\n\n";
+
+  text +=
+    "HobbiGo AI Journey & Experience Marketplace\n";
+
+  text +=
+    "Demo confirmation - no real payment processed.\n";
+
+
+  const blob =
+    new Blob([text],{type:"text/plain"});
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href = url;
+
+  a.download =
+    b.reference + ".txt";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* -----------------------------
+   REFERENCE NUMBER
+------------------------------ */
+
+function generateBookingReference(){
+
+  const now =
+    new Date();
+
+  const year =
+    now.getFullYear();
+
+  const random =
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    );
+
+  return "HBG-" + year + "-" + random;
+
+}
+
+
+/* -----------------------------
+   FORMAT RUPIAH
+------------------------------ */
+
+function formatRupiah(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style:"currency",
+      currency:"IDR",
+      maximumFractionDigits:0
+    }
+  ).format(value || 0);
+
+}
+
+
+/* -----------------------------
+   ESCAPE HTML
+------------------------------ */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* -----------------------------
+   SCROLL
+------------------------------ */
+
+function scrollToSection(id){
+
+  const element =
+    document.getElementById(id);
+
+  if(element){
+
+    element.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  }
+
+}
+
+
+/* -----------------------------
+   END
+------------------------------ */
+
+</script>
+
+</body>
+</html>
