@@ -1,1 +1,2674 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V82.7 - Partner Marketplace Engine</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+body{background:#f4f7fb;color:#172033}
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.header{
+    background:linear-gradient(135deg,#081b33,#123e69);
+    color:white;padding:18px 28px;
+    display:flex;justify-content:space-between;align-items:center;
+    position:sticky;top:0;z-index:20
+}
+.logo{font-size:27px;font-weight:800}
+.logo span{color:#45d9ff}
+.tagline{font-size:11px;opacity:.8;margin-top:3px}
+.header-right{display:flex;gap:10px;align-items:center}
+.badge-demo{background:#f59e0b;color:#111;padding:7px 12px;border-radius:20px;font-size:11px;font-weight:bold}
+
+.container{display:flex;min-height:calc(100vh - 75px)}
+.sidebar{width:240px;background:#07182c;color:white;padding:22px 14px;flex-shrink:0}
+.sidebar h3{font-size:11px;color:#8ea7c2;margin:16px 12px 8px;text-transform:uppercase}
+.nav-btn{
+    width:100%;border:0;background:transparent;color:#d9e5f2;
+    padding:12px 14px;border-radius:9px;text-align:left;margin-bottom:5px
+}
+.nav-btn:hover,.nav-btn.active{background:#164b78;color:white}
+
+.main{flex:1;padding:25px;overflow:auto}
+.page{display:none}
+.page.active{display:block}
+
+.title{font-size:28px;font-weight:800;margin-bottom:5px}
+.subtitle{color:#718096;margin-bottom:22px}
+
+.notice{
+    background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+    padding:14px;border-radius:10px;margin-bottom:18px;font-size:13px
+}
+
+.cards{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    gap:15px;margin-bottom:22px
+}
+.card{
+    background:white;border-radius:15px;padding:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06)
+}
+.card-label{font-size:12px;color:#718096}
+.card-value{font-size:25px;font-weight:800;margin-top:8px}
+.card-note{font-size:11px;color:#16a34a;margin-top:6px}
+
+.panel{
+    background:white;border-radius:15px;padding:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);margin-bottom:20px
+}
+.panel h3{margin-bottom:15px}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+
+.form-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px
+}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-group label{font-size:12px;font-weight:bold;color:#475569}
+.form-group input,.form-group select{
+    border:1px solid #d7dee8;border-radius:9px;padding:11px;
+    outline:none;background:white
+}
+.form-group input:focus,.form-group select:focus{border-color:#1684c7}
+
+.primary{
+    background:#0879bd;color:white;border:0;
+    padding:11px 17px;border-radius:9px;font-weight:bold
+}
+.secondary{
+    background:#e8f1f8;color:#164b78;border:0;
+    padding:11px 17px;border-radius:9px;font-weight:bold
+}
+.danger{
+    background:#fee2e2;color:#991b1b;border:0;
+    padding:7px 10px;border-radius:7px;font-size:11px
+}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+
+.search{
+    display:flex;gap:10px;margin-bottom:15px
+}
+.search input,.search select{
+    padding:11px;border:1px solid #d7dee8;border-radius:9px
+}
+.search input{flex:1}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{
+    padding:11px 9px;border-bottom:1px solid #e8edf3;
+    text-align:left;font-size:12px;white-space:nowrap
+}
+th{font-size:10px;text-transform:uppercase;color:#64748b}
+
+.status{
+    display:inline-block;padding:5px 9px;border-radius:20px;
+    font-size:10px;font-weight:bold
+}
+.status.active{background:#dcfce7;color:#166534}
+.status.pending{background:#fef3c7;color:#92400e}
+.status.blocked{background:#fee2e2;color:#991b1b}
+.status.inactive{background:#e2e8f0;color:#475569}
+
+.partner-card{
+    border:1px solid #e3e9ef;border-radius:14px;
+    padding:18px;background:#fff
+}
+.partner-top{
+    display:flex;justify-content:space-between;gap:10px;
+    margin-bottom:10px
+}
+.partner-name{font-size:17px;font-weight:800}
+.partner-meta{font-size:11px;color:#64748b;line-height:1.7}
+
+.product-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:15px
+}
+.product-card{
+    border:1px solid #e3e9ef;border-radius:14px;
+    overflow:hidden;background:white
+}
+.product-image{
+    height:110px;
+    background:linear-gradient(135deg,#d9effa,#eef7fb);
+    display:flex;align-items:center;justify-content:center;
+    font-size:38px
+}
+.product-body{padding:15px}
+.product-title{font-weight:800;font-size:15px}
+.product-small{font-size:11px;color:#64748b;margin-top:5px}
+.product-price{font-size:20px;font-weight:800;margin-top:10px}
+.product-actions{display:flex;gap:7px;margin-top:12px}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.chip{
+    background:#edf6fb;color:#155e85;
+    border-radius:20px;padding:6px 9px;font-size:10px
+}
+
+.route{
+    background:linear-gradient(135deg,#edf8ff,#f8fcff);
+    border-radius:13px;padding:18px
+}
+.route-row{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 0;border-bottom:1px solid #dceaf3
+}
+.route-row:last-child{border-bottom:0}
+
+.empty{text-align:center;padding:30px;color:#718096}
+
+.api{
+    border:1px solid #e3e9ef;border-radius:13px;padding:18px
+}
+.api h4{margin-bottom:8px}
+.api-ready{color:#16a34a;font-size:11px;font-weight:bold}
+.api-demo{color:#d97706;font-size:11px;font-weight:bold}
+
+.modal{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.55);z-index:100;
+    align-items:center;justify-content:center;padding:20px
+}
+.modal-box{
+    width:min(700px,100%);max-height:90vh;overflow:auto;
+    background:white;border-radius:18px;padding:24px
+}
+.modal-head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:18px
+}
+.close{
+    width:32px;height:32px;border:0;border-radius:50%;background:#eee
+}
+
+.footer{text-align:center;color:#94a3b8;font-size:11px;padding:20px}
+
+@media(max-width:1050px){
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .product-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:800px){
+    .sidebar{width:70px;padding:15px 8px}
+    .sidebar h3{display:none}
+    .nav-btn{font-size:0;text-align:center}
+    .main{padding:15px}
+    .cards,.grid2,.grid3,.form-grid,.product-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div>
+        <div class="logo">Hobbi<span>Go</span></div>
+        <div class="tagline">AI Journey & Experience Marketplace</div>
+    </div>
+
+    <div class="header-right">
+        <span class="badge-demo">V82.7 DEMO</span>
+    </div>
+
+</header>
+
+
+<div class="container">
+
+<aside class="sidebar">
+
+    <h3>Marketplace</h3>
+
+    <button class="nav-btn active" onclick="page('overview',this)">
+        📊 Overview
+    </button>
+
+    <button class="nav-btn" onclick="page('partners',this)">
+        🤝 Partners
+    </button>
+
+    <button class="nav-btn" onclick="page('products',this)">
+        🛍️ Products
+    </button>
+
+    <button class="nav-btn" onclick="page('catalog',this)">
+        🌎 Marketplace
+    </button>
+
+    <h3>Commercial</h3>
+
+    <button class="nav-btn" onclick="page('commission',this)">
+        💰 Commission
+    </button>
+
+    <button class="nav-btn" onclick="page('availability',this)">
+        📅 Availability
+    </button>
+
+    <button class="nav-btn" onclick="page('promotions',this)">
+        🎁 Promotions
+    </button>
+
+    <h3>System</h3>
+
+    <button class="nav-btn" onclick="page('api',this)">
+        🔌 API Gateway
+    </button>
+
+    <button class="nav-btn" onclick="page('settings',this)">
+        ⚙️ Settings
+    </button>
+
+</aside>
+
+
+<main class="main">
+
+
+<!-- ======================================================
+     OVERVIEW
+====================================================== -->
+
+<section id="overview" class="page active">
+
+    <div class="title">Partner Marketplace Engine</div>
+
+    <div class="subtitle">
+        Global partner and product management — V82.7
+    </div>
+
+    <div class="notice">
+        DEMO MODE — Partner, product, price, promotion and availability data are stored locally.
+        Real partner/API integration will be connected in later versions.
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-label">Partners</div>
+            <div class="card-value" id="totalPartners">0</div>
+            <div class="card-note">Global suppliers</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Active Partners</div>
+            <div class="card-value" id="activePartners">0</div>
+            <div class="card-note">Marketplace ready</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Products</div>
+            <div class="card-value" id="totalProducts">0</div>
+            <div class="card-note">Inventory</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Active Products</div>
+            <div class="card-value" id="activeProducts">0</div>
+            <div class="card-note">Bookable</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Avg Commission</div>
+            <div class="card-value" id="avgCommission">0%</div>
+            <div class="card-note">Marketplace</div>
+        </div>
+
+    </div>
+
+
+    <div class="grid2">
+
+        <div class="panel">
+
+            <h3>Partner Categories</h3>
+
+            <div id="categoryStats"></div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h3>Marketplace Engine</h3>
+
+            <div class="route">
+
+                <div class="route-row">
+                    🤝
+                    <b>Partner</b>
+                    <span>→</span>
+                    Supplier
+                </div>
+
+                <div class="route-row">
+                    🛍️
+                    <b>Product</b>
+                    <span>→</span>
+                    Inventory
+                </div>
+
+                <div class="route-row">
+                    💵
+                    <b>Price</b>
+                    <span>→</span>
+                    Customer
+                </div>
+
+                <div class="route-row">
+                    📅
+                    <b>Availability</b>
+                    <span>→</span>
+                    Booking
+                </div>
+
+                <div class="route-row">
+                    💰
+                    <b>Commission</b>
+                    <span>→</span>
+                    HobbiGo
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Featured Marketplace Products</h3>
+
+        <div id="featuredProducts" class="product-grid"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     PARTNERS
+====================================================== -->
+
+<section id="partners" class="page">
+
+    <div class="title">Partner Management</div>
+
+    <div class="subtitle">
+        Manage hotels, restaurants, tours, attractions, transport and other suppliers.
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Register New Partner</h3>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Partner Name</label>
+                <input id="pName" placeholder="Example: Bali Paradise Resort">
+            </div>
+
+            <div class="form-group">
+                <label>Partner Category</label>
+
+                <select id="pCategory">
+
+                    <option>Hotel</option>
+                    <option>Villa / Home Rental</option>
+                    <option>Restaurant</option>
+                    <option>Tour</option>
+                    <option>Attraction</option>
+                    <option>Activity</option>
+                    <option>Vehicle / Rental</option>
+                    <option>Boat</option>
+                    <option>Flight / Transport</option>
+                    <option>Event</option>
+                    <option>Travel Agency</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Country</label>
+                <input id="pCountry" placeholder="Indonesia">
+            </div>
+
+            <div class="form-group">
+                <label>City</label>
+                <input id="pCity" placeholder="Bali">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input id="pEmail" placeholder="partner@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Phone</label>
+                <input id="pPhone" placeholder="+62">
+            </div>
+
+            <div class="form-group">
+                <label>Commission %</label>
+                <input id="pCommission" type="number" value="15">
+            </div>
+
+            <div class="form-group">
+                <label>Currency</label>
+
+                <select id="pCurrency">
+                    <option>USD</option>
+                    <option>IDR</option>
+                    <option>EUR</option>
+                    <option>SGD</option>
+                    <option>AUD</option>
+                    <option>GBP</option>
+                    <option>JPY</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="action-row">
+
+            <button class="primary" onclick="addPartner()">
+                + Register Partner
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="search">
+
+            <input
+                id="partnerSearch"
+                placeholder="Search partner, country, city..."
+                oninput="renderPartners()"
+            >
+
+            <select id="partnerFilter" onchange="renderPartners()">
+
+                <option value="">All Categories</option>
+                <option>Hotel</option>
+                <option>Restaurant</option>
+                <option>Tour</option>
+                <option>Attraction</option>
+                <option>Activity</option>
+                <option>Boat</option>
+                <option>Vehicle / Rental</option>
+                <option>Travel Agency</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Partner</th>
+                        <th>Category</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                        <th>Commission</th>
+                        <th>Products</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="partnerTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     PRODUCTS
+====================================================== -->
+
+<section id="products" class="page">
+
+    <div class="title">Product Inventory</div>
+
+    <div class="subtitle">
+        One partner can manage multiple products.
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Create Marketplace Product</h3>
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Product Name</label>
+                <input id="xName" placeholder="Example: Ubud Cultural Tour">
+            </div>
+
+            <div class="form-group">
+                <label>Category</label>
+
+                <select id="xCategory">
+
+                    <option>Hotel</option>
+                    <option>Villa</option>
+                    <option>Flight</option>
+                    <option>Restaurant</option>
+                    <option>Tour</option>
+                    <option>Attraction</option>
+                    <option>Activity</option>
+                    <option>Vehicle</option>
+                    <option>Boat</option>
+                    <option>Event</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Partner</label>
+                <select id="xPartner"></select>
+            </div>
+
+            <div class="form-group">
+                <label>Destination</label>
+                <input id="xDestination" placeholder="Bali">
+            </div>
+
+            <div class="form-group">
+                <label>Base Price</label>
+                <input id="xPrice" type="number" placeholder="100">
+            </div>
+
+            <div class="form-group">
+                <label>Currency</label>
+
+                <select id="xCurrency">
+                    <option>USD</option>
+                    <option>IDR</option>
+                    <option>EUR</option>
+                    <option>SGD</option>
+                    <option>AUD</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Rating</label>
+                <input id="xRating" type="number" step=".1" value="4.5">
+            </div>
+
+            <div class="form-group">
+                <label>Availability</label>
+
+                <select id="xAvailability">
+                    <option>Available</option>
+                    <option>Limited</option>
+                    <option>On Request</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Promo %</label>
+                <input id="xPromo" type="number" value="0">
+            </div>
+
+            <div class="form-group">
+                <label>Stock / Capacity</label>
+                <input id="xStock" type="number" value="10">
+            </div>
+
+        </div>
+
+
+        <div class="action-row">
+
+            <button class="primary" onclick="addProduct()">
+                + Add Marketplace Product
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="search">
+
+            <input
+                id="productSearch"
+                placeholder="Search product..."
+                oninput="renderProducts()"
+            >
+
+            <select id="productFilter" onchange="renderProducts()">
+
+                <option value="">All Categories</option>
+                <option>Hotel</option>
+                <option>Villa</option>
+                <option>Flight</option>
+                <option>Restaurant</option>
+                <option>Tour</option>
+                <option>Attraction</option>
+                <option>Activity</option>
+                <option>Vehicle</option>
+                <option>Boat</option>
+                <option>Event</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Partner</th>
+                        <th>Destination</th>
+                        <th>Price</th>
+                        <th>Promo</th>
+                        <th>Availability</th>
+                        <th>Stock</th>
+                        <th>Rating</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="productTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     MARKETPLACE
+====================================================== -->
+
+<section id="catalog" class="page">
+
+    <div class="title">HobbiGo Marketplace</div>
+
+    <div class="subtitle">
+        Customer-facing marketplace catalog simulation.
+    </div>
+
+
+    <div class="panel">
+
+        <div class="search">
+
+            <input
+                id="catalogSearch"
+                placeholder="Search destination, hotel, tour, activity..."
+                oninput="renderCatalog()"
+            >
+
+            <select id="catalogCategory" onchange="renderCatalog()">
+
+                <option value="">All</option>
+                <option>Hotel</option>
+                <option>Villa</option>
+                <option>Restaurant</option>
+                <option>Tour</option>
+                <option>Attraction</option>
+                <option>Activity</option>
+                <option>Vehicle</option>
+                <option>Boat</option>
+
+            </select>
+
+        </div>
+
+
+        <div id="catalogGrid" class="product-grid"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     COMMISSION
+====================================================== -->
+
+<section id="commission" class="page">
+
+    <div class="title">Commission Engine</div>
+
+    <div class="subtitle">
+        Marketplace revenue configuration.
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-label">Average Commission</div>
+            <div class="card-value" id="commissionAverage">0%</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Highest Commission</div>
+            <div class="card-value" id="commissionHighest">0%</div>
+        </div>
+
+        <div class="card">
+            <div class="card-label">Lowest Commission</div>
+            <div class="card-value" id="commissionLowest">0%</div>
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Partner Commission Rules</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Partner</th>
+                        <th>Category</th>
+                        <th>Commission</th>
+                        <th>Example $100 Sale</th>
+                        <th>Partner Share</th>
+                    </tr>
+                </thead>
+
+                <tbody id="commissionTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Marketplace Revenue Flow</h3>
+
+        <div class="route">
+
+            Customer
+            <br>↓
+            <br>
+            <b>Payment $100</b>
+            <br>↓
+            <br>
+            HobbiGo Commission
+            <br>↓
+            <br>
+            Partner Settlement
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     AVAILABILITY
+====================================================== -->
+
+<section id="availability" class="page">
+
+    <div class="title">Availability Engine</div>
+
+    <div class="subtitle">
+        Product availability and capacity management.
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Inventory Status</h3>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Destination</th>
+                        <th>Availability</th>
+                        <th>Capacity</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="availabilityTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Future Real-Time Availability</h3>
+
+        <div class="grid3">
+
+            <div class="api">
+                <h4>🏨 Hotel</h4>
+                <span class="api-ready">API READY</span>
+            </div>
+
+            <div class="api">
+                <h4>✈️ Flight</h4>
+                <span class="api-ready">API READY</span>
+            </div>
+
+            <div class="api">
+                <h4>🎯 Activities</h4>
+                <span class="api-ready">API READY</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     PROMOTIONS
+====================================================== -->
+
+<section id="promotions" class="page">
+
+    <div class="title">Promotions Engine</div>
+
+    <div class="subtitle">
+        Demo promotion and discount management.
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Products With Promotions</h3>
+
+        <div id="promoProducts" class="product-grid"></div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>Promotion Architecture</h3>
+
+        <div class="chips">
+
+            <span class="chip">Early Bird</span>
+            <span class="chip">Last Minute</span>
+            <span class="chip">Flash Sale</span>
+            <span class="chip">Member Discount</span>
+            <span class="chip">Referral</span>
+            <span class="chip">Lucky Draw</span>
+            <span class="chip">Corporate</span>
+            <span class="chip">Group</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     API
+====================================================== -->
+
+<section id="api" class="page">
+
+    <div class="title">API Gateway</div>
+
+    <div class="subtitle">
+        V82.7 marketplace integration layer.
+    </div>
+
+
+    <div class="grid3">
+
+        <div class="api">
+            <h4>🏨 Hotel API</h4>
+            <span class="api-ready">● READY</span>
+            <p style="font-size:11px;margin-top:8px">
+                Inventory, rate and availability.
+            </p>
+        </div>
+
+        <div class="api">
+            <h4>✈️ Flight API</h4>
+            <span class="api-ready">● READY</span>
+            <p style="font-size:11px;margin-top:8px">
+                Search, route and fare.
+            </p>
+        </div>
+
+        <div class="api">
+            <h4>🗺️ Maps API</h4>
+            <span class="api-ready">● READY</span>
+            <p style="font-size:11px;margin-top:8px">
+                Location and routing.
+            </p>
+        </div>
+
+        <div class="api">
+            <h4>🍜 Culinary API</h4>
+            <span class="api-ready">● READY</span>
+            <p style="font-size:11px;margin-top:8px">
+                Restaurant and food discovery.
+            </p>
+        </div>
+
+        <div class="api">
+            <h4>🚗 Transport API</h4>
+            <span class="api-ready">● READY</span>
+            <p style="font-size:11px;margin-top:8px">
+                Vehicle and transfer.
+            </p>
+        </div>
+
+        <div class="api">
+            <h4>💳 Payment API</h4>
+            <span class="api-demo">● DEMO</span>
+            <p style="font-size:11px;margin-top:8px">
+                Payment gateway architecture.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="panel" style="margin-top:20px">
+
+        <h3>Marketplace API Architecture</h3>
+
+        <div class="route" style="text-align:center;line-height:2">
+
+            CUSTOMER
+            <br>↓
+            <br>
+            <b>HOBBIGO MARKETPLACE ENGINE</b>
+            <br>↓
+            <br>
+            PARTNER DATABASE
+            <br>↓
+            <br>
+            PRODUCT INVENTORY
+            <br>↓
+            <br>
+            API GATEWAY
+            <br>↓
+            <br>
+            HOTEL | FLIGHT | MAPS | RESTAURANT | ACTIVITY | TRANSPORT | PAYMENT
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     SETTINGS
+====================================================== -->
+
+<section id="settings" class="page">
+
+    <div class="title">Marketplace Settings</div>
+
+    <div class="subtitle">
+        Core engine configuration.
+    </div>
+
+
+    <div class="panel">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Default Commission</label>
+                <input id="settingCommission" type="number" value="15">
+            </div>
+
+            <div class="form-group">
+                <label>Default Currency</label>
+
+                <select id="settingCurrency">
+                    <option>USD</option>
+                    <option>IDR</option>
+                    <option>EUR</option>
+                    <option>SGD</option>
+                    <option>AUD</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Marketplace</label>
+
+                <select>
+                    <option>Enabled</option>
+                    <option>Disabled</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>Partner Approval</label>
+
+                <select>
+                    <option>Manual Approval</option>
+                    <option>Automatic</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="action-row">
+
+            <button class="primary" onclick="saveSettings()">
+                Save Settings
+            </button>
+
+            <button class="secondary" onclick="resetDemo()">
+                Reset V82.7 Demo
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h3>System Information</h3>
+
+        <div class="route">
+
+            <b>Platform:</b> HobbiGo<br>
+            <b>Version:</b> V82.7<br>
+            <b>Engine:</b> Partner Marketplace Engine<br>
+            <b>Database:</b> LocalStorage Demo<br>
+            <b>Partner Model:</b> Multi-product Partner<br>
+            <b>Payment:</b> Demo<br>
+            <b>API:</b> Gateway Ready<br>
+            <b>Next:</b> V82.8 API Gateway Architecture
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="footer">
+    HobbiGo V82.7 — Partner Marketplace Engine — DEMO
+</div>
+
+</main>
+</div>
+
+
+<!-- ======================================================
+     MODAL
+====================================================== -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h3 id="modalTitle">Product Detail</h3>
+
+            <button class="close" onclick="closeModal()">×</button>
+
+        </div>
+
+        <div id="modalBody"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+let partners =
+    JSON.parse(
+        localStorage.getItem("HobbiGoV827Partners") || "null"
+    );
+
+let products =
+    JSON.parse(
+        localStorage.getItem("HobbiGoV827Products") || "null"
+    );
+
+
+/* =========================================================
+   DEFAULT PARTNERS
+========================================================= */
+
+if(!partners){
+
+    partners = [
+
+        {
+            id:1,
+            name:"Bali Paradise Hotel",
+            category:"Hotel",
+            country:"Indonesia",
+            city:"Bali",
+            email:"hotel@demo.com",
+            phone:"+62 361 000000",
+            commission:15,
+            currency:"USD",
+            status:"Active"
+        },
+
+        {
+            id:2,
+            name:"Ubud Experience",
+            category:"Tour",
+            country:"Indonesia",
+            city:"Ubud",
+            email:"tour@demo.com",
+            phone:"+62 361 111111",
+            commission:18,
+            currency:"USD",
+            status:"Active"
+        },
+
+        {
+            id:3,
+            name:"Tokyo Local Food",
+            category:"Restaurant",
+            country:"Japan",
+            city:"Tokyo",
+            email:"food@demo.com",
+            phone:"+81 3 000000",
+            commission:12,
+            currency:"USD",
+            status:"Pending"
+        },
+
+        {
+            id:4,
+            name:"HobbiGo Transport Bali",
+            category:"Vehicle / Rental",
+            country:"Indonesia",
+            city:"Bali",
+            email:"transport@demo.com",
+            phone:"+62 811 000000",
+            commission:15,
+            currency:"USD",
+            status:"Active"
+        }
+
+    ];
+
+    savePartners();
+
+}
+
+
+/* =========================================================
+   DEFAULT PRODUCTS
+========================================================= */
+
+if(!products){
+
+    products = [
+
+        {
+            id:1,
+            name:"Bali Paradise Deluxe Room",
+            category:"Hotel",
+            partner:"Bali Paradise Hotel",
+            destination:"Bali",
+            price:120,
+            currency:"USD",
+            rating:4.8,
+            availability:"Available",
+            stock:20,
+            promo:10,
+            status:"Active"
+        },
+
+        {
+            id:2,
+            name:"Ubud Cultural Experience",
+            category:"Tour",
+            partner:"Ubud Experience",
+            destination:"Ubud",
+            price:85,
+            currency:"USD",
+            rating:4.7,
+            availability:"Available",
+            stock:15,
+            promo:5,
+            status:"Active"
+        },
+
+        {
+            id:3,
+            name:"Tokyo Local Food Experience",
+            category:"Restaurant",
+            partner:"Tokyo Local Food",
+            destination:"Tokyo",
+            price:55,
+            currency:"USD",
+            rating:4.6,
+            availability:"On Request",
+            stock:8,
+            promo:15,
+            status:"Pending"
+        },
+
+        {
+            id:4,
+            name:"Bali Private Airport Transfer",
+            category:"Vehicle",
+            partner:"HobbiGo Transport Bali",
+            destination:"Bali",
+            price:35,
+            currency:"USD",
+            rating:4.5,
+            availability:"Available",
+            stock:30,
+            promo:0,
+            status:"Active"
+        },
+
+        {
+            id:5,
+            name:"Bali Sunset Boat Experience",
+            category:"Boat",
+            partner:"Ubud Experience",
+            destination:"Bali",
+            price:95,
+            currency:"USD",
+            rating:4.9,
+            availability:"Limited",
+            stock:6,
+            promo:8,
+            status:"Active"
+        }
+
+    ];
+
+    saveProducts();
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function savePartners(){
+
+    localStorage.setItem(
+        "HobbiGoV827Partners",
+        JSON.stringify(partners)
+    );
+
+}
+
+function saveProducts(){
+
+    localStorage.setItem(
+        "HobbiGoV827Products",
+        JSON.stringify(products)
+    );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function page(id,button){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(b => b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    refreshAll();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================================
+   OVERVIEW
+========================================================= */
+
+function renderOverview(){
+
+    const activeP =
+        partners.filter(
+            p => p.status === "Active"
+        ).length;
+
+    const activeX =
+        products.filter(
+            p => p.status === "Active"
+        ).length;
+
+    const avg =
+        partners.length
+        ?
+        partners.reduce(
+            (sum,p) => sum + Number(p.commission),
+            0
+        ) / partners.length
+        : 0;
+
+
+    document.getElementById("totalPartners").textContent =
+        partners.length;
+
+    document.getElementById("activePartners").textContent =
+        activeP;
+
+    document.getElementById("totalProducts").textContent =
+        products.length;
+
+    document.getElementById("activeProducts").textContent =
+        activeX;
+
+    document.getElementById("avgCommission").textContent =
+        avg.toFixed(1) + "%";
+
+
+    const categories = {};
+
+    partners.forEach(p => {
+
+        categories[p.category] =
+            (categories[p.category] || 0) + 1;
+
+    });
+
+
+    document.getElementById("categoryStats").innerHTML =
+        Object.entries(categories)
+        .map(([cat,count]) => `
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px solid #edf1f5;
+            ">
+
+                <span>${escapeHTML(cat)}</span>
+
+                <b>${count}</b>
+
+            </div>
+
+        `).join("");
+
+
+    const featured =
+        products
+        .filter(p => p.status === "Active")
+        .slice(0,6);
+
+
+    document.getElementById("featuredProducts").innerHTML =
+        featured.map(productCard).join("");
+
+}
+
+
+/* =========================================================
+   PARTNERS
+========================================================= */
+
+function addPartner(){
+
+    const name =
+        document.getElementById("pName").value.trim();
+
+    const category =
+        document.getElementById("pCategory").value;
+
+    const country =
+        document.getElementById("pCountry").value.trim();
+
+    const city =
+        document.getElementById("pCity").value.trim();
+
+    const email =
+        document.getElementById("pEmail").value.trim();
+
+    const phone =
+        document.getElementById("pPhone").value.trim();
+
+    const commission =
+        Number(
+            document.getElementById("pCommission").value
+        ) || 15;
+
+    const currency =
+        document.getElementById("pCurrency").value;
+
+
+    if(!name || !country || !city){
+
+        alert(
+            "Partner Name, Country dan City wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    partners.push({
+
+        id:Date.now(),
+
+        name,
+
+        category,
+
+        country,
+
+        city,
+
+        email,
+
+        phone,
+
+        commission,
+
+        currency,
+
+        status:"Pending"
+
+    });
+
+
+    savePartners();
+
+    clearPartnerForm();
+
+    renderPartners();
+
+    renderPartnerSelect();
+
+    renderOverview();
+
+    alert(
+        "Partner berhasil dibuat dengan status PENDING."
+    );
+
+}
+
+
+function clearPartnerForm(){
+
+    document.getElementById("pName").value="";
+    document.getElementById("pCountry").value="";
+    document.getElementById("pCity").value="";
+    document.getElementById("pEmail").value="";
+    document.getElementById("pPhone").value="";
+
+}
+
+
+function renderPartners(){
+
+    const query =
+        (
+            document.getElementById("partnerSearch")?.value || ""
+        ).toLowerCase();
+
+    const filter =
+        document.getElementById("partnerFilter")?.value || "";
+
+
+    const list =
+        partners.filter(p => {
+
+            const text =
+                (
+                    p.name + " " +
+                    p.country + " " +
+                    p.city + " " +
+                    p.category
+                ).toLowerCase();
+
+            return (
+                text.includes(query) &&
+                (!filter || p.category === filter)
+            );
+
+        });
+
+
+    const table =
+        document.getElementById("partnerTable");
+
+
+    if(!list.length){
+
+        table.innerHTML =
+            `<tr>
+                <td colspan="8">
+                    <div class="empty">
+                        No partners found.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        list.map(p => {
+
+            const productCount =
+                products.filter(
+                    x => x.partner === p.name
+                ).length;
+
+
+            return `
+
+            <tr>
+
+                <td>
+                    <b>${escapeHTML(p.name)}</b>
+                </td>
+
+                <td>
+                    ${escapeHTML(p.category)}
+                </td>
+
+                <td>
+                    ${escapeHTML(p.city)},
+                    ${escapeHTML(p.country)}
+                </td>
+
+                <td>
+                    ${escapeHTML(p.email || "-")}
+                </td>
+
+                <td>
+                    ${p.commission}%
+                </td>
+
+                <td>
+                    ${productCount}
+                </td>
+
+                <td>
+
+                    <span class="status ${statusClass(p.status)}">
+                        ${escapeHTML(p.status)}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="secondary"
+                        style="padding:7px 9px;font-size:10px"
+                        onclick="partnerDetail(${p.id})"
+                    >
+                        View
+                    </button>
+
+                    ${
+                        p.status === "Pending"
+                        ?
+                        `<button
+                            class="primary"
+                            style="padding:7px 9px;font-size:10px"
+                            onclick="activatePartner(${p.id})"
+                        >
+                            Activate
+                        </button>`
+                        :
+                        ""
+                    }
+
+                    <button
+                        class="danger"
+                        onclick="deletePartner(${p.id})"
+                    >
+                        Delete
+                    </button>
+
+                </td>
+
+            </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+function activatePartner(id){
+
+    const p =
+        partners.find(x => x.id === id);
+
+    if(!p) return;
+
+    p.status = "Active";
+
+    savePartners();
+
+    refreshAll();
+
+}
+
+
+function deletePartner(id){
+
+    const p =
+        partners.find(x => x.id === id);
+
+    if(!p) return;
+
+
+    if(!confirm(
+        "Delete partner " + p.name + "?"
+    )) return;
+
+
+    partners =
+        partners.filter(x => x.id !== id);
+
+    savePartners();
+
+    refreshAll();
+
+}
+
+
+function partnerDetail(id){
+
+    const p =
+        partners.find(x => x.id === id);
+
+    if(!p) return;
+
+
+    const list =
+        products.filter(
+            x => x.partner === p.name
+        );
+
+
+    document.getElementById("modalTitle").textContent =
+        p.name;
+
+
+    document.getElementById("modalBody").innerHTML = `
+
+        <div class="partner-card">
+
+            <div class="partner-name">
+                ${escapeHTML(p.name)}
+            </div>
+
+            <div class="partner-meta">
+
+                Category:
+                ${escapeHTML(p.category)}
+                <br>
+
+                Country:
+                ${escapeHTML(p.country)}
+                <br>
+
+                City:
+                ${escapeHTML(p.city)}
+                <br>
+
+                Email:
+                ${escapeHTML(p.email || "-")}
+                <br>
+
+                Phone:
+                ${escapeHTML(p.phone || "-")}
+                <br>
+
+                Commission:
+                ${p.commission}%
+                <br>
+
+                Currency:
+                ${escapeHTML(p.currency)}
+                <br>
+
+                Status:
+                ${escapeHTML(p.status)}
+
+            </div>
+
+            <hr style="margin:18px 0">
+
+            <b>Partner Products: ${list.length}</b>
+
+            <div class="chips">
+
+                ${
+                    list.length
+                    ?
+                    list.map(x =>
+                        `<span class="chip">
+                            ${escapeHTML(x.name)}
+                         </span>`
+                    ).join("")
+                    :
+                    `<span class="chip">
+                        No products
+                     </span>`
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   PRODUCT ENGINE
+========================================================= */
+
+function renderPartnerSelect(){
+
+    const select =
+        document.getElementById("xPartner");
+
+    if(!select) return;
+
+
+    const active =
+        partners.filter(
+            p => p.status === "Active"
+        );
+
+
+    select.innerHTML =
+        active.map(p =>
+            `<option value="${escapeHTML(p.name)}">
+                ${escapeHTML(p.name)}
+             </option>`
+        ).join("");
+
+}
+
+
+function addProduct(){
+
+    const name =
+        document.getElementById("xName").value.trim();
+
+    const category =
+        document.getElementById("xCategory").value;
+
+    const partner =
+        document.getElementById("xPartner").value;
+
+    const destination =
+        document.getElementById("xDestination").value.trim();
+
+    const price =
+        Number(
+            document.getElementById("xPrice").value
+        ) || 0;
+
+    const currency =
+        document.getElementById("xCurrency").value;
+
+    const rating =
+        Number(
+            document.getElementById("xRating").value
+        ) || 4.5;
+
+    const availability =
+        document.getElementById("xAvailability").value;
+
+    const promo =
+        Number(
+            document.getElementById("xPromo").value
+        ) || 0;
+
+    const stock =
+        Number(
+            document.getElementById("xStock").value
+        ) || 0;
+
+
+    if(
+        !name ||
+        !partner ||
+        !destination ||
+        price <= 0
+    ){
+
+        alert(
+            "Product, Partner, Destination dan Price wajib diisi."
+        );
+
+        return;
+
+    }
+
+
+    products.push({
+
+        id:Date.now(),
+
+        name,
+
+        category,
+
+        partner,
+
+        destination,
+
+        price,
+
+        currency,
+
+        rating,
+
+        availability,
+
+        stock,
+
+        promo,
+
+        status:"Active"
+
+    });
+
+
+    saveProducts();
+
+    clearProductForm();
+
+    refreshAll();
+
+    alert(
+        "Product berhasil masuk ke Marketplace."
+    );
+
+}
+
+
+function clearProductForm(){
+
+    document.getElementById("xName").value="";
+    document.getElementById("xDestination").value="";
+    document.getElementById("xPrice").value="";
+    document.getElementById("xPromo").value="0";
+    document.getElementById("xStock").value="10";
+
+}
+
+
+function renderProducts(){
+
+    const query =
+        (
+            document.getElementById("productSearch")?.value || ""
+        ).toLowerCase();
+
+    const filter =
+        document.getElementById("productFilter")?.value || "";
+
+
+    const list =
+        products.filter(p => {
+
+            const text =
+                (
+                    p.name + " " +
+                    p.partner + " " +
+                    p.destination
+                ).toLowerCase();
+
+            return (
+                text.includes(query) &&
+                (!filter || p.category === filter)
+            );
+
+        });
+
+
+    const table =
+        document.getElementById("productTable");
+
+
+    if(!list.length){
+
+        table.innerHTML =
+            `<tr>
+                <td colspan="10">
+                    <div class="empty">
+                        No products found.
+                    </div>
+                </td>
+            </tr>`;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        list.map(p => `
+
+        <tr>
+
+            <td>
+                <b>${escapeHTML(p.name)}</b>
+            </td>
+
+            <td>${escapeHTML(p.category)}</td>
+
+            <td>${escapeHTML(p.partner)}</td>
+
+            <td>${escapeHTML(p.destination)}</td>
+
+            <td>
+                ${escapeHTML(p.currency)}
+                ${Number(p.price).toLocaleString()}
+            </td>
+
+            <td>
+                ${p.promo > 0 ? p.promo + "%" : "-"}
+            </td>
+
+            <td>
+                ${escapeHTML(p.availability)}
+            </td>
+
+            <td>
+                ${p.stock}
+            </td>
+
+            <td>
+                ⭐ ${Number(p.rating).toFixed(1)}
+            </td>
+
+            <td>
+
+                <button
+                    class="secondary"
+                    style="padding:7px 9px;font-size:10px"
+                    onclick="productDetail(${p.id})"
+                >
+                    View
+                </button>
+
+                <button
+                    class="danger"
+                    onclick="deleteProduct(${p.id})"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        </tr>
+
+        `).join("");
+
+}
+
+
+function deleteProduct(id){
+
+    const p =
+        products.find(x => x.id === id);
+
+    if(!p) return;
+
+
+    if(!confirm(
+        "Delete product " + p.name + "?"
+    )) return;
+
+
+    products =
+        products.filter(x => x.id !== id);
+
+    saveProducts();
+
+    refreshAll();
+
+}
+
+
+function productDetail(id){
+
+    const p =
+        products.find(x => x.id === id);
+
+    if(!p) return;
+
+
+    const finalPrice =
+        p.price * (1 - p.promo / 100);
+
+
+    document.getElementById("modalTitle").textContent =
+        p.name;
+
+
+    document.getElementById("modalBody").innerHTML = `
+
+        <div class="product-card">
+
+            <div class="product-image">
+                ${iconFor(p.category)}
+            </div>
+
+            <div class="product-body">
+
+                <div class="product-title">
+                    ${escapeHTML(p.name)}
+                </div>
+
+                <div class="product-small">
+                    ${escapeHTML(p.category)}
+                    ·
+                    ${escapeHTML(p.destination)}
+                </div>
+
+                <div class="product-small">
+                    Partner:
+                    ${escapeHTML(p.partner)}
+                </div>
+
+                <div class="product-price">
+
+                    ${escapeHTML(p.currency)}
+                    ${finalPrice.toLocaleString()}
+
+                </div>
+
+                ${
+                    p.promo > 0
+                    ?
+                    `<div class="product-small">
+                        Original:
+                        ${p.currency}
+                        ${Number(p.price).toLocaleString()}
+                        · Promo ${p.promo}%
+                     </div>`
+                    :
+                    ""
+                }
+
+                <div class="chips">
+
+                    <span class="chip">
+                        ⭐ ${p.rating}
+                    </span>
+
+                    <span class="chip">
+                        ${escapeHTML(p.availability)}
+                    </span>
+
+                    <span class="chip">
+                        Stock ${p.stock}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    openModal();
+
+}
+
+
+/* =========================================================
+   CUSTOMER MARKETPLACE
+========================================================= */
+
+function renderCatalog(){
+
+    const query =
+        (
+            document.getElementById("catalogSearch")?.value || ""
+        ).toLowerCase();
+
+    const category =
+        document.getElementById("catalogCategory")?.value || "";
+
+
+    const list =
+        products.filter(p => {
+
+            if(p.status !== "Active") return false;
+
+            const text =
+                (
+                    p.name + " " +
+                    p.partner + " " +
+                    p.destination + " " +
+                    p.category
+                ).toLowerCase();
+
+            return (
+                text.includes(query) &&
+                (!category || p.category === category)
+            );
+
+        });
+
+
+    document.getElementById("catalogGrid").innerHTML =
+        list.length
+        ?
+        list.map(productCard).join("")
+        :
+        `<div class="empty">
+            No marketplace products found.
+         </div>`;
+
+}
+
+
+function productCard(p){
+
+    const finalPrice =
+        p.price * (1 - p.promo / 100);
+
+
+    return `
+
+        <div class="product-card">
+
+            <div class="product-image">
+                ${iconFor(p.category)}
+            </div>
+
+            <div class="product-body">
+
+                <div class="product-title">
+                    ${escapeHTML(p.name)}
+                </div>
+
+                <div class="product-small">
+                    ${escapeHTML(p.destination)}
+                    ·
+                    ${escapeHTML(p.category)}
+                </div>
+
+                <div class="product-small">
+                    Partner:
+                    ${escapeHTML(p.partner)}
+                </div>
+
+                <div class="product-price">
+
+                    ${escapeHTML(p.currency)}
+                    ${finalPrice.toLocaleString()}
+
+                </div>
+
+                ${
+                    p.promo > 0
+                    ?
+                    `<div class="product-small">
+                        🔥 ${p.promo}% PROMO
+                     </div>`
+                    :
+                    ""
+                }
+
+                <div class="chips">
+
+                    <span class="chip">
+                        ⭐ ${p.rating}
+                    </span>
+
+                    <span class="chip">
+                        ${escapeHTML(p.availability)}
+                    </span>
+
+                </div>
+
+                <div class="product-actions">
+
+                    <button
+                        class="primary"
+                        style="padding:8px 11px;font-size:10px"
+                        onclick="productDetail(${p.id})"
+                    >
+                        View
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   COMMISSION
+========================================================= */
+
+function renderCommission(){
+
+    if(!partners.length) return;
+
+
+    const values =
+        partners.map(
+            p => Number(p.commission)
+        );
+
+
+    const avg =
+        values.reduce(
+            (a,b) => a+b,0
+        ) / values.length;
+
+
+    const highest =
+        Math.max(...values);
+
+    const lowest =
+        Math.min(...values);
+
+
+    document.getElementById("commissionAverage").textContent =
+        avg.toFixed(1) + "%";
+
+    document.getElementById("commissionHighest").textContent =
+        highest + "%";
+
+    document.getElementById("commissionLowest").textContent =
+        lowest + "%";
+
+
+    document.getElementById("commissionTable").innerHTML =
+
+        partners.map(p => {
+
+            const hobbiGo =
+                100 * p.commission / 100;
+
+            const partner =
+                100 - hobbiGo;
+
+
+            return `
+
+            <tr>
+
+                <td>
+                    <b>${escapeHTML(p.name)}</b>
+                </td>
+
+                <td>${escapeHTML(p.category)}</td>
+
+                <td>${p.commission}%</td>
+
+                <td>
+                    $${hobbiGo.toFixed(2)}
+                </td>
+
+                <td>
+                    $${partner.toFixed(2)}
+                </td>
+
+            </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   AVAILABILITY
+========================================================= */
+
+function renderAvailability(){
+
+    document.getElementById("availabilityTable").innerHTML =
+
+        products.map(p => `
+
+        <tr>
+
+            <td>
+                <b>${escapeHTML(p.name)}</b>
+            </td>
+
+            <td>
+                ${escapeHTML(p.destination)}
+            </td>
+
+            <td>
+                ${escapeHTML(p.availability)}
+            </td>
+
+            <td>
+                ${p.stock > 0 ? "Available" : "Full"}
+            </td>
+
+            <td>
+                ${p.stock}
+            </td>
+
+            <td>
+
+                <span class="status ${
+                    p.stock > 0 ? "active" : "blocked"
+                }">
+
+                    ${
+                        p.stock > 0
+                        ? "BOOKABLE"
+                        : "SOLD OUT"
+                    }
+
+                </span>
+
+            </td>
+
+        </tr>
+
+        `).join("");
+
+}
+
+
+/* =========================================================
+   PROMOTION
+========================================================= */
+
+function renderPromotions(){
+
+    const list =
+        products.filter(
+            p => p.promo > 0
+        );
+
+
+    document.getElementById("promoProducts").innerHTML =
+
+        list.length
+        ?
+        list.map(productCard).join("")
+        :
+        `<div class="empty">
+            No active promotions.
+         </div>`;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(){
+
+    document.getElementById("modal").style.display =
+        "flex";
+
+}
+
+
+function closeModal(){
+
+    document.getElementById("modal").style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+function saveSettings(){
+
+    const commission =
+        document.getElementById("settingCommission").value;
+
+    const currency =
+        document.getElementById("settingCurrency").value;
+
+
+    localStorage.setItem(
+        "HobbiGoV827Commission",
+        commission
+    );
+
+    localStorage.setItem(
+        "HobbiGoV827Currency",
+        currency
+    );
+
+
+    alert(
+        "Marketplace settings berhasil disimpan."
+    );
+
+}
+
+
+function resetDemo(){
+
+    if(!confirm(
+        "Reset seluruh data V82.7?"
+    )) return;
+
+
+    localStorage.removeItem(
+        "HobbiGoV827Partners"
+    );
+
+    localStorage.removeItem(
+        "HobbiGoV827Products"
+    );
+
+    location.reload();
+
+}
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function statusClass(status){
+
+    if(status === "Active") return "active";
+    if(status === "Pending") return "pending";
+    if(status === "Blocked") return "blocked";
+
+    return "inactive";
+
+}
+
+
+function iconFor(category){
+
+    const icons = {
+
+        "Hotel":"🏨",
+        "Villa":"🏡",
+        "Flight":"✈️",
+        "Restaurant":"🍜",
+        "Tour":"🚌",
+        "Attraction":"🎡",
+        "Activity":"🎯",
+        "Vehicle":"🚗",
+        "Boat":"🚤",
+        "Event":"🎪"
+
+    };
+
+    return icons[category] || "🌎";
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+function refreshAll(){
+
+    renderOverview();
+
+    renderPartners();
+
+    renderPartnerSelect();
+
+    renderProducts();
+
+    renderCatalog();
+
+    renderCommission();
+
+    renderAvailability();
+
+    renderPromotions();
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+refreshAll();
+
+</script>
+
+</body>
+</html>
