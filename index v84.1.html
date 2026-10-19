@@ -1,1 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HobbiGo V84.1 - Global Country & City Engine</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#061b3a,#0b3973,#1681bf);
+  color:white;
+  padding:20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 4px 18px rgba(0,0,0,.16);
+}
+
+.header{
+  max-width:1450px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.logo{
+  font-size:29px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#45dfff;
+}
+
+.tagline{
+  font-size:12px;
+  opacity:.85;
+  margin-top:4px;
+}
+
+.header-right{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.header-btn{
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.12);
+  color:white;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.container{
+  max-width:1450px;
+  margin:auto;
+  padding:25px 18px 60px;
+}
+
+.hero{
+  background:white;
+  border-radius:22px;
+  padding:32px;
+  margin-bottom:20px;
+  box-shadow:0 8px 30px rgba(20,50,80,.08);
+}
+
+.badge{
+  display:inline-block;
+  background:#e8f7ff;
+  color:#0674ad;
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#687589;
+  line-height:1.6;
+  max-width:950px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-top:22px;
+}
+
+.stat{
+  background:#f4f8fc;
+  border-radius:13px;
+  padding:16px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:23px;
+  color:#0878b6;
+}
+
+.stat span{
+  font-size:11px;
+  color:#718096;
+}
+
+.search-card{
+  background:linear-gradient(135deg,#0b386d,#087fbe);
+  color:white;
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.search-card h2{
+  margin-bottom:15px;
+}
+
+.search-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr auto;
+  gap:10px;
+}
+
+.search-grid input,
+.search-grid select{
+  border:0;
+  padding:14px;
+  border-radius:10px;
+  outline:none;
+}
+
+.search-btn{
+  background:#ffd33d;
+  border:0;
+  border-radius:10px;
+  padding:0 22px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:1.5fr .7fr;
+  gap:20px;
+  align-items:start;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 6px 25px rgba(20,50,80,.07);
+}
+
+.card h2{
+  font-size:21px;
+  margin-bottom:16px;
+}
+
+.card h3{
+  font-size:16px;
+  margin-bottom:9px;
+}
+
+.country-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.country{
+  border:1px solid #dce4ed;
+  border-radius:14px;
+  padding:15px;
+  cursor:pointer;
+  transition:.2s;
+  background:#fff;
+}
+
+.country:hover{
+  border-color:#0a83c5;
+  transform:translateY(-2px);
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.country.active{
+  border:2px solid #087dc0;
+  background:#edf9ff;
+}
+
+.flag{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.country-name{
+  font-weight:bold;
+}
+
+.country-info{
+  color:#788497;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.city-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.city{
+  border:1px solid #dce4ed;
+  border-radius:14px;
+  padding:15px;
+  background:#fff;
+}
+
+.city:hover{
+  box-shadow:0 5px 18px rgba(0,0,0,.07);
+}
+
+.city-icon{
+  font-size:25px;
+}
+
+.city-name{
+  font-weight:bold;
+  margin-top:7px;
+}
+
+.city-meta{
+  font-size:11px;
+  color:#748096;
+  margin-top:4px;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.product{
+  border:1px solid #dce4ed;
+  border-radius:14px;
+  padding:15px;
+}
+
+.product-icon{
+  font-size:28px;
+}
+
+.product-name{
+  font-weight:bold;
+  margin:7px 0;
+}
+
+.product-desc{
+  font-size:12px;
+  color:#738095;
+  line-height:1.5;
+}
+
+.price{
+  font-weight:900;
+  color:#0879b8;
+  font-size:17px;
+  margin:10px 0;
+}
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:10px 14px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:12px;
+}
+
+.btn-primary{
+  background:#087dc0;
+  color:white;
+}
+
+.btn-secondary{
+  background:#edf2f7;
+  color:#31516a;
+}
+
+.btn-success{
+  background:#138a5b;
+  color:white;
+}
+
+.btn-warning{
+  background:#efb42c;
+  color:#332300;
+}
+
+.btn-danger{
+  background:#e75050;
+  color:white;
+}
+
+.btn-block{
+  width:100%;
+}
+
+.selected-box{
+  background:#eef9ff;
+  border:1px solid #bde6fa;
+  border-radius:14px;
+  padding:17px;
+  margin-bottom:15px;
+}
+
+.selected-box strong{
+  color:#0879b8;
+}
+
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #edf0f4;
+  font-size:13px;
+}
+
+.summary-total{
+  background:#eef8ff;
+  border-radius:14px;
+  padding:18px;
+  margin:15px 0;
+}
+
+.summary-total .label{
+  font-size:11px;
+  color:#728095;
+}
+
+.summary-total .amount{
+  font-size:25px;
+  font-weight:900;
+  color:#087dc0;
+}
+
+.ai-box{
+  background:#f3fbf7;
+  border:1px solid #c9ead9;
+  border-radius:14px;
+  padding:16px;
+  color:#276b4e;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.api-box{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.api{
+  border:1px solid #dce4ed;
+  border-radius:13px;
+  padding:15px;
+}
+
+.api-icon{
+  font-size:25px;
+}
+
+.api strong{
+  display:block;
+  margin:6px 0;
+}
+
+.api span{
+  font-size:11px;
+  color:#758195;
+}
+
+.notice{
+  background:#fff8e5;
+  border:1px solid #efd991;
+  color:#765c0b;
+  border-radius:12px;
+  padding:13px;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:12px;
+}
+
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#778397;
+  font-size:13px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.cart-item{
+  border:1px solid #dce4ed;
+  border-radius:13px;
+  padding:13px;
+  margin-bottom:9px;
+}
+
+.cart-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.cart-price{
+  color:#087dc0;
+  font-weight:bold;
+}
+
+.sticky{
+  position:sticky;
+  top:105px;
+}
+
+.footer{
+  text-align:center;
+  color:#7d8898;
+  font-size:11px;
+  padding:25px;
+}
+
+@media(max-width:1050px){
+
+  .layout{
+    grid-template-columns:1fr;
+  }
+
+  .sticky{
+    position:static;
+  }
+
+}
+
+@media(max-width:800px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .search-grid{
+    grid-template-columns:1fr;
+  }
+
+  .country-grid,
+  .city-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .api-box{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:600px){
+
+  .country-grid,
+  .city-grid,
+  .product-grid,
+  .api-box{
+    grid-template-columns:1fr;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="header">
+
+    <div>
+
+      <div class="logo">
+        Hobbi<span>Go</span>
+      </div>
+
+      <div class="tagline">
+        AI Journey & Experience Marketplace
+      </div>
+
+    </div>
+
+    <div class="header-right">
+
+      <button class="header-btn"
+        onclick="goTo('globalSearch')">
+        🌍 Global Search
+      </button>
+
+      <button class="header-btn"
+        onclick="goTo('marketplace')">
+        Marketplace
+      </button>
+
+      <button class="header-btn"
+        onclick="goTo('globalCart')">
+        🛒 Cart
+        <span id="cartCount">0</span>
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <span class="badge">
+    V84.1 GLOBAL COUNTRY & CITY ENGINE
+  </span>
+
+  <h1>
+    Explore The World With HobbiGo
+  </h1>
+
+  <p>
+    Global destination discovery engine untuk mencari negara,
+    kota, hotel, flight, culinary, transport, attraction,
+    activity, tour dan corporate venue.
+    Demo database ini menjadi fondasi untuk integrasi API global
+    pada tahap production.
+  </p>
+
+  <div class="stats">
+
+    <div class="stat">
+      <strong id="countryStat">195+</strong>
+      <span>Countries</span>
+    </div>
+
+    <div class="stat">
+      <strong>Global</strong>
+      <span>City Search</span>
+    </div>
+
+    <div class="stat">
+      <strong>9+</strong>
+      <span>Marketplace Categories</span>
+    </div>
+
+    <div class="stat">
+      <strong>Multi</strong>
+      <span>Currency Ready</span>
+    </div>
+
+    <div class="stat">
+      <strong>AI</strong>
+      <span>Recommendation</span>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GLOBAL SEARCH -->
+
+<section class="search-card" id="globalSearch">
+
+  <h2>
+    🌍 Global Destination Search
+  </h2>
+
+  <div class="search-grid">
+
+    <input
+      id="globalQuery"
+      placeholder="Search country or city..."
+      oninput="globalSearch()"
+    >
+
+    <select id="regionFilter" onchange="globalSearch()">
+
+      <option value="">All Regions</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="North America">North America</option>
+      <option value="South America">South America</option>
+      <option value="Africa">Africa</option>
+      <option value="Oceania">Oceania</option>
+      <option value="Middle East">Middle East</option>
+
+    </select>
+
+    <select id="travelPurpose">
+
+      <option>Holiday</option>
+      <option>Business</option>
+      <option>Family</option>
+      <option>Group</option>
+      <option>Corporate Event</option>
+      <option>Adventure</option>
+      <option>Culinary</option>
+      <option>Luxury</option>
+
+    </select>
+
+    <button
+      class="search-btn"
+      onclick="aiExplore()">
+      🤖 AI Explore
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="layout">
+
+
+<main>
+
+
+<!-- SELECTED DESTINATION -->
+
+<section class="card">
+
+  <h2>
+    Selected Destination
+  </h2>
+
+  <div id="selectedDestination">
+
+    <div class="empty">
+      Select a country or city to start building your global journey.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- COUNTRIES -->
+
+<section class="card">
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+  ">
+
+    <h2>
+      🌎 Global Countries
+    </h2>
+
+    <span class="badge">
+      195+ GLOBAL
+    </span>
+
+  </div>
+
+  <div
+    class="country-grid"
+    id="countryGrid">
+  </div>
+
+</section>
+
+
+<!-- CITIES -->
+
+<section class="card">
+
+  <h2>
+    🏙️ Popular Cities
+  </h2>
+
+  <div
+    class="city-grid"
+    id="cityGrid">
+  </div>
+
+</section>
+
+
+<!-- MARKETPLACE -->
+
+<section
+  class="card"
+  id="marketplace">
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+  ">
+
+    <h2>
+      🛍️ Global Marketplace
+    </h2>
+
+    <span class="badge">
+      DEMO DATA
+    </span>
+
+  </div>
+
+  <div
+    class="product-grid"
+    id="productGrid">
+  </div>
+
+</section>
+
+
+<!-- AI -->
+
+<section class="card">
+
+  <h2>
+    🤖 AI Global Destination Engine
+  </h2>
+
+  <div
+    id="aiRecommendation"
+    class="ai-box">
+
+    Select a destination and click AI Explore
+    to generate a destination recommendation.
+
+  </div>
+
+</section>
+
+
+<!-- API ROADMAP -->
+
+<section class="card">
+
+  <h2>
+    🔌 Global API Integration Layer
+  </h2>
+
+  <div class="api-box">
+
+    <div class="api">
+      <div class="api-icon">🌎</div>
+      <strong>Country API</strong>
+      <span>Country, city, region and destination data.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🏨</div>
+      <strong>Hotel API</strong>
+      <span>Availability, room, price and reservation.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">✈️</div>
+      <strong>Flight API</strong>
+      <span>Routes, schedule, fare and ticketing.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🚗</div>
+      <strong>Transport API</strong>
+      <span>Car, van, bus, driver and transfer.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🍽️</div>
+      <strong>Food API</strong>
+      <span>Restaurant, culinary and group dining.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🎯</div>
+      <strong>Activity API</strong>
+      <span>Attraction, tour and experience.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🏢</div>
+      <strong>Venue API</strong>
+      <span>Meeting, event and corporate venues.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">🗺️</div>
+      <strong>Maps API</strong>
+      <span>GPS, routing and distance.</span>
+    </div>
+
+    <div class="api">
+      <div class="api-icon">💳</div>
+      <strong>Payment API</strong>
+      <span>Multi-currency payment and settlement.</span>
+    </div>
+
+  </div>
+
+  <div class="notice">
+
+    V84.1 masih menggunakan demo database lokal.
+    Struktur sudah dipisahkan agar database/API global dapat
+    menggantikan data demo pada tahap production.
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- SIDEBAR -->
+
+<aside>
+
+
+<section class="card sticky">
+
+  <h2>
+    🌍 Global Trip Summary
+  </h2>
+
+  <div class="summary-row">
+    <span>Country</span>
+    <strong id="sumCountry">-</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>City</span>
+    <strong id="sumCity">-</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>Region</span>
+    <strong id="sumRegion">-</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>Purpose</span>
+    <strong id="sumPurpose">Holiday</strong>
+  </div>
+
+  <div class="summary-row">
+    <span>Currency</span>
+    <strong id="sumCurrency">IDR</strong>
+  </div>
+
+  <div class="summary-total">
+
+    <div class="label">
+      Estimated Package
+    </div>
+
+    <div
+      class="amount"
+      id="sumTotal">
+      Rp0
+    </div>
+
+  </div>
+
+  <button
+    class="btn btn-primary btn-block"
+    onclick="buildDestinationPackage()">
+
+    📦 Build Destination Package
+
+  </button>
+
+  <br>
+
+  <button
+    class="btn btn-success btn-block"
+    onclick="goTo('globalCart')">
+
+    🛒 View Global Cart
+
+  </button>
+
+</section>
+
+
+<!-- CART -->
+
+<section
+  class="card"
+  id="globalCart">
+
+  <h2>
+    🛒 Global Cart
+  </h2>
+
+  <div id="cartItems">
+
+    <div class="empty">
+      Cart is empty.
+    </div>
+
+  </div>
+
+  <div class="summary-total">
+
+    <div class="label">
+      Cart Total
+    </div>
+
+    <div
+      class="amount"
+      id="cartTotal">
+      Rp0
+    </div>
+
+  </div>
+
+  <button
+    class="btn btn-warning btn-block"
+    onclick="sendToBookingEngine()">
+
+    Continue To Booking Engine
+
+  </button>
+
+</section>
+
+
+</aside>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+  HobbiGo V84.1 — Global Country & City Engine<br>
+
+  AI Journey & Experience Marketplace<br>
+
+  Demo mode — ready for global API integration
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V84.1
+   GLOBAL COUNTRY & CITY ENGINE
+   ========================================================= */
+
+
+/* ------------------------------
+   GLOBAL STATE
+------------------------------- */
+
+let selectedCountry = null;
+
+let selectedCity = null;
+
+let cart = [];
+
+
+/* ------------------------------
+   GLOBAL COUNTRY DATABASE
+   Core global country list
+------------------------------- */
+
+const countries = [
+
+/* ASIA */
+
+{flag:"🇮🇩",name:"Indonesia",region:"Asia",currency:"IDR",cities:["Jakarta","Bali","Yogyakarta","Surabaya","Lombok"]},
+
+{flag:"🇸🇬",name:"Singapore",region:"Asia",currency:"SGD",cities:["Singapore"]},
+
+{flag:"🇲🇾",name:"Malaysia",region:"Asia",currency:"MYR",cities:["Kuala Lumpur","Penang","Langkawi","Johor Bahru"]},
+
+{flag:"🇹🇭",name:"Thailand",region:"Asia",currency:"THB",cities:["Bangkok","Phuket","Chiang Mai","Pattaya"]},
+
+{flag:"🇻🇳",name:"Vietnam",region:"Asia",currency:"VND",cities:["Hanoi","Ho Chi Minh City","Da Nang","Phu Quoc"]},
+
+{flag:"🇵🇭",name:"Philippines",region:"Asia",currency:"PHP",cities:["Manila","Cebu","Boracay","Davao"]},
+
+{flag:"🇯🇵",name:"Japan",region:"Asia",currency:"JPY",cities:["Tokyo","Osaka","Kyoto","Sapporo"]},
+
+{flag:"🇰🇷",name:"South Korea",region:"Asia",currency:"KRW",cities:["Seoul","Busan","Jeju","Incheon"]},
+
+{flag:"🇨🇳",name:"China",region:"Asia",currency:"CNY",cities:["Beijing","Shanghai","Guangzhou","Shenzhen"]},
+
+{flag:"🇭🇰",name:"Hong Kong",region:"Asia",currency:"HKD",cities:["Hong Kong"]},
+
+{flag:"🇹🇼",name:"Taiwan",region:"Asia",currency:"TWD",cities:["Taipei","Kaohsiung","Taichung"]},
+
+{flag:"🇮🇳",name:"India",region:"Asia",currency:"INR",cities:["New Delhi","Mumbai","Bengaluru","Goa"]},
+
+{flag:"🇦🇪",name:"United Arab Emirates",region:"Middle East",currency:"AED",cities:["Dubai","Abu Dhabi","Sharjah"]},
+
+{flag:"🇸🇦",name:"Saudi Arabia",region:"Middle East",currency:"SAR",cities:["Riyadh","Jeddah","Makkah","Medina"]},
+
+{flag:"🇶🇦",name:"Qatar",region:"Middle East",currency:"QAR",cities:["Doha"]},
+
+{flag:"🇹🇷",name:"Türkiye",region:"Middle East",currency:"TRY",cities:["Istanbul","Antalya","Ankara"]},
+
+/* EUROPE */
+
+{flag:"🇫🇷",name:"France",region:"Europe",currency:"EUR",cities:["Paris","Nice","Lyon","Marseille"]},
+
+{flag:"🇮🇹",name:"Italy",region:"Europe",currency:"EUR",cities:["Rome","Milan","Venice","Florence"]},
+
+{flag:"🇪🇸",name:"Spain",region:"Europe",currency:"EUR",cities:["Madrid","Barcelona","Seville","Valencia"]},
+
+{flag:"🇬🇧",name:"United Kingdom",region:"Europe",currency:"GBP",cities:["London","Manchester","Edinburgh","Liverpool"]},
+
+{flag:"🇨🇭",name:"Switzerland",region:"Europe",currency:"CHF",cities:["Zurich","Geneva","Lucerne","Interlaken"]},
+
+{flag:"🇩🇪",name:"Germany",region:"Europe",currency:"EUR",cities:["Berlin","Munich","Frankfurt","Hamburg"]},
+
+{flag:"🇳🇱",name:"Netherlands",region:"Europe",currency:"EUR",cities:["Amsterdam","Rotterdam","The Hague"]},
+
+{flag:"🇵🇹",name:"Portugal",region:"Europe",currency:"EUR",cities:["Lisbon","Porto","Faro"]},
+
+{flag:"🇬🇷",name:"Greece",region:"Europe",currency:"EUR",cities:["Athens","Santorini","Mykonos"]},
+
+{flag:"🇦🇹",name:"Austria",region:"Europe",currency:"EUR",cities:["Vienna","Salzburg","Innsbruck"]},
+
+/* NORTH AMERICA */
+
+{flag:"🇺🇸",name:"United States",region:"North America",currency:"USD",cities:["New York","Los Angeles","Miami","Las Vegas","San Francisco"]},
+
+{flag:"🇨🇦",name:"Canada",region:"North America",currency:"CAD",cities:["Toronto","Vancouver","Montreal","Calgary"]},
+
+{flag:"🇲🇽",name:"Mexico",region:"North America",currency:"MXN",cities:["Mexico City","Cancun","Tulum","Los Cabos"]},
+
+/* SOUTH AMERICA */
+
+{flag:"🇧🇷",name:"Brazil",region:"South America",currency:"BRL",cities:["Rio de Janeiro","São Paulo","Salvador"]},
+
+{flag:"🇦🇷",name:"Argentina",region:"South America",currency:"ARS",cities:["Buenos Aires","Mendoza","Bariloche"]},
+
+{flag:"🇨🇱",name:"Chile",region:"South America",currency:"CLP",cities:["Santiago","Valparaiso","Atacama"]},
+
+{flag:"🇵🇪",name:"Peru",region:"South America",currency:"PEN",cities:["Lima","Cusco","Arequipa"]},
+
+/* AFRICA */
+
+{flag:"🇿🇦",name:"South Africa",region:"Africa",currency:"ZAR",cities:["Cape Town","Johannesburg","Durban"]},
+
+{flag:"🇪🇬",name:"Egypt",region:"Africa",currency:"EGP",cities:["Cairo","Luxor","Sharm El Sheikh"]},
+
+{flag:"🇲🇦",name:"Morocco",region:"Africa",currency:"MAD",cities:["Marrakesh","Casablanca","Rabat"]},
+
+{flag:"🇰🇪",name:"Kenya",region:"Africa",currency:"KES",cities:["Nairobi","Mombasa"]},
+
+/* OCEANIA */
+
+{flag:"🇦🇺",name:"Australia",region:"Oceania",currency:"AUD",cities:["Sydney","Melbourne","Brisbane","Perth"]},
+
+{flag:"🇳🇿",name:"New Zealand",region:"Oceania",currency:"NZD",cities:["Auckland","Queenstown","Wellington"]},
+
+{flag:"🇫🇯",name:"Fiji",region:"Oceania",currency:"FJD",cities:["Nadi","Suva"]}
+
+];
+
+
+/* --------------------------------------------------------
+   NOTE:
+   Core demo list above is intentionally compact for the
+   browser prototype. Production V84.x will use a complete
+   global country master database/API.
+--------------------------------------------------------- */
+
+
+/* ------------------------------
+   MARKETPLACE PRODUCTS
+------------------------------- */
+
+const marketplace = [
+
+{
+id:"hotel",
+icon:"🏨",
+category:"Hotel",
+name:"Global Hotel Search",
+description:"Search hotels and accommodation in selected destination.",
+price:850000
+},
+
+{
+id:"flight",
+icon:"✈️",
+category:"Flight",
+name:"Global Flight Search",
+description:"Search flight routes from origin to destination.",
+price:1850000
+},
+
+{
+id:"food",
+icon:"🍽️",
+category:"Food",
+name:"Local Culinary Experience",
+description:"Restaurant, local food and culinary experience.",
+price:275000
+},
+
+{
+id:"transport",
+icon:"🚗",
+category:"Transport",
+name:"Private Airport Transfer",
+description:"Airport transfer with vehicle and driver.",
+price:750000
+},
+
+{
+id:"activity",
+icon:"🎯",
+category:"Activity",
+name:"Destination Activity",
+description:"Activities, tours and local experiences.",
+price:450000
+},
+
+{
+id:"attraction",
+icon:"📸",
+category:"Attraction",
+name:"Top Attraction",
+description:"Popular tourism attraction.",
+price:350000
+},
+
+{
+id:"tour",
+icon:"🗺️",
+category:"Tour",
+name:"Private City Tour",
+description:"Private city sightseeing tour.",
+price:750000
+},
+
+{
+id:"venue",
+icon:"🏢",
+category:"Corporate Venue",
+name:"Meeting & Event Venue",
+description:"Corporate meeting, retreat and event venue.",
+price:7500000
+}
+
+];
+
+
+/* ------------------------------
+   INIT
+------------------------------- */
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+renderCountries();
+
+renderCities();
+
+renderMarketplace();
+
+updateCart();
+
+}
+);
+
+
+/* ------------------------------
+   COUNTRY RENDER
+------------------------------- */
+
+function renderCountries(
+query="",
+region=""
+){
+
+const grid =
+document.getElementById("countryGrid");
+
+grid.innerHTML="";
+
+const filtered =
+countries.filter(country=>{
+
+const matchQuery =
+(country.name+
+" "+
+country.cities.join(" "))
+.toLowerCase()
+.includes(query.toLowerCase());
+
+const matchRegion =
+!region ||
+country.region===region;
+
+return matchQuery && matchRegion;
+
+});
+
+if(filtered.length===0){
+
+grid.innerHTML=`
+<div class="empty">
+No country found in demo database.
+</div>
+`;
+
+return;
+
+}
+
+filtered.forEach(country=>{
+
+const div =
+document.createElement("div");
+
+div.className="country";
+
+if(
+selectedCountry &&
+selectedCountry.name===country.name
+){
+
+div.classList.add("active");
+
+}
+
+div.innerHTML=`
+
+<div class="flag">
+${country.flag}
+</div>
+
+<div class="country-name">
+${country.name}
+</div>
+
+<div class="country-info">
+${country.region} · ${country.currency}
+</div>
+
+<div class="country-info">
+${country.cities.length} demo cities
+</div>
+
+`;
+
+div.onclick=()=>selectCountry(country);
+
+grid.appendChild(div);
+
+});
+
+}
+
+
+/* ------------------------------
+   SELECT COUNTRY
+------------------------------- */
+
+function selectCountry(country){
+
+selectedCountry=country;
+
+selectedCity=null;
+
+renderCountries(
+document.getElementById("globalQuery").value,
+document.getElementById("regionFilter").value
+);
+
+renderCities();
+
+updateDestinationSummary();
+
+}
+
+
+/* ------------------------------
+   CITY RENDER
+------------------------------- */
+
+function renderCities(){
+
+const grid =
+document.getElementById("cityGrid");
+
+grid.innerHTML="";
+
+if(!selectedCountry){
+
+grid.innerHTML=`
+
+<div class="empty">
+
+Select a country first to view
+available cities.
+
+</div>
+
+`;
+
+return;
+
+}
+
+selectedCountry.cities.forEach(
+(city,index)=>{
+
+const div =
+document.createElement("div");
+
+div.className="city";
+
+div.innerHTML=`
+
+<div class="city-icon">
+${index===0?"🌆":"📍"}
+</div>
+
+<div class="city-name">
+${city}
+</div>
+
+<div class="city-meta">
+${selectedCountry.name}
+</div>
+
+<button
+class="btn btn-primary"
+style="margin-top:10px;"
+onclick="selectCity('${city}')">
+
+Explore City
+
+</button>
+
+`;
+
+grid.appendChild(div);
+
+});
+
+}
+
+
+/* ------------------------------
+   SELECT CITY
+------------------------------- */
+
+function selectCity(city){
+
+selectedCity=city;
+
+updateDestinationSummary();
+
+document.getElementById(
+"aiRecommendation"
+).innerHTML=`
+
+<strong>
+🤖 AI Destination Ready
+</strong><br><br>
+
+${city}, ${selectedCountry.name}
+has been selected.
+
+HobbiGo can now build a trip
+combining hotel, flight, food,
+transport, activities and attractions.
+
+`;
+
+}
+
+
+/* ------------------------------
+   SUMMARY
+------------------------------- */
+
+function updateDestinationSummary(){
+
+const country =
+selectedCountry
+?selectedCountry.name
+:"-";
+
+const city =
+selectedCity
+?selectedCity
+:"-";
+
+const region =
+selectedCountry
+?selectedCountry.region
+:"-";
+
+const currency =
+selectedCountry
+?selectedCountry.currency
+:"IDR";
+
+const purpose =
+document.getElementById(
+"travelPurpose"
+).value;
+
+document.getElementById(
+"sumCountry"
+).innerText=country;
+
+document.getElementById(
+"sumCity"
+).innerText=city;
+
+document.getElementById(
+"sumRegion"
+).innerText=region;
+
+document.getElementById(
+"sumPurpose"
+).innerText=purpose;
+
+document.getElementById(
+"sumCurrency"
+).innerText=currency;
+
+}
+
+
+/* ------------------------------
+   GLOBAL SEARCH
+------------------------------- */
+
+function globalSearch(){
+
+const query =
+document.getElementById(
+"globalQuery"
+).value;
+
+const region =
+document.getElementById(
+"regionFilter"
+).value;
+
+renderCountries(
+query,
+region
+);
+
+}
+
+
+/* ------------------------------
+   AI EXPLORE
+------------------------------- */
+
+function aiExplore(){
+
+if(!selectedCountry){
+
+alert(
+"Please select a country first."
+);
+
+return;
+
+}
+
+const purpose =
+document.getElementById(
+"travelPurpose"
+).value;
+
+const city =
+selectedCity ||
+selectedCountry.cities[0];
+
+selectedCity=city;
+
+updateDestinationSummary();
+
+let recommendation="";
+
+if(purpose==="Business" ||
+purpose==="Corporate Event"){
+
+recommendation=`
+
+For <strong>${city}</strong>,
+HobbiGo AI recommends a business
+travel configuration:
+
+<br><br>
+
+🏨 Business Hotel<br>
+🚗 Executive Transfer<br>
+🍽️ Business Dining<br>
+🏢 Meeting Venue<br>
+🎯 Networking Activity
+
+`;
+
+}else if(purpose==="Family"){
+
+recommendation=`
+
+For <strong>${city}</strong>,
+HobbiGo AI recommends:
+
+<br><br>
+
+🏨 Family-friendly Hotel<br>
+🚗 Private Family Transfer<br>
+🍽️ Local Culinary Experience<br>
+📸 Family Attractions<br>
+🎯 Family Activities
+
+`;
+
+}else if(purpose==="Adventure"){
+
+recommendation=`
+
+For <strong>${city}</strong>,
+HobbiGo AI recommends:
+
+<br><br>
+
+🏨 Comfortable Accommodation<br>
+🚗 Private Transport<br>
+🎯 Adventure Activities<br>
+📸 Local Attractions<br>
+🗺️ Flexible Route
+
+`;
+
+}else{
+
+recommendation=`
+
+For <strong>${city}</strong>,
+HobbiGo AI recommends a balanced
+destination package:
+
+<br><br>
+
+🏨 Hotel<br>
+✈️ Flight<br>
+🚗 Transport<br>
+🍽️ Culinary<br>
+🎯 Activity<br>
+📸 Attraction
+
+`;
+
+}
+
+document.getElementById(
+"aiRecommendation"
+).innerHTML=
+`🤖 <strong>AI Recommendation</strong><br><br>`
++
+recommendation;
+
+}
+
+
+/* ------------------------------
+   MARKETPLACE RENDER
+------------------------------- */
+
+function renderMarketplace(){
+
+const grid =
+document.getElementById(
+"productGrid"
+);
+
+grid.innerHTML="";
+
+marketplace.forEach(product=>{
+
+const div =
+document.createElement("div");
+
+div.className="product";
+
+div.innerHTML=`
+
+<div class="product-icon">
+${product.icon}
+</div>
+
+<div class="small">
+${product.category}
+</div>
+
+<div class="product-name">
+${product.name}
+</div>
+
+<div class="product-desc">
+${product.description}
+</div>
+
+<div class="price">
+${formatRupiah(product.price)}
+</div>
+
+<button
+class="btn btn-primary"
+onclick="addToCart('${product.id}')">
+
++ Add To Global Cart
+
+</button>
+
+`;
+
+grid.appendChild(div);
+
+});
+
+}
+
+
+/* ------------------------------
+   ADD CART
+------------------------------- */
+
+function addToCart(id){
+
+const product =
+marketplace.find(
+p=>p.id===id
+);
+
+if(!product)return;
+
+const existing =
+cart.find(
+item=>item.id===id
+);
+
+if(existing){
+
+existing.qty++;
+
+}else{
+
+cart.push({
+
+id:product.id,
+name:product.name,
+category:product.category,
+icon:product.icon,
+price:product.price,
+qty:1
+
+});
+
+}
+
+updateCart();
+
+}
+
+
+/* ------------------------------
+   UPDATE CART
+------------------------------- */
+
+function updateCart(){
+
+const container =
+document.getElementById(
+"cartItems"
+);
+
+document.getElementById(
+"cartCount"
+).innerText=cart.length;
+
+if(cart.length===0){
+
+container.innerHTML=`
+
+<div class="empty">
+Global cart is empty.
+</div>
+
+`;
+
+document.getElementById(
+"cartTotal"
+).innerText=
+formatRupiah(0);
+
+return;
+
+}
+
+let total=0;
+
+let html="";
+
+cart.forEach(
+(item,index)=>{
+
+const line =
+item.price*item.qty;
+
+total+=line;
+
+html+=`
+
+<div class="cart-item">
+
+<div class="cart-head">
+
+<div>
+
+<strong>
+${item.icon} ${item.name}
+</strong>
+
+<div class="small">
+${item.category} · Qty ${item.qty}
+</div>
+
+</div>
+
+<div class="cart-price">
+${formatRupiah(line)}
+</div>
+
+</div>
+
+<div style="margin-top:8px;">
+
+<button
+class="btn btn-secondary"
+onclick="changeCartQty(${index},-1)">
+−
+</button>
+
+<button
+class="btn btn-secondary"
+onclick="changeCartQty(${index},1)">
++
+</button>
+
+<button
+class="btn btn-danger"
+onclick="removeCart(${index})">
+Remove
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+container.innerHTML=html;
+
+document.getElementById(
+"cartTotal"
+).innerText=
+formatRupiah(total);
+
+document.getElementById(
+"sumTotal"
+).innerText=
+formatRupiah(total);
+
+}
+
+
+/* ------------------------------
+   CART QTY
+------------------------------- */
+
+function changeCartQty(index,delta){
+
+if(!cart[index])return;
+
+cart[index].qty+=delta;
+
+if(cart[index].qty<=0){
+
+cart.splice(index,1);
+
+}
+
+updateCart();
+
+}
+
+
+/* ------------------------------
+   REMOVE CART
+------------------------------- */
+
+function removeCart(index){
+
+cart.splice(index,1);
+
+updateCart();
+
+}
+
+
+/* ------------------------------
+   BUILD PACKAGE
+------------------------------- */
+
+function buildDestinationPackage(){
+
+if(!selectedCountry){
+
+alert(
+"Select a country first."
+);
+
+return;
+
+}
+
+if(!selectedCity){
+
+selectedCity =
+selectedCountry.cities[0];
+
+}
+
+const purpose =
+document.getElementById(
+"travelPurpose"
+).value;
+
+
+/*
+AI automatically selects
+core marketplace products.
+*/
+
+const autoProducts=[
+"hotel",
+"flight",
+"transport",
+"food",
+"activity",
+"attraction"
+];
+
+if(
+purpose==="Business" ||
+purpose==="Corporate Event"
+){
+
+autoProducts.push("venue");
+
+}
+
+autoProducts.forEach(id=>{
+
+const exists =
+cart.find(
+item=>item.id===id
+);
+
+if(!exists){
+
+addToCart(id);
+
+}
+
+});
+
+
+document.getElementById(
+"aiRecommendation"
+).innerHTML=`
+
+<div class="ai-box">
+
+<strong>
+🤖 HobbiGo AI Package Created
+</strong>
+
+<br><br>
+
+Destination:
+<strong>
+${selectedCity},
+${selectedCountry.name}
+</strong>
+
+<br><br>
+
+Purpose:
+<strong>${purpose}</strong>
+
+<br><br>
+
+Core marketplace products
+have been added to Global Cart.
+
+Next step:
+Booking Engine → Configure →
+Price → Lock → Payment.
+
+</div>
+
+`;
+
+goTo("globalCart");
+
+}
+
+
+/* ------------------------------
+   SEND TO BOOKING ENGINE
+------------------------------- */
+
+function sendToBookingEngine(){
+
+if(cart.length===0){
+
+alert(
+"Please add products to Global Cart first."
+);
+
+return;
+
+}
+
+alert(
+
+"V84.1 Global Market package ready.\n\n"+
+"Next production flow:\n"+
+"Global Search → Marketplace → "+
+"Booking Engine → Configure → "+
+"Lock → Payment → Confirmation"
+
+);
+
+}
+
+
+/* ------------------------------
+   FORMAT CURRENCY
+------------------------------- */
+
+function formatRupiah(value){
+
+return new Intl.NumberFormat(
+"id-ID",
+{
+style:"currency",
+currency:"IDR",
+maximumFractionDigits:0
+}
+).format(value||0);
+
+}
+
+
+/* ------------------------------
+   NAVIGATION
+------------------------------- */
+
+function goTo(id){
+
+const element =
+document.getElementById(id);
+
+if(element){
+
+element.scrollIntoView({
+
+behavior:"smooth",
+block:"start"
+
+});
+
+}
+
+}
+
+
+/* ------------------------------
+   TRAVEL PURPOSE CHANGE
+------------------------------- */
+
+document.addEventListener(
+"change",
+function(event){
+
+if(
+event.target &&
+event.target.id==="travelPurpose"
+){
+
+updateDestinationSummary();
+
+}
+
+}
+);
+
+</script>
+
+</body>
+</html>
