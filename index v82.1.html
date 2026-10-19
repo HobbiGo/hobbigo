@@ -1,1 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V82.1 - Global Country Engine</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#071a3d,#0b4ea2);
+  color:white;
+  padding:22px 5%;
+}
+
+.header-inner{
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.logo span{
+  color:#ffd84d;
+}
+
+.tagline{
+  font-size:12px;
+  opacity:.85;
+  margin-top:4px;
+}
+
+.lang{
+  background:rgba(255,255,255,.15);
+  padding:10px 15px;
+  border-radius:20px;
+}
+
+.hero{
+  background:white;
+  padding:35px 5%;
+  border-bottom:1px solid #ddd;
+}
+
+.hero-inner{
+  max-width:1250px;
+  margin:auto;
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#667085;
+  margin-bottom:25px;
+}
+
+.search-box{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.search-box input,
+.search-box select{
+  padding:15px;
+  border:1px solid #d6dce5;
+  border-radius:10px;
+  font-size:15px;
+  background:white;
+}
+
+.search-box input{
+  flex:1;
+  min-width:230px;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+  border-radius:10px;
+  padding:14px 20px;
+  font-weight:bold;
+}
+
+.btn-primary{
+  background:#0b63ce;
+  color:white;
+}
+
+.btn-primary:hover{
+  background:#084d9e;
+}
+
+.container{
+  max-width:1250px;
+  margin:30px auto;
+  padding:0 5%;
+}
+
+.engine-status{
+  background:#eaf5ff;
+  border:1px solid #b9ddff;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:25px;
+}
+
+.engine-status strong{
+  color:#075bab;
+}
+
+.country-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+
+.country-card{
+  background:white;
+  border-radius:15px;
+  padding:18px;
+  border:1px solid #e2e7ef;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
+  cursor:pointer;
+  transition:.2s;
+}
+
+.country-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 22px rgba(0,0,0,.1);
+}
+
+.flag{
+  font-size:38px;
+}
+
+.country-card h3{
+  margin:8px 0 5px;
+}
+
+.country-card small{
+  color:#667085;
+}
+
+.result{
+  margin-top:30px;
+}
+
+.result-header{
+  background:linear-gradient(135deg,#071a3d,#0b4ea2);
+  color:white;
+  padding:25px;
+  border-radius:18px 18px 0 0;
+}
+
+.result-header h2{
+  font-size:30px;
+}
+
+.result-header p{
+  opacity:.85;
+  margin-top:6px;
+}
+
+.modules{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+
+.module{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  border:1px solid #e0e5ec;
+  box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.module-icon{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.module h3{
+  margin-bottom:15px;
+}
+
+.item{
+  padding:12px 0;
+  border-bottom:1px solid #edf0f4;
+}
+
+.item:last-child{
+  border-bottom:none;
+}
+
+.item strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.price{
+  color:#087443;
+  font-weight:bold;
+}
+
+.badge{
+  display:inline-block;
+  background:#eef4ff;
+  color:#1457a6;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.btn-green{
+  background:#0a9f62;
+  color:white;
+}
+
+.btn-dark{
+  background:#172033;
+  color:white;
+}
+
+footer{
+  margin-top:50px;
+  padding:30px;
+  background:#071a3d;
+  color:white;
+  text-align:center;
+}
+
+@media(max-width:600px){
+  .hero h1{
+    font-size:27px;
+  }
+
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="logo">Hobbi<span>Go</span></div>
+      <div class="tagline">AI Journey & Experience Marketplace</div>
+    </div>
+
+    <div class="lang">
+      🌐 EN / ID
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>🌍 Global Country Search Engine</h1>
+
+    <p>
+      Search destinations, hotels, flights, culinary experiences,
+      attractions and activities from the HobbiGo global marketplace.
+    </p>
+
+    <div class="search-box">
+
+      <input
+        id="countrySearch"
+        type="text"
+        placeholder="Search country, city or destination..."
+        oninput="searchCountries()"
+      >
+
+      <select id="continentFilter" onchange="searchCountries()">
+        <option value="">All Continents</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Africa">Africa</option>
+        <option value="North America">North America</option>
+        <option value="South America">South America</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+
+      <button class="btn-primary" onclick="searchCountries()">
+        🔎 Search
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+  <div class="engine-status">
+    <strong>HobbiGo Global Engine V82.1</strong><br>
+    🌍 <span id="countryCount">195</span> countries loaded |
+    🏨 Hotel Engine |
+    ✈️ Flight Engine |
+    🍜 Culinary Engine |
+    📍 Attraction Engine |
+    🎯 Activity Engine
+  </div>
+
+  <div id="countryGrid" class="country-grid"></div>
+
+  <div id="result"></div>
+
+</div>
+
+<footer>
+  <strong>HobbiGo</strong><br>
+  AI Journey & Experience Marketplace<br><br>
+  Search → Plan → Configure → Package → Book → Experience → Re-optimize
+</footer>
+
+<script>
+
+/* =========================================================
+   HOBBIGO V82.1
+   GLOBAL COUNTRY DATABASE
+   195 COUNTRIES
+   ========================================================= */
+
+const countries = [
+
+/* ASIA */
+{name:"Afghanistan",code:"AF",flag:"🇦🇫",continent:"Asia",city:"Kabul"},
+{name:"Armenia",code:"AM",flag:"🇦🇲",continent:"Asia",city:"Yerevan"},
+{name:"Azerbaijan",code:"AZ",flag:"🇦🇿",continent:"Asia",city:"Baku"},
+{name:"Bahrain",code:"BH",flag:"🇧🇭",continent:"Asia",city:"Manama"},
+{name:"Bangladesh",code:"BD",flag:"🇧🇩",continent:"Asia",city:"Dhaka"},
+{name:"Bhutan",code:"BT",flag:"🇧🇹",continent:"Asia",city:"Thimphu"},
+{name:"Brunei",code:"BN",flag:"🇧🇳",continent:"Asia",city:"Bandar Seri Begawan"},
+{name:"Cambodia",code:"KH",flag:"🇰🇭",continent:"Asia",city:"Phnom Penh"},
+{name:"China",code:"CN",flag:"🇨🇳",continent:"Asia",city:"Beijing"},
+{name:"Cyprus",code:"CY",flag:"🇨🇾",continent:"Asia",city:"Nicosia"},
+{name:"Georgia",code:"GE",flag:"🇬🇪",continent:"Asia",city:"Tbilisi"},
+{name:"India",code:"IN",flag:"🇮🇳",continent:"Asia",city:"New Delhi"},
+{name:"Indonesia",code:"ID",flag:"🇮🇩",continent:"Asia",city:"Jakarta"},
+{name:"Iran",code:"IR",flag:"🇮🇷",continent:"Asia",city:"Tehran"},
+{name:"Iraq",code:"IQ",flag:"🇮🇶",continent:"Asia",city:"Baghdad"},
+{name:"Israel",code:"IL",flag:"🇮🇱",continent:"Asia",city:"Jerusalem"},
+{name:"Japan",code:"JP",flag:"🇯🇵",continent:"Asia",city:"Tokyo"},
+{name:"Jordan",code:"JO",flag:"🇯🇴",continent:"Asia",city:"Amman"},
+{name:"Kazakhstan",code:"KZ",flag:"🇰🇿",continent:"Asia",city:"Astana"},
+{name:"Kuwait",code:"KW",flag:"🇰🇼",continent:"Asia",city:"Kuwait City"},
+{name:"Kyrgyzstan",code:"KG",flag:"🇰🇬",continent:"Asia",city:"Bishkek"},
+{name:"Laos",code:"LA",flag:"🇱🇦",continent:"Asia",city:"Vientiane"},
+{name:"Lebanon",code:"LB",flag:"🇱🇧",continent:"Asia",city:"Beirut"},
+{name:"Malaysia",code:"MY",flag:"🇲🇾",continent:"Asia",city:"Kuala Lumpur"},
+{name:"Maldives",code:"MV",flag:"🇲🇻",continent:"Asia",city:"Male"},
+{name:"Mongolia",code:"MN",flag:"🇲🇳",continent:"Asia",city:"Ulaanbaatar"},
+{name:"Myanmar",code:"MM",flag:"🇲🇲",continent:"Asia",city:"Naypyidaw"},
+{name:"Nepal",code:"NP",flag:"🇳🇵",continent:"Asia",city:"Kathmandu"},
+{name:"North Korea",code:"KP",flag:"🇰🇵",continent:"Asia",city:"Pyongyang"},
+{name:"Oman",code:"OM",flag:"🇴🇲",continent:"Asia",city:"Muscat"},
+{name:"Pakistan",code:"PK",flag:"🇵🇰",continent:"Asia",city:"Islamabad"},
+{name:"Palestine",code:"PS",flag:"🇵🇸",continent:"Asia",city:"Ramallah"},
+{name:"Philippines",code:"PH",flag:"🇵🇭",continent:"Asia",city:"Manila"},
+{name:"Qatar",code:"QA",flag:"🇶🇦",continent:"Asia",city:"Doha"},
+{name:"Saudi Arabia",code:"SA",flag:"🇸🇦",continent:"Asia",city:"Riyadh"},
+{name:"Singapore",code:"SG",flag:"🇸🇬",continent:"Asia",city:"Singapore"},
+{name:"South Korea",code:"KR",flag:"🇰🇷",continent:"Asia",city:"Seoul"},
+{name:"Sri Lanka",code:"LK",flag:"🇱🇰",continent:"Asia",city:"Colombo"},
+{name:"Syria",code:"SY",flag:"🇸🇾",continent:"Asia",city:"Damascus"},
+{name:"Tajikistan",code:"TJ",flag:"🇹🇯",continent:"Asia",city:"Dushanbe"},
+{name:"Thailand",code:"TH",flag:"🇹🇭",continent:"Asia",city:"Bangkok"},
+{name:"Timor-Leste",code:"TL",flag:"🇹🇱",continent:"Asia",city:"Dili"},
+{name:"Turkey",code:"TR",flag:"🇹🇷",continent:"Asia",city:"Ankara"},
+{name:"Turkmenistan",code:"TM",flag:"🇹🇲",continent:"Asia",city:"Ashgabat"},
+{name:"United Arab Emirates",code:"AE",flag:"🇦🇪",continent:"Asia",city:"Abu Dhabi"},
+{name:"Uzbekistan",code:"UZ",flag:"🇺🇿",continent:"Asia",city:"Tashkent"},
+{name:"Vietnam",code:"VN",flag:"🇻🇳",continent:"Asia",city:"Hanoi"},
+{name:"Yemen",code:"YE",flag:"🇾🇪",continent:"Asia",city:"Sanaa"},
+
+/* EUROPE */
+{name:"Albania",code:"AL",flag:"🇦🇱",continent:"Europe",city:"Tirana"},
+{name:"Andorra",code:"AD",flag:"🇦🇩",continent:"Europe",city:"Andorra la Vella"},
+{name:"Austria",code:"AT",flag:"🇦🇹",continent:"Europe",city:"Vienna"},
+{name:"Belarus",code:"BY",flag:"🇧🇾",continent:"Europe",city:"Minsk"},
+{name:"Belgium",code:"BE",flag:"🇧🇪",continent:"Europe",city:"Brussels"},
+{name:"Bosnia and Herzegovina",code:"BA",flag:"🇧🇦",continent:"Europe",city:"Sarajevo"},
+{name:"Bulgaria",code:"BG",flag:"🇧🇬",continent:"Europe",city:"Sofia"},
+{name:"Croatia",code:"HR",flag:"🇭🇷",continent:"Europe",city:"Zagreb"},
+{name:"Czech Republic",code:"CZ",flag:"🇨🇿",continent:"Europe",city:"Prague"},
+{name:"Denmark",code:"DK",flag:"🇩🇰",continent:"Europe",city:"Copenhagen"},
+{name:"Estonia",code:"EE",flag:"🇪🇪",continent:"Europe",city:"Tallinn"},
+{name:"Finland",code:"FI",flag:"🇫🇮",continent:"Europe",city:"Helsinki"},
+{name:"France",code:"FR",flag:"🇫🇷",continent:"Europe",city:"Paris"},
+{name:"Germany",code:"DE",flag:"🇩🇪",continent:"Europe",city:"Berlin"},
+{name:"Greece",code:"GR",flag:"🇬🇷",continent:"Europe",city:"Athens"},
+{name:"Hungary",code:"HU",flag:"🇭🇺",continent:"Europe",city:"Budapest"},
+{name:"Iceland",code:"IS",flag:"🇮🇸",continent:"Europe",city:"Reykjavik"},
+{name:"Ireland",code:"IE",flag:"🇮🇪",continent:"Europe",city:"Dublin"},
+{name:"Italy",code:"IT",flag:"🇮🇹",continent:"Europe",city:"Rome"},
+{name:"Latvia",code:"LV",flag:"🇱🇻",continent:"Europe",city:"Riga"},
+{name:"Liechtenstein",code:"LI",flag:"🇱🇮",continent:"Europe",city:"Vaduz"},
+{name:"Lithuania",code:"LT",flag:"🇱🇹",continent:"Europe",city:"Vilnius"},
+{name:"Luxembourg",code:"LU",flag:"🇱🇺",continent:"Europe",city:"Luxembourg"},
+{name:"Malta",code:"MT",flag:"🇲🇹",continent:"Europe",city:"Valletta"},
+{name:"Moldova",code:"MD",flag:"🇲🇩",continent:"Europe",city:"Chisinau"},
+{name:"Monaco",code:"MC",flag:"🇲🇨",continent:"Europe",city:"Monaco"},
+{name:"Montenegro",code:"ME",flag:"🇲🇪",continent:"Europe",city:"Podgorica"},
+{name:"Netherlands",code:"NL",flag:"🇳🇱",continent:"Europe",city:"Amsterdam"},
+{name:"North Macedonia",code:"MK",flag:"🇲🇰",continent:"Europe",city:"Skopje"},
+{name:"Norway",code:"NO",flag:"🇳🇴",continent:"Europe",city:"Oslo"},
+{name:"Poland",code:"PL",flag:"🇵🇱",continent:"Europe",city:"Warsaw"},
+{name:"Portugal",code:"PT",flag:"🇵🇹",continent:"Europe",city:"Lisbon"},
+{name:"Romania",code:"RO",flag:"🇷🇴",continent:"Europe",city:"Bucharest"},
+{name:"Russia",code:"RU",flag:"🇷🇺",continent:"Europe",city:"Moscow"},
+{name:"San Marino",code:"SM",flag:"🇸🇲",continent:"Europe",city:"San Marino"},
+{name:"Serbia",code:"RS",flag:"🇷🇸",continent:"Europe",city:"Belgrade"},
+{name:"Slovakia",code:"SK",flag:"🇸🇰",continent:"Europe",city:"Bratislava"},
+{name:"Slovenia",code:"SI",flag:"🇸🇮",continent:"Europe",city:"Ljubljana"},
+{name:"Spain",code:"ES",flag:"🇪🇸",continent:"Europe",city:"Madrid"},
+{name:"Sweden",code:"SE",flag:"🇸🇪",continent:"Europe",city:"Stockholm"},
+{name:"Switzerland",code:"CH",flag:"🇨🇭",continent:"Europe",city:"Bern"},
+{name:"Ukraine",code:"UA",flag:"🇺🇦",continent:"Europe",city:"Kyiv"},
+{name:"United Kingdom",code:"GB",flag:"🇬🇧",continent:"Europe",city:"London"},
+{name:"Vatican City",code:"VA",flag:"🇻🇦",continent:"Europe",city:"Vatican City"},
+
+/* AFRICA */
+{name:"Algeria",code:"DZ",flag:"🇩🇿",continent:"Africa",city:"Algiers"},
+{name:"Angola",code:"AO",flag:"🇦🇴",continent:"Africa",city:"Luanda"},
+{name:"Benin",code:"BJ",flag:"🇧🇯",continent:"Africa",city:"Porto-Novo"},
+{name:"Botswana",code:"BW",flag:"🇧🇼",continent:"Africa",city:"Gaborone"},
+{name:"Burkina Faso",code:"BF",flag:"🇧🇫",continent:"Africa",city:"Ouagadougou"},
+{name:"Burundi",code:"BI",flag:"🇧🇮",continent:"Africa",city:"Gitega"},
+{name:"Cabo Verde",code:"CV",flag:"🇨🇻",continent:"Africa",city:"Praia"},
+{name:"Cameroon",code:"CM",flag:"🇨🇲",continent:"Africa",city:"Yaounde"},
+{name:"Central African Republic",code:"CF",flag:"🇨🇫",continent:"Africa",city:"Bangui"},
+{name:"Chad",code:"TD",flag:"🇹🇩",continent:"Africa",city:"N'Djamena"},
+{name:"Comoros",code:"KM",flag:"🇰🇲",continent:"Africa",city:"Moroni"},
+{name:"Republic of the Congo",code:"CG",flag:"🇨🇬",continent:"Africa",city:"Brazzaville"},
+{name:"Democratic Republic of the Congo",code:"CD",flag:"🇨🇩",continent:"Africa",city:"Kinshasa"},
+{name:"Djibouti",code:"DJ",flag:"🇩🇯",continent:"Africa",city:"Djibouti"},
+{name:"Egypt",code:"EG",flag:"🇪🇬",continent:"Africa",city:"Cairo"},
+{name:"Equatorial Guinea",code:"GQ",flag:"🇬🇶",continent:"Africa",city:"Malabo"},
+{name:"Eritrea",code:"ER",flag:"🇪🇷",continent:"Africa",city:"Asmara"},
+{name:"Eswatini",code:"SZ",flag:"🇸🇿",continent:"Africa",city:"Mbabane"},
+{name:"Ethiopia",code:"ET",flag:"🇪🇹",continent:"Africa",city:"Addis Ababa"},
+{name:"Gabon",code:"GA",flag:"🇬🇦",continent:"Africa",city:"Libreville"},
+{name:"Gambia",code:"GM",flag:"🇬🇲",continent:"Africa",city:"Banjul"},
+{name:"Ghana",code:"GH",flag:"🇬🇭",continent:"Africa",city:"Accra"},
+{name:"Guinea",code:"GN",flag:"🇬🇳",continent:"Africa",city:"Conakry"},
+{name:"Guinea-Bissau",code:"GW",flag:"🇬🇼",continent:"Africa",city:"Bissau"},
+{name:"Ivory Coast",code:"CI",flag:"🇨🇮",continent:"Africa",city:"Yamoussoukro"},
+{name:"Kenya",code:"KE",flag:"🇰🇪",continent:"Africa",city:"Nairobi"},
+{name:"Lesotho",code:"LS",flag:"🇱🇸",continent:"Africa",city:"Maseru"},
+{name:"Liberia",code:"LR",flag:"🇱🇷",continent:"Africa",city:"Monrovia"},
+{name:"Libya",code:"LY",flag:"🇱🇾",continent:"Africa",city:"Tripoli"},
+{name:"Madagascar",code:"MG",flag:"🇲🇬",continent:"Africa",city:"Antananarivo"},
+{name:"Malawi",code:"MW",flag:"🇲🇼",continent:"Africa",city:"Lilongwe"},
+{name:"Mali",code:"ML",flag:"🇲🇱",continent:"Africa",city:"Bamako"},
+{name:"Mauritania",code:"MR",flag:"🇲🇷",continent:"Africa",city:"Nouakchott"},
+{name:"Mauritius",code:"MU",flag:"🇲🇺",continent:"Africa",city:"Port Louis"},
+{name:"Morocco",code:"MA",flag:"🇲🇦",continent:"Africa",city:"Rabat"},
+{name:"Mozambique",code:"MZ",flag:"🇲🇿",continent:"Africa",city:"Maputo"},
+{name:"Namibia",code:"NA",flag:"🇳🇦",continent:"Africa",city:"Windhoek"},
+{name:"Niger",code:"NE",flag:"🇳🇪",continent:"Africa",city:"Niamey"},
+{name:"Nigeria",code:"NG",flag:"🇳🇬",continent:"Africa",city:"Abuja"},
+{name:"Rwanda",code:"RW",flag:"🇷🇼",continent:"Africa",city:"Kigali"},
+{name:"Sao Tome and Principe",code:"ST",flag:"🇸🇹",continent:"Africa",city:"Sao Tome"},
+{name:"Senegal",code:"SN",flag:"🇸🇳",continent:"Africa",city:"Dakar"},
+{name:"Seychelles",code:"SC",flag:"🇸🇨",continent:"Africa",city:"Victoria"},
+{name:"Sierra Leone",code:"SL",flag:"🇸🇱",continent:"Africa",city:"Freetown"},
+{name:"Somalia",code:"SO",flag:"🇸🇴",continent:"Africa",city:"Mogadishu"},
+{name:"South Africa",code:"ZA",flag:"🇿🇦",continent:"Africa",city:"Pretoria"},
+{name:"South Sudan",code:"SS",flag:"🇸🇸",continent:"Africa",city:"Juba"},
+{name:"Sudan",code:"SD",flag:"🇸🇩",continent:"Africa",city:"Khartoum"},
+{name:"Tanzania",code:"TZ",flag:"🇹🇿",continent:"Africa",city:"Dodoma"},
+{name:"Togo",code:"TG",flag:"🇹🇬",continent:"Africa",city:"Lome"},
+{name:"Tunisia",code:"TN",flag:"🇹🇳",continent:"Africa",city:"Tunis"},
+{name:"Uganda",code:"UG",flag:"🇺🇬",continent:"Africa",city:"Kampala"},
+{name:"Zambia",code:"ZM",flag:"🇿🇲",continent:"Africa",city:"Lusaka"},
+{name:"Zimbabwe",code:"ZW",flag:"🇿🇼",continent:"Africa",city:"Harare"},
+
+/* NORTH AMERICA */
+{name:"Antigua and Barbuda",code:"AG",flag:"🇦🇬",continent:"North America",city:"Saint John's"},
+{name:"Bahamas",code:"BS",flag:"🇧🇸",continent:"North America",city:"Nassau"},
+{name:"Barbados",code:"BB",flag:"🇧🇧",continent:"North America",city:"Bridgetown"},
+{name:"Belize",code:"BZ",flag:"🇧🇿",continent:"North America",city:"Belmopan"},
+{name:"Canada",code:"CA",flag:"🇨🇦",continent:"North America",city:"Ottawa"},
+{name:"Costa Rica",code:"CR",flag:"🇨🇷",continent:"North America",city:"San Jose"},
+{name:"Cuba",code:"CU",flag:"🇨🇺",continent:"North America",city:"Havana"},
+{name:"Dominica",code:"DM",flag:"🇩🇲",continent:"North America",city:"Roseau"},
+{name:"Dominican Republic",code:"DO",flag:"🇩🇴",continent:"North America",city:"Santo Domingo"},
+{name:"El Salvador",code:"SV",flag:"🇸🇻",continent:"North America",city:"San Salvador"},
+{name:"Grenada",code:"GD",flag:"🇬🇩",continent:"North America",city:"Saint George's"},
+{name:"Guatemala",code:"GT",flag:"🇬🇹",continent:"North America",city:"Guatemala City"},
+{name:"Haiti",code:"HT",flag:"🇭🇹",continent:"North America",city:"Port-au-Prince"},
+{name:"Honduras",code:"HN",flag:"🇭🇳",continent:"North America",city:"Tegucigalpa"},
+{name:"Jamaica",code:"JM",flag:"🇯🇲",continent:"North America",city:"Kingston"},
+{name:"Mexico",code:"MX",flag:"🇲🇽",continent:"North America",city:"Mexico City"},
+{name:"Nicaragua",code:"NI",flag:"🇳🇮",continent:"North America",city:"Managua"},
+{name:"Panama",code:"PA",flag:"🇵🇦",continent:"North America",city:"Panama City"},
+{name:"Saint Kitts and Nevis",code:"KN",flag:"🇰🇳",continent:"North America",city:"Basseterre"},
+{name:"Saint Lucia",code:"LC",flag:"🇱🇨",continent:"North America",city:"Castries"},
+{name:"Saint Vincent and the Grenadines",code:"VC",flag:"🇻🇨",continent:"North America",city:"Kingstown"},
+{name:"Trinidad and Tobago",code:"TT",flag:"🇹🇹",continent:"North America",city:"Port of Spain"},
+{name:"United States",code:"US",flag:"🇺🇸",continent:"North America",city:"Washington, D.C."},
+
+/* SOUTH AMERICA */
+{name:"Argentina",code:"AR",flag:"🇦🇷",continent:"South America",city:"Buenos Aires"},
+{name:"Bolivia",code:"BO",flag:"🇧🇴",continent:"South America",city:"Sucre"},
+{name:"Brazil",code:"BR",flag:"🇧🇷",continent:"South America",city:"Brasilia"},
+{name:"Chile",code:"CL",flag:"🇨🇱",continent:"South America",city:"Santiago"},
+{name:"Colombia",code:"CO",flag:"🇨🇴",continent:"South America",city:"Bogota"},
+{name:"Ecuador",code:"EC",flag:"🇪🇨",continent:"South America",city:"Quito"},
+{name:"Guyana",code:"GY",flag:"🇬🇾",continent:"South America",city:"Georgetown"},
+{name:"Paraguay",code:"PY",flag:"🇵🇾",continent:"South America",city:"Asuncion"},
+{name:"Peru",code:"PE",flag:"🇵🇪",continent:"South America",city:"Lima"},
+{name:"Suriname",code:"SR",flag:"🇸🇷",continent:"South America",city:"Paramaribo"},
+{name:"Uruguay",code:"UY",flag:"🇺🇾",continent:"South America",city:"Montevideo"},
+{name:"Venezuela",code:"VE",flag:"🇻🇪",continent:"South America",city:"Caracas"},
+
+/* OCEANIA */
+{name:"Australia",code:"AU",flag:"🇦🇺",continent:"Oceania",city:"Canberra"},
+{name:"Fiji",code:"FJ",flag:"🇫🇯",continent:"Oceania",city:"Suva"},
+{name:"Kiribati",code:"KI",flag:"🇰🇮",continent:"Oceania",city:"South Tarawa"},
+{name:"Marshall Islands",code:"MH",flag:"🇲🇭",continent:"Oceania",city:"Majuro"},
+{name:"Micronesia",code:"FM",flag:"🇫🇲",continent:"Oceania",city:"Palikir"},
+{name:"Nauru",code:"NR",flag:"🇳🇷",continent:"Oceania",city:"Yaren"},
+{name:"New Zealand",code:"NZ",flag:"🇳🇿",continent:"Oceania",city:"Wellington"},
+{name:"Palau",code:"PW",flag:"🇵🇼",continent:"Oceania",city:"Ngerulmud"},
+{name:"Papua New Guinea",code:"PG",flag:"🇵🇬",continent:"Oceania",city:"Port Moresby"},
+{name:"Samoa",code:"WS",flag:"🇼🇸",continent:"Oceania",city:"Apia"},
+{name:"Solomon Islands",code:"SB",flag:"🇸🇧",continent:"Oceania",city:"Honiara"},
+{name:"Tonga",code:"TO",flag:"🇹🇴",continent:"Oceania",city:"Nuku'alofa"},
+{name:"Tuvalu",code:"TV",flag:"🇹🇻",continent:"Oceania",city:"Funafuti"},
+{name:"Vanuatu",code:"VU",flag:"🇻🇺",continent:"Oceania",city:"Port Vila"}
+
+];
+
+/* =========================================================
+   DEMO DATA ENGINE
+   ========================================================= */
+
+function generateHotel(country){
+  const hotels = [
+    "HobbiGo Grand Hotel",
+    "HobbiGo City Resort",
+    "HobbiGo Premium Stay"
+  ];
+
+  return hotels.map((hotel,i)=>({
+    name:hotel,
+    city:country.city,
+    rating:(4.4 + i*.2).toFixed(1),
+    price:(70 + i*55)
+  }));
+}
+
+function generateFlights(country){
+  return [
+    {
+      route:"CGK → "+country.city,
+      airline:"Global Partner Airlines",
+      type:"Economy",
+      price:350 + Math.floor(Math.random()*250)
+    },
+    {
+      route:"CGK → "+country.city,
+      airline:"HobbiGo Flight Partner",
+      type:"Business",
+      price:850 + Math.floor(Math.random()*500)
+    }
+  ];
+}
+
+function generateFood(country){
+
+  const foodByCountry={
+    Indonesia:["Nasi Goreng","Rendang","Satay"],
+    Japan:["Sushi","Ramen","Tempura"],
+    Thailand:["Pad Thai","Tom Yum","Green Curry"],
+    Italy:["Pizza","Pasta","Risotto"],
+    France:["Croissant","Ratatouille","Crêpes"],
+    China:["Dim Sum","Peking Duck","Hot Pot"],
+    India:["Biryani","Butter Chicken","Masala Dosa"],
+    Singapore:["Hainanese Chicken Rice","Laksa","Chilli Crab"],
+    Malaysia:["Nasi Lemak","Char Kway Teow","Laksa"],
+    Australia:["Meat Pie","Fish & Chips","Pavlova"],
+    "United States":["Burger","BBQ","Apple Pie"],
+    Spain:["Paella","Tapas","Churros"],
+    Switzerland:["Fondue","Rösti","Raclette"],
+    Turkey:["Kebab","Baklava","Meze"]
+  };
+
+  const foods=foodByCountry[country.name] ||
+    ["Local Signature Food","Traditional Cuisine","Street Food Experience"];
+
+  return foods;
+}
+
+function generateAttractions(country){
+
+  const attractionByCountry={
+    Indonesia:["Bali","Borobudur","Komodo National Park"],
+    Japan:["Tokyo","Mount Fuji","Kyoto"],
+    France:["Eiffel Tower","Louvre Museum","French Riviera"],
+    Italy:["Colosseum","Venice","Amalfi Coast"],
+    Australia:["Sydney Opera House","Great Barrier Reef","Melbourne"],
+    Singapore:["Marina Bay Sands","Sentosa","Gardens by the Bay"],
+    Thailand:["Bangkok","Phuket","Chiang Mai"],
+    "United States":["New York","Grand Canyon","Los Angeles"],
+    Switzerland:["Swiss Alps","Lucerne","Interlaken"]
+  };
+
+  return attractionByCountry[country.name] ||
+    [
+      country.city+" City Tour",
+      "Local Cultural Heritage",
+      "Nature & Scenic Experience"
+    ];
+}
+
+/* =========================================================
+   COUNTRY DISPLAY
+   ========================================================= */
+
+function displayCountries(list){
+
+  const grid=document.getElementById("countryGrid");
+
+  document.getElementById("countryCount").innerText=list.length;
+
+  if(list.length===0){
+    grid.innerHTML=
+      "<div style='grid-column:1/-1;padding:30px;background:white;border-radius:15px;text-align:center'>"+
+      "No country found.</div>";
+    return;
+  }
+
+  grid.innerHTML=list.map((country,index)=>`
+
+    <div class="country-card"
+         onclick="openCountry('${country.code}')">
+
+      <div class="flag">${country.flag}</div>
+
+      <h3>${country.name}</h3>
+
+      <small>
+        ${country.city} · ${country.continent}
+      </small>
+
+      <br>
+
+      <span class="badge">
+        ${country.code}
+      </span>
+
+    </div>
+
+  `).join("");
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function searchCountries(){
+
+  const keyword=
+    document.getElementById("countrySearch")
+    .value.toLowerCase();
+
+  const continent=
+    document.getElementById("continentFilter").value;
+
+  const filtered=countries.filter(country=>{
+
+    const text=(
+      country.name+" "+
+      country.city+" "+
+      country.code+" "+
+      country.continent
+    ).toLowerCase();
+
+    const matchKeyword=
+      text.includes(keyword);
+
+    const matchContinent=
+      !continent ||
+      country.continent===continent;
+
+    return matchKeyword && matchContinent;
+
+  });
+
+  displayCountries(filtered);
+}
+
+/* =========================================================
+   COUNTRY DETAIL ENGINE
+   ========================================================= */
+
+function openCountry(code){
+
+  const country=
+    countries.find(c=>c.code===code);
+
+  if(!country)return;
+
+  const hotels=
+    generateHotel(country);
+
+  const flights=
+    generateFlights(country);
+
+  const foods=
+    generateFood(country);
+
+  const attractions=
+    generateAttractions(country);
+
+  const result=
+    document.getElementById("result");
+
+  result.innerHTML=`
+
+    <div class="result">
+
+      <div class="result-header">
+
+        <h2>
+          ${country.flag}
+          ${country.name}
+        </h2>
+
+        <p>
+          ${country.city} ·
+          ${country.continent} ·
+          Country Code: ${country.code}
+        </p>
+
+      </div>
+
+      <div class="modules">
+
+        <!-- HOTEL -->
+
+        <div class="module">
+
+          <div class="module-icon">🏨</div>
+
+          <h3>Hotel Engine</h3>
+
+          ${hotels.map(h=>`
+
+            <div class="item">
+
+              <strong>${h.name}</strong>
+
+              ⭐ ${h.rating}/5<br>
+
+              ${h.city}<br>
+
+              <span class="price">
+                From $${h.price}/night
+              </span>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+
+        <!-- FLIGHT -->
+
+        <div class="module">
+
+          <div class="module-icon">✈️</div>
+
+          <h3>Flight Engine</h3>
+
+          ${flights.map(f=>`
+
+            <div class="item">
+
+              <strong>${f.route}</strong>
+
+              ${f.airline}<br>
+
+              ${f.type}<br>
+
+              <span class="price">
+                From $${f.price}
+              </span>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+
+        <!-- FOOD -->
+
+        <div class="module">
+
+          <div class="module-icon">🍜</div>
+
+          <h3>Culinary Engine</h3>
+
+          ${foods.map(food=>`
+
+            <div class="item">
+
+              <strong>${food}</strong>
+
+              Local culinary experience
+
+              <br>
+
+              <span class="badge">
+                Culinary Partner
+              </span>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+
+        <!-- ATTRACTION -->
+
+        <div class="module">
+
+          <div class="module-icon">📍</div>
+
+          <h3>Attraction Engine</h3>
+
+          ${attractions.map(a=>`
+
+            <div class="item">
+
+              <strong>${a}</strong>
+
+              Tourism destination
+
+              <br>
+
+              <span class="badge">
+                Explore
+              </span>
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+
+        <!-- ACTIVITY -->
+
+        <div class="module">
+
+          <div class="module-icon">🎯</div>
+
+          <h3>Activity Engine</h3>
+
+          <div class="item">
+            <strong>City Experience</strong>
+            Guided local experience
+          </div>
+
+          <div class="item">
+            <strong>Adventure</strong>
+            Outdoor activity
+          </div>
+
+          <div class="item">
+            <strong>Culture & Hobby</strong>
+            Local cultural activity
+          </div>
+
+        </div>
+
+
+        <!-- TRANSPORT -->
+
+        <div class="module">
+
+          <div class="module-icon">🚗</div>
+
+          <h3>Transport Engine</h3>
+
+          <div class="item">
+            <strong>Car Rental</strong>
+            Economy / Comfort / Premium
+          </div>
+
+          <div class="item">
+            <strong>Private Driver</strong>
+            Airport → Hotel → Activity
+          </div>
+
+          <div class="item">
+            <strong>Local Transport</strong>
+            Bus / Train / Taxi / Transfer
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn-primary"
+          onclick="createTrip('${country.code}')">
+
+          🧠 AI Create Trip
+
+        </button>
+
+        <button
+          class="btn-green"
+          onclick="addDestination('${country.code}')">
+
+          🛒 Add Destination
+
+        </button>
+
+        <button
+          class="btn-dark"
+          onclick="window.scrollTo({top:0,behavior:'smooth'})">
+
+          🔎 Search Another Country
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  result.scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+/* =========================================================
+   AI TRIP DEMO
+   ========================================================= */
+
+function createTrip(code){
+
+  const country=
+    countries.find(c=>c.code===code);
+
+  alert(
+    "HobbiGo AI Trip Planner\\n\\n"+
+    "Destination: "+country.name+"\\n"+
+    "Route: Airport → Hotel → Culinary → Attraction → Activity\\n"+
+    "Status: AI itinerary engine ready."
+  );
+
+}
+
+/* =========================================================
+   CART / MARKETPLACE DEMO
+   ========================================================= */
+
+function addDestination(code){
+
+  const country=
+    countries.find(c=>c.code===code);
+
+  localStorage.setItem(
+    "HobbiGoSelectedCountry",
+    JSON.stringify(country)
+  );
+
+  alert(
+    country.name+
+    " has been added to your HobbiGo trip."
+  );
+
+}
+
+/* =========================================================
+   START ENGINE
+   ========================================================= */
+
+displayCountries(countries);
+
+console.log(
+  "HobbiGo V82.1 Global Engine loaded:",
+  countries.length,
+  "countries"
+);
+
+</script>
+
+</body>
+</html>
