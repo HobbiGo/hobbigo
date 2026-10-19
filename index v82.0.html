@@ -1,1 +1,1643 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HobbiGo V82.0 - Global Data Engine</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#07152f,#0d2c5c,#1267b1);
+    color:white;
+    padding:22px 5%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.nav{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#59d8ff;
+}
+
+.version{
+    font-size:12px;
+    background:rgba(255,255,255,.15);
+    padding:7px 12px;
+    border-radius:20px;
+}
+
+.hero{
+    background:
+    linear-gradient(rgba(4,20,45,.78),rgba(4,20,45,.78)),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80");
+    background-size:cover;
+    background-position:center;
+    min-height:420px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    padding:60px 20px;
+}
+
+.hero-content{
+    max-width:950px;
+}
+
+.hero h1{
+    font-size:52px;
+    margin-bottom:18px;
+}
+
+.hero h1 span{
+    color:#62dcff;
+}
+
+.hero p{
+    font-size:19px;
+    line-height:1.6;
+    opacity:.95;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:35px 5%;
+}
+
+.section-title{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.section-subtitle{
+    color:#657085;
+    margin-bottom:25px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-top:-55px;
+    position:relative;
+    z-index:10;
+}
+
+.stat-card{
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.10);
+    text-align:center;
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:900;
+    color:#0868b9;
+}
+
+.stat-label{
+    color:#687387;
+    margin-top:8px;
+}
+
+.engine{
+    background:white;
+    border-radius:22px;
+    padding:30px;
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+    margin-top:30px;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+label{
+    font-size:13px;
+    font-weight:bold;
+    display:block;
+    margin-bottom:7px;
+}
+
+select,input{
+    width:100%;
+    padding:13px;
+    border:1px solid #d7deea;
+    border-radius:10px;
+    font-size:14px;
+    background:white;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    padding:13px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    background:#0878d1;
+    color:white;
+}
+
+.btn-dark{
+    background:#172033;
+    color:white;
+}
+
+.btn-light{
+    background:#edf5fc;
+    color:#1267a7;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.destination-card{
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    overflow:hidden;
+    background:white;
+    transition:.25s;
+}
+
+.destination-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(0,0,0,.10);
+}
+
+.destination-image{
+    height:160px;
+    background-size:cover;
+    background-position:center;
+}
+
+.destination-body{
+    padding:18px;
+}
+
+.destination-body h3{
+    margin-bottom:8px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#eaf6ff;
+    color:#0868b9;
+    font-size:11px;
+    font-weight:bold;
+    margin:3px;
+}
+
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+.data-table th,
+.data-table td{
+    padding:14px;
+    border-bottom:1px solid #e6ebf2;
+    text-align:left;
+    font-size:14px;
+}
+
+.data-table th{
+    background:#f6f9fc;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+}
+
+.category{
+    background:#f7faff;
+    border:1px solid #e1e9f3;
+    padding:20px 10px;
+    border-radius:15px;
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.category-icon{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.pipeline{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:25px;
+}
+
+.pipe{
+    background:#edf6ff;
+    border:1px solid #cfe6fa;
+    padding:13px 18px;
+    border-radius:30px;
+    color:#0868b9;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#8b98a9;
+    font-weight:bold;
+}
+
+.status{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    background:#eefaf2;
+    color:#23713c;
+    border:1px solid #ccebd5;
+}
+
+.json-box{
+    background:#111827;
+    color:#d7e6f5;
+    padding:20px;
+    border-radius:15px;
+    overflow:auto;
+    font-family:monospace;
+    font-size:13px;
+    line-height:1.6;
+    min-height:180px;
+}
+
+footer{
+    margin-top:50px;
+    background:#07152f;
+    color:white;
+    padding:40px 5%;
+    text-align:center;
+}
+
+footer strong{
+    color:#59d8ff;
+}
+
+@media(max-width:1000px){
+    .stats,
+    .controls{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .result-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .category-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+}
+
+@media(max-width:650px){
+    .stats,
+    .controls,
+    .result-grid{
+        grid-template-columns:1fr;
+    }
+
+    .category-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .data-table{
+        display:block;
+        overflow-x:auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo">HOBBI<span>GO</span></div>
+        <div class="version">GLOBAL DATA ENGINE • V82.0</div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>One Global Engine for <span>Every Journey</span></h1>
+        <p>
+            HobbiGo V82.0 connects countries, cities, destinations,
+            airports and travel products into one structured global
+            tourism data engine.
+        </p>
+    </div>
+</section>
+
+<div class="container">
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <div class="stat-number">195</div>
+            <div class="stat-label">Target Countries</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">1,000+</div>
+            <div class="stat-label">Target Cities</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Marketplace Categories</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">API</div>
+            <div class="stat-label">Ready Architecture</div>
+        </div>
+
+    </div>
+
+    <!-- GLOBAL DATA ENGINE -->
+
+    <section class="engine">
+
+        <h2 class="section-title">🌍 Global Data Engine</h2>
+
+        <p class="section-subtitle">
+            Country → City → Destination → Airport → Product
+        </p>
+
+        <div class="controls">
+
+            <div>
+                <label>Country</label>
+                <select id="countrySelect" onchange="loadCities()">
+                </select>
+            </div>
+
+            <div>
+                <label>City</label>
+                <select id="citySelect" onchange="loadDestinations()">
+                </select>
+            </div>
+
+            <div>
+                <label>Destination</label>
+                <select id="destinationSelect" onchange="showDestination()">
+                </select>
+            </div>
+
+            <div>
+                <label>Search</label>
+                <input
+                    id="searchInput"
+                    placeholder="Search hotel, restaurant, activity..."
+                    oninput="searchProducts()"
+                >
+            </div>
+
+        </div>
+
+        <div id="destinationResults" class="result-grid"></div>
+
+        <div class="status">
+            <strong>ENGINE STATUS:</strong>
+            Global master structure is active.
+            Demo data can later be replaced or supplemented by database/API data.
+        </div>
+
+    </section>
+
+    <!-- DATA PIPELINE -->
+
+    <section class="engine">
+
+        <h2 class="section-title">🔗 HobbiGo Global Data Pipeline</h2>
+
+        <p class="section-subtitle">
+            Struktur data yang akan menjadi fondasi API dan database HobbiGo.
+        </p>
+
+        <div class="pipeline">
+
+            <div class="pipe">🌎 Country</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">🏙️ City</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">📍 Destination</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">✈️ Airport</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">🏨 Hotel</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">🎯 Experience</div>
+            <div class="arrow">→</div>
+
+            <div class="pipe">💳 Booking</div>
+
+        </div>
+
+    </section>
+
+    <!-- CATEGORIES -->
+
+    <section class="engine">
+
+        <h2 class="section-title">🧩 Global Marketplace Categories</h2>
+
+        <p class="section-subtitle">
+            Semua kategori menggunakan struktur data yang sama sehingga
+            nantinya partner/API dapat diintegrasikan.
+        </p>
+
+        <div class="category-grid">
+
+            <div class="category">
+                <div class="category-icon">🏨</div>
+                Hotel
+            </div>
+
+            <div class="category">
+                <div class="category-icon">✈️</div>
+                Flight
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🏡</div>
+                Villa
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🍽️</div>
+                Restaurant
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🚗</div>
+                Transport
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🏝️</div>
+                Attraction
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🎯</div>
+                Activity
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🛥️</div>
+                Boat
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🧭</div>
+                Tour
+            </div>
+
+            <div class="category">
+                <div class="category-icon">🏢</div>
+                Event
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- DESTINATION DATA -->
+
+    <section class="engine">
+
+        <h2 class="section-title">📊 Destination Master Data</h2>
+
+        <p class="section-subtitle">
+            Contoh struktur master data global.
+        </p>
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>City</th>
+                    <th>Destination</th>
+                    <th>Airport</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+
+            <tbody id="masterTable"></tbody>
+
+        </table>
+
+    </section>
+
+    <!-- API READY STRUCTURE -->
+
+    <section class="engine">
+
+        <h2 class="section-title">⚙️ API Ready Data Structure</h2>
+
+        <p class="section-subtitle">
+            Format data yang nantinya dapat dihubungkan dengan database
+            atau supplier API.
+        </p>
+
+        <div id="jsonPreview" class="json-box"></div>
+
+    </section>
+
+</div>
+
+<footer>
+
+    <div style="font-size:26px;font-weight:900;">
+        HOBBI<span>GO</span>
+    </div>
+
+    <p style="margin-top:12px;">
+        AI Journey & Experience Marketplace
+    </p>
+
+    <p style="margin-top:15px;font-size:13px;opacity:.7;">
+        V82.0 • Global Data Engine • Demo Architecture
+    </p>
+
+</footer>
+
+<script>
+
+/* =========================================================
+   HOBBIGO V82.0
+   GLOBAL MASTER DATA
+========================================================= */
+
+const globalData = [
+
+    {
+        country:"Indonesia",
+        code:"ID",
+        currency:"IDR",
+        cities:[
+            {
+                city:"Bali",
+                airport:"DPS",
+                destinations:[
+                    {
+                        name:"Seminyak",
+                        lat:-8.6913,
+                        lng:115.1688,
+                        image:"https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80"
+                    },
+                    {
+                        name:"Ubud",
+                        lat:-8.5069,
+                        lng:115.2625,
+                        image:"https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=900&q=80"
+                    },
+                    {
+                        name:"Nusa Dua",
+                        lat:-8.8005,
+                        lng:115.2300,
+                        image:"https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            },
+            {
+                city:"Jakarta",
+                airport:"CGK",
+                destinations:[
+                    {
+                        name:"Central Jakarta",
+                        lat:-6.1862,
+                        lng:106.8341,
+                        image:"https://images.unsplash.com/photo-1555899434-94d1368aa7af?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            },
+            {
+                city:"Yogyakarta",
+                airport:"YIA",
+                destinations:[
+                    {
+                        name:"Malioboro",
+                        lat:-7.7928,
+                        lng:110.3659,
+                        image:"https://images.unsplash.com/photo-1584810359583-96fc3448beaa?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"Singapore",
+        code:"SG",
+        currency:"SGD",
+        cities:[
+            {
+                city:"Singapore",
+                airport:"SIN",
+                destinations:[
+                    {
+                        name:"Marina Bay",
+                        lat:1.2834,
+                        lng:103.8607,
+                        image:"https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80"
+                    },
+                    {
+                        name:"Sentosa",
+                        lat:1.2494,
+                        lng:103.8303,
+                        image:"https://images.unsplash.com/photo-1496939376851-89342e90adcd?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"Japan",
+        code:"JP",
+        currency:"JPY",
+        cities:[
+            {
+                city:"Tokyo",
+                airport:"HND",
+                destinations:[
+                    {
+                        name:"Shibuya",
+                        lat:35.6595,
+                        lng:139.7005,
+                        image:"https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            },
+            {
+                city:"Osaka",
+                airport:"KIX",
+                destinations:[
+                    {
+                        name:"Dotonbori",
+                        lat:34.6687,
+                        lng:135.5013,
+                        image:"https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"France",
+        code:"FR",
+        currency:"EUR",
+        cities:[
+            {
+                city:"Paris",
+                airport:"CDG",
+                destinations:[
+                    {
+                        name:"Eiffel Tower",
+                        lat:48.8584,
+                        lng:2.2945,
+                        image:"https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"United Kingdom",
+        code:"GB",
+        currency:"GBP",
+        cities:[
+            {
+                city:"London",
+                airport:"LHR",
+                destinations:[
+                    {
+                        name:"Central London",
+                        lat:51.5074,
+                        lng:-0.1278,
+                        image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"United Arab Emirates",
+        code:"AE",
+        currency:"AED",
+        cities:[
+            {
+                city:"Dubai",
+                airport:"DXB",
+                destinations:[
+                    {
+                        name:"Downtown Dubai",
+                        lat:25.1972,
+                        lng:55.2744,
+                        image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"Australia",
+        code:"AU",
+        currency:"AUD",
+        cities:[
+            {
+                city:"Sydney",
+                airport:"SYD",
+                destinations:[
+                    {
+                        name:"Sydney Harbour",
+                        lat:-33.8568,
+                        lng:151.2153,
+                        image:"https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d7?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"United States",
+        code:"US",
+        currency:"USD",
+        cities:[
+            {
+                city:"New York",
+                airport:"JFK",
+                destinations:[
+                    {
+                        name:"Manhattan",
+                        lat:40.7831,
+                        lng:-73.9712,
+                        image:"https://images.unsplash.com/photo-1496588152823-86ff7695e68f?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            },
+            {
+                city:"Los Angeles",
+                airport:"LAX",
+                destinations:[
+                    {
+                        name:"Hollywood",
+                        lat:34.0928,
+                        lng:-118.3287,
+                        image:"https://images.unsplash.com/photo-1534190239940-9ba8944ea261?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"Italy",
+        code:"IT",
+        currency:"EUR",
+        cities:[
+            {
+                city:"Rome",
+                airport:"FCO",
+                destinations:[
+                    {
+                        name:"Colosseum",
+                        lat:41.8902,
+                        lng:12.4922,
+                        image:"https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        country:"Thailand",
+        code:"TH",
+        currency:"THB",
+        cities:[
+            {
+                city:"Bangkok",
+                airport:"BKK",
+                destinations:[
+                    {
+                        name:"Grand Palace",
+                        lat:13.7500,
+                        lng:100.4914,
+                        image:"https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            },
+            {
+                city:"Phuket",
+                airport:"HKT",
+                destinations:[
+                    {
+                        name:"Patong Beach",
+                        lat:7.8966,
+                        lng:98.2961,
+                        image:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+                    }
+                ]
+            }
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   MARKETPLACE PRODUCTS
+========================================================= */
+
+const products = [
+
+    {
+        id:"H001",
+        type:"Hotel",
+        name:"HobbiGo Bali Beach Resort",
+        city:"Bali",
+        country:"Indonesia",
+        price:1200000
+    },
+
+    {
+        id:"H002",
+        type:"Hotel",
+        name:"Tokyo Grand Hotel",
+        city:"Tokyo",
+        country:"Japan",
+        price:1800000
+    },
+
+    {
+        id:"H003",
+        type:"Hotel",
+        name:"Paris Luxury Hotel",
+        city:"Paris",
+        country:"France",
+        price:2300000
+    },
+
+    {
+        id:"H004",
+        type:"Hotel",
+        name:"Dubai Royal Hotel",
+        city:"Dubai",
+        country:"United Arab Emirates",
+        price:2800000
+    },
+
+    {
+        id:"F001",
+        type:"Flight",
+        name:"Jakarta → Bali",
+        city:"Bali",
+        country:"Indonesia",
+        price:1500000
+    },
+
+    {
+        id:"F002",
+        type:"Flight",
+        name:"Jakarta → Singapore",
+        city:"Singapore",
+        country:"Singapore",
+        price:2200000
+    },
+
+    {
+        id:"F003",
+        type:"Flight",
+        name:"Singapore → Tokyo",
+        city:"Tokyo",
+        country:"Japan",
+        price:4500000
+    },
+
+    {
+        id:"F004",
+        type:"Flight",
+        name:"Singapore → Paris",
+        city:"Paris",
+        country:"France",
+        price:8500000
+    },
+
+    {
+        id:"V001",
+        type:"Villa",
+        name:"Private Pool Villa Bali",
+        city:"Bali",
+        country:"Indonesia",
+        price:2500000
+    },
+
+    {
+        id:"R001",
+        type:"Restaurant",
+        name:"Bali Local Taste",
+        city:"Bali",
+        country:"Indonesia",
+        price:250000
+    },
+
+    {
+        id:"R002",
+        type:"Restaurant",
+        name:"Tokyo Local Kitchen",
+        city:"Tokyo",
+        country:"Japan",
+        price:450000
+    },
+
+    {
+        id:"T001",
+        type:"Transport",
+        name:"Private Car + Driver",
+        city:"Bali",
+        country:"Indonesia",
+        price:650000
+    },
+
+    {
+        id:"A001",
+        type:"Activity",
+        name:"Bali Cultural Experience",
+        city:"Bali",
+        country:"Indonesia",
+        price:350000
+    },
+
+    {
+        id:"A002",
+        type:"Activity",
+        name:"Bali Snorkeling Experience",
+        city:"Bali",
+        country:"Indonesia",
+        price:550000
+    },
+
+    {
+        id:"B001",
+        type:"Boat",
+        name:"Private Boat Charter",
+        city:"Bali",
+        country:"Indonesia",
+        price:3500000
+    },
+
+    {
+        id:"TO001",
+        type:"Tour",
+        name:"Bali Island Tour",
+        city:"Bali",
+        country:"Indonesia",
+        price:950000
+    }
+
+];
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+function init(){
+
+    const countrySelect =
+        document.getElementById("countrySelect");
+
+    countrySelect.innerHTML =
+        `<option value="">Select Country</option>`;
+
+    globalData.forEach((country,index)=>{
+
+        countrySelect.innerHTML +=
+        `<option value="${index}">
+            ${country.country}
+        </option>`;
+
+    });
+
+    buildMasterTable();
+
+    showAllDestinations();
+
+    document.getElementById("jsonPreview").textContent =
+        JSON.stringify(globalData[0],null,2);
+
+}
+
+
+/* =========================================================
+   LOAD CITIES
+========================================================= */
+
+function loadCities(){
+
+    const countryIndex =
+        document.getElementById("countrySelect").value;
+
+    const citySelect =
+        document.getElementById("citySelect");
+
+    const destinationSelect =
+        document.getElementById("destinationSelect");
+
+    citySelect.innerHTML =
+        `<option value="">Select City</option>`;
+
+    destinationSelect.innerHTML =
+        `<option value="">Select Destination</option>`;
+
+    if(countryIndex===""){
+
+        showAllDestinations();
+
+        return;
+    }
+
+    const country =
+        globalData[countryIndex];
+
+    country.cities.forEach((city,index)=>{
+
+        citySelect.innerHTML +=
+        `<option value="${index}">
+            ${city.city}
+        </option>`;
+
+    });
+
+    document.getElementById("jsonPreview").textContent =
+        JSON.stringify(country,null,2);
+
+    showCountryResults(country);
+
+}
+
+
+/* =========================================================
+   LOAD DESTINATIONS
+========================================================= */
+
+function loadDestinations(){
+
+    const countryIndex =
+        document.getElementById("countrySelect").value;
+
+    const cityIndex =
+        document.getElementById("citySelect").value;
+
+    const destinationSelect =
+        document.getElementById("destinationSelect");
+
+    destinationSelect.innerHTML =
+        `<option value="">Select Destination</option>`;
+
+    if(countryIndex==="" || cityIndex===""){
+        return;
+    }
+
+    const city =
+        globalData[countryIndex].cities[cityIndex];
+
+    city.destinations.forEach((destination,index)=>{
+
+        destinationSelect.innerHTML +=
+        `<option value="${index}">
+            ${destination.name}
+        </option>`;
+
+    });
+
+    document.getElementById("jsonPreview").textContent =
+        JSON.stringify(city,null,2);
+
+    showCityResults(city);
+
+}
+
+
+/* =========================================================
+   SHOW DESTINATION
+========================================================= */
+
+function showDestination(){
+
+    const countryIndex =
+        document.getElementById("countrySelect").value;
+
+    const cityIndex =
+        document.getElementById("citySelect").value;
+
+    const destinationIndex =
+        document.getElementById("destinationSelect").value;
+
+    if(
+        countryIndex==="" ||
+        cityIndex==="" ||
+        destinationIndex===""
+    ){
+        return;
+    }
+
+    const country =
+        globalData[countryIndex];
+
+    const city =
+        country.cities[cityIndex];
+
+    const destination =
+        city.destinations[destinationIndex];
+
+    document.getElementById("jsonPreview").textContent =
+        JSON.stringify(destination,null,2);
+
+    const box =
+        document.getElementById("destinationResults");
+
+    box.innerHTML = `
+        <div class="destination-card">
+
+            <div
+                class="destination-image"
+                style="background-image:url('${destination.image}')">
+            </div>
+
+            <div class="destination-body">
+
+                <h3>${destination.name}</h3>
+
+                <span class="badge">
+                    ${country.country}
+                </span>
+
+                <span class="badge">
+                    ${city.city}
+                </span>
+
+                <span class="badge">
+                    Airport ${city.airport}
+                </span>
+
+                <p style="margin-top:15px;color:#657085;">
+                    GPS: ${destination.lat},
+                    ${destination.lng}
+                </p>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   SHOW ALL DESTINATIONS
+========================================================= */
+
+function showAllDestinations(){
+
+    const box =
+        document.getElementById("destinationResults");
+
+    box.innerHTML = "";
+
+    let count=0;
+
+    globalData.forEach(country=>{
+
+        country.cities.forEach(city=>{
+
+            city.destinations.forEach(destination=>{
+
+                if(count>=9) return;
+
+                box.innerHTML += `
+                    <div class="destination-card">
+
+                        <div
+                            class="destination-image"
+                            style="background-image:url('${destination.image}')">
+                        </div>
+
+                        <div class="destination-body">
+
+                            <h3>${destination.name}</h3>
+
+                            <span class="badge">
+                                ${country.country}
+                            </span>
+
+                            <span class="badge">
+                                ${city.city}
+                            </span>
+
+                            <p style="margin-top:12px;color:#657085;">
+                                Airport: ${city.airport}
+                            </p>
+
+                        </div>
+
+                    </div>
+                `;
+
+                count++;
+
+            });
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   COUNTRY RESULTS
+========================================================= */
+
+function showCountryResults(country){
+
+    const box =
+        document.getElementById("destinationResults");
+
+    box.innerHTML = "";
+
+    country.cities.forEach(city=>{
+
+        city.destinations.forEach(destination=>{
+
+            box.innerHTML += `
+                <div class="destination-card">
+
+                    <div
+                        class="destination-image"
+                        style="background-image:url('${destination.image}')">
+                    </div>
+
+                    <div class="destination-body">
+
+                        <h3>${destination.name}</h3>
+
+                        <span class="badge">
+                            ${country.country}
+                        </span>
+
+                        <span class="badge">
+                            ${city.city}
+                        </span>
+
+                        <p style="margin-top:12px;color:#657085;">
+                            GPS: ${destination.lat},
+                            ${destination.lng}
+                        </p>
+
+                    </div>
+
+                </div>
+            `;
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   CITY RESULTS
+========================================================= */
+
+function showCityResults(city){
+
+    const box =
+        document.getElementById("destinationResults");
+
+    box.innerHTML = "";
+
+    city.destinations.forEach(destination=>{
+
+        box.innerHTML += `
+            <div class="destination-card">
+
+                <div
+                    class="destination-image"
+                    style="background-image:url('${destination.image}')">
+                </div>
+
+                <div class="destination-body">
+
+                    <h3>${destination.name}</h3>
+
+                    <span class="badge">
+                        ${city.city}
+                    </span>
+
+                    <span class="badge">
+                        Airport ${city.airport}
+                    </span>
+
+                    <p style="margin-top:12px;color:#657085;">
+                        GPS:
+                        ${destination.lat},
+                        ${destination.lng}
+                    </p>
+
+                </div>
+
+            </div>
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH PRODUCTS
+========================================================= */
+
+function searchProducts(){
+
+    const keyword =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const box =
+        document.getElementById("destinationResults");
+
+    if(keyword===""){
+
+        showAllDestinations();
+
+        return;
+    }
+
+    const matches =
+        products.filter(product=>
+            product.name.toLowerCase().includes(keyword) ||
+            product.type.toLowerCase().includes(keyword) ||
+            product.city.toLowerCase().includes(keyword) ||
+            product.country.toLowerCase().includes(keyword)
+        );
+
+    box.innerHTML = "";
+
+    if(matches.length===0){
+
+        box.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                padding:30px;
+                text-align:center;
+                color:#657085;
+            ">
+                No demo products found.
+            </div>
+        `;
+
+        return;
+    }
+
+    matches.forEach(product=>{
+
+        box.innerHTML += `
+            <div class="destination-card">
+
+                <div class="destination-body">
+
+                    <span class="badge">
+                        ${product.type}
+                    </span>
+
+                    <h3 style="margin-top:10px;">
+                        ${product.name}
+                    </h3>
+
+                    <p style="margin-top:8px;color:#657085;">
+                        ${product.city}, ${product.country}
+                    </p>
+
+                    <p style="
+                        margin-top:14px;
+                        font-size:20px;
+                        font-weight:900;
+                        color:#0878d1;
+                    ">
+                        ${formatIDR(product.price)}
+                    </p>
+
+                    <button
+                        class="btn-primary"
+                        style="margin-top:15px;"
+                        onclick="selectProduct('${product.id}')">
+                        View Product
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   PRODUCT VIEW
+========================================================= */
+
+function selectProduct(id){
+
+    const product =
+        products.find(item=>item.id===id);
+
+    if(!product) return;
+
+    document.getElementById("jsonPreview").textContent =
+        JSON.stringify(product,null,2);
+
+    alert(
+        "HobbiGo Product Engine\n\n" +
+        product.name +
+        "\n" +
+        product.type +
+        "\n" +
+        product.city +
+        ", " +
+        product.country +
+        "\n\nDemo Price: " +
+        formatIDR(product.price)
+    );
+
+}
+
+
+/* =========================================================
+   MASTER DATA TABLE
+========================================================= */
+
+function buildMasterTable(){
+
+    const table =
+        document.getElementById("masterTable");
+
+    table.innerHTML = "";
+
+    globalData.forEach(country=>{
+
+        country.cities.forEach(city=>{
+
+            city.destinations.forEach(destination=>{
+
+                table.innerHTML += `
+                    <tr>
+
+                        <td>
+                            <strong>${country.country}</strong>
+                            <br>
+                            <small>${country.code}</small>
+                        </td>
+
+                        <td>${city.city}</td>
+
+                        <td>${destination.name}</td>
+
+                        <td>${city.airport}</td>
+
+                        <td>${destination.lat}</td>
+
+                        <td>${destination.lng}</td>
+
+                    </tr>
+                `;
+
+            });
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   CURRENCY DISPLAY
+========================================================= */
+
+function formatIDR(number){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:"currency",
+            currency:"IDR",
+            maximumFractionDigits:0
+        }
+    ).format(number);
+
+}
+
+
+/* =========================================================
+   START ENGINE
+========================================================= */
+
+init();
+
+</script>
+
+</body>
+</html>
