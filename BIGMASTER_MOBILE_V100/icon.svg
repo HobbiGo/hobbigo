@@ -1,114 +1,61 @@
-const CACHE_NAME = "hobbigo-pwa-v100";
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
 
-const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon.svg"
-];
+  <defs>
 
-self.addEventListener("install", event => {
+    <linearGradient
+      id="bg"
+      x1="0"
+      y1="0"
+      x2="1"
+      y2="1">
 
-  event.waitUntil(
+      <stop
+        offset="0%"
+        stop-color="#20d3a0"/>
 
-    caches.open(CACHE_NAME)
-      .then(cache => {
+      <stop
+        offset="100%"
+        stop-color="#087c83"/>
 
-        return cache.addAll(
-          FILES_TO_CACHE
-        );
+    </linearGradient>
 
-      })
+  </defs>
 
-  );
+  <rect
+    width="512"
+    height="512"
+    rx="120"
+    fill="#06101d"/>
 
-  self.skipWaiting();
+  <rect
+    x="54"
+    y="54"
+    width="404"
+    height="404"
+    rx="100"
+    fill="url(#bg)"/>
 
-});
+  <path
+    d="M142 125
+       L142 387
+       L193 387
+       L193 281
+       L319 281
+       L319 387
+       L370 387
+       L370 125
+       L319 125
+       L319 228
+       L193 228
+       L193 125
+       Z"
+    fill="#03151a"/>
 
+  <circle
+    cx="382"
+    cy="119"
+    r="24"
+    fill="#ffffff"/>
 
-self.addEventListener("activate", event => {
-
-  event.waitUntil(
-
-    caches.keys()
-      .then(keys => {
-
-        return Promise.all(
-
-          keys
-            .filter(key =>
-              key !== CACHE_NAME
-            )
-            .map(key =>
-              caches.delete(key)
-            )
-
-        );
-
-      })
-
-  );
-
-  self.clients.claim();
-
-});
-
-
-self.addEventListener("fetch", event => {
-
-  if(event.request.method !== "GET"){
-    return;
-  }
-
-  event.respondWith(
-
-    caches.match(event.request)
-      .then(cached => {
-
-        if(cached){
-          return cached;
-        }
-
-        return fetch(event.request)
-          .then(response => {
-
-            if(
-              !response ||
-              response.status !== 200 ||
-              response.type !== "basic"
-            ){
-
-              return response;
-
-            }
-
-            const copy =
-              response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-
-                cache.put(
-                  event.request,
-                  copy
-                );
-
-              });
-
-            return response;
-
-          })
-          .catch(() => {
-
-            return caches.match(
-              "./index.html"
-            );
-
-          });
-
-      })
-
-  );
-
-});
+</svg>
