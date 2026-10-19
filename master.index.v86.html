@@ -1,1 +1,3109 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V86 MASTER</title>
+
+<style>
+:root{
+  --bg:#07111f;
+  --panel:#0d1b2e;
+  --panel2:#11243b;
+  --line:#203854;
+  --text:#f4f7fb;
+  --muted:#91a4ba;
+  --accent:#35d0ba;
+  --accent2:#6c8cff;
+  --gold:#f5c451;
+  --danger:#ff6b7a;
+  --success:#42d392;
+  --warning:#ffb84d;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(135deg,#06101d,#0b1727 50%,#07111f);
+  color:var(--text);
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  min-height:100vh;
+}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(5,14,26,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:16px 22px;
+}
+
+.header-inner{
+  max-width:1500px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.logo{
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.tagline{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.badges{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.badge{
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  font-size:11px;
+  color:#cbd8e8;
+  background:#0b192b;
+}
+
+.badge.green{
+  color:var(--success);
+  border-color:#235d4c;
+}
+
+.badge.blue{
+  color:#91a9ff;
+  border-color:#30457d;
+}
+
+.container{
+  max-width:1500px;
+  margin:auto;
+  padding:22px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1.4fr .6fr;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.hero-card{
+  background:
+    radial-gradient(circle at top right,rgba(53,208,186,.15),transparent 35%),
+    var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:28px;
+}
+
+.hero h1{
+  margin:0 0 10px;
+  font-size:38px;
+}
+
+.hero p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+
+.flow span{
+  background:#10263d;
+  border:1px solid #24425f;
+  padding:9px 12px;
+  border-radius:12px;
+  font-size:12px;
+}
+
+.flow span.active{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.version-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.version{
+  font-size:60px;
+  font-weight:900;
+  color:var(--accent);
+}
+
+.version-sub{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:17px;
+}
+
+.stat .num{
+  font-size:25px;
+  font-weight:900;
+}
+
+.stat .label{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:350px 1fr;
+  gap:18px;
+}
+
+.panel{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.panel h2{
+  margin:0 0 15px;
+  font-size:18px;
+}
+
+.panel h3{
+  font-size:14px;
+  margin:18px 0 10px;
+}
+
+label{
+  display:block;
+  color:#b9c9dc;
+  font-size:11px;
+  margin:12px 0 6px;
+}
+
+input,select{
+  width:100%;
+  background:#081526;
+  color:white;
+  border:1px solid #26405c;
+  border-radius:10px;
+  padding:11px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--accent);
+}
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:11px 15px;
+  font-weight:700;
+  background:#18304b;
+  color:white;
+  margin:4px 3px 4px 0;
+}
+
+.btn:hover{
+  filter:brightness(1.15);
+}
+
+.btn.primary{
+  background:var(--accent);
+  color:#06131c;
+}
+
+.btn.blue{
+  background:var(--accent2);
+}
+
+.btn.gold{
+  background:var(--gold);
+  color:#151006;
+}
+
+.btn.success{
+  background:var(--success);
+  color:#06130e;
+}
+
+.btn.danger{
+  background:var(--danger);
+}
+
+.search-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.status{
+  padding:10px;
+  border-radius:10px;
+  background:#0a1929;
+  border:1px solid var(--line);
+  margin-top:8px;
+  font-size:12px;
+}
+
+.status.good{
+  border-color:#28604f;
+  color:#7be1bd;
+}
+
+.status.demo{
+  border-color:#66502c;
+  color:#ffd17a;
+}
+
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.product{
+  background:#0a1829;
+  border:1px solid #203952;
+  border-radius:15px;
+  padding:15px;
+  transition:.2s;
+}
+
+.product:hover{
+  transform:translateY(-2px);
+  border-color:#3a668e;
+}
+
+.product.selected{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px var(--accent);
+}
+
+.product-top{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.product-icon{
+  font-size:27px;
+}
+
+.product h4{
+  margin:7px 0;
+  font-size:14px;
+}
+
+.product p{
+  margin:4px 0;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.price{
+  color:var(--gold);
+  font-weight:800;
+}
+
+.rating{
+  color:#ffd66a;
+  font-size:12px;
+}
+
+.engine-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.engine-card{
+  background:#0a1829;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:16px;
+}
+
+.engine-title{
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.engine-desc{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.score{
+  font-size:30px;
+  font-weight:900;
+  color:var(--accent);
+}
+
+.progress{
+  height:8px;
+  background:#162b42;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0;
+}
+
+.progress div{
+  height:100%;
+  background:var(--accent);
+}
+
+.route{
+  display:flex;
+  overflow:auto;
+  gap:0;
+  padding:8px 0;
+}
+
+.route-step{
+  min-width:135px;
+  text-align:center;
+  position:relative;
+}
+
+.route-step:not(:last-child)::after{
+  content:"→";
+  position:absolute;
+  right:-10px;
+  top:20px;
+  color:var(--accent);
+}
+
+.route-icon{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:auto;
+  border-radius:50%;
+  background:#122943;
+  border:1px solid #2b4c6e;
+  font-size:21px;
+}
+
+.route-step strong{
+  display:block;
+  margin-top:8px;
+  font-size:11px;
+}
+
+.route-step small{
+  color:var(--muted);
+}
+
+.compare-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+
+.compare-card{
+  background:#0a1829;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px;
+  text-align:center;
+}
+
+.compare-card .icon{
+  font-size:22px;
+}
+
+.compare-card strong{
+  display:block;
+  font-size:11px;
+  margin:7px 0;
+}
+
+.compare-card span{
+  font-size:18px;
+  font-weight:900;
+  color:var(--accent);
+}
+
+.package-box{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.package{
+  border:1px solid var(--line);
+  background:#0a1829;
+  border-radius:14px;
+  padding:15px;
+}
+
+.package.active{
+  border-color:var(--accent);
+}
+
+.package h3{
+  margin:0 0 5px;
+}
+
+.package .package-price{
+  font-size:20px;
+  font-weight:900;
+  color:var(--gold);
+  margin:8px 0;
+}
+
+.package ul{
+  padding-left:17px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+}
+
+.invoice{
+  background:#081525;
+  border:1px dashed #355271;
+  border-radius:14px;
+  padding:16px;
+}
+
+.invoice-row{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  border-bottom:1px solid #162b42;
+  font-size:12px;
+}
+
+.invoice-total{
+  font-size:22px;
+  font-weight:900;
+  color:var(--gold);
+  display:flex;
+  justify-content:space-between;
+  padding-top:14px;
+}
+
+.api-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+}
+
+.api{
+  padding:9px;
+  background:#081525;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-family:monospace;
+  font-size:10px;
+  color:#a9bbd0;
+}
+
+.log{
+  max-height:190px;
+  overflow:auto;
+  background:#050d17;
+  border-radius:10px;
+  padding:10px;
+  font-family:monospace;
+  font-size:10px;
+  color:#8fa6bf;
+}
+
+.log div{
+  padding:4px 0;
+  border-bottom:1px solid #132234;
+}
+
+.selected-box{
+  background:
+    linear-gradient(135deg,rgba(53,208,186,.08),rgba(108,140,255,.06)),
+    #0a1829;
+  border:1px solid #28506d;
+  border-radius:15px;
+  padding:16px;
+}
+
+.selected-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+
+.selected-item{
+  background:#081525;
+  border-radius:9px;
+  padding:9px;
+  font-size:11px;
+}
+
+.selected-item span{
+  color:var(--muted);
+  display:block;
+  margin-bottom:4px;
+}
+
+.ai-result{
+  border:1px solid #2a506d;
+  background:#0b1c2d;
+  border-radius:14px;
+  padding:15px;
+  margin-top:10px;
+}
+
+.ai-result strong{
+  color:var(--accent);
+}
+
+.footer{
+  text-align:center;
+  color:#71869d;
+  font-size:11px;
+  padding:25px;
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:1100px){
+  .grid{grid-template-columns:1fr}
+  .market-grid{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .compare-grid{grid-template-columns:repeat(3,1fr)}
+  .package-box{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+  .hero{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .market-grid{grid-template-columns:1fr}
+  .engine-grid{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:repeat(2,1fr)}
+  .package-box{grid-template-columns:1fr}
+  .selected-list{grid-template-columns:1fr}
+  .header-inner{align-items:flex-start;flex-direction:column}
+  .badges{justify-content:flex-start}
+  .hero h1{font-size:28px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="logo">HOBBI<span>GO</span></div>
+      <div class="tagline">AI Journey & Experience Marketplace</div>
+    </div>
+
+    <div class="badges">
+      <div class="badge green">ENGINE READY</div>
+      <div class="badge blue">195 COUNTRIES</div>
+      <div class="badge">AI MATCH</div>
+      <div class="badge">SMART ROUTE 2.0</div>
+      <div class="badge">BOOKING</div>
+      <div class="badge">PAYMENT</div>
+      <div class="badge">V86 MASTER</div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+  <div class="hero-card">
+    <h1>HobbiGo V86 MASTER</h1>
+
+    <p>
+      Real Marketplace + AI Decision Engine.
+      V86 menggabungkan Global Data Engine, Smart Match,
+      Smart Route, Dynamic Package, Compare, Availability,
+      Booking dan Payment Architecture dalam satu master index.
+    </p>
+
+    <div class="flow">
+      <span class="active">🌍 195 Countries</span>
+      <span>🏙️ City</span>
+      <span>🔎 Search</span>
+      <span>🤖 AI Match</span>
+      <span>🗺️ Smart Route</span>
+      <span>📦 Package</span>
+      <span>⚖️ Compare</span>
+      <span>🟢 Availability</span>
+      <span>🧾 Booking</span>
+      <span>💳 Payment</span>
+    </div>
+  </div>
+
+  <div class="hero-card version-card">
+    <div class="version">V86</div>
+    <div class="version-sub">MASTER ALL-IN-ONE</div>
+    <div class="status good">● SYSTEM ARCHITECTURE READY</div>
+    <div class="status demo">● DEMO DATA MODE</div>
+  </div>
+
+</section>
+
+
+<section class="stats">
+
+  <div class="stat">
+    <div class="num">195</div>
+    <div class="label">COUNTRIES</div>
+  </div>
+
+  <div class="stat">
+    <div class="num" id="cityCount">12+</div>
+    <div class="label">DEMO CITIES</div>
+  </div>
+
+  <div class="stat">
+    <div class="num" id="productCount">30+</div>
+    <div class="label">MARKETPLACE PRODUCTS</div>
+  </div>
+
+  <div class="stat">
+    <div class="num">9</div>
+    <div class="label">V86 ENGINES</div>
+  </div>
+
+  <div class="stat">
+    <div class="num">API READY</div>
+    <div class="label">REAL DATA ARCHITECTURE</div>
+  </div>
+
+</section>
+
+
+<div class="grid">
+
+<!-- LEFT SIDEBAR -->
+
+<aside>
+
+  <div class="panel">
+
+    <h2>🌍 Global Search</h2>
+
+    <div class="search-grid">
+
+      <div>
+        <label>Country</label>
+        <select id="country">
+          <option>Indonesia</option>
+          <option>Singapore</option>
+          <option>Thailand</option>
+          <option>Japan</option>
+          <option>United Arab Emirates</option>
+          <option>Australia</option>
+          <option>France</option>
+          <option>Italy</option>
+          <option>United Kingdom</option>
+          <option>United States</option>
+        </select>
+      </div>
+
+      <div>
+        <label>City</label>
+        <select id="city">
+          <option>Jakarta</option>
+          <option>Bali</option>
+          <option>Singapore</option>
+          <option>Bangkok</option>
+          <option>Tokyo</option>
+          <option>Dubai</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Event Type</label>
+        <select id="eventType">
+          <option>Corporate Retreat</option>
+          <option>Meeting</option>
+          <option>Team Building</option>
+          <option>Conference</option>
+          <option>Incentive Trip</option>
+          <option>Company Gathering</option>
+          <option>Private Event</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Participants</label>
+        <input id="participants" type="number" value="100" min="1">
+      </div>
+
+      <div>
+        <label>Event Date</label>
+        <input id="eventDate" type="date">
+      </div>
+
+      <div>
+        <label>Duration</label>
+        <select id="duration">
+          <option value="1">1 Day</option>
+          <option value="2">2 Days</option>
+          <option value="3" selected>3 Days</option>
+          <option value="4">4 Days</option>
+          <option value="5">5 Days</option>
+          <option value="7">7 Days</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Budget Level</label>
+        <select id="budget">
+          <option value="economy">Economy</option>
+          <option value="comfort" selected>Comfort</option>
+          <option value="premium">Premium</option>
+          <option value="exclusive">Exclusive</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Marketplace</label>
+        <select id="category">
+          <option value="all">All</option>
+          <option value="venue">Venue</option>
+          <option value="hotel">Hotel</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="transport">Transport</option>
+          <option value="activity">Activity</option>
+          <option value="production">Production</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn primary" onclick="runAI()">🤖 RUN AI SMART MATCH</button>
+    <button class="btn blue" onclick="searchMarket()">🔎 SEARCH MARKET</button>
+    <button class="btn" onclick="resetEngine()">↻ RESET</button>
+
+  </div>
+
+
+  <div class="panel">
+
+    <h2>⚙️ Configure Event</h2>
+
+    <label>Food Theme</label>
+    <select id="foodTheme">
+      <option>Indonesian Local Food</option>
+      <option>International Buffet</option>
+      <option>Asian Fusion</option>
+      <option>Western</option>
+      <option>Japanese</option>
+      <option>Healthy / Wellness</option>
+      <option>Premium Fine Dining</option>
+    </select>
+
+    <label>Special Requirement</label>
+    <input id="specialReq" placeholder="Halal, accessibility, VIP, branding...">
+
+    <label>Maximum Product Price</label>
+    <input id="maxPrice" type="number" value="100000000">
+
+    <label>Minimum Rating</label>
+    <select id="minRating">
+      <option value="4">4.0+</option>
+      <option value="4.3">4.3+</option>
+      <option value="4.5" selected>4.5+</option>
+      <option value="4.7">4.7+</option>
+    </select>
+
+  </div>
+
+
+  <div class="panel">
+
+    <h2>🔌 API Connector Layer</h2>
+
+    <div class="status demo">
+      DEMO MODE — API credentials are not connected.
+    </div>
+
+    <label>API Base URL</label>
+    <input id="apiBase" value="https://api.hobbigo.com/v1">
+
+    <label>Maps Endpoint</label>
+    <input value="/maps">
+
+    <label>Hotel Endpoint</label>
+    <input value="/hotels">
+
+    <label>Flight Endpoint</label>
+    <input value="/flights">
+
+    <label>Booking Endpoint</label>
+    <input value="/bookings">
+
+    <button class="btn primary" onclick="testAPI()">TEST API ARCHITECTURE</button>
+
+    <div id="apiStatus" class="status">
+      Waiting for API test...
+    </div>
+
+  </div>
+
+
+  <div class="panel">
+
+    <h2>📡 System Status</h2>
+
+    <div class="status good">● Global Data Engine READY</div>
+    <div class="status good">● AI Smart Match READY</div>
+    <div class="status good">● Smart Route 2.0 READY</div>
+    <div class="status good">● Dynamic Package READY</div>
+    <div class="status good">● Compare Engine READY</div>
+    <div class="status demo">● Live Availability DEMO</div>
+    <div class="status demo">● Booking DEMO</div>
+    <div class="status demo">● Payment DEMO</div>
+
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<section>
+
+  <div class="panel">
+
+    <h2>🧠 HOBBIGO AI CONTROL CENTER</h2>
+
+    <div class="engine-grid">
+
+      <div class="engine-card">
+        <div class="engine-title">Best Match</div>
+        <div id="bestMatch" class="score">--</div>
+        <div class="progress">
+          <div id="matchBar" style="width:0%"></div>
+        </div>
+        <div class="engine-desc">
+          AI simulation berdasarkan budget, kapasitas,
+          rating, lokasi, event type dan value.
+        </div>
+      </div>
+
+      <div class="engine-card">
+        <div class="engine-title">Estimated Saving</div>
+        <div id="saving" class="score">Rp 0</div>
+        <div class="engine-desc">
+          Estimasi optimasi biaya dibandingkan paket standar.
+        </div>
+      </div>
+
+      <div class="engine-card">
+        <div class="engine-title">Route Efficiency</div>
+        <div id="routeScore" class="score">--</div>
+        <div class="progress">
+          <div id="routeBar" style="width:0%"></div>
+        </div>
+        <div class="engine-desc">
+          Simulasi efisiensi urutan perjalanan dan aktivitas.
+        </div>
+      </div>
+
+      <div class="engine-card">
+        <div class="engine-title">AI Confidence</div>
+        <div id="confidence" class="score">--</div>
+        <div class="progress">
+          <div id="confidenceBar" style="width:0%"></div>
+        </div>
+        <div class="engine-desc">
+          Confidence score simulasi untuk prototype V86.
+        </div>
+      </div>
+
+    </div>
+
+    <div id="aiMessage" class="ai-result">
+      <strong>AI Control Center:</strong>
+      Masukkan kebutuhan event kemudian tekan RUN AI SMART MATCH.
+    </div>
+
+  </div>
+
+
+  <!-- MARKETPLACE -->
+
+  <div class="panel">
+
+    <h2>🌐 Global Marketplace</h2>
+
+    <div id="marketplace" class="market-grid"></div>
+
+  </div>
+
+
+  <!-- SELECTED PACKAGE -->
+
+  <div class="panel">
+
+    <h2>📦 Selected Trip Package</h2>
+
+    <div class="selected-box">
+
+      <div class="selected-list">
+
+        <div class="selected-item">
+          <span>Venue</span>
+          <strong id="selectedVenue">Not selected</strong>
+        </div>
+
+        <div class="selected-item">
+          <span>Hotel</span>
+          <strong id="selectedHotel">Not selected</strong>
+        </div>
+
+        <div class="selected-item">
+          <span>Restaurant</span>
+          <strong id="selectedRestaurant">Not selected</strong>
+        </div>
+
+        <div class="selected-item">
+          <span>Transport</span>
+          <strong id="selectedTransport">Not selected</strong>
+        </div>
+
+        <div class="selected-item">
+          <span>Activity</span>
+          <strong id="selectedActivity">Not selected</strong>
+        </div>
+
+        <div class="selected-item">
+          <span>Production</span>
+          <strong id="selectedProduction">Not selected</strong>
+        </div>
+
+      </div>
+
+      <br>
+
+      <strong>Total Package Estimate</strong>
+
+      <div id="totalPackage"
+           style="font-size:28px;font-weight:900;color:var(--gold);margin-top:6px">
+        Rp 0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SMART ROUTE -->
+
+  <div class="panel">
+
+    <h2>🗺️ Smart Route 2.0</h2>
+
+    <div class="route">
+
+      <div class="route-step">
+        <div class="route-icon">✈️</div>
+        <strong>Flight</strong>
+        <small>Origin</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🛬</div>
+        <strong>Airport</strong>
+        <small>Arrival</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🚐</div>
+        <strong>Transfer</strong>
+        <small>Airport</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🏨</div>
+        <strong>Hotel</strong>
+        <small>Check-in</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🏢</div>
+        <strong>Venue</strong>
+        <small>Meeting</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🍽️</div>
+        <strong>Lunch</strong>
+        <small>Food</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🎯</div>
+        <strong>Activity</strong>
+        <small>Experience</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🌙</div>
+        <strong>Dinner</strong>
+        <small>Evening</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">🏨</div>
+        <strong>Hotel</strong>
+        <small>Night</small>
+      </div>
+
+      <div class="route-step">
+        <div class="route-icon">✈️</div>
+        <strong>Airport</strong>
+        <small>Return</small>
+      </div>
+
+    </div>
+
+    <div class="status good">
+      Smart Route 2.0 aktif — urutan perjalanan siap dioptimalkan.
+    </div>
+
+  </div>
+
+
+  <!-- AI COMPARE -->
+
+  <div class="panel">
+
+    <h2>⚖️ AI Compare Engine</h2>
+
+    <div class="compare-grid">
+
+      <div class="compare-card">
+        <div class="icon">💰</div>
+        <strong>Best Price</strong>
+        <span id="bestPrice">--</span>
+      </div>
+
+      <div class="compare-card">
+        <div class="icon">⭐</div>
+        <strong>Best Value</strong>
+        <span id="bestValue">--</span>
+      </div>
+
+      <div class="compare-card">
+        <div class="icon">📍</div>
+        <strong>Best Location</strong>
+        <span id="bestLocation">--</span>
+      </div>
+
+      <div class="compare-card">
+        <div class="icon">🎯</div>
+        <strong>Best Experience</strong>
+        <span id="bestExperience">--</span>
+      </div>
+
+      <div class="compare-card">
+        <div class="icon">🏢</div>
+        <strong>Corporate Choice</strong>
+        <span id="corporateChoice">--</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- PACKAGE BUILDER -->
+
+  <div class="panel">
+
+    <h2>📦 AI Corporate Package Builder</h2>
+
+    <div class="package-box">
+
+      <div class="package" id="pkgEconomy">
+        <h3>Economy</h3>
+        <div class="package-price" id="priceEconomy">Rp 0</div>
+        <ul>
+          <li>Basic venue</li>
+          <li>Standard hotel</li>
+          <li>Standard transport</li>
+          <li>Basic activity</li>
+        </ul>
+        <button class="btn" onclick="selectPackage('economy')">
+          SELECT
+        </button>
+      </div>
+
+      <div class="package active" id="pkgComfort">
+        <h3>Comfort</h3>
+        <div class="package-price" id="priceComfort">Rp 0</div>
+        <ul>
+          <li>Better venue</li>
+          <li>Comfort hotel</li>
+          <li>Private transport</li>
+          <li>Curated activity</li>
+        </ul>
+        <button class="btn primary" onclick="selectPackage('comfort')">
+          SELECT
+        </button>
+      </div>
+
+      <div class="package" id="pkgPremium">
+        <h3>Premium</h3>
+        <div class="package-price" id="pricePremium">Rp 0</div>
+        <ul>
+          <li>Premium venue</li>
+          <li>Premium hotel</li>
+          <li>Executive transport</li>
+          <li>Premium activity</li>
+        </ul>
+        <button class="btn" onclick="selectPackage('premium')">
+          SELECT
+        </button>
+      </div>
+
+      <div class="package" id="pkgExclusive">
+        <h3>Exclusive</h3>
+        <div class="package-price" id="priceExclusive">Rp 0</div>
+        <ul>
+          <li>Exclusive venue</li>
+          <li>Luxury hotel</li>
+          <li>VIP transport</li>
+          <li>Exclusive experience</li>
+        </ul>
+        <button class="btn gold" onclick="selectPackage('exclusive')">
+          SELECT
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- AVAILABILITY -->
+
+  <div class="panel">
+
+    <h2>🟢 Live Availability Architecture</h2>
+
+    <div class="market-grid">
+
+      <div class="product">
+        <div class="product-icon">🏢</div>
+        <h4>Venue Availability</h4>
+        <p id="availabilityVenue">● DEMO AVAILABLE</p>
+        <button class="btn success" onclick="checkAvailability('Venue')">
+          CHECK
+        </button>
+      </div>
+
+      <div class="product">
+        <div class="product-icon">🏨</div>
+        <h4>Hotel Availability</h4>
+        <p id="availabilityHotel">● DEMO AVAILABLE</p>
+        <button class="btn success" onclick="checkAvailability('Hotel')">
+          CHECK
+        </button>
+      </div>
+
+      <div class="product">
+        <div class="product-icon">🚐</div>
+        <h4>Transport Availability</h4>
+        <p id="availabilityTransport">● DEMO AVAILABLE</p>
+        <button class="btn success" onclick="checkAvailability('Transport')">
+          CHECK
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- BOOKING -->
+
+  <div class="panel">
+
+    <h2>🧾 Booking Engine 2.0</h2>
+
+    <div class="search-grid">
+
+      <div>
+        <label>Customer / Company</label>
+        <input id="customer" placeholder="Company name">
+      </div>
+
+      <div>
+        <label>Contact</label>
+        <input id="contact" placeholder="Email / Phone">
+      </div>
+
+      <div>
+        <label>Billing Type</label>
+        <select id="billing">
+          <option>Company Invoice</option>
+          <option>Credit Card</option>
+          <option>Bank Transfer</option>
+          <option>Payment Gateway</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Deposit</label>
+        <select id="deposit">
+          <option value="30">30%</option>
+          <option value="50" selected>50%</option>
+          <option value="100">100%</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn primary" onclick="createBooking()">
+      🧾 CREATE BOOKING
+    </button>
+
+    <button class="btn gold" onclick="processPayment()">
+      💳 PROCESS PAYMENT
+    </button>
+
+    <div id="bookingResult" class="ai-result hidden"></div>
+
+  </div>
+
+
+  <!-- INVOICE -->
+
+  <div class="panel">
+
+    <h2>📄 Invoice Preview</h2>
+
+    <div class="invoice">
+
+      <div class="invoice-row">
+        <span>Booking ID</span>
+        <strong id="invoiceBooking">-</strong>
+      </div>
+
+      <div class="invoice-row">
+        <span>Customer</span>
+        <strong id="invoiceCustomer">-</strong>
+      </div>
+
+      <div class="invoice-row">
+        <span>Destination</span>
+        <strong id="invoiceDestination">-</strong>
+      </div>
+
+      <div class="invoice-row">
+        <span>Participants</span>
+        <strong id="invoiceParticipants">-</strong>
+      </div>
+
+      <div class="invoice-row">
+        <span>Package</span>
+        <strong id="invoicePackage">-</strong>
+      </div>
+
+      <div class="invoice-row">
+        <span>Payment Status</span>
+        <strong id="invoicePayment">UNPAID</strong>
+      </div>
+
+      <div class="invoice-total">
+        <span>Total</span>
+        <span id="invoiceTotal">Rp 0</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- API ARCHITECTURE -->
+
+  <div class="panel">
+
+    <h2>🔌 V86 API Architecture</h2>
+
+    <div class="api-list">
+
+      <div class="api">GET /api/v1/countries</div>
+      <div class="api">GET /api/v1/cities</div>
+      <div class="api">GET /api/v1/airports</div>
+      <div class="api">GET /api/v1/hotels</div>
+      <div class="api">GET /api/v1/venues</div>
+      <div class="api">GET /api/v1/restaurants</div>
+      <div class="api">GET /api/v1/transport</div>
+      <div class="api">GET /api/v1/activities</div>
+      <div class="api">GET /api/v1/production</div>
+      <div class="api">GET /api/v1/partners</div>
+      <div class="api">GET /api/v1/maps</div>
+      <div class="api">GET /api/v1/routes</div>
+      <div class="api">POST /api/v1/ai/match</div>
+      <div class="api">POST /api/v1/packages</div>
+      <div class="api">GET /api/v1/availability</div>
+      <div class="api">POST /api/v1/bookings</div>
+      <div class="api">POST /api/v1/payments</div>
+      <div class="api">POST /api/v1/refunds</div>
+      <div class="api">POST /api/v1/notifications</div>
+      <div class="api">POST /api/v1/webhooks</div>
+
+    </div>
+
+  </div>
+
+
+  <!-- EVENT OBJECT -->
+
+  <div class="panel">
+
+    <h2>🧠 Live Event Object</h2>
+
+    <pre id="eventJSON" style="
+      white-space:pre-wrap;
+      background:#050d17;
+      padding:15px;
+      border-radius:10px;
+      overflow:auto;
+      color:#9fc2df;
+      font-size:11px;
+    "></pre>
+
+  </div>
+
+
+  <!-- SYSTEM LOG -->
+
+  <div class="panel">
+
+    <h2>📜 Engine Log</h2>
+
+    <div id="log" class="log"></div>
+
+  </div>
+
+</section>
+
+</div>
+
+</main>
+
+<footer class="footer">
+  HOBBIGO V86 MASTER • AI Journey & Experience Marketplace •
+  Demo Architecture • API-ready foundation
+</footer>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V86 MASTER
+   V86.1 → V86.9 ALL IN ONE
+   ========================================================= */
+
+
+/* =========================
+   GLOBAL STATE
+========================= */
+
+const state = {
+
+  version:"V86 MASTER",
+
+  mode:"DEMO",
+
+  package:"comfort",
+
+  bookingId:null,
+
+  paymentStatus:"UNPAID",
+
+  selected:{
+    venue:null,
+    hotel:null,
+    restaurant:null,
+    transport:null,
+    activity:null,
+    production:null
+  },
+
+  totals:{
+    base:0,
+    package:0,
+    total:0
+  },
+
+  ai:{
+    match:0,
+    route:0,
+    confidence:0,
+    saving:0
+  }
+
+};
+
+
+/* =========================
+   DEMO GLOBAL DATA ENGINE
+   V86.1
+========================= */
+
+const countries = [
+"Indonesia",
+"Singapore",
+"Thailand",
+"Japan",
+"United Arab Emirates",
+"Australia",
+"Malaysia",
+"Vietnam",
+"Philippines",
+"South Korea",
+"China",
+"India",
+"France",
+"Italy",
+"Spain",
+"Germany",
+"United Kingdom",
+"United States",
+"Canada",
+"Switzerland",
+"Netherlands",
+"New Zealand",
+"Turkey",
+"Saudi Arabia",
+"Qatar"
+];
+
+const cityData = {
+
+Jakarta:[
+"Jakarta",
+"Bali",
+"Bandung",
+"Yogyakarta",
+"Surabaya"
+],
+
+Singapore:[
+"Singapore"
+],
+
+Thailand:[
+"Bangkok",
+"Phuket",
+"Chiang Mai"
+],
+
+Japan:[
+"Tokyo",
+"Osaka",
+"Kyoto"
+],
+
+"United Arab Emirates":[
+"Dubai",
+"Abu Dhabi"
+],
+
+Australia:[
+"Sydney",
+"Melbourne",
+"Brisbane"
+]
+
+};
+
+
+/* =========================
+   MARKETPLACE DATA
+   V86.1
+========================= */
+
+const marketplaceDB = [
+
+{
+ id:"VEN001",
+ category:"venue",
+ icon:"🏢",
+ name:"HobbiGo Convention Venue",
+ city:"Jakarta",
+ capacity:500,
+ rating:4.8,
+ price:85000000,
+ locationScore:92,
+ valueScore:94,
+ experienceScore:90
+},
+
+{
+ id:"VEN002",
+ category:"venue",
+ icon:"🏢",
+ name:"Premium Garden Event Hall",
+ city:"Bali",
+ capacity:300,
+ rating:4.9,
+ price:95000000,
+ locationScore:96,
+ valueScore:91,
+ experienceScore:98
+},
+
+{
+ id:"VEN003",
+ category:"venue",
+ icon:"🏢",
+ name:"Singapore Business Center",
+ city:"Singapore",
+ capacity:400,
+ rating:4.7,
+ price:120000000,
+ locationScore:95,
+ valueScore:87,
+ experienceScore:92
+},
+
+{
+ id:"HOT001",
+ category:"hotel",
+ icon:"🏨",
+ name:"HobbiGo Grand Hotel",
+ city:"Jakarta",
+ capacity:250,
+ rating:4.7,
+ price:75000000,
+ locationScore:94,
+ valueScore:93,
+ experienceScore:89
+},
+
+{
+ id:"HOT002",
+ category:"hotel",
+ icon:"🏨",
+ name:"Bali Resort Collection",
+ city:"Bali",
+ capacity:350,
+ rating:4.9,
+ price:105000000,
+ locationScore:97,
+ valueScore:91,
+ experienceScore:98
+},
+
+{
+ id:"HOT003",
+ category:"hotel",
+ icon:"🏨",
+ name:"Singapore Executive Hotel",
+ city:"Singapore",
+ capacity:300,
+ rating:4.8,
+ price:130000000,
+ locationScore:96,
+ valueScore:88,
+ experienceScore:93
+},
+
+{
+ id:"RES001",
+ category:"restaurant",
+ icon:"🍽️",
+ name:"Nusantara Grand Buffet",
+ city:"Jakarta",
+ capacity:500,
+ rating:4.7,
+ price:35000000,
+ locationScore:90,
+ valueScore:96,
+ experienceScore:91
+},
+
+{
+ id:"RES002",
+ category:"restaurant",
+ icon:"🍽️",
+ name:"Bali Sunset Dining",
+ city:"Bali",
+ capacity:300,
+ rating:4.9,
+ price:50000000,
+ locationScore:96,
+ valueScore:90,
+ experienceScore:99
+},
+
+{
+ id:"RES003",
+ category:"restaurant",
+ icon:"🍽️",
+ name:"Singapore Fusion Dining",
+ city:"Singapore",
+ capacity:400,
+ rating:4.8,
+ price:65000000,
+ locationScore:95,
+ valueScore:89,
+ experienceScore:94
+},
+
+{
+ id:"TRN001",
+ category:"transport",
+ icon:"🚐",
+ name:"Corporate Executive Fleet",
+ city:"Jakarta",
+ capacity:120,
+ rating:4.8,
+ price:28000000,
+ locationScore:93,
+ valueScore:94,
+ experienceScore:88
+},
+
+{
+ id:"TRN002",
+ category:"transport",
+ icon:"🚌",
+ name:"Bali Premium Coach Fleet",
+ city:"Bali",
+ capacity:150,
+ rating:4.9,
+ price:35000000,
+ locationScore:95,
+ valueScore:92,
+ experienceScore:97
+},
+
+{
+ id:"TRN003",
+ category:"transport",
+ icon:"🚐",
+ name:"Singapore Business Shuttle",
+ city:"Singapore",
+ capacity:150,
+ rating:4.8,
+ price:42000000,
+ locationScore:97,
+ valueScore:90,
+ experienceScore:92
+},
+
+{
+ id:"ACT001",
+ category:"activity",
+ icon:"🎯",
+ name:"Corporate Team Building",
+ city:"Jakarta",
+ capacity:300,
+ rating:4.8,
+ price:30000000,
+ locationScore:91,
+ valueScore:95,
+ experienceScore:96
+},
+
+{
+ id:"ACT002",
+ category:"activity",
+ icon:"🌴",
+ name:"Bali Team Experience",
+ city:"Bali",
+ capacity:300,
+ rating:4.9,
+ price:45000000,
+ locationScore:97,
+ valueScore:92,
+ experienceScore:100
+},
+
+{
+ id:"ACT003",
+ category:"activity",
+ icon:"🏙️",
+ name:"Singapore City Challenge",
+ city:"Singapore",
+ capacity:250,
+ rating:4.7,
+ price:55000000,
+ locationScore:96,
+ valueScore:88,
+ experienceScore:95
+},
+
+{
+ id:"PRO001",
+ category:"production",
+ icon:"🎤",
+ name:"Corporate Event Production",
+ city:"Jakarta",
+ capacity:1000,
+ rating:4.8,
+ price:45000000,
+ locationScore:90,
+ valueScore:94,
+ experienceScore:91
+},
+
+{
+ id:"PRO002",
+ category:"production",
+ icon:"🎬",
+ name:"Premium Event Production Bali",
+ city:"Bali",
+ capacity:800,
+ rating:4.9,
+ price:60000000,
+ locationScore:95,
+ valueScore:91,
+ experienceScore:98
+}
+
+];
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+function money(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style:"currency",
+      currency:"IDR",
+      maximumFractionDigits:0
+    }
+  ).format(Math.round(value));
+
+}
+
+
+function log(message){
+
+  const el=document.getElementById("log");
+
+  const time=new Date().toLocaleTimeString();
+
+  el.innerHTML +=
+    `<div>[${time}] ${message}</div>`;
+
+  el.scrollTop=el.scrollHeight;
+
+}
+
+
+function getParticipants(){
+
+  return Math.max(
+    1,
+    Number(document.getElementById("participants").value)||1
+  );
+
+}
+
+
+function getCity(){
+
+  return document.getElementById("city").value;
+
+}
+
+
+function getDuration(){
+
+  return Number(
+    document.getElementById("duration").value
+  );
+
+}
+
+
+/* =========================
+   CITY SWITCH
+========================= */
+
+document.getElementById("country")
+.addEventListener("change",function(){
+
+  const country=this.value;
+
+  const cities=cityData[country] || ["Capital City"];
+
+  const citySelect=document.getElementById("city");
+
+  citySelect.innerHTML="";
+
+  cities.forEach(city=>{
+
+    const option=document.createElement("option");
+
+    option.value=city;
+    option.textContent=city;
+
+    citySelect.appendChild(option);
+
+  });
+
+  log("Country changed → "+country);
+
+  searchMarket();
+
+});
+
+
+/* =========================
+   MARKETPLACE RENDER
+========================= */
+
+function searchMarket(){
+
+  const city=getCity();
+
+  const category=
+    document.getElementById("category").value;
+
+  const minRating=
+    Number(document.getElementById("minRating").value);
+
+  let data=marketplaceDB.filter(item=>{
+
+    const cityMatch=
+      item.city===city ||
+      city==="Jakarta" && item.city==="Jakarta";
+
+    const categoryMatch=
+      category==="all" ||
+      item.category===category;
+
+    const ratingMatch=
+      item.rating>=minRating;
+
+    return cityMatch && categoryMatch && ratingMatch;
+
+  });
+
+
+  if(!data.length){
+
+    data=marketplaceDB.filter(item=>
+      item.rating>=minRating
+    );
+
+  }
+
+
+  renderMarketplace(data);
+
+  log(
+    "Marketplace searched → "+
+    city+
+    " / "+
+    category+
+    " / "+
+    data.length+
+    " products"
+  );
+
+}
+
+
+function renderMarketplace(data){
+
+  const container=
+    document.getElementById("marketplace");
+
+  container.innerHTML="";
+
+  data.forEach(item=>{
+
+    const card=document.createElement("div");
+
+    card.className="product";
+
+    card.innerHTML=`
+
+      <div class="product-top">
+
+        <div class="product-icon">
+          ${item.icon}
+        </div>
+
+        <div class="rating">
+          ⭐ ${item.rating}
+        </div>
+
+      </div>
+
+      <h4>${item.name}</h4>
+
+      <p>
+        ${item.city} • Capacity ${item.capacity}
+      </p>
+
+      <p>
+        Category: ${item.category}
+      </p>
+
+      <p class="price">
+        ${money(item.price)}
+      </p>
+
+      <button class="btn primary"
+        onclick="selectProduct('${item.id}')">
+        SELECT
+      </button>
+
+      <button class="btn"
+        onclick="viewProduct('${item.id}')">
+        DETAILS
+      </button>
+
+    `;
+
+    container.appendChild(card);
+
+  });
+
+}
+
+
+/* =========================
+   SELECT PRODUCT
+========================= */
+
+function selectProduct(id){
+
+  const item=
+    marketplaceDB.find(x=>x.id===id);
+
+  if(!item)return;
+
+  state.selected[item.category]=item;
+
+  document
+    .getElementById(
+      "selected"+
+      item.category.charAt(0).toUpperCase()+
+      item.category.slice(1)
+    )
+    .textContent=item.name;
+
+  updateTotal();
+
+  updateEventObject();
+
+  log(
+    "Selected "+
+    item.category+
+    " → "+
+    item.name
+  );
+
+}
+
+
+function viewProduct(id){
+
+  const item=
+    marketplaceDB.find(x=>x.id===id);
+
+  if(!item)return;
+
+  alert(
+    "HOBBIGO PRODUCT\n\n"+
+    item.name+
+    "\n\n"+
+    "City: "+item.city+
+    "\nRating: "+item.rating+
+    "\nCapacity: "+item.capacity+
+    "\nPrice: "+money(item.price)+
+    "\n\nDEMO DATA"
+  );
+
+}
+
+
+/* =========================
+   DYNAMIC COST ENGINE
+   V86.5
+========================= */
+
+function updateTotal(){
+
+  let base=0;
+
+  Object.values(state.selected)
+    .forEach(item=>{
+
+      if(item){
+        base += item.price;
+      }
+
+    });
+
+
+  const participants=getParticipants();
+
+  let multiplier=1;
+
+  if(participants>200){
+    multiplier=1.12;
+  }
+
+  if(participants>500){
+    multiplier=1.25;
+  }
+
+
+  const duration=getDuration();
+
+  let durationFactor=
+    duration<=1 ? 1 :
+    1+(duration-1)*0.15;
+
+
+  const total=
+    base*
+    multiplier*
+    durationFactor;
+
+
+  state.totals.base=base;
+
+  state.totals.total=total;
+
+
+  document.getElementById(
+    "totalPackage"
+  ).textContent=money(total);
+
+
+  updatePackages(total);
+
+  updateInvoice();
+
+  updateEventObject();
+
+}
+
+
+/* =========================
+   PACKAGE BUILDER
+   V86.6
+========================= */
+
+function updatePackages(base){
+
+  document.getElementById(
+    "priceEconomy"
+  ).textContent=
+    money(base*0.75);
+
+  document.getElementById(
+    "priceComfort"
+  ).textContent=
+    money(base);
+
+  document.getElementById(
+    "pricePremium"
+  ).textContent=
+    money(base*1.28);
+
+  document.getElementById(
+    "priceExclusive"
+  ).textContent=
+    money(base*1.65);
+
+}
+
+
+function selectPackage(type){
+
+  state.package=type;
+
+  [
+    "Economy",
+    "Comfort",
+    "Premium",
+    "Exclusive"
+  ].forEach(name=>{
+
+    document
+      .getElementById(
+        "pkg"+name
+      )
+      .classList.remove("active");
+
+  });
+
+
+  const title=
+    type.charAt(0).toUpperCase()+
+    type.slice(1);
+
+  document
+    .getElementById(
+      "pkg"+title
+    )
+    .classList.add("active");
+
+
+  let multiplier=1;
+
+  if(type==="economy")multiplier=.75;
+  if(type==="comfort")multiplier=1;
+  if(type==="premium")multiplier=1.28;
+  if(type==="exclusive")multiplier=1.65;
+
+
+  state.totals.package=
+    state.totals.base*multiplier;
+
+
+  state.totals.total=
+    state.totals.package;
+
+
+  document.getElementById(
+    "totalPackage"
+  ).textContent=
+    money(state.totals.total);
+
+
+  updateInvoice();
+
+  updateEventObject();
+
+  log(
+    "Package selected → "+
+    type.toUpperCase()
+  );
+
+}
+
+
+/* =========================
+   AI SMART MATCH
+   V86.3
+========================= */
+
+function runAI(){
+
+  const participants=getParticipants();
+
+  const budget=
+    document.getElementById("budget").value;
+
+  const event=
+    document.getElementById("eventType").value;
+
+  let match=78;
+
+  if(participants<=300)
+    match+=5;
+
+  if(participants>500)
+    match-=6;
+
+  if(budget==="premium")
+    match+=5;
+
+  if(budget==="exclusive")
+    match+=7;
+
+  if(event.includes("Retreat"))
+    match+=4;
+
+  if(event.includes("Team"))
+    match+=3;
+
+  match=Math.max(
+    50,
+    Math.min(98,match)
+  );
+
+
+  const route=
+    Math.max(
+      65,
+      Math.min(
+        97,
+        match+Math.round(Math.random()*7)-3
+      )
+    );
+
+
+  const confidence=
+    Math.max(
+      72,
+      Math.min(
+        96,
+        match+Math.round(Math.random()*5)
+      )
+    );
+
+
+  const saving=
+    Math.round(
+      Math.max(
+        0,
+        state.totals.base*
+        (0.05+Math.random()*0.12)
+      )
+    );
+
+
+  state.ai.match=match;
+  state.ai.route=route;
+  state.ai.confidence=confidence;
+  state.ai.saving=saving;
+
+
+  document.getElementById(
+    "bestMatch"
+  ).textContent=match+"%";
+
+  document.getElementById(
+    "matchBar"
+  ).style.width=match+"%";
+
+
+  document.getElementById(
+    "routeScore"
+  ).textContent=route+"%";
+
+  document.getElementById(
+    "routeBar"
+  ).style.width=route+"%";
+
+
+  document.getElementById(
+    "confidence"
+  ).textContent=confidence+"%";
+
+  document.getElementById(
+    "confidenceBar"
+  ).style.width=confidence+"%";
+
+
+  document.getElementById(
+    "saving"
+  ).textContent=money(saving);
+
+
+  document.getElementById(
+    "aiMessage"
+  ).innerHTML=`
+
+    <strong>AI Smart Match Result</strong><br><br>
+
+    Destination:
+    <b>${getCity()}</b><br>
+
+    Event:
+    <b>${event}</b><br>
+
+    Participants:
+    <b>${participants}</b><br>
+
+    AI recommends optimizing the package around
+    venue capacity, hotel location, transport efficiency,
+    food theme and activity experience.
+
+    <br><br>
+
+    <b>Recommendation:</b>
+    ${confidence>=85 ?
+      "HIGH CONFIDENCE PACKAGE" :
+      "GOOD MATCH — REVIEW OPTIONS"}
+
+  `;
+
+
+  updateCompare();
+
+  log(
+    "AI Smart Match executed → "+
+    match+
+    "% match"
+  );
+
+}
+
+
+/* =========================
+   AI COMPARE
+   V86.6
+========================= */
+
+function updateCompare(){
+
+  const city=getCity();
+
+  let data=
+    marketplaceDB.filter(
+      x=>x.city===city
+    );
+
+
+  if(!data.length)
+    data=marketplaceDB;
+
+
+  const cheapest=
+    [...data]
+      .sort((a,b)=>a.price-b.price)[0];
+
+  const value=
+    [...data]
+      .sort((a,b)=>b.valueScore-a.valueScore)[0];
+
+  const location=
+    [...data]
+      .sort((a,b)=>b.locationScore-a.locationScore)[0];
+
+  const experience=
+    [...data]
+      .sort((a,b)=>b.experienceScore-a.experienceScore)[0];
+
+  const corporate=
+    [...data]
+      .sort((a,b)=>
+        (
+          b.rating+
+          b.valueScore/20+
+          b.capacity/1000
+        )-
+        (
+          a.rating+
+          a.valueScore/20+
+          a.capacity/1000
+        )
+      )[0];
+
+
+  document.getElementById(
+    "bestPrice"
+  ).textContent=
+    cheapest ? cheapest.name.split(" ")[0] : "--";
+
+
+  document.getElementById(
+    "bestValue"
+  ).textContent=
+    value ? value.name.split(" ")[0] : "--";
+
+
+  document.getElementById(
+    "bestLocation"
+  ).textContent=
+    location ? location.name.split(" ")[0] : "--";
+
+
+  document.getElementById(
+    "bestExperience"
+  ).textContent=
+    experience ? experience.name.split(" ")[0] : "--";
+
+
+  document.getElementById(
+    "corporateChoice"
+  ).textContent=
+    corporate ? corporate.name.split(" ")[0] : "--";
+
+}
+
+
+/* =========================
+   AVAILABILITY
+   V86.7
+========================= */
+
+function checkAvailability(type){
+
+  const statuses=[
+    "● AVAILABLE",
+    "● LIMITED",
+    "● REQUEST REQUIRED"
+  ];
+
+  const status=
+    statuses[
+      Math.floor(
+        Math.random()*statuses.length
+      )
+    ];
+
+
+  const map={
+    Venue:"availabilityVenue",
+    Hotel:"availabilityHotel",
+    Transport:"availabilityTransport"
+  };
+
+
+  document.getElementById(
+    map[type]
+  ).textContent=status;
+
+
+  log(
+    "Availability checked → "+
+    type+
+    " → "+
+    status
+  );
+
+}
+
+
+/* =========================
+   BOOKING
+   V86.8
+========================= */
+
+function generateBookingId(){
+
+  const date=
+    new Date()
+    .toISOString()
+    .slice(0,10)
+    .replaceAll("-","");
+
+  const random=
+    Math.floor(
+      10000+
+      Math.random()*90000
+    );
+
+  return "HBG-"+date+"-"+random;
+
+}
+
+
+function createBooking(){
+
+  const customer=
+    document.getElementById(
+      "customer"
+    ).value.trim();
+
+
+  if(!customer){
+
+    alert(
+      "Masukkan nama customer/company terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  state.bookingId=
+    generateBookingId();
+
+  state.paymentStatus=
+    "UNPAID";
+
+
+  document.getElementById(
+    "bookingResult"
+  ).classList.remove("hidden");
+
+
+  document.getElementById(
+    "bookingResult"
+  ).innerHTML=`
+
+    <strong>BOOKING CREATED</strong><br><br>
+
+    Booking ID:
+    <b>${state.bookingId}</b><br>
+
+    Customer:
+    <b>${customer}</b><br>
+
+    Status:
+    <b>WAITING PAYMENT</b>
+
+  `;
+
+
+  updateInvoice();
+
+  log(
+    "Booking created → "+
+    state.bookingId
+  );
+
+}
+
+
+/* =========================
+   PAYMENT
+========================= */
+
+function processPayment(){
+
+  if(!state.bookingId){
+
+    alert(
+      "Create booking terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  state.paymentStatus=
+    "PAYMENT CONFIRMED";
+
+
+  document.getElementById(
+    "invoicePayment"
+  ).textContent=
+    state.paymentStatus;
+
+
+  const result=
+    document.getElementById(
+      "bookingResult"
+    );
+
+
+  result.classList.remove("hidden");
+
+  result.innerHTML=`
+
+    <strong>PAYMENT DEMO SUCCESS</strong><br><br>
+
+    Booking:
+    <b>${state.bookingId}</b><br>
+
+    Amount:
+    <b>${money(state.totals.total)}</b><br>
+
+    Status:
+    <b>PAYMENT CONFIRMED</b><br><br>
+
+    Production version:
+    payment gateway API akan dipanggil
+    melalui backend HobbiGo.
+
+  `;
+
+
+  log(
+    "Payment processed → "+
+    state.bookingId
+  );
+
+}
+
+
+/* =========================
+   INVOICE
+========================= */
+
+function updateInvoice(){
+
+  document.getElementById(
+    "invoiceBooking"
+  ).textContent=
+    state.bookingId || "-";
+
+
+  document.getElementById(
+    "invoiceCustomer"
+  ).textContent=
+    document.getElementById(
+      "customer"
+    ).value || "-";
+
+
+  document.getElementById(
+    "invoiceDestination"
+  ).textContent=
+    getCity();
+
+
+  document.getElementById(
+    "invoiceParticipants"
+  ).textContent=
+    getParticipants();
+
+
+  document.getElementById(
+    "invoicePackage"
+  ).textContent=
+    state.package.toUpperCase();
+
+
+  document.getElementById(
+    "invoicePayment"
+  ).textContent=
+    state.paymentStatus;
+
+
+  document.getElementById(
+    "invoiceTotal"
+  ).textContent=
+    money(state.totals.total);
+
+}
+
+
+/* =========================
+   EVENT OBJECT
+========================= */
+
+function updateEventObject(){
+
+  const object={
+
+    platform:"HobbiGo",
+
+    version:"V86 MASTER",
+
+    mode:"DEMO",
+
+    country:
+      document.getElementById(
+        "country"
+      ).value,
+
+    city:getCity(),
+
+    eventType:
+      document.getElementById(
+        "eventType"
+      ).value,
+
+    eventDate:
+      document.getElementById(
+        "eventDate"
+      ).value,
+
+    participants:
+      getParticipants(),
+
+    duration:
+      getDuration(),
+
+    budget:
+      document.getElementById(
+        "budget"
+      ).value,
+
+    foodTheme:
+      document.getElementById(
+        "foodTheme"
+      ).value,
+
+    specialRequirement:
+      document.getElementById(
+        "specialReq"
+      ).value,
+
+    package:
+      state.package,
+
+    selected:{
+
+      venue:
+        state.selected.venue?.name || null,
+
+      hotel:
+        state.selected.hotel?.name || null,
+
+      restaurant:
+        state.selected.restaurant?.name || null,
+
+      transport:
+        state.selected.transport?.name || null,
+
+      activity:
+        state.selected.activity?.name || null,
+
+      production:
+        state.selected.production?.name || null
+
+    },
+
+    totalEstimate:
+      state.totals.total,
+
+    ai:state.ai,
+
+    booking:{
+
+      bookingId:
+        state.bookingId,
+
+      paymentStatus:
+        state.paymentStatus
+
+    }
+
+  };
+
+
+  document.getElementById(
+    "eventJSON"
+  ).textContent=
+    JSON.stringify(
+      object,
+      null,
+      2
+    );
+
+}
+
+
+/* =========================
+   API CONNECTOR
+   V86.2
+========================= */
+
+function testAPI(){
+
+  const base=
+    document.getElementById(
+      "apiBase"
+    ).value;
+
+
+  const status=
+    document.getElementById(
+      "apiStatus"
+    );
+
+
+  status.className=
+    "status demo";
+
+  status.textContent=
+    "DEMO TEST: Connector architecture ready → "+
+    base;
+
+
+  log(
+    "API architecture tested → "+
+    base
+  );
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetEngine(){
+
+  state.selected={
+    venue:null,
+    hotel:null,
+    restaurant:null,
+    transport:null,
+    activity:null,
+    production:null
+  };
+
+
+  state.totals={
+    base:0,
+    package:0,
+    total:0
+  };
+
+
+  state.bookingId=null;
+
+  state.paymentStatus="UNPAID";
+
+  state.package="comfort";
+
+
+  [
+    ["selectedVenue","Not selected"],
+    ["selectedHotel","Not selected"],
+    ["selectedRestaurant","Not selected"],
+    ["selectedTransport","Not selected"],
+    ["selectedActivity","Not selected"],
+    ["selectedProduction","Not selected"]
+  ]
+  .forEach(item=>{
+
+    document.getElementById(
+      item[0]
+    ).textContent=item[1];
+
+  });
+
+
+  document.getElementById(
+    "totalPackage"
+  ).textContent="Rp 0";
+
+
+  document.getElementById(
+    "bookingResult"
+  ).classList.add("hidden");
+
+
+  updateInvoice();
+
+  updateEventObject();
+
+  log("Engine reset.");
+
+}
+
+
+/* =========================
+   CUSTOMER LIVE UPDATE
+========================= */
+
+document.getElementById(
+  "customer"
+).addEventListener(
+  "input",
+  updateInvoice
+);
+
+
+/* =========================
+   PARTICIPANT UPDATE
+========================= */
+
+document.getElementById(
+  "participants"
+).addEventListener(
+  "input",
+  function(){
+
+    updateTotal();
+
+    updateEventObject();
+
+  }
+);
+
+
+/* =========================
+   DURATION UPDATE
+========================= */
+
+document.getElementById(
+  "duration"
+).addEventListener(
+  "change",
+  function(){
+
+    updateTotal();
+
+    updateEventObject();
+
+  }
+);
+
+
+/* =========================
+   CITY UPDATE
+========================= */
+
+document.getElementById(
+  "city"
+).addEventListener(
+  "change",
+  function(){
+
+    searchMarket();
+
+    updateCompare();
+
+    updateEventObject();
+
+  }
+);
+
+
+/* =========================
+   PACKAGE DATA
+========================= */
+
+function initialPackageSetup(){
+
+  const base=100000000;
+
+  updatePackages(base);
+
+}
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
+
+function init(){
+
+  const date=
+    new Date();
+
+  date.setDate(
+    date.getDate()+14
+  );
+
+  document.getElementById(
+    "eventDate"
+  ).value=
+    date.toISOString()
+    .split("T")[0];
+
+
+  document.getElementById(
+    "cityCount"
+  ).textContent=
+    "12+";
+
+
+  document.getElementById(
+    "productCount"
+  ).textContent=
+    marketplaceDB.length+"+";
+
+
+  renderMarketplace(
+    marketplaceDB
+  );
+
+
+  initialPackageSetup();
+
+  updateTotal();
+
+  updateCompare();
+
+  updateEventObject();
+
+  log(
+    "HobbiGo V86 MASTER initialized."
+  );
+
+  log(
+    "V86.1 Global Data Engine READY."
+  );
+
+  log(
+    "V86.2 API Connector READY."
+  );
+
+  log(
+    "V86.3 AI Smart Match READY."
+  );
+
+  log(
+    "V86.4 Smart Route 2.0 READY."
+  );
+
+  log(
+    "V86.5 Dynamic Package READY."
+  );
+
+  log(
+    "V86.6 AI Compare READY."
+  );
+
+  log(
+    "V86.7 Availability Architecture READY."
+  );
+
+  log(
+    "V86.8 Booking + Payment READY."
+  );
+
+  log(
+    "V86.9 AI Control Center READY."
+  );
+
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
