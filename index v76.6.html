@@ -1,1 +1,1728 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>HobbiGo V76.6 - Real Google Map</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:#071a35;
+    color:#fff;
+    padding:15px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#35d49a;
+}
+
+.version{
+    background:#12355c;
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#071a35,#0d477b);
+    color:white;
+    padding:28px;
+    border-radius:18px;
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    opacity:.9;
+    line-height:1.5;
+}
+
+.card{
+    background:#fff;
+    border-radius:17px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card h2{
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.field label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    color:#667085;
+    margin-bottom:6px;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d8dee9;
+    border-radius:10px;
+    background:#fff;
+    font-size:14px;
+}
+
+.buttons{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.primary{
+    background:#0878ff;
+    color:#fff;
+}
+
+.green{
+    background:#19a974;
+    color:#fff;
+}
+
+.dark{
+    background:#071a35;
+    color:#fff;
+}
+
+.status{
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#eef5ff;
+    color:#31567c;
+    font-size:13px;
+}
+
+.api-box{
+    background:#fff8e6;
+    border:1px solid #f2d38a;
+    color:#735711;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:15px;
+    font-size:13px;
+}
+
+#map{
+    width:100%;
+    height:560px;
+    border-radius:14px;
+    overflow:hidden;
+    background:#dbeaf1;
+}
+
+.map-placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:25px;
+    background:
+        linear-gradient(
+            135deg,
+            #dcefe3,
+            #d4e9f1
+        );
+}
+
+.placeholder-inner{
+    background:#fff;
+    padding:25px;
+    border-radius:15px;
+    max-width:500px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
+
+.placeholder-inner h3{
+    margin-bottom:10px;
+}
+
+.placeholder-inner p{
+    font-size:13px;
+    line-height:1.6;
+    color:#667085;
+}
+
+.route-info{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+.info{
+    background:#f5f8fc;
+    padding:14px;
+    border-radius:10px;
+}
+
+.info small{
+    color:#667085;
+    display:block;
+    margin-bottom:5px;
+}
+
+.info strong{
+    font-size:18px;
+}
+
+.points{
+    margin-top:5px;
+}
+
+.point{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 5px;
+    border-bottom:1px solid #edf0f5;
+}
+
+.number{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    background:#071a35;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.point-content{
+    flex:1;
+}
+
+.point-content strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.point-content span{
+    color:#667085;
+    font-size:12px;
+}
+
+.coord{
+    font-size:11px;
+    color:#7b8494;
+}
+
+.footer{
+    text-align:center;
+    padding:25px;
+    color:#667085;
+    font-size:12px;
+}
+
+@media(max-width:850px){
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .route-info{
+        grid-template-columns:1fr 1fr;
+    }
+
+    #map{
+        height:470px;
+    }
+}
+
+@media(max-width:550px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .route-info{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+
+    #map{
+        height:430px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        HOBBI<span>GO</span>
+    </div>
+
+    <div class="version">
+        V76.6 • REAL GOOGLE MAP
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <section class="hero">
+
+        <h1>
+            AI Journey & Experience Marketplace
+        </h1>
+
+        <p>
+            Real Location • Real Coordinates • Real Road Route
+        </p>
+
+    </section>
+
+
+    <!-- TRIP SELECTION -->
+
+    <section class="card">
+
+        <h2>
+            🧭 HobbiGo Smart Journey
+        </h2>
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>
+                    ✈️ ARRIVAL
+                </label>
+
+                <select id="arrival">
+
+                    <option value="airport">
+                        Ngurah Rai International Airport (DPS)
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    🚗 TRANSPORT
+                </label>
+
+                <select id="transport">
+
+                    <option value="rental">
+                        Bali Car Rental
+                    </option>
+
+                    <option value="driver">
+                        Private Driver
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    🏨 HOTEL
+                </label>
+
+                <select id="hotel">
+
+                    <option value="seminyak">
+                        Hotel Seminyak
+                    </option>
+
+                    <option value="ubud">
+                        Hotel Ubud
+                    </option>
+
+                    <option value="nusadua">
+                        Hotel Nusa Dua
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    🍽️ RESTAURANT
+                </label>
+
+                <select id="restaurant">
+
+                    <option value="seminyakRestaurant">
+                        Restaurant Seminyak
+                    </option>
+
+                    <option value="cangguRestaurant">
+                        Restaurant Canggu
+                    </option>
+
+                    <option value="ubudRestaurant">
+                        Restaurant Ubud
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button
+                class="primary"
+                onclick="generateRealRoute()">
+
+                🗺️ GENERATE REAL ROUTE
+
+            </button>
+
+
+            <button
+                class="green"
+                onclick="fitRoute()">
+
+                ⛶ FIT ROUTE
+
+            </button>
+
+
+            <button
+                class="dark"
+                onclick="resetJourney()">
+
+                ↻ RESET
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="status"
+            class="status">
+
+            Menunggu Google Maps...
+
+        </div>
+
+    </section>
+
+
+    <!-- API INFORMATION -->
+
+    <section class="card">
+
+        <div class="api-box">
+
+            <strong>Google Maps API:</strong>
+
+            Kode ini sudah disiapkan untuk
+            Google Maps JavaScript API + Directions API.
+
+            Untuk mengaktifkan peta real,
+            isi API key pada variabel
+            <b>GOOGLE_MAPS_API_KEY</b>
+            di bagian JavaScript.
+
+        </div>
+
+
+        <!-- REAL MAP -->
+
+        <div id="map">
+
+            <div
+                class="map-placeholder">
+
+                <div
+                    class="placeholder-inner">
+
+                    <h3>
+                        🗺️ HobbiGo Real Map
+                    </h3>
+
+                    <p>
+                        Google Maps akan tampil di area ini
+                        setelah Google Maps API key dimasukkan.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Target:
+                        Airport → Hotel → Restaurant
+                        dengan jalan/rute sebenarnya.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ROUTE INFORMATION -->
+
+        <div class="route-info">
+
+            <div class="info">
+
+                <small>
+                    Total Distance
+                </small>
+
+                <strong id="distance">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <small>
+                    Travel Time
+                </small>
+
+                <strong id="duration">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <small>
+                    Journey Points
+                </small>
+
+                <strong id="pointCount">
+                    3
+                </strong>
+
+            </div>
+
+
+            <div class="info">
+
+                <small>
+                    Map Status
+                </small>
+
+                <strong id="mapState">
+                    Waiting
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- JOURNEY POINTS -->
+
+    <section class="card">
+
+        <h2>
+            📍 Journey Coordinates
+        </h2>
+
+        <div
+            id="points"
+            class="points">
+        </div>
+
+    </section>
+
+</div>
+
+
+<div class="footer">
+
+    HOBBIGO • AI Journey & Experience Marketplace<br>
+    V76.6 Real Google Map + Smart Route
+
+</div>
+
+
+<script>
+
+/*
+=========================================================
+HOBBIGO V76.6
+REAL GOOGLE MAP + DIRECTIONS
+=========================================================
+*/
+
+
+/*
+=========================================================
+1. GOOGLE MAPS API KEY
+=========================================================
+
+KOSONGKAN UNTUK SEKARANG.
+
+Contoh nanti:
+
+const GOOGLE_MAPS_API_KEY =
+"AIzaSyXXXXXXXXXXXXXXXX";
+
+Jangan menggunakan API key production
+secara terbuka di W3Schools.
+=========================================================
+*/
+
+const GOOGLE_MAPS_API_KEY = "";
+
+
+/*
+=========================================================
+2. HOBBIGO LOCATIONS
+=========================================================
+
+Koordinat contoh nyata Bali.
+
+Nanti data ini dapat diganti dengan:
+
+Google Places
+Hotel API
+Restaurant API
+Partner API
+HobbiGo Database
+Admin Dashboard
+=========================================================
+*/
+
+const locations = {
+
+    airport:{
+
+        name:
+        "Ngurah Rai International Airport",
+
+        type:
+        "Airport / Arrival",
+
+        icon:
+        "✈️",
+
+        lat:
+        -8.7467,
+
+        lng:
+        115.1668
+
+    },
+
+
+    seminyak:{
+
+        name:
+        "Hotel Seminyak",
+
+        type:
+        "Hotel",
+
+        icon:
+        "🏨",
+
+        lat:
+        -8.6916,
+
+        lng:
+        115.1685
+
+    },
+
+
+    ubud:{
+
+        name:
+        "Hotel Ubud",
+
+        type:
+        "Hotel",
+
+        icon:
+        "🏨",
+
+        lat:
+        -8.5069,
+
+        lng:
+        115.2625
+
+    },
+
+
+    nusadua:{
+
+        name:
+        "Hotel Nusa Dua",
+
+        type:
+        "Hotel",
+
+        icon:
+        "🏨",
+
+        lat:
+        -8.8005,
+
+        lng:
+        115.2278
+
+    },
+
+
+    seminyakRestaurant:{
+
+        name:
+        "Restaurant Seminyak",
+
+        type:
+        "Restaurant",
+
+        icon:
+        "🍽️",
+
+        lat:
+        -8.6805,
+
+        lng:
+        115.1548
+
+    },
+
+
+    cangguRestaurant:{
+
+        name:
+        "Restaurant Canggu",
+
+        type:
+        "Restaurant",
+
+        icon:
+        "🍽️",
+
+        lat:
+        -8.6478,
+
+        lng:
+        115.1385
+
+    },
+
+
+    ubudRestaurant:{
+
+        name:
+        "Restaurant Ubud",
+
+        type:
+        "Restaurant",
+
+        icon:
+        "🍽️",
+
+        lat:
+        -8.5060,
+
+        lng:
+        115.2620
+
+    }
+
+};
+
+
+/*
+=========================================================
+3. GOOGLE MAP VARIABLES
+=========================================================
+*/
+
+let map = null;
+
+let directionsService = null;
+
+let directionsRenderer = null;
+
+let markers = [];
+
+let currentRoute = [];
+
+
+/*
+=========================================================
+4. INITIALIZE GOOGLE MAP
+=========================================================
+*/
+
+function initMap(){
+
+    const defaultCenter = {
+
+        lat:
+        -8.4095,
+
+        lng:
+        115.1889
+
+    };
+
+
+    map = new google.maps.Map(
+
+        document.getElementById("map"),
+
+        {
+
+            center:
+            defaultCenter,
+
+            zoom:
+            10,
+
+            mapTypeControl:
+            true,
+
+            streetViewControl:
+            false,
+
+            fullscreenControl:
+            true,
+
+            zoomControl:
+            true
+
+        }
+
+    );
+
+
+    directionsService =
+        new google.maps.DirectionsService();
+
+
+    directionsRenderer =
+        new google.maps.DirectionsRenderer({
+
+            map:
+            map,
+
+            suppressMarkers:
+            true,
+
+            polylineOptions:{
+
+                strokeColor:
+                "#0878ff",
+
+                strokeOpacity:
+                0.9,
+
+                strokeWeight:
+                6
+
+            }
+
+        });
+
+
+    setStatus(
+        "Google Maps aktif. Silakan generate route.",
+        true
+    );
+
+
+    document.getElementById(
+        "mapState"
+    ).innerText =
+        "READY";
+
+
+    generateRealRoute();
+
+}
+
+
+/*
+=========================================================
+5. GENERATE REAL ROUTE
+=========================================================
+*/
+
+function generateRealRoute(){
+
+    const hotelKey =
+        document.getElementById(
+            "hotel"
+        ).value;
+
+
+    const restaurantKey =
+        document.getElementById(
+            "restaurant"
+        ).value;
+
+
+    const airport =
+        locations.airport;
+
+
+    const hotel =
+        locations[hotelKey];
+
+
+    const restaurant =
+        locations[restaurantKey];
+
+
+    currentRoute = [
+
+        airport,
+
+        hotel,
+
+        restaurant
+
+    ];
+
+
+    renderJourneyPoints();
+
+
+    if(!map || !directionsService){
+
+        setStatus(
+            "Google Maps belum aktif. Masukkan API key terlebih dahulu.",
+            false
+        );
+
+        return;
+
+    }
+
+
+    clearMarkers();
+
+
+    /*
+    Create real route request.
+    */
+
+    const request = {
+
+        origin:{
+
+            lat:
+            airport.lat,
+
+            lng:
+            airport.lng
+
+        },
+
+
+        destination:{
+
+            lat:
+            restaurant.lat,
+
+            lng:
+            restaurant.lng
+
+        },
+
+
+        waypoints:[
+
+            {
+
+                location:{
+
+                    lat:
+                    hotel.lat,
+
+                    lng:
+                    hotel.lng
+
+                },
+
+                stopover:
+                true
+
+            }
+
+        ],
+
+
+        travelMode:
+        google.maps.TravelMode.DRIVING,
+
+
+        optimizeWaypoints:
+        false
+
+    };
+
+
+    setStatus(
+        "Menghitung jalan dan rute sebenarnya...",
+        true
+    );
+
+
+    directionsService.route(
+
+        request,
+
+        function(result,status){
+
+            if(
+                status ===
+                "OK"
+            ){
+
+                directionsRenderer.setDirections(
+                    result
+                );
+
+
+                renderMarkers();
+
+
+                calculateRouteSummary(
+                    result
+                );
+
+
+                setStatus(
+                    "REAL ROAD ROUTE berhasil dibuat.",
+                    true
+                );
+
+
+                document.getElementById(
+                    "mapState"
+                ).innerText =
+                    "REAL ROUTE";
+
+            }
+
+            else{
+
+                setStatus(
+                    "Route gagal: " + status,
+                    false
+                );
+
+
+                document.getElementById(
+                    "mapState"
+                ).innerText =
+                    "ERROR";
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/*
+=========================================================
+6. MARKERS
+=========================================================
+*/
+
+function renderMarkers(){
+
+    clearMarkers();
+
+
+    currentRoute.forEach(
+
+        function(location,index){
+
+            const marker =
+                new google.maps.Marker({
+
+                    position:{
+
+                        lat:
+                        location.lat,
+
+                        lng:
+                        location.lng
+
+                    },
+
+                    map:
+                    map,
+
+                    label:{
+
+                        text:
+                        String(index+1),
+
+                        color:
+                        "white",
+
+                        fontWeight:
+                        "bold"
+
+                    },
+
+                    title:
+                    location.name
+
+                });
+
+
+            const infoWindow =
+                new google.maps.InfoWindow({
+
+                    content:
+
+                    "<div style='padding:8px'>" +
+
+                    "<strong>" +
+
+                    location.icon +
+                    " " +
+                    location.name +
+
+                    "</strong><br>" +
+
+                    "<small>" +
+
+                    location.type +
+
+                    "</small><br><br>" +
+
+                    "Lat: " +
+                    location.lat +
+
+                    "<br>" +
+
+                    "Lng: " +
+                    location.lng +
+
+                    "</div>"
+
+                });
+
+
+            marker.addListener(
+                "click",
+                function(){
+
+                    infoWindow.open({
+
+                        anchor:
+                        marker,
+
+                        map:
+                        map
+
+                    });
+
+                }
+            );
+
+
+            markers.push(
+                marker
+            );
+
+        }
+
+    );
+
+}
+
+
+/*
+=========================================================
+7. CLEAR MARKERS
+=========================================================
+*/
+
+function clearMarkers(){
+
+    markers.forEach(
+
+        function(marker){
+
+            marker.setMap(
+                null
+            );
+
+        }
+
+    );
+
+
+    markers = [];
+
+}
+
+
+/*
+=========================================================
+8. ROUTE SUMMARY
+=========================================================
+*/
+
+function calculateRouteSummary(
+    result
+){
+
+    let totalDistance =
+        0;
+
+
+    let totalDuration =
+        0;
+
+
+    const legs =
+        result.routes[0].legs;
+
+
+    legs.forEach(
+
+        function(leg){
+
+            totalDistance +=
+                leg.distance.value;
+
+
+            totalDuration +=
+                leg.duration.value;
+
+        }
+
+    );
+
+
+    const km =
+        totalDistance /
+        1000;
+
+
+    const minutes =
+        Math.round(
+            totalDuration /
+            60
+        );
+
+
+    document.getElementById(
+        "distance"
+    ).innerText =
+        km.toFixed(1) +
+        " km";
+
+
+    document.getElementById(
+        "duration"
+    ).innerText =
+        formatDuration(
+            minutes
+        );
+
+}
+
+
+/*
+=========================================================
+9. FORMAT TIME
+=========================================================
+*/
+
+function formatDuration(
+    minutes
+){
+
+    if(minutes < 60){
+
+        return minutes +
+            " min";
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    const remaining =
+        minutes %
+        60;
+
+
+    return hours +
+        " hr " +
+        remaining +
+        " min";
+
+}
+
+
+/*
+=========================================================
+10. FIT ROUTE
+=========================================================
+*/
+
+function fitRoute(){
+
+    if(
+        !map ||
+        currentRoute.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    const bounds =
+        new google.maps.LatLngBounds();
+
+
+    currentRoute.forEach(
+
+        function(location){
+
+            bounds.extend({
+
+                lat:
+                location.lat,
+
+                lng:
+                location.lng
+
+            });
+
+        }
+
+    );
+
+
+    map.fitBounds(
+        bounds
+    );
+
+}
+
+
+/*
+=========================================================
+11. JOURNEY POINT LIST
+=========================================================
+*/
+
+function renderJourneyPoints(){
+
+    const container =
+        document.getElementById(
+            "points"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    currentRoute.forEach(
+
+        function(location,index){
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "point";
+
+
+            row.innerHTML = `
+
+                <div class="number">
+                    ${index + 1}
+                </div>
+
+                <div class="point-content">
+
+                    <strong>
+                        ${location.icon}
+                        ${location.name}
+                    </strong>
+
+                    <span>
+                        ${location.type}
+                    </span>
+
+                </div>
+
+                <div class="coord">
+
+                    ${location.lat.toFixed(5)}
+                    <br>
+                    ${location.lng.toFixed(5)}
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+
+    );
+
+
+    document.getElementById(
+        "pointCount"
+    ).innerText =
+        currentRoute.length;
+
+}
+
+
+/*
+=========================================================
+12. RESET
+=========================================================
+*/
+
+function resetJourney(){
+
+    document.getElementById(
+        "hotel"
+    ).value =
+        "seminyak";
+
+
+    document.getElementById(
+        "restaurant"
+    ).value =
+        "seminyakRestaurant";
+
+
+    currentRoute = [
+
+        locations.airport,
+
+        locations.seminyak,
+
+        locations.seminyakRestaurant
+
+    ];
+
+
+    renderJourneyPoints();
+
+
+    if(
+        directionsRenderer
+    ){
+
+        directionsRenderer.setDirections(
+            {
+                routes:[]
+            }
+        );
+
+    }
+
+
+    clearMarkers();
+
+
+    if(map){
+
+        map.setCenter({
+
+            lat:
+            -8.4095,
+
+            lng:
+            115.1889
+
+        });
+
+
+        map.setZoom(
+            10
+        );
+
+    }
+
+
+    document.getElementById(
+        "distance"
+    ).innerText =
+        "-";
+
+
+    document.getElementById(
+        "duration"
+    ).innerText =
+        "-";
+
+
+    document.getElementById(
+        "mapState"
+    ).innerText =
+        "READY";
+
+}
+
+
+/*
+=========================================================
+13. STATUS
+=========================================================
+*/
+
+function setStatus(
+    message,
+    success
+){
+
+    const element =
+        document.getElementById(
+            "status"
+        );
+
+
+    element.innerText =
+        message;
+
+
+    if(success){
+
+        element.style.background =
+            "#ecfdf3";
+
+        element.style.color =
+            "#087443";
+
+    }
+
+    else{
+
+        element.style.background =
+            "#fff3f3";
+
+        element.style.color =
+            "#b42318";
+
+    }
+
+}
+
+
+/*
+=========================================================
+14. GOOGLE MAPS LOADER
+=========================================================
+*/
+
+function loadGoogleMaps(){
+
+    /*
+    API key belum dimasukkan.
+    Jangan load Google Maps.
+    */
+
+    if(
+        !GOOGLE_MAPS_API_KEY
+    ){
+
+        setStatus(
+
+            "Mode DEMO: Google Maps API key belum dimasukkan. Masukkan key untuk mengaktifkan REAL MAP.",
+
+            false
+
+        );
+
+        document.getElementById(
+            "mapState"
+        ).innerText =
+            "API KEY NEEDED";
+
+        return;
+
+    }
+
+
+    const script =
+        document.createElement(
+            "script"
+        );
+
+
+    script.src =
+        "https://maps.googleapis.com/maps/api/js?key=" +
+
+        encodeURIComponent(
+            GOOGLE_MAPS_API_KEY
+        ) +
+
+        "&callback=initMap";
+
+
+    script.async =
+        true;
+
+
+    script.defer =
+        true;
+
+
+    script.onerror =
+        function(){
+
+            setStatus(
+                "Google Maps API gagal dimuat. Periksa API key dan API yang diaktifkan.",
+                false
+            );
+
+        };
+
+
+    document.head.appendChild(
+        script
+    );
+
+}
+
+
+/*
+=========================================================
+15. INITIAL LOAD
+=========================================================
+*/
+
+window.addEventListener(
+
+    "load",
+
+    function(){
+
+        currentRoute = [
+
+            locations.airport,
+
+            locations.seminyak,
+
+            locations.seminyakRestaurant
+
+        ];
+
+
+        renderJourneyPoints();
+
+
+        loadGoogleMaps();
+
+    }
+
+);
+
+</script>
+
+</body>
+</html>
