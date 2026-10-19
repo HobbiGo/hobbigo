@@ -1,1 +1,1685 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V83.6 - Corporate Complete Package Engine</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#061936,#0b55ad);
+    color:white;
+    padding:22px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+.header-wrap{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.logo{
+    font-size:29px;
+    font-weight:800;
+}
+
+.logo span{color:#36d2ff}
+
+.version{
+    font-size:12px;
+    opacity:.8;
+    margin-top:4px;
+}
+
+.badge{
+    background:#36d2ff;
+    color:#05234c;
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1250px;
+    margin:25px auto;
+    padding:0 16px;
+}
+
+.hero{
+    background:white;
+    border-radius:20px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 8px 28px rgba(0,0,0,.06);
+}
+
+.hero h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#69758a;
+    line-height:1.6;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 7px 25px rgba(0,0,0,.055);
+}
+
+.card h2{
+    margin-bottom:16px;
+    font-size:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group.full{
+    grid-column:1/-1;
+}
+
+label{
+    font-size:13px;
+    font-weight:bold;
+    color:#3e4b61;
+    margin-bottom:7px;
+}
+
+input,select{
+    padding:12px;
+    border:1px solid #d8dfeb;
+    border-radius:10px;
+    font-size:14px;
+    outline:none;
+}
+
+input:focus,select:focus{
+    border-color:#1478ff;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:13px 18px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:14px;
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{background:#0969ff;color:white}
+.btn-success{background:#16a36a;color:white}
+.btn-dark{background:#172033;color:white}
+.btn-warning{background:#f0a020;color:white}
+.btn-light{background:#edf2f8;color:#24344d}
+
+.package-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    margin-top:18px;
+}
+
+.package-module{
+    border:1px solid #e0e6ef;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+    background:#fafcff;
+}
+
+.package-module .icon{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.package-module h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.package-module p{
+    color:#778399;
+    font-size:11px;
+}
+
+.ai-panel{
+    background:linear-gradient(135deg,#eef7ff,#f8fcff);
+    border:1px solid #cce6ff;
+    border-radius:16px;
+    padding:20px;
+}
+
+.ai-panel h3{
+    color:#0757ad;
+    margin-bottom:8px;
+}
+
+.ai-result{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:16px;
+}
+
+.ai-box{
+    background:white;
+    border:1px solid #dfe7f2;
+    border-radius:14px;
+    padding:16px;
+}
+
+.ai-box h3{
+    font-size:15px;
+    color:#172033;
+}
+
+.ai-price{
+    font-size:22px;
+    font-weight:800;
+    color:#095bc4;
+    margin-top:8px;
+}
+
+.selection-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.option{
+    border:1px solid #e0e6ef;
+    border-radius:15px;
+    padding:17px;
+    background:white;
+}
+
+.option.selected{
+    border:2px solid #0969ff;
+    background:#f5faff;
+}
+
+.option-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.option-icon{
+    font-size:34px;
+}
+
+.option h3{
+    margin-top:8px;
+    font-size:16px;
+}
+
+.option p{
+    color:#6f7b90;
+    font-size:12px;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+.option-price{
+    font-size:20px;
+    font-weight:800;
+    color:#095bc4;
+    margin:12px 0;
+}
+
+.tag{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:8px;
+    background:#eaf7ef;
+    color:#087344;
+    font-size:10px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.cost-section{
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:20px;
+}
+
+.cost-list{
+    border:1px solid #e1e6ef;
+    border-radius:14px;
+    overflow:hidden;
+}
+
+.cost-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px;
+    border-bottom:1px solid #edf0f5;
+    font-size:14px;
+}
+
+.cost-row:last-child{
+    border-bottom:0;
+}
+
+.cost-total{
+    background:#eef6ff;
+    display:flex;
+    justify-content:space-between;
+    padding:17px;
+    font-size:21px;
+    font-weight:800;
+    color:#0757ad;
+}
+
+.cost-side{
+    background:linear-gradient(135deg,#0a1d3d,#0b55ad);
+    color:white;
+    border-radius:16px;
+    padding:22px;
+}
+
+.cost-side h3{
+    margin-bottom:18px;
+}
+
+.big-number{
+    font-size:30px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.cost-side p{
+    opacity:.8;
+    font-size:12px;
+    margin-bottom:18px;
+}
+
+.proposal{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    border:1px solid #dfe5ef;
+}
+
+.proposal-header{
+    border-bottom:1px solid #e2e7ef;
+    padding-bottom:15px;
+    margin-bottom:15px;
+}
+
+.proposal-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    font-size:14px;
+}
+
+.proposal-total{
+    margin-top:12px;
+    padding-top:15px;
+    border-top:2px solid #172033;
+    display:flex;
+    justify-content:space-between;
+    font-size:22px;
+    font-weight:800;
+}
+
+.status{
+    display:none;
+    margin-top:14px;
+    padding:13px;
+    border-radius:10px;
+    background:#e9f8ef;
+    color:#087344;
+    font-weight:bold;
+}
+
+.empty{
+    padding:30px;
+    text-align:center;
+    border:1px dashed #ccd5e2;
+    border-radius:14px;
+    color:#7a8597;
+}
+
+.note{
+    color:#718096;
+    font-size:12px;
+    line-height:1.6;
+}
+
+footer{
+    text-align:center;
+    color:#7b8596;
+    font-size:12px;
+    padding:35px 15px;
+}
+
+@media(max-width:1000px){
+    .package-grid{grid-template-columns:repeat(3,1fr)}
+    .form-grid{grid-template-columns:repeat(2,1fr)}
+    .cost-section{grid-template-columns:1fr}
+}
+
+@media(max-width:700px){
+    .package-grid,
+    .form-grid,
+    .selection-grid,
+    .ai-result{
+        grid-template-columns:1fr;
+    }
+
+    .header-wrap{
+        align-items:flex-start;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-wrap">
+
+    <div>
+        <div class="logo">Hobbi<span>Go</span></div>
+        <div class="version">
+            AI Journey & Experience Marketplace · V83.6
+        </div>
+    </div>
+
+    <div class="badge">
+        CORPORATE COMPLETE PACKAGE
+    </div>
+
+</div>
+</header>
+
+
+<div class="container">
+
+<section class="hero">
+
+    <h1>🏢 Corporate Complete Package Engine</h1>
+
+    <p>
+        Build a complete corporate journey in one place:
+        venue, hotel, transport, restaurant and activities.
+        HobbiGo AI compares package value and calculates
+        estimated total cost automatically.
+    </p>
+
+</section>
+
+
+<!-- SEARCH -->
+<section class="card">
+
+<h2>🔎 Corporate Event Configuration</h2>
+
+<div class="form-grid">
+
+    <div class="form-group">
+        <label>Company Name</label>
+        <input id="company" value="HobbiGo Corporate Client">
+    </div>
+
+    <div class="form-group">
+        <label>Country</label>
+        <select id="country">
+            <option>Indonesia</option>
+            <option>Singapore</option>
+            <option>Malaysia</option>
+            <option>Thailand</option>
+            <option>Japan</option>
+            <option>Australia</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>City</label>
+        <select id="city">
+            <option>Jakarta</option>
+            <option>Bali</option>
+            <option>Bandung</option>
+            <option>Surabaya</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Event Type</label>
+        <select id="eventType">
+            <option>Meeting</option>
+            <option>Corporate Retreat</option>
+            <option>Team Building</option>
+            <option>Conference</option>
+            <option>Incentive Trip</option>
+            <option>Company Gathering</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Event Date</label>
+        <input id="eventDate" type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Duration</label>
+        <select id="duration">
+            <option value="1">1 Day</option>
+            <option value="2" selected>2 Days / 1 Night</option>
+            <option value="3">3 Days / 2 Nights</option>
+            <option value="4">4 Days / 3 Nights</option>
+            <option value="5">5 Days / 4 Nights</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Participants</label>
+        <input id="participants" type="number" min="1" value="30">
+    </div>
+
+    <div class="form-group">
+        <label>Budget Preference</label>
+        <select id="budget">
+            <option value="economy">Economy</option>
+            <option value="comfort" selected>Comfort</option>
+            <option value="premium">Premium</option>
+            <option value="exclusive">Exclusive</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Package Strategy</label>
+        <select id="strategy">
+            <option value="value">Best Value</option>
+            <option value="price">Lowest Price</option>
+            <option value="premium">Premium Experience</option>
+        </select>
+    </div>
+
+    <div class="form-group full">
+
+        <button class="btn btn-primary" onclick="generatePackage()">
+            🤖 Generate AI Corporate Package
+        </button>
+
+    </div>
+
+</div>
+
+<div id="status" class="status"></div>
+
+</section>
+
+
+<!-- PACKAGE MODULES -->
+<section class="card">
+
+<h2>🧩 Package Marketplace</h2>
+
+<div class="package-grid">
+
+    <div class="package-module">
+        <div class="icon">🏢</div>
+        <h3>Venue</h3>
+        <p>Meeting & event venue</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🏨</div>
+        <h3>Hotel</h3>
+        <p>Rooms & accommodation</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🚌</div>
+        <h3>Transport</h3>
+        <p>Car, van, bus & transfer</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🍽️</div>
+        <h3>Restaurant</h3>
+        <p>Meals & culinary</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🎯</div>
+        <h3>Activity</h3>
+        <p>Experience & team building</p>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- AI -->
+<section class="card">
+
+<h2>🤖 AI Package Recommendation</h2>
+
+<div id="aiPackage">
+
+    <div class="empty">
+        Configure your event and generate the AI package.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- OPTIONS -->
+<section class="card">
+
+<h2>📦 Selected Package Components</h2>
+
+<div id="packageOptions">
+
+    <div class="empty">
+        Package components will appear here.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- COST -->
+<section class="card">
+
+<h2>💰 Complete Package Cost</h2>
+
+<div id="costSection">
+
+    <div class="empty">
+        Generate package to calculate total cost.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- PROPOSAL -->
+<section class="card">
+
+<h2>📄 Corporate Proposal</h2>
+
+<div id="proposal">
+
+    <div class="empty">
+        Proposal will be generated after package calculation.
+    </div>
+
+</div>
+
+<br>
+
+<div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+    <button class="btn btn-success" onclick="generateProposal()">
+        📄 Generate Proposal
+    </button>
+
+    <button class="btn btn-dark" onclick="downloadProposal()">
+        ⬇️ Download Proposal
+    </button>
+
+    <button class="btn btn-warning" onclick="resetAll()">
+        🔄 Reset
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- FUTURE SYSTEM -->
+<section class="card">
+
+<h2>🔌 Future HobbiGo API Architecture</h2>
+
+<p class="note">
+
+This prototype uses demo marketplace data.
+The structure is prepared for future real API/database integration.
+
+</p>
+
+<div class="package-grid">
+
+    <div class="package-module">
+        <div class="icon">🌐</div>
+        <h3>Supplier API</h3>
+        <p>Hotels, venues & suppliers</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🗺️</div>
+        <h3>Maps API</h3>
+        <p>Routes & travel time</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">💳</div>
+        <h3>Payment API</h3>
+        <p>Booking & payment</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">📡</div>
+        <h3>GPS API</h3>
+        <p>Live transportation</p>
+    </div>
+
+    <div class="package-module">
+        <div class="icon">🤖</div>
+        <h3>AI Engine</h3>
+        <p>Dynamic optimization</p>
+    </div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<footer>
+
+HOBBIGO · AI Journey & Experience Marketplace<br>
+V83.6 Corporate Complete Package Engine · Demo Prototype
+
+</footer>
+
+
+<script>
+
+let currentPackage = null;
+
+
+/* =========================
+   DEMO DATABASE
+========================= */
+
+const database = {
+
+    venue:[
+        {
+            name:"Grand Jakarta Convention Hall",
+            icon:"🏢",
+            capacity:500,
+            price:18000000,
+            rating:4.8
+        },
+        {
+            name:"Executive Business Meeting Center",
+            icon:"🏢",
+            capacity:100,
+            price:9500000,
+            rating:4.7
+        },
+        {
+            name:"Premium Resort Conference Hall",
+            icon:"🏢",
+            capacity:250,
+            price:15000000,
+            rating:4.9
+        }
+    ],
+
+    hotel:[
+        {
+            name:"HobbiGo Business Hotel",
+            icon:"🏨",
+            price:850000,
+            rating:4.6
+        },
+        {
+            name:"Executive City Hotel",
+            icon:"🏨",
+            price:1100000,
+            rating:4.8
+        },
+        {
+            name:"Luxury Corporate Resort",
+            icon:"🏨",
+            price:1750000,
+            rating:4.9
+        }
+    ],
+
+    transport:[
+        {
+            name:"Executive Van",
+            icon:"🚐",
+            capacity:12,
+            price:1350000,
+            rating:4.8
+        },
+        {
+            name:"Medium Executive Bus",
+            icon:"🚌",
+            capacity:30,
+            price:3200000,
+            rating:4.8
+        },
+        {
+            name:"Large Executive Coach",
+            icon:"🚌",
+            capacity:45,
+            price:4500000,
+            rating:4.9
+        }
+    ],
+
+    restaurant:[
+        {
+            name:"Corporate Dinner Restaurant",
+            icon:"🍽️",
+            price:275000,
+            rating:4.7
+        },
+        {
+            name:"Premium Indonesian Restaurant",
+            icon:"🍽️",
+            price:350000,
+            rating:4.8
+        },
+        {
+            name:"Luxury Fine Dining Experience",
+            icon:"🍽️",
+            price:550000,
+            rating:4.9
+        }
+    ],
+
+    activity:[
+        {
+            name:"Corporate Team Building",
+            icon:"🎯",
+            price:450000,
+            rating:4.8
+        },
+        {
+            name:"Island Adventure Experience",
+            icon:"🏝️",
+            price:650000,
+            rating:4.9
+        },
+        {
+            name:"Premium Golf & Networking",
+            icon:"⛳",
+            price:950000,
+            rating:4.8
+        }
+    ]
+
+};
+
+
+/* =========================
+   GENERATE
+========================= */
+
+function generatePackage(){
+
+    const participants =
+        Number(document.getElementById("participants").value);
+
+    const duration =
+        Number(document.getElementById("duration").value);
+
+    const budget =
+        document.getElementById("budget").value;
+
+    const strategy =
+        document.getElementById("strategy").value;
+
+
+    let multiplier = 1;
+
+    if(budget === "economy"){
+        multiplier = .85;
+    }
+
+    if(budget === "premium"){
+        multiplier = 1.18;
+    }
+
+    if(budget === "exclusive"){
+        multiplier = 1.35;
+    }
+
+
+    /* VENUE */
+
+    let venue =
+        database.venue[1];
+
+    if(strategy === "price"){
+        venue =
+            [...database.venue]
+            .sort((a,b)=>a.price-b.price)[0];
+    }
+
+    if(strategy === "premium"){
+        venue =
+            [...database.venue]
+            .sort((a,b)=>b.rating-a.rating)[0];
+    }
+
+
+    /* HOTEL */
+
+    let hotel =
+        database.hotel[0];
+
+    if(strategy === "value"){
+        hotel =
+            database.hotel[1];
+    }
+
+    if(strategy === "premium"){
+        hotel =
+            database.hotel[2];
+    }
+
+
+    /* TRANSPORT */
+
+    let transport =
+        database.transport[1];
+
+    if(participants <= 12){
+        transport = database.transport[0];
+    }
+
+    if(participants > 30){
+        transport = database.transport[2];
+    }
+
+
+    /* RESTAURANT */
+
+    let restaurant =
+        database.restaurant[0];
+
+    if(strategy === "premium"){
+        restaurant =
+            database.restaurant[2];
+    }
+
+    if(strategy === "value"){
+        restaurant =
+            database.restaurant[1];
+    }
+
+
+    /* ACTIVITY */
+
+    let activity =
+        database.activity[0];
+
+    if(strategy === "premium"){
+        activity =
+            database.activity[1];
+    }
+
+    if(strategy === "price"){
+        activity =
+            database.activity[0];
+    }
+
+
+    /* HOTEL NIGHTS */
+
+    const nights =
+        Math.max(1,duration-1);
+
+
+    /* BUS QUANTITY */
+
+    const transportUnits =
+        Math.ceil(
+            participants /
+            transport.capacity
+        );
+
+
+    const venueCost =
+        Math.round(
+            venue.price *
+            multiplier
+        );
+
+
+    const hotelCost =
+        Math.round(
+            hotel.price *
+            participants *
+            nights *
+            multiplier
+        );
+
+
+    const transportCost =
+        Math.round(
+            transport.price *
+            transportUnits *
+            multiplier
+        );
+
+
+    const restaurantCost =
+        Math.round(
+            restaurant.price *
+            participants *
+            duration *
+            multiplier
+        );
+
+
+    const activityCost =
+        Math.round(
+            activity.price *
+            participants *
+            multiplier
+        );
+
+
+    const total =
+        venueCost +
+        hotelCost +
+        transportCost +
+        restaurantCost +
+        activityCost;
+
+
+    const perPerson =
+        Math.round(
+            total / participants
+        );
+
+
+    currentPackage = {
+
+        company:
+            document.getElementById("company").value,
+
+        country:
+            document.getElementById("country").value,
+
+        city:
+            document.getElementById("city").value,
+
+        eventType:
+            document.getElementById("eventType").value,
+
+        date:
+            document.getElementById("eventDate").value,
+
+        duration,
+        participants,
+        budget,
+        strategy,
+
+        venue,
+        hotel,
+        transport,
+        restaurant,
+        activity,
+
+        transportUnits,
+        nights,
+
+        venueCost,
+        hotelCost,
+        transportCost,
+        restaurantCost,
+        activityCost,
+
+        total,
+        perPerson
+
+    };
+
+
+    renderAI();
+
+    renderComponents();
+
+    renderCost();
+
+    generateProposal();
+
+
+    const status =
+        document.getElementById("status");
+
+    status.style.display="block";
+
+    status.innerHTML =
+        "✅ AI Corporate Package generated successfully.";
+
+}
+
+
+/* =========================
+   AI
+========================= */
+
+function renderAI(){
+
+    const p = currentPackage;
+
+    document.getElementById("aiPackage").innerHTML = `
+
+        <div class="ai-panel">
+
+            <h3>🤖 HobbiGo AI Recommended Package</h3>
+
+            <p>
+                For <strong>${p.participants} participants</strong>
+                in <strong>${p.city}</strong>,
+                HobbiGo AI has configured a
+                <strong>${p.strategy}</strong> package.
+            </p>
+
+            <div class="ai-result">
+
+                <div class="ai-box">
+                    <h3>💰 Total Package</h3>
+                    <div class="ai-price">
+                        ${formatRupiah(p.total)}
+                    </div>
+                </div>
+
+                <div class="ai-box">
+                    <h3>👤 Cost / Person</h3>
+                    <div class="ai-price">
+                        ${formatRupiah(p.perPerson)}
+                    </div>
+                </div>
+
+                <div class="ai-box">
+                    <h3>⭐ AI Package Score</h3>
+                    <div class="ai-price">
+                        96/100
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   COMPONENTS
+========================= */
+
+function renderComponents(){
+
+    const p = currentPackage;
+
+    const items = [
+
+        {
+            type:"Venue",
+            data:p.venue,
+            cost:p.venueCost
+        },
+
+        {
+            type:"Hotel",
+            data:p.hotel,
+            cost:p.hotelCost
+        },
+
+        {
+            type:"Transport",
+            data:p.transport,
+            cost:p.transportCost
+        },
+
+        {
+            type:"Restaurant",
+            data:p.restaurant,
+            cost:p.restaurantCost
+        },
+
+        {
+            type:"Activity",
+            data:p.activity,
+            cost:p.activityCost
+        }
+
+    ];
+
+
+    document.getElementById("packageOptions").innerHTML = `
+
+        <div class="selection-grid">
+
+            ${items.map(item=>`
+
+                <div class="option selected">
+
+                    <div class="option-top">
+
+                        <div>
+                            <span class="tag">
+                                ${item.type}
+                            </span>
+
+                            <h3>
+                                ${item.data.icon}
+                                ${item.data.name}
+                            </h3>
+
+                            <p>
+                                Rating ⭐ ${item.data.rating}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="option-price">
+                        ${formatRupiah(item.cost)}
+                    </div>
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   COST
+========================= */
+
+function renderCost(){
+
+    const p = currentPackage;
+
+    document.getElementById("costSection").innerHTML = `
+
+        <div class="cost-section">
+
+            <div class="cost-list">
+
+                <div class="cost-row">
+                    <span>🏢 Venue</span>
+                    <strong>${formatRupiah(p.venueCost)}</strong>
+                </div>
+
+                <div class="cost-row">
+                    <span>🏨 Hotel</span>
+                    <strong>${formatRupiah(p.hotelCost)}</strong>
+                </div>
+
+                <div class="cost-row">
+                    <span>
+                        🚌 Transport
+                        (${p.transportUnits} vehicle)
+                    </span>
+                    <strong>${formatRupiah(p.transportCost)}</strong>
+                </div>
+
+                <div class="cost-row">
+                    <span>🍽️ Restaurant</span>
+                    <strong>${formatRupiah(p.restaurantCost)}</strong>
+                </div>
+
+                <div class="cost-row">
+                    <span>🎯 Activity</span>
+                    <strong>${formatRupiah(p.activityCost)}</strong>
+                </div>
+
+                <div class="cost-total">
+                    <span>Total</span>
+                    <span>${formatRupiah(p.total)}</span>
+                </div>
+
+            </div>
+
+
+            <div class="cost-side">
+
+                <h3>Corporate Investment</h3>
+
+                <div class="big-number">
+                    ${formatRupiah(p.total)}
+                </div>
+
+                <p>
+                    Estimated complete package
+                </p>
+
+                <div class="big-number">
+                    ${formatRupiah(p.perPerson)}
+                </div>
+
+                <p>
+                    Estimated cost per participant
+                </p>
+
+                <button
+                    class="btn btn-success"
+                    style="width:100%;"
+                    onclick="generateProposal()">
+
+                    Create Corporate Proposal
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   PROPOSAL
+========================= */
+
+function generateProposal(){
+
+    if(!currentPackage){
+
+        return;
+
+    }
+
+
+    const p = currentPackage;
+
+    document.getElementById("proposal").innerHTML = `
+
+        <div class="proposal">
+
+            <div class="proposal-header">
+
+                <h2>HOBBIGO CORPORATE TRAVEL PROPOSAL</h2>
+
+                <p class="note">
+                    AI Journey & Experience Marketplace
+                </p>
+
+            </div>
+
+            <div class="proposal-row">
+                <span>Company</span>
+                <strong>${p.company}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Destination</span>
+                <strong>${p.city}, ${p.country}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Event</span>
+                <strong>${p.eventType}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Participants</span>
+                <strong>${p.participants}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Duration</span>
+                <strong>${p.duration} Day(s)</strong>
+            </div>
+
+            <br>
+
+            <div class="proposal-row">
+                <span>Venue</span>
+                <strong>${p.venue.name}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Hotel</span>
+                <strong>${p.hotel.name}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Transport</span>
+                <strong>
+                    ${p.transport.name}
+                    × ${p.transportUnits}
+                </strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Restaurant</span>
+                <strong>${p.restaurant.name}</strong>
+            </div>
+
+            <div class="proposal-row">
+                <span>Activity</span>
+                <strong>${p.activity.name}</strong>
+            </div>
+
+            <div class="proposal-total">
+
+                <span>Total Package</span>
+
+                <span>
+                    ${formatRupiah(p.total)}
+                </span>
+
+            </div>
+
+            <div class="proposal-row">
+
+                <span>Estimated / Person</span>
+
+                <strong>
+                    ${formatRupiah(p.perPerson)}
+                </strong>
+
+            </div>
+
+            <br>
+
+            <p class="note">
+                This proposal is a prototype estimate.
+                Final prices, availability, taxes, supplier
+                terms and booking conditions will be confirmed
+                through connected HobbiGo partners.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+function downloadProposal(){
+
+    if(!currentPackage){
+
+        alert("Generate a package first.");
+
+        return;
+
+    }
+
+
+    const p = currentPackage;
+
+
+    const text = `
+
+HOBBIGO CORPORATE TRAVEL PROPOSAL
+
+Company:
+${p.company}
+
+Destination:
+${p.city}, ${p.country}
+
+Event:
+${p.eventType}
+
+Participants:
+${p.participants}
+
+Duration:
+${p.duration} Day(s)
+
+--------------------------------
+
+VENUE
+${p.venue.name}
+${formatRupiah(p.venueCost)}
+
+HOTEL
+${p.hotel.name}
+${formatRupiah(p.hotelCost)}
+
+TRANSPORT
+${p.transport.name}
+Vehicles: ${p.transportUnits}
+${formatRupiah(p.transportCost)}
+
+RESTAURANT
+${p.restaurant.name}
+${formatRupiah(p.restaurantCost)}
+
+ACTIVITY
+${p.activity.name}
+${formatRupiah(p.activityCost)}
+
+--------------------------------
+
+TOTAL PACKAGE
+${formatRupiah(p.total)}
+
+COST PER PARTICIPANT
+${formatRupiah(p.perPerson)}
+
+--------------------------------
+
+HOBBIGO
+AI Journey & Experience Marketplace
+
+Prototype estimate only.
+Final availability and pricing will be
+confirmed through HobbiGo partners.
+
+`;
+
+
+    const blob =
+        new Blob(
+            [text],
+            {type:"text/plain"}
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const a =
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download =
+        "HobbiGo_Corporate_Proposal_V83.6.txt";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetAll(){
+
+    currentPackage = null;
+
+    document.getElementById("status").style.display =
+        "none";
+
+    document.getElementById("aiPackage").innerHTML =
+        '<div class="empty">Configure your event and generate the AI package.</div>';
+
+    document.getElementById("packageOptions").innerHTML =
+        '<div class="empty">Package components will appear here.</div>';
+
+    document.getElementById("costSection").innerHTML =
+        '<div class="empty">Generate package to calculate total cost.</div>';
+
+    document.getElementById("proposal").innerHTML =
+        '<div class="empty">Proposal will be generated after package calculation.</div>';
+
+}
+
+
+/* =========================
+   COUNTRY / CITY
+========================= */
+
+const cities = {
+
+    Indonesia:[
+        "Jakarta",
+        "Bali",
+        "Bandung",
+        "Surabaya",
+        "Yogyakarta",
+        "Medan"
+    ],
+
+    Singapore:[
+        "Singapore"
+    ],
+
+    Malaysia:[
+        "Kuala Lumpur",
+        "Penang",
+        "Johor Bahru"
+    ],
+
+    Thailand:[
+        "Bangkok",
+        "Phuket",
+        "Chiang Mai"
+    ],
+
+    Japan:[
+        "Tokyo",
+        "Osaka",
+        "Kyoto"
+    ],
+
+    Australia:[
+        "Sydney",
+        "Melbourne",
+        "Brisbane"
+    ]
+
+};
+
+
+document.getElementById("country")
+.addEventListener("change",function(){
+
+    const selected =
+        this.value;
+
+    const citySelect =
+        document.getElementById("city");
+
+    citySelect.innerHTML =
+        (cities[selected] || ["Main City"])
+        .map(city =>
+            `<option>${city}</option>`
+        )
+        .join("");
+
+});
+
+
+/* =========================
+   DATE
+========================= */
+
+document.getElementById("eventDate").value =
+    new Date()
+    .toISOString()
+    .split("T")[0];
+
+
+/* =========================
+   FORMAT
+========================= */
+
+function formatRupiah(number){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style:"currency",
+            currency:"IDR",
+            maximumFractionDigits:0
+        }
+    ).format(number);
+
+}
+
+</script>
+
+</body>
+</html>
