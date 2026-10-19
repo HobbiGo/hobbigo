@@ -1,1 +1,1530 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo V82.2 - Global Destination Engine</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:linear-gradient(135deg,#061936,#0b55aa);
+  color:white;
+  padding:20px 5%;
+}
+
+.header{
+  max-width:1250px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#ffd447;
+}
+
+.tagline{
+  font-size:12px;
+  opacity:.8;
+  margin-top:4px;
+}
+
+.lang{
+  padding:9px 14px;
+  background:rgba(255,255,255,.15);
+  border-radius:20px;
+}
+
+.hero{
+  background:white;
+  padding:35px 5%;
+  border-bottom:1px solid #ddd;
+}
+
+.hero-inner{
+  max-width:1250px;
+  margin:auto;
+}
+
+.hero h1{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:#667085;
+  margin-bottom:24px;
+}
+
+.search{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.search input,
+.search select{
+  border:1px solid #d5dce6;
+  padding:14px;
+  border-radius:10px;
+  font-size:15px;
+  background:white;
+}
+
+.search input{
+  flex:1;
+  min-width:230px;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:13px 18px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.primary{
+  background:#0965ce;
+  color:white;
+}
+
+.green{
+  background:#07945b;
+  color:white;
+}
+
+.dark{
+  background:#172033;
+  color:white;
+}
+
+.container{
+  max-width:1250px;
+  margin:30px auto;
+  padding:0 5%;
+}
+
+.status{
+  background:#eaf5ff;
+  border:1px solid #b9ddff;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:22px;
+  line-height:1.7;
+}
+
+.country-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:15px;
+}
+
+.country{
+  background:white;
+  padding:18px;
+  border-radius:15px;
+  border:1px solid #e1e6ed;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.country:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.flag{
+  font-size:38px;
+}
+
+.country h3{
+  margin:8px 0 4px;
+}
+
+.country small{
+  color:#667085;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:7px;
+  background:#edf4ff;
+  color:#0758a7;
+  padding:5px 9px;
+  border-radius:15px;
+  font-size:11px;
+}
+
+.destination{
+  margin-top:30px;
+}
+
+.destination-head{
+  background:linear-gradient(135deg,#071a3d,#0b55aa);
+  color:white;
+  padding:25px;
+  border-radius:18px 18px 0 0;
+}
+
+.destination-head h2{
+  font-size:30px;
+}
+
+.destination-head p{
+  margin-top:6px;
+  opacity:.85;
+}
+
+.city-selector{
+  background:white;
+  padding:20px;
+  border:1px solid #e0e5ec;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.city-selector select{
+  flex:1;
+  min-width:250px;
+  padding:13px;
+  border:1px solid #d5dce6;
+  border-radius:9px;
+}
+
+.modules{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:18px;
+  margin-top:20px;
+}
+
+.module{
+  background:white;
+  padding:20px;
+  border-radius:16px;
+  border:1px solid #e0e5ec;
+  box-shadow:0 4px 15px rgba(0,0,0,.04);
+}
+
+.icon{
+  font-size:31px;
+  margin-bottom:8px;
+}
+
+.module h3{
+  margin-bottom:13px;
+}
+
+.item{
+  padding:12px 0;
+  border-bottom:1px solid #edf0f4;
+  line-height:1.55;
+}
+
+.item:last-child{
+  border-bottom:0;
+}
+
+.item strong{
+  display:block;
+}
+
+.price{
+  color:#087443;
+  font-weight:bold;
+}
+
+.route{
+  color:#075bab;
+  font-weight:bold;
+}
+
+.summary{
+  background:#fff;
+  border:1px solid #dfe5ed;
+  padding:22px;
+  border-radius:15px;
+  margin-top:22px;
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin-top:15px;
+}
+
+.stat{
+  background:#f5f8fc;
+  padding:15px;
+  border-radius:10px;
+}
+
+.stat strong{
+  display:block;
+  font-size:21px;
+  margin-top:5px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+footer{
+  margin-top:50px;
+  padding:30px;
+  text-align:center;
+  color:white;
+  background:#061936;
+}
+
+@media(max-width:600px){
+  .header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+
+  .hero h1{
+    font-size:27px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header">
+
+    <div>
+      <div class="logo">Hobbi<span>Go</span></div>
+      <div class="tagline">
+        AI Journey & Experience Marketplace
+      </div>
+    </div>
+
+    <div class="lang">
+      🌐 EN / ID
+    </div>
+
+  </div>
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <h1>
+      🌍 Global Destination Engine
+    </h1>
+
+    <p>
+      Country → City → Airport → Hotel → Flight →
+      Culinary → Attraction → Activity
+    </p>
+
+    <div class="search">
+
+      <input
+        id="searchInput"
+        placeholder="Search country or city..."
+        oninput="filterCountries()"
+      >
+
+      <select
+        id="continent"
+        onchange="filterCountries()"
+      >
+
+        <option value="">
+          All Continents
+        </option>
+
+        <option>Asia</option>
+        <option>Europe</option>
+        <option>Africa</option>
+        <option>North America</option>
+        <option>South America</option>
+        <option>Oceania</option>
+
+      </select>
+
+      <button
+        class="primary"
+        onclick="filterCountries()"
+      >
+        🔎 Search
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<div class="container">
+
+  <div class="status">
+
+    <strong>HobbiGo V82.2 Global Destination Engine</strong>
+
+    <br>
+
+    🌍 <span id="totalCountries">195</span> Countries
+
+    · 🏙️ City Engine
+
+    · ✈️ Airport Engine
+
+    · 🏨 Hotel Engine
+
+    · 🍜 Culinary Engine
+
+    · 📍 Attraction Engine
+
+    · 🎯 Activity Engine
+
+    · 🚗 Transport Engine
+
+  </div>
+
+
+  <div
+    id="countryGrid"
+    class="country-grid"
+  ></div>
+
+
+  <div id="destination"></div>
+
+</div>
+
+
+<footer>
+
+  <strong>HobbiGo</strong>
+
+  <br>
+
+  AI Journey & Experience Marketplace
+
+  <br><br>
+
+  Search → Plan → Configure → Package →
+  Book → Experience → Re-optimize
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   HOBBIGO V82.2
+   GLOBAL COUNTRY DATABASE
+   ========================================================= */
+
+const countries = [
+
+/* ASIA */
+
+["Indonesia","ID","🇮🇩","Asia","Jakarta"],
+["Japan","JP","🇯🇵","Asia","Tokyo"],
+["Singapore","SG","🇸🇬","Asia","Singapore"],
+["Malaysia","MY","🇲🇾","Asia","Kuala Lumpur"],
+["Thailand","TH","🇹🇭","Asia","Bangkok"],
+["Vietnam","VN","🇻🇳","Asia","Hanoi"],
+["Philippines","PH","🇵🇭","Asia","Manila"],
+["China","CN","🇨🇳","Asia","Beijing"],
+["South Korea","KR","🇰🇷","Asia","Seoul"],
+["India","IN","🇮🇳","Asia","New Delhi"],
+["Nepal","NP","🇳🇵","Asia","Kathmandu"],
+["Maldives","MV","🇲🇻","Asia","Male"],
+["Sri Lanka","LK","🇱🇰","Asia","Colombo"],
+["Cambodia","KH","🇰🇭","Asia","Phnom Penh"],
+["Laos","LA","🇱🇦","Asia","Vientiane"],
+["Myanmar","MM","🇲🇲","Asia","Naypyidaw"],
+["Brunei","BN","🇧🇳","Asia","Bandar Seri Begawan"],
+["Timor-Leste","TL","🇹🇱","Asia","Dili"],
+["Mongolia","MN","🇲🇳","Asia","Ulaanbaatar"],
+["Kazakhstan","KZ","🇰🇿","Asia","Astana"],
+["Uzbekistan","UZ","🇺🇿","Asia","Tashkent"],
+["Qatar","QA","🇶🇦","Asia","Doha"],
+["United Arab Emirates","AE","🇦🇪","Asia","Abu Dhabi"],
+["Saudi Arabia","SA","🇸🇦","Asia","Riyadh"],
+["Oman","OM","🇴🇲","Asia","Muscat"],
+["Jordan","JO","🇯🇴","Asia","Amman"],
+["Israel","IL","🇮🇱","Asia","Jerusalem"],
+["Bahrain","BH","🇧🇭","Asia","Manama"],
+["Kuwait","KW","🇰🇼","Asia","Kuwait City"],
+["Turkey","TR","🇹🇷","Asia","Ankara"],
+
+/* EUROPE */
+
+["United Kingdom","GB","🇬🇧","Europe","London"],
+["France","FR","🇫🇷","Europe","Paris"],
+["Germany","DE","🇩🇪","Europe","Berlin"],
+["Italy","IT","🇮🇹","Europe","Rome"],
+["Spain","ES","🇪🇸","Europe","Madrid"],
+["Portugal","PT","🇵🇹","Europe","Lisbon"],
+["Switzerland","CH","🇨🇭","Europe","Bern"],
+["Austria","AT","🇦🇹","Europe","Vienna"],
+["Netherlands","NL","🇳🇱","Europe","Amsterdam"],
+["Belgium","BE","🇧🇪","Europe","Brussels"],
+["Greece","GR","🇬🇷","Europe","Athens"],
+["Norway","NO","🇳🇴","Europe","Oslo"],
+["Sweden","SE","🇸🇪","Europe","Stockholm"],
+["Denmark","DK","🇩🇰","Europe","Copenhagen"],
+["Finland","FI","🇫🇮","Europe","Helsinki"],
+["Iceland","IS","🇮🇸","Europe","Reykjavik"],
+["Ireland","IE","🇮🇪","Europe","Dublin"],
+["Poland","PL","🇵🇱","Europe","Warsaw"],
+["Czech Republic","CZ","🇨🇿","Europe","Prague"],
+["Hungary","HU","🇭🇺","Europe","Budapest"],
+["Croatia","HR","🇭🇷","Europe","Zagreb"],
+["Romania","RO","🇷🇴","Europe","Bucharest"],
+["Bulgaria","BG","🇧🇬","Europe","Sofia"],
+["Serbia","RS","🇷🇸","Europe","Belgrade"],
+["Slovenia","SI","🇸🇮","Europe","Ljubljana"],
+["Slovakia","SK","🇸🇰","Europe","Bratislava"],
+["Ukraine","UA","🇺🇦","Europe","Kyiv"],
+["Russia","RU","🇷🇺","Europe","Moscow"],
+["Estonia","EE","🇪🇪","Europe","Tallinn"],
+["Lithuania","LT","🇱🇹","Europe","Vilnius"],
+["Latvia","LV","🇱🇻","Europe","Riga"],
+["Luxembourg","LU","🇱🇺","Europe","Luxembourg"],
+["Malta","MT","🇲🇹","Europe","Valletta"],
+["Monaco","MC","🇲🇨","Europe","Monaco"],
+["Andorra","AD","🇦🇩","Europe","Andorra la Vella"],
+["Albania","AL","🇦🇱","Europe","Tirana"],
+["Bosnia and Herzegovina","BA","🇧🇦","Europe","Sarajevo"],
+["Montenegro","ME","🇲🇪","Europe","Podgorica"],
+["North Macedonia","MK","🇲🇰","Europe","Skopje"],
+
+/* AFRICA */
+
+["Egypt","EG","🇪🇬","Africa","Cairo"],
+["South Africa","ZA","🇿🇦","Africa","Pretoria"],
+["Morocco","MA","🇲🇦","Africa","Rabat"],
+["Kenya","KE","🇰🇪","Africa","Nairobi"],
+["Tanzania","TZ","🇹🇿","Africa","Dodoma"],
+["Ethiopia","ET","🇪🇹","Africa","Addis Ababa"],
+["Nigeria","NG","🇳🇬","Africa","Abuja"],
+["Ghana","GH","🇬🇭","Africa","Accra"],
+["Rwanda","RW","🇷🇼","Africa","Kigali"],
+["Uganda","UG","🇺🇬","Africa","Kampala"],
+["Senegal","SN","🇸🇳","Africa","Dakar"],
+["Tunisia","TN","🇹🇳","Africa","Tunis"],
+["Algeria","DZ","🇩🇿","Africa","Algiers"],
+["Namibia","NA","🇳🇦","Africa","Windhoek"],
+["Botswana","BW","🇧🇼","Africa","Gaborone"],
+["Zambia","ZM","🇿🇲","Africa","Lusaka"],
+["Zimbabwe","ZW","🇿🇼","Africa","Harare"],
+["Mauritius","MU","🇲🇺","Africa","Port Louis"],
+["Seychelles","SC","🇸🇨","Africa","Victoria"],
+["Madagascar","MG","🇲🇬","Africa","Antananarivo"],
+
+/* NORTH AMERICA */
+
+["United States","US","🇺🇸","North America","Washington, D.C."],
+["Canada","CA","🇨🇦","North America","Ottawa"],
+["Mexico","MX","🇲🇽","North America","Mexico City"],
+["Costa Rica","CR","🇨🇷","North America","San Jose"],
+["Panama","PA","🇵🇦","North America","Panama City"],
+["Guatemala","GT","🇬🇹","North America","Guatemala City"],
+["Cuba","CU","🇨🇺","North America","Havana"],
+["Jamaica","JM","🇯🇲","North America","Kingston"],
+["Bahamas","BS","🇧🇸","North America","Nassau"],
+["Barbados","BB","🇧🇧","North America","Bridgetown"],
+["Dominican Republic","DO","🇩🇴","North America","Santo Domingo"],
+["Trinidad and Tobago","TT","🇹🇹","North America","Port of Spain"],
+
+/* SOUTH AMERICA */
+
+["Brazil","BR","🇧🇷","South America","Brasilia"],
+["Argentina","AR","🇦🇷","South America","Buenos Aires"],
+["Chile","CL","🇨🇱","South America","Santiago"],
+["Peru","PE","🇵🇪","South America","Lima"],
+["Colombia","CO","🇨🇴","South America","Bogota"],
+["Ecuador","EC","🇪🇨","South America","Quito"],
+["Bolivia","BO","🇧🇴","South America","Sucre"],
+["Paraguay","PY","🇵🇾","South America","Asuncion"],
+["Uruguay","UY","🇺🇾","South America","Montevideo"],
+["Venezuela","VE","🇻🇪","South America","Caracas"],
+["Guyana","GY","🇬🇾","South America","Georgetown"],
+["Suriname","SR","🇸🇷","South America","Paramaribo"],
+
+/* OCEANIA */
+
+["Australia","AU","🇦🇺","Oceania","Canberra"],
+["New Zealand","NZ","🇳🇿","Oceania","Wellington"],
+["Fiji","FJ","🇫🇯","Oceania","Suva"],
+["Papua New Guinea","PG","🇵🇬","Oceania","Port Moresby"],
+["Samoa","WS","🇼🇸","Oceania","Apia"],
+["Tonga","TO","🇹🇴","Oceania","Nuku'alofa"],
+["Vanuatu","VU","🇻🇺","Oceania","Port Vila"],
+["Solomon Islands","SB","🇸🇧","Oceania","Honiara"],
+["Palau","PW","🇵🇼","Oceania","Ngerulmud"],
+["Micronesia","FM","🇫🇲","Oceania","Palikir"]
+
+];
+
+
+/* =========================================================
+   CITY DATABASE
+   ========================================================= */
+
+const cityDatabase={
+
+Indonesia:[
+"Jakarta",
+"Bali",
+"Surabaya",
+"Bandung",
+"Yogyakarta",
+"Medan",
+"Lombok",
+"Labuan Bajo"
+],
+
+Japan:[
+"Tokyo",
+"Osaka",
+"Kyoto",
+"Sapporo",
+"Fukuoka",
+"Nara",
+"Okinawa"
+],
+
+Singapore:[
+"Singapore"
+],
+
+Malaysia:[
+"Kuala Lumpur",
+"Penang",
+"Langkawi",
+"Malacca",
+"Kota Kinabalu"
+],
+
+Thailand:[
+"Bangkok",
+"Phuket",
+"Chiang Mai",
+"Pattaya",
+"Krabi"
+],
+
+France:[
+"Paris",
+"Nice",
+"Lyon",
+"Marseille",
+"Bordeaux"
+],
+
+Italy:[
+"Rome",
+"Milan",
+"Venice",
+"Florence",
+"Naples"
+],
+
+Spain:[
+"Madrid",
+"Barcelona",
+"Seville",
+"Valencia",
+"Malaga"
+],
+
+UnitedKingdom:[
+"London",
+"Manchester",
+"Edinburgh",
+"Liverpool",
+"Birmingham"
+],
+
+UnitedStates:[
+"New York",
+"Los Angeles",
+"Las Vegas",
+"San Francisco",
+"Miami",
+"Orlando"
+],
+
+Australia:[
+"Sydney",
+"Melbourne",
+"Brisbane",
+"Perth",
+"Gold Coast"
+],
+
+Switzerland:[
+"Zurich",
+"Geneva",
+"Lucerne",
+"Interlaken",
+"Zermatt"
+],
+
+China:[
+"Beijing",
+"Shanghai",
+"Guangzhou",
+"Shenzhen",
+"Chengdu"
+],
+
+SouthKorea:[
+"Seoul",
+"Busan",
+"Jeju",
+"Incheon",
+"Daegu"
+],
+
+India:[
+"New Delhi",
+"Mumbai",
+"Delhi",
+"Jaipur",
+"Goa"
+]
+
+};
+
+
+/* =========================================================
+   AIRPORT ENGINE
+   ========================================================= */
+
+function airportData(country,city){
+
+  const code=country[1];
+
+  return [
+    {
+      name:city+" International Airport",
+      code:code+"-"+city.substring(0,3).toUpperCase(),
+      type:"International"
+    },
+    {
+      name:city+" Regional Airport",
+      code:code+"-REG",
+      type:"Domestic / Regional"
+    }
+  ];
+
+}
+
+
+/* =========================================================
+   HOTEL ENGINE
+   ========================================================= */
+
+function hotelData(city){
+
+  return [
+
+    {
+      name:"HobbiGo Grand Hotel",
+      rating:"5.0",
+      price:180
+    },
+
+    {
+      name:"HobbiGo Comfort Hotel",
+      rating:"4.5",
+      price:120
+    },
+
+    {
+      name:"HobbiGo Economy Stay",
+      rating:"4.1",
+      price:65
+    },
+
+    {
+      name:"HobbiGo Villa & Residence",
+      rating:"4.7",
+      price:150
+    }
+
+  ];
+
+}
+
+
+/* =========================================================
+   FLIGHT ENGINE
+   ========================================================= */
+
+function flightData(city){
+
+  return [
+
+    {
+      airline:"HobbiGo Global Air Partner",
+      route:"CGK → "+city,
+      cabin:"Economy",
+      price:420
+    },
+
+    {
+      airline:"HobbiGo Premium Air Partner",
+      route:"CGK → "+city,
+      cabin:"Business",
+      price:980
+    },
+
+    {
+      airline:"Global Connecting Partner",
+      route:"CGK → "+city,
+      cabin:"Premium Economy",
+      price:650
+    }
+
+  ];
+
+}
+
+
+/* =========================================================
+   CULINARY ENGINE
+   ========================================================= */
+
+function culinaryData(country,city){
+
+  const foods={
+
+    Indonesia:[
+      "Nasi Goreng",
+      "Rendang",
+      "Satay",
+      "Local Street Food"
+    ],
+
+    Japan:[
+      "Sushi",
+      "Ramen",
+      "Tempura",
+      "Izakaya Experience"
+    ],
+
+    Thailand:[
+      "Pad Thai",
+      "Tom Yum",
+      "Green Curry",
+      "Thai Street Food"
+    ],
+
+    Italy:[
+      "Pizza",
+      "Pasta",
+      "Risotto",
+      "Italian Food Tour"
+    ],
+
+    France:[
+      "Croissant",
+      "Crêpes",
+      "French Cuisine",
+      "Wine & Culinary Tour"
+    ]
+
+  };
+
+  return foods[country[0]] || [
+
+    "Local Signature Food",
+    "Traditional Cuisine",
+    "Street Food Experience",
+    "Local Restaurant Tour"
+
+  ];
+
+}
+
+
+/* =========================================================
+   ATTRACTION ENGINE
+   ========================================================= */
+
+function attractionData(country,city){
+
+  const attractions={
+
+    Indonesia:[
+      "Bali",
+      "Borobudur",
+      "Komodo National Park"
+    ],
+
+    Japan:[
+      "Mount Fuji",
+      "Tokyo City",
+      "Kyoto Temples"
+    ],
+
+    France:[
+      "Eiffel Tower",
+      "Louvre Museum",
+      "French Riviera"
+    ],
+
+    Italy:[
+      "Colosseum",
+      "Venice",
+      "Amalfi Coast"
+    ],
+
+    Australia:[
+      "Sydney Opera House",
+      "Great Barrier Reef",
+      "Gold Coast"
+    ]
+
+  };
+
+  return attractions[country[0]] || [
+
+    city+" City Tour",
+    "Cultural Heritage",
+    "Nature & Scenic Destination"
+
+  ];
+
+}
+
+
+/* =========================================================
+   ACTIVITY ENGINE
+   ========================================================= */
+
+function activityData(city){
+
+  return [
+
+    "City Sightseeing",
+
+    "Local Cultural Experience",
+
+    "Adventure & Outdoor",
+
+    "Shopping Experience",
+
+    "Photography Tour",
+
+    "Hobby Experience"
+
+  ];
+
+}
+
+
+/* =========================================================
+   COUNTRY DISPLAY
+   ========================================================= */
+
+function displayCountries(list){
+
+  document.getElementById(
+    "totalCountries"
+  ).innerText=list.length;
+
+  const grid=
+    document.getElementById("countryGrid");
+
+  if(!list.length){
+
+    grid.innerHTML=`
+      <div style="
+        grid-column:1/-1;
+        background:white;
+        padding:30px;
+        text-align:center;
+        border-radius:15px;
+      ">
+        Country not found.
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML=list.map((c,index)=>`
+
+    <div
+      class="country"
+      onclick="openCountry(${countries.indexOf(c)})"
+    >
+
+      <div class="flag">
+        ${c[2]}
+      </div>
+
+      <h3>${c[0]}</h3>
+
+      <small>
+        ${c[4]} · ${c[3]}
+      </small>
+
+      <br>
+
+      <span class="badge">
+        ${c[1]}
+      </span>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+function filterCountries(){
+
+  const q=
+    document.getElementById(
+      "searchInput"
+    ).value.toLowerCase();
+
+  const continent=
+    document.getElementById(
+      "continent"
+    ).value;
+
+  const result=countries.filter(c=>{
+
+    const text=
+      (c[0]+" "+c[1]+" "+c[3]+" "+c[4])
+      .toLowerCase();
+
+    return
+      text.includes(q) &&
+      (!continent || c[3]===continent);
+
+  });
+
+  displayCountries(result);
+
+}
+
+
+/* =========================================================
+   OPEN COUNTRY
+   ========================================================= */
+
+function openCountry(index){
+
+  const country=countries[index];
+
+  let cities=
+    cityDatabase[country[0].replaceAll(" ","")]
+    || [country[4]];
+
+  renderDestination(
+    country,
+    cities
+  );
+
+}
+
+
+/* =========================================================
+   DESTINATION
+   ========================================================= */
+
+function renderDestination(country,cities){
+
+  const destination=
+    document.getElementById(
+      "destination"
+    );
+
+  destination.innerHTML=`
+
+    <div class="destination">
+
+      <div class="destination-head">
+
+        <h2>
+          ${country[2]}
+          ${country[0]}
+        </h2>
+
+        <p>
+          ${country[3]}
+          · Country Code: ${country[1]}
+        </p>
+
+      </div>
+
+
+      <div class="city-selector">
+
+        <strong>
+          🏙️ Select City:
+        </strong>
+
+        <select id="citySelect">
+
+          ${cities.map((city,i)=>`
+
+            <option value="${i}">
+              ${city}
+            </option>
+
+          `).join("")}
+
+        </select>
+
+        <button
+          class="primary"
+          onclick='loadCity(${JSON.stringify(country)},${JSON.stringify(cities)})'
+        >
+          Explore City
+        </button>
+
+      </div>
+
+
+      <div id="cityResult"></div>
+
+    </div>
+
+  `;
+
+  loadCity(country,cities);
+
+  destination.scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   LOAD CITY
+   ========================================================= */
+
+function loadCity(country,cities){
+
+  const select=
+    document.getElementById(
+      "citySelect"
+    );
+
+  const city=
+    cities[
+      parseInt(select.value)
+    ];
+
+  const airports=
+    airportData(country,city);
+
+  const hotels=
+    hotelData(city);
+
+  const flights=
+    flightData(city);
+
+  const foods=
+    culinaryData(country,city);
+
+  const attractions=
+    attractionData(country,city);
+
+  const activities=
+    activityData(city);
+
+  document.getElementById(
+    "cityResult"
+  ).innerHTML=`
+
+    <div class="summary">
+
+      <h2>
+        📍 ${city}
+      </h2>
+
+      <div class="summary-grid">
+
+        <div class="stat">
+          Airport
+          <strong>${airports.length}</strong>
+        </div>
+
+        <div class="stat">
+          Hotels
+          <strong>${hotels.length}</strong>
+        </div>
+
+        <div class="stat">
+          Flights
+          <strong>${flights.length}</strong>
+        </div>
+
+        <div class="stat">
+          Culinary
+          <strong>${foods.length}</strong>
+        </div>
+
+        <div class="stat">
+          Attractions
+          <strong>${attractions.length}</strong>
+        </div>
+
+        <div class="stat">
+          Activities
+          <strong>${activities.length}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="modules">
+
+
+      <!-- AIRPORT -->
+
+      <div class="module">
+
+        <div class="icon">✈️</div>
+
+        <h3>Airport Engine</h3>
+
+        ${airports.map(a=>`
+
+          <div class="item">
+
+            <strong>
+              ${a.name}
+            </strong>
+
+            Airport Code:
+            <span class="route">
+              ${a.code}
+            </span>
+
+            <br>
+
+            ${a.type}
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- HOTEL -->
+
+      <div class="module">
+
+        <div class="icon">🏨</div>
+
+        <h3>Hotel Engine</h3>
+
+        ${hotels.map(h=>`
+
+          <div class="item">
+
+            <strong>
+              ${h.name}
+            </strong>
+
+            ⭐ ${h.rating}
+
+            <br>
+
+            <span class="price">
+              From $${h.price}/night
+            </span>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- FLIGHT -->
+
+      <div class="module">
+
+        <div class="icon">🛫</div>
+
+        <h3>Flight Engine</h3>
+
+        ${flights.map(f=>`
+
+          <div class="item">
+
+            <strong>
+              ${f.airline}
+            </strong>
+
+            <span class="route">
+              ${f.route}
+            </span>
+
+            <br>
+
+            ${f.cabin}
+
+            <br>
+
+            <span class="price">
+              From $${f.price}
+            </span>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- CULINARY -->
+
+      <div class="module">
+
+        <div class="icon">🍜</div>
+
+        <h3>Culinary Engine</h3>
+
+        ${foods.map(food=>`
+
+          <div class="item">
+
+            <strong>
+              ${food}
+            </strong>
+
+            ${city} Culinary Experience
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- ATTRACTION -->
+
+      <div class="module">
+
+        <div class="icon">📍</div>
+
+        <h3>Attraction Engine</h3>
+
+        ${attractions.map(a=>`
+
+          <div class="item">
+
+            <strong>
+              ${a}
+            </strong>
+
+            Tourism Destination
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- ACTIVITY -->
+
+      <div class="module">
+
+        <div class="icon">🎯</div>
+
+        <h3>Activity Engine</h3>
+
+        ${activities.map(a=>`
+
+          <div class="item">
+
+            <strong>
+              ${a}
+            </strong>
+
+            Available experience
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+
+      <!-- TRANSPORT -->
+
+      <div class="module">
+
+        <div class="icon">🚗</div>
+
+        <h3>Transport Engine</h3>
+
+        <div class="item">
+          <strong>Airport Transfer</strong>
+          Airport → Hotel
+        </div>
+
+        <div class="item">
+          <strong>Car Rental</strong>
+          Economy / Comfort / Premium
+        </div>
+
+        <div class="item">
+          <strong>Private Driver</strong>
+          City transportation
+        </div>
+
+        <div class="item">
+          <strong>Local Transport</strong>
+          Taxi / Bus / Train
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="createTrip('${country[0]}','${city}')"
+      >
+        🧠 AI Create Trip
+      </button>
+
+      <button
+        class="green"
+        onclick="addTrip('${country[0]}','${city}')"
+      >
+        🛒 Add Destination
+      </button>
+
+      <button
+        class="dark"
+        onclick="window.scrollTo({top:0,behavior:'smooth'})"
+      >
+        🔎 Search Again
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   AI TRIP
+   ========================================================= */
+
+function createTrip(country,city){
+
+  alert(
+    "HOBBIGO AI TRIP ENGINE\\n\\n"+
+    "Country: "+country+"\\n"+
+    "City: "+city+"\\n\\n"+
+    "AI will combine:\\n"+
+    "✈️ Flight\\n"+
+    "🏨 Hotel\\n"+
+    "🚗 Transport\\n"+
+    "🍜 Culinary\\n"+
+    "📍 Attraction\\n"+
+    "🎯 Activity\\n\\n"+
+    "Next stage: Smart Route + Itinerary."
+  );
+
+}
+
+
+/* =========================================================
+   ADD TRIP
+   ========================================================= */
+
+function addTrip(country,city){
+
+  const trip={
+    country:country,
+    city:city,
+    createdAt:new Date().toISOString()
+  };
+
+  localStorage.setItem(
+    "HobbiGoTrip",
+    JSON.stringify(trip)
+  );
+
+  alert(
+    "Destination added to HobbiGo Trip!\\n\\n"+
+    country+" - "+city
+  );
+
+}
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+displayCountries(countries);
+
+console.log(
+  "HobbiGo V82.2 Engine Loaded",
+  countries.length,
+  "countries"
+);
+
+</script>
+
+</body>
+</html>
