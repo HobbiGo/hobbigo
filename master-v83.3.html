@@ -1,1 +1,1742 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>HobbiGo Master V83.3</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f7fb;
+  color:#182230;
+}
+
+button,
+input,
+select{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  background:linear-gradient(135deg,#071d35,#0b4f75,#0b8b83);
+  color:white;
+  padding:18px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 4px 18px rgba(0,0,0,.15);
+}
+
+.logo{
+  font-size:29px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.logo span{
+  color:#55e3c1;
+}
+
+.tagline{
+  font-size:11px;
+  opacity:.85;
+  margin-top:3px;
+}
+
+.nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.nav button{
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);
+  color:white;
+  padding:9px 13px;
+  border-radius:20px;
+}
+
+.nav button:hover{
+  background:rgba(255,255,255,.18);
+}
+
+.hero{
+  padding:50px 5% 35px;
+  background:
+  radial-gradient(circle at 80% 20%,rgba(51,220,184,.22),transparent 30%),
+  linear-gradient(135deg,#071d35,#0c496c);
+  color:white;
+}
+
+.hero h1{
+  font-size:clamp(30px,5vw,54px);
+  max-width:850px;
+  line-height:1.05;
+}
+
+.hero p{
+  margin-top:15px;
+  max-width:760px;
+  line-height:1.7;
+  opacity:.9;
+}
+
+.badge{
+  display:inline-block;
+  background:#55e3c1;
+  color:#073043;
+  padding:7px 13px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.container{
+  width:90%;
+  max-width:1250px;
+  margin:auto;
+}
+
+.section{
+  padding:32px 0;
+}
+
+.section-title{
+  font-size:25px;
+  margin-bottom:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 7px 25px rgba(15,45,75,.08);
+  border:1px solid #e6edf4;
+}
+
+.card h3{
+  margin-bottom:9px;
+}
+
+.card p{
+  color:#667383;
+  font-size:14px;
+  line-height:1.55;
+}
+
+.icon{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.panel{
+  background:white;
+  border-radius:22px;
+  padding:25px;
+  box-shadow:0 10px 35px rgba(15,45,75,.09);
+  border:1px solid #e5edf4;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field label{
+  font-size:13px;
+  font-weight:bold;
+  color:#445264;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:13px;
+  border:1px solid #d7e0e9;
+  border-radius:11px;
+  background:#fff;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:#0b8b83;
+  box-shadow:0 0 0 3px rgba(11,139,131,.1);
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.primary{
+  background:linear-gradient(135deg,#087d79,#0baf91);
+  color:white;
+  border:0;
+  padding:14px 21px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.secondary{
+  background:#edf4f7;
+  color:#164154;
+  border:0;
+  padding:13px 18px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+.danger{
+  background:#fff0f0;
+  color:#b63b3b;
+  border:0;
+  padding:12px 17px;
+  border-radius:12px;
+}
+
+.actions{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.results{
+  display:none;
+  margin-top:25px;
+}
+
+.result-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+
+.ai-box{
+  background:linear-gradient(135deg,#eefdfa,#eaf7ff);
+  border:1px solid #c9eee6;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.ai-box strong{
+  color:#087d79;
+}
+
+.option-card{
+  background:white;
+  border:1px solid #e0e8ee;
+  border-radius:16px;
+  padding:18px;
+  position:relative;
+}
+
+.option-card.selected{
+  border:2px solid #0b9c87;
+}
+
+.option-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.price{
+  font-size:21px;
+  font-weight:bold;
+  color:#087d79;
+  margin-top:10px;
+}
+
+.small{
+  color:#738092;
+  font-size:12px;
+}
+
+.select-btn{
+  width:100%;
+  margin-top:14px;
+  padding:11px;
+  border:0;
+  border-radius:10px;
+  background:#eef5f7;
+  color:#175163;
+  font-weight:bold;
+}
+
+.select-btn.active{
+  background:#0b9183;
+  color:white;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.summary-box{
+  background:#f7fafc;
+  padding:17px;
+  border-radius:14px;
+}
+
+.summary-box span{
+  display:block;
+  font-size:12px;
+  color:#728093;
+}
+
+.summary-box strong{
+  display:block;
+  margin-top:6px;
+  font-size:18px;
+}
+
+.itinerary{
+  margin-top:25px;
+}
+
+.day{
+  border-left:4px solid #0b9183;
+  padding:12px 0 12px 18px;
+  margin-bottom:15px;
+}
+
+.day h4{
+  margin-bottom:7px;
+}
+
+.day p{
+  color:#637083;
+  line-height:1.6;
+  font-size:14px;
+}
+
+.proposal{
+  margin-top:25px;
+  background:#071d35;
+  color:white;
+  border-radius:20px;
+  padding:25px;
+}
+
+.proposal h3{
+  color:#55e3c1;
+  margin-bottom:12px;
+}
+
+.proposal-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+  margin-top:15px;
+}
+
+.proposal-item{
+  background:rgba(255,255,255,.07);
+  border-radius:10px;
+  padding:12px;
+}
+
+.notice{
+  padding:13px 15px;
+  border-radius:12px;
+  background:#fff9e9;
+  border:1px solid #f4df9a;
+  color:#745d18;
+  font-size:13px;
+  margin-top:15px;
+}
+
+.footer{
+  margin-top:40px;
+  padding:30px 5%;
+  background:#061728;
+  color:#dbe7ef;
+  text-align:center;
+}
+
+.footer strong{
+  color:#55e3c1;
+}
+
+@media(max-width:750px){
+  .header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .proposal-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    padding-top:35px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <div>
+    <div class="logo">Hobbi<span>Go</span></div>
+    <div class="tagline">
+      AI Journey & Experience Marketplace
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button onclick="scrollToSection('planner')">Corporate</button>
+    <button onclick="scrollToSection('results')">Results</button>
+    <button onclick="scrollToSection('proposal')">Proposal</button>
+  </nav>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="container">
+
+    <span class="badge">
+      HOBBIGO V83.3 MASTER
+    </span>
+
+    <h1>
+      Corporate Meeting & Event Planner
+    </h1>
+
+    <p>
+      Plan corporate meetings, retreats, conferences, team building
+      and corporate trips in one integrated HobbiGo experience.
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="section">
+
+<div class="container">
+
+  <h2 class="section-title">
+    Corporate Event Marketplace
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon">🏢</div>
+      <h3>Meeting Venue</h3>
+      <p>
+        Search meeting rooms, conference halls,
+        ballroom and corporate event venues.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🏨</div>
+      <h3>Hotel</h3>
+      <p>
+        Corporate accommodation based on
+        location, capacity and budget.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🚌</div>
+      <h3>Transport</h3>
+      <p>
+        Bus, van, car and other group transportation
+        options.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🍽️</div>
+      <h3>Restaurant</h3>
+      <p>
+        Lunch, dinner, catering and corporate
+        dining experiences.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎯</div>
+      <h3>Activities</h3>
+      <p>
+        Team building, recreation, attraction
+        and corporate experiences.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🤖</div>
+      <h3>AI Planner</h3>
+      <p>
+        AI-assisted package configuration,
+        itinerary and budget estimation.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="section" id="planner">
+
+<div class="container">
+
+  <div class="panel">
+
+    <h2 class="section-title">
+      Create Your Corporate Event
+    </h2>
+
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Company Name</label>
+        <input
+          id="company"
+          type="text"
+          placeholder="Example: ABC Indonesia">
+      </div>
+
+      <div class="field">
+        <label>Destination</label>
+        <select id="destination">
+          <option value="Bali">Bali, Indonesia</option>
+          <option value="Jakarta">Jakarta, Indonesia</option>
+          <option value="Bandung">Bandung, Indonesia</option>
+          <option value="Yogyakarta">Yogyakarta, Indonesia</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Kuala Lumpur">Kuala Lumpur, Malaysia</option>
+          <option value="Bangkok">Bangkok, Thailand</option>
+          <option value="Tokyo">Tokyo, Japan</option>
+          <option value="Seoul">Seoul, South Korea</option>
+          <option value="Sydney">Sydney, Australia</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Event Start Date</label>
+        <input id="eventDate" type="date">
+      </div>
+
+      <div class="field">
+        <label>Duration</label>
+        <select id="duration">
+          <option value="1">1 Day</option>
+          <option value="2">2 Days / 1 Night</option>
+          <option value="3" selected>3 Days / 2 Nights</option>
+          <option value="4">4 Days / 3 Nights</option>
+          <option value="5">5 Days / 4 Nights</option>
+          <option value="7">7 Days / 6 Nights</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Participants</label>
+        <input
+          id="participants"
+          type="number"
+          min="1"
+          value="30">
+      </div>
+
+      <div class="field">
+        <label>Event Type</label>
+        <select id="eventType">
+
+          <option>Corporate Meeting</option>
+          <option>Conference</option>
+          <option>Team Building</option>
+          <option>Corporate Retreat</option>
+          <option>Corporate Trip</option>
+          <option>Gala Dinner</option>
+          <option>Training</option>
+          <option>Incentive Trip</option>
+
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Hotel Category</label>
+        <select id="hotelCategory">
+          <option value="3">3 Star</option>
+          <option value="4" selected>4 Star</option>
+          <option value="5">5 Star</option>
+          <option value="luxury">Luxury</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Budget Preference</label>
+        <select id="budget">
+          <option value="economy">Economy</option>
+          <option value="comfort" selected>Comfort</option>
+          <option value="premium">Premium</option>
+          <option value="exclusive">Exclusive</option>
+        </select>
+      </div>
+
+      <div class="field full">
+        <label>Special Requirement</label>
+        <input
+          id="special"
+          type="text"
+          placeholder="Example: halal food, projector, airport transfer, team building">
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button class="primary" onclick="generateCorporatePlan()">
+        🤖 Generate AI Corporate Plan
+      </button>
+
+      <button class="secondary" onclick="resetPlanner()">
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="section results" id="results">
+
+<div class="container">
+
+  <div class="result-header">
+
+    <div>
+      <h2 class="section-title">
+        AI Corporate Recommendation
+      </h2>
+
+      <div class="small" id="resultSubtitle">
+        -
+      </div>
+    </div>
+
+    <button class="secondary" onclick="generateCorporatePlan()">
+      Re-optimize
+    </button>
+
+  </div>
+
+
+  <div class="ai-box">
+
+    <strong>🤖 HobbiGo AI Recommendation</strong>
+
+    <p id="aiText" style="margin-top:8px;line-height:1.6;">
+      -
+    </p>
+
+  </div>
+
+
+  <h3 style="margin-bottom:13px;">
+    🏢 Meeting Venue
+  </h3>
+
+  <div class="grid" id="venueOptions"></div>
+
+
+  <h3 style="margin:28px 0 13px;">
+    🏨 Hotel
+  </h3>
+
+  <div class="grid" id="hotelOptions"></div>
+
+
+  <h3 style="margin:28px 0 13px;">
+    🚌 Transport
+  </h3>
+
+  <div class="grid" id="transportOptions"></div>
+
+
+  <h3 style="margin:28px 0 13px;">
+    🍽️ Restaurant / Catering
+  </h3>
+
+  <div class="grid" id="restaurantOptions"></div>
+
+
+  <h3 style="margin:28px 0 13px;">
+    🎯 Activities
+  </h3>
+
+  <div class="grid" id="activityOptions"></div>
+
+
+  <div class="summary">
+
+    <div class="summary-box">
+      <span>Participants</span>
+      <strong id="sumParticipants">0</strong>
+    </div>
+
+    <div class="summary-box">
+      <span>Duration</span>
+      <strong id="sumDuration">0</strong>
+    </div>
+
+    <div class="summary-box">
+      <span>Estimated Cost</span>
+      <strong id="sumCost">Rp 0</strong>
+    </div>
+
+    <div class="summary-box">
+      <span>Package Status</span>
+      <strong id="sumStatus">Draft</strong>
+    </div>
+
+  </div>
+
+
+  <div class="itinerary">
+
+    <h3 style="margin-bottom:17px;">
+      📅 AI Event Itinerary
+    </h3>
+
+    <div id="itineraryContent"></div>
+
+  </div>
+
+
+  <div class="actions">
+
+    <button class="primary" onclick="createProposal()">
+      📄 Create Corporate Proposal
+    </button>
+
+    <button class="secondary" onclick="scrollToSection('planner')">
+      ✏️ Edit Event
+    </button>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section class="section results" id="proposal">
+
+<div class="container">
+
+  <div class="proposal">
+
+    <h3>
+      HOBBIGO CORPORATE EVENT PROPOSAL
+    </h3>
+
+    <p id="proposalIntro">
+      -
+    </p>
+
+    <div class="proposal-grid">
+
+      <div class="proposal-item">
+        Company<br>
+        <strong id="pCompany">-</strong>
+      </div>
+
+      <div class="proposal-item">
+        Destination<br>
+        <strong id="pDestination">-</strong>
+      </div>
+
+      <div class="proposal-item">
+        Event<br>
+        <strong id="pEvent">-</strong>
+      </div>
+
+      <div class="proposal-item">
+        Participants<br>
+        <strong id="pParticipants">-</strong>
+      </div>
+
+      <div class="proposal-item">
+        Duration<br>
+        <strong id="pDuration">-</strong>
+      </div>
+
+      <div class="proposal-item">
+        Estimated Budget<br>
+        <strong id="pBudget">-</strong>
+      </div>
+
+    </div>
+
+    <div class="notice">
+      This is a demonstration proposal generated by
+      HobbiGo V83.3. Final prices, availability,
+      taxes and supplier terms will be confirmed
+      through connected partners/API.
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        onclick="downloadProposal()">
+        ⬇️ Download Proposal
+      </button>
+
+      <button
+        class="secondary"
+        onclick="sendRequest()">
+        📩 Request Supplier Proposal
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<footer class="footer">
+
+  <strong>HobbiGo</strong>
+
+  <br><br>
+
+  AI Journey & Experience Marketplace
+
+  <br>
+
+  Search → Plan → Configure → Package → Book
+  → Experience → Re-optimize
+
+  <br><br>
+
+  <span style="font-size:12px;opacity:.7;">
+    Master V83.3 Corporate Event & Meeting Planner
+  </span>
+
+</footer>
+
+
+<script>
+
+let state = {
+
+  company:"",
+  destination:"",
+  date:"",
+  duration:3,
+  participants:30,
+  eventType:"",
+  hotelCategory:"4",
+  budget:"comfort",
+  special:"",
+
+  selections:{
+    venue:null,
+    hotel:null,
+    transport:null,
+    restaurant:null,
+    activity:null
+  },
+
+  total:0
+
+};
+
+
+const data = {
+
+  Bali:{
+
+    venues:[
+      {
+        name:"Bali Convention Center",
+        capacity:500,
+        price:35000000,
+        desc:"Large conference venue with presentation facilities."
+      },
+      {
+        name:"Nusa Dua Meeting Hall",
+        capacity:300,
+        price:28000000,
+        desc:"Professional corporate meeting environment."
+      },
+      {
+        name:"Beachside Corporate Venue",
+        capacity:150,
+        price:22000000,
+        desc:"Creative corporate venue with outdoor area."
+      }
+    ],
+
+    hotels:[
+      {
+        name:"Bali Executive Resort",
+        stars:"5 Star",
+        price:1250000
+      },
+      {
+        name:"Bali Business Hotel",
+        stars:"4 Star",
+        price:850000
+      },
+      {
+        name:"Bali Corporate Inn",
+        stars:"3 Star",
+        price:650000
+      }
+    ],
+
+    transport:[
+      {
+        name:"Executive Bus",
+        price:8500000
+      },
+      {
+        name:"Premium Coach",
+        price:12500000
+      },
+      {
+        name:"VIP Shuttle Fleet",
+        price:18000000
+      }
+    ],
+
+    restaurants:[
+      {
+        name:"Balinese Corporate Dinner",
+        price:275000,
+        desc:"Local cuisine corporate dinner."
+      },
+      {
+        name:"International Buffet",
+        price:350000,
+        desc:"International buffet package."
+      },
+      {
+        name:"Premium Gala Dinner",
+        price:550000,
+        desc:"Premium corporate dining."
+      }
+    ],
+
+    activities:[
+      {
+        name:"Beach Team Building",
+        price:350000,
+        desc:"Outdoor team-building experience."
+      },
+      {
+        name:"Cultural Experience",
+        price:425000,
+        desc:"Balinese culture and creative activities."
+      },
+      {
+        name:"Adventure Team Challenge",
+        price:650000,
+        desc:"Adventure-based team experience."
+      }
+    ]
+
+  },
+
+  Jakarta:{
+
+    venues:[
+      {
+        name:"Jakarta Convention Hall",
+        capacity:800,
+        price:32000000,
+        desc:"Large corporate conference venue."
+      },
+      {
+        name:"Central Business Meeting Room",
+        capacity:250,
+        price:18000000,
+        desc:"Business district meeting venue."
+      },
+      {
+        name:"Luxury Corporate Ballroom",
+        capacity:500,
+        price:40000000,
+        desc:"Premium ballroom for corporate events."
+      }
+    ],
+
+    hotels:[
+      {
+        name:"Jakarta Grand Hotel",
+        stars:"5 Star",
+        price:1450000
+      },
+      {
+        name:"Jakarta Business Hotel",
+        stars:"4 Star",
+        price:900000
+      },
+      {
+        name:"Jakarta City Hotel",
+        stars:"3 Star",
+        price:650000
+      }
+    ],
+
+    transport:[
+      {
+        name:"Corporate Bus",
+        price:7000000
+      },
+      {
+        name:"Executive Coach",
+        price:10500000
+      },
+      {
+        name:"Premium Shuttle Fleet",
+        price:16000000
+      }
+    ],
+
+    restaurants:[
+      {
+        name:"Indonesian Corporate Buffet",
+        price:225000,
+        desc:"Indonesian buffet."
+      },
+      {
+        name:"International Business Lunch",
+        price:325000,
+        desc:"International business dining."
+      },
+      {
+        name:"Premium Gala Dinner",
+        price:550000,
+        desc:"Premium corporate dinner."
+      }
+    ],
+
+    activities:[
+      {
+        name:"Jakarta City Experience",
+        price:250000,
+        desc:"City exploration experience."
+      },
+      {
+        name:"Indoor Team Challenge",
+        price:325000,
+        desc:"Indoor team-building activities."
+      },
+      {
+        name:"Premium Corporate Experience",
+        price:550000,
+        desc:"Premium corporate entertainment."
+      }
+    ]
+
+  }
+
+};
+
+
+function fallbackDestination(city){
+
+  if(data[city]) return data[city];
+
+  return {
+
+    venues:[
+      {
+        name:city+" Convention Center",
+        capacity:500,
+        price:30000000,
+        desc:"Corporate meeting venue."
+      },
+      {
+        name:city+" Business Meeting Hall",
+        capacity:250,
+        price:20000000,
+        desc:"Professional business venue."
+      },
+      {
+        name:city+" Premium Event Venue",
+        capacity:350,
+        price:38000000,
+        desc:"Premium event venue."
+      }
+    ],
+
+    hotels:[
+      {
+        name:city+" Executive Hotel",
+        stars:"5 Star",
+        price:1300000
+      },
+      {
+        name:city+" Business Hotel",
+        stars:"4 Star",
+        price:850000
+      },
+      {
+        name:city+" City Hotel",
+        stars:"3 Star",
+        price:600000
+      }
+    ],
+
+    transport:[
+      {
+        name:"Executive Bus",
+        price:8000000
+      },
+      {
+        name:"Premium Coach",
+        price:12000000
+      },
+      {
+        name:"VIP Shuttle",
+        price:17500000
+      }
+    ],
+
+    restaurants:[
+      {
+        name:"Local Corporate Buffet",
+        price:250000,
+        desc:"Local cuisine corporate dining."
+      },
+      {
+        name:"International Buffet",
+        price:350000,
+        desc:"International dining."
+      },
+      {
+        name:"Premium Corporate Dinner",
+        price:500000,
+        desc:"Premium dinner."
+      }
+    ],
+
+    activities:[
+      {
+        name:"City Team Building",
+        price:300000,
+        desc:"Team building experience."
+      },
+      {
+        name:"Cultural Experience",
+        price400000,
+        desc:"Cultural corporate activity."
+      },
+      {
+        name:"Adventure Experience",
+        price600000,
+        desc:"Adventure activity."
+      }
+    ]
+
+  };
+
+}
+
+
+function rupiah(value){
+
+  return "Rp "+
+    Math.round(value)
+    .toLocaleString("id-ID");
+
+}
+
+
+function getForm(){
+
+  state.company =
+    document.getElementById("company").value ||
+    "Corporate Client";
+
+  state.destination =
+    document.getElementById("destination").value;
+
+  state.date =
+    document.getElementById("eventDate").value ||
+    new Date().toISOString().slice(0,10);
+
+  state.duration =
+    Number(document.getElementById("duration").value);
+
+  state.participants =
+    Number(document.getElementById("participants").value) || 1;
+
+  state.eventType =
+    document.getElementById("eventType").value;
+
+  state.hotelCategory =
+    document.getElementById("hotelCategory").value;
+
+  state.budget =
+    document.getElementById("budget").value;
+
+  state.special =
+    document.getElementById("special").value;
+
+}
+
+
+function generateCorporatePlan(){
+
+  getForm();
+
+  const db =
+    data[state.destination] ||
+    fallbackDestination(state.destination);
+
+  state.selections = {
+    venue:db.venues[0],
+    hotel:db.hotels[0],
+    transport:db.transport[0],
+    restaurant:db.restaurants[0],
+    activity:db.activities[0]
+  };
+
+  renderOptions(db);
+
+  calculateTotal();
+
+  renderAI();
+
+  renderItinerary();
+
+  document.getElementById("results")
+    .style.display="block";
+
+  document.getElementById("results")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+function renderOptions(db){
+
+  document.getElementById("venueOptions").innerHTML =
+    db.venues.map((item,i)=>optionHTML(
+      item,
+      "venue",
+      i,
+      `
+      <strong>Capacity:</strong>
+      ${item.capacity} people<br>
+      <span class="small">
+      ${item.desc}
+      </span>
+      `,
+      item.price
+    )).join("");
+
+  document.getElementById("hotelOptions").innerHTML =
+    db.hotels.map((item,i)=>optionHTML(
+      item,
+      "hotel",
+      i,
+      item.stars+" • per room/night",
+      item.price
+    )).join("");
+
+  document.getElementById("transportOptions").innerHTML =
+    db.transport.map((item,i)=>optionHTML(
+      item,
+      "transport",
+      i,
+      "Corporate group transportation",
+      item.price
+    )).join("");
+
+  document.getElementById("restaurantOptions").innerHTML =
+    db.restaurants.map((item,i)=>optionHTML(
+      item,
+      "restaurant",
+      i,
+      item.desc+" • per person",
+      item.price
+    )).join("");
+
+  document.getElementById("activityOptions").innerHTML =
+    db.activities.map((item,i)=>optionHTML(
+      item,
+      "activity",
+      i,
+      item.desc+" • per person",
+      item.price
+    )).join("");
+
+}
+
+
+function optionHTML(
+  item,
+  type,
+  index,
+  description,
+  price
+){
+
+  const selected =
+    state.selections[type] &&
+    state.selections[type].name === item.name;
+
+  return `
+
+    <div class="option-card ${selected?"selected":""}">
+
+      <div class="option-top">
+
+        <div>
+          <h3>${item.name}</h3>
+
+          <div class="small">
+            ${description}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="price">
+        ${rupiah(price)}
+      </div>
+
+      <button
+        class="select-btn ${selected?"active":""}"
+        onclick="selectOption('${type}',${index})">
+
+        ${selected?"✓ Selected":"Select"}
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function selectOption(type,index){
+
+  const db =
+    data[state.destination] ||
+    fallbackDestination(state.destination);
+
+  const source = {
+
+    venue:db.venues,
+    hotel:db.hotels,
+    transport:db.transport,
+    restaurant:db.restaurants,
+    activity:db.activities
+
+  };
+
+  state.selections[type] =
+    source[type][index];
+
+  renderOptions(db);
+
+  calculateTotal();
+
+  renderItinerary();
+
+}
+
+
+function calculateTotal(){
+
+  const p =
+    state.participants;
+
+  const d =
+    state.duration;
+
+  const s =
+    state.selections;
+
+  let venue =
+    s.venue ? s.venue.price : 0;
+
+  let hotel =
+    s.hotel
+    ? s.hotel.price *
+      Math.max(1,d-1) *
+      Math.ceil(p/2)
+    : 0;
+
+  let transport =
+    s.transport
+    ? s.transport.price
+    : 0;
+
+  let restaurant =
+    s.restaurant
+    ? s.restaurant.price *
+      p *
+      Math.max(1,d)
+    : 0;
+
+  let activity =
+    s.activity
+    ? s.activity.price *
+      p
+    : 0;
+
+  state.total =
+    venue +
+    hotel +
+    transport +
+    restaurant +
+    activity;
+
+  document.getElementById("sumParticipants")
+    .textContent=p;
+
+  document.getElementById("sumDuration")
+    .textContent=d+" Days";
+
+  document.getElementById("sumCost")
+    .textContent=rupiah(state.total);
+
+  document.getElementById("sumStatus")
+    .textContent="AI Package Ready";
+
+}
+
+
+function renderAI(){
+
+  const hotel =
+    state.selections.hotel;
+
+  let message =
+    `HobbiGo AI has configured a ${state.eventType} package for ${state.company} in ${state.destination}. `;
+
+  message +=
+    `The recommended setup is designed for ${state.participants} participants over ${state.duration} days. `;
+
+  message +=
+    `The package combines a meeting venue, ${hotel ? hotel.stars : "business"} accommodation, group transport, dining and corporate activities. `;
+
+  if(state.special){
+
+    message +=
+      `Special requirement detected: ${state.special}. `;
+
+  }
+
+  message +=
+    `You can change any supplier option before requesting the final corporate proposal.`;
+
+  document.getElementById("aiText")
+    .textContent=message;
+
+  document.getElementById("resultSubtitle")
+    .textContent =
+    `${state.company} • ${state.destination} • ${state.eventType}`;
+
+}
+
+
+function renderItinerary(){
+
+  let html="";
+
+  for(let i=1;i<=state.duration;i++){
+
+    let content="";
+
+    if(i===1){
+
+      content =
+      `Arrival / welcome → Airport or city transfer → `
+      +`${state.selections.hotel.name} check-in → `
+      +`Corporate opening session → Dinner.`;
+
+    }else if(i===state.duration){
+
+      content =
+      `Morning corporate session → `
+      +`${state.selections.activity.name} → `
+      +`Closing session → Check-out / departure.`;
+
+    }else{
+
+      content =
+      `Morning meeting → Lunch at `
+      +`${state.selections.restaurant.name} → `
+      +`${state.selections.activity.name} → `
+      +`Corporate networking dinner.`;
+
+    }
+
+    html += `
+
+      <div class="day">
+
+        <h4>Day ${i}</h4>
+
+        <p>${content}</p>
+
+      </div>
+
+    `;
+
+  }
+
+  document.getElementById("itineraryContent")
+    .innerHTML=html;
+
+}
+
+
+function createProposal(){
+
+  getForm();
+
+  document.getElementById("pCompany")
+    .textContent=state.company;
+
+  document.getElementById("pDestination")
+    .textContent=state.destination;
+
+  document.getElementById("pEvent")
+    .textContent=state.eventType;
+
+  document.getElementById("pParticipants")
+    .textContent=state.participants+" people";
+
+  document.getElementById("pDuration")
+    .textContent=state.duration+" days";
+
+  document.getElementById("pBudget")
+    .textContent=rupiah(state.total);
+
+  document.getElementById("proposalIntro")
+    .textContent =
+    `HobbiGo is pleased to present a preliminary corporate event package for ${state.company}, prepared for ${state.eventType} in ${state.destination}.`;
+
+  document.getElementById("proposal")
+    .style.display="block";
+
+  document.getElementById("proposal")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+function downloadProposal(){
+
+  const text = `
+
+HOBBIGO
+AI JOURNEY & EXPERIENCE MARKETPLACE
+
+CORPORATE EVENT PROPOSAL
+MASTER V83.3
+
+Company:
+${state.company}
+
+Destination:
+${state.destination}
+
+Event:
+${state.eventType}
+
+Date:
+${state.date}
+
+Participants:
+${state.participants}
+
+Duration:
+${state.duration} Days
+
+Meeting Venue:
+${state.selections.venue.name}
+
+Hotel:
+${state.selections.hotel.name}
+
+Transport:
+${state.selections.transport.name}
+
+Restaurant:
+${state.selections.restaurant.name}
+
+Activity:
+${state.selections.activity.name}
+
+Estimated Total:
+${rupiah(state.total)}
+
+Special Requirement:
+${state.special || "None"}
+
+------------------------------------
+
+HobbiGo Corporate Event Planner
+
+This is a preliminary demonstration proposal.
+Final availability and supplier pricing must
+be confirmed through the HobbiGo marketplace.
+
+  `;
+
+  const blob =
+    new Blob([text],{
+      type:"text/plain"
+    });
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const a =
+    document.createElement("a");
+
+  a.href=url;
+
+  a.download=
+    "HobbiGo_Corporate_Proposal_V83.3.txt";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+function sendRequest(){
+
+  alert(
+    "Corporate proposal request created. "+
+    "In the production version this button will connect "+
+    "to the HobbiGo supplier/API system."
+  );
+
+}
+
+
+function resetPlanner(){
+
+  document.getElementById("company").value="";
+
+  document.getElementById("participants").value=30;
+
+  document.getElementById("special").value="";
+
+  document.getElementById("results").style.display="none";
+
+  document.getElementById("proposal").style.display="none";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function scrollToSection(id){
+
+  const el =
+    document.getElementById(id);
+
+  if(el){
+
+    el.scrollIntoView({
+      behavior:"smooth"
+    });
+
+  }
+
+}
+
+
+document.getElementById("eventDate")
+  .value =
+  new Date().toISOString().slice(0,10);
+
+</script>
+
+</body>
+</html>
