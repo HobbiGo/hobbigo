@@ -1,5 +1,5 @@
 // =========================================
-// FILE JAVASCRIPT HOBIGO - VERSI STABIL
+// FILE JAVASCRIPT HOBIGO - PREMIUM EDITION
 // =========================================
 
 const products = [
@@ -7,7 +7,10 @@ const products = [
   {id:2, type:"Hotel", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
   {id:3, type:"Flight", name:"Garuda Indonesia", place:"CGK - DPS", price:1800000, img:"https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.6},
   {id:4, type:"Transport", name:"Toyota Alphard", place:"Bali", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
-  {id:5, type:"Restaurant", name:"Jimbaran Seafood", place:"Jimbaran, Bali", price:350000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7}
+  {id:5, type:"Restaurant", name:"Jimbaran Seafood", place:"Jimbaran, Bali", price:350000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
+  {id:6, type:"Hotel", name:"Tokyo Grand Hotel", place:"Shinjuku, Tokyo", price:2500000, img:"https://images.pexels.com/photos/1440476/pexels-photo-1440476.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
+  {id:7, type:"Hotel", name:"Paris Luxury Suite", place:"Champs-Élysées, Paris", price:3800000, img:"https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
+  {id:8, type:"Hotel", name:"Maldives Water Villa", place:"Male, Maldives", price:6500000, img:"https://images.pexels.com/photos/1470502/pexels-photo-1470502.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9}
 ];
 
 let cart = [];
@@ -16,7 +19,6 @@ let mapInstance = null;
 let liveMarker = null;
 let liveInterval = null;
 
-// LOAD DATA DARI LOCAL STORAGE
 try { 
   cart = JSON.parse(localStorage.getItem("hobbigoCart")) || []; 
   transactions = JSON.parse(localStorage.getItem("hobbigoTransactions")) || [];
@@ -29,7 +31,6 @@ function saveCart(){
   if(h) h.textContent = cart.length; 
 }
 
-// NAVIGASI
 function showPage(id){
   document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
   const target = document.getElementById(id);
@@ -51,24 +52,29 @@ function goToMarket(type) {
   }
 }
 
-// RENDER BERANDA
 function renderHome(){
   const container = document.getElementById("homeDestinations");
   if(!container) return;
-  container.innerHTML = products.slice(0,4).map(p=>`
+  
+  // Tampilkan 4 destinasi pertama
+  const homeProducts = products.slice(0,4);
+  
+  container.innerHTML = homeProducts.map(p=>`
     <div class="dest-card" onclick="addProduct(${p.id})">
       <div class="dest-img" style="background-image:url('${p.img}')">
         <span class="badge-dest">${p.type}</span>
       </div>
       <div class="dest-info">
         <h4>${p.name}</h4>
-        <div class="dest-meta"><span>⭐ ${p.rating}</span> <span>${money(p.price)}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-top:10px">
+          <span><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${p.rating}</span>
+          <span>${money(p.price)}</span>
+        </div>
       </div>
     </div>
   `).join("");
 }
 
-// RENDER MARKETPLACE
 function renderMarket(){
   const grid = document.getElementById("marketGrid");
   const type = document.getElementById("marketType").value;
@@ -97,7 +103,6 @@ function renderMarket(){
   `).join("");
 }
 
-// KERANJANG
 function addProduct(id){
   const p = products.find(x=>x.id===id);
   if(p) { 
@@ -219,11 +224,9 @@ function startLiveJourney() {
   }, 3000);
 }
 
-// MODAL
 function showModal(html){ document.getElementById("modalContent").innerHTML = html; document.getElementById("modal").classList.add("show"); }
 function closeModal(){ document.getElementById("modal").classList.remove("show"); }
 
-// INIT
 document.addEventListener("DOMContentLoaded", () => {
   if(document.getElementById("date")) document.getElementById("date").value = new Date().toISOString().slice(0,10);
   saveCart();
