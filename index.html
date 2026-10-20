@@ -3,140 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HobbiGo - AI Journey Planner</title>
+<title>HobbiGo - AI Journey & Experience Marketplace</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
-  /* === CSS APLIKASI (SIDEBAR LAYOUT) === */
-  :root {
-    --bg-sidebar: #0a1128;
-    --bg-main: #f4f7fb;
-    --bg-card: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --gold: #facc15;
-    --blue-btn: #10b981; /* Tombol hijau sesuai screenshot */
-    --border: #e2e8f0;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-  body { display: flex; height: 100vh; background: var(--bg-main); color: var(--text-main); overflow: hidden; }
+/* =========================================
+   CSS - HOBIGO DASHBOARD + EXPEDIA STYLE
+   ========================================= */
+:root {
+  --bg-sidebar: #0a1128;
+  --bg-main: #f4f7fb;
+  --bg-card: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --gold: #facc15;
+  --green: #15803d;
+  --border: #e2e8f0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { display: flex; height: 100vh; background: var(--bg-main); color: var(--text-main); overflow: hidden; }
 
-  /* === SIDEBAR KIRI === */
-  .sidebar {
-    width: 260px;
-    background: var(--bg-sidebar);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
-    overflow-y: auto;
-  }
-  .logo-area { padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;}
-  .logo-area h1 { font-size: 22px; font-weight: 800; color: #fff; }
-  .logo-area h1 span { color: var(--gold); }
-  .logo-area p { font-size: 11px; color: var(--text-muted); margin-top: 5px; }
-  
-  .menu-list { list-style: none; padding: 0 10px; }
-  .menu-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 15px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-bottom: 5px;
-    transition: 0.2s;
-  }
-  .menu-item:hover, .menu-item.active {
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-  }
-  .menu-item i { font-size: 18px; width: 20px; text-align: center;}
+/* === SIDEBAR === */
+.sidebar { width: 260px; background: var(--bg-sidebar); color: #fff; display: flex; flex-direction: column; padding: 20px 0; overflow-y: auto; flex-shrink:0;}
+.logo-area { padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;}
+.logo-area h1 { font-size: 22px; font-weight: 800; color: #fff; }
+.logo-area h1 span { color: var(--gold); }
+.logo-area p { font-size: 11px; color: #94a3b8; margin-top: 5px; }
+.menu-list { list-style: none; padding: 0 10px; }
+.menu-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #94a3b8; text-decoration: none; font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; margin-bottom: 5px; transition: 0.2s; }
+.menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.1); color: #fff; }
+.menu-item i { font-size: 18px; width: 20px; text-align: center;}
 
-  /* === MAIN CONTENT KANAN === */
-  .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  
-  /* Topbar */
-  .topbar {
-    background: #fff;
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .topbar h2 { font-size: 18px; font-weight: 600; color: #0f172a;}
-  .topbar .badge { background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+/* === MAIN CONTENT === */
+.main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+.topbar { background: #fff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position:sticky; top:0; z-index:50;}
+.topbar h2 { font-size: 18px; font-weight: 600; color: #0f172a;}
+.topbar .badge { background: #dcfce7; color: #166534; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; }
 
-  /* Konten Dalam */
-  .content-area { padding: 30px; max-width: 1000px; }
-  .page-title { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 700; color: #0f172a; margin-bottom: 25px;}
-  
-  /* Form Card (AI Journey Planner) */
-  .form-card {
-    background: #fff;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-    border: 1px solid var(--border);
-  }
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-  .input-group { display: flex; flex-direction: column; gap: 8px; }
-  .input-group label { font-size: 12px; font-weight: 700; color: #475569; }
-  .input-group input, .input-group select {
-    padding: 12px 15px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #0f172a;
-    outline: none;
-    background: #fff;
-    transition: 0.2s;
-  }
-  .input-group input:focus, .input-group select:focus { border-color: var(--blue-btn); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
-  
-  .btn-primary {
-    background: #15803d; /* Hijau Gelap */
-    color: #fff;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
-  }
-  .btn-primary:hover { background: #166534; }
+.content-area { padding: 30px; flex:1;}
+.page-view { display: none; animation: fadeIn 0.3s ease;}
+.page-view.active { display: block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
-  /* Halaman Kosong (Placeholder) */
-  .placeholder-page { display: none; background: #fff; padding: 40px; border-radius: 15px; text-align: center; border: 1px solid var(--border);}
-  .placeholder-page h3 { color: #0f172a; margin-bottom: 10px;}
+/* === COMPONENT: SEARCH WIDGET === */
+.search-widget { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 5px; border:1px solid var(--border); margin-bottom: 30px;}
+.widget-tabs { display: flex; gap: 5px; padding: 10px 10px 0 10px; border-bottom: 1px solid #e2e8f0; }
+.tab-item { padding: 12px 20px; font-size: 14px; font-weight: 600; color: #64748b; cursor: pointer; border-bottom: 3px solid transparent; display: flex; align-items: center; gap: 8px; }
+.tab-item:hover { color: #2563eb; }
+.tab-item.active { color: #2563eb; border-bottom-color: #2563eb; }
+.widget-form { display: flex; align-items: center; padding: 15px; gap: 10px; flex-wrap:wrap;}
+.input-box { display: flex; align-items: center; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 15px; gap: 12px; flex:1; min-width:180px;}
+.input-box i { color: #64748b; font-size: 18px; }
+.input-content { display: flex; flex-direction: column; width: 100%;}
+.input-content label { font-size: 11px; font-weight: 700; color: #475569; margin-bottom: 2px;}
+.input-content input, .input-content select { border: none; background: transparent; outline: none; font-family: inherit; font-size: 14px; color: #0f172a; font-weight: 500; width: 100%;}
+.btn-search { background: #2563eb; color: #fff; border: none; padding: 15px 30px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-search:hover { background: #1d4ed8; }
 
-  @media(max-width: 900px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .sidebar { width: 70px; }
-    .logo-area p, .logo-area h1 span, .menu-item span { display: none; }
-    .menu-item { justify-content: center; }
-    .sidebar { align-items: center; }
-    .logo-area { padding: 0 0 20px; text-align: center; }
-  }
+/* === COMPONENT: RESULT CARDS === */
+.result-section { display: none; margin-top:20px;}
+.result-section h3 { color: #0f172a; margin-bottom:15px;}
+.result-list { display: flex; flex-direction: column; gap: 15px; }
+.result-card { display: flex; background: #fff; border-radius: 15px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition:0.3s;}
+.result-card:hover { border-color: #facc15; box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+.result-card img { width: 220px; object-fit: cover; }
+.result-info { padding: 20px; flex: 1; }
+.result-info h4 { font-size: 18px; color: #0f172a; margin-bottom:5px;}
+.result-info p { color: var(--text-muted); font-size: 13px; margin-bottom: 10px;}
+.badge-rating { background: #166534; color: #dcfce7; padding: 3px 8px; border-radius: 5px; font-size: 12px; font-weight: 700; display: inline-block;}
+.result-price { padding: 20px; text-align: right; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--border); min-width: 180px; }
+.result-price h4 { color: #0f172a; font-size: 20px;}
+.result-price small { color: var(--text-muted); }
+
+/* === COMPONENT: FORM AI === */
+.form-card { background: #fff; border-radius: 15px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid var(--border); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+.input-group { display: flex; flex-direction: column; gap: 8px; }
+.input-group label { font-size: 12px; font-weight: 700; color: #475569; }
+.input-group input, .input-group select { padding: 12px 15px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; color: #0f172a; outline: none; background: #fff; }
+.btn-primary { background: var(--green); color: #fff; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: #166534; }
+#map-container { height: 400px; width: 100%; border-radius: 15px; margin-top: 20px; display:none; border:2px solid var(--gold);}
+
+/* === COMPONENT: MARKETPLACE GRID === */
+.grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.product-card { background: #fff; border-radius: 15px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition:0.3s;}
+.product-card:hover { transform:translateY(-3px); box-shadow:0 5px 15px rgba(0,0,0,0.05);}
+.product-card img { width: 100%; height: 150px; object-fit: cover; }
+.product-info { padding: 15px;}
+.product-info h4 { color:#0f172a; font-size:15px; margin-bottom:5px;}
+.product-info .price { color: var(--green); font-weight: 800; }
+.product-info .loc { font-size:12px; color:var(--text-muted); margin-bottom:8px;}
+
+/* Placeholder */
+.placeholder-page { background: #fff; padding: 40px; border-radius: 15px; text-align: center; border: 1px solid var(--border);}
+.placeholder-page h3 { color: #0f172a; margin-bottom: 10px;}
+
+@media(max-width: 900px) {
+  .sidebar { width: 70px; }
+  .logo-area p, .logo-area h1 span, .menu-item span { display: none; }
+  .menu-item { justify-content: center; }
+  .sidebar { align-items: center; }
+  .form-grid { grid-template-columns: 1fr; }
+  .result-card { flex-direction: column; }
+  .result-card img { width: 100%; height: 200px;}
+  .result-price { border-left:none; border-top:1px solid var(--border); text-align:left;}
+}
 </style>
 </head>
 <body>
@@ -147,154 +120,281 @@
       <h1>Hobbi<span>Go</span></h1>
       <p>AI Journey & Experience Marketplace<br>V60 FINAL LAUNCH</p>
     </div>
-    
     <ul class="menu-list">
-      <li class="menu-item" onclick="showPage('page-home')"><i class="fa-solid fa-house"></i> <span>Home</span></li>
-      <li class="menu-item active" onclick="showPage('page-ai')"><i class="fa-solid fa-robot"></i> <span>AI Trip</span></li>
-      <li class="menu-item" onclick="showPage('page-market')"><i class="fa-solid fa-earth-asia"></i> <span>Marketplace</span></li>
-      <li class="menu-item" onclick="showPage('page-my-trip')"><i class="fa-solid fa-suitcase"></i> <span>My Trip</span></li>
-      <li class="menu-item" onclick="showPage('page-booking')"><i class="fa-solid fa-ticket"></i> <span>Booking</span></li>
-      <li class="menu-item" onclick="showPage('page-cart')"><i class="fa-solid fa-cart-shopping"></i> <span>Cart</span></li>
-      <li class="menu-item" onclick="showPage('page-corp')"><i class="fa-solid fa-building"></i> <span>Corporate</span></li>
-      <li class="menu-item" onclick="showPage('page-ops')"><i class="fa-solid fa-gear"></i> <span>Operations</span></li>
-      <li class="menu-item" onclick="showPage('page-partner')"><i class="fa-solid fa-handshake"></i> <span>Partner</span></li>
-      <li class="menu-item" onclick="showPage('page-analytics')"><i class="fa-solid fa-chart-pie"></i> <span>Analytics</span></li>
-      <li class="menu-item" onclick="showPage('page-api')"><i class="fa-solid fa-plug"></i> <span>API Center</span></li>
-      <li class="menu-item" onclick="showPage('page-db')"><i class="fa-solid fa-database"></i> <span>Database</span></li>
+      <li class="menu-item active" onclick="showPage('page-home', this)"><i class="fa-solid fa-house"></i> <span>Home</span></li>
+      <li class="menu-item" onclick="showPage('page-ai', this)"><i class="fa-solid fa-robot"></i> <span>AI Trip</span></li>
+      <li class="menu-item" onclick="showPage('page-market', this)"><i class="fa-solid fa-earth-asia"></i> <span>Marketplace</span></li>
+      <li class="menu-item" onclick="showPage('page-booking', this)"><i class="fa-solid fa-ticket"></i> <span>Booking</span></li>
+      <li class="menu-item" onclick="showPage('page-cart', this)"><i class="fa-solid fa-cart-shopping"></i> <span>Cart</span></li>
+      <li class="menu-item" onclick="showPage('page-corp', this)"><i class="fa-solid fa-building"></i> <span>Corporate</span></li>
+      <li class="menu-item" onclick="showPage('page-analytics', this)"><i class="fa-solid fa-chart-pie"></i> <span>Analytics</span></li>
     </ul>
   </div>
 
   <!-- === KONTEN UTAMA KANAN === -->
   <div class="main-content">
-    <!-- Topbar -->
     <div class="topbar">
-      <h2>AI Journey Planner</h2>
+      <h2 id="pageTitle">Home</h2>
       <span class="badge">● FINAL BUILD</span>
     </div>
 
     <div class="content-area">
       
-      <!-- HALAMAN: AI TRIP (Sesuai Screenshot) -->
-      <div id="page-ai">
-        <h3 class="page-title">🤖 AI Journey Planner</h3>
+      <!-- ==============================================
+           HALAMAN 1: HOME (Expedia-Style Search)
+      =============================================== -->
+      <div id="page-home" class="page-view active">
         
+        <!-- SEARCH WIDGET -->
+        <div class="search-widget">
+          <div class="widget-tabs">
+            <div class="tab-item active" onclick="switchTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Stays</div>
+            <div class="tab-item" onclick="switchTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Flights</div>
+            <div class="tab-item" onclick="switchTab(this, 'car')"><i class="fa-solid fa-car"></i> Cars</div>
+          </div>
+
+          <div class="widget-form">
+            <div class="input-box">
+              <i class="fa-solid fa-location-dot"></i>
+              <div class="input-content">
+                <label id="labelFrom">Where to?</label>
+                <input type="text" id="inputDest" value="Bali, Indonesia">
+              </div>
+            </div>
+            <div class="input-box">
+              <i class="fa-regular fa-calendar"></i>
+              <div class="input-content">
+                <label>Dates</label>
+                <input type="text" value="Tue 27 Oct - Thu 29 Oct" readonly>
+              </div>
+            </div>
+            <div class="input-box">
+              <i class="fa-regular fa-user"></i>
+              <div class="input-content">
+                <label>Travelers</label>
+                <input type="text" value="2 travellers, 1 room" readonly>
+              </div>
+            </div>
+            <button class="btn-search" onclick="executeSearch()">Search</button>
+          </div>
+        </div>
+
+        <!-- HASIL PENCARIAN HOTEL -->
+        <div id="result-hotel" class="result-section">
+          <h3>Rekomendasi Hotel di Bali</h3>
+          <div class="result-list">
+            <div class="result-card" onclick="alert('Buka Detail Hotel: Ayana Resort')">
+              <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400">
+              <div class="result-info">
+                <h4>Ayana Resort and Spa</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Jimbaran, Bali</p>
+                <span class="badge-rating">9.4 Exceptional (1.2K reviews)</span>
+              </div>
+              <div class="result-price">
+                <h4>Rp 3.200.000</h4>
+                <small>per malam</small>
+              </div>
+            </div>
+            <div class="result-card" onclick="alert('Buka Detail Hotel: Ubud Private Villa')">
+              <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400">
+              <div class="result-info">
+                <h4>Ubud Private Villa</h4>
+                <p><i class="fa-solid fa-location-dot"></i> Ubud, Bali</p>
+                <span class="badge-rating">9.2 Wonderful (800 reviews)</span>
+              </div>
+              <div class="result-price">
+                <h4>Rp 1.500.000</h4>
+                <small>per malam</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HASIL PENCARIAN FLIGHT -->
+        <div id="result-flight" class="result-section">
+          <h3>Penerbangan Tersedia (CGK - DPS)</h3>
+          <div class="result-list">
+            <div class="result-card" onclick="alert('Buka Detail Tiket: Garuda')">
+              <img src="https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400">
+              <div class="result-info">
+                <h4>Garuda Indonesia</h4>
+                <p>CGK - DPS • 08:00 - 11:00 (Direct)</p>
+                <span class="badge-rating">4.8 Full Service</span>
+              </div>
+              <div class="result-price">
+                <h4>Rp 1.850.000</h4>
+                <small>per pax</small>
+              </div>
+            </div>
+            <div class="result-card" onclick="alert('Buka Detail Tiket: Citilink')">
+              <img src="https://images.pexels.com/photos/46148/aircraft-jet-landing-cloud-46148.jpeg?auto=compress&cs=tinysrgb&w=400">
+              <div class="result-info">
+                <h4>Citilink</h4>
+                <p>CGK - DPS • 13:30 - 16:30 (Direct)</p>
+                <span class="badge-rating">4.5 Low Cost</span>
+              </div>
+              <div class="result-price">
+                <h4>Rp 950.000</h4>
+                <small>per pax</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==============================================
+           HALAMAN 2: AI TRIP PLANNER
+      =============================================== -->
+      <div id="page-ai" class="page-view">
         <div class="form-card">
           <div class="form-grid">
-            
-            <div class="input-group">
-              <label>Starting From</label>
-              <input type="text" value="Jakarta">
-            </div>
-            
-            <div class="input-group">
-              <label>Destination</label>
-              <input type="text" value="Bali">
-            </div>
-            
-            <div class="input-group">
-              <label>Travel Date</label>
-              <select>
-                <option>19/10/2026</option>
-                <option>20/10/2026</option>
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <label>Travelers</label>
-              <input type="number" value="2">
-            </div>
-            
-            <div class="input-group">
-              <label>Duration</label>
-              <select>
-                <option>3 Days</option>
-                <option>4 Days</option>
-                <option>1 Week</option>
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <label>Travel Style</label>
-              <select>
-                <option>Comfort</option>
-                <option>Economy</option>
-                <option>Premium</option>
-                <option>Exclusive</option>
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <label>Budget</label>
-              <input type="number" value="5000000">
-            </div>
-            
-            <div class="input-group">
-              <label>Interest</label>
-              <select>
-                <option>Nature</option>
-                <option>Food</option>
-                <option>Culture</option>
-                <option>Adventure</option>
-                <option>Family</option>
-                <option>Business</option>
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <label>Journey Type</label>
-              <select>
-                <option>Personal</option>
-                <option>Family</option>
-                <option>Group</option>
-                <option>Corporate</option>
-              </select>
-            </div>
-
+            <div class="input-group"><label>Starting From</label><input type="text" value="Jakarta"></div>
+            <div class="input-group"><label>Destination</label><input type="text" value="Bali"></div>
+            <div class="input-group"><label>Travel Date</label><input type="date" value="2026-10-19"></div>
+            <div class="input-group"><label>Travelers</label><input type="number" value="2"></div>
+            <div class="input-group"><label>Duration</label><select><option>3 Days</option><option>4 Days</option></select></div>
+            <div class="input-group"><label>Travel Style</label><select><option>Comfort</option><option>Premium</option></select></div>
+            <div class="input-group"><label>Budget</label><input type="number" value="5000000"></div>
+            <div class="input-group"><label>Interest</label><select><option>Nature</option><option>Food</option><option>Culture</option></select></div>
+            <div class="input-group"><label>Journey Type</label><select><option>Personal</option><option>Group</option></select></div>
           </div>
-          
-          <button class="btn-primary" onclick="alert('AI sedang memproses itinerary Anda...')">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Trip
-          </button>
+          <button class="btn-primary" onclick="generateAIMap()"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Trip</button>
+        </div>
+        <div id="map-container"></div>
+      </div>
+
+      <!-- ==============================================
+           HALAMAN 3: MARKETPLACE
+      =============================================== -->
+      <div id="page-market" class="page-view">
+        <div class="grid-products">
+          <div class="product-card" onclick="alert('Tambah ke Cart?')">
+            <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400">
+            <div class="product-info">
+              <h4>Ayana Resort</h4>
+              <p class="loc">Jimbaran, Bali</p>
+              <span class="price">Rp 3.200.000</span>
+            </div>
+          </div>
+          <div class="product-card" onclick="alert('Tambah ke Cart?')">
+            <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400">
+            <div class="product-info">
+              <h4>Toyota Alphard</h4>
+              <p class="loc">Bali</p>
+              <span class="price">Rp 1.500.000</span>
+            </div>
+          </div>
+          <div class="product-card" onclick="alert('Tambah ke Cart?')">
+            <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400">
+            <div class="product-info">
+              <h4>Jimbaran Seafood</h4>
+              <p class="loc">Jimbaran, Bali</p>
+              <span class="price">Rp 350.000</span>
+            </div>
+          </div>
+          <div class="product-card" onclick="alert('Tambah ke Cart?')">
+            <img src="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=400">
+            <div class="product-info">
+              <h4>Nusa Penida Tour</h4>
+              <p class="loc">Sanur, Bali</p>
+              <span class="price">Rp 850.000</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- HALAMAN LAIN (PLACEHOLDER) -->
-      <div id="page-home" class="placeholder-page"><h3>Home Dashboard</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-market" class="placeholder-page"><h3>Marketplace</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-my-trip" class="placeholder-page"><h3>My Trip</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-booking" class="placeholder-page"><h3>Booking</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-cart" class="placeholder-page"><h3>Cart</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-corp" class="placeholder-page"><h3>Corporate</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-ops" class="placeholder-page"><h3>Operations</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-partner" class="placeholder-page"><h3>Partner</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-analytics" class="placeholder-page"><h3>Analytics</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-api" class="placeholder-page"><h3>API Center</h3><p>Halaman ini akan segera diisi.</p></div>
-      <div id="page-db" class="placeholder-page"><h3>Database</h3><p>Halaman ini akan segera diisi.</p></div>
+      <!-- ==============================================
+           HALAMAN LAINNYA (Placeholder)
+      =============================================== -->
+      <div id="page-booking" class="page-view placeholder-page"><h3>Booking Management</h3><p>Halaman ini akan segera hadir.</p></div>
+      <div id="page-cart" class="page-view placeholder-page"><h3>Keranjang Anda</h3><p>Halaman ini akan segera hadir.</p></div>
+      <div id="page-corp" class="page-view placeholder-page"><h3>Corporate Travel</h3><p>Halaman ini akan segera hadir.</p></div>
+      <div id="page-analytics" class="page-view placeholder-page"><h3>Analytics Dashboard</h3><p>Halaman ini akan segera hadir.</p></div>
 
     </div>
   </div>
 
-  <!-- === JAVASCRIPT NAVIGASI === -->
+  <!-- === SCRIPTS === -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    function showPage(pageId) {
-      // Sembunyikan semua halaman (termasuk halaman AI)
-      document.getElementById('page-ai').style.display = 'none';
-      document.querySelectorAll('.placeholder-page').forEach(el => el.style.display = 'none');
+    let currentTab = 'hotel';
+    let mapInstance = null;
 
-      // Tampilkan halaman yang dipilih
-      const target = document.getElementById(pageId);
-      if(target) target.style.display = 'block';
-
-      // Ubah gaya menu sidebar yang aktif
-      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+    // === NAVIGASI SIDEBAR ===
+    function showPage(pageId, menuElement) {
+      // Sembunyikan semua halaman
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+      // Tampilkan yang dipilih
+      document.getElementById(pageId).classList.add('active');
       
-      // Cari elemen menu berdasarkan onclick
-      const menuItems = document.querySelectorAll('.menu-item');
-      menuItems.forEach(item => {
-        if(item.getAttribute('onclick').includes(pageId)) {
-          item.classList.add('active');
-        }
-      });
+      // Update menu active
+      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+      if(menuElement) menuElement.classList.add('active');
+
+      // Update Title Topbar
+      const titleMap = {
+        'page-home': 'Home',
+        'page-ai': 'AI Journey Planner',
+        'page-market': 'Marketplace',
+        'page-booking': 'Booking',
+        'page-cart': 'Cart',
+        'page-corp': 'Corporate',
+        'page-analytics': 'Analytics'
+      };
+      document.getElementById('pageTitle').innerText = titleMap[pageId] || 'HobbiGo';
+    }
+
+    // === SWITCH TAB PENCARIAN (HOTEL / FLIGHT) ===
+    function switchTab(element, type) {
+      document.querySelectorAll('.widget-tabs .tab-item').forEach(t => t.classList.remove('active'));
+      element.classList.add('active');
+      currentTab = type;
+
+      // Sembunyikan hasil yang lain
+      document.getElementById('result-hotel').style.display = 'none';
+      document.getElementById('result-flight').style.display = 'none';
+
+      // Ubah label form
+      if(type === 'hotel') {
+        document.getElementById('labelFrom').innerText = "Where to?";
+        document.getElementById('inputDest').value = "Bali, Indonesia";
+      } else if(type === 'flight') {
+        document.getElementById('labelFrom').innerText = "Going to?";
+        document.getElementById('inputDest').value = "Bali (DPS)";
+      }
+    }
+
+    // === EXECUTE SEARCH ===
+    function executeSearch() {
+      // Sembunyikan yang lain dulu
+      document.getElementById('result-hotel').style.display = 'none';
+      document.getElementById('result-flight').style.display = 'none';
+
+      // Tampilkan hasil sesuai tab aktif
+      if(currentTab === 'hotel') {
+        document.getElementById('result-hotel').style.display = 'block';
+      } else if(currentTab === 'flight') {
+        document.getElementById('result-flight').style.display = 'block';
+      }
+    }
+
+    // === AI MAP GENERATOR ===
+    function generateAIMap() {
+      const container = document.getElementById('map-container');
+      container.style.display = 'block';
+
+      setTimeout(() => {
+        if(mapInstance) { mapInstance.remove(); }
+        mapInstance = L.map('map-container').setView([-8.7486, 115.1672], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
+
+        L.marker([-8.7486, 115.1672]).addTo(mapInstance).bindPopup("<b>Bandara</b>");
+        L.marker([-8.8000, 115.1700]).addTo(mapInstance).bindPopup("<b>Pantai Kuta</b>");
+        L.marker([-8.8200, 115.1800]).addTo(mapInstance).bindPopup("<b>Hotel</b>");
+
+        L.polyline([[-8.7486, 115.1672], [-8.8000, 115.1700], [-8.8200, 115.1800]], {color: '#facc15', weight: 5, dashArray: '10, 10'}).addTo(mapInstance);
+      }, 100);
     }
   </script>
 </body>
