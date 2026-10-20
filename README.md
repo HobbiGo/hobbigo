@@ -4,7 +4,7 @@
 
 **HobbiGo** is a next-generation travel platform that combines the power of Artificial Intelligence with a comprehensive global marketplace. From planning the perfect itinerary to booking flights, hotels, and local experiences — everything is in one place.
 
-## 🚀 Live Demo
+## 🚀 Live Demo 
 Experience the prototype here: 
 👉 **[https://hobbigo.github.io/hobbigo/](https://hobbigo.github.io/hobbigo/)**
 
