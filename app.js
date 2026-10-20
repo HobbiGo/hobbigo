@@ -1,5 +1,5 @@
 // =========================================
-// FILE JAVASCRIPT HOBIGO - PREMIUM EDITION
+// FILE JAVASCRIPT HOBIGO - TOOLS EDITION
 // =========================================
 
 const products = [
@@ -9,8 +9,7 @@ const products = [
   {id:4, type:"Transport", name:"Toyota Alphard", place:"Bali", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
   {id:5, type:"Restaurant", name:"Jimbaran Seafood", place:"Jimbaran, Bali", price:350000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
   {id:6, type:"Hotel", name:"Tokyo Grand Hotel", place:"Shinjuku, Tokyo", price:2500000, img:"https://images.pexels.com/photos/1440476/pexels-photo-1440476.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
-  {id:7, type:"Hotel", name:"Paris Luxury Suite", place:"Champs-Élysées, Paris", price:3800000, img:"https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
-  {id:8, type:"Hotel", name:"Maldives Water Villa", place:"Male, Maldives", price:6500000, img:"https://images.pexels.com/photos/1470502/pexels-photo-1470502.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9}
+  {id:7, type:"Hotel", name:"Paris Luxury Suite", place:"Champs-Élysées, Paris", price:3800000, img:"https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7}
 ];
 
 let cart = [];
@@ -55,11 +54,7 @@ function goToMarket(type) {
 function renderHome(){
   const container = document.getElementById("homeDestinations");
   if(!container) return;
-  
-  // Tampilkan 4 destinasi pertama
-  const homeProducts = products.slice(0,4);
-  
-  container.innerHTML = homeProducts.map(p=>`
+  container.innerHTML = products.slice(0,4).map(p=>`
     <div class="dest-card" onclick="addProduct(${p.id})">
       <div class="dest-img" style="background-image:url('${p.img}')">
         <span class="badge-dest">${p.type}</span>
@@ -78,10 +73,17 @@ function renderHome(){
 function renderMarket(){
   const grid = document.getElementById("marketGrid");
   const type = document.getElementById("marketType").value;
+  const sort = document.getElementById("marketSort").value;
   if(!grid) return;
 
-  const list = products.filter(p => (type==="All" || p.type===type));
+  // 1. Filter
+  let list = products.filter(p => (type==="All" || p.type===type));
   
+  // 2. Sorting (Urutan)
+  if(sort === "low") list.sort((a,b) => a.price - b.price);
+  if(sort === "high") list.sort((a,b) => b.price - a.price);
+  if(sort === "rating") list.sort((a,b) => b.rating - a.rating);
+
   if(list.length === 0) {
     grid.innerHTML = "<p>Produk tidak ditemukan.</p>";
     return;
@@ -108,6 +110,7 @@ function addProduct(id){
   if(p) { 
     cart.push({...p}); 
     saveCart(); 
+    // Alert diganti dengan Chatbot notification
     alert(p.name + " ditambahkan ke keranjang!"); 
   }
 }
@@ -224,8 +227,22 @@ function startLiveJourney() {
   }, 3000);
 }
 
-function showModal(html){ document.getElementById("modalContent").innerHTML = html; document.getElementById("modal").classList.add("show"); }
-function closeModal(){ document.getElementById("modal").classList.remove("show"); }
+// CHATBOT AI
+function toggleChat() { document.getElementById('chatWindow').classList.toggle('show'); }
+function sendChat() { 
+  const input = document.getElementById('chatInput'); 
+  const body = document.getElementById('chatBody'); 
+  if(!input.value.trim()) return; 
+  
+  body.innerHTML += `<div class="chat-msg user">${input.value}</div>`; 
+  input.value = ''; 
+  body.scrollTop = body.scrollHeight;
+  
+  setTimeout(() => { 
+    body.innerHTML += `<div class="chat-msg bot">Baik, saya mengerti. Untuk destinasi tersebut, saya merekomendasikan Anda mencoba fitur <b>AI Planner</b> atau melihat paket di <b>Marketplace</b> kami.</div>`; 
+    body.scrollTop = body.scrollHeight; 
+  }, 1000); 
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   if(document.getElementById("date")) document.getElementById("date").value = new Date().toISOString().slice(0,10);
