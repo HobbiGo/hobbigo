@@ -6,7 +6,6 @@
 <title>HobbiGo - Travel World Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
-<!-- PENTING: Library Peta (Leaflet) -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="style.css">
 </head>
@@ -17,13 +16,17 @@
     <i class="fa-solid fa-earth-americas" style="color:var(--gold)"></i> Hobbi<span>Go</span>
   </div>
   <div class="nav-links">
-    <a onclick="showPage('home')" class="active">Beranda</a>
-    <a onclick="showPage('market')">Explore</a>
-    <a onclick="showPage('planner')">AI Planner</a>
-    <a onclick="showPage('transactions')">My Trip</a>
+    <a onclick="showPage('home')" id="nav-home" class="active">Beranda</a>
+    <a onclick="showPage('market')" id="nav-market">Explore</a>
+    <a onclick="showPage('planner')" id="nav-planner">AI Planner</a>
+    <a onclick="showPage('transactions')" id="nav-transactions">My Trip</a>
   </div>
   <div class="header-right">
-    <button class="btn-login"><i class="fa-regular fa-user"></i> Sign In</button>
+    <!-- Tombol Cart Utama -->
+    <button class="btn-login" onclick="showPage('booking')" style="position:relative">
+      <i class="fa-solid fa-cart-shopping"></i> Cart 
+      <span id="cartCountHeader" style="position:absolute;top:-5px;right:-5px;background:#ef4444;color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold">0</span>
+    </button>
     <button class="btn-download"><i class="fa-solid fa-download"></i> Download App</button>
   </div>
 </header>
@@ -36,27 +39,12 @@
       <div class="hero-content-new">
         <h1 class="hero-title">One App. One Journey.<br>The World Connected.</h1>
         <p class="hero-subtitle">Temukan pengalaman liburan terbaik dengan rekomendasi cerdas dari asisten AI kami.</p>
-        
         <div class="search-pill">
           <div class="search-field">
             <i class="fa-solid fa-location-dot"></i>
             <div>
-              <span>Where do you want to go?</span>
-              <input type="text" placeholder="Destination, city or country" id="searchInput">
-            </div>
-          </div>
-          <div class="search-field border-left">
-            <i class="fa-regular fa-calendar"></i>
-            <div>
-              <span>Check-in / Check-out</span>
-              <input type="text" value="12 May 2026 - 15 May 2026" readonly>
-            </div>
-          </div>
-          <div class="search-field border-left">
-            <i class="fa-solid fa-user-group"></i>
-            <div>
-              <span>Travelers</span>
-              <input type="text" value="2 Adults, 0 Child" readonly>
+              <span>Where to go?</span>
+              <input type="text" placeholder="Destination..." id="searchInput">
             </div>
           </div>
           <button class="btn-search-gold" onclick="goToMarket('All')"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
@@ -66,8 +54,9 @@
 
     <div class="floating-categories">
       <div class="cat-item" onclick="goToMarket('Hotel')"><i class="fa-solid fa-bed"></i><span>Hotels</span></div>
-      <div class="cat-item" onclick="goToMarket('Restaurant')"><i class="fa-solid fa-utensils"></i><span>Restaurants</span></div>
       <div class="cat-item" onclick="goToMarket('Flight')"><i class="fa-solid fa-plane"></i><span>Flights</span></div>
+      <div class="cat-item" onclick="goToMarket('Restaurant')"><i class="fa-solid fa-utensils"></i><span>Resto</span></div>
+      <div class="cat-item" onclick="goToMarket('Transport')"><i class="fa-solid fa-car"></i><span>Cars</span></div>
       <div class="cat-item" onclick="goToMarket('Activity')"><i class="fa-solid fa-compass"></i><span>Tours</span></div>
     </div>
 
@@ -77,26 +66,8 @@
         <h2>Popular Destinations</h2>
       </div>
     </div>
-
-    <div class="grid-destinations">
-      <div class="dest-card" onclick="addProduct(1)">
-        <div class="dest-img" style="background-image:url('https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=600')">
-          <span class="badge-dest">Attraction</span>
-        </div>
-        <div class="dest-info">
-          <h4>Bali, Indonesia</h4>
-          <div class="dest-meta"><span><i class="fa-solid fa-star"></i> 4.8</span> <span>From $45</span></div>
-        </div>
-      </div>
-      <div class="dest-card" onclick="addProduct(2)">
-        <div class="dest-img" style="background-image:url('https://images.pexels.com/photos/1440476/pexels-photo-1440476.jpeg?auto=compress&cs=tinysrgb&w=600')">
-          <span class="badge-dest">Tour</span>
-        </div>
-        <div class="dest-info">
-          <h4>Tokyo, Japan</h4>
-          <div class="dest-meta"><span><i class="fa-solid fa-star"></i> 4.9</span> <span>From $120</span></div>
-        </div>
-      </div>
+    <div class="grid-destinations" id="homeDestinations">
+      <!-- Diisi oleh JS -->
     </div>
   </section>
 
@@ -107,8 +78,6 @@
       <div class="grid-form">
         <div><label>Destination</label><input id="dest" value="Bali, Indonesia"></div>
         <div><label>Date</label><input id="date" type="date"></div>
-        <div><label>Travelers</label><input id="people" type="number" value="2"></div>
-        <div><label>Duration</label><select id="days"><option value="3">3 Days</option></select></div>
       </div>
       <button class="btn-gold full-width" onclick="generateTrip()" style="margin-top:20px"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI Map</button>
     </div>
@@ -119,22 +88,24 @@
   <section id="market" class="page">
     <div class="section-header" style="margin-top:20px; display:flex; justify-content:space-between;">
       <h2>🌐 Marketplace</h2>
-      <button class="btn-outline" onclick="showPage('booking')"><i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cartCountHeader">0</span>)</button>
     </div>
     <div class="grid-form" style="margin-bottom:20px">
       <input id="marketSearch" placeholder="Cari..." oninput="renderMarket()">
       <select id="marketType" onchange="renderMarket()">
-        <option value="All">Semua</option>
+        <option value="All">Semua Kategori</option>
         <option value="Hotel">Hotel</option>
-        <option value="Flight">Flight</option>
+        <option value="Flight">Pesawat</option>
+        <option value="Restaurant">Restoran</option>
+        <option value="Transport">Transportasi</option>
+        <option value="Activity">Aktivitas</option>
       </select>
     </div>
     <div class="grid-products" id="marketGrid"></div>
   </section>
 
-  <!-- BOOKING -->
+  <!-- BOOKING / CART -->
   <section id="booking" class="page">
-    <h2 style="margin-bottom:20px">🛒 Booking Center</h2>
+    <h2 style="margin-bottom:20px">🛒 Keranjang Saya</h2>
     <div id="bookingContent"></div>
   </section>
 
@@ -145,6 +116,7 @@
   </section>
 </main>
 
+<!-- MODAL -->
 <div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
   <div class="modalbox">
     <div id="modalContent"></div>
@@ -152,7 +124,7 @@
   </div>
 </div>
 
-<!-- PENTING: Library Peta (Leaflet JS) HARUS DI ATAS app.js -->
+<!-- Scripts -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>
