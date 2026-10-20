@@ -7,7 +7,6 @@
 <title>HobbiGo - Travel World Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
-<!-- Memanggil File CSS Eksternal -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,9 +22,16 @@
     <a onclick="goToMarket('Flight')">Flights</a>
     <a onclick="showPage('event')">Events</a>
     <a onclick="showPage('planner')">AI Planner</a>
+    <a onclick="showPage('transactions')">Transactions</a>
   </div>
 
   <div class="header-right">
+    <!-- TOMBOL CART DI HEADER -->
+    <div class="icon-btn" onclick="showCart()" style="position:relative">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span id="cartCountHeader" style="position:absolute;top:-2px;right:-2px;background:#ef4444;color:#fff;font-size:10px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold">0</span>
+    </div>
+    
     <div class="icon-btn"><i class="fa-solid fa-globe"></i></div>
     <div class="icon-btn" style="position:relative">
       <i class="fa-solid fa-bell"></i>
@@ -42,6 +48,7 @@
 </header>
 
 <main>
+  <!-- HOME PAGE -->
   <section id="home" class="page active">
     <div class="hero" style="margin:-20px -20px 0 -20px; border-radius:0 0 20px 20px;">
       <div class="hero-overlay"></div>
@@ -90,6 +97,7 @@
     </div>
   </section>
 
+  <!-- AI PLANNER PAGE -->
   <section id="planner" class="page">
     <div style="text-align:center;margin-bottom:20px"><h2 style="font-size:28px;font-weight:800">AI Trip Planner</h2><p style="color:#64748b">Tell HobbiGo what you want. The AI generates a configurable trip.</p></div>
     <div class="card-form">
@@ -106,10 +114,11 @@
     <div id="tripResult" style="max-width:800px;margin:20px auto"></div>
   </section>
 
+  <!-- MARKETPLACE PAGE -->
   <section id="market" class="page">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
       <h2 style="font-size:24px;font-weight:800">Global Marketplace</h2>
-      <button class="btn" style="width:auto" onclick="showCart()"><i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cartCount">0</span>)</button>
+      <button class="btn" style="width:auto" onclick="showCart()"><i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cartCountMarket">0</span>)</button>
     </div>
     <div class="grid-form" style="margin-bottom:20px">
       <input id="marketSearch" placeholder="Search hotel, flight, activity..." oninput="renderMarket()">
@@ -126,6 +135,7 @@
     <div class="grid-products" id="marketGrid"></div>
   </section>
 
+  <!-- CORPORATE PAGE -->
   <section id="event" class="page">
     <div style="text-align:center;margin-bottom:20px"><h2 style="font-size:28px;font-weight:800">Corporate Events</h2><p style="color:#64748b">Build your perfect team retreat or meeting.</p></div>
     <div class="card-form">
@@ -140,12 +150,23 @@
     <div id="eventResult" style="max-width:800px;margin:20px auto"></div>
   </section>
 
+  <!-- BOOKING PAGE -->
   <section id="booking" class="page">
     <h2 style="font-size:24px;font-weight:800;margin-bottom:20px">Booking Center</h2>
     <div id="bookingContent"></div>
   </section>
+
+  <!-- TRANSAKSI PAGE -->
+  <section id="transactions" class="page">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="font-size:24px;font-weight:800">My Transactions</h2>
+    </div>
+    <div id="transactionsContent"></div>
+  </section>
+
 </main>
 
+<!-- MODAL -->
 <div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
   <div class="modalbox">
     <div id="modalContent"></div>
@@ -153,7 +174,24 @@
   </div>
 </div>
 
-<!-- Memanggil File JavaScript Eksternal -->
+<!-- FLOATING CHATBOT -->
+<div id="chatbotBtn" onclick="toggleChat()">
+  <i class="fa-solid fa-robot"></i>
+</div>
+<div id="chatWindow" class="chat-window">
+  <div class="chat-header">
+    <h4><i class="fa-solid fa-robot"></i> HobbiGo AI</h4>
+    <button onclick="toggleChat()" style="background:none;border:none;color:#fff;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="chat-body">
+    <div class="chat-msg bot">Hi! I'm your AI travel assistant. Where do you want to go today?</div>
+  </div>
+  <div class="chat-input-area">
+    <input type="text" placeholder="Type a message..." id="chatInput" onkeypress="if(event.key==='Enter') sendChat()">
+    <button onclick="sendChat()"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+
 <script src="app.js"></script>
 </body>
 </html>
