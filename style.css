@@ -1,5 +1,5 @@
 /* =========================================
-   FILE CSS HOBIGO (LENGKAP)
+   FILE CSS HOBIGO (LENGKAP + FITUR PRINT)
    ========================================= */
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Poppins',sans-serif;background:#f4f7fb;color:#1e293b;line-height:1.5}
@@ -126,3 +126,28 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
 /* RESPONSIVE */
 @media(max-width:900px){.layout-grid{grid-template-columns:1fr}.hero h1{font-size:32px}.search-widget{position:relative;bottom:0;margin-top:20px;flex-direction:column}.search-input{border-right:none;border-bottom:1px solid #e2e8f0;width:100%}.btn-search{width:100%;justify-content:center}}
 @media(max-width:600px){.grid-form{grid-template-columns:1fr}.nav-links{display:none}}
+
+/* =========================================
+   PENGATURAN KHUSUS UNTUK CETAK (PRINT)
+   ========================================= */
+@media print {
+  /* Sembunyikan semua elemen di halaman */
+  body * { visibility: hidden; }
+  
+  /* Hanya tampilkan struk (receipt-card) dan isinya */
+  #printableReceipt, #printableReceipt * { visibility: visible; }
+  
+  /* Posisikan struk di pojok kiri atas kertas */
+  #printableReceipt { 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    max-width: 400px;
+    box-shadow: none; 
+    border: 1px solid #cbd5e1; 
+  }
+  
+  /* Sembunyikan tombol dan teks instruksi saat dicetak */
+  .no-print, button { display: none !important; }
+}
