@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#0b1b3d">
 <title>HobbiGo - Travel World Class</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- FontAwesome (jsDelivr) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -119,8 +118,8 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
   
   <div class="nav-links">
     <a onclick="showPage('home')" class="active">Home</a>
-    <a onclick="showPage('market')">Hotels</a>
-    <a onclick="showPage('market')">Flights</a>
+    <a onclick="goToMarket('Hotel')">Hotels</a>
+    <a onclick="goToMarket('Flight')">Flights</a>
     <a onclick="showPage('event')">Events</a>
     <a onclick="showPage('planner')">AI Planner</a>
   </div>
@@ -170,31 +169,31 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
         <label>Travelers</label>
         <select><option>2 Adults</option><option>1 Adult</option><option>Family</option></select>
       </div>
-      <button class="btn-search" onclick="showPage('market')"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+      <button class="btn-search" onclick="goToMarket('Flight')"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
     </div>
   </div>
 
   <div style="margin-top:60px">
     <div class="categories">
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Hotel')">
         <div class="cat-icon cat-blue"><i class="fa-solid fa-hotel"></i></div><span>Hotels</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Hotel')">
         <div class="cat-icon cat-green"><i class="fa-solid fa-house"></i></div><span>Villas</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Flight')">
         <div class="cat-icon cat-orange"><i class="fa-solid fa-plane"></i></div><span>Flights</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Transport')">
         <div class="cat-icon cat-purple"><i class="fa-solid fa-car"></i></div><span>Cars</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Transport')">
         <div class="cat-icon cat-red"><i class="fa-solid fa-motorcycle"></i></div><span>Motorbikes</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Transport')">
         <div class="cat-icon cat-teal"><i class="fa-solid fa-ship"></i></div><span>Boats</span>
       </div>
-      <div class="category-item" onclick="showPage('market')">
+      <div class="category-item" onclick="goToMarket('Restaurant')">
         <div class="cat-icon cat-orange"><i class="fa-solid fa-utensils"></i></div><span>Restaurants</span>
       </div>
     </div>
@@ -202,7 +201,7 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
 
   <div class="layout-grid">
     <div>
-      <div class="section-title">Recommended for You <a style="font-size:12px;color:#2563eb;cursor:pointer">View All <i class="fa-solid fa-arrow-right"></i></a></div>
+      <div class="section-title">Recommended for You <a style="font-size:12px;color:#2563eb;cursor:pointer" onclick="showPage('market')">View All <i class="fa-solid fa-arrow-right"></i></a></div>
       <div class="grid-products" id="homeProducts"></div>
 
       <div class="ai-banner" onclick="showPage('planner')">
@@ -276,9 +275,15 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
     <button class="btn" style="width:auto" onclick="showCart()"><i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cartCount">0</span>)</button>
   </div>
   <div class="grid-form" style="margin-bottom:20px">
-    <input id="marketSearch" placeholder="Search hotel, restaurant, activity..." oninput="renderMarket()">
+    <input id="marketSearch" placeholder="Search hotel, flight, activity..." oninput="renderMarket()">
     <select id="marketType" onchange="renderMarket()">
-      <option>All</option><option>Hotel</option><option>Restaurant</option><option>Activity</option><option>Transport</option><option>Attraction</option>
+      <option value="All">All Categories</option>
+      <option value="Hotel">Hotels</option>
+      <option value="Flight">Flights</option>
+      <option value="Restaurant">Restaurants</option>
+      <option value="Activity">Activities</option>
+      <option value="Transport">Transport</option>
+      <option value="Attraction">Attractions</option>
     </select>
   </div>
   <div class="grid-products" id="marketGrid"></div>
@@ -339,13 +344,15 @@ main{max-width:1200px;margin:70px auto 40px;padding:0 20px}
 </div>
 
 <script>
-// DATA PRODUK
+// DATA PRODUK (Tambahan: Flight)
 const products = [
   {id:1, type:"Hotel", name:"Bali Beach Resort", place:"Kuta, Bali", price:850000, img:"https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8, reviews:"2.4K", featured:true},
   {id:2, type:"Hotel", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"1.2K", featured:false},
-  {id:3, type:"Transport", name:"Toyota Alphard Rental", place:"Bali, Indonesia", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8, reviews:"856", featured:true},
-  {id:4, type:"Activity", name:"Nusa Penida Boat Tour", place:"Sanur → Nusa Penida", price:2500000, img:"https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"746", featured:false},
-  {id:5, type:"Attraction", name:"Uluwatu Sunset Tour", place:"Uluwatu, Bali", price:150000, img:"https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"1.1K", featured:false}
+  {id:3, type:"Flight", name:"Jakarta - Bali (PP)", place:"CGK - DPS", price:1800000, img:"https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.6, reviews:"3.1K", featured:true},
+  {id:4, type:"Transport", name:"Toyota Alphard Rental", place:"Bali, Indonesia", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8, reviews:"856", featured:true},
+  {id:5, type:"Activity", name:"Nusa Penida Boat Tour", place:"Sanur → Nusa Penida", price:2500000, img:"https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"746", featured:false},
+  {id:6, type:"Restaurant", name:"Jimbaran Seafood Dinner", place:"Jimbaran, Bali", price:450000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7, reviews:"2.1K", featured:false},
+  {id:7, type:"Attraction", name:"Uluwatu Sunset Tour", place:"Uluwatu, Bali", price:150000, img:"https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"1.1K", featured:false}
 ];
 
 let cart = [];
@@ -362,8 +369,15 @@ function showPage(id){
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
+// FUNGSI BARU: Untuk membuka market dengan filter otomatis
+function goToMarket(type) {
+  showPage('market');
+  document.getElementById('marketType').value = type;
+  renderMarket();
+}
+
 function renderHome(){
-  document.getElementById("homeProducts").innerHTML = products.map(p=>`
+  document.getElementById("homeProducts").innerHTML = products.slice(0, 4).map(p=>`
     <div class="card-prod" onclick="addProduct(${p.id})">
       <div class="prod-img" style="background-image:url('${p.img}')">
         ${p.featured ? '<span class="badge-featured">★ FEATURED</span>' : ''}
@@ -373,7 +387,7 @@ function renderHome(){
         <div class="prod-loc"><i class="fa-solid fa-location-dot"></i> ${p.place}</div>
         <div class="prod-rating"><i class="fa-solid fa-star"></i> ${p.rating} <span>(${p.reviews})</span></div>
         <div class="prod-bottom">
-          <div class="prod-price">${money(p.price)}<span style="font-size:10px;font-weight:400;color:#64748b">/night</span></div>
+          <div class="prod-price">${money(p.price)}</div>
           <button class="btn-book">Book Now</button>
         </div>
       </div>
@@ -401,7 +415,7 @@ function renderMarket(){
         </div>
       </div>
     </div>
-  `).join("") || '<div style="text-align:center;padding:40px;color:#64748b">No products found.</div>';
+  `).join("") || '<div style="text-align:center;padding:40px;color:#64748b;width:100%">No products found for this category.</div>';
 }
 
 function addProduct(id){
