@@ -1,1 +1,291 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b5cff">
+<title>HobbiGo Investor Demo V76 Final</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#172033}
+header{background:linear-gradient(135deg,#071b4d,#0b5cff);color:#fff;padding:18px 20px;position:sticky;top:0;z-index:20}
+.top{max-width:1180px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.logo{font-size:27px;font-weight:900;letter-spacing:.5px}.tag{font-size:11px;opacity:.8}
+.lang{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:10px}
+nav{background:#fff;position:sticky;top:77px;z-index:19;border-bottom:1px solid #e6eaf0;overflow:auto}
+.navin{max-width:1180px;margin:auto;display:flex;gap:6px;padding:8px 12px}
+nav button{white-space:nowrap;border:0;background:transparent;padding:10px 13px;border-radius:10px;color:#506078;font-weight:700}
+nav button.active,nav button:hover{background:#eaf1ff;color:#075cff}
+main{max-width:1180px;margin:auto;padding:22px 16px 60px}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(135deg,#eaf1ff,#fff);border-radius:24px;padding:30px;margin-bottom:20px}
+h1{font-size:34px;margin:0 0 10px}h2{margin:0 0 15px}h3{margin:8px 0}
+.muted{color:#667085}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:#fff;border:1px solid #e8ecf2;border-radius:18px;padding:18px;box-shadow:0 5px 20px rgba(20,40,80,.05)}
+.icon{font-size:28px}.price{font-size:20px;font-weight:900;color:#075cff}
+.btn{border:0;background:#075cff;color:#fff;padding:12px 16px;border-radius:11px;font-weight:800;cursor:pointer}
+.btn.alt{background:#eef3ff;color:#075cff}.btn.dark{background:#172033}.btn.green{background:#159957}
+.btn.full{width:100%;margin-top:10px}
+input,select{width:100%;padding:12px;border:1px solid #dce2eb;border-radius:10px;margin:6px 0 12px;font-size:15px}
+label{font-size:13px;font-weight:800}
+.row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #edf0f4}
+.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#eef3ff;color:#075cff;font-size:11px;font-weight:800}
+.notice{padding:13px;border-radius:12px;background:#fff8e7;margin:12px 0}
+.success{padding:13px;border-radius:12px;background:#eaf9f0;color:#16733c;margin:12px 0}
+.search{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px}
+.plan,.product{border:2px solid #e7ebf2;border-radius:15px;padding:15px;cursor:pointer}
+.plan.selected,.product.selected{border-color:#075cff;background:#f5f8ff}
+.timeline{border-left:3px solid #075cff;padding-left:15px;margin:10px 0}.timeline div{margin-bottom:15px}
+.kpi{font-size:25px;font-weight:900}.small{font-size:12px;color:#667085}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #edf0f4;font-size:13px}
+footer{background:#071b4d;color:#fff;padding:30px 20px;text-align:center}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}.modal.show{display:flex}
+.modalbox{background:#fff;border-radius:20px;max-width:600px;width:100%;padding:22px;max-height:90vh;overflow:auto}
+@media(max-width:800px){.grid,.grid4{grid-template-columns:1fr 1fr}.search{grid-template-columns:1fr}.top{align-items:flex-start}.tag{display:none}}
+@media(max-width:520px){.grid,.grid4{grid-template-columns:1fr}h1{font-size:28px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="top">
+<div><div class="logo">HobbiGo</div><div class="tag">AI Journey & Experience Marketplace</div></div>
+<select class="lang" id="lang"><option>EN</option><option>ID</option></select>
+</div>
+</header>
+
+<nav><div class="navin">
+<button onclick="showPage('home')" class="active">HOME</button>
+<button onclick="showPage('planner')">AI TRIP</button>
+<button onclick="showPage('market')">MARKETPLACE</button>
+<button onclick="showPage('event')">CORPORATE</button>
+<button onclick="showPage('booking')">BOOKING</button>
+<button onclick="showPage('dashboard')">INVESTOR</button>
+</div></nav>
+
+<main>
+
+<section id="home" class="page active">
+<div class="hero">
+<span class="badge">V76 FINAL • INVESTOR DEMO</span>
+<h1>One platform for the complete journey.</h1>
+<p class="muted">Search → Plan → Configure → Package → Book → Experience → Re-optimize</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button class="btn" onclick="showPage('planner')">Build My Trip</button>
+<button class="btn alt" onclick="showPage('market')">Explore Marketplace</button>
+</div>
+</div>
+<div class="grid4">
+<div class="card"><div class="icon">🤖</div><h3>AI Journey</h3><p class="small">Personalized itinerary and smart route.</p></div>
+<div class="card"><div class="icon">🌎</div><h3>Global Market</h3><p class="small">Hotels, food, activities, transport and attractions.</p></div>
+<div class="card"><div class="icon">🏢</div><h3>Corporate Event</h3><p class="small">Meeting, retreat and team-building packages.</p></div>
+<div class="card"><div class="icon">💳</div><h3>One Booking</h3><p class="small">Package products and manage the complete trip.</p></div>
+</div>
+<div class="card" style="margin-top:15px">
+<h2>How HobbiGo works</h2>
+<div class="timeline">
+<div><b>01 — Discover</b><br><span class="small">Destination, hobby, budget and travel style.</span></div>
+<div><b>02 — AI Plan</b><br><span class="small">Generate route, itinerary and estimated cost.</span></div>
+<div><b>03 — Configure</b><br><span class="small">Change hotel, restaurant, activity, vehicle and timing.</span></div>
+<div><b>04 — Package & Book</b><br><span class="small">Combine marketplace products into one trip.</span></div>
+<div><b>05 — Experience & Re-optimize</b><br><span class="small">Live trip mode and AI adjustment.</span></div>
+</div>
+</div>
+</section>
+
+<section id="planner" class="page">
+<div class="hero"><span class="badge">V75.3 + V75.4</span><h1>AI Trip Planner</h1><p class="muted">Tell HobbiGo what you want. The demo generates a configurable trip.</p></div>
+<div class="card">
+<div class="grid">
+<div><label>Destination</label><input id="dest" value="Bali, Indonesia"></div>
+<div><label>Travel Date</label><input id="date" type="date"></div>
+<div><label>People</label><input id="people" type="number" min="1" value="2"></div>
+<div><label>Duration</label><select id="days"><option value="3">3 Days</option><option value="4">4 Days</option><option value="5">5 Days</option><option value="7">7 Days</option></select></div>
+<div><label>Trip Style</label><select id="style"><option>Comfort</option><option>Economy</option><option>Exclusive</option><option>Family</option></select></div>
+<div><label>Interest</label><select id="interest"><option>Food & Culinary</option><option>Nature</option><option>Adventure</option><option>Culture</option><option>Beach</option></select></div>
+</div>
+<button class="btn full" onclick="generateTrip()">✨ Generate AI Trip</button>
+</div>
+<div id="tripResult"></div>
+</section>
+
+<section id="market" class="page">
+<div class="hero"><span class="badge">V75.5</span><h1>Global Marketplace</h1><p class="muted">Discover and configure products around your journey.</p></div>
+<div class="search">
+<input id="marketSearch" placeholder="Search hotel, restaurant, activity..." oninput="renderMarket()">
+<select id="marketType" onchange="renderMarket()"><option>All</option><option>Hotel</option><option>Restaurant</option><option>Activity</option><option>Transport</option><option>Attraction</option></select>
+<select id="marketBudget" onchange="renderMarket()"><option>Any Budget</option><option>Economy</option><option>Comfort</option><option>Exclusive</option></select>
+<button class="btn" onclick="showCart()">Cart (<span id="cartCount">0</span>)</button>
+</div>
+<div id="marketGrid" class="grid" style="margin-top:15px"></div>
+</section>
+
+<section id="event" class="page">
+<div class="hero"><span class="badge">V75.6</span><h1>Create Your Own Event</h1><p class="muted">Corporate meeting, retreat or team-building package builder.</p></div>
+<div class="card">
+<div class="grid">
+<div><label>Event Type</label><select id="eventType"><option>Meeting</option><option>Retreat</option><option>Team Building</option><option>Corporate Dinner</option></select></div>
+<div><label>Location</label><select id="eventLocation"><option>Jakarta</option><option>Bali</option><option>Bandung</option><option>Yogyakarta</option></select></div>
+<div><label>Participants</label><input id="participants" type="number" value="30"></div>
+<div><label>Duration</label><select id="eventDays"><option>1 Day</option><option>2 Days</option><option>3 Days</option></select></div>
+<div><label>Venue</label><select id="venue"><option>Business Hotel</option><option>Resort</option><option>Villa Complex</option></select></div>
+<div><label>Vehicle</label><select id="vehicle"><option>Bus</option><option>Van</option><option>Executive Car</option></select></div>
+</div>
+<button class="btn full" onclick="buildEvent()">Build Corporate Package</button>
+</div>
+<div id="eventResult"></div>
+</section>
+
+<section id="booking" class="page">
+<div class="hero"><span class="badge">V75.2 → V76</span><h1>Booking Center</h1><p class="muted">Review your selected experiences and package them into one booking.</p></div>
+<div id="bookingContent"></div>
+</section>
+
+<section id="dashboard" class="page">
+<div class="hero"><span class="badge">V75.7 + V76</span><h1>Investor Dashboard</h1><p class="muted">Demo operating metrics for the HobbiGo marketplace model.</p></div>
+<div class="grid4">
+<div class="card"><div class="small">Registered Users</div><div class="kpi">125K</div></div>
+<div class="card"><div class="small">Marketplace Partners</div><div class="kpi">4,850</div></div>
+<div class="card"><div class="small">Monthly GMV</div><div class="kpi">$1.8M</div></div>
+<div class="card"><div class="small">Booking Conversion</div><div class="kpi">8.6%</div></div>
+</div>
+<div class="card" style="margin-top:15px">
+<h2>5-Year Demo Projection</h2>
+<table><thead><tr><th>Year</th><th>GMV</th><th>Revenue</th><th>Partners</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Y1</td><td>$1.2M</td><td>$144K</td><td>500</td><td>Build</td></tr>
+<tr><td>Y2</td><td>$5M</td><td>$600K</td><td>1,500</td><td>Scale</td></tr>
+<tr><td>Y3</td><td>$15M</td><td>$1.8M</td><td>4,000</td><td>Growth</td></tr>
+<tr><td>Y4</td><td>$40M</td><td>$4.8M</td><td>9,000</td><td>Expansion</td></tr>
+<tr><td>Y5</td><td>$90M</td><td>$10.8M</td><td>20,000</td><td>Global</td></tr>
+</tbody></table>
+<p class="small">Illustrative investor-demo assumptions, not financial forecasts or guarantees.</p>
+</div>
+<div class="card">
+<h2>HobbiGo Advantage</h2>
+<div class="grid">
+<div><b>AI + Marketplace</b><p class="small">Planning and transaction in one experience.</p></div>
+<div><b>Configurable Packages</b><p class="small">Users can modify AI-selected products.</p></div>
+<div><b>Consumer + Corporate</b><p class="small">Personal, family, group and business events.</p></div>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<b>HobbiGo</b><br>
+AI Journey & Experience Marketplace<br>
+<span class="small">Investor Demo V76 Final • Prototype</span>
+</footer>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()">
+<div class="modalbox"><div id="modalContent"></div><button class="btn dark full" onclick="closeModal()">Close</button></div>
+</div>
+
+<script>
+const products=[
+{id:1,type:"Hotel",name:"Bali Comfort Resort",place:"Ubud, Bali",price:850000,budget:"Comfort",icon:"🏨"},
+{id:2,type:"Hotel",name:"Ocean Luxury Villa",place:"Seminyak, Bali",price:2200000,budget:"Exclusive",icon:"🏝️"},
+{id:3,type:"Restaurant",name:"Local Culinary Experience",place:"Ubud, Bali",price:250000,budget:"Economy",icon:"🍜"},
+{id:4,type:"Restaurant",name:"Sunset Premium Dining",place:"Jimbaran, Bali",price:650000,budget:"Exclusive",icon:"🍽️"},
+{id:5,type:"Activity",name:"Balinese Culture Tour",place:"Ubud, Bali",price:350000,budget:"Economy",icon:"🎭"},
+{id:6,type:"Activity",name:"Rafting Adventure",place:"Ayung River",price:550000,budget:"Comfort",icon:"🚣"},
+{id:7,type:"Transport",name:"Private Van",place:"Bali",price:750000,budget:"Comfort",icon:"🚐"},
+{id:8,type:"Attraction",name:"Uluwatu Sunset",place:"Uluwatu, Bali",price:150000,budget:"Economy",icon:"🌅"},
+{id:9,type:"Attraction",name:"Nusa Penida Day Trip",place:"Nusa Penida",price:950000,budget:"Comfort",icon:"🏖️"}
+];
+let cart=JSON.parse(localStorage.getItem("hobbigoCart")||"[]");
+
+function money(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(n)}
+function saveCart(){localStorage.setItem("hobbigoCart",JSON.stringify(cart));document.getElementById("cartCount").textContent=cart.length}
+function showPage(id){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+const b=[...document.querySelectorAll("nav button")].find(x=>x.getAttribute("onclick").includes("'"+id+"'"));if(b)b.classList.add("active");
+if(id==="market")renderMarket();if(id==="booking")renderBooking();window.scrollTo({top:0,behavior:"smooth"})
+}
+function renderMarket(){
+const q=(document.getElementById("marketSearch").value||"").toLowerCase();
+const type=document.getElementById("marketType").value;
+const budget=document.getElementById("marketBudget").value;
+const list=products.filter(p=>(type==="All"||p.type===type)&&(budget==="Any Budget"||p.budget===budget)&&((p.name+" "+p.place).toLowerCase().includes(q)));
+document.getElementById("marketGrid").innerHTML=list.map(p=>`
+<div class="card product" onclick="addProduct(${p.id})">
+<div class="icon">${p.icon}</div><span class="badge">${p.type}</span>
+<h3>${p.name}</h3><div class="small">${p.place}</div>
+<p><span class="badge">${p.budget}</span></p>
+<div class="price">${money(p.price)}</div>
+<button class="btn full">Add to Trip</button>
+</div>`).join("")||'<div class="card">No matching products.</div>'
+}
+function addProduct(id){
+const p=products.find(x=>x.id===id);cart.push({...p});saveCart();
+showModal(`<h2>Added to Trip ✓</h2><p><b>${p.name}</b> has been added to your HobbiGo package.</p><button class="btn full" onclick="closeModal();showPage('booking')">View Booking</button>`)
+}
+function showCart(){showPage("booking")}
+function renderBooking(){
+if(!cart.length){document.getElementById("bookingContent").innerHTML=`<div class="card"><h2>Your package is empty</h2><p class="muted">Go to Marketplace and add hotel, food, activities or transport.</p><button class="btn" onclick="showPage('market')">Explore Marketplace</button></div>`;return}
+const total=cart.reduce((s,p)=>s+p.price,0);
+document.getElementById("bookingContent").innerHTML=`
+<div class="card"><h2>My HobbiGo Package</h2>
+${cart.map((p,i)=>`<div class="row"><span>${p.icon} ${p.name}<br><span class="small">${p.type} • ${p.place}</span></span><b>${money(p.price)}</b><button class="btn alt" style="width:auto;margin:0;padding:6px 10px" onclick="removeItem(${i})">×</button></div>`).join("")}
+<div class="row"><b>Estimated Total</b><b class="price">${money(total)}</b></div>
+<button class="btn green full" onclick="checkout()">Book This Trip</button>
+<button class="btn alt full" onclick="showPage('planner')">Re-optimize With AI</button>
+</div>`
+}
+function removeItem(i){cart.splice(i,1);saveCart();renderBooking()}
+function generateTrip(){
+const dest=document.getElementById("dest").value||"Your destination";
+const people=Number(document.getElementById("people").value||1);
+const days=Number(document.getElementById("days").value);
+const style=document.getElementById("style").value;
+const interest=document.getElementById("interest").value;
+const base=style==="Economy"?650000:style==="Exclusive"?1600000:950000;
+const total=base*people*days;
+document.getElementById("tripResult").innerHTML=`
+<div class="card" style="margin-top:15px"><span class="badge">AI GENERATED</span><h2>${dest} — ${days} Days</h2>
+<p class="muted">${people} traveler(s) • ${style} • ${interest}</p>
+<div class="timeline">
+<div><b>Day 1</b><br>Arrival → hotel check-in → local culinary experience</div>
+<div><b>Day 2</b><br>${interest} experience → lunch → sunset attraction</div>
+<div><b>Day ${days}</b><br>Flexible activity → shopping → departure</div>
+</div>
+<div class="grid4">
+<div class="card"><div class="small">Hotel</div><b>Comfort Resort</b></div>
+<div class="card"><div class="small">Activity</div><b>${interest}</b></div>
+<div class="card"><div class="small">Transport</div><b>Private Van</b></div>
+<div class="card"><div class="small">Estimated Cost</div><b class="price">${money(total)}</b></div>
+</div>
+<div class="notice">AI recommendation can be adjusted. Choose marketplace products below to configure the package.</div>
+<button class="btn" onclick="showPage('market')">Configure Marketplace</button>
+</div>`
+}
+function buildEvent(){
+const type=document.getElementById("eventType").value,loc=document.getElementById("eventLocation").value,n=Number(document.getElementById("participants").value||1),days=document.getElementById("eventDays").value;
+const cost=n*450000*(days[0]);
+document.getElementById("eventResult").innerHTML=`
+<div class="card" style="margin-top:15px"><span class="badge">CORPORATE PACKAGE</span><h2>${type} — ${loc}</h2>
+<div class="row"><span>Participants</span><b>${n}</b></div>
+<div class="row"><span>Duration</span><b>${days}</b></div>
+<div class="row"><span>Venue</span><b>${document.getElementById("venue").value}</b></div>
+<div class="row"><span>Vehicle</span><b>${document.getElementById("vehicle").value}</b></div>
+<div class="row"><span>Estimated Package</span><b class="price">${money(cost)}</b></div>
+<button class="btn green full" onclick="showModal('<h2>Corporate Package Ready ✓</h2><p>Demo package prepared for investor presentation.</p>')">Request Package</button>
+</div>`
+}
+function checkout(){
+const total=cart.reduce((s,p)=>s+p.price,0);
+const code="HBG-"+Date.now().toString().slice(-8);
+showModal(`<h2>Booking Created ✓</h2><p>Your investor-demo booking has been packaged successfully.</p><div class="row"><span>Booking</span><b>${code}</b></div><div class="row"><span>Total</span><b>${money(total)}</b></div><p class="small">Payment integration is represented as a prototype flow in V76 Final.</p><button class="btn green full" onclick="closeModal();cart=[];saveCart();showPage('home')">Finish Demo</button>`)
+}
+function showModal(html){document.getElementById("modalContent").innerHTML=html;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("date").value=new Date().toISOString().slice(0,10);
+saveCart();renderMarket();
+</script>
+</body>
+</html>
