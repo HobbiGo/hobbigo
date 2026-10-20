@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>HobbiGo V75 - AI Journey & Experience Marketplace</title>
 <link rel="stylesheet" href="style.css">
-<!-- Library Peta -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 </head>
@@ -31,9 +30,9 @@
     <div>
       <span class="badge">AI Journey & Experience Marketplace</span>
       <h1>Explore the World with HobbiGo</h1>
-      <p>Plan → Configure → Package → Book → Experience → Re-optimize. Semua kebutuhan perjalanan dalam satu ekosistem marketplace.</p>
+      <p>Plan → Configure → Package → Book → Experience → Re-optimize.</p>
       <div class="searchBox">
-        <input id="heroSearch" placeholder="Search hotel, villa, flight, tour, food, activity...">
+        <input id="heroSearch" placeholder="Search hotel, villa, flight...">
         <button class="primary" onclick="searchHero()">Search</button>
       </div>
     </div>
@@ -43,36 +42,27 @@
       <div class="flow"><span>02 Plan</span><strong>✓</strong></div>
       <div class="flow"><span>03 Configure</span><strong>✓</strong></div>
       <div class="flow"><span>04 Package</span><strong>✓</strong></div>
-      <div class="flow"><span>05 Book</span><strong>✓</strong></div>
-      <div class="flow"><span>06 Experience</span><strong>✓</strong></div>
-      <div class="flow"><span>07 Re-optimize</span><strong>AI</strong></div>
+      <div class="flow"><span>05 Book & Pay</span><strong>✓</strong></div>
+      <div class="flow"><span>06 E-Ticket</span><strong>✓</strong></div>
     </div>
   </section>
 
-  <!-- NEW: SEARCH HUB (Expedia Style) -->
+  <!-- SEARCH HUB -->
   <section id="search-hub" style="padding: 40px 5%;">
     <div class="sectionHead">
-      <div>
-        <h2>🔍 Search Engine (Hotel & Flight)</h2>
-        <div class="muted">Fitur tambahan: Cari hotel & pesawat dengan form interaktif.</div>
-      </div>
+      <div><h2>🔍 Search Engine</h2><div class="muted">Cari hotel & pesawat.</div></div>
     </div>
-
     <div class="search-widget" style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.05);">
       <div class="tabs" style="margin-bottom:15px;">
         <button class="tab active" onclick="switchSearchTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Stays</button>
         <button class="tab" onclick="switchSearchTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Flights</button>
       </div>
-
-      <!-- Form Hotel -->
       <div id="form-hotel" class="formGrid form">
         <div><label>Where to?</label><input type="text" value="Jakarta"></div>
         <div><label>Dates</label><input type="text" value="Oct 30 - Nov 1"></div>
         <div><label>Travelers</label><input type="text" value="2 travellers, 1 room"></div>
         <div class="full"><button class="primary" onclick="executeNewSearch('hotel')">Search Hotels</button></div>
       </div>
-
-      <!-- Form Flight -->
       <div id="form-flight" class="formGrid form" style="display:none;">
         <div><label>Leaving from</label><input type="text" value="Jakarta (CGK)"></div>
         <div><label>Going to</label><input type="text" value="Bali (DPS)"></div>
@@ -80,8 +70,6 @@
         <div class="full"><button class="primary" onclick="executeNewSearch('flight')">Search Flights</button></div>
       </div>
     </div>
-
-    <!-- Hasil Pencarian -->
     <div id="search-results" style="margin-top:30px; display:none;">
       <h3 id="res-title" style="color:var(--green); margin-bottom:15px;"></h3>
       <div id="res-list" class="grid"></div>
@@ -91,10 +79,7 @@
   <!-- MARKETPLACE -->
   <section id="market">
     <div class="sectionHead">
-      <div>
-        <h2>Global Marketplace</h2>
-        <div class="muted">Hotel • Villa • Flight • Car • Boat • Ticket • Food • Tour • Activity</div>
-      </div>
+      <div><h2>Global Marketplace</h2><div class="muted">Hotel • Villa • Flight • Car • Ticket • Food</div></div>
     </div>
     <div class="chips" id="chips"></div>
     <div class="marketTools">
@@ -109,38 +94,27 @@
     <div class="grid" id="products"></div>
   </section>
 
-  <!-- AI PLANNER (DENGAN PETA) -->
+  <!-- AI PLANNER -->
   <section id="planner">
     <div class="planner">
-      <div class="sectionHead">
-        <div>
-          <h2>✨ AI Trip Planner 2.0</h2>
-          <div style="color:#b8d5ca">Generate Smart Route + Itinerary + Budget</div>
-        </div>
-      </div>
+      <div class="sectionHead"><div><h2>✨ AI Trip Planner 2.0</h2></div></div>
       <div class="plannerGrid">
         <div class="field"><label>DESTINATION</label><input id="dest" value="Bali"></div>
         <div class="field"><label>TRAVEL DATE</label><input id="date" type="date"></div>
         <div class="field"><label>TRAVELERS</label><input id="people" type="number" value="2" min="1"></div>
-        <div class="field"><label>DURATION</label><select id="duration"><option>3 Days 2 Nights</option><option>4 Days 3 Nights</option></select></div>
-        <div class="field"><label>TRIP STYLE</label><select id="style"><option>Economy</option><option>Comfort</option><option>Premium</option></select></div>
-        <div class="field"><label>MAIN INTEREST</label><select id="interest"><option>Nature</option><option>Culinary</option><option>Culture</option></select></div>
+        <div class="field"><label>DURATION</label><select id="duration"><option>3 Days 2 Nights</option></select></div>
+        <div class="field"><label>TRIP STYLE</label><select id="style"><option>Comfort</option></select></div>
+        <div class="field"><label>MAIN INTEREST</label><select id="interest"><option>Nature</option></select></div>
       </div>
       <br>
       <button class="primary" onclick="generateTrip()">✨ Generate Smart Trip & Peta</button>
-      
-      <!-- Container Peta AI -->
       <div id="tripResult"></div>
       <div id="map" style="height:350px; width:100%; border-radius:15px; margin-top:20px; display:none; border:2px solid #087f5b;"></div>
     </div>
   </section>
 
-  <!-- PACKAGE -->
   <section id="package">
-    <div class="sectionHead">
-      <div><h2>Package Builder</h2><div class="muted">Combine marketplace products.</div></div>
-      <button class="secondary" onclick="openCart()">Open My Cart</button>
-    </div>
+    <div class="sectionHead"><div><h2>Package Builder</h2></div><button class="secondary" onclick="openCart()">Open My Cart</button></div>
     <div class="dashboard">
       <div class="stat">Selected Items<b id="pkgItems">0</b></div>
       <div class="stat">Subtotal<b id="pkgTotal">Rp 0</b></div>
@@ -149,18 +123,15 @@
     </div>
   </section>
 
-  <!-- ACCOUNT & ADMIN -->
   <section id="account"><div class="sectionHead"><h2>My Account</h2></div><div id="accountContent"></div></section>
   <section id="admin"><div class="sectionHead"><h2>HobbiGo Dashboard</h2></div><div id="dashContent"></div></section>
 </main>
 
 <footer><div class="footerGrid"><div class="logo">Hobbi<span>Go</span></div><p>© 2026 Investor Demo.</p></div></footer>
 
-<!-- Modal -->
 <div class="modal" id="modal"><div class="modalBox" id="modalBox"></div></div>
 <div class="toast" id="toast"></div>
 
-<!-- Scripts -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>
