@@ -1,5 +1,5 @@
 // =========================================
-// FILE JAVASCRIPT HOBIGO (LENGKAP)
+// FILE JAVASCRIPT HOBIGO (LENGKAP + PRINT)
 // =========================================
 
 // 1. DATA PRODUK
@@ -155,7 +155,7 @@ function renderBooking(){
 
 function removeItem(i){ cart.splice(i,1); saveCart(); renderBooking(); }
 
-// 6. SISTEM PEMBAYARAN & TRANSAKSI
+// 6. SISTEM PEMBAYARAN & TRANSAKSI + PRINT
 function checkout(){
   if(!cart.length) return;
   const total = cart.reduce((s,p)=>s+(p.price - (p.price * (p.discount ? p.discount/100 : 0))),0);
@@ -216,7 +216,8 @@ function showReceipt(trxId) {
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=VERIFIED-${trx.id}`;
   
   showModal(`
-    <div class="receipt-card">
+    <!-- Tambahkan id="printableReceipt" di sini -->
+    <div class="receipt-card" id="printableReceipt">
       <div class="receipt-header">
         <h3>HobbiGo</h3>
         <p style="font-size:12px;color:#64748b">E-Receipt / Proof of Payment</p>
@@ -245,12 +246,22 @@ function showReceipt(trxId) {
       
       <div class="qr-container" style="margin-top:20px; padding:15px">
         <img src="${qrUrl}" alt="QR Code">
-        <p style="font-size:11px;color:#64748b;margin-top:5px">Show this E-Receipt to the partner upon arrival.</p>
+        <p class="no-print" style="font-size:11px;color:#64748b;margin-top:5px">Show this E-Receipt to the partner upon arrival.</p>
       </div>
       
-      <button class="btn" style="margin-top:10px" onclick="closeModal();showPage('transactions')">View All Transactions</button>
+      <!-- TOMBOL PRINT BARU -->
+      <button class="btn btn-green" style="margin-top:10px" onclick="printReceipt()">
+        <i class="fa-solid fa-print"></i> Print Receipt
+      </button>
+      
+      <button class="btn btn-alt" style="margin-top:10px" onclick="closeModal();showPage('transactions')">View All Transactions</button>
     </div>
   `);
+}
+
+// FUNGSI BARU UNTUK MENCETAK
+function printReceipt() {
+  window.print();
 }
 
 function renderTransactions() {
