@@ -1,4 +1,4 @@
-# 🌍 HobbiGo - AI Journey & Experience Marketplace
+# 🌍 HobbiGo - AI Journey & Experience Marketplace 
 
 ![HobbiGo Banner](https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg?auto=compress&cs=tinysrgb&w=1200)
 
