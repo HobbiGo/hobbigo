@@ -1,15 +1,22 @@
 // =========================================
-// FILE JAVASCRIPT HOBIGO - TOOLS EDITION
+// FILE JAVASCRIPT HOBIGO - ECOSYSTEM ALIGNED
 // =========================================
 
 const products = [
+  // STAY (Hotel, Villa, Rental)
   {id:1, type:"Hotel", name:"Bali Beach Resort", place:"Kuta, Bali", price:850000, img:"https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
-  {id:2, type:"Hotel", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
-  {id:3, type:"Flight", name:"Garuda Indonesia", place:"CGK - DPS", price:1800000, img:"https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.6},
-  {id:4, type:"Transport", name:"Toyota Alphard", place:"Bali", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
-  {id:5, type:"Restaurant", name:"Jimbaran Seafood", place:"Jimbaran, Bali", price:350000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
-  {id:6, type:"Hotel", name:"Tokyo Grand Hotel", place:"Shinjuku, Tokyo", price:2500000, img:"https://images.pexels.com/photos/1440476/pexels-photo-1440476.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
-  {id:7, type:"Hotel", name:"Paris Luxury Suite", place:"Champs-Élysées, Paris", price:3800000, img:"https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7}
+  {id:2, type:"Villa", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
+  {id:3, type:"Rental", name:"Toyota Alphard", place:"Bali", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
+  
+  // DO (Tour, Ticket, Activity)
+  {id:4, type:"Tour", name:"Nusa Penida Day Tour", place:"Sanur, Bali", price:850000, img:"https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
+  {id:5, type:"Ticket", name:"Garuda Indonesia Flight", place:"CGK - DPS", price:1800000, img:"https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.6},
+  {id:6, type:"Activity", name:"Ayung River Rafting", place:"Ubud, Bali", price:550000, img:"https://images.pexels.com/photos/1732281/pexels-photo-1732281.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8},
+  
+  // EAT (Food, Restaurant, Venue)
+  {id:7, type:"Food", name:"Local Culinary Experience", place:"Jimbaran, Bali", price:350000, img:"https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.7},
+  {id:8, type:"Restaurant", name:"Jimbaran Seafood Club", place:"Jimbaran, Bali", price:650000, img:"https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9},
+  {id:9, type:"Venue", name:"Bali Beach Club Event", place:"Seminyak, Bali", price:2500000, img:"https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8}
 ];
 
 let cart = [];
@@ -51,38 +58,16 @@ function goToMarket(type) {
   }
 }
 
-function renderHome(){
-  const container = document.getElementById("homeDestinations");
-  if(!container) return;
-  container.innerHTML = products.slice(0,4).map(p=>`
-    <div class="dest-card" onclick="addProduct(${p.id})">
-      <div class="dest-img" style="background-image:url('${p.img}')">
-        <span class="badge-dest">${p.type}</span>
-      </div>
-      <div class="dest-info">
-        <h4>${p.name}</h4>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-top:10px">
-          <span><i class="fa-solid fa-star" style="color:var(--gold)"></i> ${p.rating}</span>
-          <span>${money(p.price)}</span>
-        </div>
-      </div>
-    </div>
-  `).join("");
-}
-
 function renderMarket(){
   const grid = document.getElementById("marketGrid");
   const type = document.getElementById("marketType").value;
   const sort = document.getElementById("marketSort").value;
   if(!grid) return;
 
-  // 1. Filter
   let list = products.filter(p => (type==="All" || p.type===type));
   
-  // 2. Sorting (Urutan)
   if(sort === "low") list.sort((a,b) => a.price - b.price);
   if(sort === "high") list.sort((a,b) => b.price - a.price);
-  if(sort === "rating") list.sort((a,b) => b.rating - a.rating);
 
   if(list.length === 0) {
     grid.innerHTML = "<p>Produk tidak ditemukan.</p>";
@@ -94,7 +79,7 @@ function renderMarket(){
       <img src="${p.img}" alt="${p.name}">
       <div class="info">
         <span style="font-size:10px;background:var(--gold);color:#000;padding:2px 8px;border-radius:10px;font-weight:800">${p.type}</span>
-        <h4 style="margin-top:5px;">${p.name}</h4>
+        <h4 style="margin-top:5px; color:#fff;">${p.name}</h4>
         <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px"><i class="fa-solid fa-location-dot"></i> ${p.place}</p>
         <div style="display:flex;justify-content:space-between;align-items:center">
           <span style="color:var(--gold);font-weight:700">${money(p.price)}</span>
@@ -110,7 +95,6 @@ function addProduct(id){
   if(p) { 
     cart.push({...p}); 
     saveCart(); 
-    // Alert diganti dengan Chatbot notification
     alert(p.name + " ditambahkan ke keranjang!"); 
   }
 }
@@ -175,7 +159,7 @@ function generateTrip(){
       <div class="map-card">
         <h3 style="color:var(--gold);margin-bottom:10px"><i class="fa-solid fa-route"></i> Smart Route</h3>
         <div id="map-container"></div>
-        <button class="live-tracking-btn" onclick="startLiveJourney()"><i class="fa-solid fa-location-crosshairs"></i> Mulai Simulasi Perjalanan</button>
+        <button class="live-tracking-btn" onclick="startLiveJourney()"><i class="fa-solid fa-location-crosshairs"></i> Mulai Simulasi Perjalanan (Live Trip AI)</button>
       </div>
     `;
     setTimeout(initMap, 100);
@@ -227,26 +211,8 @@ function startLiveJourney() {
   }, 3000);
 }
 
-// CHATBOT AI
-function toggleChat() { document.getElementById('chatWindow').classList.toggle('show'); }
-function sendChat() { 
-  const input = document.getElementById('chatInput'); 
-  const body = document.getElementById('chatBody'); 
-  if(!input.value.trim()) return; 
-  
-  body.innerHTML += `<div class="chat-msg user">${input.value}</div>`; 
-  input.value = ''; 
-  body.scrollTop = body.scrollHeight;
-  
-  setTimeout(() => { 
-    body.innerHTML += `<div class="chat-msg bot">Baik, saya mengerti. Untuk destinasi tersebut, saya merekomendasikan Anda mencoba fitur <b>AI Planner</b> atau melihat paket di <b>Marketplace</b> kami.</div>`; 
-    body.scrollTop = body.scrollHeight; 
-  }, 1000); 
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   if(document.getElementById("date")) document.getElementById("date").value = new Date().toISOString().slice(0,10);
   saveCart();
-  renderHome();
   renderMarket();
 });
