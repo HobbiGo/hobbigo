@@ -2,152 +2,166 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HobbiGo - Travel Search Engine</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HobbiGo V75 - AI Journey & Experience Marketplace</title>
 <link rel="stylesheet" href="style.css">
+<!-- Library Peta -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 </head>
 <body>
 
-<header class="app-header">
-  <div class="logo" onclick="showPage('home')">
-    <i class="fa-solid fa-earth-americas" style="color:var(--gold)"></i> Hobbi<span>Go</span>
-  </div>
-  <div class="nav-icons">
-    <button class="btn-icon"><i class="fa-solid fa-globe"></i> ID / IDR</button>
-    <button class="btn-icon"><i class="fa-regular fa-user"></i> Sign In</button>
-  </div>
+<header>
+  <div class="logo">Hobbi<span>Go</span></div>
+  <nav>
+    <button onclick="go('home')">Home</button>
+    <button onclick="go('search-hub')">Search (Hotel/Flight)</button>
+    <button onclick="go('market')">Marketplace</button>
+    <button onclick="go('planner')">AI Trip Planner</button>
+    <button onclick="go('package')">Package</button>
+    <button onclick="go('account')">My Trips</button>
+    <button onclick="go('admin')">Dashboard</button>
+  </nav>
+  <button class="cartBtn" onclick="openCart()">My Cart <span id="cartCount">0</span></button>
 </header>
 
-<main>
-  <!-- HALAMAN 1: PENCARIAN -->
-  <section id="home" class="page active">
-    <div class="search-hero">
-      <!-- TABS -->
-      <div class="search-tabs">
-        <button class="tab active" onclick="setTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Stays</button>
-        <button class="tab" onclick="setTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Flights</button>
-        <button class="tab" onclick="setTab(this, 'car')"><i class="fa-solid fa-car"></i> Cars</button>
+<main id="home">
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div>
+      <span class="badge">AI Journey & Experience Marketplace</span>
+      <h1>Explore the World with HobbiGo</h1>
+      <p>Plan → Configure → Package → Book → Experience → Re-optimize. Semua kebutuhan perjalanan dalam satu ekosistem marketplace.</p>
+      <div class="searchBox">
+        <input id="heroSearch" placeholder="Search hotel, villa, flight, tour, food, activity...">
+        <button class="primary" onclick="searchHero()">Search</button>
       </div>
-
-      <!-- FORM HOTEL -->
-      <div id="form-hotel" class="search-form">
-        <div class="input-group" style="flex: 2;">
-          <label>Where to?</label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-location-dot"></i>
-            <input type="text" id="searchDestHotel" value="Jakarta">
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Dates</label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-calendar"></i>
-            <input type="text" value="Oct 30 - Nov 1" readonly>
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Travelers</label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-user"></i>
-            <input type="text" value="2 travellers, 1 room" readonly>
-          </div>
-        </div>
-        <button class="btn-search" onclick="executeSearch('hotel')"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </div>
-
-      <!-- FORM FLIGHT -->
-      <div id="form-flight" class="search-form" style="display:none;">
-        <div class="input-group">
-          <label>Leaving from</label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-plane-departure"></i>
-            <input type="text" value="Jakarta (CGK)">
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Going to</label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-plane-arrival"></i>
-            <input type="text" id="searchDestFlight" value="Bali (DPS)">
-          </div>
-        </div>
-        <div class="input-group">
-          <label>Dates</label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-calendar"></i>
-            <input type="text" value="Nov 4 - Nov 11" readonly>
-          </div>
-        </div>
-        <button class="btn-search" onclick="executeSearch('flight')"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </div>
+    </div>
+    <div class="heroCard">
+      <h3>HobbiGo Journey Flow</h3>
+      <div class="flow"><span>01 Search</span><strong>✓</strong></div>
+      <div class="flow"><span>02 Plan</span><strong>✓</strong></div>
+      <div class="flow"><span>03 Configure</span><strong>✓</strong></div>
+      <div class="flow"><span>04 Package</span><strong>✓</strong></div>
+      <div class="flow"><span>05 Book</span><strong>✓</strong></div>
+      <div class="flow"><span>06 Experience</span><strong>✓</strong></div>
+      <div class="flow"><span>07 Re-optimize</span><strong>AI</strong></div>
     </div>
   </section>
 
-  <!-- HALAMAN 2: HASIL PENCARIAN -->
-  <section id="results" class="page">
-    <div class="mini-search-bar">
-      <div class="mini-input"><i class="fa-solid fa-location-dot"></i> <span id="resDest">Jakarta</span></div>
-      <div class="mini-input"><i class="fa-regular fa-calendar"></i> Oct 30 - Nov 1</div>
-      <button class="btn-gold" onclick="showPage('home')">Edit Pencarian</button>
-    </div>
-
-    <div class="results-layout">
-      <div class="sidebar">
-        <div class="filter-box">
-          <h4>Filter by</h4>
-          <div class="filter-group">
-            <label>Price</label>
-            <div class="price-inputs">
-              <input type="text" placeholder="Min">
-              <input type="text" placeholder="Max">
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="main-results">
-        <div class="results-header">
-          <h2 id="resultsTitle">Menampilkan Hasil...</h2>
-          <select class="sort-select">
-            <option>Recommended</option>
-            <option>Price (low to high)</option>
-          </select>
-        </div>
-        
-        <!-- Container Hasil -->
-        <div class="hotel-list" id="resultsList"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HALAMAN 3: DETAIL -->
-  <section id="detail" class="page">
-    <button class="btn-back" onclick="showPage('results')"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
-    <div class="detail-gallery">
-      <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Main" class="main-img" id="detailImg">
-      <div class="sub-imgs">
-        <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Room">
-        <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Pool">
-      </div>
-    </div>
-
-    <div class="detail-header">
+  <!-- NEW: SEARCH HUB (Expedia Style) -->
+  <section id="search-hub" style="padding: 40px 5%;">
+    <div class="sectionHead">
       <div>
-        <span class="luxury-badge">Premium</span>
-        <h1 id="detailTitle">Nama Item</h1>
-        <div class="rating-badge" style="margin-top:10px; display:inline-block;">9.4 <span>Exceptional</span></div>
-      </div>
-      <div class="detail-price-box">
-        <h2 id="detailPrice">Rp 0</h2>
-        <small>per item</small>
-        <button class="btn-gold full-width" onclick="alert('Berhasil ditambahkan ke keranjang!')">Book Now</button>
+        <h2>🔍 Search Engine (Hotel & Flight)</h2>
+        <div class="muted">Fitur tambahan: Cari hotel & pesawat dengan form interaktif.</div>
       </div>
     </div>
+
+    <div class="search-widget" style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.05);">
+      <div class="tabs" style="margin-bottom:15px;">
+        <button class="tab active" onclick="switchSearchTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Stays</button>
+        <button class="tab" onclick="switchSearchTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Flights</button>
+      </div>
+
+      <!-- Form Hotel -->
+      <div id="form-hotel" class="formGrid form">
+        <div><label>Where to?</label><input type="text" value="Jakarta"></div>
+        <div><label>Dates</label><input type="text" value="Oct 30 - Nov 1"></div>
+        <div><label>Travelers</label><input type="text" value="2 travellers, 1 room"></div>
+        <div class="full"><button class="primary" onclick="executeNewSearch('hotel')">Search Hotels</button></div>
+      </div>
+
+      <!-- Form Flight -->
+      <div id="form-flight" class="formGrid form" style="display:none;">
+        <div><label>Leaving from</label><input type="text" value="Jakarta (CGK)"></div>
+        <div><label>Going to</label><input type="text" value="Bali (DPS)"></div>
+        <div><label>Dates</label><input type="text" value="Nov 4 - Nov 11"></div>
+        <div class="full"><button class="primary" onclick="executeNewSearch('flight')">Search Flights</button></div>
+      </div>
+    </div>
+
+    <!-- Hasil Pencarian -->
+    <div id="search-results" style="margin-top:30px; display:none;">
+      <h3 id="res-title" style="color:var(--green); margin-bottom:15px;"></h3>
+      <div id="res-list" class="grid"></div>
+    </div>
   </section>
+
+  <!-- MARKETPLACE -->
+  <section id="market">
+    <div class="sectionHead">
+      <div>
+        <h2>Global Marketplace</h2>
+        <div class="muted">Hotel • Villa • Flight • Car • Boat • Ticket • Food • Tour • Activity</div>
+      </div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="marketTools">
+      <input id="marketSearch" oninput="renderProducts()" placeholder="Search marketplace...">
+      <select id="sort" onchange="renderProducts()">
+        <option value="">Recommended</option>
+        <option value="low">Price Low</option>
+        <option value="high">Price High</option>
+      </select>
+      <button class="secondary" onclick="resetMarket()">Reset</button>
+    </div>
+    <div class="grid" id="products"></div>
+  </section>
+
+  <!-- AI PLANNER (DENGAN PETA) -->
+  <section id="planner">
+    <div class="planner">
+      <div class="sectionHead">
+        <div>
+          <h2>✨ AI Trip Planner 2.0</h2>
+          <div style="color:#b8d5ca">Generate Smart Route + Itinerary + Budget</div>
+        </div>
+      </div>
+      <div class="plannerGrid">
+        <div class="field"><label>DESTINATION</label><input id="dest" value="Bali"></div>
+        <div class="field"><label>TRAVEL DATE</label><input id="date" type="date"></div>
+        <div class="field"><label>TRAVELERS</label><input id="people" type="number" value="2" min="1"></div>
+        <div class="field"><label>DURATION</label><select id="duration"><option>3 Days 2 Nights</option><option>4 Days 3 Nights</option></select></div>
+        <div class="field"><label>TRIP STYLE</label><select id="style"><option>Economy</option><option>Comfort</option><option>Premium</option></select></div>
+        <div class="field"><label>MAIN INTEREST</label><select id="interest"><option>Nature</option><option>Culinary</option><option>Culture</option></select></div>
+      </div>
+      <br>
+      <button class="primary" onclick="generateTrip()">✨ Generate Smart Trip & Peta</button>
+      
+      <!-- Container Peta AI -->
+      <div id="tripResult"></div>
+      <div id="map" style="height:350px; width:100%; border-radius:15px; margin-top:20px; display:none; border:2px solid #087f5b;"></div>
+    </div>
+  </section>
+
+  <!-- PACKAGE -->
+  <section id="package">
+    <div class="sectionHead">
+      <div><h2>Package Builder</h2><div class="muted">Combine marketplace products.</div></div>
+      <button class="secondary" onclick="openCart()">Open My Cart</button>
+    </div>
+    <div class="dashboard">
+      <div class="stat">Selected Items<b id="pkgItems">0</b></div>
+      <div class="stat">Subtotal<b id="pkgTotal">Rp 0</b></div>
+      <div class="stat">Service Demo<b>5%</b></div>
+      <div class="stat">Estimated Final<b id="pkgFinal">Rp 0</b></div>
+    </div>
+  </section>
+
+  <!-- ACCOUNT & ADMIN -->
+  <section id="account"><div class="sectionHead"><h2>My Account</h2></div><div id="accountContent"></div></section>
+  <section id="admin"><div class="sectionHead"><h2>HobbiGo Dashboard</h2></div><div id="dashContent"></div></section>
 </main>
 
+<footer><div class="footerGrid"><div class="logo">Hobbi<span>Go</span></div><p>© 2026 Investor Demo.</p></div></footer>
+
+<!-- Modal -->
+<div class="modal" id="modal"><div class="modalBox" id="modalBox"></div></div>
+<div class="toast" id="toast"></div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
