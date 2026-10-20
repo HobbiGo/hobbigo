@@ -1,12 +1,10 @@
 // =========================================
-// FILE JAVASCRIPT HOBIGO (DENGAN MAP & LIVE TRACKING)
+// FILE JAVASCRIPT HOBIGO (VERSI AMAN)
 // =========================================
 
 const products = [
-  {id:1, type:"Hotel", name:"Bali Beach Resort", place:"Kuta, Bali", price:850000, img:"https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8, reviews:"2.4K"},
-  {id:2, type:"Hotel", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.9, reviews:"1.2K"},
-  {id:3, type:"Flight", name:"Garuda Indonesia", place:"CGK - DPS", price:1800000, img:"https://images.pexels.com/photos/2026324/pexels-photo-2026324.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.6, reviews:"3.1K"},
-  {id:4, type:"Transport", name:"Toyota Alphard", place:"Bali", price:1200000, img:"https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400", rating:4.8, reviews:"856"}
+  {id:1, type:"Hotel", name:"Bali Beach Resort", place:"Kuta, Bali", price:850000, img:"https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=400"},
+  {id:2, type:"Hotel", name:"Ubud Private Villa", place:"Ubud, Bali", price:1500000, img:"https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400"}
 ];
 
 let cart = [];
@@ -44,78 +42,73 @@ function goToMarket(type) {
   renderMarket();
 }
 
-// =========================================
-// FUNGSI AI GENERATE + PETA
-// =========================================
 function generateTrip(){
   const dest = document.getElementById("dest").value || "Bali";
-  
-  document.getElementById("tripResult").innerHTML = `<p style="text-align:center; color:var(--gold);"><i class="fa-solid fa-spinner fa-spin"></i> AI sedang merancang rute perjalanan...</p>`;
+  document.getElementById("tripResult").innerHTML = `<p style="text-align:center; color:var(--gold);"><i class="fa-solid fa-spinner fa-spin"></i> AI merancang rute...</p>`;
   
   setTimeout(() => {
+    // Render HTML Peta
     document.getElementById("tripResult").innerHTML = `
       <div class="map-card">
         <h3 style="color:var(--gold);margin-bottom:15px"><i class="fa-solid fa-route"></i> Smart Route & Global Discovery</h3>
-        <p style="color:var(--text-muted);font-size:14px;margin-bottom:15px">AI telah menyusun rute perjalanan Anda. Klik tombol di bawah untuk melihat data global.</p>
-        
-        <!-- Container untuk Peta Leaflet -->
-        <div id="map-container" style="height:400px; border-radius:15px; margin-bottom:15px;"></div>
-        
+        <div id="map-container" style="height:400px; border-radius:15px; margin-bottom:15px; background:#1e293b;"></div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
-          <button class="btn-outline" onclick="showGlobalCulinary()"><i class="fa-solid fa-utensils"></i> Tampilkan Kuliner Global</button>
-          <button class="btn-outline" onclick="showGlobalEvents()"><i class="fa-solid fa-music"></i> Tampilkan Live Events</button>
+          <button class="btn-outline" onclick="showGlobalCulinary()"><i class="fa-solid fa-utensils"></i> Kuliner</button>
+          <button class="btn-outline" onclick="showGlobalEvents()"><i class="fa-solid fa-music"></i> Live Events</button>
           <button class="live-tracking-btn" style="margin-top:0" onclick="startLiveJourney()"><i class="fa-solid fa-location-crosshairs"></i> Mulai Perjalanan</button>
         </div>
       </div>
     `;
     
-    initMap();
-  }, 1500); 
+    // Beri jeda 0.1 detik agar DIV map siap sebelum Leaflet dijalankan
+    setTimeout(() => {
+      initMap();
+    }, 100);
+  }, 1000); 
 }
 
-// =========================================
-// FUNGSI MEMBUAT PETA (LEAFLET)
-// =========================================
 function initMap() {
-  const startCoord = [-8.7486, 115.1672]; // Bandara
-  const restCoord = [-8.8000, 115.1700];  // Tempat wisata
-  const hotelCoord = [-8.8200, 115.1800]; // Hotel
+  try {
+    // Cek apakah Leaflet sudah ter-load dari index.html
+    if (typeof L === 'undefined') {
+      document.getElementById('map-container').innerHTML = '<p style="color:red;padding:20px;">Error: Library Peta (Leaflet) belum termuat di index.html.</p>';
+      return;
+    }
 
-  if(mapInstance) { mapInstance.remove(); }
+    const startCoord = [-8.7486, 115.1672]; 
+    const restCoord = [-8.8000, 115.1700];  
+    const hotelCoord = [-8.8200, 115.1800]; 
 
-  mapInstance = L.map('map-container').setView(startCoord, 13);
+    if(mapInstance) { mapInstance.remove(); }
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(mapInstance);
+    mapInstance = L.map('map-container').setView(startCoord, 13);
 
-  L.marker(startCoord).addTo(mapInstance).bindPopup("<b>Bandara Ngurah Rai</b><br>Titik Awal");
-  L.marker(restCoord).addTo(mapInstance).bindPopup("<b>Pantai Kuta</b><br>Destinasi 1");
-  L.marker(hotelCoord).addTo(mapInstance).bindPopup("<b>Bali Beach Resort</b><br>Titik Akhir");
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap'
+    }).addTo(mapInstance);
 
-  const routeLine = L.polyline([startCoord, restCoord, hotelCoord], {
-    color: '#facc15', weight: 5, opacity: 0.8, dashArray: '10, 10'
-  }).addTo(mapInstance);
+    L.marker(startCoord).addTo(mapInstance).bindPopup("<b>Bandara</b>");
+    L.marker(restCoord).addTo(mapInstance).bindPopup("<b>Pantai Kuta</b>");
+    L.marker(hotelCoord).addTo(mapInstance).bindPopup("<b>Hotel</b>");
 
-  mapInstance.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
+    const routeLine = L.polyline([startCoord, restCoord, hotelCoord], {
+      color: '#facc15', weight: 5, opacity: 0.8, dashArray: '10, 10'
+    }).addTo(mapInstance);
 
-  liveMarker = L.marker(startCoord, {
-    icon: L.divIcon({
-      className: 'custom-icon',
-      html: '<div style="background:#ef4444;width:20px;height:20px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 10px #ef4444;"></div>',
-      iconSize: [20, 20]
-    })
-  }).addTo(mapInstance).bindPopup("Anda di sini");
+    mapInstance.fitBounds(routeLine.getBounds(), { padding: [50, 50] });
 
-  window.routeCoordinates = [startCoord, restCoord, hotelCoord];
-  window.routeIndex = 0;
+    liveMarker = L.marker(startCoord).addTo(mapInstance).bindPopup("Anda di sini");
+    window.routeCoordinates = [startCoord, restCoord, hotelCoord];
+    window.routeIndex = 0;
+
+  } catch (error) {
+    console.error("Peta Error:", error);
+    document.getElementById('map-container').innerHTML = `<p style="color:red;padding:20px;">Gagal memuat peta: ${error.message}</p>`;
+  }
 }
 
-// =========================================
-// FUNGSI ANIMASI "LIVE JOURNEY"
-// =========================================
 function startLiveJourney() {
-  if(!liveMarker) return;
+  if(!liveMarker || !mapInstance) return;
   if(liveInterval) clearInterval(liveInterval);
   
   window.routeIndex = 0;
@@ -131,85 +124,51 @@ function startLiveJourney() {
     } else {
       clearInterval(liveInterval);
       liveInterval = null;
-      alert("🎉 Perjalanan Selesai! Anda telah tiba di Hotel.");
+      alert("🎉 Perjalanan Selesai!");
     }
   }, 3000);
 }
 
-// =========================================
-// FUNGSI SIMULASI DATA GLOBAL (KULINER & EVENT)
-// =========================================
 function showGlobalCulinary() {
-  // Hapus marker kuliner sebelumnya
+  if(!mapInstance) return;
   culinaryMarkers.forEach(m => mapInstance.removeLayer(m));
   culinaryMarkers = [];
 
-  // Data Simulasi (Nanti bisa diganti dengan API Foursquare)
   const mockCulinary = [
-    { name: "Warung Babi Guling Ibu Oka", lat: -8.7500, lng: 115.1600, rating: "4.8" },
-    { name: "Jimbaran Seafood Club", lat: -8.7900, lng: 115.1650, rating: "4.9" },
-    { name: "Potato Head Beach Club", lat: -8.8100, lng: 115.1750, rating: "4.7" }
+    { name: "Warung Babi Guling", lat: -8.7500, lng: 115.1600 },
+    { name: "Jimbaran Seafood", lat: -8.7900, lng: 115.1650 }
   ];
 
   mockCulinary.forEach(place => {
-    const marker = L.marker([place.lat, place.lng], {
-      icon: L.divIcon({
-        className: 'food-icon',
-        html: '<div style="background:#f59e0b;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;border:2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.3)">🍽️</div>',
-        iconSize: [30, 30]
-      })
-    }).addTo(mapInstance).bindPopup(`<b>${place.name}</b><br>⭐ ${place.rating} (Global Data)`);
-    
+    const marker = L.marker([place.lat, place.lng]).addTo(mapInstance).bindPopup(`<b>🍽️ ${place.name}</b>`);
     culinaryMarkers.push(marker);
   });
-  
-  alert("Menampilkan Spot Kuliner Global (Simulasi)!");
 }
 
 function showGlobalEvents() {
-  // Hapus marker event sebelumnya
+  if(!mapInstance) return;
   eventMarkers.forEach(m => mapInstance.removeLayer(m));
   eventMarkers = [];
 
-  // Data Simulasi (Nanti bisa diganti dengan API Ticketmaster)
   const mockEvents = [
-    { name: "Bali Jazz Festival 2026", lat: -8.8200, lng: 115.1900 },
-    { name: "Sunset DJ Party at Rock Bar", lat: -8.7950, lng: 115.1550 }
+    { name: "Bali Jazz Festival", lat: -8.8200, lng: 115.1900 }
   ];
 
   mockEvents.forEach(ev => {
-    const marker = L.marker([ev.lat, ev.lng], {
-      icon: L.divIcon({
-        className: 'event-icon',
-        html: '<div style="background:#8b5cf6;color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;border:2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.3)">🎵</div>',
-        iconSize: [30, 30]
-      })
-    }).addTo(mapInstance).bindPopup(`<b>${ev.name}</b><br>Live Event (Global Data)`);
-    
+    const marker = L.marker([ev.lat, ev.lng]).addTo(mapInstance).bindPopup(`<b>🎵 ${ev.name}</b>`);
     eventMarkers.push(marker);
   });
-  
-  alert("Menampilkan Live Events Global (Simulasi)!");
 }
 
-// =========================================
-// SISA LOGIKA MARKETPLACE & BOOKING
-// =========================================
 function renderMarket(){
   const type = document.getElementById("marketType").value;
   const list = products.filter(p => (type==="All" || p.type===type));
-  
   document.getElementById("marketGrid").innerHTML = list.map(p=>`
     <div class="card-prod" onclick="addProduct(${p.id})">
       <img src="${p.img}" alt="${p.name}">
       <div class="info">
-        <span style="font-size:10px;background:var(--gold);color:#000;padding:2px 8px;border-radius:10px;font-weight:800">${p.type}</span>
         <h4 style="margin-top:5px;color:#fff">${p.name}</h4>
-        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px"><i class="fa-solid fa-location-dot"></i> ${p.place}</p>
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="color:var(--gold);font-weight:700">${money(p.price)}</span>
-          <button class="btn-gold" style="padding:5px 10px;font-size:12px;margin:0;">Tambah</button>
-        </div>
+        <span style="color:var(--gold);font-weight:700">${money(p.price)}</span>
       </div>
     </div>
   `).join("");
@@ -217,39 +176,31 @@ function renderMarket(){
 
 function addProduct(id){
   const p = products.find(x=>x.id===id);
-  cart.push({...p}); saveCart();
-  alert(p.name + " ditambahkan ke keranjang!");
+  if(p) { cart.push({...p}); saveCart(); alert(p.name + " ditambahkan!"); }
 }
 
 function renderBooking(){
   const container = document.getElementById("bookingContent");
   if(!cart.length) { container.innerHTML = "<p>Keranjang kosong.</p>"; return; }
-  const total = cart.reduce((s,p)=>s+p.price,0);
-  container.innerHTML = `
-    <div style="background:var(--bg-card);padding:20px;border-radius:16px;">
+  container.innerHTML = `<div style="background:var(--bg-card);padding:20px;border-radius:16px;">
       ${cart.map(p=>`<div style="display:flex;justify-content:space-between;margin-bottom:10px;color:#fff"><span>${p.name}</span><b>${money(p.price)}</b></div>`).join("")}
-      <hr style="border-color:var(--border-color);margin:15px 0">
-      <div style="display:flex;justify-content:space-between;font-size:20px;font-weight:800;color:var(--gold)"><span>Total</span><span>${money(total)}</span></div>
-      <button class="btn-gold full-width" style="margin-top:20px" onclick="checkout()">Bayar Sekarang</button>
-    </div>
-  `;
+      <button class="btn-gold full-width" style="margin-top:20px" onclick="checkout()">Bayar</button>
+    </div>`;
 }
 
 function checkout(){
   const total = cart.reduce((s,p)=>s+p.price,0);
-  const trxId = "HBG-" + Date.now().toString().slice(-6);
-  transactions.unshift({ id: trxId, date: new Date().toLocaleString(), total: total, status: "Paid" });
+  transactions.unshift({ id: "HBG-"+Date.now().toString().slice(-6), date: new Date().toLocaleString(), total: total });
   localStorage.setItem("hobbigoTransactions", JSON.stringify(transactions));
   cart = []; saveCart();
-  showModal(`<h2 style="color:var(--gold)">Pembayaran Sukses ✓</h2><p>ID Transaksi: ${trxId}</p><p>Total: ${money(total)}</p>`);
   showPage('transactions');
 }
 
 function renderTransactions(){
   document.getElementById("transactionsContent").innerHTML = transactions.map(t=>`
     <div style="background:var(--bg-card);padding:15px;margin-bottom:10px;border-radius:10px;display:flex;justify-content:space-between;">
-      <div><b style="color:#fff">${t.id}</b><br><small style="color:var(--text-muted)">${t.date}</small></div>
-      <div style="text-align:right"><b style="color:var(--gold)">${money(t.total)}</b><br><small style="color:#10b981">LUNAS</small></div>
+      <div><b>${t.id}</b><br><small>${t.date}</small></div>
+      <div style="text-align:right"><b style="color:var(--gold)">${money(t.total)}</b></div>
     </div>
   `).join("");
 }
