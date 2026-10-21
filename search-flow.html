@@ -1,1 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HobbiGo - Search Flow Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+<style>
+:root { --blue: #0b5cff; --bg: #f4f7fb; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+body { background: var(--bg); color: var(--text); }
 
+/* HEADER */
+.top-nav { background: #fff; padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 20px; position: sticky; top:0; z-index:100;}
+.top-nav h1 { font-size: 22px; color: var(--blue); cursor: pointer; font-weight: 800;}
+.top-nav button { background: transparent; border: none; font-weight: 600; color: var(--muted); cursor: pointer; font-size: 14px;}
+.top-nav button:hover { color: var(--blue); }
+
+/* HALAMAN */
+.page { display: none; padding: 30px 20px; max-width: 1000px; margin: 0 auto; min-height: 80vh;}
+.page.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+
+/* FORM PENCARIAN */
+.search-box { background: #fff; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid var(--border); }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;}
+.tab-btn { padding: 10px 20px; border: none; background: transparent; font-weight: 700; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 8px; border-radius: 8px; font-size: 15px;}
+.tab-btn.active { background: #eff6ff; color: var(--blue); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+.input-group label { font-size: 12px; font-weight: 600; color: var(--muted); display: block; margin-bottom: 5px; text-transform: uppercase;}
+.input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; font-weight: 600; font-size: 14px;}
+.input-group input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(11,92,255,0.1); }
+.btn-search { background: var(--blue); color: #fff; border: none; padding: 15px 30px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 20px; width: 100%; font-size: 16px; transition: 0.2s;}
+.btn-search:hover { background: #094acc; }
+
+/* HASIL PENCARIAN */
+.flight-card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid var(--border); margin-bottom: 15px; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center;}
+.flight-card:hover { border-color: var(--blue); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transform: translateY(-2px);}
+.airline-info { display: flex; align-items: center; gap: 15px; }
+.airline-icon { font-size: 24px; color: var(--blue); background: #eff6ff; padding: 12px; border-radius: 10px;}
+.flight-time { font-size: 20px; font-weight: 800; }
+.flight-route { font-size: 13px; color: var(--muted); }
+.price-tag { text-align: right; }
+.price-tag h3 { color: var(--blue); font-size: 20px; font-weight: 800;}
+.price-tag small { color: var(--muted); }
+
+/* DETAIL PENERBANGAN */
+.detail-header { background: #fff; padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 20px; }
+.detail-header h2 { font-size: 24px; margin-bottom: 5px;}
+.detail-header p { color: var(--muted); }
+.facility { display: flex; gap: 20px; margin-top: 20px; color: var(--muted); font-size: 13px;}
+.btn-book { background: #10b981; color: #fff; border: none; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 16px; cursor: pointer; width: 100%; margin-top: 20px; transition: 0.2s;}
+.btn-book:hover { background: #059669; }
+
+@media(max-width: 768px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .flight-card { flex-direction: column; align-items: flex-start; gap: 15px;}
+  .price-tag { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <h1 onclick="showPage('page-search')">HobbiGo</h1>
+  <button onclick="showPage('page-search')">Tiket Pesawat</button>
+  <button onclick="alert('Menu Hotel segera hadir di demo ini.')">Hotel</button>
+</div>
+
+<!-- HALAMAN 1: PENCARIAN -->
+<div id="page-search" class="page active">
+  <div class="search-box">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="setTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Pesawat</button>
+      <button class="tab-btn" onclick="setTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Hotel</button>
+    </div>
+
+    <div id="form-flight" class="form-grid">
+      <div class="input-group"><label>Dari</label><input type="text" value="Jakarta (CGK)"></div>
+      <div class="input-group"><label>Ke</label><input type="text" value="Amsterdam (AMS)"></div>
+      <div class="input-group"><label>Tanggal Berangkat</label><input type="date" value="2026-10-22"></div>
+    </div>
+
+    <div id="form-hotel" class="form-grid" style="display:none;">
+      <div class="input-group"><label>Destinasi</label><input type="text" value="Bali, Indonesia"></div>
+      <div class="input-group"><label>Check-in</label><input type="date" value="2026-10-22"></div>
+      <div class="input-group"><label>Check-out</label><input type="date" value="2026-10-24"></div>
+    </div>
+
+    <button class="btn-search" onclick="doSearch()"><i class="fa-solid fa-magnifying-glass"></i> Cari Sekarang</button>
+  </div>
+</div>
+
+<!-- HALAMAN 2: HASIL PENCARIAN -->
+<div id="page-results" class="page">
+  <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+    <div>
+      <h2 style="font-size:22px;">Hasil Pencarian</h2>
+      <p style="color:var(--muted); font-size:13px;">Jakarta (CGK) → Amsterdam (AMS) • 22 Okt 2026</p>
+    </div>
+    <button onclick="showPage('page-search')" style="background:none;border:none;color:var(--blue);cursor:pointer;font-weight:700;">Edit Pencarian</button>
+  </div>
+  
+  <div id="result-list">
+    <!-- Card 1 -->
+    <div class="flight-card" onclick="openDetail('Qatar Airways', 'Rp 7.195.021', '09:00 - 20:45', '1 Stop (Doha)')">
+      <div class="airline-info">
+        <i class="fa-solid fa-plane airline-icon"></i>
+        <div>
+          <div class="flight-time">09:00 - 20:45</div>
+          <div class="flight-route">CGK - AMS • 16j 45m</div>
+          <div style="font-weight:700; margin-top:5px; color:var(--text);">Qatar Airways</div>
+        </div>
+      </div>
+      <div class="price-tag">
+        <h3>Rp 7.195.021</h3>
+        <small>/pax</small>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="flight-card" onclick="openDetail('KLM Royal Dutch Airlines', 'Rp 8.500.000', '18:30 - 13:55', 'Direct Flight')">
+      <div class="airline-info">
+        <i class="fa-solid fa-plane airline-icon"></i>
+        <div>
+          <div class="flight-time">18:30 - 13:55</div>
+          <div class="flight-route">CGK - AMS • 24j 25m</div>
+          <div style="font-weight:700; margin-top:5px; color:var(--text);">KLM Royal Dutch Airlines</div>
+        </div>
+      </div>
+      <div class="price-tag">
+        <h3>Rp 8.500.000</h3>
+        <small>/pax</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HALAMAN 3: DETAIL -->
+<div id="page-detail" class="page">
+  <button onclick="showPage('page-results')" style="background:none;border:none;color:var(--blue);cursor:pointer;margin-bottom:20px;font-weight:700;"><i class="fa-solid fa-arrow-left"></i> Kembali ke Hasil</button>
+  
+  <div class="detail-header">
+    <h2 id="detail-airline">Qatar Airways</h2>
+    <p id="detail-route">Jakarta (CGK) → Amsterdam (AMS)</p>
+    
+    <div style="margin: 20px 0; background: #f8fafc; padding: 15px; border-radius: 10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3 id="detail-time" style="font-size:24px;">09:00 - 20:45</h3>
+          <p id="detail-stop" style="color:var(--muted); font-size: 13px;">1 Stop (Doha)</p>
+        </div>
+        <div style="text-align:right;">
+          <h2 id="detail-price" style="color:var(--blue);">Rp 7.195.021</h2>
+          <small style="color:var(--muted)">per penumpang</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="facility">
+      <span><i class="fa-solid fa-suitcase"></i> 25kg Bagasi</span>
+      <span><i class="fa-solid fa-utensils"></i> Makanan</span>
+      <span><i class="fa-solid fa-wifi"></i> Wi-Fi</span>
+    </div>
+
+    <button class="btn-book" onclick="alert('Lanjut ke Halaman Pembayaran (Simulasi)')">Pilih Penerbangan Ini</button>
+  </div>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function setTab(btn, type) {
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.getElementById('form-flight').style.display = 'none';
+    document.getElementById('form-hotel').style.display = 'none';
+    
+    document.getElementById('form-' + type).style.display = 'grid';
+  }
+
+  function doSearch() {
+    const btn = document.querySelector('.btn-search');
+    const original = btn.innerHTML;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mencari...';
+    
+    setTimeout(() => {
+      btn.innerHTML = original;
+      showPage('page-results');
+    }, 1000);
+  }
+
+  function openDetail(airline, price, time, stop) {
+    document.getElementById('detail-airline').innerText = airline;
+    document.getElementById('detail-price').innerText = price;
+    document.getElementById('detail-time').innerText = time;
+    document.getElementById('detail-stop').innerText = stop;
+    showPage('page-detail');
+  }
+</script>
+</body>
+</html>
