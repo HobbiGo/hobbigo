@@ -4,10 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>CHELEA V7 — Smart Delivery</title>
+
+<title>CHELEA V8 — Real GPS Delivery</title>
+
+<link
+ rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0;
+}
+
 :root{
  --bg:#07111f;
  --card:#101f33;
@@ -20,31 +31,71 @@
  --yellow:#ffd166;
  --red:#ff667a;
 }
+
 body{
  background:linear-gradient(180deg,#06101c,#091827,#07111f);
  color:var(--text);
  font-family:Arial,Helvetica,sans-serif;
  min-height:100vh;
 }
-.app{max-width:920px;margin:auto;padding-bottom:90px}
+
+.app{
+ max-width:920px;
+ margin:auto;
+ padding-bottom:90px;
+}
+
 header{
- position:sticky;top:0;z-index:20;
+ position:sticky;
+ top:0;
+ z-index:1000;
  background:rgba(7,17,31,.96);
  backdrop-filter:blur(12px);
  border-bottom:1px solid var(--line);
  padding:14px 15px;
 }
-.head{display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:25px;font-weight:900;letter-spacing:1px}
-.small{font-size:11px;color:var(--muted)}
-.badge{
- font-size:10px;color:var(--green);
- border:1px solid #286b56;
- padding:6px 9px;border-radius:20px;
+
+.head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
 }
-.hero{padding:22px 15px}
-.hero h1{font-size:30px;line-height:1.1;margin-bottom:9px}
-.hero p{color:var(--muted);line-height:1.5;font-size:13px}
+
+.logo{
+ font-size:25px;
+ font-weight:900;
+ letter-spacing:1px;
+}
+
+.small{
+ font-size:11px;
+ color:var(--muted);
+}
+
+.badge{
+ font-size:10px;
+ color:var(--green);
+ border:1px solid #286b56;
+ padding:6px 9px;
+ border-radius:20px;
+}
+
+.hero{
+ padding:22px 15px;
+}
+
+.hero h1{
+ font-size:29px;
+ line-height:1.1;
+ margin-bottom:9px;
+}
+
+.hero p{
+ color:var(--muted);
+ line-height:1.5;
+ font-size:13px;
+}
+
 .notice{
  margin:0 15px 15px;
  padding:12px;
@@ -55,12 +106,28 @@ header{
  font-size:11px;
  line-height:1.5;
 }
-.section{padding:10px 15px 18px}
-.section-title{
- display:flex;justify-content:space-between;
- align-items:center;margin-bottom:12px;
+
+.section{
+ padding:10px 15px 18px;
 }
-.section-title h2{font-size:18px}
+
+.section-title{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:12px;
+}
+
+.section-title h2{
+ font-size:18px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
 .card{
  background:linear-gradient(145deg,var(--card),#0c1a2b);
  border:1px solid var(--line);
@@ -68,191 +135,376 @@ header{
  padding:15px;
  margin-bottom:10px;
 }
-.card h3{font-size:15px;margin-bottom:6px}
-.card p{color:var(--muted);font-size:12px;line-height:1.5}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
+.card h3{
+ font-size:15px;
+ margin-bottom:6px;
+}
+
+.card p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.5;
+}
+
 .icon{
- width:42px;height:42px;border-radius:12px;
- background:#142c46;display:flex;
- align-items:center;justify-content:center;
- font-size:20px;margin-bottom:10px;
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ background:#142c46;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:20px;
+ margin-bottom:10px;
 }
-.row{display:flex;align-items:center;gap:10px}
-.between{justify-content:space-between}
+
+.row{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+
+.between{
+ justify-content:space-between;
+}
+
 .status{
- display:inline-block;font-size:10px;
- padding:5px 8px;border-radius:20px;
- background:#123629;color:var(--green);
+ display:inline-block;
+ font-size:10px;
+ padding:5px 8px;
+ border-radius:20px;
+ background:#123629;
+ color:var(--green);
 }
-.status.blue{background:#112d4d;color:#78baff}
-.status.yellow{background:#3d3110;color:#ffd166}
+
+.status.blue{
+ background:#112d4d;
+ color:#78baff;
+}
+
+.status.yellow{
+ background:#3d3110;
+ color:#ffd166;
+}
+
 .btn{
- border:0;border-radius:11px;padding:11px 13px;
- font-weight:700;cursor:pointer;color:white;
+ border:0;
+ border-radius:11px;
+ padding:11px 13px;
+ font-weight:700;
+ cursor:pointer;
+ color:white;
  background:#1a3552;
 }
-.btn.primary{background:var(--green);color:#04130d}
-.btn.blue{background:var(--blue);color:#04101e}
-.btn.yellow{background:var(--yellow);color:#171000}
-.btn.full{width:100%;margin-top:10px}
-input,select{
- width:100%;background:#091827;
- border:1px solid var(--line);color:white;
- padding:12px;border-radius:10px;margin-top:6px;outline:none;
-}
-label{display:block;color:var(--muted);font-size:11px;margin-top:9px}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 
-/* LIVE MAP */
-.map{
- height:360px;border-radius:15px;
+.btn.primary{
+ background:var(--green);
+ color:#04130d;
+}
+
+.btn.blue{
+ background:var(--blue);
+ color:#04101e;
+}
+
+.btn.yellow{
+ background:var(--yellow);
+ color:#171000;
+}
+
+.btn.red{
+ background:var(--red);
+ color:#21040a;
+}
+
+.btn.full{
+ width:100%;
+ margin-top:10px;
+}
+
+input,
+select{
+ width:100%;
+ background:#091827;
  border:1px solid var(--line);
- overflow:hidden;position:relative;
- background:
- radial-gradient(circle at 18% 22%,#1c4660 0 2px,transparent 3px),
- radial-gradient(circle at 74% 30%,#1c4660 0 2px,transparent 3px),
- radial-gradient(circle at 55% 73%,#1c4660 0 2px,transparent 3px),
- linear-gradient(135deg,#0b2233,#102a3d 45%,#0b1c2c);
+ color:white;
+ padding:12px;
+ border-radius:10px;
+ margin-top:6px;
+ outline:none;
 }
-.road{
- position:absolute;height:9px;background:#304e64;
- border-radius:20px;opacity:.9;
+
+label{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-top:9px;
 }
-.r1{width:90%;left:5%;top:48%;transform:rotate(-13deg)}
-.r2{width:70%;left:16%;top:64%;transform:rotate(27deg)}
-.r3{width:65%;left:22%;top:32%;transform:rotate(50deg)}
-.route{
- position:absolute;width:72%;height:5px;
- left:14%;top:50%;background:var(--green);
- transform:rotate(-12deg);
- box-shadow:0 0 10px rgba(53,224,161,.5);
+
+.form-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
 }
-.map-label{
- position:absolute;background:#07111f;
- border:1px solid #35536e;padding:7px 9px;
- border-radius:9px;font-size:10px;
+
+/* MAP */
+
+#liveMap{
+ width:100%;
+ height:390px;
+ border-radius:15px;
+ overflow:hidden;
+ border:1px solid var(--line);
+ background:#0b1c2c;
 }
-.pickup{left:8%;top:34%}
-.destination{right:7%;top:24%}
-.partner-marker{
- position:absolute;left:18%;top:44%;
- width:45px;height:45px;border-radius:50%;
- background:var(--blue);border:4px solid white;
- display:flex;align-items:center;justify-content:center;
- color:#06101c;font-size:20px;
- box-shadow:0 0 25px rgba(78,161,255,.7);
- transition:left 1s linear,top 1s linear;
+
+.map-wrapper{
+ position:relative;
 }
-.map-live{
- position:absolute;top:12px;left:12px;
- background:#07111f;border:1px solid #34516b;
- padding:7px 10px;border-radius:20px;
- color:var(--green);font-size:10px;
+
+.map-status{
+ position:absolute;
+ z-index:500;
+ top:12px;
+ left:12px;
+ background:#07111f;
+ border:1px solid #35536e;
+ padding:8px 11px;
+ border-radius:20px;
+ font-size:10px;
+ color:var(--green);
 }
-.map-eta{
- position:absolute;right:12px;bottom:12px;
- background:#07111f;border:1px solid #34516b;
- padding:10px;border-radius:11px;font-size:11px;
+
+.map-info{
+ position:absolute;
+ z-index:500;
+ right:12px;
+ bottom:12px;
+ background:rgba(7,17,31,.94);
+ border:1px solid #35536e;
+ padding:10px;
+ border-radius:11px;
+ font-size:10px;
+ line-height:1.5;
 }
-.map-eta b{color:var(--green)}
+
+.leaflet-container{
+ background:#102536;
+}
 
 .metrics{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:7px;margin-top:12px;
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ margin-top:12px;
 }
+
 .metric{
- background:#091827;border-radius:9px;
- padding:9px;text-align:center;
+ background:#091827;
+ border-radius:9px;
+ padding:9px;
+ text-align:center;
 }
-.metric b{display:block;font-size:13px}
-.metric span{color:var(--muted);font-size:9px}
 
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.actions .btn{flex:1;min-width:100px}
+.metric b{
+ display:block;
+ font-size:13px;
+}
 
-.timeline{margin-top:15px}
-.step{
- display:flex;gap:12px;position:relative;padding-bottom:18px;
+.metric span{
+ color:var(--muted);
+ font-size:9px;
 }
-.dot{
- width:13px;height:13px;border-radius:50%;
- background:#263b51;border:2px solid #47617b;
- z-index:2;margin-top:2px;
+
+.actions{
+ display:flex;
+ gap:7px;
+ flex-wrap:wrap;
+ margin-top:10px;
 }
-.step.done .dot{background:var(--green);border-color:var(--green)}
-.step.current .dot{
- background:var(--blue);border-color:var(--blue);
- box-shadow:0 0 12px rgba(78,161,255,.7);
+
+.actions .btn{
+ flex:1;
+ min-width:100px;
 }
-.step:not(:last-child):after{
- content:"";position:absolute;left:6px;top:15px;
- width:1px;height:calc(100% - 5px);background:#29415b;
-}
-.step h4{font-size:12px}
-.step p{font-size:10px;color:var(--muted);margin-top:3px}
 
 .price-box{
  background:linear-gradient(145deg,#102d30,#0b202b);
  border:1px solid #236b60;
- border-radius:15px;padding:17px;
+ border-radius:15px;
+ padding:17px;
 }
+
 .price-total{
- font-size:30px;font-weight:900;
- color:var(--green);margin-top:5px;
+ font-size:30px;
+ font-weight:900;
+ color:var(--green);
+ margin-top:5px;
 }
+
 .price-row{
- display:flex;justify-content:space-between;
- padding:8px 0;border-bottom:1px solid #20384d;
+ display:flex;
+ justify-content:space-between;
+ padding:8px 0;
+ border-bottom:1px solid #20384d;
  font-size:12px;
 }
-.price-row:last-child{border-bottom:0}
+
+.price-row:last-child{
+ border-bottom:0;
+}
 
 .partner-card{
- background:#0c1b2c;border:1px solid var(--line);
- border-radius:14px;padding:14px;margin-top:10px;
+ background:#0c1b2c;
+ border:1px solid var(--line);
+ border-radius:14px;
+ padding:14px;
+ margin-top:10px;
+}
+
+.timeline{
+ margin-top:15px;
+}
+
+.step{
+ display:flex;
+ gap:12px;
+ position:relative;
+ padding-bottom:18px;
+}
+
+.dot{
+ width:13px;
+ height:13px;
+ border-radius:50%;
+ background:#263b51;
+ border:2px solid #47617b;
+ z-index:2;
+ margin-top:2px;
+}
+
+.step.done .dot{
+ background:var(--green);
+ border-color:var(--green);
+}
+
+.step.current .dot{
+ background:var(--blue);
+ border-color:var(--blue);
+ box-shadow:0 0 12px rgba(78,161,255,.7);
+}
+
+.step:not(:last-child):after{
+ content:"";
+ position:absolute;
+ left:6px;
+ top:15px;
+ width:1px;
+ height:calc(100% - 5px);
+ background:#29415b;
+}
+
+.step h4{
+ font-size:12px;
+}
+
+.step p{
+ font-size:10px;
+ color:var(--muted);
+ margin-top:3px;
 }
 
 .receipt{
- background:#0b1828;border:1px dashed #3a5875;
- padding:15px;border-radius:13px;
+ background:#0b1828;
+ border:1px dashed #3a5875;
+ padding:15px;
+ border-radius:13px;
 }
+
 .receipt-row{
- display:flex;justify-content:space-between;
- gap:12px;padding:8px 0;
+ display:flex;
+ justify-content:space-between;
+ gap:12px;
+ padding:8px 0;
  border-bottom:1px solid #1b3047;
  font-size:12px;
 }
-.receipt-row:last-child{border-bottom:0}
 
-.hidden{display:none!important}
+.receipt-row:last-child{
+ border-bottom:0;
+}
+
+.hidden{
+ display:none!important;
+}
 
 .toast{
- position:fixed;left:50%;bottom:75px;
+ position:fixed;
+ left:50%;
+ bottom:75px;
  transform:translateX(-50%);
- background:#10243a;border:1px solid #31506d;
- padding:11px 15px;border-radius:10px;
- font-size:12px;display:none;z-index:50;
+ background:#10243a;
+ border:1px solid #31506d;
+ padding:11px 15px;
+ border-radius:10px;
+ font-size:12px;
+ display:none;
+ z-index:2000;
 }
 
 .bottom{
- position:fixed;left:0;right:0;bottom:0;
+ position:fixed;
+ left:0;
+ right:0;
+ bottom:0;
  background:rgba(6,15,27,.97);
- border-top:1px solid var(--line);z-index:30;
+ border-top:1px solid var(--line);
+ z-index:1500;
 }
+
 .nav{
- max-width:920px;margin:auto;
- display:grid;grid-template-columns:repeat(5,1fr);
+ max-width:920px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
 }
+
 .nav button{
- background:none;border:0;color:#7890aa;
- padding:11px 3px;font-size:10px;
+ background:none;
+ border:0;
+ color:#7890aa;
+ padding:11px 3px;
+ font-size:10px;
 }
-.nav button.active{color:var(--green)}
+
+.nav button.active{
+ color:var(--green);
+}
+
+.gps-dot{
+ background:var(--blue);
+ width:18px!important;
+ height:18px!important;
+ border-radius:50%;
+ border:4px solid white;
+ box-shadow:0 0 18px rgba(78,161,255,.9);
+}
 
 @media(max-width:600px){
- .grid,.form-grid{grid-template-columns:1fr}
- .hero h1{font-size:27px}
- .map{height:310px}
+
+ .grid,
+ .form-grid{
+  grid-template-columns:1fr;
+ }
+
+ .hero h1{
+  font-size:27px;
+ }
+
+ #liveMap{
+  height:330px;
+ }
 }
 </style>
 </head>
@@ -262,87 +514,156 @@ label{display:block;color:var(--muted);font-size:11px;margin-top:9px}
 <div class="app">
 
 <header>
+
 <div class="head">
+
 <div>
+
 <div class="logo">CHELEA</div>
-<div class="small">Smart Personal Delivery</div>
+
+<div class="small">
+Smart Personal Delivery
 </div>
-<div class="badge">● V7 LIVE DEMO</div>
+
 </div>
+
+<div class="badge">
+● V8 REAL GPS
+</div>
+
+</div>
+
 </header>
 
 <section class="hero">
-<h1>Smart Delivery. Live Route. Clear Price.</h1>
+
+<h1>
+Real GPS Delivery Foundation
+</h1>
+
 <p>
-CHELEA connects customers, travelers, pickup partners,
-delivery partners and cargo through one delivery marketplace.
+Track your location, visualize delivery routes,
+calculate distance and prepare CHELEA for live delivery.
 </p>
+
 </section>
 
 <div class="notice">
-<b>CHELEA V7 — LIVE DELIVERY PROTOTYPE</b><br>
-GPS, map position, ETA, pricing, matching, escrow,
-insurance and verification are simulated demo functions.
+
+<b>CHELEA V8 — GPS FOUNDATION</b><br>
+
+This prototype can request the device's real GPS location.
+Map routing and backend tracking are still prototype functions.
+No real payment, escrow, insurance or commercial delivery
+transaction is performed.
+
 </div>
+
 
 <!-- HOME -->
 
 <section class="section" id="home">
 
 <div class="section-title">
+
 <h2>CHELEA Services</h2>
-<span>Marketplace</span>
+
+<span>GPS READY</span>
+
 </div>
 
 <div class="grid">
 
 <div class="card">
+
 <div class="icon">📦</div>
+
 <h3>I Need Delivery</h3>
-<p>Create a personal delivery or jastip request.</p>
-<button class="btn primary full" onclick="showTab('request')">
+
+<p>
+Create your delivery request.
+</p>
+
+<button
+class="btn primary full"
+onclick="showTab('request')">
 REQUEST
 </button>
+
 </div>
 
+
 <div class="card">
-<div class="icon">✈️</div>
-<h3>I'm Traveling</h3>
-<p>Offer your available route as a delivery partner.</p>
-<button class="btn blue full" onclick="showTab('partners')">
-FIND MATCH
+
+<div class="icon">📍</div>
+
+<h3>My Location</h3>
+
+<p>
+Use device GPS to determine current location.
+</p>
+
+<button
+class="btn blue full"
+onclick="getGPS()">
+GET GPS
 </button>
+
 </div>
 
+
 <div class="card">
+
 <div class="icon">🚗</div>
-<h3>Pickup Partner</h3>
-<p>Pickup items from customer locations.</p>
-<button class="btn full" onclick="showTab('partners')">
-JOIN NETWORK
+
+<h3>Live Delivery</h3>
+
+<p>
+Open the real GPS delivery map.
+</p>
+
+<button
+class="btn full"
+onclick="showTab('live')">
+OPEN MAP
 </button>
+
 </div>
 
+
 <div class="card">
-<div class="icon">🚚</div>
-<h3>Cargo Partner</h3>
-<p>Offer larger delivery capacity.</p>
-<button class="btn full" onclick="showTab('partners')">
-VIEW PARTNERS
+
+<div class="icon">🌍</div>
+
+<h3>Partner Network</h3>
+
+<p>
+Find traveler and delivery partners.
+</p>
+
+<button
+class="btn full"
+onclick="showTab('partners')">
+PARTNERS
 </button>
+
 </div>
 
 </div>
 
 </section>
 
+
 <!-- REQUEST -->
 
 <section class="section hidden" id="request">
 
 <div class="section-title">
+
 <h2>Create Delivery Request</h2>
+
 <span>DEMO</span>
+
 </div>
 
 <div class="card">
@@ -350,178 +671,531 @@ VIEW PARTNERS
 <div class="form-grid">
 
 <div>
+
 <label>Origin</label>
-<input id="origin" placeholder="Jakarta">
+
+<input
+id="origin"
+placeholder="Jakarta">
+
 </div>
 
+
 <div>
+
 <label>Destination</label>
-<input id="destination" placeholder="Singapore">
+
+<input
+id="destination"
+placeholder="Singapore">
+
 </div>
 
+
 <div>
+
 <label>Date</label>
-<input id="deliveryDate" type="date">
+
+<input
+id="deliveryDate"
+type="date">
+
 </div>
 
+
 <div>
+
 <label>Weight KG</label>
-<input id="weight" type="number" value="2">
+
+<input
+id="weight"
+type="number"
+value="2">
+
 </div>
 
+
 <div>
+
 <label>Pickup Location</label>
-<input id="pickup" placeholder="Customer location">
+
+<input
+id="pickup"
+placeholder="Pickup address">
+
 </div>
+
 
 <div>
+
 <label>Delivery Location</label>
-<input id="dropoff" placeholder="Receiver location">
-</div>
+
+<input
+id="dropoff"
+placeholder="Receiver address">
 
 </div>
 
-<label>Service Type</label>
+</div>
+
+
+<label>
+Service Type
+</label>
 
 <select id="serviceType">
-<option>Traveler Delivery</option>
-<option>Pickup Partner</option>
-<option>Local Delivery</option>
-<option>Cargo Partner</option>
+
+<option>
+Traveler Delivery
+</option>
+
+<option>
+Pickup Partner
+</option>
+
+<option>
+Local Delivery
+</option>
+
+<option>
+Cargo Partner
+</option>
+
 </select>
 
-<button class="btn primary full" onclick="createRequest()">
+
+<button
+class="btn primary full"
+onclick="createRequest()">
+
 CREATE REQUEST
+
 </button>
 
 </div>
 
-<div class="card hidden" id="requestResult">
+
+<div
+class="card hidden"
+id="requestResult">
 
 <div class="row between">
+
 <div>
-<div class="small">TRANSACTION</div>
-<h3>CHL-2026-000128</h3>
+
+<div class="small">
+TRANSACTION
 </div>
-<span class="status">CREATED</span>
+
+<h3>
+CHL-2026-000128
+</h3>
+
+</div>
+
+<span class="status">
+CREATED
+</span>
+
 </div>
 
 <p style="margin-top:10px">
-Your delivery request is ready.
+
+Request created successfully.
+
 </p>
 
-<button class="btn blue full" onclick="showTab('price')">
-VIEW PRICE
+<button
+class="btn blue full"
+onclick="showTab('live')">
+
+OPEN LIVE MAP
+
 </button>
 
 </div>
 
 </section>
 
-<!-- PRICE -->
 
-<section class="section hidden" id="price">
+<!-- LIVE -->
+
+<section class="section hidden" id="live">
 
 <div class="section-title">
-<h2>CHELEA Price Engine</h2>
-<span>DEMO</span>
+
+<h2>
+LIVE DELIVERY
+</h2>
+
+<span>
+REAL GPS
+</span>
+
 </div>
 
-<div class="price-box">
 
-<div class="small">ESTIMATED TOTAL</div>
+<div class="map-wrapper">
 
-<div class="price-total" id="totalPrice">
-Rp 92.500
+<div id="liveMap"></div>
+
+<div class="map-status"
+id="mapStatus">
+
+● GPS READY
+
 </div>
 
-<div style="margin-top:12px">
+<div class="map-info">
 
-<div class="price-row">
-<span>Base Delivery</span>
-<b id="baseFee">Rp 25.000</b>
-</div>
+<b id="mapDistance">
+Distance: —
+</b>
 
-<div class="price-row">
-<span>Distance</span>
-<b id="distanceFee">Rp 24.000</b>
-</div>
+<br>
 
-<div class="price-row">
-<span>Weight</span>
-<b id="weightFee">Rp 10.000</b>
-</div>
+<b id="mapAccuracy">
+Accuracy: —
+</b>
 
-<div class="price-row">
-<span>Pickup</span>
-<b>Rp 10.000</b>
-</div>
-
-<div class="price-row">
-<span>Protection</span>
-<b>Rp 5.000</b>
-</div>
-
-<div class="price-row">
-<span>Platform</span>
-<b>Rp 7.500</b>
 </div>
 
 </div>
 
-</div>
 
 <div class="card">
 
-<label>Distance KM</label>
-<input id="priceDistance" type="number" value="8">
+<div class="row between">
 
-<label>Weight KG</label>
-<input id="priceWeight" type="number" value="2">
+<div>
 
-<label>Delivery Priority</label>
+<div class="small">
+YOUR CURRENT LOCATION
+</div>
 
-<select id="priceType">
-<option value="1">Standard</option>
-<option value="1.25">Priority</option>
-<option value="1.5">Exclusive</option>
-</select>
+<h3 id="gpsStatus">
+GPS NOT STARTED
+</h3>
 
-<button class="btn primary full" onclick="calculatePrice()">
-CALCULATE
+</div>
+
+<span
+class="status"
+id="gpsBadge">
+OFF
+</span>
+
+</div>
+
+
+<div class="metrics">
+
+<div class="metric">
+
+<b id="lat">
+—
+</b>
+
+<span>
+LATITUDE
+</span>
+
+</div>
+
+<div class="metric">
+
+<b id="lng">
+—
+</b>
+
+<span>
+LONGITUDE
+</span>
+
+</div>
+
+<div class="metric">
+
+<b id="accuracy">
+—
+</b>
+
+<span>
+ACCURACY
+</span>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="getGPS()">
+
+START GPS
+
 </button>
 
-<button class="btn blue full" onclick="showTab('partners')">
-FIND PARTNER
+<button
+class="btn blue"
+onclick="centerGPS()">
+
+CENTER
+
+</button>
+
+<button
+class="btn red"
+onclick="stopGPS()">
+
+STOP GPS
+
 </button>
 
 </div>
 
+</div>
+
+
+<div class="card">
+
+<h3>
+Delivery Route
+</h3>
+
+<div class="timeline">
+
+<div
+class="step done">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+REQUEST
+</h4>
+
+<p>
+Customer created request
+</p>
+
+</div>
+
+</div>
+
+
+<div
+class="step done">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+MATCH
+</h4>
+
+<p>
+Delivery partner matched
+</p>
+
+</div>
+
+</div>
+
+
+<div
+class="step current">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+GPS ACTIVE
+</h4>
+
+<p>
+Device location available
+</p>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+PICKUP</h4>
+
+<p>
+Pickup verification
+</p>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+IN TRANSIT
+</h4>
+
+<p>
+Delivery route active
+</p>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+HANDOVER
+</h4>
+
+<p>
+Receiver verification
+</p>
+
+</div>
+
+</div>
+
+
+<div class="step">
+
+<div class="dot"></div>
+
+<div>
+
+<h4>
+COMPLETED
+</h4>
+
+<p>
+Transaction completed
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+GPS Security
+</h3>
+
+<div class="receipt-row">
+
+<span>
+Location Sharing
+</span>
+
+<b>
+DEVICE ONLY — DEMO
+</b>
+
+</div>
+
+
+<div class="receipt-row">
+
+<span>
+GPS Permission
+</span>
+
+<b id="permissionStatus">
+NOT REQUESTED
+</b>
+
+</div>
+
+
+<div class="receipt-row">
+
+<span>
+Location Accuracy
+</span>
+
+<b id="accuracyText">
+—
+</b>
+
+</div>
+
+</div>
+
 </section>
+
 
 <!-- PARTNERS -->
 
 <section class="section hidden" id="partners">
 
 <div class="section-title">
-<h2>Global Partner Network</h2>
-<span>DEMO MATCH</span>
+
+<h2>
+Global Partner Network
+</h2>
+
+<span>
+DEMO
+</span>
+
 </div>
+
 
 <div class="card">
 
-<h3>Partner Matching</h3>
+<h3>
+Partner Matching
+</h3>
 
 <p>
-CHELEA searches partners according to route,
-capacity, rating, verification and risk.
+
+Match customer requests with traveler,
+pickup and cargo partners.
+
 </p>
 
-<button class="btn primary full" onclick="runMatch()">
+<button
+class="btn primary full"
+onclick="runMatch()">
+
 RUN MATCH ENGINE
+
 </button>
 
 </div>
+
 
 <div class="partner-card">
 
@@ -529,20 +1203,30 @@ RUN MATCH ENGINE
 
 <div class="row">
 
-<div class="icon">✈️</div>
+<div class="icon">
+✈️
+</div>
 
 <div>
-<h3>Andi Traveler</h3>
+
+<h3>
+Andi Traveler
+</h3>
+
 <div class="small">
-Traveler · Jakarta → Singapore
+Jakarta → Singapore
 </div>
+
 </div>
 
 </div>
 
-<span class="status">VERIFIED</span>
+<span class="status">
+VERIFIED
+</span>
 
 </div>
+
 
 <div class="metrics">
 
@@ -563,23 +1247,29 @@ Traveler · Jakarta → Singapore
 
 </div>
 
+
 <div class="actions">
 
-<button class="btn" onclick="selectPartner('Andi Traveler')">
-VIEW
-</button>
+<button
+class="btn blue"
+onclick="matchPartner('Andi Traveler')">
 
-<button class="btn blue" onclick="matchPartner('Andi Traveler')">
 MATCH
+
 </button>
 
-<button class="btn primary" onclick="offerPartner('Andi Traveler')">
+<button
+class="btn primary"
+onclick="offerPartner('Andi Traveler')">
+
 OFFER
+
 </button>
 
 </div>
 
 </div>
+
 
 <div class="partner-card">
 
@@ -587,20 +1277,30 @@ OFFER
 
 <div class="row">
 
-<div class="icon">🚗</div>
+<div class="icon">
+🚗
+</div>
 
 <div>
-<h3>Dika Pickup</h3>
+
+<h3>
+Dika Pickup
+</h3>
+
 <div class="small">
-Pickup Partner · Jakarta
+Jakarta Pickup Partner
 </div>
+
 </div>
 
 </div>
 
-<span class="status">VERIFIED</span>
+<span class="status">
+VERIFIED
+</span>
 
 </div>
+
 
 <div class="metrics">
 
@@ -621,76 +1321,23 @@ Pickup Partner · Jakarta
 
 </div>
 
-<div class="actions">
-
-<button class="btn" onclick="selectPartner('Dika Pickup')">
-VIEW
-</button>
-
-<button class="btn blue" onclick="matchPartner('Dika Pickup')">
-MATCH
-</button>
-
-<button class="btn primary" onclick="offerPartner('Dika Pickup')">
-OFFER
-</button>
-
-</div>
-
-</div>
-
-<div class="partner-card">
-
-<div class="row between">
-
-<div class="row">
-
-<div class="icon">🚚</div>
-
-<div>
-<h3>Cargo Global</h3>
-<div class="small">
-Cargo Partner · International
-</div>
-</div>
-
-</div>
-
-<span class="status">VERIFIED</span>
-
-</div>
-
-<div class="metrics">
-
-<div class="metric">
-<b>4.8★</b>
-<span>RATING</span>
-</div>
-
-<div class="metric">
-<b>500 KG</b>
-<span>CAPACITY</span>
-</div>
-
-<div class="metric">
-<b>LOW</b>
-<span>RISK</span>
-</div>
-
-</div>
 
 <div class="actions">
 
-<button class="btn" onclick="selectPartner('Cargo Global')">
-VIEW
-</button>
+<button
+class="btn blue"
+onclick="matchPartner('Dika Pickup')">
 
-<button class="btn blue" onclick="matchPartner('Cargo Global')">
 MATCH
+
 </button>
 
-<button class="btn primary" onclick="offerPartner('Cargo Global')">
+<button
+class="btn primary"
+onclick="offerPartner('Dika Pickup')">
+
 OFFER
+
 </button>
 
 </div>
@@ -699,92 +1346,218 @@ OFFER
 
 </section>
 
-<!-- LIVE DELIVERY -->
 
-<section class="section hidden" id="live">
+<!-- PRICE -->
+
+<section class="section hidden" id="price">
 
 <div class="section-title">
-<h2>LIVE DELIVERY</h2>
-<span>GPS SIMULATION</span>
-</div>
 
-<div class="map">
+<h2>
+CHELEA Price Engine
+</h2>
 
-<div class="map-live">
-● LIVE — DEMO
-</div>
-
-<div class="road r1"></div>
-<div class="road r2"></div>
-<div class="road r3"></div>
-
-<div class="route"></div>
-
-<div class="map-label pickup">
-📍 PICKUP
-</div>
-
-<div class="map-label destination">
-🏁 DESTINATION
-</div>
-
-<div class="partner-marker" id="partnerMarker">
-🚗
-</div>
-
-<div class="map-eta">
-<b>LIVE</b><br>
-ETA <b id="eta">24 min</b><br>
-<span id="distance">8.0 km</span>
-</div>
+<span>
+DEMO
+</span>
 
 </div>
+
+
+<div class="price-box">
+
+<div class="small">
+ESTIMATED DELIVERY PRICE
+</div>
+
+<div
+class="price-total"
+id="totalPrice">
+
+Rp 92.500
+
+</div>
+
+
+<div style="margin-top:12px">
+
+<div class="price-row">
+
+<span>
+Base
+</span>
+
+<b>
+Rp 25.000
+</b>
+
+</div>
+
+
+<div class="price-row">
+
+<span>
+Distance
+</span>
+
+<b id="distanceFee">
+Rp 24.000
+</b>
+
+</div>
+
+
+<div class="price-row">
+
+<span>
+Weight
+</span>
+
+<b id="weightFee">
+Rp 10.000
+</b>
+
+</div>
+
+
+<div class="price-row">
+
+<span>
+Pickup
+</span>
+
+<b>
+Rp 10.000
+</b>
+
+</div>
+
+
+<div class="price-row">
+
+<span>
+Protection
+</span>
+
+<b>
+Rp 5.000
+</b>
+
+</div>
+
+
+<div class="price-row">
+
+<span>
+Platform
+</span>
+
+<b>
+Rp 7.500
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<label>
+Distance KM
+</label>
+
+<input
+id="priceDistance"
+type="number"
+value="8">
+
+
+<label>
+Weight KG
+</label>
+
+<input
+id="priceWeight"
+type="number"
+value="2">
+
+
+<label>
+Priority
+</label>
+
+<select id="priceType">
+
+<option value="1">
+Standard
+</option>
+
+<option value="1.25">
+Priority
+</option>
+
+<option value="1.5">
+Exclusive
+</option>
+
+</select>
+
+
+<button
+class="btn primary full"
+onclick="calculatePrice()">
+
+CALCULATE PRICE
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ORDERS -->
+
+<section class="section hidden" id="orders">
+
+<div class="section-title">
+
+<h2>
+Transaction
+</h2>
+
+<span>
+CHL-2026-000128
+</span>
+
+</div>
+
 
 <div class="card">
 
 <div class="row between">
 
 <div>
-<div class="small">DELIVERY PARTNER</div>
-<h3 id="livePartner">
-Andi Traveler
+
+<div class="small">
+STATUS
+</div>
+
+<h3 id="orderStatus">
+GPS ACTIVE
 </h3>
+
 </div>
 
 <span class="status">
-VERIFIED
+LOW RISK
 </span>
 
 </div>
 
-<div class="metrics">
-
-<div class="metric">
-<b id="speed">32</b>
-<span>KM/H</span>
-</div>
-
-<div class="metric">
-<b id="remaining">8.0</b>
-<span>KM LEFT</span>
-</div>
-
-<div class="metric">
-<b id="liveStatus">PICKUP</b>
-<span>STATUS</span>
-</div>
-
-</div>
-
-<button class="btn primary full" onclick="startLive()">
-START LIVE DELIVERY
-</button>
-
-</div>
-
-<div class="card">
-
-<h3>Live Delivery Timeline</h3>
 
 <div class="timeline">
 
@@ -792,35 +1565,48 @@ START LIVE DELIVERY
 <div class="dot"></div>
 <div>
 <h4>REQUEST</h4>
-<p>Customer request created</p>
+<p>Request created</p>
 </div>
 </div>
+
 
 <div class="step done">
 <div class="dot"></div>
 <div>
-<h4>MATCHED</h4>
-<p>Partner selected</p>
+<h4>MATCH</h4>
+<p>Partner matched</p>
 </div>
 </div>
 
-<div class="step current" id="pickupStep">
+
+<div class="step current">
+<div class="dot"></div>
+<div>
+<h4>GPS</h4>
+<p>Location tracking</p>
+</div>
+</div>
+
+
+<div class="step">
 <div class="dot"></div>
 <div>
 <h4>PICKUP</h4>
-<p>Partner approaching pickup</p>
+<p>Pickup verification</p>
 </div>
 </div>
 
-<div class="step" id="transitStep">
+
+<div class="step">
 <div class="dot"></div>
 <div>
-<h4>IN TRANSIT</h4>
-<p>Package moving to destination</p>
+<h4>DELIVERY</h4>
+<p>Route active</p>
 </div>
 </div>
 
-<div class="step" id="handoverStep">
+
+<div class="step">
 <div class="dot"></div>
 <div>
 <h4>HANDOVER</h4>
@@ -828,11 +1614,12 @@ START LIVE DELIVERY
 </div>
 </div>
 
-<div class="step" id="completeStep">
+
+<div class="step">
 <div class="dot"></div>
 <div>
 <h4>COMPLETED</h4>
-<p>Delivery completed</p>
+<p>Transaction completed</p>
 </div>
 </div>
 
@@ -840,300 +1627,174 @@ START LIVE DELIVERY
 
 </div>
 
-</section>
-
-<!-- PROFILE -->
-
-<section class="section hidden" id="profile">
-
-<div class="section-title">
-<h2>Partner Profile</h2>
-<span>VERIFIED</span>
-</div>
 
 <div class="card">
 
-<div class="row">
-
-<div class="icon">👤</div>
-
-<div>
-<h3 id="profileName">
-Andi Traveler
+<h3>
+Transaction Receipt
 </h3>
-<div class="small">
-Traveler Partner
-</div>
-</div>
 
-</div>
+<div class="receipt">
 
-<div class="metrics">
-
-<div class="metric">
-<b>4.9★</b>
-<span>RATING</span>
-</div>
-
-<div class="metric">
-<b>128</b>
-<span>DELIVERIES</span>
-</div>
-
-<div class="metric">
-<b>LOW</b>
-<span>RISK</span>
-</div>
-
-</div>
-
-<p style="margin-top:15px">
-✓ Identity Verified<br>
-✓ Partner Verified<br>
-✓ Route Verified<br>
-✓ Protection Active — DEMO
-</p>
-
-<button class="btn primary full" onclick="acceptPartner()">
-ACCEPT — DEMO
-</button>
-
-</div>
-
-</section>
-
-<!-- ORDERS -->
-
-<section class="section hidden" id="orders">
-
-<div class="section-title">
-<h2>Transaction Control</h2>
-<span>CHL-2026-000128</span>
-</div>
-
-<div class="card">
-
-<div class="row between">
-
-<div>
-<div class="small">CURRENT STATUS</div>
-<h3 id="currentStatus">
-REQUEST
-</h3>
-</div>
-
-<span class="status">
-LOW — DEMO
+<div class="receipt-row">
+<span>
+Transaction
 </span>
 
+<b>
+CHL-2026-000128
+</b>
 </div>
 
-<div class="timeline">
-
-<div class="step done" id="s1">
-<div class="dot"></div>
-<div><h4>REQUEST</h4><p>Request created</p></div>
-</div>
-
-<div class="step" id="s2">
-<div class="dot"></div>
-<div><h4>VERIFY</h4><p>Verification</p></div>
-</div>
-
-<div class="step" id="s3">
-<div class="dot"></div>
-<div><h4>MATCH</h4><p>Partner selected</p></div>
-</div>
-
-<div class="step" id="s4">
-<div class="dot"></div>
-<div><h4>OFFER</h4><p>Offer sent</p></div>
-</div>
-
-<div class="step" id="s5">
-<div class="dot"></div>
-<div><h4>APPROVED</h4><p>Approved</p></div>
-</div>
-
-<div class="step" id="s6">
-<div class="dot"></div>
-<div><h4>AGREEMENT</h4><p>Digital agreement</p></div>
-</div>
-
-<div class="step" id="s7">
-<div class="dot"></div>
-<div><h4>ESCROW</h4><p>Escrow demo</p></div>
-</div>
-
-<div class="step" id="s8">
-<div class="dot"></div>
-<div><h4>PICKUP</h4><p>Pickup verification</p></div>
-</div>
-
-<div class="step" id="s9">
-<div class="dot"></div>
-<div><h4>DELIVERY</h4><p>Live delivery</p></div>
-</div>
-
-<div class="step" id="s10">
-<div class="dot"></div>
-<div><h4>HANDOVER</h4><p>Receiver verification</p></div>
-</div>
-
-<div class="step" id="s11">
-<div class="dot"></div>
-<div><h4>COMPLETED</h4><p>Transaction completed</p></div>
-</div>
-
-</div>
-
-<button class="btn blue full" onclick="advanceStatus()">
-ADVANCE DEMO STATUS
-</button>
-
-</div>
-
-<div class="card">
-
-<h3>Security & Protection</h3>
 
 <div class="receipt-row">
-<span>Identity</span>
-<b>PASSED — DEMO</b>
+<span>
+Partner
+</span>
+
+<b>
+Andi Traveler
+</b>
 </div>
+
 
 <div class="receipt-row">
-<span>Item</span>
-<b>PASSED — DEMO</b>
+<span>
+Route
+</span>
+
+<b>
+Jakarta → Singapore
+</b>
 </div>
+
 
 <div class="receipt-row">
-<span>Route</span>
-<b>PASSED — DEMO</b>
+<span>
+Protection
+</span>
+
+<b>
+ACTIVE — DEMO
+</b>
 </div>
+
 
 <div class="receipt-row">
-<span>Insurance</span>
-<b>ACTIVE — DEMO</b>
-</div>
+<span>
+Payment
+</span>
 
-<div class="receipt-row">
-<span>Escrow</span>
-<b>RELEASED — DEMO</b>
-</div>
-
-</div>
-
-<div class="section-title">
-<h2>Transaction Receipt</h2>
-<span>DEMO</span>
-</div>
-
-<div class="receipt" id="receipt">
-
-<div class="row between">
-<div>
-<div class="small">CHELEA SECURE TRANSACTION</div>
-<h3>RECEIPT</h3>
-</div>
-<span class="status">COMPLETED</span>
-</div>
-
-<div style="margin-top:12px">
-
-<div class="receipt-row">
-<span>Transaction ID</span>
-<b>CHL-2026-000128</b>
-</div>
-
-<div class="receipt-row">
-<span>Partner</span>
-<b id="receiptPartner">Andi Traveler</b>
-</div>
-
-<div class="receipt-row">
-<span>Route</span>
-<b>Jakarta → Singapore</b>
-</div>
-
-<div class="receipt-row">
-<span>Price</span>
-<b id="receiptPrice">Rp 92.500</b>
-</div>
-
-<div class="receipt-row">
-<span>Protection</span>
-<b>ACTIVE — DEMO</b>
-</div>
-
-<div class="receipt-row">
-<span>Payment</span>
-<b>ESCROW RELEASED — DEMO</b>
+<b>
+ESCROW — DEMO
+</b>
 </div>
 
 </div>
 
-</div>
 
-<div class="actions">
+<button
+class="btn primary full"
+onclick="downloadReceipt()">
 
-<button class="btn blue" onclick="showReceipt()">
-VIEW
-</button>
+DOWNLOAD RECEIPT
 
-<button class="btn primary" onclick="downloadReceipt()">
-DOWNLOAD
-</button>
-
-<button class="btn" onclick="shareReceipt()">
-SHARE
 </button>
 
 </div>
 
 </section>
+
 
 <!-- ACCOUNT -->
 
 <section class="section hidden" id="account">
 
 <div class="section-title">
-<h2>CHELEA Control Center</h2>
-<span>DEMO</span>
+
+<h2>
+CHELEA Control Center
+</h2>
+
+<span>
+V8
+</span>
+
 </div>
+
 
 <div class="grid">
 
 <div class="card">
-<h3>128</h3>
-<p>Active Transactions</p>
-</div>
 
-<div class="card">
-<h3>24</h3>
-<p>Partners</p>
-</div>
+<h3>
+128
+</h3>
 
-<div class="card">
-<h3>7</h3>
-<p>In Transit</p>
-</div>
-
-<div class="card">
-<h3>3</h3>
-<p>Risk Review</p>
-</div>
+<p>
+Transactions
+</p>
 
 </div>
+
 
 <div class="card">
 
-<h3>Back to HOBBIGO</h3>
-<p>Return to the main HOBBIGO platform.</p>
+<h3>
+24
+</h3>
 
-<button class="btn primary full"
+<p>
+Partners
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+7
+</h3>
+
+<p>
+In Transit
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+3
+</h3>
+
+<p>
+Risk Review
+</p>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Back to HOBBIGO
+</h3>
+
+<p>
+Return to the HOBBIGO master platform.
+</p>
+
+<button
+class="btn primary full"
 onclick="location.href='../index.html'">
+
 BACK TO HOBBIGO
+
 </button>
 
 </div>
@@ -1142,79 +1803,146 @@ BACK TO HOBBIGO
 
 </div>
 
-<div class="toast" id="toast"></div>
+
+<div
+class="toast"
+id="toast">
+</div>
+
 
 <div class="bottom">
 
 <div class="nav">
 
-<button class="active" onclick="showTab('home')">
-⌂<br>HOME
+<button
+class="active"
+onclick="showTab('home')">
+
+⌂<br>
+HOME
+
 </button>
 
-<button onclick="showTab('request')">
-＋<br>REQUEST
+
+<button
+onclick="showTab('request')">
+
+＋<br>
+REQUEST
+
 </button>
 
-<button onclick="showTab('live')">
-●<br>LIVE
+
+<button
+onclick="showTab('live')">
+
+●<br>
+LIVE
+
 </button>
 
-<button onclick="showTab('partners')">
-◎<br>PARTNER
+
+<button
+onclick="showTab('partners')">
+
+◎<br>
+PARTNER
+
 </button>
 
-<button onclick="showTab('orders')">
-▣<br>ORDER
+
+<button
+onclick="showTab('orders')">
+
+▣<br>
+ORDER
+
 </button>
 
 </div>
 
 </div>
+
+
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
 
 <script>
 
-let currentStep=1;
+let map=null;
+let gpsMarker=null;
+let accuracyCircle=null;
+let gpsWatch=null;
+let currentPosition=null;
+let routeLine=null;
 let selectedPartner="Andi Traveler";
-let liveTimer=null;
-let liveProgress=0;
 
-function toast(msg){
 
-const t=document.getElementById("toast");
+function toast(message){
 
-t.textContent=msg;
-t.style.display="block";
+const el=document.getElementById("toast");
+
+el.textContent=message;
+
+el.style.display="block";
 
 clearTimeout(window.toastTimer);
 
 window.toastTimer=setTimeout(()=>{
-t.style.display="none";
-},2200);
+
+el.style.display="none";
+
+},2500);
 
 }
+
 
 function showTab(tab){
 
 const tabs=[
 "home",
 "request",
-"price",
-"partners",
 "live",
-"profile",
+"partners",
+"price",
 "orders",
 "account"
 ];
 
 tabs.forEach(id=>{
+
 const el=document.getElementById(id);
-if(el)el.classList.add("hidden");
+
+if(el){
+el.classList.add("hidden");
+}
+
 });
+
 
 const target=document.getElementById(tab);
 
-if(target)target.classList.remove("hidden");
+if(target){
+target.classList.remove("hidden");
+}
+
+
+if(tab==="live"){
+
+setTimeout(()=>{
+
+initMap();
+
+if(map){
+map.invalidateSize();
+}
+
+},200);
+
+}
+
 
 window.scrollTo({
 top:0,
@@ -1223,62 +1951,455 @@ behavior:"smooth"
 
 }
 
+
+function initMap(){
+
+if(map){
+
+map.invalidateSize();
+
+return;
+
+}
+
+
+map=L.map("liveMap").setView(
+[-6.2,106.816],
+11
+);
+
+
+L.tileLayer(
+"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{
+maxZoom:19,
+attribution:"© OpenStreetMap contributors"
+}
+).addTo(map);
+
+
+toast("Map loaded");
+
+}
+
+
+function getGPS(){
+
+if(!navigator.geolocation){
+
+toast("GPS tidak didukung browser");
+
+return;
+
+}
+
+
+showTab("live");
+
+document.getElementById("mapStatus")
+.textContent="● REQUESTING GPS";
+
+document.getElementById("gpsStatus")
+.textContent="REQUESTING GPS";
+
+document.getElementById("gpsBadge")
+.textContent="WAIT";
+
+
+navigator.geolocation.getCurrentPosition(
+
+position=>{
+
+handleGPS(position);
+
+startGPSWatch();
+
+},
+
+error=>{
+
+handleGPSError(error);
+
+},
+
+{
+
+enableHighAccuracy:true,
+
+timeout:15000,
+
+maximumAge:0
+
+}
+
+);
+
+}
+
+
+function startGPSWatch(){
+
+if(gpsWatch!==null){
+
+navigator.geolocation.clearWatch(gpsWatch);
+
+}
+
+
+gpsWatch=
+navigator.geolocation.watchPosition(
+
+position=>{
+
+handleGPS(position);
+
+},
+
+error=>{
+
+handleGPSError(error);
+
+},
+
+{
+
+enableHighAccuracy:true,
+
+timeout:20000,
+
+maximumAge:3000
+
+}
+
+);
+
+}
+
+
+function handleGPS(position){
+
+currentPosition=position;
+
+const lat=position.coords.latitude;
+
+const lng=position.coords.longitude;
+
+const accuracy=
+Math.round(position.coords.accuracy);
+
+
+document.getElementById("lat")
+.textContent=lat.toFixed(6);
+
+document.getElementById("lng")
+.textContent=lng.toFixed(6);
+
+document.getElementById("accuracy")
+.textContent=accuracy+"m";
+
+document.getElementById("accuracyText")
+.textContent=accuracy+" m";
+
+document.getElementById("permissionStatus")
+.textContent="GRANTED";
+
+document.getElementById("gpsStatus")
+.textContent="GPS ACTIVE";
+
+document.getElementById("gpsBadge")
+.textContent="ON";
+
+document.getElementById("mapStatus")
+.textContent="● LIVE GPS";
+
+
+if(!map){
+
+initMap();
+
+}
+
+
+const positionLatLng=
+L.latLng(lat,lng);
+
+
+if(!gpsMarker){
+
+const icon=L.divIcon({
+
+className:"gps-dot",
+
+iconSize:[18,18],
+
+iconAnchor:[9,9]
+
+});
+
+
+gpsMarker=
+L.marker(
+positionLatLng,
+{icon:icon}
+)
+.addTo(map)
+.bindPopup(
+"<b>CHELEA GPS</b><br>Current Location"
+);
+
+}else{
+
+gpsMarker.setLatLng(positionLatLng);
+
+}
+
+
+if(!accuracyCircle){
+
+accuracyCircle=
+L.circle(
+positionLatLng,
+{
+radius:accuracy,
+color:"#4ea1ff",
+fillColor:"#4ea1ff",
+fillOpacity:.12,
+weight:1
+}
+).addTo(map);
+
+}else{
+
+accuracyCircle.setLatLng(positionLatLng);
+
+accuracyCircle.setRadius(accuracy);
+
+}
+
+
+map.setView(
+positionLatLng,
+15
+);
+
+
+toast("GPS location updated");
+
+}
+
+
+function handleGPSError(error){
+
+let message="GPS error";
+
+if(error.code===1){
+
+message="GPS permission denied";
+
+document.getElementById("permissionStatus")
+.textContent="DENIED";
+
+}
+
+if(error.code===2){
+
+message="GPS position unavailable";
+
+}
+
+if(error.code===3){
+
+message="GPS timeout";
+
+}
+
+
+document.getElementById("gpsStatus")
+.textContent=message;
+
+document.getElementById("gpsBadge")
+.textContent="ERROR";
+
+document.getElementById("mapStatus")
+.textContent="● GPS ERROR";
+
+toast(message);
+
+}
+
+
+function centerGPS(){
+
+if(!currentPosition){
+
+toast("Start GPS first");
+
+return;
+
+}
+
+
+const lat=currentPosition.coords.latitude;
+
+const lng=currentPosition.coords.longitude;
+
+map.setView(
+[lat,lng],
+17
+);
+
+toast("Map centered on GPS");
+
+}
+
+
+function stopGPS(){
+
+if(gpsWatch!==null){
+
+navigator.geolocation.clearWatch(
+gpsWatch
+);
+
+gpsWatch=null;
+
+}
+
+
+document.getElementById("gpsStatus")
+.textContent="GPS STOPPED";
+
+document.getElementById("gpsBadge")
+.textContent="OFF";
+
+document.getElementById("mapStatus")
+.textContent="● GPS STOPPED";
+
+toast("GPS tracking stopped");
+
+}
+
+
 function createRequest(){
 
 document.getElementById("requestResult")
 .classList.remove("hidden");
 
-toast("Request created — DEMO");
-
-setTimeout(()=>{
-showTab("price");
-},500);
-
-calculatePrice();
+toast("Delivery request created");
 
 }
+
+
+function runMatch(){
+
+toast("Partner matching started");
+
+setTimeout(()=>{
+
+showTab("partners");
+
+toast("Partners matched");
+
+},600);
+
+}
+
+
+function matchPartner(name){
+
+selectedPartner=name;
+
+toast(name+" matched — DEMO");
+
+setTimeout(()=>{
+
+showTab("live");
+
+},600);
+
+}
+
+
+function offerPartner(name){
+
+selectedPartner=name;
+
+toast("Offer sent to "+name);
+
+setTimeout(()=>{
+
+showTab("live");
+
+},600);
+
+}
+
 
 function calculatePrice(){
 
 const distance=
-Number(document.getElementById("priceDistance").value)||0;
+Number(
+document.getElementById("priceDistance").value
+)||0;
+
 
 const weight=
-Number(document.getElementById("priceWeight").value)||0;
+Number(
+document.getElementById("priceWeight").value
+)||0;
+
 
 const multiplier=
-Number(document.getElementById("priceType").value)||1;
+Number(
+document.getElementById("priceType").value
+)||1;
+
 
 const base=25000;
-const distanceFee=distance*3000;
-const weightFee=weight*5000;
+
+const distanceFee=
+distance*3000;
+
+const weightFee=
+weight*5000;
+
 const pickup=10000;
+
 const protection=5000;
+
 const platform=7500;
 
+
 const total=Math.round(
-(base+distanceFee+weightFee+
-pickup+protection+platform)*multiplier
+
+(
+base+
+distanceFee+
+weightFee+
+pickup+
+protection+
+platform
+)*multiplier
+
 );
 
-document.getElementById("baseFee")
-.textContent=rupiah(base);
 
 document.getElementById("distanceFee")
 .textContent=rupiah(distanceFee);
 
+
 document.getElementById("weightFee")
 .textContent=rupiah(weightFee);
+
 
 document.getElementById("totalPrice")
 .textContent=rupiah(total);
 
-document.getElementById("receiptPrice")
-.textContent=rupiah(total);
 
 toast("Price calculated — DEMO");
 
 }
+
 
 function rupiah(value){
 
@@ -1288,260 +2409,30 @@ Math.round(value)
 
 }
 
-function runMatch(){
-
-toast("Matching partners — DEMO");
-
-setTimeout(()=>{
-showTab("partners");
-},400);
-
-}
-
-function selectPartner(name){
-
-selectedPartner=name;
-
-document.getElementById("profileName")
-.textContent=name;
-
-showTab("profile");
-
-toast("Partner profile loaded");
-
-}
-
-function matchPartner(name){
-
-selectedPartner=name;
-
-document.getElementById("receiptPartner")
-.textContent=name;
-
-document.getElementById("livePartner")
-.textContent=name;
-
-toast(name+" matched — DEMO");
-
-setTimeout(()=>{
-showTab("live");
-},500);
-
-}
-
-function offerPartner(name){
-
-selectedPartner=name;
-
-document.getElementById("receiptPartner")
-.textContent=name;
-
-document.getElementById("livePartner")
-.textContent=name;
-
-toast("Offer sent — DEMO");
-
-setTimeout(()=>{
-showTab("live");
-},500);
-
-}
-
-function acceptPartner(){
-
-toast("Partner accepted — DEMO");
-
-setTimeout(()=>{
-showTab("live");
-},500);
-
-}
-
-function startLive(){
-
-if(liveTimer){
-
-toast("Live simulation already running");
-return;
-
-}
-
-liveProgress=0;
-
-toast("LIVE DELIVERY started — DEMO");
-
-liveTimer=setInterval(()=>{
-
-liveProgress++;
-
-let distance=
-Math.max(0,8-(liveProgress*.65));
-
-let eta=
-Math.max(1,Math.round(distance/.5));
-
-document.getElementById("remaining")
-.textContent=distance.toFixed(1);
-
-document.getElementById("distance")
-.textContent=distance.toFixed(1)+" km";
-
-document.getElementById("eta")
-.textContent=eta+" min";
-
-let marker=
-document.getElementById("partnerMarker");
-
-let left=
-18+(liveProgress*5.2);
-
-if(left>78)left=78;
-
-marker.style.left=left+"%";
-
-if(liveProgress<4){
-
-document.getElementById("liveStatus")
-.textContent="PICKUP";
-
-document.getElementById("speed")
-.textContent="28";
-
-}
-
-else if(liveProgress<8){
-
-document.getElementById("liveStatus")
-.textContent="IN TRANSIT";
-
-document.getElementById("speed")
-.textContent="42";
-
-document.getElementById("pickupStep")
-.classList.add("done");
-
-document.getElementById("transitStep")
-.classList.add("current");
-
-}
-
-else if(liveProgress<12){
-
-document.getElementById("liveStatus")
-.textContent="HANDOVER";
-
-document.getElementById("speed")
-.textContent="8";
-
-document.getElementById("transitStep")
-.classList.add("done");
-
-document.getElementById("handoverStep")
-.classList.add("current");
-
-}
-
-else{
-
-document.getElementById("liveStatus")
-.textContent="COMPLETED";
-
-document.getElementById("speed")
-.textContent="0";
-
-document.getElementById("handoverStep")
-.classList.add("done");
-
-document.getElementById("completeStep")
-.classList.add("done");
-
-clearInterval(liveTimer);
-
-liveTimer=null;
-
-toast("Delivery COMPLETED — DEMO");
-
-}
-
-},1200);
-
-}
-
-function advanceStatus(){
-
-if(currentStep<11)currentStep++;
-
-const names=[
-"REQUEST",
-"VERIFY",
-"MATCH",
-"OFFER",
-"APPROVED",
-"AGREEMENT",
-"ESCROW",
-"PICKUP",
-"DELIVERY",
-"HANDOVER",
-"COMPLETED"
-];
-
-for(let i=1;i<=11;i++){
-
-const el=document.getElementById("s"+i);
-
-if(!el)continue;
-
-el.classList.remove("done","current");
-
-if(i<currentStep)
-el.classList.add("done");
-
-if(i===currentStep)
-el.classList.add("current");
-
-}
-
-document.getElementById("currentStatus")
-.textContent=names[currentStep-1];
-
-toast(names[currentStep-1]+" — DEMO");
-
-if(currentStep===9){
-showTab("live");
-}
-
-}
-
-function showReceipt(){
-
-document.getElementById("receipt")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-toast("Receipt opened");
-
-}
 
 function downloadReceipt(){
 
-const price=
-document.getElementById("receiptPrice")
-.textContent;
-
 const html=`
+
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>CHELEA Receipt</title>
+
 <style>
+
 body{
 font-family:Arial;
 background:#07111f;
 color:white;
 padding:30px;
 }
+
 .box{
 max-width:700px;
 margin:auto;
@@ -1549,64 +2440,91 @@ background:#101f33;
 padding:25px;
 border-radius:15px;
 }
+
 .row{
 display:flex;
 justify-content:space-between;
-border-bottom:1px solid #29415b;
 padding:12px 0;
+border-bottom:1px solid #29415b;
 }
-.green{color:#35e0a1}
+
+.green{
+color:#35e0a1;
+}
+
 </style>
+
 </head>
+
 <body>
+
 <div class="box">
+
 <h1>CHELEA</h1>
+
 <h2>Transaction Receipt</h2>
-<p>CHELEA SECURE TRANSACTION — DEMO</p>
+
+<p>
+CHELEA V8 — GPS FOUNDATION DEMO
+</p>
+
 <div class="row">
-<span>Transaction ID</span>
+<span>Transaction</span>
 <b>CHL-2026-000128</b>
 </div>
+
 <div class="row">
 <span>Partner</span>
 <b>${selectedPartner}</b>
 </div>
-<div class="row">
-<span>Route</span>
-<b>Jakarta → Singapore</b>
-</div>
-<div class="row">
-<span>Price</span>
-<b>${price}</b>
-</div>
+
 <div class="row">
 <span>Status</span>
-<b class="green">COMPLETED — DEMO</b>
+<b class="green">GPS ACTIVE — DEMO</b>
 </div>
+
 <div class="row">
 <span>Protection</span>
 <b>ACTIVE — DEMO</b>
 </div>
+
 <p style="margin-top:25px">
-Frontend prototype only. No real GPS,
-payment, escrow or insurance transaction occurred.
+
+This receipt belongs to a frontend
+prototype. No real payment or commercial
+delivery transaction occurred.
+
 </p>
+
 </div>
+
 </body>
+
 </html>
+
 `;
 
+
 const blob=
-new Blob([html],{type:"text/html"});
+new Blob(
+[html],
+{type:"text/html"}
+);
+
 
 const url=
 URL.createObjectURL(blob);
 
-const a=document.createElement("a");
+
+const a=
+document.createElement("a");
+
 
 a.href=url;
+
 a.download=
 "CHELEA_Receipt_CHL-2026-000128.html";
+
 
 document.body.appendChild(a);
 
@@ -1614,35 +2532,18 @@ a.click();
 
 a.remove();
 
+
 setTimeout(()=>{
+
 URL.revokeObjectURL(url);
+
 },1000);
+
 
 toast("Receipt downloaded");
 
 }
 
-function shareReceipt(){
-
-const text=
-"CHELEA Receipt CHL-2026-000128 — COMPLETED DEMO";
-
-if(navigator.share){
-
-navigator.share({
-title:"CHELEA Receipt",
-text:text
-}).catch(()=>{});
-
-}else{
-
-navigator.clipboard?.writeText(text);
-
-toast("Receipt copied");
-
-}
-
-}
 
 showTab("home");
 
