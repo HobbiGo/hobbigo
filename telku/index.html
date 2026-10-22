@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>TELKU eSIM V2.1</title>
+<title>TELKU eSIM V2.2</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+ box-sizing:border-box;
+ margin:0;
+ padding:0
+}
 
 :root{
  --bg:#07111f;
@@ -22,6 +26,7 @@
  --green:#27d17f;
  --yellow:#ffc857;
  --red:#ff5f6d;
+ --purple:#9b7cff;
 }
 
 body{
@@ -33,19 +38,24 @@ body{
  min-height:100vh;
 }
 
-button,input,select{font:inherit}
-button{cursor:pointer}
+button,input,select{
+ font:inherit
+}
+
+button{
+ cursor:pointer
+}
 
 .header{
  position:sticky;
  top:0;
- z-index:20;
+ z-index:50;
  height:64px;
  display:flex;
  align-items:center;
  justify-content:space-between;
  padding:0 18px;
- background:rgba(7,17,31,.95);
+ background:rgba(7,17,31,.96);
  border-bottom:1px solid var(--line);
  backdrop-filter:blur(12px);
 }
@@ -56,7 +66,9 @@ button{cursor:pointer}
  letter-spacing:1px;
 }
 
-.logo span{color:var(--blue)}
+.logo span{
+ color:var(--blue)
+}
 
 .badge{
  font-size:11px;
@@ -125,11 +137,14 @@ input,select{
  margin-bottom:14px;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus{
  border-color:var(--blue);
 }
 
-.hidden{display:none!important}
+.hidden{
+ display:none!important
+}
 
 .status{
  margin-top:13px;
@@ -155,6 +170,12 @@ input:focus,select:focus{
  background:rgba(255,95,109,.1);
  border:1px solid rgba(255,95,109,.25);
  color:#ff9ca5;
+}
+
+.warning{
+ background:rgba(255,200,87,.1);
+ border:1px solid rgba(255,200,87,.25);
+ color:#ffd97e;
 }
 
 .plans{
@@ -193,7 +214,18 @@ input:focus,select:focus{
  margin-bottom:13px;
 }
 
-.primary,.secondary{
+.plan-btn{
+ width:100%;
+ border:0;
+ border-radius:10px;
+ padding:11px;
+ background:#1769a7;
+ color:white;
+ font-weight:bold;
+}
+
+.primary,
+.secondary{
  width:100%;
  border-radius:12px;
  padding:13px;
@@ -213,16 +245,6 @@ input:focus,select:focus{
  color:white;
 }
 
-.plan-btn{
- width:100%;
- border:0;
- border-radius:10px;
- padding:11px;
- background:#1769a7;
- color:white;
- font-weight:bold;
-}
-
 .summary{
  background:#091728;
  border:1px solid var(--line);
@@ -239,7 +261,9 @@ input:focus,select:focus{
  border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.row:last-child{border-bottom:0}
+.row:last-child{
+ border-bottom:0
+}
 
 .muted{
  color:var(--muted);
@@ -268,6 +292,11 @@ input:focus,select:focus{
  font-size:40px;
 }
 
+.ready.active .ready-icon{
+ border-color:var(--blue);
+ background:rgba(41,169,255,.12);
+}
+
 .ready h2{
  font-size:27px;
  margin-bottom:7px;
@@ -290,8 +319,13 @@ input:focus,select:focus{
  gap:2px;
 }
 
-.qr span{background:white}
-.qr span.on{background:black}
+.qr span{
+ background:white
+}
+
+.qr span.on{
+ background:black
+}
 
 .code-box{
  background:#091728;
@@ -367,11 +401,31 @@ input:focus,select:focus{
  margin-top:12px;
 }
 
+.status-pill.active{
+ background:rgba(41,169,255,.12);
+ border-color:rgba(41,169,255,.3);
+ color:#9ddcff;
+}
+
+.status-pill.off{
+ background:rgba(255,95,109,.12);
+ border-color:rgba(255,95,109,.3);
+ color:#ff9ca5;
+}
+
 .dot{
  width:8px;
  height:8px;
  border-radius:50%;
  background:var(--green);
+}
+
+.active .dot{
+ background:var(--blue);
+}
+
+.off .dot{
+ background:var(--red);
 }
 
 .menu{
@@ -394,6 +448,106 @@ input:focus,select:focus{
  border-color:var(--blue);
 }
 
+.progress-wrap{
+ margin-top:18px;
+ text-align:left;
+}
+
+.progress-header{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ margin-bottom:8px;
+ font-size:13px;
+}
+
+.progress-bg{
+ height:13px;
+ background:#07111f;
+ border:1px solid var(--line);
+ border-radius:20px;
+ overflow:hidden;
+}
+
+.progress-bar{
+ height:100%;
+ width:0%;
+ background:linear-gradient(
+  90deg,
+  #168be0,
+  #25d17f
+ );
+ border-radius:20px;
+ transition:.5s;
+}
+
+.usage-number{
+ margin-top:8px;
+ color:var(--muted);
+ font-size:12px;
+}
+
+.dashboard-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+
+.dash{
+ background:#0b192b;
+ border:1px solid var(--line);
+ border-radius:13px;
+ padding:15px;
+}
+
+.dash-icon{
+ font-size:22px;
+ margin-bottom:7px;
+}
+
+.dash-label{
+ color:var(--muted);
+ font-size:12px;
+}
+
+.dash-value{
+ margin-top:5px;
+ font-size:18px;
+ font-weight:900;
+}
+
+.history-item{
+ background:#0b192b;
+ border:1px solid var(--line);
+ border-radius:13px;
+ padding:14px;
+ margin-bottom:10px;
+}
+
+.history-top{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ margin-bottom:7px;
+}
+
+.history-id{
+ font-size:13px;
+ font-weight:bold;
+}
+
+.history-status{
+ font-size:11px;
+ font-weight:bold;
+ color:var(--green);
+}
+
+.history-meta{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.6;
+}
+
 .footer{
  text-align:center;
  color:#70849c;
@@ -402,12 +556,24 @@ input:focus,select:focus{
 }
 
 @media(min-width:600px){
- .plans{grid-template-columns:1fr 1fr}
+ .plans{
+  grid-template-columns:1fr 1fr;
+ }
 }
 
 @media(max-width:430px){
- .hero h1{font-size:25px}
- .grid{grid-template-columns:1fr}
+ .hero h1{
+  font-size:25px
+ }
+
+ .grid,
+ .dashboard-grid{
+  grid-template-columns:1fr
+ }
+
+ .menu{
+  grid-template-columns:1fr 1fr
+ }
 }
 </style>
 </head>
@@ -422,77 +588,139 @@ input:focus,select:focus{
 <main class="container">
 
 <!-- HOME -->
+
 <section id="homePage">
 
  <div class="hero">
   <div class="hero-icon">🌍</div>
   <h1>TELKU Global eSIM</h1>
-  <p>Pilih negara dan paket eSIM Anda.</p>
+  <p>
+   Global eSIM marketplace untuk perjalanan Anda.
+  </p>
  </div>
 
  <div class="card">
 
-  <div class="title">👤 Customer Information</div>
+  <div class="title">
+   👤 Customer Information
+  </div>
 
   <label>Full Name</label>
-  <input id="fullName" type="text" placeholder="Nama lengkap">
+  <input
+   id="fullName"
+   type="text"
+   placeholder="Nama lengkap"
+  >
 
   <label>Email</label>
-  <input id="email" type="email" placeholder="nama@email.com">
+  <input
+   id="email"
+   type="email"
+   placeholder="nama@email.com"
+  >
 
   <label>Phone</label>
-  <input id="phone" type="tel" placeholder="+62">
+  <input
+   id="phone"
+   type="tel"
+   placeholder="+62"
+  >
 
   <label>Destination Country</label>
-  <select id="countrySelect" onchange="loadPlans()">
-   <option value="">-- Pilih negara --</option>
+
+  <select
+   id="countrySelect"
+   onchange="loadPlans()"
+  >
+   <option value="">
+    -- Pilih negara --
+   </option>
   </select>
 
-  <div id="countryStatus" class="status info">
+  <div
+   id="countryStatus"
+   class="status info"
+  >
    Memuat negara...
   </div>
 
  </div>
 
- <div id="plansCard" class="card hidden">
-  <div class="title">📦 Available eSIM Plans</div>
-  <div id="plans" class="plans"></div>
+ <div
+  id="plansCard"
+  class="card hidden"
+ >
+
+  <div class="title">
+   📦 Available eSIM Plans
+  </div>
+
+  <div
+   id="plans"
+   class="plans"
+  ></div>
+
  </div>
 
 </section>
 
 
 <!-- PAYMENT -->
-<section id="paymentPage" class="hidden">
+
+<section
+ id="paymentPage"
+ class="hidden"
+>
 
  <div class="hero">
   <div class="hero-icon">💳</div>
   <h1>Payment</h1>
-  <p>Periksa pesanan sebelum pembayaran.</p>
+  <p>
+   Periksa pesanan sebelum pembayaran.
+  </p>
  </div>
 
  <div class="card">
 
-  <div class="title">🧾 Order Summary</div>
+  <div class="title">
+   🧾 Order Summary
+  </div>
 
-  <div id="paymentSummary" class="summary"></div>
+  <div
+   id="paymentSummary"
+   class="summary"
+  ></div>
 
-  <label>Payment Method</label>
+  <label>
+   Payment Method
+  </label>
 
   <select id="paymentMethod">
-   <option value="online">Online Payment</option>
-   <option value="card">Credit / Debit Card</option>
-   <option value="bank_transfer">Bank Transfer</option>
+   <option value="online">
+    Online Payment
+   </option>
+
+   <option value="card">
+    Credit / Debit Card
+   </option>
+
+   <option value="bank_transfer">
+    Bank Transfer
+   </option>
   </select>
 
-  <button id="payButton"
-          class="primary"
-          onclick="processPayment()">
+  <button
+   id="payButton"
+   class="primary"
+   onclick="processPayment()"
+  >
    Pay Now
   </button>
 
-  <button class="secondary"
-          onclick="backToHome()">
+  <button
+   class="secondary"
+   onclick="backToHome()"
+  >
    ← Kembali
   </button>
 
@@ -503,25 +731,50 @@ input:focus,select:focus{
 </section>
 
 
-<!-- ESIM MANAGEMENT -->
-<section id="esimPage" class="hidden">
+<!-- ESIM -->
+
+<section
+ id="esimPage"
+ class="hidden"
+>
 
  <div class="hero">
-  <div class="hero-icon">📱</div>
-  <h1>My eSIM</h1>
-  <p>Kelola eSIM TELKU Anda.</p>
 
-  <div class="status-pill">
+  <div class="hero-icon">
+   📱
+  </div>
+
+  <h1>
+   My eSIM
+  </h1>
+
+  <p>
+   Kelola eSIM TELKU Anda.
+  </p>
+
+  <div
+   id="statusPill"
+   class="status-pill"
+  >
    <span class="dot"></span>
    READY
   </div>
+
  </div>
 
- <div class="card ready">
 
-  <div class="ready-icon">✓</div>
+ <div
+  id="esimReadyCard"
+  class="card ready"
+ >
 
-  <h2>eSIM READY</h2>
+  <div class="ready-icon">
+   ✓
+  </div>
+
+  <h2 id="esimTitle">
+   eSIM READY
+  </h2>
 
   <p class="muted">
    eSIM demo berhasil dibuat.
@@ -531,9 +784,88 @@ input:focus,select:focus{
 
  </div>
 
+
+ <!-- USAGE -->
+
  <div class="card">
 
-  <div class="title">⚙️ eSIM Management</div>
+  <div class="title">
+   📊 Data Usage
+  </div>
+
+  <div class="progress-wrap">
+
+   <div class="progress-header">
+    <span>
+     Data Used
+    </span>
+
+    <strong id="usagePercent">
+     0%
+    </strong>
+   </div>
+
+   <div class="progress-bg">
+
+    <div
+     id="usageBar"
+     class="progress-bar"
+    ></div>
+
+   </div>
+
+   <div
+    id="usageNumber"
+    class="usage-number"
+   >
+    0 GB used of 0 GB
+   </div>
+
+  </div>
+
+  <button
+   class="primary"
+   style="margin-top:15px"
+   onclick="simulateUsage()"
+  >
+   📶 Simulate Data Usage
+  </button>
+
+  <button
+   class="secondary"
+   onclick="topUpData()"
+  >
+   ➕ Top Up Data
+  </button>
+
+  <div id="usageStatus"></div>
+
+ </div>
+
+
+ <!-- DASHBOARD -->
+
+ <div class="card">
+
+  <div class="title">
+   📊 eSIM Dashboard
+  </div>
+
+  <div
+   id="dashboard"
+   class="dashboard-grid"
+  ></div>
+
+ </div>
+
+
+ <!-- MANAGEMENT -->
+
+ <div class="card">
+
+  <div class="title">
+   ⚙️ eSIM Management
+  </div>
 
   <div class="menu">
 
@@ -553,35 +885,109 @@ input:focus,select:focus{
     📡 Activate
    </button>
 
+   <button onclick="deactivateESIM()">
+    ⛔ Deactivate
+   </button>
+
+   <button onclick="showHistory()">
+    📚 eSIM History
+   </button>
+
   </div>
 
   <div id="managementStatus"></div>
 
  </div>
 
- <button class="primary"
-         onclick="newTransaction()">
+
+ <button
+  class="primary"
+  onclick="newTransaction()"
+ >
   + New eSIM
  </button>
 
 </section>
 
 
-<!-- TRANSACTION DETAIL -->
-<section id="transactionPage" class="hidden">
+<!-- TRANSACTION -->
+
+<section
+ id="transactionPage"
+ class="hidden"
+>
 
  <div class="hero">
-  <div class="hero-icon">🧾</div>
-  <h1>Transaction Detail</h1>
-  <p>Detail transaksi TELKU.</p>
+
+  <div class="hero-icon">
+   🧾
+  </div>
+
+  <h1>
+   Transaction Detail
+  </h1>
+
+  <p>
+   Detail transaksi TELKU.
+  </p>
+
  </div>
 
  <div class="card">
 
-  <div id="transactionDetail"></div>
+  <div
+   id="transactionDetail"
+  ></div>
 
-  <button class="secondary"
-          onclick="backToEsim()">
+  <button
+   class="secondary"
+   onclick="backToEsim()"
+  >
+   ← Back to eSIM
+  </button>
+
+ </div>
+
+</section>
+
+
+<!-- HISTORY -->
+
+<section
+ id="historyPage"
+ class="hidden"
+>
+
+ <div class="hero">
+
+  <div class="hero-icon">
+   📚
+  </div>
+
+  <h1>
+   eSIM History
+  </h1>
+
+  <p>
+   Riwayat eSIM dan transaksi TELKU.
+  </p>
+
+ </div>
+
+ <div class="card">
+
+  <div class="title">
+   📱 My eSIM History
+  </div>
+
+  <div
+   id="historyList"
+  ></div>
+
+  <button
+   class="secondary"
+   onclick="backToEsim()"
+  >
    ← Back to eSIM
   </button>
 
@@ -591,19 +997,19 @@ input:focus,select:focus{
 
 </main>
 
+
 <div class="footer">
- TELKU Global eSIM · HOBBIGO Technology · V2.1 Demo
+ TELKU Global eSIM · HOBBIGO Technology · V2.2 Demo
 </div>
 
 
 <script>
 
-/* =====================================================
-   TELKU V2.1
-   eSIM MANAGEMENT DEMO
-   ===================================================== */
+/* =========================
+   DEMO DATA
+========================= */
 
-const DEMO_COUNTRIES = [
+const DEMO_COUNTRIES=[
  "Indonesia",
  "Singapore",
  "Malaysia",
@@ -621,50 +1027,82 @@ const DEMO_COUNTRIES = [
  "Saudi Arabia"
 ];
 
-const PLAN_DATA = [
- {data_gb:1,duration:7,price:49000},
- {data_gb:3,duration:15,price:89000},
- {data_gb:5,duration:30,price:129000},
- {data_gb:10,duration:30,price:199000},
- {data_gb:20,duration:30,price:299000}
+const PLAN_DATA=[
+ {
+  data_gb:1,
+  duration:7,
+  price:49000
+ },
+ {
+  data_gb:3,
+  duration:15,
+  price:89000
+ },
+ {
+  data_gb:5,
+  duration:30,
+  price:129000
+ },
+ {
+  data_gb:10,
+  duration:30,
+  price:199000
+ },
+ {
+  data_gb:20,
+  duration:30,
+  price:299000
+ }
 ];
 
-const STORAGE_KEY =
- "telku_demo_transactions_v21";
+const STORAGE_KEY=
+ "telku_demo_transactions_v22";
 
-let selectedPlan = null;
-let selectedCountry = null;
-let currentTransaction = null;
+let selectedPlan=null;
+let selectedCountry=null;
+let currentTransaction=null;
 
 
-/* ==============================
+/* =========================
    STORAGE
-   ============================== */
+========================= */
 
 function storageOK(){
 
  try{
+
   const key="telku_test";
+
   localStorage.setItem(key,"1");
   localStorage.removeItem(key);
+
   return true;
+
  }catch(e){
+
   return false;
+
  }
+
 }
+
 
 function getTransactions(){
 
- if(!storageOK()) return [];
+ if(!storageOK())
+  return [];
 
  try{
 
-  const raw =
-   localStorage.getItem(STORAGE_KEY);
+  const raw=
+   localStorage.getItem(
+    STORAGE_KEY
+   );
 
-  if(!raw) return [];
+  if(!raw)
+   return [];
 
-  const data =
+  const data=
    JSON.parse(raw);
 
   return Array.isArray(data)
@@ -676,11 +1114,14 @@ function getTransactions(){
   return [];
 
  }
+
 }
+
 
 function saveTransactions(data){
 
- if(!storageOK()) return false;
+ if(!storageOK())
+  return false;
 
  try{
 
@@ -698,22 +1139,27 @@ function saveTransactions(data){
   return false;
 
  }
+
 }
 
 
-/* ==============================
+/* =========================
    HELPERS
-   ============================== */
+========================= */
 
 function code(prefix){
 
- return prefix+"-"+
- Date.now().toString().slice(-8)+"-"+
+ return prefix+
+ "-" +
+ Date.now().toString().slice(-8)+
+ "-" +
  Math.floor(
-  100000+Math.random()*900000
+  100000+
+  Math.random()*900000
  );
 
 }
+
 
 function rupiah(value){
 
@@ -728,6 +1174,7 @@ function rupiah(value){
 
 }
 
+
 function esc(value){
 
  return String(value ?? "")
@@ -739,17 +1186,77 @@ function esc(value){
 
 }
 
+
+function formatDate(value){
+
+ if(!value)
+  return "-";
+
+ return new Date(value)
+  .toLocaleDateString(
+   "id-ID",
+   {
+    day:"2-digit",
+    month:"short",
+    year:"numeric"
+   }
+  );
+
+}
+
+
+function addDays(date,days){
+
+ const result=
+  new Date(date);
+
+ result.setDate(
+  result.getDate()+days
+ );
+
+ return result;
+
+}
+
+
+function getExpiry(transaction){
+
+ if(!transaction)
+  return null;
+
+ if(transaction.expiryDate)
+  return new Date(
+   transaction.expiryDate
+  );
+
+ return addDays(
+  new Date(transaction.createdAt),
+  transaction.plan.duration
+ );
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
 function showPage(id){
 
  [
   "homePage",
   "paymentPage",
   "esimPage",
-  "transactionPage"
+  "transactionPage",
+  "historyPage"
  ].forEach(page=>{
-  document
-   .getElementById(page)
-   .classList.add("hidden");
+
+  const el=
+   document.getElementById(page);
+
+  if(el)
+   el.classList.add("hidden");
+
  });
 
  document
@@ -764,24 +1271,26 @@ function showPage(id){
 }
 
 
-/* ==============================
+/* =========================
    COUNTRIES
-   ============================== */
+========================= */
 
 function loadCountries(){
 
- const select =
+ const select=
   document.getElementById(
    "countrySelect"
   );
 
- select.innerHTML =
+ select.innerHTML=
   '<option value="">-- Pilih negara --</option>';
 
  DEMO_COUNTRIES.forEach(country=>{
 
-  const option =
-   document.createElement("option");
+  const option=
+   document.createElement(
+    "option"
+   );
 
   option.value=country;
   option.textContent=country;
@@ -792,30 +1301,30 @@ function loadCountries(){
 
  document.getElementById(
   "countryStatus"
- ).textContent =
+ ).textContent=
   DEMO_COUNTRIES.length+
   " countries available";
 
 }
 
 
-/* ==============================
+/* =========================
    PLANS
-   ============================== */
+========================= */
 
 function loadPlans(){
 
- const country =
+ const country=
   document.getElementById(
    "countrySelect"
   ).value;
 
- const card =
+ const card=
   document.getElementById(
    "plansCard"
   );
 
- const container =
+ const container=
   document.getElementById(
    "plans"
   );
@@ -827,74 +1336,92 @@ function loadPlans(){
 
  if(!country){
 
-  card.classList.add("hidden");
+  card.classList.add(
+   "hidden"
+  );
 
   return;
 
  }
 
- card.classList.remove("hidden");
+ card.classList.remove(
+  "hidden"
+ );
 
- PLAN_DATA.forEach((plan,index)=>{
+ PLAN_DATA.forEach(
+  (plan,index)=>{
 
-  const div =
-   document.createElement("div");
+   const div=
+    document.createElement(
+     "div"
+    );
 
-  div.className="plan";
+   div.className="plan";
 
-  div.innerHTML=`
+   div.innerHTML=`
 
-   <div class="plan-top">
-    <div class="plan-data">
-     ${plan.data_gb} GB
+    <div class="plan-top">
+
+     <div class="plan-data">
+      ${plan.data_gb} GB
+     </div>
+
+     <div class="plan-price">
+      ${rupiah(plan.price)}
+     </div>
+
     </div>
 
-    <div class="plan-price">
-     ${rupiah(plan.price)}
+    <div class="plan-meta">
+     Valid ${plan.duration} days
+     · ${esc(country)}
     </div>
-   </div>
 
-   <div class="plan-meta">
-    Valid ${plan.duration} days
-    · ${esc(country)}
-   </div>
+    <button
+     class="plan-btn"
+     onclick="selectPlan(${index})"
+    >
+     Choose Plan
+    </button>
 
-   <button
-    class="plan-btn"
-    onclick="selectPlan(${index})">
-    Choose Plan
-   </button>
+   `;
 
-  `;
+   container.appendChild(div);
 
-  container.appendChild(div);
-
- });
+  }
+ );
 
 }
 
 
-/* ==============================
-   SELECT PLAN
-   ============================== */
-
 function selectPlan(index){
 
- const plan=PLAN_DATA[index];
+ const plan=
+  PLAN_DATA[index];
 
  if(!plan){
 
-  alert("Paket tidak ditemukan.");
+  alert(
+   "Paket tidak ditemukan."
+  );
 
   return;
 
  }
 
  selectedPlan={
+
   country:selectedCountry,
-  data_gb:plan.data_gb,
-  duration:plan.duration,
-  price:plan.price
+
+  data_gb:
+   plan.data_gb,
+
+  duration:
+   plan.duration,
+
+  price:
+   plan.price
+
  };
 
  showPayment();
@@ -902,13 +1429,13 @@ function selectPlan(index){
 }
 
 
-/* ==============================
+/* =========================
    PAYMENT
-   ============================== */
+========================= */
 
 function showPayment(){
 
- const summary =
+ const summary=
   document.getElementById(
    "paymentSummary"
   );
@@ -916,7 +1443,10 @@ function showPayment(){
  summary.innerHTML=`
 
   <div class="row">
-   <span class="muted">Customer</span>
+   <span class="muted">
+    Customer
+   </span>
+
    <strong>
     ${esc(
      document.getElementById(
@@ -927,62 +1457,80 @@ function showPayment(){
   </div>
 
   <div class="row">
-   <span class="muted">Country</span>
+   <span class="muted">
+    Country
+   </span>
+
    <strong>
-    ${esc(selectedPlan.country)}
+    ${esc(
+     selectedPlan.country
+    )}
    </strong>
   </div>
 
   <div class="row">
-   <span class="muted">Data</span>
+   <span class="muted">
+    Data
+   </span>
+
    <strong>
     ${selectedPlan.data_gb} GB
    </strong>
   </div>
 
   <div class="row">
-   <span class="muted">Validity</span>
+   <span class="muted">
+    Validity
+   </span>
+
    <strong>
     ${selectedPlan.duration} days
    </strong>
   </div>
 
   <div class="row">
-   <span class="muted">Total</span>
+   <span class="muted">
+    Total
+   </span>
+
    <strong>
-    ${rupiah(selectedPlan.price)}
+    ${rupiah(
+     selectedPlan.price
+    )}
    </strong>
   </div>
 
  `;
 
- showPage("paymentPage");
+ showPage(
+  "paymentPage"
+ );
 
 }
 
 
-/* ==============================
-   CREATE CUSTOMER
-   ============================== */
+/* =========================
+   CUSTOMER
+========================= */
 
 function createCustomer(){
 
- const fullName =
+ const fullName=
   document.getElementById(
    "fullName"
   ).value.trim();
 
- const email =
+ const email=
   document.getElementById(
    "email"
   ).value.trim();
 
- const phone =
+ const phone=
   document.getElementById(
    "phone"
   ).value.trim();
 
- const country =
+ const country=
   document.getElementById(
    "countrySelect"
   ).value;
@@ -1004,7 +1552,8 @@ function createCustomer(){
 
  return{
 
-  customerId:code("TELKU-CUS"),
+  customerId:
+   code("TELKU-CUS"),
 
   fullName,
 
@@ -1022,9 +1571,9 @@ function createCustomer(){
 }
 
 
-/* ==============================
+/* =========================
    TRANSACTION
-   ============================== */
+========================= */
 
 function createTransaction(){
 
@@ -1036,30 +1585,33 @@ function createTransaction(){
 
  }
 
- const customer =
+ const customer=
   createCustomer();
 
- const paymentMethod =
+ const paymentMethod=
   document.getElementById(
    "paymentMethod"
   ).value;
 
- const orderId =
+ const createdAt=
+  new Date();
+
+ const orderId=
   code("TELKU-ORD");
 
- const paymentId =
+ const paymentId=
   code("TELKU-PAY");
 
- const invoiceId =
+ const invoiceId=
   code("TELKU-INV");
 
- const esimId =
+ const esimId=
   code("TELKU-ESIM");
 
- const transactionId =
+ const transactionId=
   code("TELKU-TXN");
 
- const activationCode =
+ const activationCode=
   "TELKU-"+
   Math.random()
    .toString(36)
@@ -1071,11 +1623,18 @@ function createTransaction(){
    .substring(2,10)
    .toUpperCase();
 
- const iccid =
+ const iccid=
   "8988"+
   Math.floor(
    100000000000000000+
-   Math.random()*899999999999999999
+   Math.random()*
+   899999999999999999
+  );
+
+ const expiryDate=
+  addDays(
+   createdAt,
+   selectedPlan.duration
   );
 
  const transaction={
@@ -1092,12 +1651,20 @@ function createTransaction(){
 
   customer,
 
-  country:selectedPlan.country,
+  country:
+   selectedPlan.country,
 
   plan:{
-   data_gb:selectedPlan.data_gb,
-   duration:selectedPlan.duration,
-   price:selectedPlan.price
+
+   data_gb:
+    selectedPlan.data_gb,
+
+   duration:
+    selectedPlan.duration,
+
+   price:
+    selectedPlan.price
+
   },
 
   paymentMethod,
@@ -1109,24 +1676,40 @@ function createTransaction(){
   smdpAddress:
    "smdp.demo.telku.example",
 
-  status:"ESIM_READY",
+  status:
+   "ESIM_READY",
 
-  orderStatus:"PAID_DEMO",
+  orderStatus:
+   "PAID_DEMO",
 
-  paymentStatus:"PAYMENT_DEMO",
+  paymentStatus:
+   "PAYMENT_DEMO",
 
-  invoiceStatus:"PAID_DEMO",
+  invoiceStatus:
+   "PAID_DEMO",
 
-  esimStatus:"ESIM_READY",
+  esimStatus:
+   "ESIM_READY",
 
   createdAt:
-   new Date().toISOString(),
+   createdAt.toISOString(),
 
-  activatedAt:null
+  expiryDate:
+   expiryDate.toISOString(),
+
+  activatedAt:null,
+
+  deactivatedAt:null,
+
+  dataUsed:0,
+
+  topUpTotal:0,
+
+  usageEvents:[]
 
  };
 
- const list =
+ const list=
   getTransactions();
 
  list.push(transaction);
@@ -1138,18 +1721,18 @@ function createTransaction(){
 }
 
 
-/* ==============================
-   PROCESS PAYMENT
-   ============================== */
+/* =========================
+   PAYMENT PROCESS
+========================= */
 
 async function processPayment(){
 
- const button =
+ const button=
   document.getElementById(
    "payButton"
   );
 
- const status =
+ const status=
   document.getElementById(
    "paymentStatus"
   );
@@ -1161,12 +1744,12 @@ async function processPayment(){
     "Please select an eSIM plan first."
    );
 
-  const name =
+  const name=
    document.getElementById(
     "fullName"
    ).value.trim();
 
-  const email =
+  const email=
    document.getElementById(
     "email"
    ).value.trim();
@@ -1196,7 +1779,7 @@ async function processPayment(){
    r=>setTimeout(r,700)
   );
 
-  currentTransaction =
+  currentTransaction=
    createTransaction();
 
   status.className=
@@ -1211,7 +1794,9 @@ async function processPayment(){
    r=>setTimeout(r,300)
   );
 
-  showPage("esimPage");
+  showPage(
+   "esimPage"
+  );
 
  }catch(error){
 
@@ -1226,25 +1811,29 @@ async function processPayment(){
 
   button.disabled=false;
 
-  button.textContent="Pay Now";
+  button.textContent=
+   "Pay Now";
 
  }
 
 }
 
 
-/* ==============================
+/* =========================
    RENDER ESIM
-   ============================== */
+========================= */
 
 function renderESIM(){
 
  if(!currentTransaction)
   return;
 
- const t=currentTransaction;
+ const t=
+  currentTransaction;
 
- const target =
+ updateStatusUI();
+
+ const target=
   document.getElementById(
    "esimData"
   );
@@ -1252,7 +1841,10 @@ function renderESIM(){
  target.innerHTML=`
 
   <div class="qr-box">
-   <div id="qr" class="qr"></div>
+   <div
+    id="qr"
+    class="qr"
+   ></div>
   </div>
 
   <div class="code-box">
@@ -1267,6 +1859,7 @@ function renderESIM(){
 
   </div>
 
+
   <div class="code-box">
 
    <div class="code-label">
@@ -1279,11 +1872,13 @@ function renderESIM(){
 
    <button
     class="copy-btn"
-    onclick="copyActivation()">
+    onclick="copyActivation()"
+   >
     📋 Copy Activation Code
    </button>
 
   </div>
+
 
   <div class="code-box">
 
@@ -1297,17 +1892,21 @@ function renderESIM(){
 
    <button
     class="copy-btn"
-    onclick="copySMdp()">
+    onclick="copySMdp()"
+   >
     📋 Copy SM-DP+ Address
    </button>
 
   </div>
 
+
   <div class="grid">
 
    <div class="box">
     <small>Country</small>
-    <strong>${esc(t.country)}</strong>
+    <strong>
+     ${esc(t.country)}
+    </strong>
    </div>
 
    <div class="box">
@@ -1337,19 +1936,107 @@ function renderESIM(){
 
  generateQR();
 
+ renderUsage();
+
+ renderDashboard();
+
 }
 
 
-/* ==============================
+/* =========================
+   STATUS UI
+========================= */
+
+function updateStatusUI(){
+
+ if(!currentTransaction)
+  return;
+
+ const t=
+  currentTransaction;
+
+ const pill=
+  document.getElementById(
+   "statusPill"
+  );
+
+ const title=
+  document.getElementById(
+   "esimTitle"
+  );
+
+ const card=
+  document.getElementById(
+   "esimReadyCard"
+  );
+
+ if(
+  t.esimStatus==="ACTIVE"
+ ){
+
+  pill.className=
+   "status-pill active";
+
+  pill.innerHTML=
+   '<span class="dot"></span> ACTIVE';
+
+  title.textContent=
+   "eSIM ACTIVE";
+
+  card.classList.add(
+   "active"
+  );
+
+ }else if(
+  t.esimStatus==="DEACTIVATED"
+ ){
+
+  pill.className=
+   "status-pill off";
+
+  pill.innerHTML=
+   '<span class="dot"></span> OFF';
+
+  title.textContent=
+   "eSIM DEACTIVATED";
+
+  card.classList.remove(
+   "active"
+  );
+
+ }else{
+
+  pill.className=
+   "status-pill";
+
+  pill.innerHTML=
+   '<span class="dot"></span> READY';
+
+  title.textContent=
+   "eSIM READY";
+
+  card.classList.remove(
+   "active"
+  );
+
+ }
+
+}
+
+
+/* =========================
    QR DEMO
-   ============================== */
+========================= */
 
 function generateQR(){
 
- const qr =
-  document.getElementById("qr");
+ const qr=
+  document.getElementById(
+   "qr"
+  );
 
- if(!qr) return;
+ if(!qr)
+  return;
 
  qr.innerHTML="";
 
@@ -1368,6 +2055,7 @@ function generateQR(){
   );
 
  }
+
 
  function finder(x,y){
 
@@ -1415,7 +2103,9 @@ function generateQR(){
  cells.forEach(on=>{
 
   const span=
-   document.createElement("span");
+   document.createElement(
+    "span"
+   );
 
   if(on)
    span.className="on";
@@ -1427,17 +2117,22 @@ function generateQR(){
 }
 
 
-/* ==============================
+/* =========================
    COPY
-   ============================== */
+========================= */
 
-async function copyText(text,message){
+async function copyText(
+ text,
+ message
+){
 
  try{
 
-  await navigator.clipboard.writeText(text);
+  await navigator.clipboard.writeText(
+   text
+  );
 
-  const target =
+  const target=
    document.getElementById(
     "managementStatus"
    );
@@ -1456,6 +2151,7 @@ async function copyText(text,message){
 
 }
 
+
 function copyActivation(){
 
  if(!currentTransaction)
@@ -1467,6 +2163,7 @@ function copyActivation(){
  );
 
 }
+
 
 function copySMdp(){
 
@@ -1481,128 +2178,363 @@ function copySMdp(){
 }
 
 
-/* ==============================
-   TRANSACTION DETAIL
-   ============================== */
+/* =========================
+   USAGE
+========================= */
 
-function showTransaction(){
+function renderUsage(){
 
  if(!currentTransaction)
   return;
 
- const t=currentTransaction;
+ const t=
+  currentTransaction;
 
- const target =
-  document.getElementById(
-   "transactionDetail"
-  );
+ const total=
+  t.plan.data_gb+
+  (t.topUpTotal||0);
 
- target.innerHTML=`
+ const used=
+  Number(t.dataUsed||0);
 
-  <div class="title">
-   Transaction Information
-  </div>
+ const percent=
+  total>0
+   ? Math.min(
+      100,
+      (used/total)*100
+     )
+   :0;
 
-  <div class="summary">
+ document.getElementById(
+  "usagePercent"
+ ).textContent=
+  Math.round(percent)+
+  "%";
 
-   <div class="row">
-    <span class="muted">
-     Transaction ID
-    </span>
-    <strong>
-     ${esc(t.transactionId)}
-    </strong>
-   </div>
+ document.getElementById(
+  "usageBar"
+ ).style.width=
+  percent+"%";
 
-   <div class="row">
-    <span class="muted">
-     Order ID
-    </span>
-    <strong>
-     ${esc(t.orderId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Payment ID
-    </span>
-    <strong>
-     ${esc(t.paymentId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Invoice ID
-    </span>
-    <strong>
-     ${esc(t.invoiceId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     eSIM ID
-    </span>
-    <strong>
-     ${esc(t.esimId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Amount
-    </span>
-    <strong>
-     ${rupiah(t.plan.price)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Payment
-    </span>
-    <strong>
-     ${esc(t.paymentMethod)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Status
-    </span>
-    <strong>
-     ESIM READY
-    </strong>
-   </div>
-
-  </div>
-
-  <div class="status success">
-   ✓ Transaction completed in demo mode.
-  </div>
-
- `;
-
- showPage("transactionPage");
+ document.getElementById(
+  "usageNumber"
+ ).textContent=
+  used.toFixed(2)+
+  " GB used of "+
+  total.toFixed(2)+
+  " GB";
 
 }
 
 
-/* ==============================
-   ACTIVATE DEMO
-   ============================== */
+function simulateUsage(){
+
+ if(!currentTransaction)
+  return;
+
+ const t=
+  currentTransaction;
+
+ const status=
+  document.getElementById(
+   "usageStatus"
+  );
+
+ if(
+  t.esimStatus!=="ACTIVE"
+ ){
+
+  status.className=
+   "status warning";
+
+  status.innerHTML=
+   "⚠️ Activate eSIM terlebih dahulu.";
+
+  return;
+
+ }
+
+ const total=
+  t.plan.data_gb+
+  (t.topUpTotal||0);
+
+ const remaining=
+  total-
+  Number(t.dataUsed||0);
+
+ if(remaining<=0){
+
+  status.className=
+   "status error";
+
+  status.innerHTML=
+   "Data sudah habis. Silakan Top Up.";
+
+  return;
+
+ }
+
+ const amount=
+  Math.min(
+   remaining,
+   Number(
+    (0.2+
+    Math.random()*1.3)
+    .toFixed(2)
+   )
+  );
+
+ t.dataUsed=
+  Number(t.dataUsed||0)+
+  amount;
+
+ if(!Array.isArray(
+  t.usageEvents
+ ))
+  t.usageEvents=[];
+
+ t.usageEvents.push({
+
+  amount,
+
+  createdAt:
+   new Date().toISOString()
+
+ });
+
+ saveCurrentTransaction();
+
+ renderUsage();
+
+ renderDashboard();
+
+ status.className=
+  "status success";
+
+ status.innerHTML=
+  "📶 Demo usage +"+
+  amount.toFixed(2)+
+  " GB";
+
+}
+
+
+/* =========================
+   TOP UP
+========================= */
+
+function topUpData(){
+
+ if(!currentTransaction)
+  return;
+
+ const amount=
+  prompt(
+   "Masukkan Top Up data dalam GB:",
+   "5"
+  );
+
+ if(amount===null)
+  return;
+
+ const gb=
+  Number(amount);
+
+ if(!gb||gb<=0){
+
+  alert(
+   "Masukkan jumlah GB yang valid."
+  );
+
+  return;
+
+ }
+
+ if(gb>100){
+
+  alert(
+   "Demo Top Up maksimal 100 GB."
+  );
+
+  return;
+
+ }
+
+ currentTransaction.topUpTotal=
+  Number(
+   currentTransaction.topUpTotal||0
+  )+
+  gb;
+
+ saveCurrentTransaction();
+
+ renderUsage();
+
+ renderDashboard();
+
+ const status=
+  document.getElementById(
+   "usageStatus"
+  );
+
+ status.className=
+  "status success";
+
+ status.innerHTML=
+  "✓ Top Up demo berhasil: +"+
+  gb+
+  " GB";
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function renderDashboard(){
+
+ if(!currentTransaction)
+  return;
+
+ const t=
+  currentTransaction;
+
+ const total=
+  t.plan.data_gb+
+  Number(t.topUpTotal||0);
+
+ const used=
+  Number(t.dataUsed||0);
+
+ const remaining=
+  Math.max(
+   0,
+   total-used
+  );
+
+ const expiry=
+  getExpiry(t);
+
+ const today=
+  new Date();
+
+ const daysLeft=
+  Math.max(
+   0,
+   Math.ceil(
+    (expiry-today)/
+    86400000
+   )
+  );
+
+ const target=
+  document.getElementById(
+   "dashboard"
+  );
+
+ target.innerHTML=`
+
+  <div class="dash">
+
+   <div class="dash-icon">
+    📦
+   </div>
+
+   <div class="dash-label">
+    Total Data
+   </div>
+
+   <div class="dash-value">
+    ${total.toFixed(2)} GB
+   </div>
+
+  </div>
+
+
+  <div class="dash">
+
+   <div class="dash-icon">
+    📶
+   </div>
+
+   <div class="dash-label">
+    Remaining
+   </div>
+
+   <div class="dash-value">
+    ${remaining.toFixed(2)} GB
+   </div>
+
+  </div>
+
+
+  <div class="dash">
+
+   <div class="dash-icon">
+    📅
+   </div>
+
+   <div class="dash-label">
+    Expiry
+   </div>
+
+   <div class="dash-value">
+    ${formatDate(expiry)}
+   </div>
+
+  </div>
+
+
+  <div class="dash">
+
+   <div class="dash-icon">
+    ⏳
+   </div>
+
+   <div class="dash-label">
+    Days Left
+   </div>
+
+   <div class="dash-value">
+    ${daysLeft} days
+   </div>
+
+  </div>
+
+ `;
+
+}
+
+
+/* =========================
+   ACTIVATE
+========================= */
 
 function simulateActivation(){
 
  if(!currentTransaction)
   return;
 
- const status =
+ const status=
   document.getElementById(
    "managementStatus"
   );
+
+ if(
+  currentTransaction.esimStatus===
+  "ACTIVE"
+ ){
+
+  status.className=
+   "status info";
+
+  status.innerHTML=
+   "ℹ️ eSIM sudah ACTIVE.";
+
+  return;
+
+ }
 
  status.className=
   "status info";
@@ -1621,24 +2553,16 @@ function simulateActivation(){
   currentTransaction.activatedAt=
    new Date().toISOString();
 
-  const list =
-   getTransactions();
+  currentTransaction.deactivatedAt=
+   null;
 
-  const index =
-   list.findIndex(
-    item=>
-     item.transactionId===
-     currentTransaction.transactionId
-   );
+  saveCurrentTransaction();
 
-  if(index>=0){
+  updateStatusUI();
 
-   list[index]=
-    currentTransaction;
+  renderUsage();
 
-   saveTransactions(list);
-
-  }
+  renderDashboard();
 
   status.className=
    "status success";
@@ -1646,38 +2570,330 @@ function simulateActivation(){
   status.innerHTML=
    "✓ eSIM demo sekarang berstatus <strong>ACTIVE</strong>.";
 
-  renderESIM();
-
  },900);
 
 }
 
 
-/* ==============================
-   NAVIGATION
-   ============================== */
+/* =========================
+   DEACTIVATE
+========================= */
 
-function backToHome(){
+function deactivateESIM(){
 
- showPage("homePage");
+ if(!currentTransaction)
+  return;
+
+ if(
+  currentTransaction.esimStatus!=="ACTIVE"
+ ){
+
+  const status=
+   document.getElementById(
+    "managementStatus"
+   );
+
+  status.className=
+   "status warning";
+
+  status.innerHTML=
+   "eSIM belum berstatus ACTIVE.";
+
+  return;
+
+ }
+
+ currentTransaction.status=
+  "DEACTIVATED";
+
+ currentTransaction.esimStatus=
+  "DEACTIVATED";
+
+ currentTransaction.deactivatedAt=
+  new Date().toISOString();
+
+ saveCurrentTransaction();
+
+ updateStatusUI();
+
+ const status=
+  document.getElementById(
+   "managementStatus"
+  );
+
+ status.className=
+  "status success";
+
+ status.innerHTML=
+  "✓ eSIM demo berhasil dinonaktifkan.";
 
 }
 
-function backToEsim(){
 
- showPage("esimPage");
+/* =========================
+   SAVE CURRENT
+========================= */
+
+function saveCurrentTransaction(){
+
+ if(!currentTransaction)
+  return;
+
+ const list=
+  getTransactions();
+
+ const index=
+  list.findIndex(
+   item=>
+    item.transactionId===
+    currentTransaction.transactionId
+  );
+
+ if(index>=0){
+
+  list[index]=
+   currentTransaction;
+
+ }else{
+
+  list.push(
+   currentTransaction
+  );
+
+ }
+
+ saveTransactions(list);
 
 }
 
 
-/* ==============================
-   NEW TRANSACTION
-   ============================== */
+/* =========================
+   TRANSACTION DETAIL
+========================= */
+
+function showTransaction(){
+
+ if(!currentTransaction)
+  return;
+
+ const t=
+  currentTransaction;
+
+ const target=
+  document.getElementById(
+   "transactionDetail"
+  );
+
+ target.innerHTML=`
+
+  <div class="title">
+   Transaction Information
+  </div>
+
+  <div class="summary">
+
+   <div class="row">
+    <span class="muted">
+     Transaction ID
+    </span>
+
+    <strong>
+     ${esc(t.transactionId)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Order ID
+    </span>
+
+    <strong>
+     ${esc(t.orderId)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Payment ID
+    </span>
+
+    <strong>
+     ${esc(t.paymentId)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Invoice ID
+    </span>
+
+    <strong>
+     ${esc(t.invoiceId)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     eSIM ID
+    </span>
+
+    <strong>
+     ${esc(t.esimId)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Amount
+    </span>
+
+    <strong>
+     ${rupiah(t.plan.price)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Payment
+    </span>
+
+    <strong>
+     ${esc(t.paymentMethod)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Created
+    </span>
+
+    <strong>
+     ${formatDate(t.createdAt)}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Expiry
+    </span>
+
+    <strong>
+     ${formatDate(
+      getExpiry(t)
+     )}
+    </strong>
+   </div>
+
+   <div class="row">
+    <span class="muted">
+     Status
+    </span>
+
+    <strong>
+     ${esc(t.status)}
+    </strong>
+   </div>
+
+  </div>
+
+  <div class="status success">
+   ✓ Transaction stored in TELKU demo history.
+  </div>
+
+ `;
+
+ showPage(
+  "transactionPage"
+ );
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function showHistory(){
+
+ const list=
+  getTransactions();
+
+ const target=
+  document.getElementById(
+   "historyList"
+  );
+
+ if(!list.length){
+
+  target.innerHTML=
+   '<div class="status info">Belum ada riwayat eSIM.</div>';
+
+  showPage(
+   "historyPage"
+  );
+
+  return;
+
+ }
+
+ const sorted=
+  [...list].reverse();
+
+ target.innerHTML=
+  sorted.map(t=>`
+
+   <div class="history-item">
+
+    <div class="history-top">
+
+     <div class="history-id">
+      ${esc(t.esimId)}
+     </div>
+
+     <div class="history-status">
+      ${esc(t.esimStatus)}
+     </div>
+
+    </div>
+
+    <div class="history-meta">
+
+     🌍 ${esc(t.country)}<br>
+
+     📦 ${t.plan.data_gb} GB /
+     ${t.plan.duration} days<br>
+
+     💰 ${rupiah(t.plan.price)}<br>
+
+     📅 Created:
+     ${formatDate(t.createdAt)}<br>
+
+     ⏳ Expiry:
+     ${formatDate(getExpiry(t))}
+
+    </div>
+
+   </div>
+
+  `).join("");
+
+ showPage(
+  "historyPage"
+ );
+
+}
+
+
+/* =========================
+   NEW ESIM
+========================= */
 
 function newTransaction(){
 
  selectedPlan=null;
+
  selectedCountry=null;
+
  currentTransaction=null;
 
  document.getElementById(
@@ -1702,16 +2918,54 @@ function newTransaction(){
 
  document.getElementById(
   "plansCard"
- ).classList.add("hidden");
+ ).classList.add(
+  "hidden"
+ );
 
- showPage("homePage");
+ showPage(
+  "homePage"
+ );
 
 }
 
 
-/* ==============================
-   INIT
-   ============================== */
+/* =========================
+   BACK
+========================= */
+
+function backToHome(){
+
+ showPage(
+  "homePage"
+ );
+
+}
+
+
+function backToEsim(){
+
+ if(currentTransaction){
+
+  renderESIM();
+
+  showPage(
+   "esimPage"
+  );
+
+ }else{
+
+  showPage(
+   "homePage"
+  );
+
+ }
+
+}
+
+
+/* =========================
+   LOAD
+========================= */
 
 loadCountries();
 
