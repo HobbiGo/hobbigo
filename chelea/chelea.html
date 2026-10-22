@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>CHELEA MASTER — HOBBIGO</title>
+<title>CHELEA MASTER V2 — HOBBIGO</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -386,10 +386,25 @@ textarea{
  color:var(--green);
 }
 
+.id-box{
+ margin-top:10px;
+ padding:12px;
+ border-radius:12px;
+ background:#091522;
+ border:1px solid var(--line);
+}
+
+.id-box strong{
+ color:var(--green);
+ font-size:14px;
+ word-break:break-all;
+}
+
 @media(min-width:750px){
  main{
   padding:25px;
  }
+
  .grid{
   grid-template-columns:repeat(3,minmax(0,1fr));
  }
@@ -485,6 +500,20 @@ textarea{
  </div>
 
  <div class="card">
+  <h3>Current Transaction</h3>
+
+  <div class="id-box">
+   Transaction<br>
+   <strong id="homeTransaction">-</strong>
+  </div>
+
+  <div class="id-box">
+   Tracking<br>
+   <strong id="homeTracking">-</strong>
+  </div>
+ </div>
+
+ <div class="card">
   <h3>Transaction Flow</h3>
   <div class="flow" id="flowHome"></div>
  </div>
@@ -497,16 +526,19 @@ textarea{
 
  <div class="hero">
   <h1>Create Delivery Request</h1>
-  <p>Create a real transaction record in Supabase.</p>
+  <p>
+   Every new transaction receives a unique Transaction ID
+   and Tracking ID automatically.
+  </p>
  </div>
 
  <div class="card">
 
   <label>Transaction ID</label>
-  <input id="transactionId" value="">
+  <input id="transactionId" value="" readonly>
 
   <label>Tracking ID</label>
-  <input id="trackingId" value="">
+  <input id="trackingId" value="" readonly>
 
   <label>Origin</label>
   <input id="origin" value="Bekasi">
@@ -529,11 +561,15 @@ textarea{
   <label>Delivery Priority</label>
   <select id="priority">
    <option>STANDARD</option>
-   <option>PRIORITY</option>
+   <option selected>PRIORITY</option>
    <option>EXCLUSIVE</option>
   </select>
 
-  <button class="btn" onclick="createTransaction()">
+  <button class="btn" onclick="prepareNewTransaction()">
+   GENERATE NEW TRANSACTION ID
+  </button>
+
+  <button class="btn secondary" onclick="createTransaction()">
    CREATE TRANSACTION
   </button>
 
@@ -598,7 +634,7 @@ textarea{
   <h3>Item Security</h3>
 
   <label>Item ID</label>
-  <input id="itemId" value="CHE-ITEM-2026-000128">
+  <input id="itemId" value="">
 
   <label>Item Name</label>
   <input id="itemName" value="Demo Package">
@@ -612,7 +648,11 @@ textarea{
   <label>Declared Value IDR</label>
   <input id="declaredValue" type="number" value="500000">
 
-  <button class="btn secondary" onclick="saveItemDemo()">
+  <button class="btn secondary" onclick="prepareItemId()">
+   GENERATE ITEM ID
+  </button>
+
+  <button class="btn" onclick="saveItemDemo()">
    SAVE ITEM
   </button>
 
@@ -641,17 +681,17 @@ textarea{
 
   <div class="data-row">
    <span>Transaction</span>
-   <strong id="payTransaction">CHL-2026-000128</strong>
+   <strong id="payTransaction">-</strong>
   </div>
 
   <div class="data-row">
    <span>Payment Reference</span>
-   <strong id="payReference">PAY-DEMO-000128</strong>
+   <strong id="payReference">-</strong>
   </div>
 
   <div class="data-row">
    <span>Amount</span>
-   <strong id="payAmount">Rp 125.000</strong>
+   <strong id="payAmount">Rp 0</strong>
   </div>
 
   <div class="data-row">
@@ -682,7 +722,7 @@ textarea{
 
   <div class="data-row">
    <span>Tracking ID</span>
-   <strong id="liveTracking">CHE-TRK-000128</strong>
+   <strong id="liveTracking">-</strong>
   </div>
 
   <div class="data-row">
@@ -710,7 +750,7 @@ textarea{
  <div class="card">
 
   <div class="map">
-   <div class="map-label">CHELEA LIVE GPS — DEMO</div>
+   <div class="map-label">CHELEA LIVE GPS — DEMO MAP</div>
    <div class="marker" id="customerMarker"></div>
    <div class="marker partner" id="partnerMarker"></div>
   </div>
@@ -771,6 +811,7 @@ textarea{
    <h3>Traveler</h3>
    <p>Demo Traveler</p>
    <span class="badge green">VERIFIED</span>
+
    <button class="btn" onclick="assignPartner()">
     ASSIGN
    </button>
@@ -863,32 +904,32 @@ textarea{
 
   <div class="data-row">
    <span>Transaction</span>
-   <strong id="orderTransaction">CHL-2026-000128</strong>
+   <strong id="orderTransaction">-</strong>
   </div>
 
   <div class="data-row">
    <span>Tracking</span>
-   <strong id="orderTracking">CHE-TRK-000128</strong>
+   <strong id="orderTracking">-</strong>
   </div>
 
   <div class="data-row">
    <span>Origin</span>
-   <strong id="orderOrigin">Bekasi</strong>
+   <strong id="orderOrigin">-</strong>
   </div>
 
   <div class="data-row">
    <span>Destination</span>
-   <strong id="orderDestination">Bandung</strong>
+   <strong id="orderDestination">-</strong>
   </div>
 
   <div class="data-row">
    <span>Payment</span>
-   <span class="badge green" id="orderPayment">SUCCESS</span>
+   <span class="badge green" id="orderPayment">PENDING</span>
   </div>
 
   <div class="data-row">
    <span>Status</span>
-   <span class="badge yellow" id="orderStatus">APPROVED</span>
+   <span class="badge yellow" id="orderStatus">REQUEST</span>
   </div>
 
  </div>
@@ -921,12 +962,12 @@ textarea{
 
   <div class="card">
    <div class="small">PAYMENT</div>
-   <div class="big" id="controlPayment">SUCCESS</div>
+   <div class="big" id="controlPayment">PENDING</div>
   </div>
 
   <div class="card">
    <div class="small">TRACKING</div>
-   <div class="big">LIVE</div>
+   <div class="big" id="controlTracking">READY</div>
   </div>
 
   <div class="card">
@@ -1001,11 +1042,25 @@ textarea{
 
 <div class="bottom-nav">
 
- <button id="navHome" class="active" onclick="showScreen('home')">HOME</button>
- <button id="navRequest" onclick="showScreen('request')">REQUEST</button>
- <button id="navLive" onclick="showScreen('live')">TRACKING</button>
- <button id="navOrders" onclick="showScreen('orders')">ORDERS</button>
- <button id="navAccount" onclick="showScreen('account')">PROFILE</button>
+ <button id="navHome" class="active" onclick="showScreen('home')">
+  HOME
+ </button>
+
+ <button id="navRequest" onclick="showScreen('request')">
+  REQUEST
+ </button>
+
+ <button id="navLive" onclick="showScreen('live')">
+  TRACKING
+ </button>
+
+ <button id="navOrders" onclick="showScreen('orders')">
+  ORDERS
+ </button>
+
+ <button id="navAccount" onclick="showScreen('account')">
+  PROFILE
+ </button>
 
 </div>
 
@@ -1015,7 +1070,7 @@ textarea{
 <script>
 
 /* =========================================================
-   CHELEA MASTER
+   CHELEA MASTER V2
    SUPABASE CONFIG
    ========================================================= */
 
@@ -1025,55 +1080,272 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_MSltmZ3wUgZkv1ww0wIcSg_3mk9HFrD";
 
-let supabaseClient = null;
+let supabaseClient=null;
 
 try{
+
  if(window.supabase){
-  supabaseClient =
+
+  supabaseClient=
    window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
    );
+
  }
+
 }catch(e){
- console.error(e);
+
+ console.error(
+  "Supabase initialization:",
+  e
+ );
+
 }
 
 
 /* =========================================================
-   CHELEA STATE
+   STATE
    ========================================================= */
 
-let state = JSON.parse(
- localStorage.getItem("chelea_master_state") || "null"
-) || {
+let state=
+ JSON.parse(
+  localStorage.getItem(
+   "chelea_master_state"
+  ) || "null"
+ ) ||
+ {
 
- transactionId:"CHL-2026-000128",
- trackingId:"CHE-TRK-000128",
- origin:"Bekasi",
- destination:"Bandung",
- pickupLocation:"Mall Summarecon Bekasi",
- deliveryLocation:"Bandung Indah Plaza",
- weight:2,
- priority:"PRIORITY",
- paymentStatus:"SUCCESS",
- transactionStatus:"APPROVED",
- partnerId:"CHE-PARTNER-000128",
- partnerName:"Demo Traveler",
- gpsStarted:false,
- lat:null,
- lng:null,
- accuracy:null
-};
+  transactionId:"",
+  trackingId:"",
 
-let gpsWatchId = null;
+  origin:"Bekasi",
+  destination:"Bandung",
 
+  pickupLocation:
+   "Mall Summarecon Bekasi",
+
+  deliveryLocation:
+   "Bandung Indah Plaza",
+
+  weight:2,
+
+  priority:"PRIORITY",
+
+  paymentStatus:"PENDING",
+
+  transactionStatus:"REQUEST",
+
+  paymentReference:"",
+
+  itemId:"",
+
+  partnerId:"",
+
+  partnerName:"",
+
+  gpsStarted:false,
+
+  lat:null,
+  lng:null,
+  accuracy:null
+
+ };
+
+let gpsWatchId=null;
+
+let realtimeChannel=null;
+
+let lastTrackingEvent=0;
+
+
+/* =========================================================
+   STATE SAVE
+   ========================================================= */
 
 function saveState(){
 
  localStorage.setItem(
   "chelea_master_state",
   JSON.stringify(state)
+ );
+
+}
+
+
+/* =========================================================
+   UNIQUE ID GENERATORS
+   ========================================================= */
+
+function randomDigits(length){
+
+ let output="";
+
+ for(let i=0;i<length;i++){
+
+  output +=
+   Math.floor(
+    Math.random()*10
+   );
+
+ }
+
+ return output;
+
+}
+
+
+function generateTransactionId(){
+
+ const now=new Date();
+
+ const year=
+  now.getFullYear();
+
+ const stamp=
+  String(
+   Date.now()
+  ).slice(-7);
+
+ const random=
+  randomDigits(3);
+
+ return (
+  "CHL-"+
+  year+
+  "-"+
+  stamp+
+  random
+ );
+
+}
+
+
+function generateTrackingId(){
+
+ const stamp=
+  String(
+   Date.now()
+  ).slice(-8);
+
+ const random=
+  randomDigits(2);
+
+ return (
+  "CHE-TRK-"+
+  stamp+
+  random
+ );
+
+}
+
+
+function generatePaymentReference(){
+
+ return (
+  "PAY-"+
+  new Date()
+   .getFullYear()+
+  "-"+
+  Date.now().toString().slice(-8)+
+  randomDigits(2)
+ );
+
+}
+
+
+function generateItemId(){
+
+ return (
+  "CHE-ITEM-"+
+  new Date()
+   .getFullYear()+
+  "-"+
+  Date.now().toString().slice(-8)+
+  randomDigits(2)
+ );
+
+}
+
+
+/* =========================================================
+   PREPARE NEW TRANSACTION
+   ========================================================= */
+
+function prepareNewTransaction(){
+
+ const newTransaction=
+  generateTransactionId();
+
+ const newTracking=
+  generateTrackingId();
+
+ state.transactionId=
+  newTransaction;
+
+ state.trackingId=
+  newTracking;
+
+ state.paymentStatus=
+  "PENDING";
+
+ state.transactionStatus=
+  "REQUEST";
+
+ state.paymentReference=
+  "";
+
+ state.partnerId=
+  "";
+
+ state.partnerName=
+  "";
+
+ state.lat=null;
+ state.lng=null;
+ state.accuracy=null;
+
+ saveState();
+
+ renderAll();
+
+ setStatus(
+  "requestStatus",
+  "ok",
+  "✓ NEW TRANSACTION ID READY<br>"+
+  "Transaction: <b>"+
+  htmlEscape(newTransaction)+
+  "</b><br>"+
+  "Tracking: <b>"+
+  htmlEscape(newTracking)+
+  "</b>"
+ );
+
+}
+
+
+function prepareItemId(){
+
+ state.itemId=
+  generateItemId();
+
+ saveState();
+
+ const el=
+  document.getElementById(
+   "itemId"
+  );
+
+ if(el){
+  el.value=
+   state.itemId;
+ }
+
+ setStatus(
+  "itemStatus",
+  "ok",
+  "✓ ITEM ID GENERATED<br>"+
+  htmlEscape(state.itemId)
  );
 
 }
@@ -1087,17 +1359,24 @@ function showScreen(id){
 
  document
   .querySelectorAll(".screen")
-  .forEach(x=>x.classList.remove("active"));
+  .forEach(
+   x=>x.classList.remove("active")
+  );
 
- const target=document.getElementById(id);
+ const target=
+  document.getElementById(id);
 
  if(target){
   target.classList.add("active");
  }
 
  document
-  .querySelectorAll(".bottom-nav button")
-  .forEach(x=>x.classList.remove("active"));
+  .querySelectorAll(
+   ".bottom-nav button"
+  )
+  .forEach(
+   x=>x.classList.remove("active")
+  );
 
  const map={
   home:"navHome",
@@ -1108,9 +1387,13 @@ function showScreen(id){
  };
 
  if(map[id]){
+
   document
-   .getElementById(map[id])
+   .getElementById(
+    map[id]
+   )
    .classList.add("active");
+
  }
 
  window.scrollTo({
@@ -1134,24 +1417,35 @@ function money(n){
    currency:"IDR",
    maximumFractionDigits:0
   }
- ).format(n || 0);
+ ).format(
+  n || 0
+ );
 
 }
+
 
 function htmlEscape(value){
 
- return String(value ?? "")
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+ return String(
+  value ?? ""
+ )
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
 
 }
 
-function setStatus(id,type,message){
 
- const el=document.getElementById(id);
+function setStatus(
+ id,
+ type,
+ message
+){
+
+ const el=
+  document.getElementById(id);
 
  if(!el)return;
 
@@ -1181,11 +1475,17 @@ const FLOW=[
  "FINAL RECEIPT"
 ];
 
+
 function renderFlow(){
 
- const current=String(state.transactionStatus || "APPROVED");
+ const current=
+  String(
+   state.transactionStatus ||
+   "REQUEST"
+  );
 
  const maps={
+
   REQUEST:0,
   VERIFY:1,
   MATCH:2,
@@ -1196,29 +1496,53 @@ function renderFlow(){
   ARRIVED:9,
   HANDOVER:10,
   COMPLETED:11
+
  };
 
- let index=maps[current];
+ let index=
+  maps[current];
 
  if(index===undefined){
 
-  if(state.paymentStatus==="SUCCESS"){
+  if(
+   state.paymentStatus===
+   "SUCCESS"
+  ){
+
    index=5;
+
   }else{
-   index=3;
+
+   index=0;
+
   }
 
  }
 
- const html=FLOW.map(
-  (x,i)=>
-   `<span class="${i<=index?'active':''}">${x}</span>`
- ).join("");
+ const html=
+  FLOW.map(
+   (x,i)=>
+    `<span class="${
+     i<=index
+      ?"active"
+      :""
+    }">${x}</span>`
+  ).join("");
 
- ["flowHome","flowRequest"].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el)el.innerHTML=html;
+ [
+  "flowHome",
+  "flowRequest"
+ ].forEach(id=>{
+
+  const el=
+   document.getElementById(id);
+
+  if(el){
+   el.innerHTML=html;
+  }
+
  });
+
 
  const custody=[
   "ITEM CREATED",
@@ -1232,10 +1556,19 @@ function renderFlow(){
   "COMPLETED"
  ];
 
- const c=document.getElementById("custodyFlow");
+ const c=
+  document.getElementById(
+   "custodyFlow"
+  );
 
- if(c)c.innerHTML=
-  custody.map(x=>`<span>${x}</span>`).join("");
+ if(c){
+
+  c.innerHTML=
+   custody.map(
+    x=>`<span>${x}</span>`
+   ).join("");
+
+ }
 
 }
 
@@ -1246,70 +1579,127 @@ function renderFlow(){
 
 async function testSupabaseConnection(){
 
- const el=document.getElementById("backendStatus");
+ const el=
+  document.getElementById(
+   "backendStatus"
+  );
 
- el.className="status warn";
- el.innerHTML="Connecting to Supabase...";
+ el.className=
+  "status warn";
+
+ el.innerHTML=
+  "Connecting to Supabase...";
 
  if(!supabaseClient){
 
-  el.className="status error";
-  el.innerHTML="Supabase client failed to initialize.";
+  el.className=
+   "status error";
+
+  el.innerHTML=
+   "Supabase client failed to initialize.";
+
   return;
 
  }
 
  try{
 
-  const {data,error}=await supabaseClient
-   .from("transactions")
-   .select(
-    "transaction_id,tracking_id,payment_status,transaction_status"
-   )
-   .eq(
-    "transaction_id",
-    state.transactionId
-   )
-   .maybeSingle();
+  if(!state.transactionId){
+
+   el.className=
+    "status ok";
+
+   el.innerHTML=
+    "✓ SUPABASE CLIENT READY<br>"+
+    "No active transaction yet.";
+
+   return;
+
+  }
+
+  const {
+   data,
+   error
+  }=
+   await supabaseClient
+    .from("transactions")
+    .select(
+     "transaction_id,tracking_id,payment_status,transaction_status"
+    )
+    .eq(
+     "transaction_id",
+     state.transactionId
+    )
+    .maybeSingle();
 
   if(error)throw error;
 
   if(!data){
 
-   el.className="status warn";
+   el.className=
+    "status ok";
+
    el.innerHTML=
-    "SUPABASE CONNECTED — transaction not found.";
+    "✓ SUPABASE CONNECTED<br>"+
+    "No active transaction found.";
 
    return;
+
   }
 
-  el.className="status ok";
+  el.className=
+   "status ok";
 
   el.innerHTML=
    `
    ✓ SUPABASE CONNECTED<br>
-   Transaction: <b>${htmlEscape(data.transaction_id)}</b><br>
-   Tracking: <b>${htmlEscape(data.tracking_id)}</b><br>
-   Payment: <b>${htmlEscape(data.payment_status)}</b><br>
-   Status: <b>${htmlEscape(data.transaction_status)}</b>
+   Transaction:
+   <b>${htmlEscape(
+    data.transaction_id
+   )}</b><br>
+   Tracking:
+   <b>${htmlEscape(
+    data.tracking_id
+   )}</b><br>
+   Payment:
+   <b>${htmlEscape(
+    data.payment_status
+   )}</b><br>
+   Status:
+   <b>${htmlEscape(
+    data.transaction_status
+   )}</b>
    `;
 
-  state.trackingId=data.tracking_id || state.trackingId;
-  state.paymentStatus=data.payment_status || state.paymentStatus;
-  state.transactionStatus=data.transaction_status || state.transactionStatus;
+  state.trackingId=
+   data.tracking_id ||
+   state.trackingId;
+
+  state.paymentStatus=
+   data.payment_status ||
+   state.paymentStatus;
+
+  state.transactionStatus=
+   data.transaction_status ||
+   state.transactionStatus;
 
   saveState();
+
   renderAll();
 
  }catch(error){
 
   console.error(error);
 
-  el.className="status error";
+  el.className=
+   "status error";
 
   el.innerHTML=
    "SUPABASE QUERY ERROR<br>"+
-   htmlEscape(error.message || error);
+   htmlEscape(
+    error.message ||
+    error
+   );
 
  }
 
@@ -1323,15 +1713,37 @@ async function testSupabaseConnection(){
 async function loadTransaction(){
 
  if(!supabaseClient){
-  alert("Supabase client belum siap.");
+
+  alert(
+   "Supabase client belum siap."
+  );
+
   return;
+
  }
 
- const {data,error}=await supabaseClient
-  .from("transactions")
-  .select("*")
-  .eq("transaction_id",state.transactionId)
-  .maybeSingle();
+ if(!state.transactionId){
+
+  alert(
+   "Belum ada Transaction ID."
+  );
+
+  return;
+
+ }
+
+ const {
+  data,
+  error
+ }=
+  await supabaseClient
+   .from("transactions")
+   .select("*")
+   .eq(
+    "transaction_id",
+    state.transactionId
+   )
+   .maybeSingle();
 
  if(error){
 
@@ -1343,28 +1755,50 @@ async function loadTransaction(){
   );
 
   return;
+
  }
 
  if(!data){
 
-  alert("Transaction tidak ditemukan.");
+  alert(
+   "Transaction tidak ditemukan."
+  );
 
   return;
+
  }
 
- state.transactionId=data.transaction_id;
- state.trackingId=data.tracking_id;
- state.origin=data.origin;
- state.destination=data.destination;
- state.pickupLocation=data.pickup_location;
- state.deliveryLocation=data.delivery_location;
- state.paymentStatus=data.payment_status;
- state.transactionStatus=data.transaction_status;
+ state.transactionId=
+  data.transaction_id;
+
+ state.trackingId=
+  data.tracking_id;
+
+ state.origin=
+  data.origin;
+
+ state.destination=
+  data.destination;
+
+ state.pickupLocation=
+  data.pickup_location;
+
+ state.deliveryLocation=
+  data.delivery_location;
+
+ state.paymentStatus=
+  data.payment_status;
+
+ state.transactionStatus=
+  data.transaction_status;
 
  saveState();
+
  renderAll();
 
- alert("Transaction berhasil dimuat dari Supabase.");
+ alert(
+  "Transaction berhasil dimuat dari Supabase."
+ );
 
 }
 
@@ -1373,62 +1807,109 @@ async function loadTransaction(){
    CREATE TRANSACTION
    ========================================================= */
 
-function generateTransactionId(){
-
- const now=new Date();
-
- return "CHL-"+
-  now.getFullYear()+
-  "-"+
-  String(now.getTime()).slice(-6);
-
-}
-
-function generateTrackingId(){
-
- return "CHE-TRK-"+String(
-  Math.floor(100000+Math.random()*899999)
- );
-
-}
-
-
 async function createTransaction(){
 
+ /*
+   IMPORTANT:
+   Always generate fresh IDs for every new transaction.
+   This prevents duplicate-key errors.
+ */
+
  const transactionId=
-  document.getElementById("transactionId").value.trim()
-  || generateTransactionId();
+  generateTransactionId();
 
  const trackingId=
-  document.getElementById("trackingId").value.trim()
-  || generateTrackingId();
+  generateTrackingId();
 
  const origin=
-  document.getElementById("origin").value.trim();
+  document
+   .getElementById("origin")
+   .value
+   .trim();
 
  const destination=
-  document.getElementById("destination").value.trim();
+  document
+   .getElementById("destination")
+   .value
+   .trim();
 
  const pickup=
-  document.getElementById("pickupLocation").value.trim();
+  document
+   .getElementById("pickupLocation")
+   .value
+   .trim();
 
  const delivery=
-  document.getElementById("deliveryLocation").value.trim();
+  document
+   .getElementById("deliveryLocation")
+   .value
+   .trim();
 
  const weight=
-  Number(document.getElementById("weight").value || 0);
+  Number(
+   document
+    .getElementById("weight")
+    .value ||
+   0
+  );
 
- state.transactionId=transactionId;
- state.trackingId=trackingId;
- state.origin=origin;
- state.destination=destination;
- state.pickupLocation=pickup;
- state.deliveryLocation=delivery;
- state.weight=weight;
+ const priority=
+  document
+   .getElementById("priority")
+   .value;
+
+ state.transactionId=
+  transactionId;
+
+ state.trackingId=
+  trackingId;
+
+ state.origin=
+  origin;
+
+ state.destination=
+  destination;
+
+ state.pickupLocation=
+  pickup;
+
+ state.deliveryLocation=
+  delivery;
+
+ state.weight=
+  weight;
+
  state.priority=
-  document.getElementById("priority").value;
+  priority;
+
+ state.paymentStatus=
+  "PENDING";
+
+ state.transactionStatus=
+  "REQUEST";
+
+ state.paymentReference=
+  "";
+
+ state.partnerId=
+  "";
+
+ state.partnerName=
+  "";
 
  saveState();
+
+ renderAll();
+
+ /*
+   Show the newly generated IDs immediately.
+ */
+
+ setStatus(
+  "requestStatus",
+  "warn",
+  "Saving new transaction..."
+ );
 
  if(!supabaseClient){
 
@@ -1439,35 +1920,46 @@ async function createTransaction(){
   );
 
   return;
- }
 
- setStatus(
-  "requestStatus",
-  "warn",
-  "Saving transaction to Supabase..."
- );
+ }
 
  const payload={
 
-  transaction_id:transactionId,
-  tracking_id:trackingId,
+  transaction_id:
+   transactionId,
 
-  origin:origin,
-  destination:destination,
+  tracking_id:
+   trackingId,
 
-  pickup_location:pickup,
-  delivery_location:delivery,
+  origin:
+   origin,
 
-  payment_status:"PENDING",
-  transaction_status:"REQUEST"
+  destination:
+   destination,
+
+  pickup_location:
+   pickup,
+
+  delivery_location:
+   delivery,
+
+  payment_status:
+   "PENDING",
+
+  transaction_status:
+   "REQUEST"
 
  };
 
- const {data,error}=await supabaseClient
-  .from("transactions")
-  .insert(payload)
-  .select()
-  .maybeSingle();
+ const {
+  data,
+  error
+ }=
+  await supabaseClient
+   .from("transactions")
+   .insert(payload)
+   .select()
+   .maybeSingle();
 
  if(error){
 
@@ -1477,19 +1969,25 @@ async function createTransaction(){
    "requestStatus",
    "error",
    "Transaction belum bisa disimpan.<br>"+
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
  state.paymentStatus=
-  data?.payment_status || "PENDING";
+  data?.payment_status ||
+  "PENDING";
 
  state.transactionStatus=
-  data?.transaction_status || "REQUEST";
+  data?.transaction_status ||
+  "REQUEST";
 
  saveState();
+
  renderAll();
 
  setStatus(
@@ -1497,12 +1995,19 @@ async function createTransaction(){
   "ok",
   "✓ TRANSACTION CREATED<br>"+
   "Transaction: <b>"+
-  htmlEscape(transactionId)+
+  htmlEscape(
+   transactionId
+  )+
   "</b><br>"+
   "Tracking: <b>"+
-  htmlEscape(trackingId)+
-  "</b>"
+  htmlEscape(
+   trackingId
+  )+
+  "</b><br>"+
+  "New unique ID generated successfully."
  );
+
+ subscribeRealtime();
 
 }
 
@@ -1515,24 +2020,43 @@ async function saveOwnerDemo(){
 
  const payload={
 
-  cgid:document.getElementById("cgid").value.trim(),
+  cgid:
+   document
+    .getElementById("cgid")
+    .value
+    .trim(),
 
   full_name:
-   document.getElementById("ownerName").value.trim(),
+   document
+    .getElementById("ownerName")
+    .value
+    .trim(),
 
   phone:
-   document.getElementById("ownerPhone").value.trim(),
+   document
+    .getElementById("ownerPhone")
+    .value
+    .trim(),
 
   country:
-   document.getElementById("ownerCountry").value.trim(),
+   document
+    .getElementById("ownerCountry")
+    .value
+    .trim(),
 
   identity_type:
-   document.getElementById("identityType").value,
+   document
+    .getElementById("identityType")
+    .value,
 
   identity_number:
-   document.getElementById("identityNumber").value.trim(),
+   document
+    .getElementById("identityNumber")
+    .value
+    .trim(),
 
-  verification_status:"VERIFIED"
+  verification_status:
+   "VERIFIED"
 
  };
 
@@ -1545,24 +2069,33 @@ async function saveOwnerDemo(){
   );
 
   return;
+
  }
 
- const {error}=await supabaseClient
-  .from("global_identities")
-  .upsert(
-   payload,
-   {onConflict:"cgid"}
-  );
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("global_identities")
+   .upsert(
+    payload,
+    {
+     onConflict:"cgid"
+    }
+   );
 
  if(error){
 
   setStatus(
    "ownerStatus",
    "error",
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
  setStatus(
@@ -1580,31 +2113,79 @@ async function saveOwnerDemo(){
 
 async function saveItemDemo(){
 
+ if(!state.transactionId){
+
+  setStatus(
+   "itemStatus",
+   "error",
+   "Buat Transaction terlebih dahulu."
+  );
+
+  return;
+
+ }
+
+ if(!state.itemId){
+
+  state.itemId=
+   generateItemId();
+
+ }
+
+ const itemId=
+  document
+   .getElementById("itemId")
+   .value
+   .trim() ||
+  state.itemId;
+
+ state.itemId=
+  itemId;
+
+ saveState();
+
  const payload={
 
   item_id:
-   document.getElementById("itemId").value.trim(),
+   itemId,
 
-  transaction_id:state.transactionId,
+  transaction_id:
+   state.transactionId,
 
   item_name:
-   document.getElementById("itemName").value.trim(),
+   document
+    .getElementById("itemName")
+    .value
+    .trim(),
 
   description:
-   document.getElementById("itemDescription").value.trim(),
+   document
+    .getElementById("itemDescription")
+    .value
+    .trim(),
 
   category:
-   document.getElementById("itemCategory").value.trim(),
+   document
+    .getElementById("itemCategory")
+    .value
+    .trim(),
 
   weight:
-   Number(state.weight || 0),
+   Number(
+    state.weight ||
+    0
+   ),
 
   declared_value:
    Number(
-    document.getElementById("declaredValue").value || 0
+    document
+     .getElementById("declaredValue")
+     .value ||
+    0
    ),
 
-  verification_status:"VERIFIED"
+  verification_status:
+   "VERIFIED"
 
  };
 
@@ -1617,30 +2198,44 @@ async function saveItemDemo(){
   );
 
   return;
+
  }
 
- const {error}=await supabaseClient
-  .from("items")
-  .upsert(
-   payload,
-   {onConflict:"item_id"}
-  );
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("items")
+   .upsert(
+    payload,
+    {
+     onConflict:"item_id"
+    }
+   );
 
  if(error){
 
   setStatus(
    "itemStatus",
    "error",
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
  setStatus(
   "itemStatus",
   "ok",
-  "✓ ITEM SAVED & VERIFIED"
+  "✓ ITEM SAVED & VERIFIED<br>"+
+  "Item ID: <b>"+
+  htmlEscape(
+   itemId
+  )+
+  "</b>"
  );
 
 }
@@ -1652,6 +2247,18 @@ async function saveItemDemo(){
 
 async function confirmPayment(){
 
+ if(!state.transactionId){
+
+  setStatus(
+   "paymentStatus",
+   "error",
+   "Belum ada transaction."
+  );
+
+  return;
+
+ }
+
  if(!supabaseClient){
 
   setStatus(
@@ -1661,47 +2268,62 @@ async function confirmPayment(){
   );
 
   return;
+
  }
 
  const reference=
-  "PAY-"+String(
-   Math.floor(100000+Math.random()*899999)
-  );
+  generatePaymentReference();
 
- const amount=calculatePrice(false);
+ const amount=
+  calculatePrice(false);
 
  const payload={
 
-  transaction_id:state.transactionId,
+  transaction_id:
+   state.transactionId,
 
-  payment_reference:reference,
+  payment_reference:
+   reference,
 
-  amount:amount,
+  amount:
+   amount,
 
-  currency:"IDR",
+  currency:
+   "IDR",
 
-  payment_status:"SUCCESS",
+  payment_status:
+   "SUCCESS",
 
-  paid_at:new Date().toISOString()
+  paid_at:
+   new Date().toISOString()
 
  };
 
- const {error}=await supabaseClient
-  .from("payments")
-  .upsert(
-   payload,
-   {onConflict:"payment_reference"}
-  );
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("payments")
+   .upsert(
+    payload,
+    {
+     onConflict:
+      "payment_reference"
+    }
+   );
 
  if(error){
 
   setStatus(
    "paymentStatus",
    "error",
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
 
@@ -1709,8 +2331,13 @@ async function confirmPayment(){
   await supabaseClient
    .from("transactions")
    .update({
-    payment_status:"SUCCESS",
-    transaction_status:"APPROVED"
+
+    payment_status:
+     "SUCCESS",
+
+    transaction_status:
+     "APPROVED"
+
    })
    .eq(
     "transaction_id",
@@ -1722,16 +2349,26 @@ async function confirmPayment(){
   setStatus(
    "paymentStatus",
    "error",
-   htmlEscape(updateResult.error.message)
+   htmlEscape(
+    updateResult.error.message
+   )
   );
 
   return;
+
  }
 
- state.paymentStatus="SUCCESS";
- state.transactionStatus="APPROVED";
+ state.paymentStatus=
+  "SUCCESS";
+
+ state.transactionStatus=
+  "APPROVED";
+
+ state.paymentReference=
+  reference;
 
  saveState();
+
  renderAll();
 
  setStatus(
@@ -1739,7 +2376,12 @@ async function confirmPayment(){
   "ok",
   "✓ PAYMENT SUCCESS — DEMO<br>"+
   "Reference: <b>"+
-  htmlEscape(reference)+
+  htmlEscape(
+   reference
+  )+
+  "</b><br>"+
+  "Amount: <b>"+
+  money(amount)+
   "</b>"
  );
 
@@ -1752,6 +2394,18 @@ async function confirmPayment(){
 
 async function assignPartner(){
 
+ if(!state.transactionId){
+
+  setStatus(
+   "partnerStatus",
+   "error",
+   "Buat transaction terlebih dahulu."
+  );
+
+  return;
+
+ }
+
  if(!supabaseClient){
 
   setStatus(
@@ -1761,28 +2415,36 @@ async function assignPartner(){
   );
 
   return;
+
  }
 
- const {data,error}=await supabaseClient
-  .from("partners")
-  .select(
-   "partner_id,name,phone,country,partner_type,verification_status"
-  )
-  .eq(
-   "partner_id",
-   "CHE-PARTNER-000128"
-  )
-  .maybeSingle();
+ const {
+  data,
+  error
+ }=
+  await supabaseClient
+   .from("partners")
+   .select(
+    "partner_id,name,phone,country,partner_type,verification_status"
+   )
+   .eq(
+    "partner_id",
+    "CHE-PARTNER-000128"
+   )
+   .maybeSingle();
 
  if(error){
 
   setStatus(
    "partnerStatus",
    "error",
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
  if(!data){
@@ -1794,14 +2456,20 @@ async function assignPartner(){
   );
 
   return;
+
  }
 
  const update=
   await supabaseClient
    .from("transactions")
    .update({
-    partner_id:data.partner_id,
-    transaction_status:"APPROVED"
+
+    partner_id:
+     data.partner_id,
+
+    transaction_status:
+     "APPROVED"
+
    })
    .eq(
     "transaction_id",
@@ -1813,17 +2481,26 @@ async function assignPartner(){
   setStatus(
    "partnerStatus",
    "error",
-   htmlEscape(update.error.message)
+   htmlEscape(
+    update.error.message
+   )
   );
 
   return;
+
  }
 
- state.partnerId=data.partner_id;
- state.partnerName=data.name;
- state.transactionStatus="APPROVED";
+ state.partnerId=
+  data.partner_id;
+
+ state.partnerName=
+  data.name;
+
+ state.transactionStatus=
+  "APPROVED";
 
  saveState();
+
  renderAll();
 
  setStatus(
@@ -1831,10 +2508,14 @@ async function assignPartner(){
   "ok",
   "✓ PARTNER ASSIGNED<br>"+
   "Partner: <b>"+
-  htmlEscape(data.name)+
+  htmlEscape(
+   data.name
+  )+
   "</b><br>"+
   "ID: "+
-  htmlEscape(data.partner_id)
+  htmlEscape(
+   data.partner_id
+  )
  );
 
 }
@@ -1844,51 +2525,98 @@ async function assignPartner(){
    STATUS UPDATE
    ========================================================= */
 
-async function updateTransactionStatus(status){
+async function updateTransactionStatus(
+ status
+){
 
- if(!supabaseClient)return;
+ if(!state.transactionId){
 
- const {error}=await supabaseClient
-  .from("transactions")
-  .update({
-   transaction_status:status,
-   pickup_at:
-    status==="PICKUP"
-     ? new Date().toISOString()
-     : undefined,
-   completed_at:
-    status==="COMPLETED"
-     ? new Date().toISOString()
-     : undefined
-  })
-  .eq(
-   "transaction_id",
-   state.transactionId
+  setStatus(
+   "gpsStatus",
+   "error",
+   "Belum ada transaction."
   );
+
+  return;
+
+ }
+
+ if(!supabaseClient){
+
+  setStatus(
+   "gpsStatus",
+   "error",
+   "Supabase belum siap."
+  );
+
+  return;
+
+ }
+
+ const updatePayload={
+  transaction_status:
+   status
+ };
+
+ if(status==="PICKUP"){
+
+  updatePayload.pickup_at=
+   new Date().toISOString();
+
+ }
+
+ if(status==="COMPLETED"){
+
+  updatePayload.completed_at=
+   new Date().toISOString();
+
+ }
+
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("transactions")
+   .update(
+    updatePayload
+   )
+   .eq(
+    "transaction_id",
+    state.transactionId
+   );
 
  if(error){
 
   setStatus(
    "gpsStatus",
    "error",
-   htmlEscape(error.message)
+   htmlEscape(
+    error.message
+   )
   );
 
   return;
+
  }
 
- state.transactionStatus=status;
+ state.transactionStatus=
+  status;
 
  saveState();
+
  renderAll();
 
- await createTrackingEvent(status);
+ await createTrackingEvent(
+  status
+ );
 
  setStatus(
   "gpsStatus",
   "ok",
   "✓ STATUS UPDATED: "+
-  htmlEscape(status)
+  htmlEscape(
+   status
+  )
  );
 
 }
@@ -1900,6 +2628,18 @@ async function updateTransactionStatus(status){
 
 function startGPS(){
 
+ if(!state.trackingId){
+
+  setStatus(
+   "gpsStatus",
+   "error",
+   "Belum ada Tracking ID."
+  );
+
+  return;
+
+ }
+
  if(!navigator.geolocation){
 
   setStatus(
@@ -1909,6 +2649,7 @@ function startGPS(){
   );
 
   return;
+
  }
 
  if(gpsWatchId!==null){
@@ -1920,40 +2661,56 @@ function startGPS(){
   );
 
   return;
+
  }
 
  gpsWatchId=
   navigator.geolocation.watchPosition(
+
    async position=>{
 
-    const c=position.coords;
+    const c=
+     position.coords;
 
-    state.lat=c.latitude;
-    state.lng=c.longitude;
-    state.accuracy=c.accuracy;
-    state.gpsStarted=true;
+    state.lat=
+     c.latitude;
+
+    state.lng=
+     c.longitude;
+
+    state.accuracy=
+     c.accuracy;
+
+    state.gpsStarted=
+     true;
 
     saveState();
+
     renderAll();
 
     await saveTrackingPosition();
 
    },
+
    error=>{
 
     setStatus(
      "gpsStatus",
      "error",
      "GPS ERROR: "+
-     htmlEscape(error.message)
+     htmlEscape(
+      error.message
+     )
     );
 
    },
+
    {
     enableHighAccuracy:true,
     maximumAge:5000,
     timeout:15000
    }
+
   );
 
  setStatus(
@@ -1964,6 +2721,10 @@ function startGPS(){
 
 }
 
+
+/* =========================================================
+   STOP GPS
+   ========================================================= */
 
 function stopGPS(){
 
@@ -1977,9 +2738,11 @@ function stopGPS(){
 
  }
 
- state.gpsStarted=false;
+ state.gpsStarted=
+  false;
 
  saveState();
+
  renderAll();
 
  setStatus(
@@ -1999,32 +2762,56 @@ async function saveTrackingPosition(){
 
  if(!supabaseClient)return;
 
- if(!state.lat || !state.lng)return;
+ if(
+  state.lat===null ||
+  state.lng===null
+ ){
+
+  return;
+
+ }
+
+ if(!state.trackingId){
+  return;
+ }
 
  const payload={
 
-  tracking_id:state.trackingId,
+  tracking_id:
+   state.trackingId,
 
-  transaction_id:state.transactionId,
+  transaction_id:
+   state.transactionId,
 
-  current_lat:state.lat,
+  current_lat:
+   state.lat,
 
-  current_lng:state.lng,
+  current_lng:
+   state.lng,
 
-  accuracy:state.accuracy,
+  accuracy:
+   state.accuracy,
 
-  is_live:true,
+  is_live:
+   true,
 
-  last_update:new Date().toISOString()
+  last_update:
+   new Date().toISOString()
 
  };
 
- const {error}=await supabaseClient
-  .from("tracking_sessions")
-  .upsert(
-   payload,
-   {onConflict:"tracking_id"}
-  );
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("tracking_sessions")
+   .upsert(
+    payload,
+    {
+     onConflict:
+      "tracking_id"
+    }
+   );
 
  if(error){
 
@@ -2034,6 +2821,7 @@ async function saveTrackingPosition(){
   );
 
   return;
+
  }
 
  await createTrackingEvent(
@@ -2047,47 +2835,70 @@ async function saveTrackingPosition(){
    TRACKING EVENT
    ========================================================= */
 
-let lastTrackingEvent=0;
-
-async function createTrackingEvent(type){
+async function createTrackingEvent(
+ type
+){
 
  if(!supabaseClient)return;
 
+ if(!state.trackingId)return;
+
  if(type==="GPS_UPDATE"){
 
-  const now=Date.now();
+  const now=
+   Date.now();
 
-  if(now-lastTrackingEvent<10000){
+  if(
+   now-
+   lastTrackingEvent
+   <10000
+  ){
+
    return;
+
   }
 
-  lastTrackingEvent=now;
+  lastTrackingEvent=
+   now;
 
  }
 
  const payload={
 
-  tracking_id:state.trackingId,
+  tracking_id:
+   state.trackingId,
 
-  event_type:type,
+  event_type:
+   type,
 
-  latitude:state.lat,
+  latitude:
+   state.lat,
 
-  longitude:state.lng,
+  longitude:
+   state.lng,
 
-  accuracy:state.accuracy,
+  accuracy:
+   state.accuracy,
 
-  actor_type:"WEB",
+  actor_type:
+   "WEB",
 
-  actor_id:"CHELEA-DEMO",
+  actor_id:
+   "CHELEA-DEMO",
 
-  notes:"CHELEA MASTER WEB"
+  notes:
+   "CHELEA MASTER V2 WEB"
 
  };
 
- const {error}=await supabaseClient
-  .from("tracking_events")
-  .insert(payload);
+ const {
+  error
+ }=
+  await supabaseClient
+   .from("tracking_events")
+   .insert(
+    payload
+   );
 
  if(error){
 
@@ -2105,53 +2916,125 @@ async function createTrackingEvent(type){
    PRICE
    ========================================================= */
 
-function calculatePrice(updateUI=true){
+function calculatePrice(
+ updateUI=true
+){
 
- const distance=150;
+ const distance=
+  150;
 
- const base=25000;
- const distanceFee=distance*3000;
+ const base=
+  25000;
+
+ const distanceFee=
+  distance*3000;
+
  const weightFee=
-  Number(state.weight || 2)*5000;
- const pickup=10000;
- const protection=5000;
- const platform=7500;
+  Number(
+   state.weight ||
+   2
+  )*5000;
 
- let multiplier=1;
+ const pickup=
+  10000;
 
- if(state.priority==="PRIORITY"){
-  multiplier=1.25;
+ const protection=
+  5000;
+
+ const platform=
+  7500;
+
+ let multiplier=
+  1;
+
+ if(
+  state.priority===
+  "PRIORITY"
+ ){
+
+  multiplier=
+   1.25;
+
  }
 
- if(state.priority==="EXCLUSIVE"){
-  multiplier=1.5;
+ if(
+  state.priority===
+  "EXCLUSIVE"
+ ){
+
+  multiplier=
+   1.5;
+
  }
 
- const total=Math.round(
-  (
-   base+
-   distanceFee+
-   weightFee+
-   pickup+
-   protection+
-   platform
-  )*
-  multiplier
- );
+ const total=
+  Math.round(
+   (
+    base+
+    distanceFee+
+    weightFee+
+    pickup+
+    protection+
+    platform
+   )*
+   multiplier
+  );
 
  if(updateUI){
 
-  document.getElementById(
-   "distanceFee"
-  ).textContent=money(distanceFee);
+  const distanceEl=
+   document.getElementById(
+    "distanceFee"
+   );
 
-  document.getElementById(
-   "weightFee"
-  ).textContent=money(weightFee);
+  const weightEl=
+   document.getElementById(
+    "weightFee"
+   );
 
+  const totalEl=
+   document.getElementById(
+    "totalPrice"
+   );
+
+  if(distanceEl){
+
+   distanceEl.textContent=
+    money(
+     distanceFee
+    );
+
+  }
+
+  if(weightEl){
+
+   weightEl.textContent=
+    money(
+     weightFee
+    );
+
+  }
+
+  if(totalEl){
+
+   totalEl.textContent=
+    money(
+     total
+    );
+
+  }
+
+ }
+
+ const payAmount=
   document.getElementById(
-   "totalPrice"
-  ).textContent=money(total);
+   "payAmount"
+  );
+
+ if(payAmount){
+
+  payAmount.textContent=
+   money(total);
 
  }
 
@@ -2166,60 +3049,104 @@ function calculatePrice(updateUI=true){
 
 async function loadAuditLogs(){
 
- const el=document.getElementById("auditList");
+ const el=
+  document.getElementById(
+   "auditList"
+  );
 
  if(!supabaseClient){
 
-  el.textContent="Supabase unavailable.";
+  el.textContent=
+   "Supabase unavailable.";
 
   return;
+
  }
 
- const {data,error}=await supabaseClient
-  .from("audit_logs")
-  .select(
-   "actor_type,actor_id,action,details,created_at"
-  )
-  .eq(
-   "transaction_id",
-   state.transactionId
-  )
-  .order(
-   "created_at",
-   {ascending:false}
-  )
-  .limit(20);
+ if(!state.transactionId){
+
+  el.textContent=
+   "No active transaction.";
+
+  return;
+
+ }
+
+ const {
+  data,
+  error
+ }=
+  await supabaseClient
+   .from("audit_logs")
+   .select(
+    "actor_type,actor_id,action,details,created_at"
+   )
+   .eq(
+    "transaction_id",
+    state.transactionId
+   )
+   .order(
+    "created_at",
+    {
+     ascending:false
+    }
+   )
+   .limit(20);
 
  if(error){
 
-  el.textContent=error.message;
+  el.textContent=
+   error.message;
 
   return;
+
  }
 
- if(!data || !data.length){
+ if(
+  !data ||
+  !data.length
+ ){
 
-  el.textContent="No audit events.";
+  el.textContent=
+   "No audit events.";
 
   return;
+
  }
 
- el.innerHTML=data.map(
-  x=>`
-   <div class="data-row">
-    <span>
-     ${htmlEscape(x.action)}
-     <br>
-     <small>${htmlEscape(
-      new Date(x.created_at).toLocaleString("id-ID")
-     )}</small>
-    </span>
-    <strong>${htmlEscape(
-     x.actor_type || ""
-    )}</strong>
-   </div>
-  `
- ).join("");
+ el.innerHTML=
+  data.map(
+   x=>
+    `
+    <div class="data-row">
+
+     <span>
+      ${htmlEscape(
+       x.action
+      )}
+      <br>
+
+      <small>
+       ${htmlEscape(
+        new Date(
+         x.created_at
+        ).toLocaleString(
+         "id-ID"
+        )
+       )}
+      </small>
+     </span>
+
+     <strong>
+      ${htmlEscape(
+       x.actor_type ||
+       ""
+      )}
+     </strong>
+
+    </div>
+    `
+  ).join("");
 
 }
 
@@ -2230,87 +3157,142 @@ async function loadAuditLogs(){
 
 function downloadReceipt(){
 
- const total=calculatePrice(false);
+ const total=
+  calculatePrice(false);
 
  const html=`
  <!DOCTYPE html>
  <html>
+
  <head>
+
  <meta charset="UTF-8">
- <title>CHELEA Receipt</title>
+
+ <title>
+  CHELEA Receipt
+ </title>
+
  <style>
+
  body{
   font-family:Arial;
   padding:30px;
  }
- h1{color:#123}
+
+ h1{
+  color:#123;
+ }
+
  .row{
   padding:10px 0;
   border-bottom:1px solid #ddd;
  }
+
  </style>
+
  </head>
+
  <body>
- <h1>CHELEA DELIVERY RECEIPT</h1>
+
+ <h1>
+  CHELEA DELIVERY RECEIPT
+ </h1>
 
  <div class="row">
- Transaction: ${htmlEscape(state.transactionId)}
+  Transaction:
+  ${htmlEscape(
+   state.transactionId
+  )}
  </div>
 
  <div class="row">
- Tracking: ${htmlEscape(state.trackingId)}
+  Tracking:
+  ${htmlEscape(
+   state.trackingId
+  )}
  </div>
 
  <div class="row">
- Origin: ${htmlEscape(state.origin)}
+  Origin:
+  ${htmlEscape(
+   state.origin
+  )}
  </div>
 
  <div class="row">
- Destination: ${htmlEscape(state.destination)}
+  Destination:
+  ${htmlEscape(
+   state.destination
+  )}
  </div>
 
  <div class="row">
- Payment: ${htmlEscape(state.paymentStatus)}
+  Payment:
+  ${htmlEscape(
+   state.paymentStatus
+  )}
  </div>
 
  <div class="row">
- Status: ${htmlEscape(state.transactionStatus)}
+  Status:
+  ${htmlEscape(
+   state.transactionStatus
+  )}
  </div>
 
  <div class="row">
- Total: ${money(total)}
+  Total:
+  ${money(total)}
  </div>
 
  <br>
 
- <strong>CHELEA SECURE TRANSACTION — DEMO</strong>
+ <strong>
+  CHELEA SECURE TRANSACTION — DEMO
+ </strong>
 
  </body>
+
  </html>
  `;
 
- const blob=new Blob(
-  [html],
-  {type:"text/html"}
- );
+ const blob=
+  new Blob(
+   [html],
+   {
+    type:"text/html"
+   }
+  );
 
- const url=URL.createObjectURL(blob);
+ const url=
+  URL.createObjectURL(
+   blob
+  );
 
- const a=document.createElement("a");
+ const a=
+  document.createElement(
+   "a"
+  );
 
- a.href=url;
+ a.href=
+  url;
+
  a.download=
   "CHELEA_Receipt_"+
   state.transactionId+
   ".html";
 
- document.body.appendChild(a);
+ document.body.appendChild(
+  a
+ );
 
  a.click();
 
  a.remove();
 
- URL.revokeObjectURL(url);
+ URL.revokeObjectURL(
+  url
+ );
 
 }
 
@@ -2319,34 +3301,48 @@ function downloadReceipt(){
    REALTIME FOUNDATION
    ========================================================= */
 
-let realtimeChannel=null;
-
 function subscribeRealtime(){
 
  if(!supabaseClient)return;
 
- if(realtimeChannel){
+ if(
+  !state.transactionId
+ ){
 
-  supabaseClient.removeChannel(
-   realtimeChannel
-  );
+  return;
+
+ }
+
+ if(
+  realtimeChannel
+ ){
+
+  supabaseClient
+   .removeChannel(
+    realtimeChannel
+   );
 
  }
 
  realtimeChannel=
   supabaseClient
    .channel(
-    "chelea-transaction-"+state.transactionId
+    "chelea-transaction-"+
+    state.transactionId
    )
    .on(
+
     "postgres_changes",
+
     {
      event:"UPDATE",
      schema:"public",
      table:"transactions",
      filter:
-      "transaction_id=eq."+state.transactionId
+      "transaction_id=eq."+
+      state.transactionId
     },
+
     payload=>{
 
      console.log(
@@ -2354,7 +3350,8 @@ function subscribeRealtime(){
       payload
      );
 
-     const row=payload.new;
+     const row=
+      payload.new;
 
      if(row){
 
@@ -2371,11 +3368,13 @@ function subscribeRealtime(){
        state.trackingId;
 
       saveState();
+
       renderAll();
 
      }
 
     }
+
    )
    .subscribe();
 
@@ -2390,106 +3389,363 @@ function renderAll(){
 
  const fields={
 
-  transactionId:"transactionId",
-  trackingId:"trackingId",
-  origin:"origin",
-  destination:"destination",
-  pickupLocation:"pickupLocation",
-  deliveryLocation:"deliveryLocation",
-  weight:"weight"
+  transactionId:
+   "transactionId",
+
+  trackingId:
+   "trackingId",
+
+  origin:
+   "origin",
+
+  destination:
+   "destination",
+
+  pickupLocation:
+   "pickupLocation",
+
+  deliveryLocation:
+   "deliveryLocation",
+
+  weight:
+   "weight"
 
  };
 
- Object.keys(fields).forEach(key=>{
+ Object.keys(
+  fields
+ ).forEach(
+  key=>{
 
-  const el=document.getElementById(
-   fields[key]
-  );
+   const el=
+    document.getElementById(
+     fields[key]
+    );
 
-  if(el && document.activeElement!==el){
+   if(
+    el &&
+    document.activeElement!==el
+   ){
 
-   el.value=state[key] ?? "";
+    el.value=
+     state[key] ??
+     "";
+
+   }
 
   }
-
- });
-
-
- document.getElementById(
-  "payTransaction"
- ).textContent=state.transactionId;
-
- document.getElementById(
-  "payReference"
- ).textContent="PAY-DEMO-000128";
-
- document.getElementById(
-  "payStatus"
- ).textContent=state.paymentStatus;
-
- document.getElementById(
-  "liveTracking"
- ).textContent=state.trackingId;
-
- document.getElementById(
-  "orderTransaction"
- ).textContent=state.transactionId;
-
- document.getElementById(
-  "orderTracking"
- ).textContent=state.trackingId;
-
- document.getElementById(
-  "orderOrigin"
- ).textContent=state.origin;
-
- document.getElementById(
-  "orderDestination"
- ).textContent=state.destination;
-
- document.getElementById(
-  "orderPayment"
- ).textContent=state.paymentStatus;
-
- document.getElementById(
-  "orderStatus"
- ).textContent=state.transactionStatus;
-
- document.getElementById(
-  "liveStatus"
- ).textContent=
-  state.transactionStatus;
-
- document.getElementById(
-  "lat"
- ).textContent=
-  state.lat
-   ? state.lat.toFixed(6)
-   : "-";
-
- document.getElementById(
-  "lng"
- ).textContent=
-  state.lng
-   ? state.lng.toFixed(6)
-   : "-";
-
- document.getElementById(
-  "accuracy"
- ).textContent=
-  state.accuracy
-   ? Math.round(state.accuracy)+" m"
-   : "-";
+ );
 
 
- if(state.lat && state.lng){
+ /*
+   Home
+ */
+
+ const homeTransaction=
+  document.getElementById(
+   "homeTransaction"
+  );
+
+ if(homeTransaction){
+
+  homeTransaction.textContent=
+   state.transactionId ||
+   "NO ACTIVE TRANSACTION";
+
+ }
+
+ const homeTracking=
+  document.getElementById(
+   "homeTracking"
+  );
+
+ if(homeTracking){
+
+  homeTracking.textContent=
+   state.trackingId ||
+   "NO TRACKING ID";
+
+ }
+
+
+ /*
+   Payment
+ */
+
+ const payTransaction=
+  document.getElementById(
+   "payTransaction"
+  );
+
+ if(payTransaction){
+
+  payTransaction.textContent=
+   state.transactionId ||
+   "-";
+
+ }
+
+ const payReference=
+  document.getElementById(
+   "payReference"
+  );
+
+ if(payReference){
+
+  payReference.textContent=
+   state.paymentReference ||
+   "-";
+
+ }
+
+ const payStatus=
+  document.getElementById(
+   "payStatus"
+  );
+
+ if(payStatus){
+
+  payStatus.textContent=
+   state.paymentStatus;
+
+ }
+
+
+ /*
+   Tracking
+ */
+
+ const liveTracking=
+  document.getElementById(
+   "liveTracking"
+  );
+
+ if(liveTracking){
+
+  liveTracking.textContent=
+   state.trackingId ||
+   "-";
+
+ }
+
+ const liveStatus=
+  document.getElementById(
+   "liveStatus"
+  );
+
+ if(liveStatus){
+
+  liveStatus.textContent=
+   state.transactionStatus ||
+   "READY";
+
+ }
+
+
+ /*
+   GPS
+ */
+
+ const lat=
+  document.getElementById(
+   "lat"
+  );
+
+ if(lat){
+
+  lat.textContent=
+   state.lat!==null
+    ? state.lat.toFixed(6)
+    : "-";
+
+ }
+
+ const lng=
+  document.getElementById(
+   "lng"
+  );
+
+ if(lng){
+
+  lng.textContent=
+   state.lng!==null
+    ? state.lng.toFixed(6)
+    : "-";
+
+ }
+
+ const accuracy=
+  document.getElementById(
+   "accuracy"
+  );
+
+ if(accuracy){
+
+  accuracy.textContent=
+   state.accuracy!==null
+    ? Math.round(
+       state.accuracy
+      )+
+      " m"
+    : "-";
+
+ }
+
+
+ /*
+   Orders
+ */
+
+ const orderTransaction=
+  document.getElementById(
+   "orderTransaction"
+  );
+
+ if(orderTransaction){
+
+  orderTransaction.textContent=
+   state.transactionId ||
+   "-";
+
+ }
+
+ const orderTracking=
+  document.getElementById(
+   "orderTracking"
+  );
+
+ if(orderTracking){
+
+  orderTracking.textContent=
+   state.trackingId ||
+   "-";
+
+ }
+
+ const orderOrigin=
+  document.getElementById(
+   "orderOrigin"
+  );
+
+ if(orderOrigin){
+
+  orderOrigin.textContent=
+   state.origin ||
+   "-";
+
+ }
+
+ const orderDestination=
+  document.getElementById(
+   "orderDestination"
+  );
+
+ if(orderDestination){
+
+  orderDestination.textContent=
+   state.destination ||
+   "-";
+
+ }
+
+ const orderPayment=
+  document.getElementById(
+   "orderPayment"
+  );
+
+ if(orderPayment){
+
+  orderPayment.textContent=
+   state.paymentStatus;
+
+ }
+
+ const orderStatus=
+  document.getElementById(
+   "orderStatus"
+  );
+
+ if(orderStatus){
+
+  orderStatus.textContent=
+   state.transactionStatus;
+
+ }
+
+
+ /*
+   Control
+ */
+
+ const controlPayment=
+  document.getElementById(
+   "controlPayment"
+  );
+
+ if(controlPayment){
+
+  controlPayment.textContent=
+   state.paymentStatus;
+
+ }
+
+ const controlTracking=
+  document.getElementById(
+   "controlTracking"
+  );
+
+ if(controlTracking){
+
+  controlTracking.textContent=
+   state.gpsStarted
+    ? "LIVE"
+    : "READY";
+
+ }
+
+
+ /*
+   Item
+ */
+
+ const itemId=
+  document.getElementById(
+   "itemId"
+  );
+
+ if(
+  itemId &&
+  !itemId.value
+ ){
+
+  itemId.value=
+   state.itemId ||
+   "";
+
+ }
+
+
+ /*
+   Map marker
+ */
+
+ if(
+  state.lat!==null &&
+  state.lng!==null
+ ){
 
   const x=
    Math.max(
     8,
     Math.min(
      88,
-     50+(state.lng%1)*30
+     50+
+     (
+      (
+       state.lng%1
+      )*
+      30
+     )
     )
    );
 
@@ -2498,7 +3754,13 @@ function renderAll(){
     12,
     Math.min(
      82,
-     50-(state.lat%1)*30
+     50-
+     (
+      (
+       state.lat%1
+      )*
+      30
+     )
     )
    );
 
@@ -2507,8 +3769,15 @@ function renderAll(){
     "customerMarker"
    );
 
-  marker.style.left=x+"%";
-  marker.style.top=y+"%";
+  if(marker){
+
+   marker.style.left=
+    x+"%";
+
+   marker.style.top=
+    y+"%";
+
+  }
 
  }
 
@@ -2527,6 +3796,36 @@ function renderAll(){
 document.addEventListener(
  "DOMContentLoaded",
  async()=>{
+
+  /*
+    If there is no current transaction,
+    generate IDs for display only.
+    The actual CREATE button generates
+    another fresh pair immediately.
+  */
+
+  if(!state.transactionId){
+
+   state.transactionId=
+    generateTransactionId();
+
+  }
+
+  if(!state.trackingId){
+
+   state.trackingId=
+    generateTrackingId();
+
+  }
+
+  if(!state.itemId){
+
+   state.itemId=
+    generateItemId();
+
+  }
+
+  saveState();
 
   renderAll();
 
