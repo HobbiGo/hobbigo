@@ -468,16 +468,40 @@ function randomCode(prefix) {
   return prefix + "-" + timestamp + "-" + random;
 }
 
+function isLocalStorageAvailable() {
+  try {
+    const key = "telku_demo_test";
+    localStorage.setItem(key, "1");
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 function safeLocalStorageGet(key, fallback) {
+  if (!isLocalStorageAvailable()) {
+    return fallback;
+  }
+
   try {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
+    if (raw === null || raw === undefined || raw === "") {
+      return fallback;
+    }
+
+    const parsed = JSON.parse(raw);
+    return parsed !== null ? parsed : fallback;
   } catch (error) {
     return fallback;
   }
 }
 
 function safeLocalStorageSet(key, value) {
+  if (!isLocalStorageAvailable()) {
+    return false;
+  }
+
   try {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
@@ -486,12 +510,27 @@ function safeLocalStorageSet(key, value) {
   }
 }
 
-function loadDemoTransactions() {
-  return safeLocalStorageGet(STORAGE_KEY, []);
+function getDemoTransactions() {
+  const transactions = safeLocalStorageGet(STORAGE_KEY, []);
+  return Array.isArray(transactions) ? transactions : [];
 }
 
 function saveDemoTransactions(transactions) {
   return safeLocalStorageSet(STORAGE_KEY, transactions);
+}
+
+function getPaymentMethodValue() {
+  const paymentMethodEl = document.getElementById("paymentMethod");
+  if (!paymentMethodEl || !paymentMethodEl.value) {
+    return "online";
+  }
+  return paymentMethodEl.value;
+}
+
+function ensureSelectedPlan() {
+  if (!selectedPlan || !selectedPlan.country || !selectedPlan.data_gb || !selectedPlan.price) {
+    throw new Error("No valid plan selected.");
+  }
 }
 
 function loadCountries() {
@@ -515,9 +554,14 @@ function loadCountries() {
 }
 
 function loadPlans() {
-  const country = document.getElementById("countrySelect").value;
+  const countrySelect = document.getElementById("countrySelect");
   const container = document.getElementById("plans");
 
+  if (!countrySelect || !container) {
+    return;
+  }
+
+  const country = countrySelect.value;
   container.innerHTML = "";
   selectedPlan = null;
 
@@ -572,23 +616,39 @@ function showPayment() {
     return;
   }
 
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("paymentPage").classList.remove("hidden");
+  const homeEl = document.getElementById("home");
+  const paymentPageEl = document.getElementById("paymentPage");
+  const paymentSummaryEl = document.getElementById("paymentSummary");
 
-  document.getElementById("paymentSummary").innerHTML = `
-    <p><strong>${selectedPlan.country}</strong></p>
-    <p>${selectedPlan.data_gb} GB / ${selectedPlan.validity_days} days</p>
-    <p class="small">Plan Code: ${selectedPlan.code}</p>
-    <div class="price">IDR ${Number(selectedPlan.price).toLocaleString("id-ID")}</div>
-    <p class="small" style="margin-top:8px;">Plan ID: ${selectedPlan.id}</p>
-  `;
+  if (homeEl) {
+    homeEl.classList.add("hidden");
+  }
+
+  if (paymentPageEl) {
+    paymentPageEl.classList.remove("hidden");
+  }
+
+  if (paymentSummaryEl) {
+    paymentSummaryEl.innerHTML = `
+      <p><strong>${selectedPlan.country}</strong></p>
+      <p>${selectedPlan.data_gb} GB / ${selectedPlan.validity_days} days</p>
+      <p class="small">Plan Code: ${selectedPlan.code}</p>
+      <div class="price">IDR ${Number(selectedPlan.price).toLocaleString("id-ID")}</div>
+      <p class="small" style="margin-top:8px;">Plan ID: ${selectedPlan.id}</p>
+    `;
+  }
 }
 
 async function getOrCreateCustomer() {
-  const fullName = document.getElementById("fullName").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const country = document.getElementById("countrySelect").value;
+  const fullNameEl = document.getElementById("fullName");
+  const emailEl = document.getElementById("email");
+  const phoneEl = document.getElementById("phone");
+  const countrySelectEl = document.getElementById("countrySelect");
+
+  const fullName = fullNameEl ? fullNameEl.value.trim() : "";
+  const email = emailEl ? emailEl.value.trim() : "";
+  const phone = phoneEl ? phoneEl.value.trim() : "";
+  const country = countrySelectEl ? countrySelectEl.value : "";
 
   if (!fullName) {
     throw new Error("Full Name wajib diisi.");
@@ -605,7 +665,7 @@ async function getOrCreateCustomer() {
   const customerKey = CUSTOMER_KEY_PREFIX + email.toLowerCase();
   const existingCustomer = safeLocalStorageGet(customerKey, null);
 
-  if (existingCustomer) {
+  if (existingCustomer && existingCustomer.customerId) {
     return existingCustomer;
   }
 
@@ -624,10 +684,14 @@ async function getOrCreateCustomer() {
 }
 
 async function createOrder(customer) {
-  const orderId = randomCode("TELKU-ORD");
+  ensureSelectedPlan();
 
-  const order = {
-    orderId: orderId,
+  if (!customer || !customer.customerId) {
+    throw new Error("Customer data is missing.");
+  }
+
+  return {
+    orderId: randomCode("TELKU-ORD"),
     customerId: customer.customerId,
     selectedCountry: selectedPlan.country,
     selectedPlanCode: selectedPlan.code,
@@ -636,12 +700,16 @@ async function createOrder(customer) {
     status: "CREATED",
     createdAt: new Date().toISOString()
   };
-
-  return order;
 }
 
 async function createPayment(order) {
-  const paymentMethod = document.getElementById("paymentMethod").value;
+  ensureSelectedPlan();
+
+  if (!order || !order.orderId) {
+    throw new Error("Order data is missing.");
+  }
+
+  const paymentMethod = getPaymentMethodValue();
 
   return {
     paymentId: randomCode("TELKU-TXN"),
@@ -654,16 +722,24 @@ async function createPayment(order) {
 }
 
 async function createInvoice(order) {
+  if (!order || !order.orderId) {
+    throw new Error("Order data is missing for invoice creation.");
+  }
+
   return {
     invoiceId: randomCode("TELKU-INV"),
     orderId: order.orderId,
     status: "PAID_DEMO",
-    amount: Number(selectedPlan.price),
+    amount: Number(selectedPlan ? selectedPlan.price : 0),
     createdAt: new Date().toISOString()
   };
 }
 
 async function createEsim(order) {
+  if (!order || !order.orderId) {
+    throw new Error("Order data is missing for eSIM creation.");
+  }
+
   return {
     esimId: randomCode("TELKU-ESIM"),
     orderId: order.orderId,
@@ -673,24 +749,38 @@ async function createEsim(order) {
 }
 
 async function markOrderPaid(order) {
+  if (!order || !order.orderId) {
+    throw new Error("Order data is missing for payment update.");
+  }
+
   order.status = "PAID_DEMO";
+  order.paidAt = new Date().toISOString();
   return order;
 }
 
 async function saveTransaction() {
+  ensureSelectedPlan();
+
   const customer = await getOrCreateCustomer();
   const order = await createOrder(customer);
   const payment = await createPayment(order);
   const invoice = await createInvoice(order);
   const esim = await createEsim(order);
   const transactionId = randomCode("TELKU-TXN");
-
   const paidOrder = await markOrderPaid(order);
 
   const transaction = {
     customer: customer,
     selectedCountry: selectedPlan.country,
-    selectedPlan: selectedPlan,
+    selectedPlan: {
+      id: selectedPlan.id,
+      code: selectedPlan.code,
+      country: selectedPlan.country,
+      flag: selectedPlan.flag,
+      data_gb: selectedPlan.data_gb,
+      validity_days: selectedPlan.validity_days,
+      price: Number(selectedPlan.price)
+    },
     price: Number(selectedPlan.price),
     orderId: paidOrder.orderId,
     invoiceId: invoice.invoiceId,
@@ -705,9 +795,13 @@ async function saveTransaction() {
     orderStatus: paidOrder.status
   };
 
-  const transactions = loadDemoTransactions();
+  const transactions = getDemoTransactions();
   transactions.push(transaction);
-  saveDemoTransactions(transactions);
+  const saved = saveDemoTransactions(transactions);
+
+  if (!saved) {
+    console.warn("localStorage unavailable; transaction kept in memory only.");
+  }
 
   return transaction;
 }
@@ -717,74 +811,97 @@ async function processPayment() {
   const status = document.getElementById("paymentStatus");
 
   if (!selectedPlan) {
-    status.innerHTML = `
-      <div class="status error">Please select a plan first.</div>
-    `;
+    if (status) {
+      status.innerHTML = `
+        <div class="status error">Please select a plan first.</div>
+      `;
+    }
     return;
   }
 
-  button.disabled = true;
-  button.innerText = "Processing...";
+  const paymentMethod = getPaymentMethodValue();
 
-  status.innerHTML = `
-    <div class="status info">
-      DEMO PAYMENT<br>
-      Payment simulated successfully.
-    </div>
-  `;
+  if (button) {
+    button.disabled = true;
+    button.innerText = "Processing...";
+  }
+
+  if (status) {
+    status.innerHTML = `
+      <div class="status info">
+        DEMO PAYMENT<br>
+        Payment simulated successfully.
+      </div>
+    `;
+  }
 
   try {
     const result = await saveTransaction();
 
-    document.getElementById("paymentPage").classList.add("hidden");
-    document.getElementById("successPage").classList.remove("hidden");
+    const paymentPageEl = document.getElementById("paymentPage");
+    const successPageEl = document.getElementById("successPage");
+    const successDataEl = document.getElementById("successData");
 
-    document.getElementById("successData").innerHTML = `
-      <p><strong>TELKU eSIM READY</strong></p>
+    if (paymentPageEl) {
+      paymentPageEl.classList.add("hidden");
+    }
 
-      <p style="margin-top:12px;">Order ID</p>
-      <div class="code">${result.orderId}</div>
+    if (successPageEl) {
+      successPageEl.classList.remove("hidden");
+    }
 
-      <p style="margin-top:12px;">Invoice ID</p>
-      <div class="code">${result.invoiceId}</div>
+    if (successDataEl) {
+      successDataEl.innerHTML = `
+        <p><strong>TELKU eSIM READY</strong></p>
 
-      <p style="margin-top:12px;">eSIM ID</p>
-      <div class="code">${result.esimId}</div>
+        <p style="margin-top:12px;">Order ID</p>
+        <div class="code">${result.orderId}</div>
 
-      <p style="margin-top:12px;">Transaction ID</p>
-      <div class="code">${result.transactionId}</div>
+        <p style="margin-top:12px;">Invoice ID</p>
+        <div class="code">${result.invoiceId}</div>
 
-      <p style="margin-top:12px;">Country</p>
-      <div class="code">${result.selectedCountry}</div>
+        <p style="margin-top:12px;">eSIM ID</p>
+        <div class="code">${result.esimId}</div>
 
-      <p style="margin-top:12px;">Plan</p>
-      <div class="code">${result.selectedPlan.code} / ${result.selectedPlan.data_gb} GB</div>
+        <p style="margin-top:12px;">Transaction ID</p>
+        <div class="code">${result.transactionId}</div>
 
-      <p style="margin-top:12px;">Price</p>
-      <div class="code">IDR ${Number(result.price).toLocaleString("id-ID")}</div>
+        <p style="margin-top:12px;">Country</p>
+        <div class="code">${result.selectedCountry}</div>
 
-      <p style="margin-top:12px;">Payment Method</p>
-      <div class="code">${result.paymentMethod}</div>
+        <p style="margin-top:12px;">Plan</p>
+        <div class="code">${result.selectedPlan.code} / ${result.selectedPlan.data_gb} GB</div>
 
-      <p style="margin-top:12px;">Status</p>
-      <div class="code">${result.status}</div>
+        <p style="margin-top:12px;">Price</p>
+        <div class="code">IDR ${Number(result.price).toLocaleString("id-ID")}</div>
 
-      <p class="small" style="margin-top:12px;">DEMO MODE — No real payment processed</p>
-    `;
+        <p style="margin-top:12px;">Payment Method</p>
+        <div class="code">${paymentMethod}</div>
+
+        <p style="margin-top:12px;">Status</p>
+        <div class="code">${result.status}</div>
+
+        <p class="small" style="margin-top:12px;">DEMO MODE — No real payment processed</p>
+      `;
+    }
 
   } catch (error) {
     console.error("TELKU DEMO ERROR:", error);
 
-    status.innerHTML = `
-      <div class="status error">
-        <strong>Transaction Error</strong>
-        <br><br>
-        ${error.message}
-      </div>
-    `;
+    if (status) {
+      status.innerHTML = `
+        <div class="status error">
+          <strong>Transaction Error</strong>
+          <br><br>
+          ${error && error.message ? error.message : "An unknown transaction error occurred."}
+        </div>
+      `;
+    }
 
-    button.disabled = false;
-    button.innerText = "Pay Now";
+    if (button) {
+      button.disabled = false;
+      button.innerText = "Pay Now";
+    }
   }
 }
 
