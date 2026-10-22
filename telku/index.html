@@ -5,316 +5,417 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
-<title>TELKU V3.1C</title>
+<title>TELKU — Global eSIM</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#06101d;
-  --bg2:#0a1727;
-  --card:#0d1c2e;
-  --card2:#10243a;
-  --line:#1d3954;
-  --text:#f4f7fb;
-  --muted:#91a4b8;
-  --blue:#2d9cff;
-  --green:#19d68b;
-  --yellow:#ffc857;
-  --red:#ff5577;
+  --bg:#07111f;
+  --bg2:#0b1728;
+  --card:#101f33;
+  --card2:#13263e;
+  --line:#213957;
+  --text:#f5f8fc;
+  --muted:#91a5bc;
+  --accent:#36d6a2;
+  --accent2:#25a7ff;
+  --danger:#ff6577;
+  --warning:#ffc857;
+  --radius:20px;
 }
 
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:
-    radial-gradient(circle at top right,#12345b 0,#06101d 38%,#040b14 100%);
+    radial-gradient(circle at 20% 0%,rgba(37,167,255,.14),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(54,214,162,.10),transparent 30%),
+    var(--bg);
   color:var(--text);
   min-height:100vh;
 }
 
-header{
-  border-bottom:1px solid var(--line);
-  background:rgba(5,15,27,.94);
-  position:sticky;
-  top:0;
-  z-index:20;
-  backdrop-filter:blur(12px);
+button,input,select{
+  font:inherit;
 }
 
-.header-inner{
-  max-width:1250px;
+button{
+  cursor:pointer;
+}
+
+.app{
+  width:100%;
+  max-width:1180px;
   margin:auto;
-  padding:18px 22px;
+  padding:18px;
+}
+
+.topbar{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:15px;
+  align-items:center;
+  gap:14px;
+  padding:8px 0 22px;
 }
 
 .brand{
   display:flex;
   align-items:center;
-  gap:14px;
+  gap:12px;
 }
 
 .logo{
-  width:54px;
-  height:54px;
-  border-radius:16px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#1597ff,#1261c9);
-  font-size:20px;
-  font-weight:800;
-  box-shadow:0 8px 30px rgba(30,140,255,.25);
+  width:46px;
+  height:46px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  color:#06111d;
+  font-weight:900;
+  font-size:18px;
 }
 
 .brand h1{
-  font-size:24px;
+  font-size:22px;
 }
 
 .brand p{
-  margin-top:4px;
   color:var(--muted);
-  font-size:13px;
+  font-size:12px;
+  margin-top:3px;
 }
 
 .status{
-  padding:10px 15px;
-  border-radius:30px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid var(--line);
+  background:rgba(16,31,51,.75);
+  padding:9px 12px;
+  border-radius:999px;
   font-size:12px;
-  font-weight:800;
-  border:1px solid;
+  color:var(--muted);
 }
 
-.status.ok{
-  color:#48e5a6;
-  background:rgba(25,214,139,.08);
-  border-color:rgba(25,214,139,.3);
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--warning);
 }
 
-.status.demo{
-  color:#ffc857;
-  background:rgba(255,200,87,.08);
-  border-color:rgba(255,200,87,.3);
+.dot.online{
+  background:var(--accent);
 }
 
-.status.error{
-  color:#ff6685;
-  background:rgba(255,85,119,.08);
-  border-color:rgba(255,85,119,.3);
+.dot.error{
+  background:var(--danger);
 }
 
-main{
-  max-width:1250px;
-  margin:auto;
-  padding:40px 22px 80px;
+.hero{
+  background:
+    linear-gradient(135deg,rgba(37,167,255,.12),rgba(54,214,162,.07)),
+    var(--card);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:30px;
+  margin-bottom:18px;
 }
 
 .hero h2{
-  font-size:38px;
-  margin-bottom:10px;
+  font-size:clamp(30px,5vw,54px);
+  line-height:1;
+  max-width:760px;
+  letter-spacing:-1.5px;
+}
+
+.hero h2 span{
+  color:var(--accent);
 }
 
 .hero p{
   color:var(--muted);
+  max-width:700px;
   line-height:1.7;
-  max-width:900px;
-}
-
-.tabs{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin:30px 0;
-}
-
-.tab{
-  border:1px solid var(--line);
-  background:#0d1c2e;
-  color:#9cafc3;
-  padding:13px 18px;
-  border-radius:12px;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.tab.active,
-.tab:hover{
-  color:white;
-  border-color:#338fd6;
-  background:#12304d;
-}
-
-.alert{
-  padding:17px 18px;
-  border-radius:15px;
-  margin-bottom:24px;
-  border:1px solid;
-  line-height:1.6;
-}
-
-.alert.ok{
-  background:rgba(25,214,139,.07);
-  border-color:rgba(25,214,139,.25);
-}
-
-.alert.warn{
-  background:rgba(255,200,87,.07);
-  border-color:rgba(255,200,87,.25);
-}
-
-.alert.error{
-  background:rgba(255,85,119,.07);
-  border-color:rgba(255,85,119,.25);
+  margin-top:15px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:18px;
-  margin-bottom:20px;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
 }
 
 .card{
-  background:linear-gradient(145deg,#0d1c2e,#091727);
+  grid-column:span 4;
+  background:rgba(16,31,51,.9);
   border:1px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.18);
+  border-radius:var(--radius);
+  padding:20px;
 }
 
-.stat-number{
-  font-size:34px;
-  font-weight:800;
-  margin-bottom:6px;
+.card.wide{
+  grid-column:span 8;
 }
 
-.stat-label{
-  color:var(--muted);
-}
-
-.two{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-bottom:20px;
+.card.full{
+  grid-column:1/-1;
 }
 
 .card h3{
-  margin-bottom:8px;
-  font-size:19px;
-}
-
-.card-sub{
-  color:var(--muted);
-  font-size:13px;
-  margin-bottom:18px;
-}
-
-.module{
-  border-left:3px solid var(--blue);
-  background:#091a2b;
-  border-radius:10px;
-  padding:14px;
-  margin-top:10px;
-}
-
-.module strong{
-  display:block;
+  font-size:18px;
   margin-bottom:5px;
 }
 
-.module span{
+.card .sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:17px;
+}
+
+.field{
+  margin-bottom:12px;
+}
+
+.field label{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+input,select{
+  width:100%;
+  border:1px solid var(--line);
+  background:#0b1829;
+  color:var(--text);
+  border-radius:13px;
+  padding:13px 14px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--accent2);
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:13px 15px;
+  font-weight:800;
+  color:#06111d;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  margin-top:5px;
+}
+
+.btn.secondary{
+  color:var(--text);
+  background:#162a43;
+  border:1px solid var(--line);
+}
+
+.btn.danger{
+  color:#fff;
+  background:#612433;
+}
+
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.stat{
+  padding:15px;
+  border-radius:15px;
+  background:#0b1829;
+  border:1px solid var(--line);
+}
+
+.stat b{
+  display:block;
+  font-size:22px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.plan-list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.plan{
+  border:1px solid var(--line);
+  background:#0b1829;
+  border-radius:16px;
+  padding:16px;
+  transition:.2s;
+}
+
+.plan:hover{
+  transform:translateY(-2px);
+  border-color:#2d587e;
+}
+
+.plan.selected{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(54,214,162,.2);
+}
+
+.plan-title{
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+.plan-data{
+  font-size:25px;
+  font-weight:900;
+}
+
+.plan-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin:5px 0 12px;
+}
+
+.plan-price{
+  font-size:18px;
+  font-weight:900;
+  color:var(--accent);
+  margin-bottom:12px;
+}
+
+.plan button{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  color:var(--text);
+  background:#142942;
+}
+
+.order-box{
+  background:#0b1829;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:17px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.row:last-child{
+  border-bottom:0;
+}
+
+.row span{
   color:var(--muted);
   font-size:13px;
 }
 
-.table-wrap{
-  overflow:auto;
+.row b{
+  text-align:right;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
+.message{
+  padding:13px 15px;
+  border-radius:13px;
+  background:#0b1829;
+  border:1px solid var(--line);
+  color:var(--muted);
+  line-height:1.5;
   font-size:13px;
 }
 
-th,td{
-  text-align:left;
-  padding:13px 10px;
-  border-bottom:1px solid #193149;
-  white-space:nowrap;
+.message.success{
+  border-color:rgba(54,214,162,.45);
+  color:#baf7e4;
 }
 
-th{
-  color:#a9bfd3;
+.message.error{
+  border-color:rgba(255,101,119,.45);
+  color:#ffc0c9;
 }
 
-td{
-  color:#e7edf4;
-}
-
-button.action{
-  border:0;
-  background:linear-gradient(135deg,#178eff,#1265cf);
-  color:white;
-  padding:12px 17px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-}
-
-button.action:hover{
-  opacity:.9;
-}
-
-pre{
-  background:#050d17;
-  border:1px solid #173047;
+.qr{
+  width:190px;
+  height:190px;
+  margin:15px auto;
+  display:block;
+  background:#fff;
+  padding:8px;
   border-radius:12px;
-  padding:15px;
-  overflow:auto;
-  white-space:pre-wrap;
-  word-break:break-word;
-  color:#9fd1ff;
-  font-size:12px;
-  line-height:1.6;
 }
 
 .hidden{
-  display:none;
+  display:none!important;
 }
 
-.loading{
-  color:#8eb4d3;
+pre.debug{
+  white-space:pre-wrap;
+  word-break:break-word;
+  color:#9fb4c9;
+  font-size:11px;
+  max-height:260px;
+  overflow:auto;
+  background:#07111f;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+}
+
+.footer{
+  text-align:center;
+  color:#637891;
+  font-size:11px;
+  padding:25px 0 8px;
 }
 
 @media(max-width:850px){
-  .grid{
-    grid-template-columns:1fr;
+  .card,.card.wide{
+    grid-column:1/-1;
   }
 
-  .two{
-    grid-template-columns:1fr;
+  .plan-list{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:560px){
+  .app{
+    padding:12px;
+  }
+
+  .hero{
+    padding:22px;
   }
 
   .hero h2{
-    font-size:30px;
+    font-size:34px;
   }
 
-  .header-inner{
-    align-items:flex-start;
+  .plan-list{
+    grid-template-columns:1fr;
   }
 
-  .status{
-    font-size:10px;
+  .stats{
+    grid-template-columns:1fr 1fr 1fr;
   }
 }
 </style>
@@ -322,1049 +423,1153 @@ pre{
 
 <body>
 
-<header>
-  <div class="header-inner">
+<div class="app">
 
+  <header class="topbar">
     <div class="brand">
       <div class="logo">TK</div>
       <div>
         <h1>TELKU</h1>
-        <p>Global Connectivity Engine</p>
+        <p>Global eSIM Experience</p>
       </div>
     </div>
 
-    <div id="connectionStatus" class="status demo">
-      CHECKING DATABASE...
+    <div class="status">
+      <span id="statusDot" class="dot"></span>
+      <span id="statusText">Connecting...</span>
     </div>
+  </header>
 
+  <section class="hero">
+    <h2>Stay connected <span>wherever you go.</span></h2>
+    <p>
+      Pilih negara, pilih paket eSIM, lakukan order,
+      dan kelola eSIM dalam satu pengalaman TELKU.
+    </p>
+  </section>
+
+  <main class="grid">
+
+    <section class="card">
+      <h3>🌎 Destination</h3>
+      <div class="sub">Pilih negara tujuan</div>
+
+      <div class="field">
+        <label>Country</label>
+        <select id="countrySelect">
+          <option value="">Loading countries...</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="loadPlans()">
+        Cari Paket
+      </button>
+    </section>
+
+    <section class="card wide">
+      <h3>📡 TELKU Status</h3>
+      <div class="sub">Connection & database information</div>
+
+      <div class="stats">
+        <div class="stat">
+          <b id="countryCount">-</b>
+          <span>Countries</span>
+        </div>
+
+        <div class="stat">
+          <b id="planCount">-</b>
+          <span>Plans</span>
+        </div>
+
+        <div class="stat">
+          <b id="esimCount">-</b>
+          <span>eSIM</span>
+        </div>
+      </div>
+
+      <br>
+
+      <div id="connectionMessage" class="message">
+        Menghubungkan ke Supabase...
+      </div>
+    </section>
+
+    <section class="card full">
+      <h3>📦 eSIM Plans</h3>
+      <div class="sub">
+        Paket tersedia dari database TELKU.
+      </div>
+
+      <div id="plansMessage" class="message">
+        Pilih negara terlebih dahulu.
+      </div>
+
+      <div id="planList" class="plan-list"></div>
+    </section>
+
+    <section class="card wide">
+      <h3>🛒 Order</h3>
+      <div class="sub">Review paket sebelum membuat order.</div>
+
+      <div id="orderEmpty" class="message">
+        Belum ada paket dipilih.
+      </div>
+
+      <div id="orderBox" class="order-box hidden">
+
+        <div class="row">
+          <span>Plan</span>
+          <b id="orderPlan">-</b>
+        </div>
+
+        <div class="row">
+          <span>Data</span>
+          <b id="orderData">-</b>
+        </div>
+
+        <div class="row">
+          <span>Validity</span>
+          <b id="orderValidity">-</b>
+        </div>
+
+        <div class="row">
+          <span>Price</span>
+          <b id="orderPrice">-</b>
+        </div>
+
+        <br>
+
+        <div class="field">
+          <label>Customer Name</label>
+          <input id="customerName" placeholder="Nama lengkap">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="customerEmail" type="email" placeholder="email@example.com">
+        </div>
+
+        <div class="field">
+          <label>Phone</label>
+          <input id="customerPhone" placeholder="+62...">
+        </div>
+
+        <button id="orderButton" class="btn" onclick="createOrder()">
+          Create Order
+        </button>
+
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>📲 My eSIM</h3>
+      <div class="sub">Cari eSIM berdasarkan order.</div>
+
+      <div class="field">
+        <label>Order ID / eSIM Code</label>
+        <input id="lookupInput" placeholder="Masukkan ID atau eSIM code">
+      </div>
+
+      <button class="btn secondary" onclick="lookupEsim()">
+        Cek eSIM
+      </button>
+    </section>
+
+    <section class="card full">
+      <h3>📱 eSIM Result</h3>
+
+      <div id="esimMessage" class="message">
+        Belum ada data eSIM.
+      </div>
+
+      <div id="esimResult" class="order-box hidden">
+
+        <div class="row">
+          <span>eSIM Code</span>
+          <b id="resultCode">-</b>
+        </div>
+
+        <div class="row">
+          <span>Order ID</span>
+          <b id="resultOrder">-</b>
+        </div>
+
+        <div class="row">
+          <span>Status</span>
+          <b id="resultStatus">-</b>
+        </div>
+
+        <div class="row">
+          <span>ICCID</span>
+          <b id="resultIccid">-</b>
+        </div>
+
+        <div class="row">
+          <span>Activation</span>
+          <b id="resultActivation">-</b>
+        </div>
+
+        <div id="qrArea" class="hidden">
+          <img id="qrImage" class="qr" alt="eSIM QR">
+        </div>
+
+      </div>
+    </section>
+
+    <section class="card full">
+      <h3>🔧 Database Diagnostics</h3>
+      <div class="sub">
+        Pemeriksaan koneksi TELKU tanpa secret key.
+      </div>
+
+      <button class="btn secondary" onclick="runDiagnostics()">
+        Run Diagnostics
+      </button>
+
+      <br><br>
+
+      <pre id="debug" class="debug">Ready.</pre>
+    </section>
+
+  </main>
+
+  <div class="footer">
+    TELKU V3.2 · HOBBIGO ecosystem
   </div>
-</header>
 
-<main>
-
-<section class="hero">
-  <h2>Global Connectivity Engine</h2>
-  <p>
-    TELKU V3.1C membaca database TELKU secara aman menggunakan
-    Supabase Publishable Key. Sistem dibuat adaptif terhadap struktur
-    database sehingga tidak bergantung pada nama kolom tertentu.
-  </p>
-</section>
-
-<div class="tabs">
-  <button class="tab active" onclick="showTab('dashboard',this)">Dashboard</button>
-  <button class="tab" onclick="showTab('providers',this)">Providers</button>
-  <button class="tab" onclick="showTab('networks',this)">Networks</button>
-  <button class="tab" onclick="showTab('plans',this)">Plans</button>
-  <button class="tab" onclick="showTab('esims',this)">My eSIM</button>
-  <button class="tab" onclick="showTab('logs',this)">Sync Logs</button>
-  <button class="tab" onclick="reloadAll()">↻ Refresh</button>
 </div>
 
-<div id="messageBox"></div>
-
-<!-- DASHBOARD -->
-<section id="dashboard">
-
-  <div class="grid">
-
-    <div class="card">
-      <div id="providerCount" class="stat-number">0</div>
-      <div class="stat-label">Providers</div>
-    </div>
-
-    <div class="card">
-      <div id="countryCount" class="stat-number">0</div>
-      <div class="stat-label">Countries</div>
-    </div>
-
-    <div class="card">
-      <div id="networkCount" class="stat-number">0</div>
-      <div class="stat-label">Networks</div>
-    </div>
-
-  </div>
-
-  <div class="two">
-
-    <div class="card">
-
-      <h3>Database Connection</h3>
-
-      <div class="card-sub">
-        Live status koneksi TELKU ke Supabase.
-      </div>
-
-      <div id="databaseModule"></div>
-
-    </div>
-
-    <div class="card">
-
-      <h3>Connectivity Engine</h3>
-
-      <div class="card-sub">
-        Engine utama TELKU untuk membaca provider,
-        network, plan dan eSIM.
-      </div>
-
-      <div class="module">
-        <strong>Provider Manager</strong>
-        <span id="providerEngine">0 provider(s)</span>
-      </div>
-
-      <div class="module">
-        <strong>Network Directory</strong>
-        <span id="networkEngine">0 network(s)</span>
-      </div>
-
-      <div class="module">
-        <strong>Plan Catalog</strong>
-        <span id="planEngine">0 plan(s)</span>
-      </div>
-
-      <div class="module">
-        <strong>eSIM Engine</strong>
-        <span id="esimEngine">0 eSIM(s)</span>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <h3>Database Diagnostics</h3>
-
-    <div class="card-sub">
-      Informasi teknis hanya untuk pemeriksaan TELKU.
-    </div>
-
-    <pre id="diagnostics">Checking...</pre>
-
-  </div>
-
-</section>
-
-<!-- PROVIDERS -->
-<section id="providers" class="hidden">
-
-  <div class="card">
-
-    <h3>Providers</h3>
-
-    <div class="card-sub">
-      Data provider yang tersedia di database TELKU.
-    </div>
-
-    <div id="providersTable" class="table-wrap">
-      <span class="loading">Loading...</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- NETWORKS -->
-<section id="networks" class="hidden">
-
-  <div class="card">
-
-    <h3>Networks</h3>
-
-    <div class="card-sub">
-      Network/operator yang tersedia.
-    </div>
-
-    <div id="networksTable" class="table-wrap">
-      <span class="loading">Loading...</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PLANS -->
-<section id="plans" class="hidden">
-
-  <div class="card">
-
-    <h3>Plans</h3>
-
-    <div class="card-sub">
-      Catalog paket konektivitas TELKU.
-    </div>
-
-    <div id="plansTable" class="table-wrap">
-      <span class="loading">Loading...</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ESIMS -->
-<section id="esims" class="hidden">
-
-  <div class="card">
-
-    <h3>My eSIM</h3>
-
-    <div class="card-sub">
-      eSIM yang tersedia di database.
-    </div>
-
-    <div id="esimsTable" class="table-wrap">
-      <span class="loading">Loading...</span>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- LOGS -->
-<section id="logs" class="hidden">
-
-  <div class="card">
-
-    <h3>Sync Logs</h3>
-
-    <div class="card-sub">
-      Log aktivitas database TELKU.
-    </div>
-
-    <div id="logsTable" class="table-wrap">
-      <span class="loading">Loading...</span>
-    </div>
-
-  </div>
-
-</section>
-
-</main>
-
 <script>
-
 /* =========================================================
-   TELKU V3.1C
-   ROBUST SUPABASE CONNECTION
-   ========================================================= */
-
-/*
+   TELKU V3.2
+   Supabase REST connection
    IMPORTANT:
-   Hanya gunakan Publishable Key di browser.
-
-   JANGAN memasukkan Supabase Secret Key ke file ini.
-*/
+   Only publishable/anon key belongs in frontend.
+   NEVER put a Supabase secret/service-role key here.
+========================================================= */
 
 const SUPABASE_URL =
   "https://xozjhayxttryegynntld.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+/*
+  Publishable key supplied for this project.
+  This is intentionally NOT the secret key.
+*/
+const SUPABASE_KEY =
   "sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
 
-
-/* ---------------------------------------------------------
-   TABLE CANDIDATES
-   --------------------------------------------------------- */
-
-const TABLES = [
-  "providers",
-  "networks",
-  "provider_plans",
-  "esims",
-  "usage_logs",
-  "status_logs",
-  "webhook_events"
-];
-
-
-/* ---------------------------------------------------------
-   GLOBAL STATE
-   --------------------------------------------------------- */
-
-const DB = {
-
-  connected:false,
-
-  tables:{},
-
-  providers:[],
-  networks:[],
-  plans:[],
-  esims:[],
-  usage:[],
-  status:[],
-  webhooks:[],
-
-  errors:[]
-
+const TABLES = {
+  countries: "country",
+  plans: "telku_plans",
+  esims: "telku_esims",
+  orders: "telku_oder",
+  topups: "telku_topups",
+  usage: "telku_usage"
 };
 
+let countries = [];
+let plans = [];
+let selectedPlan = null;
 
-/* ---------------------------------------------------------
-   SUPABASE REQUEST
-   --------------------------------------------------------- */
+function headers(extra = {}) {
+  return {
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Content-Type": "application/json",
+    ...extra
+  };
+}
 
-async function supabaseRequest(table){
-
+async function supabaseGet(table, query = "") {
   const url =
     SUPABASE_URL +
     "/rest/v1/" +
     encodeURIComponent(table) +
-    "?select=*";
+    "?select=*" +
+    (query ? "&" + query : "");
 
-  const response = await fetch(url,{
-    method:"GET",
-
-    headers:{
-      "apikey":SUPABASE_PUBLISHABLE_KEY,
-      "Authorization":
-        "Bearer " + SUPABASE_PUBLISHABLE_KEY,
-      "Accept":"application/json"
-    }
+  const response = await fetch(url, {
+    method: "GET",
+    headers: headers()
   });
 
   const text = await response.text();
 
-  let data=null;
+  let data;
 
-  try{
+  try {
     data = text ? JSON.parse(text) : null;
-  }catch(e){
+  } catch {
     data = text;
   }
 
-  if(!response.ok){
-
+  if (!response.ok) {
     throw new Error(
       "HTTP " +
       response.status +
       " — " +
       (
-        data &&
-        (
-          data.message ||
-          data.error_description ||
-          data.hint ||
-          data.details
-        )
-        || text
-        || "Unknown database error"
+        typeof data === "string"
+          ? data
+          : data?.message ||
+            data?.hint ||
+            JSON.stringify(data)
       )
     );
-
   }
 
-  return Array.isArray(data) ? data : [];
-
+  return data;
 }
 
+async function supabasePost(table, body) {
 
-/* ---------------------------------------------------------
-   LOAD TABLE
-   --------------------------------------------------------- */
+  const url =
+    SUPABASE_URL +
+    "/rest/v1/" +
+    encodeURIComponent(table);
 
-async function loadTable(table){
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers({
+      "Prefer": "return=representation"
+    }),
+    body: JSON.stringify(body)
+  });
 
-  try{
+  const text = await response.text();
 
-    const rows = await supabaseRequest(table);
+  let data;
 
-    DB.tables[table] = {
-      exists:true,
-      rows:rows
-    };
-
-    return rows;
-
-  }catch(error){
-
-    DB.tables[table] = {
-      exists:false,
-      rows:[],
-      error:error.message
-    };
-
-    DB.errors.push(
-      table + ": " + error.message
-    );
-
-    return [];
-
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = text;
   }
 
-}
-
-
-/* ---------------------------------------------------------
-   LOAD DATABASE
-   --------------------------------------------------------- */
-
-async function loadDatabase(){
-
-  DB.connected=false;
-  DB.errors=[];
-
-  setStatus(
-    "CHECKING DATABASE...",
-    "demo"
-  );
-
-  setDiagnostics("Connecting to Supabase...");
-
-  const results = await Promise.all(
-    TABLES.map(table => loadTable(table))
-  );
-
-  DB.providers = results[0];
-  DB.networks = results[1];
-  DB.plans = results[2];
-  DB.esims = results[3];
-  DB.usage = results[4];
-  DB.status = results[5];
-  DB.webhooks = results[6];
-
-
-  /*
-     Connection dianggap berhasil bila minimal
-     endpoint Supabase dapat membaca salah satu
-     table.
-  */
-
-  const successfulTables =
-    Object.values(DB.tables)
-      .filter(x => x.exists)
-      .length;
-
-
-  if(successfulTables > 0){
-
-    DB.connected=true;
-
-    setStatus(
-      "🟢 SUPABASE CONNECTED",
-      "ok"
-    );
-
-    showMessage(
-      "Supabase berhasil dibaca. " +
-      successfulTables +
-      " database module aktif.",
-      "ok"
-    );
-
-  }else{
-
-    setStatus(
-      "🔴 DATABASE ERROR",
-      "error"
-    );
-
-    showMessage(
-      "Database belum dapat dibaca. " +
-      "Lihat Database Diagnostics di bawah.",
-      "error"
-    );
-
-  }
-
-
-  renderAll();
-
-}
-
-
-/* ---------------------------------------------------------
-   STATUS
-   --------------------------------------------------------- */
-
-function setStatus(text,type){
-
-  const el =
-    document.getElementById("connectionStatus");
-
-  el.textContent=text;
-
-  el.className =
-    "status " + type;
-
-}
-
-
-/* ---------------------------------------------------------
-   MESSAGE
-   --------------------------------------------------------- */
-
-function showMessage(text,type){
-
-  document.getElementById("messageBox").innerHTML =
-
-    `<div class="alert ${type}">
-      ${escapeHtml(text)}
-    </div>`;
-
-}
-
-
-/* ---------------------------------------------------------
-   DIAGNOSTICS
-   --------------------------------------------------------- */
-
-function setDiagnostics(text){
-
-  document.getElementById("diagnostics")
-    .textContent=text;
-
-}
-
-
-function buildDiagnostics(){
-
-  const lines=[];
-
-  lines.push(
-    "TELKU V3.1C DATABASE DIAGNOSTICS"
-  );
-
-  lines.push(
-    "Project: " + SUPABASE_URL
-  );
-
-  lines.push(
-    "----------------------------------------"
-  );
-
-
-  TABLES.forEach(table => {
-
-    const info=DB.tables[table];
-
-    if(!info){
-
-      lines.push(
-        table + " : NOT CHECKED"
-      );
-
-    }else if(info.exists){
-
-      lines.push(
-        table +
-        " : OK (" +
-        info.rows.length +
-        " rows)"
-      );
-
-    }else{
-
-      lines.push(
-        table +
-        " : ERROR → " +
-        info.error
-      );
-
-    }
-
-  });
-
-
-  lines.push(
-    "----------------------------------------"
-  );
-
-
-  if(DB.errors.length===0){
-
-    lines.push(
-      "No database errors detected."
-    );
-
-  }else{
-
-    lines.push(
-      "ERROR DETAILS:"
-    );
-
-    DB.errors.forEach(error=>{
-      lines.push("• " + error);
-    });
-
-  }
-
-
-  return lines.join("\n");
-
-}
-
-
-/* ---------------------------------------------------------
-   RENDER ALL
-   --------------------------------------------------------- */
-
-function renderAll(){
-
-  const providerCount =
-    DB.providers.length;
-
-  const networkCount =
-    DB.networks.length;
-
-  const planCount =
-    DB.plans.length;
-
-  const esimCount =
-    DB.esims.length;
-
-
-  /*
-     Countries dihitung dari berbagai kemungkinan
-     nama field sehingga tidak tergantung schema tertentu.
-  */
-
-  const countries = new Set();
-
-  DB.networks.forEach(row=>{
-
-    const value =
-      firstValue(row,[
-        "country_code",
-        "country",
-        "country_name",
-        "iso_code"
-      ]);
-
-    if(value){
-      countries.add(String(value));
-    }
-
-  });
-
-
-  DB.plans.forEach(row=>{
-
-    const value =
-      firstValue(row,[
-        "country_code",
-        "country",
-        "country_name"
-      ]);
-
-    if(value){
-      countries.add(String(value));
-    }
-
-  });
-
-
-  document.getElementById("providerCount")
-    .textContent=providerCount;
-
-  document.getElementById("networkCount")
-    .textContent=networkCount;
-
-  document.getElementById("countryCount")
-    .textContent=countries.size;
-
-
-  document.getElementById("providerEngine")
-    .textContent=
-    providerCount + " provider(s)";
-
-  document.getElementById("networkEngine")
-    .textContent=
-    networkCount + " network(s)";
-
-  document.getElementById("planEngine")
-    .textContent=
-    planCount + " plan(s)";
-
-  document.getElementById("esimEngine")
-    .textContent=
-    esimCount + " eSIM(s)";
-
-
-  renderDatabaseModule();
-
-  renderTable(
-    "providersTable",
-    DB.providers
-  );
-
-  renderTable(
-    "networksTable",
-    DB.networks
-  );
-
-  renderTable(
-    "plansTable",
-    DB.plans
-  );
-
-  renderTable(
-    "esimsTable",
-    DB.esims
-  );
-
-  renderLogs();
-
-  setDiagnostics(
-    buildDiagnostics()
-  );
-
-}
-
-
-/* ---------------------------------------------------------
-   DATABASE MODULE
-   --------------------------------------------------------- */
-
-function renderDatabaseModule(){
-
-  const el =
-    document.getElementById("databaseModule");
-
-
-  if(DB.connected){
-
-    el.innerHTML=`
-
-      <div class="module">
-        <strong>🟢 Connection Active</strong>
-        <span>Supabase REST Data API dapat diakses.</span>
-      </div>
-
-      <div class="module">
-        <strong>Project</strong>
-        <span>TELKU HOBBIGO</span>
-      </div>
-
-      <div class="module">
-        <strong>Database</strong>
-        <span>Supabase PostgreSQL</span>
-      </div>
-
-    `;
-
-  }else{
-
-    el.innerHTML=`
-
-      <div class="module" style="border-left-color:#ff5577">
-        <strong>🔴 Connection Failed</strong>
-        <span>
-          Supabase endpoint belum dapat membaca
-          database menggunakan Publishable Key.
-        </span>
-      </div>
-
-      <div class="module">
-        <strong>Next Check</strong>
-        <span>
-          Lihat Database Diagnostics untuk error sebenarnya.
-        </span>
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* ---------------------------------------------------------
-   GENERIC TABLE RENDERER
-   --------------------------------------------------------- */
-
-function renderTable(targetId,rows){
-
-  const el=
-    document.getElementById(targetId);
-
-
-  if(!rows || rows.length===0){
-
-    el.innerHTML=
-      `<div class="module">
-        <strong>No data</strong>
-        <span>
-          Belum ada record yang dapat dibaca.
-        </span>
-      </div>`;
-
-    return;
-
-  }
-
-
-  /*
-     Ambil maksimal 8 kolom pertama
-     dari schema sebenarnya.
-  */
-
-  const columns =
-    Object.keys(rows[0]).slice(0,8);
-
-
-  let html="<table><thead><tr>";
-
-
-  columns.forEach(column=>{
-
-    html +=
-      "<th>" +
-      escapeHtml(column) +
-      "</th>";
-
-  });
-
-
-  html +=
-    "</tr></thead><tbody>";
-
-
-  rows.slice(0,50).forEach(row=>{
-
-    html += "<tr>";
-
-
-    columns.forEach(column=>{
-
-      let value=row[column];
-
-      if(value===null ||
-         value===undefined){
-
-        value="—";
-
-      }
-
-      if(typeof value==="object"){
-
-        value=
-          JSON.stringify(value);
-
-      }
-
-
-      html +=
-        "<td>" +
-        escapeHtml(String(value)) +
-        "</td>";
-
-    });
-
-
-    html += "</tr>";
-
-  });
-
-
-  html +=
-    "</tbody></table>";
-
-
-  el.innerHTML=html;
-
-}
-
-
-/* ---------------------------------------------------------
-   LOGS
-   --------------------------------------------------------- */
-
-function renderLogs(){
-
-  const combined=[];
-
-
-  DB.usage.forEach(row=>{
-    combined.push({
-      source:"usage_logs",
-      row:row
-    });
-  });
-
-
-  DB.status.forEach(row=>{
-    combined.push({
-      source:"status_logs",
-      row:row
-    });
-  });
-
-
-  DB.webhooks.forEach(row=>{
-    combined.push({
-      source:"webhook_events",
-      row:row
-    });
-  });
-
-
-  const el=
-    document.getElementById("logsTable");
-
-
-  if(combined.length===0){
-
-    el.innerHTML=
-      `<div class="module">
-        <strong>No sync logs</strong>
-        <span>
-          Belum ada log yang tersedia.
-        </span>
-      </div>`;
-
-    return;
-
-  }
-
-
-  let html=
-    "<table><thead>" +
-    "<tr><th>Source</th><th>Data</th></tr>" +
-    "</thead><tbody>";
-
-
-  combined.slice(0,50).forEach(item=>{
-
-    html +=
-      "<tr>" +
-      "<td>" +
-      escapeHtml(item.source) +
-      "</td>" +
-      "<td>" +
-      escapeHtml(
-        JSON.stringify(item.row)
-      ) +
-      "</td>" +
-      "</tr>";
-
-  });
-
-
-  html +=
-    "</tbody></table>";
-
-
-  el.innerHTML=html;
-
-}
-
-
-/* ---------------------------------------------------------
-   FIND FIRST VALUE
-   --------------------------------------------------------- */
-
-function firstValue(row,keys){
-
-  for(const key of keys){
-
-    if(
-      Object.prototype.hasOwnProperty.call(
-        row,
-        key
+  if (!response.ok) {
+    throw new Error(
+      "HTTP " +
+      response.status +
+      " — " +
+      (
+        typeof data === "string"
+          ? data
+          : data?.message ||
+            data?.hint ||
+            JSON.stringify(data)
       )
-    ){
-
-      const value=row[key];
-
-      if(
-        value!==null &&
-        value!==undefined &&
-        value!==""
-      ){
-
-        return value;
-
-      }
-
-    }
-
+    );
   }
 
-  return null;
-
+  return data;
 }
 
+function setStatus(type, text) {
 
-/* ---------------------------------------------------------
-   ESCAPE HTML
-   --------------------------------------------------------- */
+  const dot = document.getElementById("statusDot");
+  const label = document.getElementById("statusText");
 
-function escapeHtml(value){
+  dot.className = "dot";
+
+  if (type === "online") {
+    dot.classList.add("online");
+  }
+
+  if (type === "error") {
+    dot.classList.add("error");
+  }
+
+  label.textContent = text;
+}
+
+function setMessage(id, text, type = "") {
+
+  const el = document.getElementById(id);
+
+  if (!el) return;
+
+  el.className = "message";
+
+  if (type) {
+    el.classList.add(type);
+  }
+
+  el.textContent = text;
+}
+
+function escapeHtml(value) {
+
+  if (value === null || value === undefined) {
+    return "";
+  }
 
   return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
+function firstValue(obj, keys, fallback = "") {
 
-/* ---------------------------------------------------------
-   TAB
-   --------------------------------------------------------- */
+  for (const key of keys) {
 
-function showTab(tab,button){
-
-  document
-    .querySelectorAll("main > section")
-    .forEach(section=>{
-      section.classList.add("hidden");
-    });
-
-
-  const selected=
-    document.getElementById(tab);
-
-  if(selected){
-    selected.classList.remove("hidden");
+    if (
+      obj &&
+      Object.prototype.hasOwnProperty.call(obj, key) &&
+      obj[key] !== null &&
+      obj[key] !== undefined &&
+      obj[key] !== ""
+    ) {
+      return obj[key];
+    }
   }
 
+  return fallback;
+}
 
-  document
-    .querySelectorAll(".tab")
-    .forEach(btn=>{
-      btn.classList.remove("active");
-    });
+function formatMoney(value, currency = "USD") {
 
+  const number = Number(value);
 
-  if(button){
-    button.classList.add("active");
+  if (!Number.isFinite(number)) {
+    return String(value || "-");
   }
 
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currency || "USD",
+      maximumFractionDigits: 2
+    }).format(number);
+  } catch {
+    return String(number) + " " + currency;
+  }
 }
 
+/* =========================================================
+   COUNTRIES
+========================================================= */
 
-/* ---------------------------------------------------------
-   REFRESH
-   --------------------------------------------------------- */
+async function loadCountries() {
 
-async function reloadAll(){
+  try {
 
-  document.getElementById("diagnostics")
-    .textContent=
-    "Refreshing database...";
+    setStatus("loading", "Loading database...");
 
-  await loadDatabase();
+    const data = await supabaseGet(
+      TABLES.countries,
+      "active=eq.true&order=country_name.asc"
+    );
 
+    countries = Array.isArray(data) ? data : [];
+
+    const select =
+      document.getElementById("countrySelect");
+
+    select.innerHTML =
+      '<option value="">Pilih negara...</option>';
+
+    countries.forEach(country => {
+
+      const id =
+        firstValue(
+          country,
+          ["id", "country_id", "country_code"]
+        );
+
+      const name =
+        firstValue(
+          country,
+          ["country_name", "name"],
+          "Unknown"
+        );
+
+      const flag =
+        firstValue(
+          country,
+          ["flag_emoji", "flag"],
+          "🌎"
+        );
+
+      const option =
+        document.createElement("option");
+
+      option.value = id;
+      option.textContent =
+        flag + " " + name;
+
+      select.appendChild(option);
+    });
+
+    document.getElementById("countryCount")
+      .textContent = countries.length;
+
+    setStatus("online", "Supabase connected");
+
+    setMessage(
+      "connectionMessage",
+      "Database TELKU berhasil terhubung.",
+      "success"
+    );
+
+  } catch (error) {
+
+    setStatus("error", "Database error");
+
+    setMessage(
+      "connectionMessage",
+      error.message,
+      "error"
+    );
+
+    document.getElementById("countrySelect").innerHTML =
+      '<option value="">Database country belum tersedia</option>';
+
+    console.error(error);
+  }
 }
 
+/* =========================================================
+   PLANS
+========================================================= */
 
-/* ---------------------------------------------------------
-   START
-   --------------------------------------------------------- */
+async function loadPlans() {
 
-window.addEventListener(
+  const countryId =
+    document.getElementById("countrySelect").value;
+
+  if (!countryId) {
+
+    setMessage(
+      "plansMessage",
+      "Pilih negara terlebih dahulu.",
+      "error"
+    );
+
+    return;
+  }
+
+  const list =
+    document.getElementById("planList");
+
+  list.innerHTML = "";
+
+  setMessage(
+    "plansMessage",
+    "Memuat paket..."
+  );
+
+  try {
+
+    /*
+      We request all rows first because the exact FK column
+      inside telku_plans is not assumed.
+    */
+    const data =
+      await supabaseGet(
+        TABLES.plans,
+        "order=created_at.desc"
+      );
+
+    plans = Array.isArray(data) ? data : [];
+
+    const filtered =
+      plans.filter(plan => {
+
+        const value =
+          firstValue(
+            plan,
+            [
+              "country_id",
+              "country_code",
+              "country"
+            ]
+          );
+
+        return String(value) === String(countryId);
+      });
+
+    /*
+      If filtering gives zero results, show all plans.
+      This avoids a false empty state when the DB uses
+      a different country reference format.
+    */
+    const displayPlans =
+      filtered.length ? filtered : plans;
+
+    document.getElementById("planCount")
+      .textContent = plans.length;
+
+    if (!displayPlans.length) {
+
+      setMessage(
+        "plansMessage",
+        "Belum ada paket pada telku_plans.",
+        "error"
+      );
+
+      return;
+    }
+
+    setMessage(
+      "plansMessage",
+      filtered.length
+        ? filtered.length + " paket tersedia."
+        : plans.length + " paket ditemukan. Country mapping perlu disesuaikan."
+    );
+
+    displayPlans.forEach(plan => {
+
+      const planName =
+        firstValue(
+          plan,
+          [
+            "plan_name",
+            "pane_name",
+            "name",
+            "title"
+          ],
+          "TELKU Plan"
+        );
+
+      const dataGb =
+        firstValue(
+          plan,
+          [
+            "data_gb",
+            "data",
+            "data_amount",
+            "gb"
+          ],
+          "-"
+        );
+
+      const validity =
+        firstValue(
+          plan,
+          [
+            "validity_days",
+            "validity",
+            "days"
+          ],
+          "-"
+        );
+
+      const price =
+        firstValue(
+          plan,
+          [
+            "price",
+            "amount"
+          ],
+          0
+        );
+
+      const currency =
+        firstValue(
+          plan,
+          [
+            "currency",
+            "currency_code"
+          ],
+          "USD"
+        );
+
+      const network =
+        firstValue(
+          plan,
+          [
+            "network",
+            "network_name"
+          ],
+          "Global Network"
+        );
+
+      const card =
+        document.createElement("div");
+
+      card.className = "plan";
+
+      card.innerHTML = `
+        <div class="plan-title">
+          ${escapeHtml(planName)}
+        </div>
+
+        <div class="plan-data">
+          ${escapeHtml(dataGb)} GB
+        </div>
+
+        <div class="plan-meta">
+          ${escapeHtml(validity)} days ·
+          ${escapeHtml(network)}
+        </div>
+
+        <div class="plan-price">
+          ${formatMoney(price, currency)}
+        </div>
+
+        <button onclick='selectPlan(${JSON.stringify(plan).replace(/'/g,"&#39;")})'>
+          Select Plan
+        </button>
+      `;
+
+      list.appendChild(card);
+    });
+
+  } catch (error) {
+
+    setMessage(
+      "plansMessage",
+      error.message,
+      "error"
+    );
+
+    console.error(error);
+  }
+}
+
+/* =========================================================
+   SELECT PLAN
+========================================================= */
+
+function selectPlan(plan) {
+
+  selectedPlan = plan;
+
+  const planName =
+    firstValue(
+      plan,
+      ["plan_name", "pane_name", "name", "title"],
+      "TELKU Plan"
+    );
+
+  const dataGb =
+    firstValue(
+      plan,
+      ["data_gb", "data", "data_amount", "gb"],
+      "-"
+    );
+
+  const validity =
+    firstValue(
+      plan,
+      ["validity_days", "validity", "days"],
+      "-"
+    );
+
+  const price =
+    firstValue(
+      plan,
+      ["price", "amount"],
+      0
+    );
+
+  const currency =
+    firstValue(
+      plan,
+      ["currency", "currency_code"],
+      "USD"
+    );
+
+  document.getElementById("orderPlan")
+    .textContent = planName;
+
+  document.getElementById("orderData")
+    .textContent = dataGb + " GB";
+
+  document.getElementById("orderValidity")
+    .textContent = validity + " days";
+
+  document.getElementById("orderPrice")
+    .textContent = formatMoney(price, currency);
+
+  document.getElementById("orderEmpty")
+    .classList.add("hidden");
+
+  document.getElementById("orderBox")
+    .classList.remove("hidden");
+
+  window.scrollTo({
+    top: document.getElementById("orderBox").getBoundingClientRect().top +
+      window.scrollY -
+      30,
+    behavior: "smooth"
+  });
+}
+
+/* =========================================================
+   CREATE ORDER
+========================================================= */
+
+async function createOrder() {
+
+  if (!selectedPlan) {
+
+    alert("Pilih paket terlebih dahulu.");
+
+    return;
+  }
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const email =
+    document.getElementById("customerEmail").value.trim();
+
+  const phone =
+    document.getElementById("customerPhone").value.trim();
+
+  if (!name || !email) {
+
+    alert("Nama dan email wajib diisi.");
+
+    return;
+  }
+
+  const button =
+    document.getElementById("orderButton");
+
+  button.disabled = true;
+  button.textContent = "Creating...";
+
+  try {
+
+    const planId =
+      firstValue(
+        selectedPlan,
+        ["id", "plan_id", "esim_plan_id"],
+        null
+      );
+
+    const price =
+      Number(
+        firstValue(
+          selectedPlan,
+          ["price", "amount"],
+          0
+        )
+      );
+
+    const currency =
+      firstValue(
+        selectedPlan,
+        ["currency", "currency_code"],
+        "USD"
+      );
+
+    const orderNumber =
+      "TELKU-" +
+      Date.now().toString(36).toUpperCase();
+
+    /*
+      telku_oder has an unknown exact column structure,
+      so this payload uses the columns already known from
+      the database work.
+    */
+
+    const body = {
+      order_number: orderNumber,
+      plan_id: planId,
+      esim_plan_id: planId,
+      quantity: 1,
+      total_amount: price,
+      amount: price,
+      currency: currency,
+      status: "pending",
+      payment_status: "pending",
+      order_status: "pending"
+    };
+
+    let result;
+
+    try {
+
+      result =
+        await supabasePost(
+          TABLES.orders,
+          body
+        );
+
+    } catch (firstError) {
+
+      /*
+        Some existing schemas may not accept all optional
+        columns. Retry with a smaller payload.
+      */
+
+      const fallbackBody = {
+        order_number: orderNumber,
+        plan_id: planId,
+        quantity: 1,
+        total_amount: price,
+        currency: currency,
+        status: "pending",
+        payment_status: "pending"
+      };
+
+      result =
+        await supabasePost(
+          TABLES.orders,
+          fallbackBody
+        );
+    }
+
+    const created =
+      Array.isArray(result)
+        ? result[0]
+        : result;
+
+    const orderId =
+      firstValue(
+        created,
+        [
+          "id",
+          "order_id",
+          "order_number"
+        ],
+        orderNumber
+      );
+
+    alert(
+      "Order berhasil dibuat.\n\nOrder: " +
+      orderId
+    );
+
+    document.getElementById("lookupInput").value =
+      String(orderId);
+
+  } catch (error) {
+
+    alert(
+      "Order belum dapat dibuat:\n\n" +
+      error.message
+    );
+
+    console.error(error);
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "Create Order";
+  }
+}
+
+/* =========================================================
+   LOOKUP eSIM
+========================================================= */
+
+async function lookupEsim() {
+
+  const value =
+    document.getElementById("lookupInput")
+      .value.trim();
+
+  if (!value) {
+
+    alert("Masukkan Order ID atau eSIM Code.");
+
+    return;
+  }
+
+  setMessage(
+    "esimMessage",
+    "Mencari eSIM..."
+  );
+
+  document.getElementById("esimResult")
+    .classList.add("hidden");
+
+  try {
+
+    const data =
+      await supabaseGet(
+        TABLES.esims,
+        "or=(order_id.eq." +
+        encodeURIComponent(value) +
+        ",esim_code.eq." +
+        encodeURIComponent(value) +
+        ")"
+      );
+
+    if (!Array.isArray(data) || !data.length) {
+
+      setMessage(
+        "esimMessage",
+        "eSIM belum ditemukan.",
+        "error"
+      );
+
+      return;
+    }
+
+    const esim = data[0];
+
+    document.getElementById("resultCode")
+      .textContent =
+      firstValue(esim, ["esim_code"], "-");
+
+    document.getElementById("resultOrder")
+      .textContent =
+      firstValue(esim, ["order_id"], "-");
+
+    document.getElementById("resultStatus")
+      .textContent =
+      firstValue(esim, ["status"], "-");
+
+    document.getElementById("resultIccid")
+      .textContent =
+      firstValue(esim, ["iccid"], "-");
+
+    document.getElementById("resultActivation")
+      .textContent =
+      firstValue(esim, ["activation_code"], "-");
+
+    const qr =
+      firstValue(
+        esim,
+        ["qr_payload"],
+        ""
+      );
+
+    if (qr) {
+
+      const qrImage =
+        document.getElementById("qrImage");
+
+      qrImage.src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=" +
+        encodeURIComponent(qr);
+
+      document.getElementById("qrArea")
+        .classList.remove("hidden");
+
+    } else {
+
+      document.getElementById("qrArea")
+        .classList.add("hidden");
+    }
+
+    document.getElementById("esimResult")
+      .classList.remove("hidden");
+
+    setMessage(
+      "esimMessage",
+      "eSIM ditemukan.",
+      "success"
+    );
+
+  } catch (error) {
+
+    setMessage(
+      "esimMessage",
+      error.message,
+      "error"
+    );
+
+    console.error(error);
+  }
+}
+
+/* =========================================================
+   DIAGNOSTICS
+========================================================= */
+
+async function runDiagnostics() {
+
+  const debug =
+    document.getElementById("debug");
+
+  debug.textContent =
+    "Running TELKU diagnostics...\n\n";
+
+  const checks = [
+    ["country", TABLES.countries],
+    ["telku_plans", TABLES.plans],
+    ["telku_esims", TABLES.esims],
+    ["telku_oder", TABLES.orders],
+    ["telku_topups", TABLES.topups],
+    ["telku_usage", TABLES.usage]
+  ];
+
+  for (const [label, table] of checks) {
+
+    try {
+
+      const data =
+        await supabaseGet(
+          table,
+          "limit=1"
+        );
+
+      debug.textContent +=
+        "✓ " +
+        label +
+        " → OK";
+
+      if (Array.isArray(data)) {
+        debug.textContent +=
+          " (" +
+          data.length +
+          " sample row)";
+      }
+
+      debug.textContent += "\n";
+
+    } catch (error) {
+
+      debug.textContent +=
+        "✗ " +
+        label +
+        " → " +
+        error.message +
+        "\n";
+    }
+  }
+
+  debug.textContent +=
+    "\nDiagnostics selesai.";
+}
+
+/* =========================================================
+   INIT
+========================================================= */
+
+async function init() {
+
+  setStatus(
+    "loading",
+    "Connecting..."
+  );
+
+  await loadCountries();
+
+  try {
+
+    const esims =
+      await supabaseGet(
+        TABLES.esims,
+        "limit=100"
+      );
+
+    document.getElementById("esimCount")
+      .textContent =
+      Array.isArray(esims)
+        ? esims.length
+        : "-";
+
+  } catch {
+
+    document.getElementById("esimCount")
+      .textContent = "-";
+  }
+}
+
+document.addEventListener(
   "DOMContentLoaded",
-  ()=>{
-    loadDatabase();
-  }
+  init
 );
-
 </script>
 
 </body>
