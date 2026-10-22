@@ -2,153 +2,106 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <title>TELKU V1.8</title>
 
-<style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
-html,
 body{
-  width:100%;
-  min-height:100%;
   font-family:Arial,Helvetica,sans-serif;
-  background:#07111f;
-  color:#fff;
-}
-
-body{
-  overflow-x:hidden;
-}
-
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
+  background:#f4f7fb;
+  color:#101828;
+  min-height:100vh;
 }
 
 .app{
+  max-width:520px;
+  margin:auto;
   min-height:100vh;
-  padding-bottom:85px;
+  background:#f4f7fb;
+  padding-bottom:82px;
 }
 
-/* ================= HEADER ================= */
+header{
+  background:#07111f;
+  color:white;
+  padding:22px 18px 20px;
+  border-radius:0 0 24px 24px;
+}
 
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:1000;
+.header-row{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:14px 16px;
-  background:rgba(7,17,31,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.07);
+  align-items:center;
 }
 
 .logo{
-  font-size:23px;
-  font-weight:900;
+  font-size:25px;
+  font-weight:800;
   letter-spacing:1px;
 }
 
 .logo span{
-  color:#19c7b8;
+  color:#35d0ba;
 }
 
-.header-btn{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.08);
-  background:#101d30;
-  color:#fff;
-}
-
-/* ================= MAIN ================= */
-
-main{
-  width:100%;
-  max-width:720px;
-  margin:auto;
-  padding:18px 15px 30px;
+.header-small{
+  font-size:12px;
+  opacity:.7;
+  margin-top:5px;
 }
 
 .page{
   display:none;
+  padding:18px;
 }
 
 .page.active{
   display:block;
 }
 
-/* ================= HERO ================= */
-
 .hero{
-  padding:24px 20px;
+  margin-top:18px;
+  background:linear-gradient(135deg,#0b223b,#123d60);
+  color:white;
+  padding:22px;
   border-radius:22px;
-  background:linear-gradient(135deg,#10233a,#0b1728);
-  border:1px solid rgba(255,255,255,.07);
-  margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:27px;
-  line-height:1.15;
+  font-size:25px;
+  line-height:1.2;
   margin-bottom:9px;
 }
 
 .hero p{
-  color:#91a1b6;
-  line-height:1.5;
   font-size:13px;
+  opacity:.8;
+  line-height:1.5;
 }
 
-/* ================= CARDS ================= */
+.section-title{
+  font-size:18px;
+  font-weight:800;
+  margin:22px 0 12px;
+}
 
 .card{
-  background:#0d1929;
-  border:1px solid rgba(255,255,255,.07);
+  background:white;
   border-radius:18px;
-  padding:16px;
+  padding:17px;
   margin-bottom:12px;
-}
-
-.card-title{
-  font-size:17px;
-  font-weight:800;
-  margin-bottom:12px;
-}
-
-.muted{
-  color:#8090a5;
-  font-size:12px;
-}
-
-/* ================= PLAN ================= */
-
-.plan{
-  background:#0d1929;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
+  box-shadow:0 5px 18px rgba(20,40,70,.07);
 }
 
 .plan-top{
@@ -158,955 +111,496 @@ main{
   gap:10px;
 }
 
-.plan h3{
+.plan-name{
   font-size:17px;
-  margin-bottom:6px;
-}
-
-.plan-price{
-  color:#19c7b8;
-  font-size:18px;
-  font-weight:900;
-}
-
-.plan-meta{
-  color:#8090a5;
-  font-size:12px;
-  margin:8px 0 14px;
-}
-
-.primary-btn{
-  width:100%;
-  border:none;
-  border-radius:12px;
-  padding:13px;
-  background:#19c7b8;
-  color:#06121e;
-  font-weight:900;
-}
-
-.secondary-btn{
-  width:100%;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:12px;
-  padding:12px;
-  background:#132238;
-  color:#fff;
-  font-weight:700;
-}
-
-/* ================= PROFILE ================= */
-
-.profile-header{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  padding:20px;
-  margin-bottom:15px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#101d31,#0b1525);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.profile-avatar{
-  width:54px;
-  height:54px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
   font-weight:800;
-  background:#19c7b8;
-  color:#06121f;
 }
 
-.profile-header h2{
-  margin-bottom:4px;
-}
-
-.profile-header p{
-  color:#91a0b5;
+.plan-detail{
+  color:#667085;
   font-size:13px;
+  margin-top:5px;
 }
 
-.profile-menu{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.profile-item{
-  width:100%;
-  min-height:72px;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:16px;
-  background:#0d1929;
-  color:white;
-  display:flex;
-  align-items:center;
-  text-align:left;
-  padding:12px 14px;
-}
-
-.profile-item.active{
-  border-color:rgba(25,199,184,.35);
-}
-
-.profile-icon{
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#15263b;
-  font-size:20px;
-  margin-right:12px;
-}
-
-.profile-text{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-
-.profile-text strong{
-  font-size:15px;
-}
-
-.profile-text small{
-  color:#7f91a8;
-  font-size:11px;
-}
-
-.profile-arrow{
-  font-size:25px;
-  color:#19c7b8;
-}
-
-.coming-badge{
-  font-size:8px;
+.price{
+  font-size:19px;
   font-weight:800;
-  letter-spacing:.4px;
-  padding:5px 7px;
-  border-radius:7px;
-  color:#8997a9;
-  background:#172233;
-  border:1px solid rgba(255,255,255,.06);
-  white-space:nowrap;
+  margin-top:13px;
 }
 
-/* ================= ORDERS ================= */
-
-.order-search{
-  display:flex;
-  gap:8px;
-  margin-bottom:15px;
-}
-
-.order-search input{
-  flex:1;
-  min-width:0;
-  border:1px solid rgba(255,255,255,.08);
+.btn{
+  border:0;
   border-radius:12px;
-  background:#0d1929;
-  color:#fff;
-  padding:12px;
-  outline:none;
+  padding:12px 16px;
+  font-weight:800;
+  cursor:pointer;
+  width:100%;
 }
 
-.order-card{
-  background:#0d1929;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:17px;
-  padding:15px;
-  margin-bottom:10px;
+.btn-primary{
+  background:#13b89f;
+  color:white;
 }
 
-.order-head{
+.btn-dark{
+  background:#07111f;
+  color:white;
+}
+
+.btn-light{
+  background:#edf2f7;
+  color:#07111f;
+}
+
+.plan-card .btn{
+  margin-top:13px;
+}
+
+.order-row{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   gap:10px;
-  margin-bottom:10px;
 }
 
-.order-id{
-  font-size:13px;
+.order-code{
   font-weight:800;
-}
-
-.status{
-  padding:5px 8px;
-  border-radius:8px;
-  background:#142b2b;
-  color:#19c7b8;
-  font-size:9px;
-  font-weight:900;
+  font-size:14px;
 }
 
 .order-info{
-  color:#8291a5;
+  color:#667085;
   font-size:12px;
-  line-height:1.7;
+  margin-top:5px;
+  line-height:1.5;
 }
 
-.order-total{
-  margin-top:10px;
-  font-weight:900;
-  color:#fff;
+.status{
+  background:#dcfaef;
+  color:#087443;
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap;
 }
 
 .empty{
   text-align:center;
-  padding:45px 20px;
-  color:#75859a;
+  padding:40px 20px;
+  color:#667085;
 }
 
 .empty-icon{
-  font-size:42px;
-  margin-bottom:12px;
+  font-size:40px;
+  margin-bottom:10px;
 }
 
-/* ================= DETAIL ================= */
+.profile-head{
+  background:#07111f;
+  color:white;
+  padding:22px;
+  border-radius:20px;
+}
 
-.detail-row{
+.profile-name{
+  font-size:21px;
+  font-weight:800;
+}
+
+.menu{
+  margin-top:15px;
+  background:white;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.menu-item{
+  padding:17px;
+  border-bottom:1px solid #edf0f4;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:15px;
-  padding:11px 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  cursor:pointer;
 }
 
-.detail-row:last-child{
-  border-bottom:none;
+.menu-item:last-child{
+  border-bottom:0;
 }
 
-.detail-label{
-  color:#7e8da2;
-  font-size:12px;
-}
-
-.detail-value{
-  text-align:right;
-  font-size:12px;
+.menu-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
   font-weight:700;
 }
 
-/* ================= NAV ================= */
+.menu-icon{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#eef8f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.coming{
+  font-size:10px;
+  background:#eef2f6;
+  color:#667085;
+  padding:5px 7px;
+  border-radius:10px;
+}
 
 .bottom-nav{
   position:fixed;
   bottom:0;
-  left:0;
-  right:0;
-  z-index:2000;
-  height:70px;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:white;
+  border-top:1px solid #e5e7eb;
   display:flex;
   justify-content:space-around;
-  align-items:center;
-  background:rgba(7,17,31,.97);
-  border-top:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(12px);
+  padding:10px 5px calc(10px + env(safe-area-inset-bottom));
+  z-index:50;
 }
 
 .nav-item{
-  flex:1;
-  border:none;
+  border:0;
   background:none;
-  color:#65758b;
-  font-size:10px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:5px;
-}
-
-.nav-item span{
-  font-size:21px;
+  color:#98a2b3;
+  font-size:11px;
+  cursor:pointer;
+  padding:5px 10px;
 }
 
 .nav-item.active{
-  color:#19c7b8;
+  color:#0b9f8c;
+  font-weight:800;
 }
 
-/* ================= MODAL ================= */
+.nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
 
-.modal{
+.modal-bg{
   position:fixed;
   inset:0;
-  z-index:9999;
+  background:rgba(0,0,0,.55);
   display:none;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
-  padding:20px;
-  background:rgba(0,0,0,.68);
+  z-index:100;
 }
 
-.modal.show{
+.modal-bg.show{
   display:flex;
 }
 
-.modal-box{
-  width:min(390px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:#0d1929;
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:22px;
+.modal{
+  width:100%;
+  max-width:520px;
+  background:white;
+  border-radius:25px 25px 0 0;
   padding:22px;
+  max-height:85vh;
+  overflow:auto;
 }
 
-.modal-title{
-  font-size:20px;
-  font-weight:900;
-  margin-bottom:8px;
+.modal h2{
+  margin-bottom:16px;
 }
 
-.modal-text{
-  color:#8796aa;
-  font-size:13px;
-  line-height:1.6;
-  margin-bottom:20px;
-}
-
-.modal-actions{
+.detail-line{
+  padding:12px 0;
+  border-bottom:1px solid #edf0f4;
   display:flex;
-  gap:10px;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.modal-actions button{
-  flex:1;
+.detail-line span:first-child{
+  color:#667085;
 }
 
-/* ================= TOAST ================= */
-
-#toast{
+.toast{
   position:fixed;
   left:50%;
-  bottom:88px;
+  bottom:95px;
   transform:translateX(-50%) translateY(20px);
-  z-index:10000;
+  background:#07111f;
+  color:white;
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:13px;
   opacity:0;
   pointer-events:none;
-  background:#132238;
-  border:1px solid rgba(255,255,255,.08);
-  color:#fff;
-  padding:12px 16px;
-  border-radius:12px;
-  font-size:12px;
   transition:.25s;
+  z-index:200;
+  max-width:90%;
+  text-align:center;
 }
 
-#toast.show{
+.toast.show{
   opacity:1;
   transform:translateX(-50%) translateY(0);
 }
 
-/* ================= RESPONSIVE ================= */
-
-@media(max-width:420px){
-
-  main{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .hero h1{
-    font-size:24px;
-  }
-
-  .coming-badge{
-    display:none;
-  }
-
+.loading{
+  text-align:center;
+  padding:30px;
+  color:#667085;
 }
-
 </style>
 </head>
-
 
 <body>
 
 <div class="app">
 
-<!-- ================= HEADER ================= -->
-
-<header class="topbar">
-
-  <div class="logo">
-    TEL<span>KU</span>
+<header>
+  <div class="header-row">
+    <div>
+      <div class="logo">TEL<span>KU</span></div>
+      <div class="header-small">Global eSIM • Simple Travel Connectivity</div>
+    </div>
+    <div>🌐</div>
   </div>
-
-  <button class="header-btn"
-          onclick="comingSoon('Notifications')">
-    🔔
-  </button>
-
 </header>
 
-
-<main>
-
-
-<!-- =====================================================
-     HOME
-===================================================== -->
-
+<!-- HOME -->
 <section id="homePage" class="page active">
 
   <div class="hero">
-
-    <h1>
-      Stay Connected<br>
-      Anywhere.
-    </h1>
-
+    <h1>Stay Connected<br>Wherever You Go.</h1>
     <p>
-      Global eSIM connectivity for your next journey.
-      Simple, fast and flexible.
+      Get your travel eSIM instantly. No physical SIM.
+      Simple, fast and ready for your journey.
     </p>
-
   </div>
 
+  <div class="section-title">Popular eSIM Plans</div>
 
-  <div class="card">
-
-    <div class="card-title">
-      Popular eSIM Plans
+  <div class="card plan-card">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name">🇮🇩 Indonesia</div>
+        <div class="plan-detail">3 GB • 7 Days</div>
+      </div>
+      <div>📶</div>
     </div>
+    <div class="price">Rp 59.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Indonesia','3 GB / 7 Days',59000)">
+      Buy Plan
+    </button>
+  </div>
 
-    <div class="plan">
-
-      <div class="plan-top">
-
-        <div>
-          <h3>Asia Travel</h3>
-          <div class="muted">
-            Multi-country coverage
-          </div>
-        </div>
-
-        <div class="plan-price">
-          Rp 99K
-        </div>
-
+  <div class="card plan-card">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name">🌏 Asia Travel</div>
+        <div class="plan-detail">5 GB • 15 Days</div>
       </div>
-
-      <div class="plan-meta">
-        5 GB · 15 Days · eSIM
-      </div>
-
-      <button class="primary-btn"
-              onclick="createDemoOrder('Asia Travel','5 GB / 15 Days',99000)">
-        Buy Plan
-      </button>
-
+      <div>🌏</div>
     </div>
+    <div class="price">Rp 99.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Asia Travel','5 GB / 15 Days',99000)">
+      Buy Plan
+    </button>
+  </div>
 
-
-    <div class="plan">
-
-      <div class="plan-top">
-
-        <div>
-          <h3>Indonesia</h3>
-          <div class="muted">
-            Local connectivity
-          </div>
-        </div>
-
-        <div class="plan-price">
-          Rp 59K
-        </div>
-
+  <div class="card plan-card">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name">🌎 Global Travel</div>
+        <div class="plan-detail">10 GB • 30 Days</div>
       </div>
-
-      <div class="plan-meta">
-        3 GB · 7 Days · eSIM
-      </div>
-
-      <button class="primary-btn"
-              onclick="createDemoOrder('Indonesia','3 GB / 7 Days',59000)">
-        Buy Plan
-      </button>
-
+      <div>🌎</div>
     </div>
-
+    <div class="price">Rp 249.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Global Travel','10 GB / 30 Days',249000)">
+      Buy Plan
+    </button>
   </div>
 
 </section>
 
 
-<!-- =====================================================
-     ESIM PLANS
-===================================================== -->
-
+<!-- PLANS -->
 <section id="plansPage" class="page">
 
-  <div class="hero">
+  <div class="section-title">eSIM Plans</div>
 
-    <h1>eSIM Plans</h1>
-
-    <p>
-      Choose a plan for your destination.
-    </p>
-
+  <div class="card plan-card">
+    <div class="plan-name">🇮🇩 Indonesia</div>
+    <div class="plan-detail">3 GB / 7 Days</div>
+    <div class="price">Rp 59.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Indonesia','3 GB / 7 Days',59000)">
+      Buy Plan
+    </button>
   </div>
 
-
-  <div class="plan">
-
-    <div class="plan-top">
-
-      <div>
-        <h3>Indonesia Travel</h3>
-        <div class="muted">
-          3 GB / 7 Days
-        </div>
-      </div>
-
-      <div class="plan-price">
-        Rp 59K
-      </div>
-
-    </div>
-
-    <button class="primary-btn"
-            onclick="createDemoOrder('Indonesia Travel','3 GB / 7 Days',59000)">
-      Buy
+  <div class="card plan-card">
+    <div class="plan-name">🌏 Asia Travel</div>
+    <div class="plan-detail">5 GB / 15 Days</div>
+    <div class="price">Rp 99.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Asia Travel','5 GB / 15 Days',99000)">
+      Buy Plan
     </button>
-
   </div>
 
-
-  <div class="plan">
-
-    <div class="plan-top">
-
-      <div>
-        <h3>Asia Travel</h3>
-        <div class="muted">
-          5 GB / 15 Days
-        </div>
-      </div>
-
-      <div class="plan-price">
-        Rp 99K
-      </div>
-
-    </div>
-
-    <button class="primary-btn"
-            onclick="createDemoOrder('Asia Travel','5 GB / 15 Days',99000)">
-      Buy
+  <div class="card plan-card">
+    <div class="plan-name">🌎 Global Travel</div>
+    <div class="plan-detail">10 GB / 30 Days</div>
+    <div class="price">Rp 249.000</div>
+    <button class="btn btn-primary"
+      onclick="createOrder('Global Travel','10 GB / 30 Days',249000)">
+      Buy Plan
     </button>
-
-  </div>
-
-
-  <div class="plan">
-
-    <div class="plan-top">
-
-      <div>
-        <h3>Global Travel</h3>
-        <div class="muted">
-          10 GB / 30 Days
-        </div>
-      </div>
-
-      <div class="plan-price">
-        Rp 199K
-      </div>
-
-    </div>
-
-    <button class="primary-btn"
-            onclick="createDemoOrder('Global Travel','10 GB / 30 Days',199000)">
-      Buy
-    </button>
-
   </div>
 
 </section>
 
 
-<!-- =====================================================
-     ORDERS
-===================================================== -->
-
+<!-- ORDERS -->
 <section id="ordersPage" class="page">
 
-  <div class="hero">
+  <div class="section-title">My Orders</div>
 
-    <h1>My Orders</h1>
-
-    <p>
-      View your TELKU orders and transaction status.
-    </p>
-
+  <div id="ordersContainer">
+    <div class="loading">Loading orders...</div>
   </div>
-
-
-  <div class="order-search">
-
-    <input
-      id="orderSearch"
-      type="text"
-      placeholder="Search order..."
-      oninput="renderOrders()"
-    >
-
-  </div>
-
-
-  <div id="ordersContainer"></div>
 
 </section>
 
 
-<!-- =====================================================
-     ORDER DETAIL
-===================================================== -->
-
-<section id="orderDetailPage" class="page">
-
-  <div class="hero">
-
-    <h1>Order Detail</h1>
-
-    <p>
-      Transaction information.
-    </p>
-
-  </div>
-
-
-  <div id="orderDetailContainer"></div>
-
-
-  <button class="secondary-btn"
-          onclick="showPage('ordersPage')">
-    ← Back to Orders
-  </button>
-
-</section>
-
-
-<!-- =====================================================
-     PROFILE
-===================================================== -->
-
+<!-- PROFILE -->
 <section id="profilePage" class="page">
 
-  <div class="profile-header">
-
-    <div class="profile-avatar">
-      T
-    </div>
-
-    <div>
-
-      <h2>My Profile</h2>
-
-      <p>
-        TELKU User
-      </p>
-
-    </div>
-
+  <div class="profile-head">
+    <div class="profile-name">TELKU Account</div>
+    <div class="header-small">Manage your TELKU travel account</div>
   </div>
 
-
-  <div class="profile-menu">
-
-
-    <!-- ACTIVE -->
-
-    <button class="profile-item active"
-            onclick="openOrders()">
-
-      <span class="profile-icon">
-        📦
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Orders
-        </strong>
-
-        <small>
-          View your orders & purchases
-        </small>
-
-      </span>
-
-      <span class="profile-arrow">
-        ›
-      </span>
-
-    </button>
-
-
-    <!-- COMING SOON -->
-
-    <button class="profile-item"
-            onclick="comingSoon('My eSIM')">
-
-      <span class="profile-icon">
-        📱
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          My eSIM
-        </strong>
-
-        <small>
-          Manage your active eSIM
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-
-    <button class="profile-item"
-            onclick="comingSoon('Usage')">
-
-      <span class="profile-icon">
-        📊
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Usage
-        </strong>
-
-        <small>
-          Monitor your data usage
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-
-    <button class="profile-item"
-            onclick="comingSoon('Top Up')">
-
-      <span class="profile-icon">
-        💳
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Top Up
-        </strong>
-
-        <small>
-          Add balance
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-
-    <button class="profile-item"
-            onclick="comingSoon('Wallet')">
-
-      <span class="profile-icon">
-        👛
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Wallet
-        </strong>
-
-        <small>
-          Manage wallet
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-
-    <button class="profile-item"
-            onclick="comingSoon('Referral')">
-
-      <span class="profile-icon">
-        🎁
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Referral
-        </strong>
-
-        <small>
-          Invite friends & rewards
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-
-    <button class="profile-item"
-            onclick="comingSoon('Settings')">
-
-      <span class="profile-icon">
-        ⚙️
-      </span>
-
-      <span class="profile-text">
-
-        <strong>
-          Settings
-        </strong>
-
-        <small>
-          Account & application settings
-        </small>
-
-      </span>
-
-      <span class="coming-badge">
-        COMING SOON
-      </span>
-
-    </button>
-
-  </div>
-
-
-  <div class="profile-version">
-
-    TELKU V1.8<br>
-
-    <span>
-      eSIM Travel Platform
-    </span>
+  <div class="menu">
+
+    <div class="menu-item" onclick="showPage('orders')">
+      <div class="menu-left">
+        <div class="menu-icon">📦</div>
+        Orders
+      </div>
+      <span>›</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('My eSIM')">
+      <div class="menu-left">
+        <div class="menu-icon">📱</div>
+        My eSIM
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('Usage')">
+      <div class="menu-left">
+        <div class="menu-icon">📊</div>
+        Usage
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('Top Up')">
+      <div class="menu-left">
+        <div class="menu-icon">💳</div>
+        Top Up
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('Wallet')">
+      <div class="menu-left">
+        <div class="menu-icon">👛</div>
+        Wallet
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('Referral')">
+      <div class="menu-left">
+        <div class="menu-icon">🎁</div>
+        Referral
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
+
+    <div class="menu-item" onclick="comingSoon('Settings')">
+      <div class="menu-left">
+        <div class="menu-icon">⚙️</div>
+        Settings
+      </div>
+      <span class="coming">Coming Soon</span>
+    </div>
 
   </div>
 
 </section>
 
 
-</main>
-
-
-<!-- =====================================================
-     BOTTOM NAVIGATION
-===================================================== -->
-
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
 
-  <button class="nav-item active"
-          data-page="homePage"
-          onclick="showPage('homePage')">
-
-    <span>🏠</span>
+  <button class="nav-item active" id="navHome"
+    onclick="showPage('home')">
+    <span class="nav-icon">⌂</span>
     Home
-
   </button>
 
-
-  <button class="nav-item"
-          data-page="plansPage"
-          onclick="showPage('plansPage')">
-
-    <span>📱</span>
+  <button class="nav-item" id="navPlans"
+    onclick="showPage('plans')">
+    <span class="nav-icon">📶</span>
     Plans
-
   </button>
 
-
-  <button class="nav-item"
-          data-page="ordersPage"
-          onclick="showPage('ordersPage')">
-
-    <span>📦</span>
+  <button class="nav-item" id="navOrders"
+    onclick="showPage('orders')">
+    <span class="nav-icon">📦</span>
     Orders
-
   </button>
 
-
-  <button class="nav-item"
-          data-page="profilePage"
-          onclick="showPage('profilePage')">
-
-    <span>👤</span>
+  <button class="nav-item" id="navProfile"
+    onclick="showPage('profile')">
+    <span class="nav-icon">👤</span>
     Profile
-
   </button>
 
 </nav>
 
+</div>
 
-<!-- =====================================================
-     COMING SOON MODAL
-===================================================== -->
 
-<div id="comingSoonModal"
-     class="modal">
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-bg" id="orderModal">
 
-  <div class="modal-box">
+  <div class="modal">
 
-    <div style="font-size:42px;margin-bottom:10px;">
-      🚀
-    </div>
+    <h2>Order Detail</h2>
 
-    <div id="comingSoonTitle"
-         class="modal-title">
+    <div id="orderDetailContent"></div>
 
-      Coming Soon
+    <br>
 
-    </div>
-
-    <div class="modal-text">
-
-      This TELKU feature is currently being prepared
-      and will be available in a future version.
-
-    </div>
-
-    <button class="primary-btn"
-            onclick="closeComingSoon()">
-
-      OK
-
+    <button class="btn btn-dark"
+      onclick="closeOrderDetail()">
+      Close
     </button>
 
   </div>
@@ -1114,623 +608,357 @@ main{
 </div>
 
 
-<!-- =====================================================
-     ORDER DETAIL MODAL
-===================================================== -->
+<!-- COMING SOON MODAL -->
+<div class="modal-bg" id="comingModal">
 
-<div id="orderModal"
-     class="modal">
+  <div class="modal">
 
-  <div class="modal-box">
+    <h2 id="comingTitle">Coming Soon</h2>
 
-    <div class="modal-title">
-      Order Created
-    </div>
+    <p style="color:#667085;line-height:1.6;">
+      This TELKU feature is currently being prepared
+      and will be available in a future version.
+    </p>
 
-    <div id="orderModalText"
-         class="modal-text">
-    </div>
+    <br>
 
-    <div class="modal-actions">
-
-      <button class="secondary-btn"
-              onclick="closeOrderModal()">
-
-        Close
-
-      </button>
-
-      <button class="primary-btn"
-              onclick="goToOrders()">
-
-        View Orders
-
-      </button>
-
-    </div>
+    <button class="btn btn-dark"
+      onclick="closeComing()">
+      OK
+    </button>
 
   </div>
 
 </div>
 
 
-<div id="toast">
-  Done
-</div>
+<div class="toast" id="toast"></div>
 
 
 <script>
 
-/* =====================================================
-   TELKU V1.8
-   CORE APP
-===================================================== */
+/* =========================================================
+   TELKU SUPABASE CONFIG
+========================================================= */
+
+const SUPABASE_URL =
+"https://xozjhayxttryegynntld.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
 
-/* ================= STATE ================= */
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-let orders = [];
+function showPage(page){
 
-let currentOrder = null;
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
 
+  document.querySelectorAll(".nav-item")
+    .forEach(n => n.classList.remove("active"));
 
-/* ================= INITIALIZE ================= */
-
-document.addEventListener("DOMContentLoaded",function(){
-
-  loadOrders();
-
-  renderOrders();
-
-});
-
-
-/* =====================================================
-   PAGE NAVIGATION
-===================================================== */
-
-function showPage(pageId){
-
-  document.querySelectorAll(".page").forEach(function(page){
-
-    page.classList.remove("active");
-
-  });
-
-
-  const page = document.getElementById(pageId);
-
-  if(page){
-
-    page.classList.add("active");
-
+  if(page === "home"){
+    document.getElementById("homePage").classList.add("active");
+    document.getElementById("navHome").classList.add("active");
   }
 
-
-  document.querySelectorAll(".nav-item").forEach(function(item){
-
-    item.classList.remove("active");
-
-  });
-
-
-  const nav = document.querySelector(
-    '.nav-item[data-page="' + pageId + '"]'
-  );
-
-  if(nav){
-
-    nav.classList.add("active");
-
+  if(page === "plans"){
+    document.getElementById("plansPage").classList.add("active");
+    document.getElementById("navPlans").classList.add("active");
   }
 
+  if(page === "orders"){
+    document.getElementById("ordersPage").classList.add("active");
+    document.getElementById("navOrders").classList.add("active");
+    loadOrders();
+  }
+
+  if(page === "profile"){
+    document.getElementById("profilePage").classList.add("active");
+    document.getElementById("navProfile").classList.add("active");
+  }
 
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
+}
 
 
-  if(pageId === "ordersPage"){
+/* =========================================================
+   CREATE ORDER
+========================================================= */
 
-    renderOrders();
+async function createOrder(plan, detail, price){
 
+  const orderCode =
+    "TELKU-" +
+    Date.now().toString().slice(-8);
+
+  showToast("Creating order...");
+
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("telku_orders")
+    .insert([{
+      order_code: orderCode,
+      plan: plan,
+      detail: detail,
+      price: price,
+      status: "CONFIRMED",
+      payment: "SUCCESS"
+    }])
+    .select()
+    .single();
+
+  if(error){
+
+    console.error("SUPABASE ERROR:", error);
+
+    showToast(
+      "Order gagal: " + error.message
+    );
+
+    return;
   }
 
-}
-
-
-/* =====================================================
-   PROFILE → ORDERS
-===================================================== */
-
-function openOrders(){
-
-  showPage("ordersPage");
-
-}
-
-
-/* =====================================================
-   CREATE DEMO ORDER
-===================================================== */
-
-function createDemoOrder(plan,detail,price){
-
-  const order = {
-
-    id:
-      "TELKU-" +
-      Date.now().toString().slice(-8),
-
-    plan:plan,
-
-    detail:detail,
-
-    price:price,
-
-    status:"CONFIRMED",
-
-    payment:"SUCCESS",
-
-    created_at:
-      new Date().toISOString()
-
-  };
-
-
-  orders.unshift(order);
-
-  saveOrders();
-
-  currentOrder = order;
-
-
-  document.getElementById("orderModalText").innerHTML =
-
-    "<strong>" + order.id + "</strong><br><br>" +
-
-    plan + "<br>" +
-
-    detail + "<br><br>" +
-
-    "Payment: <strong>SUCCESS</strong><br>" +
-
-    "Order Status: <strong>CONFIRMED</strong>";
-
-
-  document
-    .getElementById("orderModal")
-    .classList.add("show");
-
-}
-
-
-/* =====================================================
-   LOCAL STORAGE
-===================================================== */
-
-function saveOrders(){
-
-  localStorage.setItem(
-    "TELKU_V18_ORDERS",
-    JSON.stringify(orders)
+  showToast(
+    "Order berhasil dibuat: " + orderCode
   );
 
+  setTimeout(() => {
+    showPage("orders");
+  },800);
 }
 
 
-function loadOrders(){
+/* =========================================================
+   LOAD ORDERS
+========================================================= */
 
-  try{
-
-    const saved =
-      localStorage.getItem("TELKU_V18_ORDERS");
-
-    if(saved){
-
-      orders = JSON.parse(saved);
-
-    }
-
-  }catch(error){
-
-    orders = [];
-
-  }
-
-}
-
-
-/* =====================================================
-   RENDER ORDERS
-===================================================== */
-
-function renderOrders(){
+async function loadOrders(){
 
   const container =
     document.getElementById("ordersContainer");
 
-  if(!container){
-    return;
-  }
+  container.innerHTML =
+    '<div class="loading">Loading orders...</div>';
 
+  const {
+    data,
+    error
+  } = await supabaseClient
+    .from("telku_orders")
+    .select("*")
+    .order("created_at", {
+      ascending:false
+    });
 
-  const searchInput =
-    document.getElementById("orderSearch");
+  if(error){
 
-  const keyword =
-    searchInput
-      ? searchInput.value.toLowerCase().trim()
-      : "";
-
-
-  let filtered = orders.filter(function(order){
-
-    const text =
-      (
-        order.id +
-        " " +
-        order.plan +
-        " " +
-        order.detail +
-        " " +
-        order.status
-      ).toLowerCase();
-
-    return text.includes(keyword);
-
-  });
-
-
-  if(filtered.length === 0){
+    console.error("LOAD ERROR:", error);
 
     container.innerHTML = `
-
-      <div class="empty">
-
-        <div class="empty-icon">
-          📦
-        </div>
-
-        <strong>
-          No orders yet
-        </strong>
-
-        <p style="margin-top:8px;">
-          Your TELKU orders will appear here.
+      <div class="card">
+        <b>Database belum dapat dibaca.</b>
+        <p style="margin-top:8px;color:#667085;font-size:13px;">
+          ${escapeHtml(error.message)}
         </p>
-
       </div>
-
     `;
 
     return;
-
   }
 
+  if(!data || data.length === 0){
 
-  container.innerHTML = filtered.map(function(order){
-
-    return `
-
-      <div class="order-card">
-
-        <div class="order-head">
-
-          <div class="order-id">
-            ${escapeHTML(order.id)}
-          </div>
-
-          <div class="status">
-            ${escapeHTML(order.status)}
-          </div>
-
-        </div>
-
-
-        <div style="font-weight:800;margin-bottom:5px;">
-          ${escapeHTML(order.plan)}
-        </div>
-
-
-        <div class="order-info">
-
-          ${escapeHTML(order.detail)}<br>
-
-          Payment:
-          ${escapeHTML(order.payment)}
-
-        </div>
-
-
-        <div class="order-total">
-
-          Rp ${formatNumber(order.price)}
-
-        </div>
-
-
-        <button
-          class="secondary-btn"
-          style="margin-top:12px;"
-          onclick="viewOrder('${escapeJS(order.id)}')">
-
-          View Detail
-
-        </button>
-
+    container.innerHTML = `
+      <div class="card empty">
+        <div class="empty-icon">📦</div>
+        <b>No Orders Yet</b>
+        <p style="margin-top:7px;">
+          Your TELKU orders will appear here.
+        </p>
       </div>
-
     `;
 
-  }).join("");
+    return;
+  }
 
+  container.innerHTML = data
+    .map(order => renderOrder(order))
+    .join("");
 }
 
 
-/* =====================================================
-   VIEW ORDER
-===================================================== */
+/* =========================================================
+   RENDER ORDER
+========================================================= */
 
-function viewOrder(id){
+function renderOrder(order){
 
-  const order =
-    orders.find(function(item){
+  const date =
+    order.created_at
+      ? new Date(order.created_at)
+          .toLocaleString("id-ID")
+      : "-";
 
-      return item.id === id;
+  return `
+    <div class="card"
+      onclick='openOrderDetail(${JSON.stringify(order).replace(/'/g,"&#39;")})'
+      style="cursor:pointer;">
 
-    });
+      <div class="order-row">
 
+        <div>
+          <div class="order-code">
+            ${escapeHtml(order.order_code || "-")}
+          </div>
 
-  if(!order){
+          <div class="order-info">
+            ${escapeHtml(order.plan || "-")}<br>
+            ${escapeHtml(order.detail || "-")}<br>
+            ${date}
+          </div>
+        </div>
 
-    showToast("Order not found");
-
-    return;
-
-  }
-
-
-  currentOrder = order;
-
-
-  const container =
-    document.getElementById("orderDetailContainer");
-
-
-  container.innerHTML = `
-
-    <div class="card">
-
-      <div class="card-title">
-        ${escapeHTML(order.plan)}
-      </div>
-
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Order ID
-        </span>
-
-        <span class="detail-value">
-          ${escapeHTML(order.id)}
-        </span>
+        <div>
+          <span class="status">
+            ${escapeHtml(order.status || "CONFIRMED")}
+          </span>
+        </div>
 
       </div>
 
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Plan
-        </span>
-
-        <span class="detail-value">
-          ${escapeHTML(order.detail)}
-        </span>
-
-      </div>
-
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Order Status
-        </span>
-
-        <span class="detail-value"
-              style="color:#19c7b8;">
-
-          ${escapeHTML(order.status)}
-
-        </span>
-
-      </div>
-
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Payment
-        </span>
-
-        <span class="detail-value">
-          ${escapeHTML(order.payment)}
-        </span>
-
-      </div>
-
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Total
-        </span>
-
-        <span class="detail-value">
-          Rp ${formatNumber(order.price)}
-        </span>
-
-      </div>
-
-
-      <div class="detail-row">
-
-        <span class="detail-label">
-          Created
-        </span>
-
-        <span class="detail-value">
-          ${formatDate(order.created_at)}
-        </span>
-
+      <div class="price">
+        ${formatRupiah(order.price)}
       </div>
 
     </div>
+  `;
+}
 
 
-    <div class="card">
+/* =========================================================
+   ORDER DETAIL
+========================================================= */
 
-      <div class="card-title">
-        eSIM
-      </div>
+function openOrderDetail(order){
 
-      <div class="muted">
+  const content =
+    document.getElementById(
+      "orderDetailContent"
+    );
 
-        eSIM activation information will appear
-        here when the eSIM integration is enabled.
+  content.innerHTML = `
 
-      </div>
+    <div class="detail-line">
+      <span>Order ID</span>
+      <b>${escapeHtml(order.order_code || "-")}</b>
+    </div>
 
-      <button
-        class="secondary-btn"
-        style="margin-top:14px;"
-        onclick="comingSoon('eSIM Activation')">
+    <div class="detail-line">
+      <span>Plan</span>
+      <b>${escapeHtml(order.plan || "-")}</b>
+    </div>
 
-        View eSIM
+    <div class="detail-line">
+      <span>Package</span>
+      <b>${escapeHtml(order.detail || "-")}</b>
+    </div>
 
-      </button>
+    <div class="detail-line">
+      <span>Price</span>
+      <b>${formatRupiah(order.price)}</b>
+    </div>
 
+    <div class="detail-line">
+      <span>Status</span>
+      <b style="color:#087443;">
+        ${escapeHtml(order.status || "-")}
+      </b>
+    </div>
+
+    <div class="detail-line">
+      <span>Payment</span>
+      <b style="color:#087443;">
+        ${escapeHtml(order.payment || "-")}
+      </b>
+    </div>
+
+    <div class="detail-line">
+      <span>Created</span>
+      <b>
+        ${
+          order.created_at
+          ? new Date(order.created_at)
+              .toLocaleString("id-ID")
+          : "-"
+        }
+      </b>
     </div>
 
   `;
 
-
-  showPage("orderDetailPage");
-
+  document
+    .getElementById("orderModal")
+    .classList.add("show");
 }
 
 
-/* =====================================================
-   ORDER MODAL
-===================================================== */
-
-function closeOrderModal(){
+function closeOrderDetail(){
 
   document
     .getElementById("orderModal")
     .classList.remove("show");
-
 }
 
 
-function goToOrders(){
-
-  closeOrderModal();
-
-  showPage("ordersPage");
-
-}
-
-
-/* =====================================================
+/* =========================================================
    COMING SOON
-===================================================== */
+========================================================= */
 
-function comingSoon(feature){
+function comingSoon(name){
 
-  document.getElementById("comingSoonTitle").textContent =
-    feature + " — Coming Soon";
+  document.getElementById("comingTitle")
+    .textContent = name + " — Coming Soon";
 
-
-  document
-    .getElementById("comingSoonModal")
+  document.getElementById("comingModal")
     .classList.add("show");
-
 }
 
 
-function closeComingSoon(){
+function closeComing(){
 
-  document
-    .getElementById("comingSoonModal")
+  document.getElementById("comingModal")
     .classList.remove("show");
-
 }
 
 
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer =
-    setTimeout(function(){
-
-      toast.classList.remove("show");
-
-    },2200);
-
-}
-
-
-/* =====================================================
+/* =========================================================
    HELPERS
-===================================================== */
+========================================================= */
 
-function formatNumber(number){
+function formatRupiah(value){
 
-  return Number(number || 0)
-    .toLocaleString("id-ID");
-
-}
-
-
-function formatDate(date){
-
-  if(!date){
-    return "-";
-  }
-
-  try{
-
-    return new Date(date)
+  return "Rp " +
+    Number(value || 0)
       .toLocaleString("id-ID");
-
-  }catch(error){
-
-    return date;
-
-  }
-
 }
 
 
-function escapeHTML(value){
+function escapeHtml(value){
 
   return String(value ?? "")
     .replace(/&/g,"&amp;")
@@ -1738,52 +966,42 @@ function escapeHTML(value){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
     .replace(/'/g,"&#039;");
-
 }
 
 
-function escapeJS(value){
+function showToast(message){
 
-  return String(value ?? "")
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'")
-    .replace(/"/g,'\\"');
+  const toast =
+    document.getElementById("toast");
 
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.telkuToast);
+
+  window.telkuToast =
+    setTimeout(() => {
+      toast.classList.remove("show");
+    },3000);
 }
 
 
-/* =====================================================
-   CLOSE MODALS WHEN CLICK OUTSIDE
-===================================================== */
+/* =========================================================
+   START
+========================================================= */
 
-document.addEventListener("click",function(event){
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  const coming =
-    document.getElementById("comingSoonModal");
-
-  const order =
-    document.getElementById("orderModal");
-
-
-  if(event.target === coming){
-
-    closeComingSoon();
+    console.log(
+      "TELKU V1.8 Supabase Connected"
+    );
 
   }
-
-
-  if(event.target === order){
-
-    closeOrderModal();
-
-  }
-
-});
-
+);
 
 </script>
-
-</div>
 
 </body>
 </html>
