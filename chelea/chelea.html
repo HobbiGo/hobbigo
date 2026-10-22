@@ -1,57 +1,59 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>CHELEA — Transaction Flow</title>
+<title>CHELEA — Full Transaction Flow</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
  --bg:#07111f;
+ --bg2:#0b1728;
  --card:#101f33;
- --card2:#14263d;
- --line:#243d5b;
- --text:#f5f8ff;
- --muted:#91a4bd;
- --accent:#35d0ba;
+ --card2:#13263e;
+ --line:#243b56;
+ --text:#f5f7fa;
+ --muted:#91a4b8;
+ --green:#32d583;
+ --yellow:#f6c453;
  --blue:#4da3ff;
- --green:#3ee58b;
- --orange:#ffb84d;
- --red:#ff6577;
+ --red:#ff6b6b;
 }
 
 body{
  font-family:Arial,Helvetica,sans-serif;
- background:linear-gradient(180deg,#06101d,#091727);
+ background:linear-gradient(180deg,var(--bg),#091827);
  color:var(--text);
  min-height:100vh;
 }
 
+button,input,select{font:inherit}
+button{cursor:pointer}
+
 .app{
- width:100%;
- max-width:520px;
+ max-width:720px;
  margin:auto;
- min-height:100vh;
- background:var(--bg);
+ padding-bottom:90px;
 }
 
 header{
  position:sticky;
  top:0;
  z-index:20;
- padding:16px;
- background:rgba(7,17,31,.96);
+ background:rgba(7,17,31,.94);
+ backdrop-filter:blur(12px);
  border-bottom:1px solid var(--line);
+ padding:14px 16px;
 }
 
-.header{
+.head{
  display:flex;
  justify-content:space-between;
  align-items:center;
+ gap:12px;
 }
 
 .logo{
@@ -60,113 +62,129 @@ header{
  letter-spacing:2px;
 }
 
-.logo span{
- color:var(--accent);
-}
-
 .badge{
- font-size:10px;
- font-weight:800;
+ font-size:11px;
  padding:7px 10px;
- border-radius:20px;
- color:var(--accent);
- background:rgba(53,208,186,.1);
- border:1px solid rgba(53,208,186,.25);
+ border-radius:999px;
+ background:rgba(50,213,131,.12);
+ color:var(--green);
+ border:1px solid rgba(50,213,131,.3);
 }
 
-main{
- padding:15px;
- padding-bottom:100px;
-}
+main{padding:16px}
 
-.screen{
- display:none;
-}
-
-.screen.active{
- display:block;
-}
+.screen{display:none}
+.screen.active{display:block}
 
 .hero{
- padding:20px;
- border-radius:20px;
- background:
- linear-gradient(135deg,rgba(53,208,186,.13),rgba(77,163,255,.08)),
- var(--card);
- border:1px solid var(--line);
- margin-bottom:14px;
+ padding:22px 4px 14px;
 }
 
 .hero h1{
- font-size:26px;
+ font-size:29px;
+ line-height:1.1;
  margin-bottom:8px;
 }
 
 .hero p{
  color:var(--muted);
- font-size:14px;
  line-height:1.5;
 }
 
 .card{
- background:var(--card);
+ background:linear-gradient(145deg,var(--card),var(--bg2));
  border:1px solid var(--line);
- border-radius:17px;
- padding:15px;
- margin-bottom:13px;
+ border-radius:18px;
+ padding:16px;
+ margin:12px 0;
+ box-shadow:0 12px 30px rgba(0,0,0,.14);
 }
 
 .card h3{
- margin-bottom:13px;
+ font-size:16px;
+ margin-bottom:12px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+
+.stat{
+ background:var(--card2);
+ border:1px solid var(--line);
+ border-radius:14px;
+ padding:13px;
+}
+
+.stat small{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-bottom:5px;
+}
+
+.stat strong{
+ font-size:15px;
+ word-break:break-word;
 }
 
 label{
  display:block;
  color:var(--muted);
  font-size:12px;
- margin-bottom:6px;
+ margin:12px 0 6px;
 }
 
 input,select{
  width:100%;
- padding:13px;
- margin-bottom:11px;
- border-radius:12px;
- border:1px solid var(--line);
  background:#081524;
  color:var(--text);
+ border:1px solid var(--line);
+ border-radius:12px;
+ padding:12px;
  outline:none;
+}
+
+input:focus,select:focus{
+ border-color:var(--blue);
 }
 
 .btn{
  width:100%;
- padding:14px;
- border-radius:12px;
- margin-top:7px;
- font-weight:900;
  border:0;
- cursor:pointer;
+ border-radius:13px;
+ padding:13px 14px;
+ font-weight:800;
+ margin-top:10px;
 }
 
-.btn.green{
+.primary{
  background:var(--green);
- color:#04140c;
+ color:#04120a;
 }
 
-.btn.blue{
+.blue{
  background:var(--blue);
- color:#fff;
+ color:#04101c;
 }
 
-.btn.secondary{
- background:#142942;
- color:#fff;
+.yellow{
+ background:var(--yellow);
+ color:#1a1403;
+}
+
+.dark{
+ background:#122239;
+ color:var(--text);
  border:1px solid var(--line);
 }
 
-.btn.orange{
- background:var(--orange);
- color:#241500;
+.red{
+ background:rgba(255,107,107,.13);
+ color:#ff8b8b;
+ border:1px solid rgba(255,107,107,.35);
 }
 
 .btn:disabled{
@@ -174,266 +192,390 @@ input,select{
  cursor:not-allowed;
 }
 
-.status{
- padding:13px;
- border-radius:12px;
- background:#081524;
- border:1px solid var(--line);
- color:var(--muted);
- font-size:13px;
- line-height:1.5;
- margin-bottom:10px;
-}
-
-.status.success{
- color:var(--green);
- border-color:rgba(62,229,139,.35);
- background:rgba(62,229,139,.06);
-}
-
-.status.warning{
- color:var(--orange);
- border-color:rgba(255,184,77,.35);
-}
-
-.status.error{
- color:var(--red);
- border-color:rgba(255,101,119,.35);
-}
-
 .idbox{
- background:#07111f;
- border:1px dashed #315275;
- border-radius:13px;
- padding:14px;
- margin-bottom:10px;
+ background:#06111d;
+ border:1px dashed #3d5975;
+ border-radius:14px;
+ padding:13px;
+ margin-top:10px;
 }
 
-.idbox small{
- display:block;
- color:var(--muted);
- margin-bottom:6px;
- font-size:11px;
-}
-
-.idbox strong{
- display:block;
- font-size:17px;
- letter-spacing:1px;
- word-break:break-all;
- color:var(--accent);
-}
-
-.flow{
- display:flex;
- flex-direction:column;
- gap:8px;
-}
-
-.flow-item{
- padding:11px;
- border-radius:11px;
- background:#0b192b;
- border:1px solid var(--line);
- font-size:12px;
- color:#71859e;
-}
-
-.flow-item.active{
- color:var(--accent);
- border-color:rgba(53,208,186,.4);
-}
-
-.flow-item.done{
- color:var(--green);
- border-color:rgba(62,229,139,.25);
-}
-
-.amount{
- font-size:30px;
- font-weight:900;
- color:var(--accent);
- margin:10px 0;
-}
-
-.row{
+.idrow{
  display:flex;
  justify-content:space-between;
  gap:10px;
- padding:9px 0;
- border-bottom:1px solid rgba(255,255,255,.05);
- font-size:13px;
+ padding:8px 0;
+ border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.row:last-child{
+.idrow:last-child{
  border-bottom:0;
 }
 
-.row span:first-child{
+.idrow span{
  color:var(--muted);
+ font-size:12px;
 }
 
-.success-box{
- text-align:center;
- padding:20px;
- border-radius:18px;
- border:1px solid rgba(62,229,139,.35);
- background:rgba(62,229,139,.06);
- margin-bottom:14px;
+.idrow b{
+ font-size:13px;
+ text-align:right;
+ word-break:break-all;
 }
 
-.success-icon{
- font-size:45px;
- margin-bottom:8px;
+.status{
+ display:inline-flex;
+ align-items:center;
+ gap:7px;
+ padding:7px 10px;
+ border-radius:999px;
+ font-size:11px;
+ font-weight:800;
+ background:rgba(77,163,255,.12);
+ color:#8bc5ff;
+ border:1px solid rgba(77,163,255,.25);
 }
 
-.success-title{
- font-size:22px;
- font-weight:900;
- color:var(--green);
+.dot{
+ width:7px;
+ height:7px;
+ border-radius:50%;
+ background:currentColor;
 }
 
-.success-sub{
- color:var(--muted);
- margin-top:6px;
+.timeline{
+ position:relative;
+ margin:8px 0 0 6px;
+}
+
+.step{
+ display:flex;
+ gap:12px;
+ min-height:48px;
+}
+
+.stepmark{
+ width:25px;
+ position:relative;
+ display:flex;
+ justify-content:center;
+}
+
+.stepmark:before{
+ content:"";
+ width:13px;
+ height:13px;
+ border-radius:50%;
+ border:2px solid #40566e;
+ background:#0a1726;
+ z-index:2;
+}
+
+.step:not(:last-child) .stepmark:after{
+ content:"";
+ position:absolute;
+ top:13px;
+ bottom:-5px;
+ width:2px;
+ background:#263b52;
+}
+
+.step.done .stepmark:before{
+ background:var(--green);
+ border-color:var(--green);
+}
+
+.step.done .stepmark:after{
+ background:var(--green);
+}
+
+.step.active .stepmark:before{
+ background:var(--blue);
+ border-color:var(--blue);
+ box-shadow:0 0 0 5px rgba(77,163,255,.12);
+}
+
+.stepbody strong{
+ display:block;
  font-size:13px;
 }
 
-.nav{
- position:fixed;
- bottom:0;
- left:50%;
- transform:translateX(-50%);
- width:100%;
- max-width:520px;
- display:grid;
- grid-template-columns:repeat(4,1fr);
- background:rgba(7,17,31,.97);
- border-top:1px solid var(--line);
- z-index:30;
+.stepbody small{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-top:3px;
 }
 
-.nav button{
- padding:13px 4px;
+.map{
+ height:220px;
+ border-radius:16px;
+ background:
+ radial-gradient(circle at 22% 70%,rgba(50,213,131,.8) 0 5px,transparent 6px),
+ radial-gradient(circle at 75% 28%,rgba(77,163,255,.9) 0 5px,transparent 6px),
+ linear-gradient(135deg,transparent 48%,rgba(77,163,255,.28) 49%,rgba(77,163,255,.28) 50%,transparent 51%),
+ repeating-linear-gradient(25deg,#0d2035 0 18px,#102840 19px 20px);
+ border:1px solid var(--line);
+ position:relative;
+ overflow:hidden;
+}
+
+.map:after{
+ content:"LIVE DELIVERY • GPS DEMO";
+ position:absolute;
+ left:12px;
+ top:12px;
+ font-size:10px;
+ color:#b9cbe0;
+ background:rgba(0,0,0,.35);
+ padding:7px 9px;
+ border-radius:8px;
+}
+
+.route{
+ position:absolute;
+ left:24%;
+ top:64%;
+ width:55%;
+ height:2px;
+ background:var(--green);
+ transform:rotate(-28deg);
+ transform-origin:left center;
+ box-shadow:0 0 12px rgba(50,213,131,.5);
+}
+
+.marker{
+ position:absolute;
+ width:15px;
+ height:15px;
+ border-radius:50%;
+ border:3px solid white;
+ box-shadow:0 0 0 7px rgba(50,213,131,.18);
+}
+
+.marker.a{
+ left:20%;
+ top:67%;
+ background:var(--green);
+}
+
+.marker.b{
+ left:73%;
+ top:27%;
+ background:var(--blue);
+}
+
+.notice{
+ padding:11px 12px;
+ border-radius:12px;
+ background:rgba(246,196,83,.09);
+ border:1px solid rgba(246,196,83,.25);
+ color:#f9d87d;
+ font-size:12px;
+ line-height:1.45;
+}
+
+.success{
+ background:rgba(50,213,131,.08);
+ border-color:rgba(50,213,131,.3);
+}
+
+.receipt{
+ white-space:pre-wrap;
+ background:#06111d;
+ border:1px solid var(--line);
+ border-radius:14px;
+ padding:14px;
+ font:12px/1.55 monospace;
+ color:#cfe0ef;
+}
+
+nav{
+ position:fixed;
+ bottom:0;
+ left:0;
+ right:0;
+ z-index:30;
+ background:rgba(7,17,31,.96);
+ border-top:1px solid var(--line);
+ padding:9px max(10px,calc((100vw - 720px)/2 + 10px));
+}
+
+.navgrid{
+ max-width:720px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:6px;
+}
+
+.navbtn{
  background:transparent;
- color:#71859e;
  border:0;
+ color:var(--muted);
+ padding:8px 3px;
  font-size:10px;
  font-weight:700;
 }
 
-.nav button.active{
- color:var(--accent);
+.navbtn.active{
+ color:var(--green);
 }
 
-.hidden{
- display:none!important;
+.navicon{
+ display:block;
+ font-size:17px;
+ margin-bottom:3px;
+}
+
+.toast{
+ position:fixed;
+ top:70px;
+ left:50%;
+ transform:translateX(-50%);
+ z-index:50;
+ background:#11243a;
+ border:1px solid #34516f;
+ padding:11px 14px;
+ border-radius:12px;
+ font-size:12px;
+ display:none;
+ max-width:90%;
+}
+
+.toast.show{
+ display:block;
+}
+
+@media(min-width:650px){
+ main{padding:22px}
+ .hero h1{font-size:34px}
 }
 </style>
-
 </head>
 
 <body>
 
+<div id="toast" class="toast"></div>
+
 <div class="app">
 
 <header>
- <div class="header">
-  <div class="logo">CHELEA<span>.</span></div>
-  <div class="badge">TRANSACTION</div>
+ <div class="head">
+  <div class="logo">CHELEA</div>
+  <div class="badge">SECURE DELIVERY DEMO</div>
  </div>
 </header>
 
 <main>
 
 <!-- HOME -->
-
 <section id="home" class="screen active">
 
  <div class="hero">
-  <h1>CHELEA Delivery</h1>
-  <p>
-   Create your delivery transaction, receive a unique
-   Transaction ID and Tracking ID, then complete payment.
-  </p>
+  <h1>Smart Personal Delivery</h1>
+  <p>Full transaction demo dari CREATE sampai COMPLETED dalam satu alur.</p>
  </div>
 
  <div class="card">
-  <h3>Transaction Lifecycle</h3>
 
-  <div class="flow">
-   <div id="flowCreate" class="flow-item active">
-    1. CREATE TRANSACTION
-   </div>
-
-   <div id="flowCreated" class="flow-item">
-    2. TRANSACTION CREATED
-   </div>
-
-   <div id="flowPayment" class="flow-item">
-    3. PAYMENT
-   </div>
-
-   <div id="flowPaid" class="flow-item">
-    4. PAYMENT SUCCESS
-   </div>
-
-   <div id="flowTracking" class="flow-item">
-    5. TRACKING ACTIVE
-   </div>
+  <div class="status">
+   <span class="dot"></span>
+   <span id="homeStatus">READY</span>
   </div>
+
+  <div class="idbox">
+
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b id="homeTx">—</b>
+   </div>
+
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b id="homeTrack">—</b>
+   </div>
+
+   <div class="idrow">
+    <span>Payment</span>
+    <b id="homePay">—</b>
+   </div>
+
+   <div class="idrow">
+    <span>Delivery</span>
+    <b id="homeDelivery">—</b>
+   </div>
+
+  </div>
+
+  <button class="btn primary" onclick="go('create')">
+   CREATE NEW TRANSACTION
+  </button>
+
+  <button class="btn dark" onclick="go('tracking')">
+   OPEN CURRENT TRACKING
+  </button>
+
  </div>
 
- <div id="homeCurrent" class="card"></div>
+ <div class="card">
+  <h3>Lifecycle</h3>
+  <div id="homeTimeline"></div>
+ </div>
 
- <button class="btn green" onclick="goCreate()">
-  CREATE NEW TRANSACTION
- </button>
+ <div class="notice">
+  Prototype mode: payment, GPS, partner, insurance, escrow,
+  e-signature, dan delivery adalah simulasi lokal untuk pengujian UX.
+  Belum merupakan transaksi uang nyata.
+ </div>
 
 </section>
 
-<!-- CREATE -->
 
+<!-- CREATE -->
 <section id="create" class="screen">
 
  <div class="hero">
   <h1>Create Transaction</h1>
-  <p>Isi data pengiriman. ID baru akan dibuat otomatis.</p>
+  <p>Buat satu transaksi baru. ID dibuat otomatis dan dipakai sampai Completed.</p>
  </div>
 
  <div class="card">
 
-<label>Origin</label>
-<input id="origin" value="Bekasi">
+  <h3>Delivery Details</h3>
 
-<label>Destination</label>
-<input id="destination" value="Bandung">
+  <label>Origin</label>
+  <input id="origin" value="Bekasi">
 
-<label>Pickup Location</label>
-<input id="pickup" value="Mall Summarecon Bekasi">
+  <label>Destination</label>
+  <input id="destination" value="Bandung">
 
-<label>Delivery Location</label>
-<input id="delivery" value="Bandung Indah Plaza">
+  <label>Pickup Location</label>
+  <input id="pickup" value="Mall Summarecon Bekasi">
 
-<label>Delivery Date</label>
-<input id="date" type="date" value="2026-10-23">
+  <label>Delivery Location</label>
+  <input id="dropoff" value="Bandung Indah Plaza">
 
-<label>Weight</label>
-<input id="weight" type="number" value="2" min="0.1" step="0.1">
+  <label>Delivery Date</label>
+  <input id="date" type="date" value="2026-10-23">
 
-<label>Priority</label>
-<select id="priority">
+  <label>Package Weight (KG)</label>
+  <input id="weight" type="number" min="0.1" step="0.1" value="2">
 
+  <label>Service</label>
+
+  <select id="service">
    <option value="standard">Standard</option>
    <option value="priority" selected>Priority</option>
    <option value="exclusive">Exclusive</option>
   </select>
 
-<button id="createBtn"
-       class="btn green"
-       onclick="createTransaction()">
-CREATE TRANSACTION
-</button>
+  <label>Partner</label>
+  <input id="partner" value="Andi Traveler">
+
+  <button id="createBtn" class="btn primary" onclick="createTransaction()">
+   CREATE TRANSACTION
+  </button>
 
  </div>
 
@@ -441,400 +583,335 @@ CREATE TRANSACTION
 
 </section>
 
-<!-- CREATED -->
-
-<section id="created" class="screen">
-
- <div class="hero">
-  <h1>Transaction Created</h1>
-  <p>Transaction berhasil dibuat dan siap masuk ke payment.</p>
- </div>
-
- <div class="success-box">
-  <div class="success-icon">✓</div>
-  <div class="success-title">TRANSACTION CREATED</div>
-  <div class="success-sub">
-   Transaction berhasil dibuat.
-  </div>
- </div>
-
- <div class="card">
-
-  <div class="idbox">
-   <small>TRANSACTION ID</small>
-   <strong id="createdTransactionId">—</strong>
-  </div>
-
-  <div class="idbox">
-   <small>TRACKING ID</small>
-   <strong id="createdTrackingId">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Origin</span>
-   <strong id="createdOrigin">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Destination</span>
-   <strong id="createdDestination">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Status</span>
-   <strong id="createdStatus">REQUEST</strong>
-  </div>
-
-  <div class="row">
-   <span>Total</span>
-   <strong id="createdAmount">Rp 0</strong>
-  </div>
-
- </div>
-
- <button class="btn blue" onclick="goPayment()">
-  CONTINUE TO PAYMENT
- </button>
-
-</section>
 
 <!-- PAYMENT -->
-
 <section id="payment" class="screen">
 
  <div class="hero">
   <h1>Payment</h1>
-  <p>Review transaction sebelum konfirmasi pembayaran.</p>
+  <p>Konfirmasi pembayaran demo untuk mengaktifkan tracking.</p>
  </div>
 
- <div class="card">
-
-  <div class="idbox">
-   <small>TRANSACTION ID</small>
-   <strong id="paymentTransactionId">—</strong>
-  </div>
-
-  <div class="idbox">
-   <small>TRACKING ID</small>
-   <strong id="paymentTrackingId">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Route</span>
-   <strong id="paymentRoute">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Weight</span>
-   <strong id="paymentWeight">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Priority</span>
-   <strong id="paymentPriority">—</strong>
-  </div>
-
-  <div class="amount" id="paymentAmount">
-   Rp 0
-  </div>
-
-<button id="payBtn"
-       class="btn green"
-       onclick="paymentSuccess()">
-CONFIRM PAYMENT SUCCESS
-</button>
-
- </div>
-
- <div id="paymentResult"></div>
+ <div id="paymentContent"></div>
 
 </section>
 
-<!-- SUCCESS -->
-
-<section id="success" class="screen">
-
- <div class="success-box">
-  <div class="success-icon">✓</div>
-  <div class="success-title">
-   PAYMENT SUCCESS
-  </div>
-
-  <div class="success-sub">
-   Transaction sudah dibayar dan tracking aktif.
-  </div>
- </div>
-
- <div class="card">
-
-  <div class="idbox">
-   <small>TRANSACTION ID</small>
-   <strong id="successTransactionId">—</strong>
-  </div>
-
-  <div class="idbox">
-   <small>TRACKING ID</small>
-   <strong id="successTrackingId">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Payment Status</span>
-   <strong style="color:var(--green)">
-    PAID
-   </strong>
-  </div>
-
-  <div class="row">
-   <span>Transaction Status</span>
-   <strong id="successStatus">
-    PAYMENT SUCCESS
-   </strong>
-  </div>
-
-  <div class="row">
-   <span>Total Paid</span>
-   <strong id="successAmount">
-    Rp 0
-   </strong>
-  </div>
-
- </div>
-
- <button class="btn blue" onclick="goTracking()">
-  OPEN TRACKING
- </button>
-
-</section>
 
 <!-- TRACKING -->
-
 <section id="tracking" class="screen">
 
  <div class="hero">
-  <h1>Tracking</h1>
-  <p>Tracking dibuat dari transaksi yang sudah berhasil dibayar.</p>
+  <h1>Live Tracking</h1>
+  <p>Tracking menggunakan Transaction ID dan Tracking ID dari transaksi aktif.</p>
  </div>
 
- <div class="card">
+ <div id="trackingContent"></div>
 
-  <div class="idbox">
-   <small>TRANSACTION ID</small>
-   <strong id="trackingTransactionId">—</strong>
-  </div>
+</section>
 
-  <div class="idbox">
-   <small>TRACKING ID</small>
-   <strong id="trackingTrackingId">—</strong>
-  </div>
 
-  <div class="status success">
-   TRACKING ACTIVE
-  </div>
+<!-- ORDER -->
+<section id="orders" class="screen">
 
-  <div class="row">
-   <span>Status</span>
-   <strong id="trackingStatus">
-    PAYMENT SUCCESS
-   </strong>
-  </div>
-
+ <div class="hero">
+  <h1>Order Detail</h1>
+  <p>Kontrol seluruh lifecycle transaksi.</p>
  </div>
 
- <div class="card">
+ <div id="orderContent"></div>
 
-  <h3>Delivery Timeline</h3>
+</section>
 
-  <div class="flow">
 
-   <div class="flow-item done">
-    ✓ TRANSACTION CREATED
-   </div>
+<!-- RECEIPT -->
+<section id="receipt" class="screen">
 
-   <div class="flow-item done">
-    ✓ PAYMENT SUCCESS
-   </div>
-
-   <div class="flow-item active">
-    ● TRACKING ACTIVE
-   </div>
-
-   <div class="flow-item">
-    ○ PICKUP
-   </div>
-
-   <div class="flow-item">
-    ○ IN TRANSIT
-   </div>
-
-   <div class="flow-item">
-    ○ ARRIVED
-   </div>
-
-   <div class="flow-item">
-    ○ HANDOVER
-   </div>
-
-   <div class="flow-item">
-    ○ COMPLETED
-   </div>
-
-  </div>
-
+ <div class="hero">
+  <h1>Final Receipt</h1>
+  <p>Bukti transaksi demo setelah delivery selesai.</p>
  </div>
+
+ <div id="receiptContent"></div>
 
 </section>
 
 </main>
 
-<nav class="nav">
 
-<button onclick="showScreen('home',this)"
-      class="active">
-HOME
-</button>
+<nav>
 
- <button onclick="showScreen('create',this)">
-  CREATE
- </button>
+ <div class="navgrid">
 
- <button onclick="showScreen('payment',this)">
-  PAYMENT
- </button>
+  <button class="navbtn active" data-screen="home" onclick="go('home')">
+   <span class="navicon">⌂</span>
+   HOME
+  </button>
 
- <button onclick="showScreen('tracking',this)">
-  TRACKING
- </button>
+  <button class="navbtn" data-screen="create" onclick="go('create')">
+   <span class="navicon">＋</span>
+   CREATE
+  </button>
+
+  <button class="navbtn" data-screen="payment" onclick="go('payment')">
+   <span class="navicon">▣</span>
+   PAYMENT
+  </button>
+
+  <button class="navbtn" data-screen="tracking" onclick="go('tracking')">
+   <span class="navicon">⌖</span>
+   TRACKING
+  </button>
+
+  <button class="navbtn" data-screen="orders" onclick="go('orders')">
+   <span class="navicon">☰</span>
+   ORDER
+  </button>
+
+ </div>
 
 </nav>
 
 </div>
 
+
 <script>
 
-/* =====================================================
-   CHELEA TRANSACTION FLOW
-===================================================== */
+const STORE_KEY="CHELEA_FULL_TRANSACTION_V2";
 
-const STORAGE_KEY="CHELEA_TRANSACTION_V1";
+const FLOW=[
+ ["CREATED","Transaction Created"],
+ ["PAID","Payment Success"],
+ ["PARTNER_ASSIGNED","Partner Assigned"],
+ ["PICKUP","Pickup Verified"],
+ ["IN_TRANSIT","In Transit"],
+ ["ARRIVED","Arrived"],
+ ["HANDOVER","Handover Verified"],
+ ["COMPLETED","Completed"]
+];
 
-let transaction=
- JSON.parse(
-  localStorage.getItem(STORAGE_KEY)||"null"
+
+let state=loadState();
+
+
+function freshState(){
+
+ return {
+
+  transactionId:"",
+  trackingId:"",
+
+  status:"DRAFT",
+  payment:"UNPAID",
+  delivery:"NOT_STARTED",
+
+  origin:"Bekasi",
+  destination:"Bandung",
+
+  pickup:"Mall Summarecon Bekasi",
+  dropoff:"Bandung Indah Plaza",
+
+  date:"2026-10-23",
+
+  weight:2,
+
+  service:"priority",
+
+  partner:"Andi Traveler",
+
+  createdAt:"",
+  paidAt:"",
+  partnerAt:"",
+  pickupAt:"",
+  transitAt:"",
+  arrivedAt:"",
+  handoverAt:"",
+  completedAt:"",
+
+  gps:null,
+
+  events:[]
+ };
+}
+
+
+function loadState(){
+
+ try{
+
+  const x=JSON.parse(localStorage.getItem(STORE_KEY));
+
+  if(x && x.transactionId){
+   return x;
+  }
+
+  return freshState();
+
+ }catch(e){
+
+  return freshState();
+
+ }
+
+}
+
+
+function save(){
+
+ localStorage.setItem(
+  STORE_KEY,
+  JSON.stringify(state)
  );
 
+ renderAll();
 
-/* =====================================================
-   ID GENERATOR
-===================================================== */
+}
 
-function randomCode(length=8){
 
- const chars=
- "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+function randomCode(n=8){
 
- let result="";
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
- if(window.crypto &&
-    crypto.getRandomValues){
+ let out="";
 
-  const arr=
-   new Uint32Array(length);
+ if(window.crypto && crypto.getRandomValues){
+
+  const arr=new Uint32Array(n);
 
   crypto.getRandomValues(arr);
 
-  for(let i=0;i<length;i++){
+  for(let i=0;i<n;i++){
 
-   result+=
-    chars[arr[i]%chars.length];
+   out+=chars[arr[i]%chars.length];
+
   }
 
  }else{
 
-  for(let i=0;i<length;i++){
+  for(let i=0;i<n;i++){
 
-   result+=
-    chars[
-     Math.floor(
-      Math.random()*chars.length
-     )
-    ];
+   out+=chars[
+    Math.floor(Math.random()*chars.length)
+   ];
+
   }
+
  }
 
- return result;
+ return out;
+
 }
 
 
-function generateTransactionId(){
+function newIds(){
 
- return "CHL-"+
-  new Date().getFullYear()+
-  "-"+
-  randomCode(8);
+ const y=new Date().getFullYear();
+
+ state.transactionId=
+  `CHL-${y}-${randomCode(8)}`;
+
+ state.trackingId=
+  `CHE-TRK-${y}-${randomCode(8)}`;
+
 }
 
 
-function generateTrackingId(){
+function now(){
 
- return "CHE-TRK-"+
-  new Date().getFullYear()+
-  "-"+
-  randomCode(8);
+ return new Date().toLocaleString(
+  "id-ID",
+  {
+   dateStyle:"medium",
+   timeStyle:"medium"
+  }
+ );
+
 }
 
 
-/* =====================================================
-   PRICE
-===================================================== */
+function addEvent(status,note){
 
-function calculatePrice(){
+ state.events.push({
+  status:status,
+  note:note,
+  time:now()
+ });
 
- const weight=
-  parseFloat(
-   document.getElementById("weight").value
-  )||0;
+}
 
- const priority=
-  document.getElementById("priority").value;
+
+function money(n){
+
+ return "Rp "+Math.round(n)
+  .toLocaleString("id-ID");
+
+}
+
+
+function calculate(){
+
+ const w=Math.max(
+  0.1,
+  Number(state.weight)||1
+ );
 
  const base=25000;
- const distanceFee=100*3000;
- const weightFee=weight*5000;
+
+ const distance=100*3000;
+
+ const weight=w*5000;
+
  const pickup=10000;
+
  const protection=5000;
+
  const platform=7500;
 
- let multiplier=1;
-
- if(priority==="priority")
-  multiplier=1.25;
-
- if(priority==="exclusive")
-  multiplier=1.5;
+ const multiplier=
+  state.service==="priority"
+   ?1.25
+   :state.service==="exclusive"
+    ?1.5
+    :1;
 
  return Math.round(
-  (
-   base+
-   distanceFee+
-   weightFee+
+  (base+
+   distance+
+   weight+
    pickup+
    protection+
-   platform
-  )*multiplier
+   platform)
+   *multiplier
  );
+
 }
 
 
-/* =====================================================
-   NAVIGATION
-===================================================== */
+function showToast(msg){
 
-function showScreen(id,button){
+ const t=document.getElementById("toast");
+
+ t.textContent=msg;
+
+ t.classList.add("show");
+
+ clearTimeout(showToast.timer);
+
+ showToast.timer=setTimeout(
+  ()=>{
+   t.classList.remove("show");
+  },
+  2200
+ );
+
+}
+
+
+function go(id){
 
  document
   .querySelectorAll(".screen")
   .forEach(
-   s=>s.classList.remove("active")
+   x=>x.classList.remove("active")
   );
 
  document
@@ -842,579 +919,1314 @@ function showScreen(id,button){
   .classList.add("active");
 
  document
-  .querySelectorAll(".nav button")
+  .querySelectorAll(".navbtn")
   .forEach(
-   b=>b.classList.remove("active")
+   x=>x.classList.toggle(
+    "active",
+    x.dataset.screen===id
+   )
   );
 
- if(button)
-  button.classList.add("active");
+ renderAll();
 
- render();
-}
-
-
-function goCreate(){
-
- showScreen("create");
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
 
 }
 
-
-function goPayment(){
-
- if(!transaction){
-
-  alert(
-   "Belum ada transaction."
-  );
-
-  return;
- }
-
- showScreen("payment");
-
-}
-
-
-function goTracking(){
-
- if(!transaction ||
-    transaction.paymentStatus!=="PAID"){
-
-  alert(
-   "Tracking baru aktif setelah payment success."
-  );
-
-  return;
- }
-
- showScreen("tracking");
-
-}
-
-
-/* =====================================================
-   CREATE TRANSACTION
-===================================================== */
 
 function createTransaction(){
 
- const button=
-  document.getElementById("createBtn");
+ const btn=document.getElementById("createBtn");
 
- button.disabled=true;
+ if(btn.disabled)return;
 
- button.textContent=
-  "CREATING TRANSACTION...";
+ btn.disabled=true;
 
- /*
-   ALWAYS create fresh IDs.
-   Never reuse old ID.
- */
 
- const transactionId=
-  generateTransactionId();
+ state=freshState();
 
- const trackingId=
-  generateTrackingId();
 
- const origin=
+ state.origin=
   document.getElementById("origin")
-  .value.trim();
+  .value.trim()
+  ||"Bekasi";
 
- const destination=
+
+ state.destination=
   document.getElementById("destination")
-  .value.trim();
+  .value.trim()
+  ||"Bandung";
 
- const pickup=
+
+ state.pickup=
   document.getElementById("pickup")
-  .value.trim();
+  .value.trim()
+  ||"Mall Summarecon Bekasi";
 
- const delivery=
-  document.getElementById("delivery")
-  .value.trim();
 
- const date=
+ state.dropoff=
+  document.getElementById("dropoff")
+  .value.trim()
+  ||"Bandung Indah Plaza";
+
+
+ state.date=
   document.getElementById("date")
-  .value;
+  .value
+  ||"2026-10-23";
 
- const weight=
-  parseFloat(
+
+ state.weight=
+  Number(
    document.getElementById("weight")
    .value
-  )||0;
+  )||2;
 
- const priority=
-  document.getElementById("priority")
+
+ state.service=
+  document.getElementById("service")
   .value;
 
- const total=
-  calculatePrice();
 
- transaction={
-  transactionId,
-  trackingId,
+ state.partner=
+  document.getElementById("partner")
+  .value.trim()
+  ||"Andi Traveler";
 
-  origin,
-  destination,
-  pickup,
-  delivery,
-  date,
-  weight,
-  priority,
 
-  amount:total,
+ newIds();
 
-  status:"CREATED",
 
-  paymentStatus:"PENDING",
+ state.status="CREATED";
 
-  createdAt:
-   new Date().toISOString(),
+ state.delivery="CREATED";
 
-  paymentAt:null
- };
+ state.createdAt=now();
 
- localStorage.setItem(
-  STORAGE_KEY,
-  JSON.stringify(transaction)
+ addEvent(
+  "CREATED",
+  "Transaction berhasil dibuat"
  );
+
+
+ save();
+
 
  document.getElementById(
   "createResult"
  ).innerHTML=`
 
-  <div class="status success">
+ <div class="card success">
 
-   <strong>TRANSACTION CREATED</strong><br><br>
+  <div class="status">
+   <span class="dot"></span>
+   TRANSACTION CREATED
+  </div>
 
-   Transaction ID:<br>
-   <strong>
-    ${transactionId}
-   </strong>
+  <div class="idbox">
 
-   <br><br>
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b>${state.transactionId}</b>
+   </div>
 
-   Tracking ID:<br>
-   <strong>
-    ${trackingId}
-   </strong>
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b>${state.trackingId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Total</span>
+    <b>${money(calculate())}</b>
+   </div>
 
   </div>
+
+  <button
+   class="btn blue"
+   onclick="go('payment')">
+
+   CONTINUE TO PAYMENT
+
+  </button>
+
+ </div>
+
  `;
 
- button.disabled=false;
 
- button.textContent=
-  "CREATE TRANSACTION";
+ showToast("Transaction created");
 
- render();
 
  setTimeout(
-  ()=>showScreen("created"),
-  400
+  ()=>{
+   btn.disabled=false;
+  },
+  500
  );
+
 }
 
 
-/* =====================================================
-   PAYMENT SUCCESS
-===================================================== */
+function confirmPayment(){
 
-function paymentSuccess(){
+ if(!state.transactionId){
 
- if(!transaction){
-
-  alert(
-   "Transaction belum dibuat."
+  showToast(
+   "Create transaction dulu"
   );
+
+  go("create");
 
   return;
  }
 
- if(transaction.paymentStatus==="PAID"){
+ if(state.payment==="PAID"){
 
-  showScreen("success");
+  go("tracking");
 
   return;
  }
 
- const button=
-  document.getElementById("payBtn");
 
- button.disabled=true;
+ state.payment="PAID";
 
- button.textContent=
-  "PROCESSING PAYMENT...";
+ state.status="PAID";
 
- setTimeout(()=>{
+ state.paidAt=now();
 
-  transaction.paymentStatus=
-   "PAID";
+ addEvent(
+  "PAID",
+  "Payment Success — DEMO"
+ );
 
-  transaction.status=
-   "PAYMENT SUCCESS";
+ save();
 
-  transaction.paymentAt=
-   new Date().toISOString();
-
-  localStorage.setItem(
-   STORAGE_KEY,
-   JSON.stringify(transaction)
-  );
-
-  button.disabled=false;
-
-  button.textContent=
-   "PAYMENT SUCCESS";
-
-  render();
-
-  showScreen("success");
-
- },800);
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render(){
-
- renderHome();
-
- renderCreated();
-
- renderPayment();
-
- renderSuccess();
-
- renderTracking();
-
- renderFlow();
+ showToast(
+  "PAYMENT SUCCESS"
+ );
 
 }
 
 
-/* =====================================================
-   HOME
-===================================================== */
+function assignPartner(){
 
-function renderHome(){
+ if(state.payment!=="PAID"){
 
- const box=
-  document.getElementById(
-   "homeCurrent"
+  showToast(
+   "Payment belum success"
   );
 
- if(!transaction){
+  return;
 
-  box.innerHTML=`
+ }
 
-   <div class="status">
-    Belum ada transaction aktif.
+ if(
+  state.status==="PARTNER_ASSIGNED" ||
+  state.status==="PICKUP" ||
+  state.status==="IN_TRANSIT" ||
+  state.status==="ARRIVED" ||
+  state.status==="HANDOVER" ||
+  state.status==="COMPLETED"
+ ){
+
+  return;
+
+ }
+
+
+ state.status="PARTNER_ASSIGNED";
+
+ state.partnerAt=now();
+
+ addEvent(
+  "PARTNER_ASSIGNED",
+  "Partner assigned: "+state.partner
+ );
+
+ save();
+
+ showToast(
+  "Partner assigned"
+ );
+
+}
+
+
+function doPickup(){
+
+ if(!canDeliver())return;
+
+ state.status="PICKUP";
+
+ state.delivery="PICKUP_VERIFIED";
+
+ state.pickupAt=now();
+
+ addEvent(
+  "PICKUP",
+  "Pickup verified"
+ );
+
+ save();
+
+ showToast(
+  "Pickup verified"
+ );
+
+}
+
+
+function doTransit(){
+
+ if(
+  state.status!=="PICKUP" &&
+  state.status!=="IN_TRANSIT"
+ ){
+
+  return;
+
+ }
+
+
+ state.status="IN_TRANSIT";
+
+ state.delivery="IN_TRANSIT";
+
+ state.transitAt=now();
+
+ captureGPS();
+
+ addEvent(
+  "IN_TRANSIT",
+  "Package in transit"
+ );
+
+ save();
+
+ showToast(
+  "Delivery started"
+ );
+
+}
+
+
+function doArrived(){
+
+ if(state.status!=="IN_TRANSIT")return;
+
+ state.status="ARRIVED";
+
+ state.delivery="ARRIVED";
+
+ state.arrivedAt=now();
+
+ captureGPS();
+
+ addEvent(
+  "ARRIVED",
+  "Package arrived at destination"
+ );
+
+ save();
+
+ showToast(
+  "Package arrived"
+ );
+
+}
+
+
+function doHandover(){
+
+ if(state.status!=="ARRIVED")return;
+
+ state.status="HANDOVER";
+
+ state.delivery="HANDOVER_VERIFIED";
+
+ state.handoverAt=now();
+
+ captureGPS();
+
+ addEvent(
+  "HANDOVER",
+  "Handover verified"
+ );
+
+ save();
+
+ showToast(
+  "Handover verified"
+ );
+
+}
+
+
+function doComplete(){
+
+ if(state.status!=="HANDOVER")return;
+
+ state.status="COMPLETED";
+
+ state.delivery="COMPLETED";
+
+ state.completedAt=now();
+
+ captureGPS();
+
+ addEvent(
+  "COMPLETED",
+  "Transaction completed"
+ );
+
+ save();
+
+ showToast(
+  "TRANSACTION COMPLETED"
+ );
+
+}
+
+
+function canDeliver(){
+
+ if(state.payment!=="PAID"){
+
+  showToast(
+   "Payment belum success"
+  );
+
+  return false;
+
+ }
+
+ if(state.status==="PAID"){
+
+  assignPartner();
+
+ }
+
+ return true;
+
+}
+
+
+function captureGPS(){
+
+ if(!navigator.geolocation)return;
+
+ navigator.geolocation.getCurrentPosition(
+
+  pos=>{
+
+   state.gps={
+
+    lat:Number(
+     pos.coords.latitude.toFixed(6)
+    ),
+
+    lng:Number(
+     pos.coords.longitude.toFixed(6)
+    ),
+
+    accuracy:Math.round(
+     pos.coords.accuracy
+    ),
+
+    time:now()
+
+   };
+
+   save();
+
+  },
+
+  ()=>{}
+
+ );
+
+}
+
+
+function resetTransaction(){
+
+ state=freshState();
+
+ save();
+
+ document.getElementById(
+  "createResult"
+ ).innerHTML="";
+
+ showToast(
+  "Ready for new transaction"
+ );
+
+ go("create");
+
+}
+
+
+function timelineHtml(){
+
+ const current=
+  FLOW.findIndex(
+   x=>x[0]===state.status
+  );
+
+
+ return `
+ <div class="timeline">
+
+ ${FLOW.map(
+  (x,i)=>{
+
+   const done=
+    current>=i &&
+    current>=0;
+
+   const active=
+    current===i;
+
+   const event=
+    state.events.find(
+     e=>e.status===x[0]
+    );
+
+   return `
+
+   <div class="step
+    ${done?"done":""}
+    ${active?"active":""}">
+
+    <div class="stepmark"></div>
+
+    <div class="stepbody">
+
+     <strong>${x[1]}</strong>
+
+     <small>
+      ${event
+       ?event.time
+       :"Pending"}
+     </small>
+
+    </div>
+
    </div>
+
+   `;
+
+  }
+ ).join("")}
+
+ </div>
+ `;
+
+}
+
+
+function paymentHtml(){
+
+ if(!state.transactionId){
+
+  return `
+
+  <div class="card">
+
+   <div class="notice">
+    Belum ada transaksi.
+    Buat transaksi baru terlebih dahulu.
+   </div>
+
+   <button
+    class="btn primary"
+    onclick="go('create')">
+
+    CREATE TRANSACTION
+
+   </button>
+
+  </div>
 
   `;
 
-  return;
  }
 
- box.innerHTML=`
 
-  <h3>Current Transaction</h3>
+ const paid=
+  state.payment==="PAID";
+
+
+ return `
+
+ <div class="card ${paid?"success":""}">
+
+  <div class="status">
+
+   <span class="dot"></span>
+
+   ${paid
+    ?"PAYMENT SUCCESS"
+    :"PAYMENT PENDING"}
+
+  </div>
 
   <div class="idbox">
 
-   <small>TRANSACTION ID</small>
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b>${state.transactionId}</b>
+   </div>
 
-   <strong>
-    ${transaction.transactionId}
-   </strong>
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b>${state.trackingId}</b>
+   </div>
 
-  </div>
+   <div class="idrow">
+    <span>Amount</span>
+    <b>${money(calculate())}</b>
+   </div>
 
-  <div class="idbox">
-
-   <small>TRACKING ID</small>
-
-   <strong>
-    ${transaction.trackingId}
-   </strong>
-
-  </div>
-
-  <div class="row">
-
-   <span>Status</span>
-
-   <strong>
-    ${transaction.status}
-   </strong>
+   <div class="idrow">
+    <span>Payment</span>
+    <b>${state.payment}</b>
+   </div>
 
   </div>
 
-  <div class="row">
+  ${
+   paid
 
-   <span>Payment</span>
+   ?
 
-   <strong>
-    ${transaction.paymentStatus}
-   </strong>
+   `<button
+    class="btn blue"
+    onclick="go('tracking')">
+
+    OPEN TRACKING
+
+   </button>`
+
+   :
+
+   `<button
+    class="btn primary"
+    onclick="confirmPayment()">
+
+    CONFIRM PAYMENT SUCCESS — DEMO
+
+   </button>`
+  }
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Payment Protection</h3>
+
+  <div class="grid">
+
+   <div class="stat">
+    <small>Escrow</small>
+    <strong>DEMO</strong>
+   </div>
+
+   <div class="stat">
+    <small>Protection</small>
+    <strong>ACTIVE — DEMO</strong>
+   </div>
+
+   <div class="stat">
+    <small>Insurance</small>
+    <strong>DEMO</strong>
+   </div>
+
+   <div class="stat">
+    <small>Agreement</small>
+    <strong>DEMO</strong>
+   </div>
 
   </div>
+
+ </div>
 
  `;
 
 }
 
 
-/* =====================================================
-   CREATED
-===================================================== */
+function trackingHtml(){
 
-function renderCreated(){
+ if(!state.transactionId){
 
- if(!transaction)
-  return;
+  return `
 
- const set=(
-  id,value
- )=>{
-  const el=
-   document.getElementById(id);
+  <div class="card">
 
-  if(el)
-   el.textContent=value;
- };
+   <div class="notice">
+    Belum ada transaction.
+   </div>
 
- set(
-  "createdTransactionId",
-  transaction.transactionId
- );
+   <button
+    class="btn primary"
+    onclick="go('create')">
 
- set(
-  "createdTrackingId",
-  transaction.trackingId
- );
+    CREATE TRANSACTION
 
- set(
-  "createdOrigin",
-  transaction.origin
- );
+   </button>
 
- set(
-  "createdDestination",
-  transaction.destination
- );
+  </div>
 
- set(
-  "createdStatus",
-  transaction.status
- );
-
- set(
-  "createdAmount",
-  rupiah(transaction.amount)
- );
-
-}
-
-
-/* =====================================================
-   PAYMENT
-===================================================== */
-
-function renderPayment(){
-
- if(!transaction)
-  return;
-
- document.getElementById(
-  "paymentTransactionId"
- ).textContent=
-  transaction.transactionId;
-
- document.getElementById(
-  "paymentTrackingId"
- ).textContent=
-  transaction.trackingId;
-
- document.getElementById(
-  "paymentRoute"
- ).textContent=
-  transaction.origin+
-  " → "+
-  transaction.destination;
-
- document.getElementById(
-  "paymentWeight"
- ).textContent=
-  transaction.weight+
-  " KG";
-
- document.getElementById(
-  "paymentPriority"
- ).textContent=
-  transaction.priority
-   .toUpperCase();
-
- document.getElementById(
-  "paymentAmount"
- ).textContent=
-  rupiah(transaction.amount);
-
-}
-
-
-/* =====================================================
-   SUCCESS
-===================================================== */
-
-function renderSuccess(){
-
- if(!transaction)
-  return;
-
- document.getElementById(
-  "successTransactionId"
- ).textContent=
-  transaction.transactionId;
-
- document.getElementById(
-  "successTrackingId"
- ).textContent=
-  transaction.trackingId;
-
- document.getElementById(
-  "successAmount"
- ).textContent=
-  rupiah(transaction.amount);
-
- document.getElementById(
-  "successStatus"
- ).textContent=
-  transaction.status;
-
-}
-
-
-/* =====================================================
-   TRACKING
-===================================================== */
-
-function renderTracking(){
-
- if(!transaction)
-  return;
-
- document.getElementById(
-  "trackingTransactionId"
- ).textContent=
-  transaction.transactionId;
-
- document.getElementById(
-  "trackingTrackingId"
- ).textContent=
-  transaction.trackingId;
-
- document.getElementById(
-  "trackingStatus"
- ).textContent=
-  transaction.status;
-
-}
-
-
-/* =====================================================
-   FLOW
-===================================================== */
-
-function renderFlow(){
-
- const items={
-  flowCreate:true,
-  flowCreated:false,
-  flowPayment:false,
-  flowPaid:false,
-  flowTracking:false
- };
-
- if(transaction){
-
-  items.flowCreate=true;
-  items.flowCreated=true;
-
-  if(transaction.paymentStatus==="PENDING"){
-
-   items.flowPayment=true;
-
-  }
-
-  if(transaction.paymentStatus==="PAID"){
-
-   items.flowPayment=true;
-   items.flowPaid=true;
-   items.flowTracking=true;
-
-  }
+  `;
 
  }
 
- Object
-  .entries(items)
-  .forEach(([id,done])=>{
 
-   const el=
-    document.getElementById(id);
+ const controls=[];
 
-   if(!el) return;
 
-   el.classList.remove(
-    "active",
-    "done"
-   );
+ if(state.payment!=="PAID"){
 
-   if(done)
-    el.classList.add("done");
+  controls.push(`
 
-  });
+   <button
+    class="btn yellow"
+    onclick="go('payment')">
+
+    GO TO PAYMENT
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="PAID"){
+
+  controls.push(`
+
+   <button
+    class="btn blue"
+    onclick="assignPartner()">
+
+    ASSIGN PARTNER
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="PARTNER_ASSIGNED"){
+
+  controls.push(`
+
+   <button
+    class="btn blue"
+    onclick="doPickup()">
+
+    VERIFY PICKUP
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="PICKUP"){
+
+  controls.push(`
+
+   <button
+    class="btn blue"
+    onclick="doTransit()">
+
+    START LIVE DELIVERY
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="IN_TRANSIT"){
+
+  controls.push(`
+
+   <button
+    class="btn blue"
+    onclick="doArrived()">
+
+    MARK ARRIVED
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="ARRIVED"){
+
+  controls.push(`
+
+   <button
+    class="btn blue"
+    onclick="doHandover()">
+
+    VERIFY HANDOVER
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="HANDOVER"){
+
+  controls.push(`
+
+   <button
+    class="btn primary"
+    onclick="doComplete()">
+
+    COMPLETE TRANSACTION
+
+   </button>
+
+  `);
+
+ }
+
+ else if(state.status==="COMPLETED"){
+
+  controls.push(`
+
+   <button
+    class="btn primary"
+    onclick="go('receipt')">
+
+    OPEN FINAL RECEIPT
+
+   </button>
+
+  `);
+
+ }
+
+
+ return `
+
+ <div class="card">
+
+  <div class="status">
+
+   <span class="dot"></span>
+
+   ${state.status}
+
+  </div>
+
+  <div class="idbox">
+
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b>${state.transactionId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b>${state.trackingId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Partner</span>
+    <b>${state.partner}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Route</span>
+    <b>${state.origin} → ${state.destination}</b>
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <div class="map">
+
+   <div class="route"></div>
+
+   <div class="marker a"></div>
+
+   <div class="marker b"></div>
+
+  </div>
+
+
+  <div
+   class="grid"
+   style="margin-top:10px">
+
+   <div class="stat">
+
+    <small>ETA</small>
+
+    <strong>
+     ${
+      state.status==="COMPLETED"
+       ?"DELIVERED"
+       :"LIVE DEMO"
+     }
+    </strong>
+
+   </div>
+
+   <div class="stat">
+
+    <small>GPS</small>
+
+    <strong>
+     ${
+      state.gps
+       ?state.gps.lat+", "+state.gps.lng
+       :"Waiting"
+     }
+    </strong>
+
+   </div>
+
+  </div>
+
+
+  ${controls.join("")}
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Transaction Lifecycle</h3>
+
+  ${timelineHtml()}
+
+ </div>
+
+ `;
 
 }
 
 
-/* =====================================================
-   CREATED SCREEN BUTTON
-===================================================== */
+function orderHtml(){
 
-document.addEventListener(
- "DOMContentLoaded",
- ()=>{
+ if(!state.transactionId){
 
-  render();
+  return `
+
+  <div class="card">
+
+   <div class="notice">
+    Belum ada order.
+   </div>
+
+  </div>
+
+  `;
 
  }
-);
 
 
-/* =====================================================
-   UTILITY
-===================================================== */
+ return `
 
-function rupiah(value){
+ <div class="card">
 
- return new Intl.NumberFormat(
-  "id-ID",
+  <div class="status">
+
+   <span class="dot"></span>
+
+   ${state.status}
+
+  </div>
+
+
+  <div class="idbox">
+
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b>${state.transactionId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b>${state.trackingId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Amount</span>
+    <b>${money(calculate())}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Payment</span>
+    <b>${state.payment}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Delivery</span>
+    <b>${state.delivery}</b>
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Security & Control</h3>
+
+  <div class="grid">
+
+   <div class="stat">
+    <small>Identity</small>
+    <strong>DEMO VERIFIED</strong>
+   </div>
+
+   <div class="stat">
+    <small>Item</small>
+    <strong>ITEM VERIFIED</strong>
+   </div>
+
+   <div class="stat">
+    <small>Route</small>
+    <strong>CHECKED</strong>
+   </div>
+
+   <div class="stat">
+    <small>Country</small>
+    <strong>CHECKED</strong>
+   </div>
+
+  </div>
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Audit Trail</h3>
+
+  ${
+   state.events.length
+
+   ?
+
+   state.events.map(
+    e=>`
+
+    <div class="idrow">
+
+     <span>${e.time}</span>
+
+     <b>
+      ${e.status}<br>
+      ${e.note}
+     </b>
+
+    </div>
+
+    `
+   ).join("")
+
+   :
+
+   "No events"
+  }
+
+ </div>
+
+
+ <button
+  class="btn dark"
+  onclick="resetTransaction()">
+
+  NEW TRANSACTION
+
+ </button>
+
+ `;
+
+}
+
+
+function receiptText(){
+
+ return `CHELEA — FINAL TRANSACTION RECEIPT
+========================================
+
+Transaction ID : ${state.transactionId}
+Tracking ID    : ${state.trackingId}
+
+Status         : ${state.status}
+Payment        : ${state.payment}
+Delivery       : ${state.delivery}
+
+ROUTE
+Origin         : ${state.origin}
+Destination    : ${state.destination}
+Pickup         : ${state.pickup}
+Dropoff        : ${state.dropoff}
+
+Date           : ${state.date}
+Weight         : ${state.weight} KG
+Service        : ${state.service}
+Partner        : ${state.partner}
+
+TOTAL
+${money(calculate())}
+
+TIMELINE
+${state.events.map(
+ e=>`${e.time} | ${e.status} | ${e.note}`
+).join("\n")}
+
+GPS
+${
+ state.gps
+  ?`${state.gps.lat}, ${state.gps.lng} (accuracy ${state.gps.accuracy}m)`
+  :"Not captured"
+}
+
+CHELEA SECURE TRANSACTION
+
+DEMO RECEIPT — NOT A REAL PAYMENT DOCUMENT
+`;
+
+}
+
+
+function downloadReceipt(){
+
+ const blob=new Blob(
+  [receiptText()],
   {
-   style:"currency",
-   currency:"IDR",
-   maximumFractionDigits:0
+   type:"text/plain;charset=utf-8"
   }
- ).format(value||0);
+ );
+
+ const url=
+  URL.createObjectURL(blob);
+
+ const a=
+  document.createElement("a");
+
+ a.href=url;
+
+ a.download=
+  `CHELEA_${state.transactionId||"Receipt"}.txt`;
+
+ document.body.appendChild(a);
+
+ a.click();
+
+ a.remove();
+
+ URL.revokeObjectURL(url);
 
 }
+
+
+function receiptHtml(){
+
+ if(state.status!=="COMPLETED"){
+
+  return `
+
+  <div class="card">
+
+   <div class="notice">
+
+    Final Receipt tersedia
+    setelah status COMPLETED.
+
+   </div>
+
+   <button
+    class="btn blue"
+    onclick="go('tracking')">
+
+    BACK TO TRACKING
+
+   </button>
+
+  </div>
+
+  `;
+
+ }
+
+
+ return `
+
+ <div class="card success">
+
+  <div class="status">
+
+   <span class="dot"></span>
+
+   TRANSACTION COMPLETED
+
+  </div>
+
+
+  <div class="idbox">
+
+   <div class="idrow">
+    <span>Transaction ID</span>
+    <b>${state.transactionId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Tracking ID</span>
+    <b>${state.trackingId}</b>
+   </div>
+
+   <div class="idrow">
+    <span>Payment</span>
+    <b>SUCCESS</b>
+   </div>
+
+   <div class="idrow">
+    <span>Delivery</span>
+    <b>COMPLETED</b>
+   </div>
+
+   <div class="idrow">
+    <span>Total</span>
+    <b>${money(calculate())}</b>
+   </div>
+
+  </div>
+
+
+  <button
+   class="btn primary"
+   onclick="downloadReceipt()">
+
+   DOWNLOAD RECEIPT
+
+  </button>
+
+ </div>
+
+
+ <div class="card">
+
+  <h3>Receipt</h3>
+
+  <div class="receipt">
+   ${escapeHtml(receiptText())}
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+function escapeHtml(s){
+
+ return s.replace(
+  /[&<>"']/g,
+  m=>({
+
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+
+  }[m])
+ );
+
+}
+
+
+function renderAll(){
+
+ document.getElementById(
+  "homeTx"
+ ).textContent=
+  state.transactionId||"—";
+
+
+ document.getElementById(
+  "homeTrack"
+ ).textContent=
+  state.trackingId||"—";
+
+
+ document.getElementById(
+  "homePay"
+ ).textContent=
+  state.payment;
+
+
+ document.getElementById(
+  "homeDelivery"
+ ).textContent=
+  state.delivery;
+
+
+ document.getElementById(
+  "homeStatus"
+ ).textContent=
+  state.status;
+
+
+ document.getElementById(
+  "homeTimeline"
+ ).innerHTML=
+  timelineHtml();
+
+
+ document.getElementById(
+  "paymentContent"
+ ).innerHTML=
+  paymentHtml();
+
+
+ document.getElementById(
+  "trackingContent"
+ ).innerHTML=
+  trackingHtml();
+
+
+ document.getElementById(
+  "orderContent"
+ ).innerHTML=
+  orderHtml();
+
+
+ document.getElementById(
+  "receiptContent"
+ ).innerHTML=
+  receiptHtml();
+
+}
+
+
+renderAll();
 
 </script>
 
