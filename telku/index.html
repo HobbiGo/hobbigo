@@ -1,579 +1,509 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>TELKU eSIM V2.2</title>
+
+<title>TELKU V3.0 Connectivity Engine</title>
 
 <style>
 *{
- box-sizing:border-box;
- margin:0;
- padding:0
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 :root{
- --bg:#07111f;
- --bg2:#0b1728;
- --card:#101f33;
- --card2:#13263d;
- --line:#223952;
- --text:#f4f8ff;
- --muted:#9db0c7;
- --blue:#29a9ff;
- --green:#27d17f;
- --yellow:#ffc857;
- --red:#ff5f6d;
- --purple:#9b7cff;
+  --bg:#07111f;
+  --bg2:#0b1728;
+  --card:#101f33;
+  --card2:#142842;
+  --line:#203852;
+  --text:#f4f8ff;
+  --muted:#91a4ba;
+  --blue:#3da9ff;
+  --green:#27d17f;
+  --yellow:#ffc857;
+  --red:#ff647c;
 }
 
 body{
- font-family:Arial,Helvetica,sans-serif;
- background:
- radial-gradient(circle at top right,#123a62 0,transparent 32%),
- linear-gradient(180deg,var(--bg),#050c16);
- color:var(--text);
- min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#06101d,#091727 55%,#07111f);
+  color:var(--text);
+  min-height:100vh;
 }
 
-button,input,select{
- font:inherit
+button,
+input,
+select{
+  font:inherit;
 }
 
 button{
- cursor:pointer
+  cursor:pointer;
 }
 
 .header{
- position:sticky;
- top:0;
- z-index:50;
- height:64px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 18px;
- background:rgba(7,17,31,.96);
- border-bottom:1px solid var(--line);
- backdrop-filter:blur(12px);
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(7,17,31,.95);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);
+}
+
+.header-inner{
+  max-width:1100px;
+  margin:auto;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
 .logo{
- font-size:24px;
- font-weight:900;
- letter-spacing:1px;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#2da8ff,#1673d1);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:18px;
 }
 
-.logo span{
- color:var(--blue)
+.brand h1{
+  font-size:20px;
 }
 
-.badge{
- font-size:11px;
- font-weight:bold;
- color:#06111e;
- background:var(--yellow);
- padding:7px 10px;
- border-radius:20px;
+.brand small{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.mode{
+  padding:7px 11px;
+  border-radius:20px;
+  background:rgba(255,200,87,.12);
+  border:1px solid rgba(255,200,87,.35);
+  color:var(--yellow);
+  font-size:11px;
+  font-weight:700;
 }
 
 .container{
- width:min(760px,94%);
- margin:24px auto 60px;
+  max-width:1100px;
+  margin:auto;
+  padding:22px 20px 50px;
 }
 
 .hero{
- text-align:center;
- padding:20px 8px;
+  padding:26px 0 20px;
 }
 
-.hero-icon{
- font-size:44px;
- margin-bottom:10px;
-}
-
-.hero h1{
- font-size:29px;
- margin-bottom:8px;
+.hero h2{
+  font-size:30px;
+  line-height:1.15;
+  margin-bottom:9px;
 }
 
 .hero p{
- color:var(--muted);
- line-height:1.5;
+  color:var(--muted);
+  max-width:720px;
+  line-height:1.6;
+}
+
+.nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:5px 0 18px;
+}
+
+.nav button{
+  white-space:nowrap;
+  background:var(--card);
+  color:var(--muted);
+  border:1px solid var(--line);
+  padding:10px 14px;
+  border-radius:10px;
+}
+
+.nav button.active{
+  background:#123052;
+  color:#fff;
+  border-color:#2d76b7;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
 }
 
 .card{
- background:linear-gradient(145deg,var(--card),var(--card2));
- border:1px solid var(--line);
- border-radius:18px;
- padding:20px;
- margin-bottom:16px;
- box-shadow:0 14px 35px rgba(0,0,0,.28);
+  background:linear-gradient(180deg,var(--card),#0c1b2d);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 10px 35px rgba(0,0,0,.15);
 }
 
-.title{
- font-size:18px;
- font-weight:800;
- margin-bottom:16px;
+.card h3{
+  margin-bottom:7px;
+  font-size:17px;
 }
 
-label{
- display:block;
- font-size:13px;
- color:var(--muted);
- margin-bottom:7px;
+.card p{
+  color:var(--muted);
+  line-height:1.55;
 }
 
-input,select{
- width:100%;
- border:1px solid var(--line);
- background:#091728;
- color:var(--text);
- border-radius:11px;
- padding:13px 14px;
- outline:none;
- margin-bottom:14px;
+.label{
+  display:block;
+  color:#b8c8da;
+  font-size:12px;
+  margin-bottom:7px;
+}
+
+input,
+select{
+  width:100%;
+  background:#091827;
+  color:#fff;
+  border:1px solid #29425e;
+  border-radius:10px;
+  padding:12px;
+  outline:none;
 }
 
 input:focus,
 select:focus{
- border-color:var(--blue);
+  border-color:var(--blue);
 }
 
-.hidden{
- display:none!important
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:13px;
 }
 
-.status{
- margin-top:13px;
- border-radius:11px;
- padding:12px;
- font-size:13px;
- line-height:1.5;
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  font-weight:700;
+  margin-top:14px;
 }
 
-.info{
- background:rgba(41,169,255,.1);
- border:1px solid rgba(41,169,255,.25);
- color:#9ddcff;
+.btn-primary{
+  background:linear-gradient(135deg,#35a9ff,#1676d2);
+  color:#fff;
 }
 
-.success{
- background:rgba(39,209,127,.1);
- border:1px solid rgba(39,209,127,.25);
- color:#80f0b8;
+.btn-secondary{
+  background:#142a42;
+  color:#fff;
+  border:1px solid #294761;
 }
 
-.error{
- background:rgba(255,95,109,.1);
- border:1px solid rgba(255,95,109,.25);
- color:#ff9ca5;
+.btn-success{
+  background:#124b38;
+  color:#5ff0a9;
+  border:1px solid #217b5b;
 }
 
-.warning{
- background:rgba(255,200,87,.1);
- border:1px solid rgba(255,200,87,.25);
- color:#ffd97e;
+.btn-danger{
+  background:#4a1d2a;
+  color:#ff93a5;
+  border:1px solid #803146;
 }
 
-.plans{
- display:grid;
- grid-template-columns:1fr;
- gap:12px;
+.btn-full{
+  width:100%;
 }
 
-.plan{
- border:1px solid var(--line);
- background:#0b192b;
- border-radius:14px;
- padding:16px;
+.provider{
+  position:relative;
 }
 
-.plan-top{
- display:flex;
- justify-content:space-between;
- gap:10px;
- margin-bottom:8px;
+.provider-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.plan-data{
- font-size:21px;
- font-weight:900;
+.provider-name{
+  font-weight:800;
+  font-size:17px;
 }
 
-.plan-price{
- color:var(--green);
- font-weight:900;
+.provider-type{
+  color:var(--blue);
+  font-size:11px;
+  margin-top:4px;
 }
 
-.plan-meta{
- color:var(--muted);
- font-size:13px;
- margin-bottom:13px;
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
 }
 
-.plan-btn{
- width:100%;
- border:0;
- border-radius:10px;
- padding:11px;
- background:#1769a7;
- color:white;
- font-weight:bold;
+.badge-green{
+  background:rgba(39,209,127,.12);
+  color:var(--green);
+  border:1px solid rgba(39,209,127,.25);
 }
 
-.primary,
-.secondary{
- width:100%;
- border-radius:12px;
- padding:13px;
- font-weight:900;
+.badge-yellow{
+  background:rgba(255,200,87,.12);
+  color:var(--yellow);
+  border:1px solid rgba(255,200,87,.25);
 }
 
-.primary{
- border:0;
- background:linear-gradient(90deg,#168be0,#25b7ff);
- color:white;
+.badge-blue{
+  background:rgba(61,169,255,.12);
+  color:var(--blue);
+  border:1px solid rgba(61,169,255,.25);
 }
 
-.secondary{
- margin-top:10px;
- border:1px solid var(--line);
- background:#0b192b;
- color:white;
+.stat{
+  background:#0a192a;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:15px;
 }
 
-.summary{
- background:#091728;
- border:1px solid var(--line);
- border-radius:13px;
- padding:15px;
- margin-bottom:17px;
+.stat .value{
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:5px;
 }
 
-.row{
- display:flex;
- justify-content:space-between;
- gap:15px;
- padding:9px 0;
- border-bottom:1px solid rgba(255,255,255,.06);
+.stat .name{
+  color:var(--muted);
+  font-size:12px;
 }
 
-.row:last-child{
- border-bottom:0
+.network{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid #1a3047;
 }
 
-.muted{
- color:var(--muted);
- font-size:13px;
-}
-
-.value{
- text-align:right;
- font-weight:bold;
-}
-
-.ready{
- text-align:center;
-}
-
-.ready-icon{
- width:82px;
- height:82px;
- margin:5px auto 16px;
- border-radius:50%;
- display:flex;
- align-items:center;
- justify-content:center;
- background:rgba(39,209,127,.12);
- border:2px solid var(--green);
- font-size:40px;
-}
-
-.ready.active .ready-icon{
- border-color:var(--blue);
- background:rgba(41,169,255,.12);
-}
-
-.ready h2{
- font-size:27px;
- margin-bottom:7px;
-}
-
-.qr-box{
- width:190px;
- height:190px;
- margin:20px auto;
- padding:12px;
- background:white;
- border-radius:15px;
-}
-
-.qr{
- width:100%;
- height:100%;
- display:grid;
- grid-template-columns:repeat(21,1fr);
- gap:2px;
-}
-
-.qr span{
- background:white
-}
-
-.qr span.on{
- background:black
-}
-
-.code-box{
- background:#091728;
- border:1px solid var(--line);
- border-radius:13px;
- padding:15px;
- margin-top:12px;
- text-align:left;
-}
-
-.code-label{
- color:var(--muted);
- font-size:12px;
- margin-bottom:6px;
-}
-
-.code{
- font-family:monospace;
- font-size:15px;
- font-weight:bold;
- letter-spacing:.7px;
- word-break:break-all;
-}
-
-.copy-btn{
- margin-top:9px;
- width:100%;
- border:1px solid var(--line);
- background:#10243a;
- color:white;
- padding:9px;
- border-radius:9px;
- font-weight:bold;
-}
-
-.grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
- margin-top:15px;
-}
-
-.box{
- background:#0b192b;
- border:1px solid var(--line);
- border-radius:12px;
- padding:13px;
- text-align:left;
-}
-
-.box small{
- display:block;
- color:var(--muted);
- margin-bottom:5px;
-}
-
-.box strong{
- font-size:13px;
- word-break:break-word;
-}
-
-.status-pill{
- display:inline-flex;
- align-items:center;
- gap:7px;
- padding:7px 12px;
- border-radius:20px;
- background:rgba(39,209,127,.12);
- border:1px solid rgba(39,209,127,.3);
- color:#80f0b8;
- font-size:12px;
- font-weight:bold;
- margin-top:12px;
-}
-
-.status-pill.active{
- background:rgba(41,169,255,.12);
- border-color:rgba(41,169,255,.3);
- color:#9ddcff;
-}
-
-.status-pill.off{
- background:rgba(255,95,109,.12);
- border-color:rgba(255,95,109,.3);
- color:#ff9ca5;
+.network:last-child{
+  border-bottom:0;
 }
 
 .dot{
- width:8px;
- height:8px;
- border-radius:50%;
- background:var(--green);
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px rgba(39,209,127,.6);
 }
 
-.active .dot{
- background:var(--blue);
+.network-info{
+  flex:1;
 }
 
-.off .dot{
- background:var(--red);
+.network-info strong{
+  display:block;
+  margin-bottom:3px;
 }
 
-.menu{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
- margin-top:15px;
+.network-info span{
+  color:var(--muted);
+  font-size:12px;
 }
 
-.menu button{
- border:1px solid var(--line);
- background:#0b192b;
- color:white;
- border-radius:12px;
- padding:13px 8px;
- font-weight:bold;
+.plan{
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:15px;
+  background:#0b1a2c;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.menu button:hover{
- border-color:var(--blue);
+.plan:hover,
+.plan.selected{
+  border-color:#3da9ff;
+  background:#102944;
 }
 
-.progress-wrap{
- margin-top:18px;
- text-align:left;
+.plan .gb{
+  font-size:22px;
+  font-weight:900;
 }
 
-.progress-header{
- display:flex;
- justify-content:space-between;
- gap:10px;
- margin-bottom:8px;
- font-size:13px;
+.plan .price{
+  color:var(--green);
+  margin-top:6px;
+  font-weight:800;
 }
 
-.progress-bg{
- height:13px;
- background:#07111f;
- border:1px solid var(--line);
- border-radius:20px;
- overflow:hidden;
+.plan .valid{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+.table th,
+.table td{
+  text-align:left;
+  padding:11px 8px;
+  border-bottom:1px solid #1c3248;
+  font-size:12px;
+}
+
+.table th{
+  color:#a9bad0;
+}
+
+.table td{
+  color:#e8f0fa;
+}
+
+.code{
+  background:#06111d;
+  border:1px solid #1b3046;
+  border-radius:10px;
+  padding:13px;
+  font-family:monospace;
+  font-size:12px;
+  overflow:auto;
+  color:#8ed0ff;
+}
+
+.log{
+  border-left:3px solid var(--blue);
+  padding:9px 12px;
+  margin:9px 0;
+  background:#0a192a;
+  border-radius:0 9px 9px 0;
+}
+
+.log strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.log span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.alert{
+  padding:13px;
+  border-radius:10px;
+  margin-bottom:15px;
+  line-height:1.5;
+  font-size:13px;
+}
+
+.alert-info{
+  background:rgba(61,169,255,.09);
+  border:1px solid rgba(61,169,255,.25);
+  color:#b9ddff;
+}
+
+.alert-warning{
+  background:rgba(255,200,87,.09);
+  border:1px solid rgba(255,200,87,.25);
+  color:#ffe2a0;
+}
+
+.progress{
+  height:10px;
+  background:#06111d;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:10px;
 }
 
 .progress-bar{
- height:100%;
- width:0%;
- background:linear-gradient(
-  90deg,
-  #168be0,
-  #25d17f
- );
- border-radius:20px;
- transition:.5s;
-}
-
-.usage-number{
- margin-top:8px;
- color:var(--muted);
- font-size:12px;
-}
-
-.dashboard-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.dash{
- background:#0b192b;
- border:1px solid var(--line);
- border-radius:13px;
- padding:15px;
-}
-
-.dash-icon{
- font-size:22px;
- margin-bottom:7px;
-}
-
-.dash-label{
- color:var(--muted);
- font-size:12px;
-}
-
-.dash-value{
- margin-top:5px;
- font-size:18px;
- font-weight:900;
-}
-
-.history-item{
- background:#0b192b;
- border:1px solid var(--line);
- border-radius:13px;
- padding:14px;
- margin-bottom:10px;
-}
-
-.history-top{
- display:flex;
- justify-content:space-between;
- gap:10px;
- margin-bottom:7px;
-}
-
-.history-id{
- font-size:13px;
- font-weight:bold;
-}
-
-.history-status{
- font-size:11px;
- font-weight:bold;
- color:var(--green);
-}
-
-.history-meta{
- color:var(--muted);
- font-size:12px;
- line-height:1.6;
+  height:100%;
+  background:linear-gradient(90deg,#2ea8ff,#28d17f);
+  width:0%;
+  transition:.3s;
 }
 
 .footer{
- text-align:center;
- color:#70849c;
- font-size:11px;
- padding:20px;
+  text-align:center;
+  color:#60758b;
+  padding:25px 10px 10px;
+  font-size:11px;
 }
 
-@media(min-width:600px){
- .plans{
-  grid-template-columns:1fr 1fr;
- }
+.hidden{
+  display:none!important;
 }
 
-@media(max-width:430px){
- .hero h1{
-  font-size:25px
- }
+@media(max-width:760px){
+  .grid,
+  .grid3,
+  .form-row{
+    grid-template-columns:1fr;
+  }
 
- .grid,
- .dashboard-grid{
-  grid-template-columns:1fr
- }
+  .hero h2{
+    font-size:25px;
+  }
 
- .menu{
-  grid-template-columns:1fr 1fr
- }
+  .container{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .header-inner{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .brand h1{
+    font-size:18px;
+  }
 }
 </style>
 </head>
@@ -581,2393 +511,1430 @@ select:focus{
 <body>
 
 <header class="header">
- <div class="logo">TEL<span>KU</span></div>
- <div class="badge">DEMO MODE</div>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo">TK</div>
+      <div>
+        <h1>TELKU</h1>
+        <small>Global Connectivity Engine</small>
+      </div>
+    </div>
+    <div class="mode">V3.0 DEMO</div>
+  </div>
 </header>
 
 <main class="container">
 
-<!-- HOME -->
-
-<section id="homePage">
-
- <div class="hero">
-  <div class="hero-icon">🌍</div>
-  <h1>TELKU Global eSIM</h1>
-  <p>
-   Global eSIM marketplace untuk perjalanan Anda.
-  </p>
- </div>
-
- <div class="card">
-
-  <div class="title">
-   👤 Customer Information
-  </div>
-
-  <label>Full Name</label>
-  <input
-   id="fullName"
-   type="text"
-   placeholder="Nama lengkap"
-  >
-
-  <label>Email</label>
-  <input
-   id="email"
-   type="email"
-   placeholder="nama@email.com"
-  >
-
-  <label>Phone</label>
-  <input
-   id="phone"
-   type="tel"
-   placeholder="+62"
-  >
-
-  <label>Destination Country</label>
-
-  <select
-   id="countrySelect"
-   onchange="loadPlans()"
-  >
-   <option value="">
-    -- Pilih negara --
-   </option>
-  </select>
-
-  <div
-   id="countryStatus"
-   class="status info"
-  >
-   Memuat negara...
-  </div>
-
- </div>
-
- <div
-  id="plansCard"
-  class="card hidden"
- >
-
-  <div class="title">
-   📦 Available eSIM Plans
-  </div>
-
-  <div
-   id="plans"
-   class="plans"
-  ></div>
-
- </div>
-
-</section>
-
-
-<!-- PAYMENT -->
-
-<section
- id="paymentPage"
- class="hidden"
->
-
- <div class="hero">
-  <div class="hero-icon">💳</div>
-  <h1>Payment</h1>
-  <p>
-   Periksa pesanan sebelum pembayaran.
-  </p>
- </div>
-
- <div class="card">
-
-  <div class="title">
-   🧾 Order Summary
-  </div>
+  <section class="hero">
+    <h2>Global Connectivity Engine</h2>
+    <p>
+      TELKU V3.0 adalah fondasi untuk menghubungkan customer
+      dengan provider eSIM lokal maupun global melalui satu sistem.
+    </p>
+  </section>
+
+  <nav class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+    <button onclick="showPage('providers',this)">Providers</button>
+    <button onclick="showPage('networks',this)">Networks</button>
+    <button onclick="showPage('plans',this)">Plans</button>
+    <button onclick="showPage('esim',this)">My eSIM</button>
+    <button onclick="showPage('logs',this)">Sync Logs</button>
+    <button onclick="showPage('architecture',this)">Architecture</button>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="page active">
+
+    <div class="alert alert-info">
+      <strong>Connectivity Engine aktif dalam DEMO MODE.</strong><br>
+      Data provider dan jaringan di bawah adalah data simulasi lokal.
+      Belum ada provisioning eSIM nyata.
+    </div>
+
+    <div class="grid3">
+      <div class="stat">
+        <div class="value" id="providerCount">0</div>
+        <div class="name">Providers</div>
+      </div>
+
+      <div class="stat">
+        <div class="value" id="countryCount">0</div>
+        <div class="name">Countries</div>
+      </div>
+
+      <div class="stat">
+        <div class="value" id="networkCount">0</div>
+        <div class="name">Networks</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:16px">
+
+      <div class="card">
+        <h3>Connectivity Status</h3>
+        <p>Simulasi status konektivitas customer.</p>
+
+        <div style="margin-top:16px">
+          <span class="badge badge-green">● CONNECTED</span>
+        </div>
+
+        <div class="network">
+          <div class="dot"></div>
+          <div class="network-info">
+            <strong id="dashNetwork">Singtel</strong>
+            <span id="dashProvider">TELKU Global Provider</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <span class="label">Country</span>
+            <strong id="dashCountry">Singapore</strong>
+          </div>
+
+          <div>
+            <span class="label">Data Remaining</span>
+            <strong id="dashData">7.4 GB</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Provider Routing</h3>
+        <p>TELKU menentukan provider berdasarkan negara dan availability.</p>
+
+        <div class="log">
+          <strong>Country detected</strong>
+          <span>Singapore</span>
+        </div>
+
+        <div class="log">
+          <strong>Provider selected</strong>
+          <span>TELKU Global Provider</span>
+        </div>
+
+        <div class="log">
+          <strong>Network selected</strong>
+          <span>Singtel</span>
+        </div>
+
+        <div class="log">
+          <strong>Connectivity</strong>
+          <span>ACTIVE</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <h3>Customer Test</h3>
+      <p>Simulasikan customer memilih negara dan paket.</p>
+
+      <div class="form-row">
+        <div>
+          <span class="label">Country</span>
+          <select id="customerCountry">
+            <option value="Singapore">Singapore</option>
+            <option value="Indonesia">Indonesia</option>
+            <option value="Japan">Japan</option>
+            <option value="Malaysia">Malaysia</option>
+            <option value="Thailand">Thailand</option>
+            <option value="Australia">Australia</option>
+          </select>
+        </div>
+
+        <div>
+          <span class="label">Data Package</span>
+          <select id="customerPlan">
+            <option value="5">5 GB</option>
+            <option value="10" selected>10 GB</option>
+            <option value="20">20 GB</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-full" onclick="simulateRouting()">
+        Find Best Provider
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- PROVIDERS -->
+  <section id="providers" class="page">
+
+    <div class="card">
+      <h3>Provider Manager</h3>
+      <p>
+        Tempat TELKU mengelola partner provider lokal dan global.
+      </p>
+    </div>
+
+    <div id="providerList" class="grid"></div>
+
+    <div class="card">
+      <h3>Add Provider</h3>
+
+      <div class="form-row">
+        <div>
+          <span class="label">Provider Name</span>
+          <input id="newProviderName" placeholder="Example Provider">
+        </div>
+
+        <div>
+          <span class="label">Provider Type</span>
+          <select id="newProviderType">
+            <option>Global Aggregator</option>
+            <option>Local Provider</option>
+            <option>Direct Operator</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="addProvider()">
+        Add Demo Provider
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- NETWORKS -->
+  <section id="networks" class="page">
+
+    <div class="card">
+      <h3>Network Directory</h3>
+      <p>
+        Daftar operator/network yang tersedia melalui provider TELKU.
+      </p>
+    </div>
+
+    <div class="card">
+      <div id="networkList"></div>
+    </div>
+
+  </section>
+
+
+  <!-- PLANS -->
+  <section id="plans" class="page">
+
+    <div class="card">
+      <h3>Global eSIM Plans</h3>
+      <p>
+        Contoh katalog paket yang nantinya berasal dari API provider.
+      </p>
+    </div>
 
-  <div
-   id="paymentSummary"
-   class="summary"
-  ></div>
+    <div id="planList" class="grid3"></div>
 
-  <label>
-   Payment Method
-  </label>
+  </section>
 
-  <select id="paymentMethod">
-   <option value="online">
-    Online Payment
-   </option>
 
-   <option value="card">
-    Credit / Debit Card
-   </option>
+  <!-- ESIM -->
+  <section id="esim" class="page">
 
-   <option value="bank_transfer">
-    Bank Transfer
-   </option>
-  </select>
+    <div class="card">
 
-  <button
-   id="payButton"
-   class="primary"
-   onclick="processPayment()"
-  >
-   Pay Now
-  </button>
+      <div class="provider-top">
+        <div>
+          <h3>My eSIM</h3>
+          <p>Demo connectivity profile</p>
+        </div>
 
-  <button
-   class="secondary"
-   onclick="backToHome()"
-  >
-   ← Kembali
-  </button>
+        <span class="badge badge-green" id="esimStatus">
+          ACTIVE
+        </span>
+      </div>
 
-  <div id="paymentStatus"></div>
+      <div class="form-row">
 
- </div>
+        <div>
+          <span class="label">eSIM ID</span>
+          <div class="code" id="esimId">TELKU-ESIM-DEMO-001</div>
+        </div>
 
-</section>
+        <div>
+          <span class="label">ICCID</span>
+          <div class="code" id="iccid">
+            8965012345678901234
+          </div>
+        </div>
+
+      </div>
 
+      <div class="form-row">
 
-<!-- ESIM -->
+        <div>
+          <span class="label">Provider</span>
+          <strong id="esimProvider">
+            TELKU Global Provider
+          </strong>
+        </div>
 
-<section
- id="esimPage"
- class="hidden"
->
+        <div>
+          <span class="label">Network</span>
+          <strong id="esimNetwork">
+            Singtel
+          </strong>
+        </div>
 
- <div class="hero">
+      </div>
 
-  <div class="hero-icon">
-   📱
-  </div>
+      <div class="form-row">
 
-  <h1>
-   My eSIM
-  </h1>
+        <div>
+          <span class="label">Country</span>
+          <strong id="esimCountry">
+            Singapore
+          </strong>
+        </div>
 
-  <p>
-   Kelola eSIM TELKU Anda.
-  </p>
+        <div>
+          <span class="label">Validity</span>
+          <strong id="esimValidity">
+            30 days
+          </strong>
+        </div>
 
-  <div
-   id="statusPill"
-   class="status-pill"
-  >
-   <span class="dot"></span>
-   READY
-  </div>
+      </div>
 
- </div>
+    </div>
 
 
- <div
-  id="esimReadyCard"
-  class="card ready"
- >
+    <div class="card">
 
-  <div class="ready-icon">
-   ✓
-  </div>
+      <h3>Data Usage</h3>
+      <p>
+        Simulasi data usage yang nantinya berasal dari provider API.
+      </p>
+
+      <div style="margin-top:18px;display:flex;justify-content:space-between">
+        <strong id="usageText">2.6 GB / 10 GB</strong>
+        <span id="usagePercent">26%</span>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="usageBar"></div>
+      </div>
+
+      <button class="btn btn-secondary" onclick="simulateUsage()">
+        Simulate Usage +0.5 GB
+      </button>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>Provider Sync</h3>
+
+        <div class="log">
+          <strong>Last sync</strong>
+          <span id="lastSync">Waiting...</span>
+        </div>
+
+        <div class="log">
+          <strong>Provider status</strong>
+          <span id="providerStatus">ONLINE</span>
+        </div>
+
+        <button class="btn btn-success btn-full" onclick="syncProvider()">
+          Sync Provider
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>eSIM Management</h3>
+
+        <button class="btn btn-primary btn-full" onclick="activateESIM()">
+          Activate
+        </button>
+
+        <button class="btn btn-danger btn-full" onclick="deactivateESIM()">
+          Deactivate
+        </button>
+
+        <button class="btn btn-secondary btn-full" onclick="newESIM()">
+          + New Demo eSIM
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LOGS -->
+  <section id="logs" class="page">
+
+    <div class="card">
+      <h3>Provider Sync Logs</h3>
+      <p>
+        Semua aktivitas komunikasi TELKU dengan provider akan
+        tercatat di sini.
+      </p>
+    </div>
 
-  <h2 id="esimTitle">
-   eSIM READY
-  </h2>
+    <div class="card">
+      <div id="syncLogs"></div>
+    </div>
 
-  <p class="muted">
-   eSIM demo berhasil dibuat.
-  </p>
+  </section>
 
-  <div id="esimData"></div>
 
- </div>
+  <!-- ARCHITECTURE -->
+  <section id="architecture" class="page">
 
+    <div class="card">
+      <h3>TELKU V3 Architecture</h3>
+      <p>Target arsitektur ketika masuk ke backend nyata.</p>
+    </div>
 
- <!-- USAGE -->
+    <div class="card">
 
- <div class="card">
+      <div class="code">
+CUSTOMER APP
+      │
+      ▼
+TELKU FRONTEND
+      │
+      ▼
+TELKU API / EDGE FUNCTIONS
+      │
+      ├───────────────┐
+      ▼               ▼
+Provider Router   Order Engine
+      │               │
+      ▼               ▼
+Provider Adapter  eSIM Provisioning
+      │               │
+      ├───────┬───────┤
+      ▼       ▼       ▼
+Provider A Provider B Operator
+      │       │       │
+      └───────┼───────┘
+              ▼
+       Connectivity
+              │
+              ▼
+          CUSTOMER HP
+      </div>
 
-  <div class="title">
-   📊 Data Usage
-  </div>
+    </div>
 
-  <div class="progress-wrap">
+    <div class="grid">
 
-   <div class="progress-header">
-    <span>
-     Data Used
-    </span>
+      <div class="card">
+        <h3>Supabase Tables</h3>
 
-    <strong id="usagePercent">
-     0%
-    </strong>
-   </div>
+        <div class="log">
+          <strong>providers</strong>
+          <span>Partner provider master data</span>
+        </div>
 
-   <div class="progress-bg">
+        <div class="log">
+          <strong>provider_plans</strong>
+          <span>Plans, price, quota, validity</span>
+        </div>
 
-    <div
-     id="usageBar"
-     class="progress-bar"
-    ></div>
+        <div class="log">
+          <strong>esims</strong>
+          <span>ICCID, eSIM ID, status</span>
+        </div>
 
-   </div>
+        <div class="log">
+          <strong>usage_logs</strong>
+          <span>Usage history</span>
+        </div>
 
-   <div
-    id="usageNumber"
-    class="usage-number"
-   >
-    0 GB used of 0 GB
-   </div>
+        <div class="log">
+          <strong>webhook_events</strong>
+          <span>Provider event records</span>
+        </div>
 
-  </div>
+      </div>
 
-  <button
-   class="primary"
-   style="margin-top:15px"
-   onclick="simulateUsage()"
-  >
-   📶 Simulate Data Usage
-  </button>
+      <div class="card">
+        <h3>Provider API Adapter</h3>
 
-  <button
-   class="secondary"
-   onclick="topUpData()"
-  >
-   ➕ Top Up Data
-  </button>
+        <div class="code">
+getPlans(country)
 
-  <div id="usageStatus"></div>
+createOrder(planId, customer)
 
- </div>
+getEsim(iccid)
 
+getStatus(iccid)
 
- <!-- DASHBOARD -->
+getUsage(iccid)
 
- <div class="card">
+topUp(iccid, planId)
 
-  <div class="title">
-   📊 eSIM Dashboard
-  </div>
+cancelOrder(orderId)
+        </div>
 
-  <div
-   id="dashboard"
-   class="dashboard-grid"
-  ></div>
+      </div>
 
- </div>
+    </div>
 
+    <div class="alert alert-warning">
+      <strong>Penting:</strong>
+      API key provider, secret key, payment credential,
+      dan provisioning credential tidak boleh diletakkan
+      di index.html. Semua credential harus berada di backend
+      / Edge Function.
+    </div>
 
- <!-- MANAGEMENT -->
+  </section>
 
- <div class="card">
 
-  <div class="title">
-   ⚙️ eSIM Management
-  </div>
-
-  <div class="menu">
-
-   <button onclick="copyActivation()">
-    🔑 Copy Activation
-   </button>
-
-   <button onclick="copySMdp()">
-    📋 Copy SM-DP+
-   </button>
-
-   <button onclick="showTransaction()">
-    🧾 Transaction
-   </button>
-
-   <button onclick="simulateActivation()">
-    📡 Activate
-   </button>
-
-   <button onclick="deactivateESIM()">
-    ⛔ Deactivate
-   </button>
-
-   <button onclick="showHistory()">
-    📚 eSIM History
-   </button>
-
-  </div>
-
-  <div id="managementStatus"></div>
-
- </div>
-
-
- <button
-  class="primary"
-  onclick="newTransaction()"
- >
-  + New eSIM
- </button>
-
-</section>
-
-
-<!-- TRANSACTION -->
-
-<section
- id="transactionPage"
- class="hidden"
->
-
- <div class="hero">
-
-  <div class="hero-icon">
-   🧾
-  </div>
-
-  <h1>
-   Transaction Detail
-  </h1>
-
-  <p>
-   Detail transaksi TELKU.
-  </p>
-
- </div>
-
- <div class="card">
-
-  <div
-   id="transactionDetail"
-  ></div>
-
-  <button
-   class="secondary"
-   onclick="backToEsim()"
-  >
-   ← Back to eSIM
-  </button>
-
- </div>
-
-</section>
-
-
-<!-- HISTORY -->
-
-<section
- id="historyPage"
- class="hidden"
->
-
- <div class="hero">
-
-  <div class="hero-icon">
-   📚
-  </div>
-
-  <h1>
-   eSIM History
-  </h1>
-
-  <p>
-   Riwayat eSIM dan transaksi TELKU.
-  </p>
-
- </div>
-
- <div class="card">
-
-  <div class="title">
-   📱 My eSIM History
-  </div>
-
-  <div
-   id="historyList"
-  ></div>
-
-  <button
-   class="secondary"
-   onclick="backToEsim()"
-  >
-   ← Back to eSIM
-  </button>
-
- </div>
-
-</section>
+  <footer class="footer">
+    TELKU Global Connectivity Engine · HOBBIGO Technology · V3.0 Demo
+  </footer>
 
 </main>
 
 
-<div class="footer">
- TELKU Global eSIM · HOBBIGO Technology · V2.2 Demo
-</div>
-
-
 <script>
 
-/* =========================
-   DEMO DATA
-========================= */
+const STORAGE_PROVIDER = "telku_v30_providers";
+const STORAGE_LOGS = "telku_v30_sync_logs";
+const STORAGE_ESIM = "telku_v30_esim";
 
-const DEMO_COUNTRIES=[
- "Indonesia",
- "Singapore",
- "Malaysia",
- "Thailand",
- "Japan",
- "South Korea",
- "Australia",
- "United States",
- "United Kingdom",
- "France",
- "Germany",
- "Italy",
- "Spain",
- "United Arab Emirates",
- "Saudi Arabia"
-];
+const DEFAULT_PROVIDERS = [
 
-const PLAN_DATA=[
- {
-  data_gb:1,
-  duration:7,
-  price:49000
- },
- {
-  data_gb:3,
-  duration:15,
-  price:89000
- },
- {
-  data_gb:5,
-  duration:30,
-  price:129000
- },
- {
-  data_gb:10,
-  duration:30,
-  price:199000
- },
- {
-  data_gb:20,
-  duration:30,
-  price:299000
- }
-];
-
-const STORAGE_KEY=
- "telku_demo_transactions_v22";
-
-let selectedPlan=null;
-let selectedCountry=null;
-let currentTransaction=null;
-
-
-/* =========================
-   STORAGE
-========================= */
-
-function storageOK(){
-
- try{
-
-  const key="telku_test";
-
-  localStorage.setItem(key,"1");
-  localStorage.removeItem(key);
-
-  return true;
-
- }catch(e){
-
-  return false;
-
- }
-
-}
-
-
-function getTransactions(){
-
- if(!storageOK())
-  return [];
-
- try{
-
-  const raw=
-   localStorage.getItem(
-    STORAGE_KEY
-   );
-
-  if(!raw)
-   return [];
-
-  const data=
-   JSON.parse(raw);
-
-  return Array.isArray(data)
-   ? data
-   : [];
-
- }catch(e){
-
-  return [];
-
- }
-
-}
-
-
-function saveTransactions(data){
-
- if(!storageOK())
-  return false;
-
- try{
-
-  localStorage.setItem(
-   STORAGE_KEY,
-   JSON.stringify(data)
-  );
-
-  return true;
-
- }catch(e){
-
-  console.warn(e);
-
-  return false;
-
- }
-
-}
-
-
-/* =========================
-   HELPERS
-========================= */
-
-function code(prefix){
-
- return prefix+
- "-" +
- Date.now().toString().slice(-8)+
- "-" +
- Math.floor(
-  100000+
-  Math.random()*900000
- );
-
-}
-
-
-function rupiah(value){
-
- return new Intl.NumberFormat(
-  "id-ID",
   {
-   style:"currency",
-   currency:"IDR",
-   maximumFractionDigits:0
-  }
- ).format(value);
-
-}
-
-
-function esc(value){
-
- return String(value ?? "")
-  .replace(/&/g,"&amp;")
-  .replace(/</g,"&lt;")
-  .replace(/>/g,"&gt;")
-  .replace(/"/g,"&quot;")
-  .replace(/'/g,"&#039;");
-
-}
-
-
-function formatDate(value){
-
- if(!value)
-  return "-";
-
- return new Date(value)
-  .toLocaleDateString(
-   "id-ID",
-   {
-    day:"2-digit",
-    month:"short",
-    year:"numeric"
-   }
-  );
-
-}
-
-
-function addDays(date,days){
-
- const result=
-  new Date(date);
-
- result.setDate(
-  result.getDate()+days
- );
-
- return result;
-
-}
-
-
-function getExpiry(transaction){
-
- if(!transaction)
-  return null;
-
- if(transaction.expiryDate)
-  return new Date(
-   transaction.expiryDate
-  );
-
- return addDays(
-  new Date(transaction.createdAt),
-  transaction.plan.duration
- );
-
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function showPage(id){
-
- [
-  "homePage",
-  "paymentPage",
-  "esimPage",
-  "transactionPage",
-  "historyPage"
- ].forEach(page=>{
-
-  const el=
-   document.getElementById(page);
-
-  if(el)
-   el.classList.add("hidden");
-
- });
-
- document
-  .getElementById(id)
-  .classList.remove("hidden");
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
-}
-
-
-/* =========================
-   COUNTRIES
-========================= */
-
-function loadCountries(){
-
- const select=
-  document.getElementById(
-   "countrySelect"
-  );
-
- select.innerHTML=
-  '<option value="">-- Pilih negara --</option>';
-
- DEMO_COUNTRIES.forEach(country=>{
-
-  const option=
-   document.createElement(
-    "option"
-   );
-
-  option.value=country;
-  option.textContent=country;
-
-  select.appendChild(option);
-
- });
-
- document.getElementById(
-  "countryStatus"
- ).textContent=
-  DEMO_COUNTRIES.length+
-  " countries available";
-
-}
-
-
-/* =========================
-   PLANS
-========================= */
-
-function loadPlans(){
-
- const country=
-  document.getElementById(
-   "countrySelect"
-  ).value;
-
- const card=
-  document.getElementById(
-   "plansCard"
-  );
-
- const container=
-  document.getElementById(
-   "plans"
-  );
-
- selectedPlan=null;
- selectedCountry=country;
-
- container.innerHTML="";
-
- if(!country){
-
-  card.classList.add(
-   "hidden"
-  );
-
-  return;
-
- }
-
- card.classList.remove(
-  "hidden"
- );
-
- PLAN_DATA.forEach(
-  (plan,index)=>{
-
-   const div=
-    document.createElement(
-     "div"
-    );
-
-   div.className="plan";
-
-   div.innerHTML=`
-
-    <div class="plan-top">
-
-     <div class="plan-data">
-      ${plan.data_gb} GB
-     </div>
-
-     <div class="plan-price">
-      ${rupiah(plan.price)}
-     </div>
-
-    </div>
-
-    <div class="plan-meta">
-     Valid ${plan.duration} days
-     · ${esc(country)}
-    </div>
-
-    <button
-     class="plan-btn"
-     onclick="selectPlan(${index})"
-    >
-     Choose Plan
-    </button>
-
-   `;
-
-   container.appendChild(div);
-
-  }
- );
-
-}
-
-
-function selectPlan(index){
-
- const plan=
-  PLAN_DATA[index];
-
- if(!plan){
-
-  alert(
-   "Paket tidak ditemukan."
-  );
-
-  return;
-
- }
-
- selectedPlan={
-
-  country:selectedCountry,
-
-  data_gb:
-   plan.data_gb,
-
-  duration:
-   plan.duration,
-
-  price:
-   plan.price
-
- };
-
- showPayment();
-
-}
-
-
-/* =========================
-   PAYMENT
-========================= */
-
-function showPayment(){
-
- const summary=
-  document.getElementById(
-   "paymentSummary"
-  );
-
- summary.innerHTML=`
-
-  <div class="row">
-   <span class="muted">
-    Customer
-   </span>
-
-   <strong>
-    ${esc(
-     document.getElementById(
-      "fullName"
-     ).value
-    )}
-   </strong>
-  </div>
-
-  <div class="row">
-   <span class="muted">
-    Country
-   </span>
-
-   <strong>
-    ${esc(
-     selectedPlan.country
-    )}
-   </strong>
-  </div>
-
-  <div class="row">
-   <span class="muted">
-    Data
-   </span>
-
-   <strong>
-    ${selectedPlan.data_gb} GB
-   </strong>
-  </div>
-
-  <div class="row">
-   <span class="muted">
-    Validity
-   </span>
-
-   <strong>
-    ${selectedPlan.duration} days
-   </strong>
-  </div>
-
-  <div class="row">
-   <span class="muted">
-    Total
-   </span>
-
-   <strong>
-    ${rupiah(
-     selectedPlan.price
-    )}
-   </strong>
-  </div>
-
- `;
-
- showPage(
-  "paymentPage"
- );
-
-}
-
-
-/* =========================
-   CUSTOMER
-========================= */
-
-function createCustomer(){
-
- const fullName=
-  document.getElementById(
-   "fullName"
-  ).value.trim();
-
- const email=
-  document.getElementById(
-   "email"
-  ).value.trim();
-
- const phone=
-  document.getElementById(
-   "phone"
-  ).value.trim();
-
- const country=
-  document.getElementById(
-   "countrySelect"
-  ).value;
-
- if(!fullName)
-  throw new Error(
-   "Full Name wajib diisi."
-  );
-
- if(!email)
-  throw new Error(
-   "Email wajib diisi."
-  );
-
- if(!country)
-  throw new Error(
-   "Country wajib dipilih."
-  );
-
- return{
-
-  customerId:
-   code("TELKU-CUS"),
-
-  fullName,
-
-  email,
-
-  phone,
-
-  country,
-
-  createdAt:
-   new Date().toISOString()
-
- };
-
-}
-
-
-/* =========================
-   TRANSACTION
-========================= */
-
-function createTransaction(){
-
- if(!selectedPlan){
-
-  throw new Error(
-   "eSIM plan belum dipilih."
-  );
-
- }
-
- const customer=
-  createCustomer();
-
- const paymentMethod=
-  document.getElementById(
-   "paymentMethod"
-  ).value;
-
- const createdAt=
-  new Date();
-
- const orderId=
-  code("TELKU-ORD");
-
- const paymentId=
-  code("TELKU-PAY");
-
- const invoiceId=
-  code("TELKU-INV");
-
- const esimId=
-  code("TELKU-ESIM");
-
- const transactionId=
-  code("TELKU-TXN");
-
- const activationCode=
-  "TELKU-"+
-  Math.random()
-   .toString(36)
-   .substring(2,10)
-   .toUpperCase()+
-  "-"+
-  Math.random()
-   .toString(36)
-   .substring(2,10)
-   .toUpperCase();
-
- const iccid=
-  "8988"+
-  Math.floor(
-   100000000000000000+
-   Math.random()*
-   899999999999999999
-  );
-
- const expiryDate=
-  addDays(
-   createdAt,
-   selectedPlan.duration
-  );
-
- const transaction={
-
-  transactionId,
-
-  orderId,
-
-  paymentId,
-
-  invoiceId,
-
-  esimId,
-
-  customer,
-
-  country:
-   selectedPlan.country,
-
-  plan:{
-
-   data_gb:
-    selectedPlan.data_gb,
-
-   duration:
-    selectedPlan.duration,
-
-   price:
-    selectedPlan.price
-
+    id:"PROV-GLOBAL-001",
+    name:"TELKU Global Provider",
+    type:"Global Aggregator",
+    status:"ONLINE",
+    countries:120,
+    networks:420
   },
 
-  paymentMethod,
+  {
+    id:"PROV-LOCAL-001",
+    name:"TELKU Indonesia Provider",
+    type:"Local Provider",
+    status:"ONLINE",
+    countries:1,
+    networks:4
+  },
 
-  iccid,
+  {
+    id:"PROV-ASIA-001",
+    name:"TELKU Asia Provider",
+    type:"Regional Provider",
+    status:"ONLINE",
+    countries:18,
+    networks:75
+  }
 
-  activationCode,
+];
 
-  smdpAddress:
-   "smdp.demo.telku.example",
 
-  status:
-   "ESIM_READY",
+const NETWORKS = [
 
-  orderStatus:
-   "PAID_DEMO",
+  {
+    country:"Singapore",
+    operator:"Singtel",
+    provider:"TELKU Global Provider",
+    status:"ONLINE"
+  },
 
-  paymentStatus:
-   "PAYMENT_DEMO",
+  {
+    country:"Singapore",
+    operator:"StarHub",
+    provider:"TELKU Global Provider",
+    status:"ONLINE"
+  },
 
-  invoiceStatus:
-   "PAID_DEMO",
+  {
+    country:"Indonesia",
+    operator:"Telkomsel",
+    provider:"TELKU Indonesia Provider",
+    status:"ONLINE"
+  },
 
-  esimStatus:
-   "ESIM_READY",
+  {
+    country:"Indonesia",
+    operator:"Indosat",
+    provider:"TELKU Indonesia Provider",
+    status:"ONLINE"
+  },
 
-  createdAt:
-   createdAt.toISOString(),
+  {
+    country:"Indonesia",
+    operator:"XL",
+    provider:"TELKU Indonesia Provider",
+    status:"ONLINE"
+  },
 
-  expiryDate:
-   expiryDate.toISOString(),
+  {
+    country:"Japan",
+    operator:"NTT Docomo",
+    provider:"TELKU Global Provider",
+    status:"ONLINE"
+  },
 
-  activatedAt:null,
+  {
+    country:"Japan",
+    operator:"KDDI",
+    provider:"TELKU Global Provider",
+    status:"ONLINE"
+  },
 
-  deactivatedAt:null,
+  {
+    country:"Malaysia",
+    operator:"Maxis",
+    provider:"TELKU Asia Provider",
+    status:"ONLINE"
+  },
 
-  dataUsed:0,
+  {
+    country:"Thailand",
+    operator:"AIS",
+    provider:"TELKU Asia Provider",
+    status:"ONLINE"
+  },
 
-  topUpTotal:0,
+  {
+    country:"Australia",
+    operator:"Optus",
+    provider:"TELKU Global Provider",
+    status:"ONLINE"
+  }
 
-  usageEvents:[]
+];
 
- };
 
- const list=
-  getTransactions();
+const PLANS = [
 
- list.push(transaction);
+  {
+    id:"PLAN-SG-5",
+    country:"Singapore",
+    provider:"TELKU Global Provider",
+    data:5,
+    validity:15,
+    price:8
+  },
 
- saveTransactions(list);
+  {
+    id:"PLAN-SG-10",
+    country:"Singapore",
+    provider:"TELKU Global Provider",
+    data:10,
+    validity:30,
+    price:15
+  },
 
- return transaction;
+  {
+    id:"PLAN-ID-10",
+    country:"Indonesia",
+    provider:"TELKU Indonesia Provider",
+    data:10,
+    validity:30,
+    price:10
+  },
+
+  {
+    id:"PLAN-JP-10",
+    country:"Japan",
+    provider:"TELKU Global Provider",
+    data:10,
+    validity:30,
+    price:18
+  },
+
+  {
+    id:"PLAN-MY-10",
+    country:"Malaysia",
+    provider:"TELKU Asia Provider",
+    data:10,
+    validity:30,
+    price:12
+  },
+
+  {
+    id:"PLAN-AU-10",
+    country:"Australia",
+    provider:"TELKU Global Provider",
+    data:10,
+    validity:30,
+    price:20
+  }
+
+];
+
+
+function loadProviders(){
+
+  let data =
+    localStorage.getItem(STORAGE_PROVIDER);
+
+  if(!data){
+
+    localStorage.setItem(
+      STORAGE_PROVIDER,
+      JSON.stringify(DEFAULT_PROVIDERS)
+    );
+
+    return DEFAULT_PROVIDERS;
+
+  }
+
+  try{
+    return JSON.parse(data);
+  }catch(e){
+    return DEFAULT_PROVIDERS;
+  }
 
 }
 
 
-/* =========================
-   PAYMENT PROCESS
-========================= */
+function saveProviders(data){
 
-async function processPayment(){
-
- const button=
-  document.getElementById(
-   "payButton"
+  localStorage.setItem(
+    STORAGE_PROVIDER,
+    JSON.stringify(data)
   );
-
- const status=
-  document.getElementById(
-   "paymentStatus"
-  );
-
- try{
-
-  if(!selectedPlan)
-   throw new Error(
-    "Please select an eSIM plan first."
-   );
-
-  const name=
-   document.getElementById(
-    "fullName"
-   ).value.trim();
-
-  const email=
-   document.getElementById(
-    "email"
-   ).value.trim();
-
-  if(!name)
-   throw new Error(
-    "Full Name wajib diisi."
-   );
-
-  if(!email)
-   throw new Error(
-    "Email wajib diisi."
-   );
-
-  button.disabled=true;
-
-  button.textContent=
-   "Processing...";
-
-  status.className=
-   "status info";
-
-  status.innerHTML=
-   "⏳ Processing demo transaction...";
-
-  await new Promise(
-   r=>setTimeout(r,700)
-  );
-
-  currentTransaction=
-   createTransaction();
-
-  status.className=
-   "status success";
-
-  status.innerHTML=
-   "✓ Transaction berhasil dibuat.";
-
-  renderESIM();
-
-  await new Promise(
-   r=>setTimeout(r,300)
-  );
-
-  showPage(
-   "esimPage"
-  );
-
- }catch(error){
-
-  console.error(error);
-
-  status.className=
-   "status error";
-
-  status.innerHTML=
-   "<strong>Transaction Error</strong><br>"+
-   esc(error.message);
-
-  button.disabled=false;
-
-  button.textContent=
-   "Pay Now";
-
- }
 
 }
 
 
-/* =========================
-   RENDER ESIM
-========================= */
+function loadLogs(){
+
+  let data =
+    localStorage.getItem(STORAGE_LOGS);
+
+  if(!data) return [];
+
+  try{
+    return JSON.parse(data);
+  }catch(e){
+    return [];
+  }
+
+}
+
+
+function saveLogs(data){
+
+  localStorage.setItem(
+    STORAGE_LOGS,
+    JSON.stringify(data)
+  );
+
+}
+
+
+function addLog(title,message){
+
+  const logs = loadLogs();
+
+  logs.unshift({
+    time:new Date().toLocaleString(),
+    title:title,
+    message:message
+  });
+
+  saveLogs(logs.slice(0,50));
+
+  renderLogs();
+
+}
+
+
+function showPage(id,button){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page=>{
+      page.classList.remove("active");
+    });
+
+  const target =
+    document.getElementById(id);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
+  if(button){
+    button.classList.add("active");
+  }
+
+}
+
+
+function renderProviders(){
+
+  const providers = loadProviders();
+
+  const box =
+    document.getElementById("providerList");
+
+  box.innerHTML = "";
+
+  providers.forEach(p=>{
+
+    box.innerHTML += `
+
+      <div class="card provider">
+
+        <div class="provider-top">
+
+          <div>
+            <div class="provider-name">
+              ${escapeHTML(p.name)}
+            </div>
+
+            <div class="provider-type">
+              ${escapeHTML(p.type)}
+            </div>
+          </div>
+
+          <span class="badge badge-green">
+            ${escapeHTML(p.status)}
+          </span>
+
+        </div>
+
+        <div class="form-row">
+
+          <div>
+            <span class="label">Countries</span>
+            <strong>${p.countries}</strong>
+          </div>
+
+          <div>
+            <span class="label">Networks</span>
+            <strong>${p.networks}</strong>
+          </div>
+
+        </div>
+
+        <div class="code" style="margin-top:13px">
+          ${escapeHTML(p.id)}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+function renderNetworks(){
+
+  const box =
+    document.getElementById("networkList");
+
+  box.innerHTML = "";
+
+  NETWORKS.forEach(n=>{
+
+    box.innerHTML += `
+
+      <div class="network">
+
+        <div class="dot"></div>
+
+        <div class="network-info">
+
+          <strong>
+            ${escapeHTML(n.operator)}
+          </strong>
+
+          <span>
+            ${escapeHTML(n.country)}
+            · ${escapeHTML(n.provider)}
+          </span>
+
+        </div>
+
+        <span class="badge badge-green">
+          ${escapeHTML(n.status)}
+        </span>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+function renderPlans(){
+
+  const box =
+    document.getElementById("planList");
+
+  box.innerHTML = "";
+
+  PLANS.forEach(plan=>{
+
+    box.innerHTML += `
+
+      <div class="plan"
+           onclick="selectPlan('${plan.id}')">
+
+        <div class="gb">
+          ${plan.data} GB
+        </div>
+
+        <div>
+          ${escapeHTML(plan.country)}
+        </div>
+
+        <div class="valid">
+          ${plan.validity} days
+        </div>
+
+        <div class="price">
+          $${plan.price}
+        </div>
+
+        <div style="color:#71879e;font-size:11px;margin-top:6px">
+          ${escapeHTML(plan.provider)}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+function selectPlan(id){
+
+  const plan =
+    PLANS.find(x=>x.id===id);
+
+  if(!plan) return;
+
+  localStorage.setItem(
+    "telku_v30_selected_plan",
+    JSON.stringify(plan)
+  );
+
+  alert(
+    "Plan selected:\n\n"+
+    plan.country+
+    " · "+
+    plan.data+
+    " GB · "+
+    plan.validity+
+    " days"
+  );
+
+}
+
+
+function addProvider(){
+
+  const name =
+    document
+      .getElementById("newProviderName")
+      .value
+      .trim();
+
+  const type =
+    document
+      .getElementById("newProviderType")
+      .value;
+
+  if(!name){
+
+    alert("Masukkan nama provider.");
+
+    return;
+
+  }
+
+  const providers =
+    loadProviders();
+
+  providers.push({
+
+    id:
+      "PROV-DEMO-"+Date.now(),
+
+    name:name,
+
+    type:type,
+
+    status:"ONLINE",
+
+    countries:1,
+
+    networks:1
+
+  });
+
+  saveProviders(providers);
+
+  document
+    .getElementById("newProviderName")
+    .value="";
+
+  renderProviders();
+
+  updateStats();
+
+  addLog(
+    "Provider added",
+    name+" berhasil ditambahkan sebagai demo provider."
+  );
+
+}
+
+
+function simulateRouting(){
+
+  const country =
+    document
+      .getElementById("customerCountry")
+      .value;
+
+  const data =
+    document
+      .getElementById("customerPlan")
+      .value;
+
+  let result =
+    NETWORKS.find(
+      n=>n.country===country
+    );
+
+  if(!result){
+
+    alert(
+      "Belum ada provider demo untuk negara tersebut."
+    );
+
+    return;
+
+  }
+
+  document.getElementById("dashCountry")
+    .textContent=country;
+
+  document.getElementById("dashNetwork")
+    .textContent=result.operator;
+
+  document.getElementById("dashProvider")
+    .textContent=result.provider;
+
+  document.getElementById("dashData")
+    .textContent=data+" GB";
+
+  document.getElementById("esimCountry")
+    .textContent=country;
+
+  document.getElementById("esimNetwork")
+    .textContent=result.operator;
+
+  document.getElementById("esimProvider")
+    .textContent=result.provider;
+
+  addLog(
+    "Provider routing",
+    "Country "+country+
+    " → "+result.provider+
+    " → "+result.operator+
+    " → "+data+" GB"
+  );
+
+  alert(
+    "Provider ditemukan!\n\n"+
+    "Country: "+country+
+    "\nProvider: "+result.provider+
+    "\nNetwork: "+result.operator+
+    "\nData: "+data+" GB"
+  );
+
+}
+
+
+function loadESIM(){
+
+  let data =
+    localStorage.getItem(STORAGE_ESIM);
+
+  if(data){
+
+    try{
+
+      return JSON.parse(data);
+
+    }catch(e){}
+
+  }
+
+  const esim={
+
+    id:"TELKU-ESIM-DEMO-001",
+
+    iccid:"8965012345678901234",
+
+    provider:"TELKU Global Provider",
+
+    network:"Singtel",
+
+    country:"Singapore",
+
+    status:"ACTIVE",
+
+    total:10,
+
+    used:2.6,
+
+    validity:30,
+
+    created:new Date().toISOString(),
+
+    lastSync:null
+
+  };
+
+  localStorage.setItem(
+    STORAGE_ESIM,
+    JSON.stringify(esim)
+  );
+
+  return esim;
+
+}
+
+
+function saveESIM(esim){
+
+  localStorage.setItem(
+    STORAGE_ESIM,
+    JSON.stringify(esim)
+  );
+
+}
+
 
 function renderESIM(){
 
- if(!currentTransaction)
-  return;
+  const esim=loadESIM();
 
- const t=
-  currentTransaction;
+  document.getElementById("esimId")
+    .textContent=esim.id;
 
- updateStatusUI();
+  document.getElementById("iccid")
+    .textContent=esim.iccid;
 
- const target=
-  document.getElementById(
-   "esimData"
-  );
+  document.getElementById("esimProvider")
+    .textContent=esim.provider;
 
- target.innerHTML=`
+  document.getElementById("esimNetwork")
+    .textContent=esim.network;
 
-  <div class="qr-box">
-   <div
-    id="qr"
-    class="qr"
-   ></div>
-  </div>
+  document.getElementById("esimCountry")
+    .textContent=esim.country;
 
-  <div class="code-box">
+  document.getElementById("esimValidity")
+    .textContent=esim.validity+" days";
 
-   <div class="code-label">
-    eSIM ID
-   </div>
+  document.getElementById("esimStatus")
+    .textContent=esim.status;
 
-   <div class="code">
-    ${esc(t.esimId)}
-   </div>
+  document.getElementById("providerStatus")
+    .textContent=
+      esim.status==="ACTIVE"
+      ?"ONLINE"
+      :"OFFLINE";
 
-  </div>
-
-
-  <div class="code-box">
-
-   <div class="code-label">
-    Activation Code
-   </div>
-
-   <div class="code">
-    ${esc(t.activationCode)}
-   </div>
-
-   <button
-    class="copy-btn"
-    onclick="copyActivation()"
-   >
-    📋 Copy Activation Code
-   </button>
-
-  </div>
-
-
-  <div class="code-box">
-
-   <div class="code-label">
-    SM-DP+ Address
-   </div>
-
-   <div class="code">
-    ${esc(t.smdpAddress)}
-   </div>
-
-   <button
-    class="copy-btn"
-    onclick="copySMdp()"
-   >
-    📋 Copy SM-DP+ Address
-   </button>
-
-  </div>
-
-
-  <div class="grid">
-
-   <div class="box">
-    <small>Country</small>
-    <strong>
-     ${esc(t.country)}
-    </strong>
-   </div>
-
-   <div class="box">
-    <small>Data</small>
-    <strong>
-     ${t.plan.data_gb} GB
-    </strong>
-   </div>
-
-   <div class="box">
-    <small>Validity</small>
-    <strong>
-     ${t.plan.duration} days
-    </strong>
-   </div>
-
-   <div class="box">
-    <small>ICCID</small>
-    <strong>
-     ${esc(t.iccid)}
-    </strong>
-   </div>
-
-  </div>
-
- `;
-
- generateQR();
-
- renderUsage();
-
- renderDashboard();
-
-}
-
-
-/* =========================
-   STATUS UI
-========================= */
-
-function updateStatusUI(){
-
- if(!currentTransaction)
-  return;
-
- const t=
-  currentTransaction;
-
- const pill=
-  document.getElementById(
-   "statusPill"
-  );
-
- const title=
-  document.getElementById(
-   "esimTitle"
-  );
-
- const card=
-  document.getElementById(
-   "esimReadyCard"
-  );
-
- if(
-  t.esimStatus==="ACTIVE"
- ){
-
-  pill.className=
-   "status-pill active";
-
-  pill.innerHTML=
-   '<span class="dot"></span> ACTIVE';
-
-  title.textContent=
-   "eSIM ACTIVE";
-
-  card.classList.add(
-   "active"
-  );
-
- }else if(
-  t.esimStatus==="DEACTIVATED"
- ){
-
-  pill.className=
-   "status-pill off";
-
-  pill.innerHTML=
-   '<span class="dot"></span> OFF';
-
-  title.textContent=
-   "eSIM DEACTIVATED";
-
-  card.classList.remove(
-   "active"
-  );
-
- }else{
-
-  pill.className=
-   "status-pill";
-
-  pill.innerHTML=
-   '<span class="dot"></span> READY';
-
-  title.textContent=
-   "eSIM READY";
-
-  card.classList.remove(
-   "active"
-  );
-
- }
-
-}
-
-
-/* =========================
-   QR DEMO
-========================= */
-
-function generateQR(){
-
- const qr=
-  document.getElementById(
-   "qr"
-  );
-
- if(!qr)
-  return;
-
- qr.innerHTML="";
-
- const size=21;
-
- const cells=[];
-
- for(
-  let i=0;
-  i<size*size;
-  i++
- ){
-
-  cells.push(
-   Math.random()>.55
-  );
-
- }
-
-
- function finder(x,y){
-
-  for(
-   let row=0;
-   row<7;
-   row++
-  ){
-
-   for(
-    let col=0;
-    col<7;
-    col++
-   ){
-
-    const index=
-     (y+row)*size+
-     (x+col);
-
-    const outer=
-     row===0||
-     row===6||
-     col===0||
-     col===6;
-
-    const inner=
-     row>=2&&
-     row<=4&&
-     col>=2&&
-     col<=4;
-
-    cells[index]=
-     outer||inner;
-
-   }
-
-  }
-
- }
-
- finder(0,0);
- finder(14,0);
- finder(0,14);
-
- cells.forEach(on=>{
-
-  const span=
-   document.createElement(
-    "span"
-   );
-
-  if(on)
-   span.className="on";
-
-  qr.appendChild(span);
-
- });
-
-}
-
-
-/* =========================
-   COPY
-========================= */
-
-async function copyText(
- text,
- message
-){
-
- try{
-
-  await navigator.clipboard.writeText(
-   text
-  );
-
-  const target=
-   document.getElementById(
-    "managementStatus"
-   );
-
-  target.className=
-   "status success";
-
-  target.innerHTML=
-   "✓ "+message;
-
- }catch(error){
-
-  alert(text);
-
- }
-
-}
-
-
-function copyActivation(){
-
- if(!currentTransaction)
-  return;
-
- copyText(
-  currentTransaction.activationCode,
-  "Activation Code berhasil disalin."
- );
-
-}
-
-
-function copySMdp(){
-
- if(!currentTransaction)
-  return;
-
- copyText(
-  currentTransaction.smdpAddress,
-  "SM-DP+ Address berhasil disalin."
- );
-
-}
-
-
-/* =========================
-   USAGE
-========================= */
-
-function renderUsage(){
-
- if(!currentTransaction)
-  return;
-
- const t=
-  currentTransaction;
-
- const total=
-  t.plan.data_gb+
-  (t.topUpTotal||0);
-
- const used=
-  Number(t.dataUsed||0);
-
- const percent=
-  total>0
-   ? Math.min(
+  const percent =
+    Math.min(
       100,
-      (used/total)*100
-     )
-   :0;
+      (esim.used/esim.total)*100
+    );
 
- document.getElementById(
-  "usagePercent"
- ).textContent=
-  Math.round(percent)+
-  "%";
+  document.getElementById("usageText")
+    .textContent=
+      esim.used.toFixed(1)+
+      " GB / "+
+      esim.total+
+      " GB";
 
- document.getElementById(
-  "usageBar"
- ).style.width=
-  percent+"%";
+  document.getElementById("usagePercent")
+    .textContent=
+      Math.round(percent)+"%";
 
- document.getElementById(
-  "usageNumber"
- ).textContent=
-  used.toFixed(2)+
-  " GB used of "+
-  total.toFixed(2)+
-  " GB";
+  document.getElementById("usageBar")
+    .style.width=percent+"%";
+
+  document.getElementById("lastSync")
+    .textContent=
+      esim.lastSync
+      ?new Date(esim.lastSync).toLocaleString()
+      :"Waiting...";
 
 }
 
 
 function simulateUsage(){
 
- if(!currentTransaction)
-  return;
+  const esim=loadESIM();
 
- const t=
-  currentTransaction;
+  if(esim.status!=="ACTIVE"){
 
- const status=
-  document.getElementById(
-   "usageStatus"
-  );
+    alert("eSIM belum ACTIVE.");
 
- if(
-  t.esimStatus!=="ACTIVE"
- ){
+    return;
 
-  status.className=
-   "status warning";
+  }
 
-  status.innerHTML=
-   "⚠️ Activate eSIM terlebih dahulu.";
+  esim.used =
+    Math.min(
+      esim.total,
+      esim.used+0.5
+    );
 
-  return;
-
- }
-
- const total=
-  t.plan.data_gb+
-  (t.topUpTotal||0);
-
- const remaining=
-  total-
-  Number(t.dataUsed||0);
-
- if(remaining<=0){
-
-  status.className=
-   "status error";
-
-  status.innerHTML=
-   "Data sudah habis. Silakan Top Up.";
-
-  return;
-
- }
-
- const amount=
-  Math.min(
-   remaining,
-   Number(
-    (0.2+
-    Math.random()*1.3)
-    .toFixed(2)
-   )
-  );
-
- t.dataUsed=
-  Number(t.dataUsed||0)+
-  amount;
-
- if(!Array.isArray(
-  t.usageEvents
- ))
-  t.usageEvents=[];
-
- t.usageEvents.push({
-
-  amount,
-
-  createdAt:
-   new Date().toISOString()
-
- });
-
- saveCurrentTransaction();
-
- renderUsage();
-
- renderDashboard();
-
- status.className=
-  "status success";
-
- status.innerHTML=
-  "📶 Demo usage +"+
-  amount.toFixed(2)+
-  " GB";
-
-}
-
-
-/* =========================
-   TOP UP
-========================= */
-
-function topUpData(){
-
- if(!currentTransaction)
-  return;
-
- const amount=
-  prompt(
-   "Masukkan Top Up data dalam GB:",
-   "5"
-  );
-
- if(amount===null)
-  return;
-
- const gb=
-  Number(amount);
-
- if(!gb||gb<=0){
-
-  alert(
-   "Masukkan jumlah GB yang valid."
-  );
-
-  return;
-
- }
-
- if(gb>100){
-
-  alert(
-   "Demo Top Up maksimal 100 GB."
-  );
-
-  return;
-
- }
-
- currentTransaction.topUpTotal=
-  Number(
-   currentTransaction.topUpTotal||0
-  )+
-  gb;
-
- saveCurrentTransaction();
-
- renderUsage();
-
- renderDashboard();
-
- const status=
-  document.getElementById(
-   "usageStatus"
-  );
-
- status.className=
-  "status success";
-
- status.innerHTML=
-  "✓ Top Up demo berhasil: +"+
-  gb+
-  " GB";
-
-}
-
-
-/* =========================
-   DASHBOARD
-========================= */
-
-function renderDashboard(){
-
- if(!currentTransaction)
-  return;
-
- const t=
-  currentTransaction;
-
- const total=
-  t.plan.data_gb+
-  Number(t.topUpTotal||0);
-
- const used=
-  Number(t.dataUsed||0);
-
- const remaining=
-  Math.max(
-   0,
-   total-used
-  );
-
- const expiry=
-  getExpiry(t);
-
- const today=
-  new Date();
-
- const daysLeft=
-  Math.max(
-   0,
-   Math.ceil(
-    (expiry-today)/
-    86400000
-   )
-  );
-
- const target=
-  document.getElementById(
-   "dashboard"
-  );
-
- target.innerHTML=`
-
-  <div class="dash">
-
-   <div class="dash-icon">
-    📦
-   </div>
-
-   <div class="dash-label">
-    Total Data
-   </div>
-
-   <div class="dash-value">
-    ${total.toFixed(2)} GB
-   </div>
-
-  </div>
-
-
-  <div class="dash">
-
-   <div class="dash-icon">
-    📶
-   </div>
-
-   <div class="dash-label">
-    Remaining
-   </div>
-
-   <div class="dash-value">
-    ${remaining.toFixed(2)} GB
-   </div>
-
-  </div>
-
-
-  <div class="dash">
-
-   <div class="dash-icon">
-    📅
-   </div>
-
-   <div class="dash-label">
-    Expiry
-   </div>
-
-   <div class="dash-value">
-    ${formatDate(expiry)}
-   </div>
-
-  </div>
-
-
-  <div class="dash">
-
-   <div class="dash-icon">
-    ⏳
-   </div>
-
-   <div class="dash-label">
-    Days Left
-   </div>
-
-   <div class="dash-value">
-    ${daysLeft} days
-   </div>
-
-  </div>
-
- `;
-
-}
-
-
-/* =========================
-   ACTIVATE
-========================= */
-
-function simulateActivation(){
-
- if(!currentTransaction)
-  return;
-
- const status=
-  document.getElementById(
-   "managementStatus"
-  );
-
- if(
-  currentTransaction.esimStatus===
-  "ACTIVE"
- ){
-
-  status.className=
-   "status info";
-
-  status.innerHTML=
-   "ℹ️ eSIM sudah ACTIVE.";
-
-  return;
-
- }
-
- status.className=
-  "status info";
-
- status.innerHTML=
-  "⏳ Simulating eSIM activation...";
-
- setTimeout(()=>{
-
-  currentTransaction.status=
-   "ACTIVE";
-
-  currentTransaction.esimStatus=
-   "ACTIVE";
-
-  currentTransaction.activatedAt=
-   new Date().toISOString();
-
-  currentTransaction.deactivatedAt=
-   null;
-
-  saveCurrentTransaction();
-
-  updateStatusUI();
-
-  renderUsage();
-
-  renderDashboard();
-
-  status.className=
-   "status success";
-
-  status.innerHTML=
-   "✓ eSIM demo sekarang berstatus <strong>ACTIVE</strong>.";
-
- },900);
-
-}
-
-
-/* =========================
-   DEACTIVATE
-========================= */
-
-function deactivateESIM(){
-
- if(!currentTransaction)
-  return;
-
- if(
-  currentTransaction.esimStatus!=="ACTIVE"
- ){
-
-  const status=
-   document.getElementById(
-    "managementStatus"
-   );
-
-  status.className=
-   "status warning";
-
-  status.innerHTML=
-   "eSIM belum berstatus ACTIVE.";
-
-  return;
-
- }
-
- currentTransaction.status=
-  "DEACTIVATED";
-
- currentTransaction.esimStatus=
-  "DEACTIVATED";
-
- currentTransaction.deactivatedAt=
-  new Date().toISOString();
-
- saveCurrentTransaction();
-
- updateStatusUI();
-
- const status=
-  document.getElementById(
-   "managementStatus"
-  );
-
- status.className=
-  "status success";
-
- status.innerHTML=
-  "✓ eSIM demo berhasil dinonaktifkan.";
-
-}
-
-
-/* =========================
-   SAVE CURRENT
-========================= */
-
-function saveCurrentTransaction(){
-
- if(!currentTransaction)
-  return;
-
- const list=
-  getTransactions();
-
- const index=
-  list.findIndex(
-   item=>
-    item.transactionId===
-    currentTransaction.transactionId
-  );
-
- if(index>=0){
-
-  list[index]=
-   currentTransaction;
-
- }else{
-
-  list.push(
-   currentTransaction
-  );
-
- }
-
- saveTransactions(list);
-
-}
-
-
-/* =========================
-   TRANSACTION DETAIL
-========================= */
-
-function showTransaction(){
-
- if(!currentTransaction)
-  return;
-
- const t=
-  currentTransaction;
-
- const target=
-  document.getElementById(
-   "transactionDetail"
-  );
-
- target.innerHTML=`
-
-  <div class="title">
-   Transaction Information
-  </div>
-
-  <div class="summary">
-
-   <div class="row">
-    <span class="muted">
-     Transaction ID
-    </span>
-
-    <strong>
-     ${esc(t.transactionId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Order ID
-    </span>
-
-    <strong>
-     ${esc(t.orderId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Payment ID
-    </span>
-
-    <strong>
-     ${esc(t.paymentId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Invoice ID
-    </span>
-
-    <strong>
-     ${esc(t.invoiceId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     eSIM ID
-    </span>
-
-    <strong>
-     ${esc(t.esimId)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Amount
-    </span>
-
-    <strong>
-     ${rupiah(t.plan.price)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Payment
-    </span>
-
-    <strong>
-     ${esc(t.paymentMethod)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Created
-    </span>
-
-    <strong>
-     ${formatDate(t.createdAt)}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Expiry
-    </span>
-
-    <strong>
-     ${formatDate(
-      getExpiry(t)
-     )}
-    </strong>
-   </div>
-
-   <div class="row">
-    <span class="muted">
-     Status
-    </span>
-
-    <strong>
-     ${esc(t.status)}
-    </strong>
-   </div>
-
-  </div>
-
-  <div class="status success">
-   ✓ Transaction stored in TELKU demo history.
-  </div>
-
- `;
-
- showPage(
-  "transactionPage"
- );
-
-}
-
-
-/* =========================
-   HISTORY
-========================= */
-
-function showHistory(){
-
- const list=
-  getTransactions();
-
- const target=
-  document.getElementById(
-   "historyList"
-  );
-
- if(!list.length){
-
-  target.innerHTML=
-   '<div class="status info">Belum ada riwayat eSIM.</div>';
-
-  showPage(
-   "historyPage"
-  );
-
-  return;
-
- }
-
- const sorted=
-  [...list].reverse();
-
- target.innerHTML=
-  sorted.map(t=>`
-
-   <div class="history-item">
-
-    <div class="history-top">
-
-     <div class="history-id">
-      ${esc(t.esimId)}
-     </div>
-
-     <div class="history-status">
-      ${esc(t.esimStatus)}
-     </div>
-
-    </div>
-
-    <div class="history-meta">
-
-     🌍 ${esc(t.country)}<br>
-
-     📦 ${t.plan.data_gb} GB /
-     ${t.plan.duration} days<br>
-
-     💰 ${rupiah(t.plan.price)}<br>
-
-     📅 Created:
-     ${formatDate(t.createdAt)}<br>
-
-     ⏳ Expiry:
-     ${formatDate(getExpiry(t))}
-
-    </div>
-
-   </div>
-
-  `).join("");
-
- showPage(
-  "historyPage"
- );
-
-}
-
-
-/* =========================
-   NEW ESIM
-========================= */
-
-function newTransaction(){
-
- selectedPlan=null;
-
- selectedCountry=null;
-
- currentTransaction=null;
-
- document.getElementById(
-  "fullName"
- ).value="";
-
- document.getElementById(
-  "email"
- ).value="";
-
- document.getElementById(
-  "phone"
- ).value="";
-
- document.getElementById(
-  "countrySelect"
- ).value="";
-
- document.getElementById(
-  "plans"
- ).innerHTML="";
-
- document.getElementById(
-  "plansCard"
- ).classList.add(
-  "hidden"
- );
-
- showPage(
-  "homePage"
- );
-
-}
-
-
-/* =========================
-   BACK
-========================= */
-
-function backToHome(){
-
- showPage(
-  "homePage"
- );
-
-}
-
-
-function backToEsim(){
-
- if(currentTransaction){
+  saveESIM(esim);
 
   renderESIM();
 
-  showPage(
-   "esimPage"
+  addLog(
+    "Usage update",
+    "Demo usage bertambah 0.5 GB."
   );
-
- }else{
-
-  showPage(
-   "homePage"
-  );
-
- }
 
 }
 
 
-/* =========================
-   LOAD
-========================= */
+function syncProvider(){
 
-loadCountries();
+  const esim=loadESIM();
+
+  esim.lastSync =
+    new Date().toISOString();
+
+  saveESIM(esim);
+
+  renderESIM();
+
+  addLog(
+    "Provider sync",
+    "Demo provider berhasil disinkronkan."
+  );
+
+  alert(
+    "Provider sync berhasil.\n\n"+
+    "Status: ONLINE\n"+
+    "Network: "+esim.network+
+    "\nData: "+
+    (esim.total-esim.used).toFixed(1)+
+    " GB remaining"
+  );
+
+}
+
+
+function activateESIM(){
+
+  const esim=loadESIM();
+
+  esim.status="ACTIVE";
+
+  saveESIM(esim);
+
+  renderESIM();
+
+  addLog(
+    "eSIM activated",
+    "Demo eSIM status berubah menjadi ACTIVE."
+  );
+
+}
+
+
+function deactivateESIM(){
+
+  const esim=loadESIM();
+
+  esim.status="OFF";
+
+  saveESIM(esim);
+
+  renderESIM();
+
+  addLog(
+    "eSIM deactivated",
+    "Demo eSIM status berubah menjadi OFF."
+  );
+
+}
+
+
+function newESIM(){
+
+  const id =
+    "TELKU-ESIM-"+Date.now();
+
+  const iccid =
+    "89650"+
+    Math.floor(
+      100000000000000000+
+      Math.random()*899999999999999999
+    );
+
+  const esim={
+
+    id:id,
+
+    iccid:String(iccid),
+
+    provider:"TELKU Global Provider",
+
+    network:"Singtel",
+
+    country:"Singapore",
+
+    status:"READY",
+
+    total:10,
+
+    used:0,
+
+    validity:30,
+
+    created:new Date().toISOString(),
+
+    lastSync:null
+
+  };
+
+  saveESIM(esim);
+
+  renderESIM();
+
+  addLog(
+    "New eSIM",
+    "Demo eSIM baru dibuat: "+id
+  );
+
+  alert(
+    "Demo eSIM baru berhasil dibuat."
+  );
+
+}
+
+
+function renderLogs(){
+
+  const box =
+    document.getElementById("syncLogs");
+
+  const logs=loadLogs();
+
+  if(!logs.length){
+
+    box.innerHTML=
+      `<p style="color:#91a4ba">
+        Belum ada aktivitas.
+      </p>`;
+
+    return;
+
+  }
+
+  box.innerHTML="";
+
+  logs.forEach(log=>{
+
+    box.innerHTML += `
+
+      <div class="log">
+
+        <strong>
+          ${escapeHTML(log.title)}
+        </strong>
+
+        <span>
+          ${escapeHTML(log.message)}
+          · ${escapeHTML(log.time)}
+        </span>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+
+function updateStats(){
+
+  const providers =
+    loadProviders();
+
+  const countries =
+    new Set(
+      NETWORKS.map(n=>n.country)
+    );
+
+  document.getElementById("providerCount")
+    .textContent=providers.length;
+
+  document.getElementById("countryCount")
+    .textContent=countries.size;
+
+  document.getElementById("networkCount")
+    .textContent=NETWORKS.length;
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function init(){
+
+  loadProviders();
+  loadESIM();
+
+  renderProviders();
+  renderNetworks();
+  renderPlans();
+  renderESIM();
+  renderLogs();
+  updateStats();
+
+}
+
+
+init();
 
 </script>
 
