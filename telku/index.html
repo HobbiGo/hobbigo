@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>TELKU V3.1B — Supabase Connected</title>
+<title>TELKU V3.1C</title>
 
 <style>
 *{
@@ -16,50 +16,40 @@
 }
 
 :root{
-  --bg:#07111f;
-  --bg2:#0b1728;
-  --card:#101f33;
-  --card2:#142842;
-  --line:#203852;
-  --text:#f4f8ff;
-  --muted:#91a4ba;
-  --blue:#3da9ff;
-  --green:#27d17f;
+  --bg:#06101d;
+  --bg2:#0a1727;
+  --card:#0d1c2e;
+  --card2:#10243a;
+  --line:#1d3954;
+  --text:#f4f7fb;
+  --muted:#91a4b8;
+  --blue:#2d9cff;
+  --green:#19d68b;
   --yellow:#ffc857;
-  --red:#ff647c;
+  --red:#ff5577;
 }
 
 body{
   font-family:Arial,Helvetica,sans-serif;
   background:
-    linear-gradient(180deg,#06101d,#091727 55%,#07111f);
+    radial-gradient(circle at top right,#12345b 0,#06101d 38%,#040b14 100%);
   color:var(--text);
   min-height:100vh;
 }
 
-button,
-input,
-select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.header{
+header{
+  border-bottom:1px solid var(--line);
+  background:rgba(5,15,27,.94);
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(7,17,31,.96);
-  border-bottom:1px solid var(--line);
   backdrop-filter:blur(12px);
 }
 
 .header-inner{
-  max-width:1100px;
+  max-width:1250px;
   margin:auto;
-  padding:15px 20px;
+  padding:18px 22px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -69,2895 +59,1311 @@ button{
 .brand{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:14px;
 }
 
 .logo{
-  width:43px;
-  height:43px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#2da8ff,#1673d1);
+  width:54px;
+  height:54px;
+  border-radius:16px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:900;
+  background:linear-gradient(135deg,#1597ff,#1261c9);
+  font-size:20px;
+  font-weight:800;
+  box-shadow:0 8px 30px rgba(30,140,255,.25);
 }
 
 .brand h1{
-  font-size:20px;
+  font-size:24px;
 }
 
-.brand small{
+.brand p{
+  margin-top:4px;
   color:var(--muted);
-  font-size:11px;
+  font-size:13px;
 }
 
-.connection{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:7px 11px;
-  border-radius:20px;
-  font-size:11px;
+.status{
+  padding:10px 15px;
+  border-radius:30px;
+  font-size:12px;
   font-weight:800;
   border:1px solid;
 }
 
-.connection.online{
-  color:var(--green);
-  background:rgba(39,209,127,.10);
-  border-color:rgba(39,209,127,.28);
+.status.ok{
+  color:#48e5a6;
+  background:rgba(25,214,139,.08);
+  border-color:rgba(25,214,139,.3);
 }
 
-.connection.offline{
-  color:var(--red);
-  background:rgba(255,100,124,.10);
-  border-color:rgba(255,100,124,.28);
+.status.demo{
+  color:#ffc857;
+  background:rgba(255,200,87,.08);
+  border-color:rgba(255,200,87,.3);
 }
 
-.connection.loading{
-  color:var(--yellow);
-  background:rgba(255,200,87,.10);
-  border-color:rgba(255,200,87,.28);
+.status.error{
+  color:#ff6685;
+  background:rgba(255,85,119,.08);
+  border-color:rgba(255,85,119,.3);
 }
 
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:currentColor;
-}
-
-.container{
-  max-width:1100px;
+main{
+  max-width:1250px;
   margin:auto;
-  padding:22px 20px 50px;
-}
-
-.hero{
-  padding:20px 0;
+  padding:40px 22px 80px;
 }
 
 .hero h2{
-  font-size:30px;
-  margin-bottom:9px;
+  font-size:38px;
+  margin-bottom:10px;
 }
 
 .hero p{
   color:var(--muted);
-  line-height:1.6;
-  max-width:750px;
+  line-height:1.7;
+  max-width:900px;
 }
 
-.nav{
+.tabs{
   display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:5px 0 18px;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:30px 0;
 }
 
-.nav button{
-  white-space:nowrap;
-  background:var(--card);
-  color:var(--muted);
+.tab{
   border:1px solid var(--line);
-  padding:10px 14px;
-  border-radius:10px;
+  background:#0d1c2e;
+  color:#9cafc3;
+  padding:13px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:14px;
 }
 
-.nav button.active{
-  background:#123052;
-  color:#fff;
-  border-color:#2d76b7;
+.tab.active,
+.tab:hover{
+  color:white;
+  border-color:#338fd6;
+  background:#12304d;
 }
 
-.page{
-  display:none;
+.alert{
+  padding:17px 18px;
+  border-radius:15px;
+  margin-bottom:24px;
+  border:1px solid;
+  line-height:1.6;
 }
 
-.page.active{
-  display:block;
+.alert.ok{
+  background:rgba(25,214,139,.07);
+  border-color:rgba(25,214,139,.25);
+}
+
+.alert.warn{
+  background:rgba(255,200,87,.07);
+  border-color:rgba(255,200,87,.25);
+}
+
+.alert.error{
+  background:rgba(255,85,119,.07);
+  border-color:rgba(255,85,119,.25);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:16px;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:20px;
 }
 
 .card{
-  background:linear-gradient(180deg,var(--card),#0c1b2d);
+  background:linear-gradient(145deg,#0d1c2e,#091727);
   border:1px solid var(--line);
-  border-radius:16px;
-  padding:18px;
-  margin-bottom:16px;
-  box-shadow:0 10px 35px rgba(0,0,0,.15);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+
+.stat-number{
+  font-size:34px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.stat-label{
+  color:var(--muted);
+}
+
+.two{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:20px;
 }
 
 .card h3{
-  margin-bottom:7px;
-  font-size:17px;
+  margin-bottom:8px;
+  font-size:19px;
 }
 
-.card p{
+.card-sub{
   color:var(--muted);
-  line-height:1.55;
-}
-
-.label{
-  display:block;
-  color:#b8c8da;
-  font-size:12px;
-  margin-bottom:7px;
-}
-
-.stat{
-  background:#0a192a;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:15px;
-}
-
-.stat .value{
-  font-size:24px;
-  font-weight:900;
-  margin-bottom:5px;
-}
-
-.stat .name{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:800;
-}
-
-.badge-green{
-  background:rgba(39,209,127,.12);
-  color:var(--green);
-  border:1px solid rgba(39,209,127,.25);
-}
-
-.badge-yellow{
-  background:rgba(255,200,87,.12);
-  color:var(--yellow);
-  border:1px solid rgba(255,200,87,.25);
-}
-
-.badge-blue{
-  background:rgba(61,169,255,.12);
-  color:var(--blue);
-  border:1px solid rgba(61,169,255,.25);
-}
-
-.badge-red{
-  background:rgba(255,100,124,.12);
-  color:var(--red);
-  border:1px solid rgba(255,100,124,.25);
-}
-
-.alert{
-  padding:14px;
-  border-radius:11px;
-  margin-bottom:16px;
-  line-height:1.5;
   font-size:13px;
+  margin-bottom:18px;
 }
 
-.alert-info{
-  background:rgba(61,169,255,.09);
-  border:1px solid rgba(61,169,255,.25);
-  color:#b9ddff;
-}
-
-.alert-success{
-  background:rgba(39,209,127,.09);
-  border:1px solid rgba(39,209,127,.25);
-  color:#a9f2cc;
-}
-
-.alert-error{
-  background:rgba(255,100,124,.09);
-  border:1px solid rgba(255,100,124,.25);
-  color:#ffb0bd;
-}
-
-.provider{
-  min-height:190px;
-}
-
-.provider-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:10px;
-}
-
-.provider-name{
-  font-weight:800;
-  font-size:17px;
-}
-
-.provider-type{
-  color:var(--blue);
-  font-size:11px;
-  margin-top:4px;
-}
-
-.network{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:12px 0;
-  border-bottom:1px solid #1a3047;
-}
-
-.network:last-child{
-  border-bottom:0;
-}
-
-.network-info{
-  flex:1;
-}
-
-.network-info strong{
-  display:block;
-  margin-bottom:4px;
-}
-
-.network-info span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.form-row{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-  margin-top:13px;
-}
-
-input,
-select{
-  width:100%;
-  background:#091827;
-  color:#fff;
-  border:1px solid #29425e;
+.module{
+  border-left:3px solid var(--blue);
+  background:#091a2b;
   border-radius:10px;
-  padding:12px;
-  outline:none;
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:12px 16px;
-  font-weight:700;
-  margin-top:14px;
-}
-
-.btn-primary{
-  background:linear-gradient(135deg,#35a9ff,#1676d2);
-  color:#fff;
-}
-
-.btn-secondary{
-  background:#142a42;
-  color:#fff;
-  border:1px solid #294761;
-}
-
-.btn-success{
-  background:#124b38;
-  color:#5ff0a9;
-  border:1px solid #217b5b;
-}
-
-.btn-danger{
-  background:#4a1d2a;
-  color:#ff93a5;
-  border:1px solid #803146;
-}
-
-.btn-full{
-  width:100%;
-}
-
-.plan{
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:16px;
-  background:#0b1a2c;
-}
-
-.plan .gb{
-  font-size:23px;
-  font-weight:900;
-}
-
-.plan .price{
-  color:var(--green);
-  font-weight:800;
-  margin-top:7px;
-}
-
-.plan .valid{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:5px;
-}
-
-.code{
-  background:#06111d;
-  border:1px solid #1b3046;
-  border-radius:10px;
-  padding:12px;
-  font-family:monospace;
-  font-size:11px;
-  overflow:auto;
-  color:#8ed0ff;
-  word-break:break-all;
-}
-
-.progress{
-  height:10px;
-  background:#06111d;
-  border-radius:20px;
-  overflow:hidden;
+  padding:14px;
   margin-top:10px;
 }
 
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,#2ea8ff,#28d17f);
-  width:0%;
-  transition:.3s;
-}
-
-.log{
-  border-left:3px solid var(--blue);
-  padding:10px 12px;
-  margin:9px 0;
-  background:#0a192a;
-  border-radius:0 9px 9px 0;
-}
-
-.log strong{
+.module strong{
   display:block;
-  margin-bottom:3px;
+  margin-bottom:5px;
 }
 
-.log span{
+.module span{
   color:var(--muted);
-  font-size:11px;
+  font-size:13px;
 }
 
-.empty{
-  text-align:center;
-  padding:25px;
-  color:var(--muted);
+.table-wrap{
+  overflow:auto;
 }
 
-.footer{
-  text-align:center;
-  color:#60758b;
-  padding:25px 10px 10px;
-  font-size:11px;
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:13px;
+}
+
+th,td{
+  text-align:left;
+  padding:13px 10px;
+  border-bottom:1px solid #193149;
+  white-space:nowrap;
+}
+
+th{
+  color:#a9bfd3;
+}
+
+td{
+  color:#e7edf4;
+}
+
+button.action{
+  border:0;
+  background:linear-gradient(135deg,#178eff,#1265cf);
+  color:white;
+  padding:12px 17px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+button.action:hover{
+  opacity:.9;
+}
+
+pre{
+  background:#050d17;
+  border:1px solid #173047;
+  border-radius:12px;
+  padding:15px;
+  overflow:auto;
+  white-space:pre-wrap;
+  word-break:break-word;
+  color:#9fd1ff;
+  font-size:12px;
+  line-height:1.6;
 }
 
 .hidden{
-  display:none!important;
+  display:none;
 }
 
-@media(max-width:760px){
+.loading{
+  color:#8eb4d3;
+}
 
-  .grid,
-  .grid3,
-  .form-row{
+@media(max-width:850px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .two{
     grid-template-columns:1fr;
   }
 
   .hero h2{
-    font-size:25px;
-  }
-
-  .container{
-    padding-left:14px;
-    padding-right:14px;
+    font-size:30px;
   }
 
   .header-inner{
-    padding-left:14px;
-    padding-right:14px;
+    align-items:flex-start;
   }
 
-  .brand h1{
-    font-size:18px;
+  .status{
+    font-size:10px;
   }
-
-  .connection{
-    font-size:9px;
-  }
-
 }
 </style>
 </head>
 
 <body>
 
-<header class="header">
-
+<header>
   <div class="header-inner">
 
     <div class="brand">
-
       <div class="logo">TK</div>
-
       <div>
         <h1>TELKU</h1>
-        <small>Global Connectivity Engine</small>
+        <p>Global Connectivity Engine</p>
       </div>
+    </div>
+
+    <div id="connectionStatus" class="status demo">
+      CHECKING DATABASE...
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <h2>Global Connectivity Engine</h2>
+  <p>
+    TELKU V3.1C membaca database TELKU secara aman menggunakan
+    Supabase Publishable Key. Sistem dibuat adaptif terhadap struktur
+    database sehingga tidak bergantung pada nama kolom tertentu.
+  </p>
+</section>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('dashboard',this)">Dashboard</button>
+  <button class="tab" onclick="showTab('providers',this)">Providers</button>
+  <button class="tab" onclick="showTab('networks',this)">Networks</button>
+  <button class="tab" onclick="showTab('plans',this)">Plans</button>
+  <button class="tab" onclick="showTab('esims',this)">My eSIM</button>
+  <button class="tab" onclick="showTab('logs',this)">Sync Logs</button>
+  <button class="tab" onclick="reloadAll()">↻ Refresh</button>
+</div>
+
+<div id="messageBox"></div>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+
+  <div class="grid">
+
+    <div class="card">
+      <div id="providerCount" class="stat-number">0</div>
+      <div class="stat-label">Providers</div>
+    </div>
+
+    <div class="card">
+      <div id="countryCount" class="stat-number">0</div>
+      <div class="stat-label">Countries</div>
+    </div>
+
+    <div class="card">
+      <div id="networkCount" class="stat-number">0</div>
+      <div class="stat-label">Networks</div>
+    </div>
+
+  </div>
+
+  <div class="two">
+
+    <div class="card">
+
+      <h3>Database Connection</h3>
+
+      <div class="card-sub">
+        Live status koneksi TELKU ke Supabase.
+      </div>
+
+      <div id="databaseModule"></div>
 
     </div>
 
-    <div id="connectionStatus"
-         class="connection loading">
+    <div class="card">
 
-      <span class="dot"></span>
-      CONNECTING
+      <h3>Connectivity Engine</h3>
+
+      <div class="card-sub">
+        Engine utama TELKU untuk membaca provider,
+        network, plan dan eSIM.
+      </div>
+
+      <div class="module">
+        <strong>Provider Manager</strong>
+        <span id="providerEngine">0 provider(s)</span>
+      </div>
+
+      <div class="module">
+        <strong>Network Directory</strong>
+        <span id="networkEngine">0 network(s)</span>
+      </div>
+
+      <div class="module">
+        <strong>Plan Catalog</strong>
+        <span id="planEngine">0 plan(s)</span>
+      </div>
+
+      <div class="module">
+        <strong>eSIM Engine</strong>
+        <span id="esimEngine">0 eSIM(s)</span>
+      </div>
 
     </div>
 
   </div>
 
-</header>
+  <div class="card">
 
+    <h3>Database Diagnostics</h3>
 
-<main class="container">
-
-  <section class="hero">
-
-    <h2>Global Connectivity Engine</h2>
-
-    <p>
-      TELKU V3.1B sekarang terhubung ke Supabase.
-      Data provider, network, plan dan eSIM dapat
-      dibaca dari database TELKU.
-    </p>
-
-  </section>
-
-
-  <nav class="nav">
-
-    <button class="active"
-            onclick="showPage('dashboard',this)">
-      Dashboard
-    </button>
-
-    <button onclick="showPage('providers',this)">
-      Providers
-    </button>
-
-    <button onclick="showPage('networks',this)">
-      Networks
-    </button>
-
-    <button onclick="showPage('plans',this)">
-      Plans
-    </button>
-
-    <button onclick="showPage('esim',this)">
-      My eSIM
-    </button>
-
-    <button onclick="showPage('logs',this)">
-      Sync Logs
-    </button>
-
-  </nav>
-
-
-  <!-- DASHBOARD -->
-
-  <section id="dashboard"
-           class="page active">
-
-    <div id="systemAlert"
-         class="alert alert-info">
-
-      Connecting to TELKU Supabase...
-
+    <div class="card-sub">
+      Informasi teknis hanya untuk pemeriksaan TELKU.
     </div>
 
+    <pre id="diagnostics">Checking...</pre>
 
-    <div class="grid3">
+  </div>
 
-      <div class="stat">
+</section>
 
-        <div class="value"
-             id="providerCount">
-          -
-        </div>
+<!-- PROVIDERS -->
+<section id="providers" class="hidden">
 
-        <div class="name">
-          Providers
-        </div>
+  <div class="card">
 
-      </div>
+    <h3>Providers</h3>
 
-
-      <div class="stat">
-
-        <div class="value"
-             id="countryCount">
-          -
-        </div>
-
-        <div class="name">
-          Countries
-        </div>
-
-      </div>
-
-
-      <div class="stat">
-
-        <div class="value"
-             id="networkCount">
-          -
-        </div>
-
-        <div class="name">
-          Networks
-        </div>
-
-      </div>
-
+    <div class="card-sub">
+      Data provider yang tersedia di database TELKU.
     </div>
 
-
-    <div class="grid"
-         style="margin-top:16px">
-
-      <div class="card">
-
-        <h3>
-          Database Connection
-        </h3>
-
-        <p>
-          Live status koneksi TELKU ke Supabase.
-        </p>
-
-        <div style="margin-top:16px">
-
-          <span id="dbBadge"
-                class="badge badge-yellow">
-            CHECKING
-          </span>
-
-        </div>
-
-        <div class="log">
-
-          <strong>
-            Project
-          </strong>
-
-          <span>
-            TELKU HOBBIGO
-          </span>
-
-        </div>
-
-        <div class="log">
-
-          <strong>
-            Database
-          </strong>
-
-          <span>
-            Supabase PostgreSQL
-          </span>
-
-        </div>
-
-        <div class="log">
-
-          <strong>
-            Data API
-          </strong>
-
-          <span>
-            Enabled
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>
-          Connectivity Engine
-        </h3>
-
-        <p>
-          Status engine yang membaca data provider.
-        </p>
-
-        <div class="log">
-
-          <strong>
-            Provider Manager
-          </strong>
-
-          <span id="engineProviders">
-            Loading...
-          </span>
-
-        </div>
-
-        <div class="log">
-
-          <strong>
-            Network Directory
-          </strong>
-
-          <span id="engineNetworks">
-            Loading...
-          </span>
-
-        </div>
-
-        <div class="log">
-
-          <strong>
-            Plan Catalog
-          </strong>
-
-          <span id="enginePlans">
-            Loading...
-          </span>
-
-        </div>
-
-      </div>
-
+    <div id="providersTable" class="table-wrap">
+      <span class="loading">Loading...</span>
     </div>
 
+  </div>
 
-    <div class="card">
+</section>
 
-      <h3>
-        Customer Connectivity Test
-      </h3>
+<!-- NETWORKS -->
+<section id="networks" class="hidden">
 
-      <p>
-        Pilih negara untuk mencari network dari database TELKU.
-      </p>
+  <div class="card">
 
-      <div class="form-row">
+    <h3>Networks</h3>
 
-        <div>
-
-          <span class="label">
-            Country
-          </span>
-
-          <select id="customerCountry">
-            <option value="">
-              Loading countries...
-            </option>
-          </select>
-
-        </div>
-
-
-        <div>
-
-          <span class="label">
-            Data Package
-          </span>
-
-          <select id="customerPlan">
-
-            <option value="5">
-              5 GB
-            </option>
-
-            <option value="10"
-                    selected>
-              10 GB
-            </option>
-
-            <option value="20">
-              20 GB
-            </option>
-
-          </select>
-
-        </div>
-
-      </div>
-
-
-      <button class="btn btn-primary btn-full"
-              onclick="findProvider()">
-
-        Find Provider & Network
-
-      </button>
-
+    <div class="card-sub">
+      Network/operator yang tersedia.
     </div>
 
-
-    <div id="routingResult"
-         class="card hidden">
-
-      <h3>
-        Routing Result
-      </h3>
-
-      <div id="routingContent"></div>
-
+    <div id="networksTable" class="table-wrap">
+      <span class="loading">Loading...</span>
     </div>
 
-  </section>
+  </div>
 
+</section>
 
-  <!-- PROVIDERS -->
+<!-- PLANS -->
+<section id="plans" class="hidden">
 
-  <section id="providers"
-           class="page">
+  <div class="card">
 
-    <div class="card">
+    <h3>Plans</h3>
 
-      <h3>
-        Provider Manager
-      </h3>
-
-      <p>
-        Provider yang tersimpan di Supabase TELKU.
-      </p>
-
+    <div class="card-sub">
+      Catalog paket konektivitas TELKU.
     </div>
 
-    <div id="providerList"
-         class="grid">
-
-      <div class="empty">
-        Loading providers...
-      </div>
-
+    <div id="plansTable" class="table-wrap">
+      <span class="loading">Loading...</span>
     </div>
 
-  </section>
+  </div>
 
+</section>
 
-  <!-- NETWORKS -->
+<!-- ESIMS -->
+<section id="esims" class="hidden">
 
-  <section id="networks"
-           class="page">
+  <div class="card">
 
-    <div class="card">
+    <h3>My eSIM</h3>
 
-      <h3>
-        Network Directory
-      </h3>
-
-      <p>
-        Operator/network yang tersedia dari database TELKU.
-      </p>
-
+    <div class="card-sub">
+      eSIM yang tersedia di database.
     </div>
 
-
-    <div class="card">
-
-      <div id="networkList">
-
-        <div class="empty">
-          Loading networks...
-        </div>
-
-      </div>
-
+    <div id="esimsTable" class="table-wrap">
+      <span class="loading">Loading...</span>
     </div>
 
-  </section>
+  </div>
 
+</section>
 
-  <!-- PLANS -->
+<!-- LOGS -->
+<section id="logs" class="hidden">
 
-  <section id="plans"
-           class="page">
+  <div class="card">
 
-    <div class="card">
+    <h3>Sync Logs</h3>
 
-      <h3>
-        Provider Plans
-      </h3>
-
-      <p>
-        Paket eSIM dari tabel provider_plans.
-      </p>
-
+    <div class="card-sub">
+      Log aktivitas database TELKU.
     </div>
 
-
-    <div id="planList"
-         class="grid3">
-
-      <div class="empty">
-        Loading plans...
-      </div>
-
+    <div id="logsTable" class="table-wrap">
+      <span class="loading">Loading...</span>
     </div>
 
-  </section>
+  </div>
 
-
-  <!-- ESIM -->
-
-  <section id="esim"
-           class="page">
-
-    <div class="card">
-
-      <div class="provider-top">
-
-        <div>
-
-          <h3>
-            My eSIM
-          </h3>
-
-          <p>
-            Data eSIM dari database TELKU.
-          </p>
-
-        </div>
-
-        <span id="esimStatus"
-              class="badge badge-yellow">
-          NO DATA
-        </span>
-
-      </div>
-
-
-      <div class="form-row">
-
-        <div>
-
-          <span class="label">
-            eSIM ID
-          </span>
-
-          <div id="esimId"
-               class="code">
-            -
-          </div>
-
-        </div>
-
-
-        <div>
-
-          <span class="label">
-            ICCID
-          </span>
-
-          <div id="iccid"
-               class="code">
-            -
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="form-row">
-
-        <div>
-
-          <span class="label">
-            Provider
-          </span>
-
-          <strong id="esimProvider">
-            -
-          </strong>
-
-        </div>
-
-
-        <div>
-
-          <span class="label">
-            Network
-          </span>
-
-          <strong id="esimNetwork">
-            -
-          </strong>
-
-        </div>
-
-      </div>
-
-
-      <div class="form-row">
-
-        <div>
-
-          <span class="label">
-            Country
-          </span>
-
-          <strong id="esimCountry">
-            -
-          </strong>
-
-        </div>
-
-
-        <div>
-
-          <span class="label">
-            Remaining Data
-          </span>
-
-          <strong id="esimRemaining">
-            -
-          </strong>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>
-        Data Usage
-      </h3>
-
-      <p>
-        Data ini akan berasal dari usage_logs
-        ketika provider sungguhan sudah terhubung.
-      </p>
-
-      <div style="margin-top:18px;
-                  display:flex;
-                  justify-content:space-between">
-
-        <strong id="usageText">
-          -
-        </strong>
-
-        <span id="usagePercent">
-          -
-        </span>
-
-      </div>
-
-
-      <div class="progress">
-
-        <div id="usageBar"
-             class="progress-bar">
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>
-        Last Provider Sync
-      </h3>
-
-      <div class="log">
-
-        <strong>
-          Last synced
-        </strong>
-
-        <span id="lastSync">
-          -
-        </span>
-
-      </div>
-
-      <button class="btn btn-success btn-full"
-              onclick="loadAllData()">
-
-        Sync Database
-
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- LOGS -->
-
-  <section id="logs"
-           class="page">
-
-    <div class="card">
-
-      <h3>
-        Sync Logs
-      </h3>
-
-      <p>
-        Log aktivitas koneksi TELKU dengan Supabase.
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <div id="syncLogs">
-
-        <div class="empty">
-          No logs yet.
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <footer class="footer">
-
-    TELKU Global Connectivity Engine ·
-    HOBBIGO Technology ·
-    V3.1B Supabase Connected
-
-  </footer>
+</section>
 
 </main>
 
-
 <script>
 
+/* =========================================================
+   TELKU V3.1C
+   ROBUST SUPABASE CONNECTION
+   ========================================================= */
+
 /*
-=========================================================
-TELKU V3.1B
-SUPABASE CONFIGURATION
-=========================================================
+   IMPORTANT:
+   Hanya gunakan Publishable Key di browser.
+
+   JANGAN memasukkan Supabase Secret Key ke file ini.
 */
 
 const SUPABASE_URL =
-  "https://" +
-  "xozjhayxttryegynntld" +
-  ".supabase.co";
+  "https://xozjhayxttryegynntld.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
 
 
-/*
-=========================================================
-DATABASE TABLES
-=========================================================
-*/
+/* ---------------------------------------------------------
+   TABLE CANDIDATES
+   --------------------------------------------------------- */
 
-const TABLES = {
-
-  providers:
-    "providers",
-
-  networks:
-    "networks",
-
-  providerPlans:
-    "provider_plans",
-
-  esims:
-    "esims",
-
-  usageLogs:
-    "usage_logs",
-
-  statusLogs:
-    "status_logs",
-
-  webhookEvents:
-    "webhook_events"
-
-};
+const TABLES = [
+  "providers",
+  "networks",
+  "provider_plans",
+  "esims",
+  "usage_logs",
+  "status_logs",
+  "webhook_events"
+];
 
 
-/*
-=========================================================
-APP STATE
-=========================================================
-*/
+/* ---------------------------------------------------------
+   GLOBAL STATE
+   --------------------------------------------------------- */
 
-const state = {
+const DB = {
 
-  providers: [],
+  connected:false,
 
-  networks: [],
+  tables:{},
 
-  plans: [],
+  providers:[],
+  networks:[],
+  plans:[],
+  esims:[],
+  usage:[],
+  status:[],
+  webhooks:[],
 
-  esims: [],
-
-  usageLogs: [],
-
-  statusLogs: [],
-
-  webhookEvents: [],
-
-  connected: false
+  errors:[]
 
 };
 
 
-/*
-=========================================================
-UTILITY
-=========================================================
-*/
+/* ---------------------------------------------------------
+   SUPABASE REQUEST
+   --------------------------------------------------------- */
 
-function escapeHTML(value){
+async function supabaseRequest(table){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function formatNumber(value){
-
-  const n =
-    Number(value);
-
-  if(Number.isNaN(n)){
-    return "0";
-  }
-
-  return n.toLocaleString();
-
-}
-
-
-function formatDate(value){
-
-  if(!value){
-    return "-";
-  }
-
-  const d =
-    new Date(value);
-
-  if(Number.isNaN(d.getTime())){
-    return "-";
-  }
-
-  return d.toLocaleString();
-
-}
-
-
-function addLog(title,message){
-
-  const box =
-    document.getElementById("syncLogs");
-
-  if(
-    box.innerHTML.includes(
-      "No logs yet"
-    )
-  ){
-
-    box.innerHTML = "";
-
-  }
-
-  box.innerHTML =
-    `
-    <div class="log">
-      <strong>
-        ${escapeHTML(title)}
-      </strong>
-      <span>
-        ${escapeHTML(message)}
-        · ${escapeHTML(
-          new Date().toLocaleString()
-        )}
-      </span>
-    </div>
-    ` +
-    box.innerHTML;
-
-}
-
-
-/*
-=========================================================
-SUPABASE REST REQUEST
-=========================================================
-*/
-
-async function supabaseRequest(
-  table,
-  params = {},
-  method = "GET",
-  body = null
-){
-
-  let url =
+  const url =
     SUPABASE_URL +
     "/rest/v1/" +
-    table;
+    encodeURIComponent(table) +
+    "?select=*";
 
-  const search =
-    new URLSearchParams();
-
-  Object.keys(params).forEach(
-    key=>{
-
-      if(
-        params[key] !== undefined &&
-        params[key] !== null
-      ){
-
-        search.set(
-          key,
-          params[key]
-        );
-
-      }
-
-    }
-  );
-
-  const query =
-    search.toString();
-
-  if(query){
-    url += "?" + query;
-  }
-
-  const options = {
-
-    method:method,
+  const response = await fetch(url,{
+    method:"GET",
 
     headers:{
-
-      "apikey":
-        SUPABASE_PUBLISHABLE_KEY,
-
+      "apikey":SUPABASE_PUBLISHABLE_KEY,
       "Authorization":
-        "Bearer " +
-        SUPABASE_PUBLISHABLE_KEY,
-
-      "Content-Type":
-        "application/json",
-
-      "Accept":
-        "application/json"
-
+        "Bearer " + SUPABASE_PUBLISHABLE_KEY,
+      "Accept":"application/json"
     }
+  });
 
-  };
+  const text = await response.text();
 
-  if(body){
-
-    options.body =
-      JSON.stringify(body);
-
-  }
-
-  const response =
-    await fetch(
-      url,
-      options
-    );
-
-  const text =
-    await response.text();
-
-  let data = null;
+  let data=null;
 
   try{
-
-    data =
-      text
-      ?JSON.parse(text)
-      :null;
-
+    data = text ? JSON.parse(text) : null;
   }catch(e){
-
-    data=text;
-
+    data = text;
   }
 
   if(!response.ok){
 
     throw new Error(
-      typeof data==="object"
-      ?(
-        data.message ||
-        data.hint ||
-        data.details ||
-        "Supabase API error"
+      "HTTP " +
+      response.status +
+      " — " +
+      (
+        data &&
+        (
+          data.message ||
+          data.error_description ||
+          data.hint ||
+          data.details
+        )
+        || text
+        || "Unknown database error"
       )
-      :String(data)
     );
 
   }
 
-  return data;
+  return Array.isArray(data) ? data : [];
 
 }
 
 
-/*
-=========================================================
-LOAD PROVIDERS
-=========================================================
-*/
+/* ---------------------------------------------------------
+   LOAD TABLE
+   --------------------------------------------------------- */
 
-async function loadProviders(){
+async function loadTable(table){
 
   try{
 
-    const data =
-      await supabaseRequest(
-        TABLES.providers,
-        {
-          select:"*",
-          order:"created_at.desc"
-        }
-      );
+    const rows = await supabaseRequest(table);
 
-    state.providers =
-      Array.isArray(data)
-      ?data
-      :[];
+    DB.tables[table] = {
+      exists:true,
+      rows:rows
+    };
 
-    renderProviders();
-
-    addLog(
-      "Providers loaded",
-      state.providers.length +
-      " provider(s) loaded from Supabase."
-    );
-
-    return true;
+    return rows;
 
   }catch(error){
 
-    console.error(
-      "Providers error:",
-      error
+    DB.tables[table] = {
+      exists:false,
+      rows:[],
+      error:error.message
+    };
+
+    DB.errors.push(
+      table + ": " + error.message
     );
 
-    addLog(
-      "Providers error",
-      error.message
-    );
-
-    return false;
+    return [];
 
   }
 
 }
 
 
-/*
-=========================================================
-LOAD NETWORKS
-=========================================================
-*/
+/* ---------------------------------------------------------
+   LOAD DATABASE
+   --------------------------------------------------------- */
 
-async function loadNetworks(){
+async function loadDatabase(){
 
-  try{
+  DB.connected=false;
+  DB.errors=[];
 
-    const data =
-      await supabaseRequest(
-        TABLES.networks,
-        {
-          select:"*",
-          order:"country_name.asc"
-        }
-      );
-
-    state.networks =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    renderNetworks();
-
-    buildCountrySelector();
-
-    addLog(
-      "Networks loaded",
-      state.networks.length +
-      " network(s) loaded from Supabase."
-    );
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Networks error:",
-      error
-    );
-
-    addLog(
-      "Networks error",
-      error.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD PLANS
-=========================================================
-*/
-
-async function loadPlans(){
-
-  try{
-
-    const data =
-      await supabaseRequest(
-        TABLES.providerPlans,
-        {
-          select:"*",
-          order:"country_name.asc"
-        }
-      );
-
-    state.plans =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    renderPlans();
-
-    addLog(
-      "Plans loaded",
-      state.plans.length +
-      " plan(s) loaded from Supabase."
-    );
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Plans error:",
-      error
-    );
-
-    addLog(
-      "Plans error",
-      error.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD ESIMS
-=========================================================
-*/
-
-async function loadEsims(){
-
-  try{
-
-    const data =
-      await supabaseRequest(
-        TABLES.esims,
-        {
-          select:"*",
-          order:"created_at.desc",
-          limit:"10"
-        }
-      );
-
-    state.esims =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    renderESIM();
-
-    addLog(
-      "eSIM loaded",
-      state.esims.length +
-      " eSIM record(s) loaded."
-    );
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "eSIM error:",
-      error
-    );
-
-    addLog(
-      "eSIM error",
-      error.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD USAGE
-=========================================================
-*/
-
-async function loadUsage(){
-
-  try{
-
-    const data =
-      await supabaseRequest(
-        TABLES.usageLogs,
-        {
-          select:"*",
-          order:"created_at.desc",
-          limit:"20"
-        }
-      );
-
-    state.usageLogs =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    addLog(
-      "Usage loaded",
-      state.usageLogs.length +
-      " usage record(s) loaded."
-    );
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Usage error:",
-      error
-    );
-
-    addLog(
-      "Usage error",
-      error.message
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD STATUS LOGS
-=========================================================
-*/
-
-async function loadStatusLogs(){
-
-  try{
-
-    const data =
-      await supabaseRequest(
-        TABLES.statusLogs,
-        {
-          select:"*",
-          order:"created_at.desc",
-          limit:"20"
-        }
-      );
-
-    state.statusLogs =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Status logs error:",
-      error
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD WEBHOOK EVENTS
-=========================================================
-*/
-
-async function loadWebhookEvents(){
-
-  try{
-
-    const data =
-      await supabaseRequest(
-        TABLES.webhookEvents,
-        {
-          select:"*",
-          order:"created_at.desc",
-          limit:"20"
-        }
-      );
-
-    state.webhookEvents =
-      Array.isArray(data)
-      ?data
-      :[];
-
-    return true;
-
-  }catch(error){
-
-    console.error(
-      "Webhook error:",
-      error
-    );
-
-    return false;
-
-  }
-
-}
-
-
-/*
-=========================================================
-LOAD EVERYTHING
-=========================================================
-*/
-
-async function loadAllData(){
-
-  setConnection(
-    "loading",
-    "SYNCING"
+  setStatus(
+    "CHECKING DATABASE...",
+    "demo"
   );
 
-  try{
+  setDiagnostics("Connecting to Supabase...");
 
-    const results =
-      await Promise.all([
+  const results = await Promise.all(
+    TABLES.map(table => loadTable(table))
+  );
 
-        loadProviders(),
+  DB.providers = results[0];
+  DB.networks = results[1];
+  DB.plans = results[2];
+  DB.esims = results[3];
+  DB.usage = results[4];
+  DB.status = results[5];
+  DB.webhooks = results[6];
 
-        loadNetworks(),
 
-        loadPlans(),
+  /*
+     Connection dianggap berhasil bila minimal
+     endpoint Supabase dapat membaca salah satu
+     table.
+  */
 
-        loadEsims(),
+  const successfulTables =
+    Object.values(DB.tables)
+      .filter(x => x.exists)
+      .length;
 
-        loadUsage(),
 
-        loadStatusLogs(),
+  if(successfulTables > 0){
 
-        loadWebhookEvents()
+    DB.connected=true;
 
-      ]);
+    setStatus(
+      "🟢 SUPABASE CONNECTED",
+      "ok"
+    );
 
-    const successCount =
-      results.filter(Boolean).length;
+    showMessage(
+      "Supabase berhasil dibaca. " +
+      successfulTables +
+      " database module aktif.",
+      "ok"
+    );
 
-    state.connected =
-      successCount >= 3;
+  }else{
 
-    updateStats();
+    setStatus(
+      "🔴 DATABASE ERROR",
+      "error"
+    );
 
-    if(state.connected){
+    showMessage(
+      "Database belum dapat dibaca. " +
+      "Lihat Database Diagnostics di bawah.",
+      "error"
+    );
 
-      setConnection(
-        "online",
-        "SUPABASE CONNECTED"
+  }
+
+
+  renderAll();
+
+}
+
+
+/* ---------------------------------------------------------
+   STATUS
+   --------------------------------------------------------- */
+
+function setStatus(text,type){
+
+  const el =
+    document.getElementById("connectionStatus");
+
+  el.textContent=text;
+
+  el.className =
+    "status " + type;
+
+}
+
+
+/* ---------------------------------------------------------
+   MESSAGE
+   --------------------------------------------------------- */
+
+function showMessage(text,type){
+
+  document.getElementById("messageBox").innerHTML =
+
+    `<div class="alert ${type}">
+      ${escapeHtml(text)}
+    </div>`;
+
+}
+
+
+/* ---------------------------------------------------------
+   DIAGNOSTICS
+   --------------------------------------------------------- */
+
+function setDiagnostics(text){
+
+  document.getElementById("diagnostics")
+    .textContent=text;
+
+}
+
+
+function buildDiagnostics(){
+
+  const lines=[];
+
+  lines.push(
+    "TELKU V3.1C DATABASE DIAGNOSTICS"
+  );
+
+  lines.push(
+    "Project: " + SUPABASE_URL
+  );
+
+  lines.push(
+    "----------------------------------------"
+  );
+
+
+  TABLES.forEach(table => {
+
+    const info=DB.tables[table];
+
+    if(!info){
+
+      lines.push(
+        table + " : NOT CHECKED"
       );
 
-      document
-        .getElementById("dbBadge")
-        .className =
-          "badge badge-green";
+    }else if(info.exists){
 
-      document
-        .getElementById("dbBadge")
-        .textContent =
-          "CONNECTED";
-
-      document
-        .getElementById("systemAlert")
-        .className =
-          "alert alert-success";
-
-      document
-        .getElementById("systemAlert")
-        .innerHTML =
-          "<strong>Supabase connected.</strong><br>" +
-          "TELKU berhasil membaca data dari database.";
-
-      addLog(
-        "Database connected",
-        successCount +
-        "/7 data modules loaded."
+      lines.push(
+        table +
+        " : OK (" +
+        info.rows.length +
+        " rows)"
       );
 
     }else{
 
-      throw new Error(
-        "Database modules gagal dimuat."
+      lines.push(
+        table +
+        " : ERROR → " +
+        info.error
       );
 
     }
 
-  }catch(error){
+  });
 
-    console.error(
-      "Database connection:",
-      error
+
+  lines.push(
+    "----------------------------------------"
+  );
+
+
+  if(DB.errors.length===0){
+
+    lines.push(
+      "No database errors detected."
     );
 
-    state.connected=false;
+  }else{
 
-    setConnection(
-      "offline",
-      "DATABASE ERROR"
+    lines.push(
+      "ERROR DETAILS:"
     );
 
-    document
-      .getElementById("dbBadge")
-      .className =
-        "badge badge-red";
-
-    document
-      .getElementById("dbBadge")
-      .textContent =
-        "ERROR";
-
-    document
-      .getElementById("systemAlert")
-      .className =
-        "alert alert-error";
-
-    document
-      .getElementById("systemAlert")
-      .innerHTML =
-        "<strong>Supabase belum dapat dibaca.</strong><br>" +
-        escapeHTML(error.message);
-
-    addLog(
-      "Database connection error",
-      error.message
-    );
+    DB.errors.forEach(error=>{
+      lines.push("• " + error);
+    });
 
   }
+
+
+  return lines.join("\n");
 
 }
 
 
-/*
-=========================================================
-CONNECTION UI
-=========================================================
-*/
+/* ---------------------------------------------------------
+   RENDER ALL
+   --------------------------------------------------------- */
 
-function setConnection(
-  mode,
-  text
-){
+function renderAll(){
+
+  const providerCount =
+    DB.providers.length;
+
+  const networkCount =
+    DB.networks.length;
+
+  const planCount =
+    DB.plans.length;
+
+  const esimCount =
+    DB.esims.length;
+
+
+  /*
+     Countries dihitung dari berbagai kemungkinan
+     nama field sehingga tidak tergantung schema tertentu.
+  */
+
+  const countries = new Set();
+
+  DB.networks.forEach(row=>{
+
+    const value =
+      firstValue(row,[
+        "country_code",
+        "country",
+        "country_name",
+        "iso_code"
+      ]);
+
+    if(value){
+      countries.add(String(value));
+    }
+
+  });
+
+
+  DB.plans.forEach(row=>{
+
+    const value =
+      firstValue(row,[
+        "country_code",
+        "country",
+        "country_name"
+      ]);
+
+    if(value){
+      countries.add(String(value));
+    }
+
+  });
+
+
+  document.getElementById("providerCount")
+    .textContent=providerCount;
+
+  document.getElementById("networkCount")
+    .textContent=networkCount;
+
+  document.getElementById("countryCount")
+    .textContent=countries.size;
+
+
+  document.getElementById("providerEngine")
+    .textContent=
+    providerCount + " provider(s)";
+
+  document.getElementById("networkEngine")
+    .textContent=
+    networkCount + " network(s)";
+
+  document.getElementById("planEngine")
+    .textContent=
+    planCount + " plan(s)";
+
+  document.getElementById("esimEngine")
+    .textContent=
+    esimCount + " eSIM(s)";
+
+
+  renderDatabaseModule();
+
+  renderTable(
+    "providersTable",
+    DB.providers
+  );
+
+  renderTable(
+    "networksTable",
+    DB.networks
+  );
+
+  renderTable(
+    "plansTable",
+    DB.plans
+  );
+
+  renderTable(
+    "esimsTable",
+    DB.esims
+  );
+
+  renderLogs();
+
+  setDiagnostics(
+    buildDiagnostics()
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   DATABASE MODULE
+   --------------------------------------------------------- */
+
+function renderDatabaseModule(){
 
   const el =
-    document.getElementById(
-      "connectionStatus"
-    );
+    document.getElementById("databaseModule");
 
-  el.className =
-    "connection " +
-    mode;
 
-  el.innerHTML =
-    `
-    <span class="dot"></span>
-    ${escapeHTML(text)}
-    `;
+  if(DB.connected){
 
-}
+    el.innerHTML=`
 
-
-/*
-=========================================================
-STATS
-=========================================================
-*/
-
-function updateStats(){
-
-  document
-    .getElementById(
-      "providerCount"
-    )
-    .textContent =
-      formatNumber(
-        state.providers.length
-      );
-
-  const countries =
-    new Set(
-      state.networks
-        .map(
-          x=>x.country_name
-        )
-        .filter(Boolean)
-    );
-
-  document
-    .getElementById(
-      "countryCount"
-    )
-    .textContent =
-      formatNumber(
-        countries.size
-      );
-
-  document
-    .getElementById(
-      "networkCount"
-    )
-    .textContent =
-      formatNumber(
-        state.networks.length
-      );
-
-  document
-    .getElementById(
-      "engineProviders"
-    )
-    .textContent =
-      state.providers.length +
-      " provider(s)";
-
-  document
-    .getElementById(
-      "engineNetworks"
-    )
-    .textContent =
-      state.networks.length +
-      " network(s)";
-
-  document
-    .getElementById(
-      "enginePlans"
-    )
-    .textContent =
-      state.plans.length +
-      " plan(s)";
-
-}
-
-
-/*
-=========================================================
-PROVIDER RENDER
-=========================================================
-*/
-
-function renderProviders(){
-
-  const box =
-    document.getElementById(
-      "providerList"
-    );
-
-  if(!state.providers.length){
-
-    box.innerHTML =
-      `
-      <div class="card empty">
-        No provider data found.
-      </div>
-      `;
-
-    return;
-
-  }
-
-  box.innerHTML =
-    state.providers
-      .map(
-        p=>`
-
-        <div class="card provider">
-
-          <div class="provider-top">
-
-            <div>
-
-              <div class="provider-name">
-                ${escapeHTML(
-                  p.provider_name
-                )}
-              </div>
-
-              <div class="provider-type">
-                ${escapeHTML(
-                  p.provider_type
-                )}
-              </div>
-
-            </div>
-
-            <span class="
-              badge
-              ${
-                p.status==="active"
-                ?"badge-green"
-                :"badge-red"
-              }
-            ">
-              ${escapeHTML(
-                p.status
-              )}
-            </span>
-
-          </div>
-
-
-          <div class="form-row">
-
-            <div>
-
-              <span class="label">
-                Provider Code
-              </span>
-
-              <strong>
-                ${escapeHTML(
-                  p.provider_code
-                )}
-              </strong>
-
-            </div>
-
-
-            <div>
-
-              <span class="label">
-                API Enabled
-              </span>
-
-              <strong>
-                ${
-                  p.api_enabled
-                  ?"YES"
-                  :"DEMO"
-                }
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <div class="form-row">
-
-            <div>
-
-              <span class="label">
-                Countries
-              </span>
-
-              <strong>
-                ${formatNumber(
-                  p.countries_count
-                )}
-              </strong>
-
-            </div>
-
-
-            <div>
-
-              <span class="label">
-                Networks
-              </span>
-
-              <strong>
-                ${formatNumber(
-                  p.networks_count
-                )}
-              </strong>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/*
-=========================================================
-NETWORK RENDER
-=========================================================
-*/
-
-function renderNetworks(){
-
-  const box =
-    document.getElementById(
-      "networkList"
-    );
-
-  if(!state.networks.length){
-
-    box.innerHTML =
-      `
-      <div class="empty">
-        No network data found.
-      </div>
-      `;
-
-    return;
-
-  }
-
-  box.innerHTML =
-    state.networks
-      .map(
-        n=>`
-
-        <div class="network">
-
-          <span
-            class="dot"
-            style="
-              color:${
-                n.status==="active"
-                ?"var(--green)"
-                :"var(--red)"
-              };
-            ">
-          </span>
-
-          <div class="network-info">
-
-            <strong>
-              ${escapeHTML(
-                n.operator_name
-              )}
-            </strong>
-
-            <span>
-              ${escapeHTML(
-                n.country_name
-              )}
-              ·
-              ${escapeHTML(
-                n.country_code
-              )}
-              ·
-              ${escapeHTML(
-                n.technology
-              )}
-            </span>
-
-          </div>
-
-          <span class="
-            badge
-            ${
-              n.status==="active"
-              ?"badge-green"
-              :"badge-red"
-            }
-          ">
-            ${escapeHTML(
-              n.status
-            )}
-          </span>
-
-        </div>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/*
-=========================================================
-PLAN RENDER
-=========================================================
-*/
-
-function renderPlans(){
-
-  const box =
-    document.getElementById(
-      "planList"
-    );
-
-  if(!state.plans.length){
-
-    box.innerHTML =
-      `
-      <div class="card empty">
-        No plan data found.
-      </div>
-      `;
-
-    return;
-
-  }
-
-  box.innerHTML =
-    state.plans
-      .map(
-        p=>`
-
-        <div class="plan">
-
-          <div class="gb">
-            ${escapeHTML(
-              p.data_gb
-            )} GB
-          </div>
-
-          <div style="margin-top:5px">
-            ${escapeHTML(
-              p.country_name
-            )}
-          </div>
-
-          <div class="valid">
-            ${escapeHTML(
-              p.validity_days
-            )} days
-          </div>
-
-          <div class="price">
-            ${escapeHTML(
-              p.currency
-            )}
-            ${escapeHTML(
-              p.telku_price
-            )}
-          </div>
-
-          <div style="
-            color:#71879e;
-            font-size:11px;
-            margin-top:7px;
-          ">
-            ${escapeHTML(
-              p.plan_code
-            )}
-          </div>
-
-          <div style="
-            color:#71879e;
-            font-size:11px;
-            margin-top:3px;
-          ">
-            Provider:
-            ${escapeHTML(
-              p.provider_id
-            )}
-          </div>
-
-        </div>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/*
-=========================================================
-COUNTRY SELECTOR
-=========================================================
-*/
-
-function buildCountrySelector(){
-
-  const select =
-    document.getElementById(
-      "customerCountry"
-    );
-
-  const countries =
-    [
-      ...new Map(
-        state.networks
-          .filter(
-            n=>n.country_code
-          )
-          .map(
-            n=>[
-              n.country_code,
-              n.country_name
-            ]
-          )
-      ).entries()
-    ];
-
-  if(!countries.length){
-
-    select.innerHTML =
-      `
-      <option value="">
-        No countries found
-      </option>
-      `;
-
-    return;
-
-  }
-
-  select.innerHTML =
-    `
-    <option value="">
-      Select country
-    </option>
-    ` +
-    countries
-      .map(
-        c=>`
-
-        <option value="${escapeHTML(c[0])}">
-          ${escapeHTML(c[1])}
-        </option>
-
-        `
-      )
-      .join("");
-
-}
-
-
-/*
-=========================================================
-FIND PROVIDER
-=========================================================
-*/
-
-function findProvider(){
-
-  const countryCode =
-    document
-      .getElementById(
-        "customerCountry"
-      )
-      .value;
-
-  const packageGB =
-    document
-      .getElementById(
-        "customerPlan"
-      )
-      .value;
-
-  if(!countryCode){
-
-    alert(
-      "Pilih negara terlebih dahulu."
-    );
-
-    return;
-
-  }
-
-  const networks =
-    state.networks
-      .filter(
-        n=>
-          n.country_code===
-          countryCode &&
-          n.status==="active"
-      );
-
-  const plans =
-    state.plans
-      .filter(
-        p=>
-          p.country_code===
-          countryCode &&
-          p.status==="active"
-      )
-      .sort(
-        (a,b)=>
-          Number(a.telku_price) -
-          Number(b.telku_price)
-      );
-
-  const result =
-    document.getElementById(
-      "routingResult"
-    );
-
-  const content =
-    document.getElementById(
-      "routingContent"
-    );
-
-  result.classList.remove(
-    "hidden"
-  );
-
-  if(!networks.length){
-
-    content.innerHTML =
-      `
-      <div class="alert alert-error">
-        Tidak ada network aktif untuk negara ini.
-      </div>
-      `;
-
-    return;
-
-  }
-
-  const firstNetwork =
-    networks[0];
-
-  const bestPlan =
-    plans.find(
-      p=>
-        Number(p.data_gb)>=
-        Number(packageGB)
-    ) ||
-    plans[0];
-
-  content.innerHTML =
-    `
-
-    <div class="grid">
-
-      <div>
-
-        <div class="log">
-
-          <strong>
-            Country
-          </strong>
-
-          <span>
-            ${escapeHTML(
-              firstNetwork.country_name
-            )}
-          </span>
-
-        </div>
-
-
-        <div class="log">
-
-          <strong>
-            Network
-          </strong>
-
-          <span>
-            ${escapeHTML(
-              firstNetwork.operator_name
-            )}
-          </span>
-
-        </div>
-
+      <div class="module">
+        <strong>🟢 Connection Active</strong>
+        <span>Supabase REST Data API dapat diakses.</span>
       </div>
 
-
-      <div>
-
-        <div class="log">
-
-          <strong>
-            Recommended Plan
-          </strong>
-
-          <span>
-            ${
-              bestPlan
-              ?escapeHTML(
-                bestPlan.plan_name
-              )
-              :"No plan"
-            }
-          </span>
-
-        </div>
-
-
-        <div class="log">
-
-          <strong>
-            Data
-          </strong>
-
-          <span>
-            ${
-              bestPlan
-              ?escapeHTML(
-                bestPlan.data_gb
-              )+
-              " GB / "+
-              escapeHTML(
-                bestPlan.validity_days
-              )+
-              " days"
-              :"No plan"
-            }
-          </span>
-
-        </div>
-
+      <div class="module">
+        <strong>Project</strong>
+        <span>TELKU HOBBIGO</span>
       </div>
 
-    </div>
-
-
-    <div class="alert alert-success"
-         style="margin-top:15px">
-
-      <strong>
-        Provider routing ditemukan.
-      </strong>
-
-      <br>
-
-      TELKU menemukan
-      ${networks.length}
-      network aktif untuk
-      ${escapeHTML(
-        firstNetwork.country_name
-      )}.
-
-    </div>
+      <div class="module">
+        <strong>Database</strong>
+        <span>Supabase PostgreSQL</span>
+      </div>
 
     `;
 
-  addLog(
-    "Provider routing",
-    firstNetwork.country_name+
-    " → "+
-    firstNetwork.operator_name+
-    " → "+
-    (
-      bestPlan
-      ?bestPlan.plan_name
-      :"No plan"
-    )
-  );
+  }else{
+
+    el.innerHTML=`
+
+      <div class="module" style="border-left-color:#ff5577">
+        <strong>🔴 Connection Failed</strong>
+        <span>
+          Supabase endpoint belum dapat membaca
+          database menggunakan Publishable Key.
+        </span>
+      </div>
+
+      <div class="module">
+        <strong>Next Check</strong>
+        <span>
+          Lihat Database Diagnostics untuk error sebenarnya.
+        </span>
+      </div>
+
+    `;
+
+  }
 
 }
 
 
-/*
-=========================================================
-ESIM RENDER
-=========================================================
-*/
+/* ---------------------------------------------------------
+   GENERIC TABLE RENDERER
+   --------------------------------------------------------- */
 
-function renderESIM(){
+function renderTable(targetId,rows){
 
-  if(!state.esims.length){
+  const el=
+    document.getElementById(targetId);
 
-    document
-      .getElementById(
-        "esimStatus"
-      )
-      .className =
-        "badge badge-yellow";
 
-    document
-      .getElementById(
-        "esimStatus"
-      )
-      .textContent =
-        "NO DATA";
+  if(!rows || rows.length===0){
 
-    document
-      .getElementById(
-        "esimId"
-      )
-      .textContent =
-        "No eSIM record";
-
-    document
-      .getElementById(
-        "iccid"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "esimProvider"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "esimNetwork"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "esimCountry"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "esimRemaining"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "usageText"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "usagePercent"
-      )
-      .textContent =
-        "-";
-
-    document
-      .getElementById(
-        "usageBar"
-      )
-      .style.width =
-        "0%";
-
-    document
-      .getElementById(
-        "lastSync"
-      )
-      .textContent =
-        "-";
+    el.innerHTML=
+      `<div class="module">
+        <strong>No data</strong>
+        <span>
+          Belum ada record yang dapat dibaca.
+        </span>
+      </div>`;
 
     return;
 
   }
 
-  const esim =
-    state.esims[0];
 
-  const status =
-    String(
-      esim.status ||
-      "ready"
-    ).toUpperCase();
+  /*
+     Ambil maksimal 8 kolom pertama
+     dari schema sebenarnya.
+  */
 
-  const badge =
-    document
-      .getElementById(
-        "esimStatus"
-      );
+  const columns =
+    Object.keys(rows[0]).slice(0,8);
 
-  badge.textContent =
-    status;
 
-  badge.className =
-    "badge " +
-    (
-      status==="ACTIVE"
-      ?"badge-green"
-      :
-      status==="OFF"
-      ?"badge-red"
-      :"badge-yellow"
-    );
+  let html="<table><thead><tr>";
 
-  document
-    .getElementById(
-      "esimId"
-    )
-    .textContent =
-      esim.esim_code ||
-      esim.provider_esim_id ||
-      esim.id ||
-      "-";
 
-  document
-    .getElementById(
-      "iccid"
-    )
-    .textContent =
-      esim.iccid ||
-      "-";
+  columns.forEach(column=>{
 
-  document
-    .getElementById(
-      "esimProvider"
-    )
-    .textContent =
-      esim.provider_id ||
-      "-";
+    html +=
+      "<th>" +
+      escapeHtml(column) +
+      "</th>";
 
-  document
-    .getElementById(
-      "esimNetwork"
-    )
-    .textContent =
-      esim.network_name ||
-      "-";
+  });
 
-  document
-    .getElementById(
-      "esimCountry"
-    )
-    .textContent =
-      esim.country_name ||
-      esim.country_code ||
-      "-";
 
-  const total =
-    Number(
-      esim.total_data_gb ||
-      0
-    );
+  html +=
+    "</tr></thead><tbody>";
 
-  const used =
-    Number(
-      esim.used_data_gb ||
-      0
-    );
 
-  const remaining =
-    Number(
-      esim.remaining_data_gb ||
-      Math.max(
-        0,
-        total-used
-      )
-    );
+  rows.slice(0,50).forEach(row=>{
 
-  document
-    .getElementById(
-      "esimRemaining"
-    )
-    .textContent =
-      remaining.toFixed(2)+
-      " GB";
+    html += "<tr>";
 
-  const percent =
-    total>0
-    ?Math.min(
-      100,
-      (used/total)*100
-    )
-    :0;
 
-  document
-    .getElementById(
-      "usageText"
-    )
-    .textContent =
-      used.toFixed(2)+
-      " GB used / "+
-      total.toFixed(2)+
-      " GB";
+    columns.forEach(column=>{
 
-  document
-    .getElementById(
-      "usagePercent"
-    )
-    .textContent =
-      Math.round(percent)+
-      "%";
+      let value=row[column];
 
-  document
-    .getElementById(
-      "usageBar"
-    )
-    .style.width =
-      percent+"%";
+      if(value===null ||
+         value===undefined){
 
-  document
-    .getElementById(
-      "lastSync"
-    )
-    .textContent =
-      formatDate(
-        esim.last_synced_at
-      );
+        value="—";
+
+      }
+
+      if(typeof value==="object"){
+
+        value=
+          JSON.stringify(value);
+
+      }
+
+
+      html +=
+        "<td>" +
+        escapeHtml(String(value)) +
+        "</td>";
+
+    });
+
+
+    html += "</tr>";
+
+  });
+
+
+  html +=
+    "</tbody></table>";
+
+
+  el.innerHTML=html;
 
 }
 
 
-/*
-=========================================================
-PAGE NAVIGATION
-=========================================================
-*/
+/* ---------------------------------------------------------
+   LOGS
+   --------------------------------------------------------- */
 
-function showPage(
-  id,
-  button
-){
+function renderLogs(){
 
-  document
-    .querySelectorAll(
-      ".page"
-    )
-    .forEach(
-      page=>
-        page.classList.remove(
-          "active"
-        )
-    );
+  const combined=[];
 
-  const target =
-    document.getElementById(
-      id
-    );
 
-  if(target){
+  DB.usage.forEach(row=>{
+    combined.push({
+      source:"usage_logs",
+      row:row
+    });
+  });
 
-    target.classList.add(
-      "active"
-    );
+
+  DB.status.forEach(row=>{
+    combined.push({
+      source:"status_logs",
+      row:row
+    });
+  });
+
+
+  DB.webhooks.forEach(row=>{
+    combined.push({
+      source:"webhook_events",
+      row:row
+    });
+  });
+
+
+  const el=
+    document.getElementById("logsTable");
+
+
+  if(combined.length===0){
+
+    el.innerHTML=
+      `<div class="module">
+        <strong>No sync logs</strong>
+        <span>
+          Belum ada log yang tersedia.
+        </span>
+      </div>`;
+
+    return;
 
   }
 
+
+  let html=
+    "<table><thead>" +
+    "<tr><th>Source</th><th>Data</th></tr>" +
+    "</thead><tbody>";
+
+
+  combined.slice(0,50).forEach(item=>{
+
+    html +=
+      "<tr>" +
+      "<td>" +
+      escapeHtml(item.source) +
+      "</td>" +
+      "<td>" +
+      escapeHtml(
+        JSON.stringify(item.row)
+      ) +
+      "</td>" +
+      "</tr>";
+
+  });
+
+
+  html +=
+    "</tbody></table>";
+
+
+  el.innerHTML=html;
+
+}
+
+
+/* ---------------------------------------------------------
+   FIND FIRST VALUE
+   --------------------------------------------------------- */
+
+function firstValue(row,keys){
+
+  for(const key of keys){
+
+    if(
+      Object.prototype.hasOwnProperty.call(
+        row,
+        key
+      )
+    ){
+
+      const value=row[key];
+
+      if(
+        value!==null &&
+        value!==undefined &&
+        value!==""
+      ){
+
+        return value;
+
+      }
+
+    }
+
+  }
+
+  return null;
+
+}
+
+
+/* ---------------------------------------------------------
+   ESCAPE HTML
+   --------------------------------------------------------- */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* ---------------------------------------------------------
+   TAB
+   --------------------------------------------------------- */
+
+function showTab(tab,button){
+
   document
-    .querySelectorAll(
-      ".nav button"
-    )
-    .forEach(
-      btn=>
-        btn.classList.remove(
-          "active"
-        )
-    );
+    .querySelectorAll("main > section")
+    .forEach(section=>{
+      section.classList.add("hidden");
+    });
+
+
+  const selected=
+    document.getElementById(tab);
+
+  if(selected){
+    selected.classList.remove("hidden");
+  }
+
+
+  document
+    .querySelectorAll(".tab")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
+
 
   if(button){
-
-    button.classList.add(
-      "active"
-    );
-
+    button.classList.add("active");
   }
 
 }
 
 
-/*
-=========================================================
-START
-=========================================================
-*/
+/* ---------------------------------------------------------
+   REFRESH
+   --------------------------------------------------------- */
 
-async function init(){
+async function reloadAll(){
 
-  addLog(
-    "TELKU started",
-    "Starting Supabase connection..."
-  );
+  document.getElementById("diagnostics")
+    .textContent=
+    "Refreshing database...";
 
-  await loadAllData();
-
-  updateStats();
+  await loadDatabase();
 
 }
 
 
-/*
-=========================================================
-RUN
-=========================================================
-*/
+/* ---------------------------------------------------------
+   START
+   --------------------------------------------------------- */
 
-init();
+window.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+    loadDatabase();
+  }
+);
 
 </script>
 
