@@ -2061,9 +2061,17 @@
 
                 <div class="detail-card">
                   <div class="detail-item"><span>Order Detail</span><strong>Jastip / Personal Delivery</strong></div>
-                  <div class="detail-item"><span>Sender</span><strong>Alex Johnson</strong></div>
-                  <div class="detail-item"><span>Recipient</span><strong>Bali Customer</strong></div>
+                  <div class="detail-item"><span>Customer</span><strong>Alex Johnson</strong></div>
+                  <div class="detail-item"><span>Service</span><strong>Jastip / Personal Delivery</strong></div>
                   <div class="detail-item"><span>Route</span><strong>Jakarta → Bali</strong></div>
+                  <div class="detail-item"><span>Partner</span><strong>Aulia Rahman</strong></div>
+                  <div class="detail-item"><span>Transaction Status</span><strong>COMPLETED</strong></div>
+                  <div class="detail-item"><span>Security Score</span><strong>92 / 100</strong></div>
+                  <div class="detail-item"><span>Protection Status</span><strong>ACTIVE — DEMO</strong></div>
+                  <div class="detail-item"><span>Agreement ID</span><strong>AGR-CHL-000128</strong></div>
+                  <div class="detail-item"><span>Escrow Status</span><strong>ESCROW RELEASED — DEMO</strong></div>
+                  <div class="detail-item"><span>Pickup Status</span><strong>PICKUP VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Handover Status</span><strong>HANDOVER VERIFIED — DEMO</strong></div>
                   <div class="detail-item"><span>Protection Center</span><strong>ACTIVE — DEMO</strong></div>
                   <div class="detail-item"><span>Insurance Card</span><strong>STANDARD COVERAGE — DEMO</strong></div>
                   <div class="detail-item"><span>Digital Agreement</span><strong>SIGNED — DEMO</strong></div>
@@ -2075,16 +2083,16 @@
                 <div class="score-grid">
                   <div class="score-box"><small>Security Score</small><strong>92 / 100</strong></div>
                   <div class="score-box"><small>Risk Score</small><strong>LOW — DEMO</strong></div>
-                  <div class="score-box"><small>Escrow</small><strong>LOCKED — DEMO</strong></div>
+                  <div class="score-box"><small>Escrow</small><strong>RELEASED — DEMO</strong></div>
                   <div class="score-box"><small>Insurance</small><strong>ACTIVE — DEMO</strong></div>
                 </div>
 
                 <div class="status-row" style="margin-top:18px;">
                   <button class="primary-btn" type="button" data-go="home">VIEW RECEIPT</button>
-                  <button class="ghost-btn" type="button">Download Receipt — DEMO</button>
+                  <button class="ghost-btn" type="button" id="downloadReceiptBtn">Download Receipt — DEMO</button>
                 </div>
                 <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="secondary-btn" type="button">Share Receipt — DEMO</button>
+                  <button class="secondary-btn" type="button" id="shareReceiptBtn">Share Receipt — DEMO</button>
                   <button class="ghost-btn" type="button" data-go="control">CONTROL</button>
                 </div>
               </div>
@@ -2155,6 +2163,186 @@
         });
       }
 
+      function buildReceiptHtml() {
+        const transactionId = 'CHEL-2026-000128';
+        return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHELEA Receipt - ${transactionId}</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f8ff;
+        color: #132336;
+        margin: 0;
+        padding: 32px 18px;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        background: white;
+        border: 1px solid #dfe8f3;
+        border-radius: 18px;
+        box-shadow: 0 20px 50px rgba(16, 38, 73, 0.06);
+        padding: 28px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .brand {
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+      .badge {
+        background: #eaf2ff;
+        color: #0d49ba;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+      .section {
+        margin-top: 18px;
+        border-top: 1px solid #dfe8f3;
+        padding-top: 14px;
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #64748b;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      td {
+        padding: 10px 0;
+        border-bottom: 1px solid #edf2f7;
+        font-size: 0.9rem;
+      }
+      td:first-child {
+        color: #64748b;
+        width: 38%;
+      }
+      .notice {
+        margin-top: 18px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #fff4dd;
+        color: #9c6705;
+        font-weight: 700;
+      }
+      .done {
+        color: #0b7b6d;
+        font-weight: 700;
+      }
+      .warn {
+        color: #9c6705;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="header">
+        <div class="brand">CHELEA</div>
+        <div class="badge">CHELEA SECURE TRANSACTION</div>
+      </div>
+
+      <div class="section">
+        <h2>Receipt</h2>
+        <table>
+          <tr><td>Transaction ID</td><td>${transactionId}</td></tr>
+          <tr><td>Order Detail</td><td>Jastip / Personal Delivery</td></tr>
+          <tr><td>Customer</td><td>Alex Johnson</td></tr>
+          <tr><td>Service</td><td>Jastip / Personal Delivery</td></tr>
+          <tr><td>Route</td><td>Jakarta → Bali</td></tr>
+          <tr><td>Partner</td><td>Aulia Rahman</td></tr>
+          <tr><td>Transaction Status</td><td class="done">COMPLETED</td></tr>
+          <tr><td>Security Score</td><td>92 / 100</td></tr>
+          <tr><td>Protection Status</td><td>ACTIVE — DEMO</td></tr>
+          <tr><td>Agreement ID</td><td>AGR-CHL-000128</td></tr>
+          <tr><td>Escrow Status</td><td class="done">ESCROW RELEASED — DEMO</td></tr>
+          <tr><td>Pickup Status</td><td>PICKUP VERIFIED — DEMO</td></tr>
+          <tr><td>Handover Status</td><td>HANDOVER VERIFIED — DEMO</td></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>Summary</h2>
+        <table>
+          <tr><td>Final Status</td><td class="done">COMPLETED</td></tr>
+          <tr><td>Escrow</td><td class="done">ESCROW RELEASED — DEMO</td></tr>
+          <tr><td>Protection</td><td>ACTIVE — DEMO</td></tr>
+          <tr><td>Compliance</td><td>LOW — DEMO</td></tr>
+        </table>
+      </div>
+
+      <div class="notice">
+        DEMO / PROTOTYPE NOTICE<br />
+        This receipt is generated locally in-browser for demonstration purposes only. No real payment, escrow, insurance, or government systems are connected.
+      </div>
+    </div>
+  </body>
+</html>`;
+      }
+
+      function triggerDownload(filename, content) {
+        const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function downloadReceiptFile() {
+        const fileName = 'CHELEA_Receipt_CHL-2026-000128.html';
+        const html = buildReceiptHtml();
+        triggerDownload(fileName, html);
+      }
+
+      async function shareReceiptDemo() {
+        const receiptText = 'CHELEA Receipt - CHEL-2026-000128\nTransaction Status: COMPLETED\nEscrow: ESCROW RELEASED — DEMO\nDEMO / PROTOTYPE NOTICE';
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'CHELEA Receipt',
+              text: receiptText
+            });
+            return;
+          } catch (error) {
+            console.log('Share cancelled by user.', error);
+          }
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          try {
+            await navigator.clipboard.writeText(receiptText);
+            alert('Receipt summary copied to clipboard for demo preview.');
+            return;
+          } catch (error) {
+            console.log('Clipboard copy failed.', error);
+          }
+        }
+
+        alert('Share Receipt — DEMO. This is a frontend-only demo action.');
+      }
+
       document.querySelectorAll('[data-go]').forEach((button) => {
         button.addEventListener('click', () => {
           const target = button.getAttribute('data-go');
@@ -2197,15 +2385,11 @@
             high: 'HIGH RISK',
             review: 'REVIEW REQUIRED'
           };
-          const node = document.querySelector('.status-panel .detail-item span .risk-badge');
-          const chips = document.querySelectorAll('.status-panel .risk-badge, .risk-badge');
+          const chips = document.querySelectorAll('.risk-badge');
           chips.forEach((chip) => {
             chip.textContent = riskLabels[level] || 'LOW RISK';
-            chip.className = 'risk-badge ' + level;
+            chip.className = 'risk-badge ' + (level || 'low');
           });
-          if (node) {
-            node.textContent = riskLabels[level];
-          }
           showScreen('control');
         });
       });
@@ -2261,6 +2445,9 @@
           event.target.classList.remove('show');
         }
       });
+
+      document.getElementById('downloadReceiptBtn')?.addEventListener('click', downloadReceiptFile);
+      document.getElementById('shareReceiptBtn')?.addEventListener('click', shareReceiptDemo);
 
       showScreen('home');
     </script>
