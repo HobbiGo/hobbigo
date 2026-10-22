@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CHELEA V3</title>
+    <title>CHELEA V4</title>
     <style>
       :root {
         --bg: #eef4ff;
@@ -27,6 +27,8 @@
         --radius-lg: 24px;
         --radius-md: 18px;
         --radius-sm: 12px;
+        --dark: #0d1831;
+        --slate: #24364f;
       }
 
       * { box-sizing: border-box; }
@@ -208,7 +210,10 @@
       .nav-item,
       .service-card,
       .partner-card,
-      .detail-btn {
+      .detail-btn,
+      .control-action,
+      .risk-toggle,
+      .pill-button {
         border: none;
         border-radius: 14px;
         cursor: pointer;
@@ -216,13 +221,16 @@
       }
 
       .primary-btn,
-      .detail-btn {
+      .detail-btn,
+      .control-action,
+      .risk-toggle,
+      .pill-button {
         background: linear-gradient(135deg, #fff, #dfeeff);
         color: var(--primary-strong);
         box-shadow: 0 12px 24px rgba(255, 255, 255, 0.22);
       }
 
-      .primary-btn, .secondary-btn, .ghost-btn, .mini-btn, .detail-btn {
+      .primary-btn, .secondary-btn, .ghost-btn, .mini-btn, .detail-btn, .control-action, .risk-toggle, .pill-button {
         padding: 12px 16px;
         font-weight: 700;
       }
@@ -248,7 +256,12 @@
       .partner-card,
       .request-card,
       .timeline-card,
-      .detail-card {
+      .detail-card,
+      .control-card,
+      .alert-card,
+      .audit-row,
+      .risk-card,
+      .status-panel {
         background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
         border: 1px solid var(--line);
         border-radius: var(--radius-md);
@@ -326,7 +339,13 @@
       .info-grid,
       .form-grid,
       .mini-grid,
-      .score-grid {
+      .score-grid,
+      .control-grid,
+      .risk-grid,
+      .alert-grid,
+      .audit-grid,
+      .partner-grid,
+      .metric-grid {
         display: grid;
         gap: 12px;
       }
@@ -334,7 +353,10 @@
       .summary-grid,
       .tracking-grid,
       .mini-grid,
-      .score-grid {
+      .score-grid,
+      .control-grid,
+      .partner-grid,
+      .metric-grid {
         grid-template-columns: repeat(2, minmax(0,1fr));
       }
 
@@ -344,7 +366,12 @@
       .info-item,
       .check-row,
       .timeline-row,
-      .score-box {
+      .score-box,
+      .control-card,
+      .alert-card,
+      .audit-row,
+      .risk-card,
+      .status-panel {
         border: 1px solid var(--line);
         background: rgba(255,255,255,0.7);
         border-radius: 16px;
@@ -355,7 +382,9 @@
       .metric-box strong,
       .transaction-item strong,
       .info-item strong,
-      .score-box strong {
+      .score-box strong,
+      .risk-card strong,
+      .status-panel strong {
         display: block;
         font-size: 0.78rem;
         margin-bottom: 4px;
@@ -364,7 +393,9 @@
       .summary-box span,
       .metric-box span,
       .transaction-item span,
-      .info-item span {
+      .info-item span,
+      .risk-card span,
+      .status-panel span {
         font-size: 0.72rem;
         color: var(--muted);
       }
@@ -379,7 +410,11 @@
       .status-list,
       .timeline-list,
       .checklist,
-      .detail-list {
+      .detail-list,
+      .alert-list,
+      .audit-list,
+      .control-list,
+      .review-list {
         display: grid;
         gap: 10px;
       }
@@ -393,7 +428,10 @@
 
       .badge,
       .status-chip,
-      .tag {
+      .tag,
+      .risk-badge,
+      .severity-badge,
+      .priority-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -404,16 +442,22 @@
         white-space: nowrap;
       }
 
-      .badge.primary, .status-chip.primary, .tag.primary { background: var(--primary-soft); color: var(--primary-strong); }
-      .badge.success, .status-chip.success, .tag.success { background: var(--accent-soft); color: #0b7b6d; }
-      .badge.warning, .status-chip.warning, .tag.warning { background: var(--warning-soft); color: #9c6705; }
-      .badge.danger, .status-chip.danger, .tag.danger { background: var(--danger-soft); color: var(--danger); }
+      .badge.primary, .status-chip.primary, .tag.primary, .risk-badge.low, .severity-badge.low, .priority-badge.low { background: var(--primary-soft); color: var(--primary-strong); }
+      .badge.success, .status-chip.success, .tag.success, .risk-badge.low-risk, .severity-badge.info { background: var(--accent-soft); color: #0b7b6d; }
+      .badge.warning, .status-chip.warning, .tag.warning, .risk-badge.medium, .priority-badge.medium { background: var(--warning-soft); color: #9c6705; }
+      .badge.danger, .status-chip.danger, .tag.danger, .risk-badge.high, .risk-badge.review, .priority-badge.high, .severity-badge.critical { background: var(--danger-soft); color: var(--danger); }
+      .risk-badge.review-required, .severity-badge.warning { background: #fff0de; color: #8c5c00; }
 
       .request-card,
       .partner-card,
       .timeline-card,
       .panel,
-      .detail-card {
+      .detail-card,
+      .control-card,
+      .risk-card,
+      .alert-card,
+      .status-panel,
+      .review-card {
         padding: 16px;
       }
 
@@ -882,6 +926,132 @@
         color: var(--text);
       }
 
+      .control-banner {
+        margin-top: 10px;
+        background: linear-gradient(135deg, rgba(27,110,243,0.08), rgba(18,185,164,0.08));
+        border: 1px solid rgba(27,110,243,0.18);
+        border-radius: 16px;
+        padding: 12px;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .demo-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(27,110,243,0.08);
+        color: var(--primary-strong);
+        font-size: 0.66rem;
+        font-weight: 700;
+        padding: 6px 10px;
+      }
+
+      .v4-note {
+        margin: 14px 0;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(27,110,243,0.18);
+        background: rgba(27,110,243,0.05);
+        color: var(--primary-strong);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .control-grid .control-card {
+        padding: 14px;
+      }
+
+      .inline-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .metric-big {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-strong);
+      }
+
+      .risk-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .risk-bar {
+        width: 100%;
+        height: 10px;
+        background: #edf2fb;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .risk-bar > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #2cc5a5, #1b6ef3);
+      }
+
+      .audit-row {
+        display: grid;
+        grid-template-columns: 90px 1fr 1fr 1fr;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .audit-row strong {
+        display: block;
+        font-size: 0.74rem;
+      }
+
+      .audit-row span {
+        font-size: 0.68rem;
+        color: var(--muted);
+      }
+
+      .admin-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 10px;
+      }
+
+      .control-action,
+      .risk-toggle,
+      .pill-button {
+        width: 100%;
+        border: 1px solid rgba(27,110,243,0.12);
+      }
+
+      .alert-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .alert-item strong {
+        display: block;
+        font-size: 0.78rem;
+      }
+
+      .alert-item span {
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+
       @media (min-width: 700px) {
         .page-shell { padding-top: 36px; }
         .mobile-frame { width: min(100%, 860px); border-radius: 36px; }
@@ -907,6 +1077,8 @@
 
         <div class="content">
           <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← HOBBIGO</button>
+
+          <div class="v4-note">CHELEA V4 — BUSINESS CONTROL PROTOTYPE</div>
 
           <section id="home-screen" class="screen active">
             <div class="hero" aria-label="CHELEA hero section">
@@ -996,6 +1168,54 @@
                 </div>
               </div>
             </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">CHELEA CONTROL CENTER</div>
+              </div>
+              <div class="control-banner">
+                <div class="inline-label">DEMO OPERATIONS DASHBOARD</div>
+                <div class="control-grid">
+                  <div class="control-card">
+                    <div class="inline-label">Active Transactions</div>
+                    <div class="metric-big">18</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Pending Verification</div>
+                    <div class="metric-big">06</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">In Transit</div>
+                    <div class="metric-big">09</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Completed Today</div>
+                    <div class="metric-big">27</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Risk Review</div>
+                    <div class="metric-big">03</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Escrow Locked</div>
+                    <div class="metric-big">Rp 2.4M</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Protection Active</div>
+                    <div class="metric-big">94%</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Compliance</div>
+                    <div class="metric-big">LOW</div>
+                  </div>
+                </div>
+                <div class="chip-row">
+                  <span class="demo-chip">DEMO</span>
+                  <span class="demo-chip">BUSINESS CONTROL</span>
+                  <span class="demo-chip">RISK REVIEW</span>
+                </div>
+              </div>
+            </div>
           </section>
 
           <section id="request-screen" class="screen">
@@ -1014,7 +1234,6 @@
                       <option>Request Pickup</option>
                     </select>
                   </div>
-
                   <div class="field">
                     <label>Item Category</label>
                     <select id="itemCategory">
@@ -1025,42 +1244,34 @@
                       <option>Gift</option>
                     </select>
                   </div>
-
                   <div class="field full-width">
                     <label>Item Description</label>
-                    <textarea id="itemDescription" placeholder="Example: 2 boxes of skincare products, sealed with bubble wrap">2 boxes of skincare products, sealed and protected</textarea>
+                    <textarea id="itemDescription" placeholder="Example: 2 boxes of skincare products, sealed and protected">2 boxes of skincare products, sealed and protected</textarea>
                   </div>
-
                   <div class="field">
                     <label>Item Value</label>
                     <input id="itemValue" type="number" value="2500000" />
                   </div>
-
                   <div class="field">
                     <label>Weight</label>
                     <input id="weight" type="number" value="3.5" step="0.1" />
                   </div>
-
                   <div class="field">
                     <label>Origin</label>
                     <input id="origin" value="Jakarta" />
                   </div>
-
                   <div class="field">
                     <label>Destination</label>
                     <input id="destination" value="Bali" />
                   </div>
-
                   <div class="field">
                     <label>Pickup Date</label>
                     <input id="pickupDate" type="date" />
                   </div>
-
                   <div class="field">
                     <label>Delivery Date</label>
                     <input id="deliveryDate" type="date" />
                   </div>
-
                   <div class="field full-width">
                     <label>Protection / Insurance</label>
                     <select id="protectionOption">
@@ -1070,7 +1281,6 @@
                     </select>
                   </div>
                 </div>
-
                 <div style="display:flex; margin-top:18px;">
                   <button class="primary-btn" type="button" id="createRequestBtn" style="width:100%;">CREATE REQUEST</button>
                 </div>
@@ -1081,25 +1291,29 @@
           <section id="verify-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Verify</div>
+                <div class="section-title">VERIFY</div>
               </div>
               <div class="panel">
                 <div class="checklist">
                   <div class="check-item">
                     <div class="check-name"><span class="check-icon">✓</span> Identity Verification</div>
-                    <span class="status-chip success">VERIFIED</span>
+                    <span class="status-chip success">PASSED</span>
                   </div>
                   <div class="check-item">
                     <div class="check-name"><span class="check-icon">✓</span> Item Verification</div>
-                    <span class="status-chip success">VERIFIED</span>
+                    <span class="status-chip success">PASSED</span>
                   </div>
                   <div class="check-item">
-                    <div class="check-name"><span class="check-icon">✓</span> Country Restriction Check</div>
+                    <div class="check-name"><span class="check-icon">✓</span> Route Verification</div>
                     <span class="status-chip warning">REVIEW</span>
+                  </div>
+                  <div class="check-item pending">
+                    <div class="check-name"><span class="check-icon">!</span> Country Restriction Check</div>
+                    <span class="status-chip warning">PENDING</span>
                   </div>
                   <div class="check-item review">
                     <div class="check-name"><span class="check-icon">!</span> Risk Review</div>
-                    <span class="status-chip danger">PENDING</span>
+                    <span class="status-chip danger">REVIEW</span>
                   </div>
                 </div>
 
@@ -1119,37 +1333,32 @@
           <section id="match-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Match</div>
+                <div class="section-title">MATCH</div>
               </div>
-
               <div class="partner-card">
                 <div class="partner-top">
                   <div class="profile-head">
                     <div class="avatar">A</div>
                     <div>
                       <div class="profile-name">Aulia Rahman</div>
-                      <div class="muted" style="font-size:0.7rem;">Traveler Delivery</div>
+                      <div class="muted" style="font-size:0.72rem;">Traveler Delivery</div>
                     </div>
                   </div>
                   <span class="status-chip success">Trust Verified</span>
                 </div>
-
                 <div class="mini-meta">
                   <span>Jakarta → Bali</span>
                   <span>Rating 4.9</span>
                 </div>
-
                 <div class="rating-row">
                   <span>ETA: 18 hours</span>
                   <span>Route: Direct</span>
                 </div>
-
                 <div class="price-row">
                   <div class="amount-box"><small>Delivery Fee</small><strong>Rp 520.000</strong></div>
                   <div class="amount-box"><small>Protection</small><strong>Rp 85.000</strong></div>
                 </div>
-
-                <button class="primary-btn select-partner-btn" type="button" data-partner="Aulia Rahman">SELECT PARTNER</button>
+                <button class="primary-btn" type="button" data-next="approved">SELECT PARTNER</button>
               </div>
 
               <div class="partner-card">
@@ -1158,58 +1367,24 @@
                     <div class="avatar">N</div>
                     <div>
                       <div class="profile-name">Nabila Putri</div>
-                      <div class="muted" style="font-size:0.7rem;">Cargo Partner</div>
+                      <div class="muted" style="font-size:0.72rem;">Cargo Partner</div>
                     </div>
                   </div>
                   <span class="status-chip primary">High Trust</span>
                 </div>
-
                 <div class="mini-meta">
                   <span>Jakarta → Denpasar</span>
                   <span>Rating 4.8</span>
                 </div>
-
                 <div class="rating-row">
                   <span>ETA: 21 hours</span>
                   <span>Route: Priority</span>
                 </div>
-
                 <div class="price-row">
                   <div class="amount-box"><small>Delivery Fee</small><strong>Rp 610.000</strong></div>
                   <div class="amount-box"><small>Protection</small><strong>Rp 95.000</strong></div>
                 </div>
-
-                <button class="primary-btn select-partner-btn" type="button" data-partner="Nabila Putri">SELECT PARTNER</button>
-              </div>
-
-              <div class="partner-card">
-                <div class="partner-top">
-                  <div class="profile-head">
-                    <div class="avatar">R</div>
-                    <div>
-                      <div class="profile-name">Rizky Aditya</div>
-                      <div class="muted" style="font-size:0.7rem;">Request Pickup</div>
-                    </div>
-                  </div>
-                  <span class="status-chip warning">Fastest</span>
-                </div>
-
-                <div class="mini-meta">
-                  <span>Jakarta → Bali</span>
-                  <span>Rating 4.7</span>
-                </div>
-
-                <div class="rating-row">
-                  <span>ETA: 14 hours</span>
-                  <span>Route: Express</span>
-                </div>
-
-                <div class="price-row">
-                  <div class="amount-box"><small>Delivery Fee</small><strong>Rp 680.000</strong></div>
-                  <div class="amount-box"><small>Protection</small><strong>Rp 110.000</strong></div>
-                </div>
-
-                <button class="primary-btn select-partner-btn" type="button" data-partner="Rizky Aditya">SELECT PARTNER</button>
+                <button class="primary-btn" type="button" data-next="approved">SELECT PARTNER</button>
               </div>
             </div>
           </section>
@@ -1217,7 +1392,7 @@
           <section id="approved-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Approved</div>
+                <div class="section-title">APPROVED</div>
               </div>
               <div class="panel">
                 <div class="partner-top">
@@ -1225,40 +1400,36 @@
                     <div class="avatar">A</div>
                     <div>
                       <div class="profile-name" id="approvedPartnerName">Aulia Rahman</div>
-                      <div class="muted" style="font-size:0.7rem;">Selected partner</div>
+                      <div class="muted" style="font-size:0.72rem;">Selected partner</div>
                     </div>
                   </div>
                   <span class="status-chip success">Offer Selected</span>
                 </div>
 
                 <div class="detail-card">
-                  <div class="detail-item"><span>CHELEA ID</span><strong id="detailId">CHL-2026-000128</strong></div>
-                  <div class="detail-item"><span>Service Type</span><strong id="detailService">Jastip / Personal Delivery</strong></div>
+                  <div class="detail-item"><span>CHELEA ID</span><strong>CHEL-2026-000128</strong></div>
+                  <div class="detail-item"><span>Service Type</span><strong>Jastip / Personal Delivery</strong></div>
                   <div class="detail-item"><span>Sender</span><strong>Alex Johnson</strong></div>
-                  <div class="detail-item"><span>Traveler / Delivery Partner</span><strong id="detailPartner">Aulia Rahman</strong></div>
+                  <div class="detail-item"><span>Traveler / Partner</span><strong>Aulia Rahman</strong></div>
                   <div class="detail-item"><span>Recipient</span><strong>Bali Customer</strong></div>
                   <div class="detail-item"><span>Item</span><strong>Skincare product package</strong></div>
-                  <div class="detail-item"><span>Item Category</span><strong>Beauty & Fashion</strong></div>
                   <div class="detail-item"><span>Item Value</span><strong>Rp 2.500.000</strong></div>
                   <div class="detail-item"><span>Weight</span><strong>3.5 kg</strong></div>
                   <div class="detail-item"><span>Origin</span><strong>Jakarta</strong></div>
                   <div class="detail-item"><span>Destination</span><strong>Bali</strong></div>
-                  <div class="detail-item"><span>Pickup Date</span><strong>2026-10-24</strong></div>
-                  <div class="detail-item"><span>Estimated Delivery</span><strong>2026-10-25</strong></div>
                   <div class="detail-item"><span>Current Status</span><strong>APPROVED</strong></div>
                 </div>
 
                 <div class="price-summary" style="margin-top:18px;">
-                  <div class="price-line"><span>Route</span><strong id="approvedRoute">Jakarta → Bali</strong></div>
-                  <div class="price-line"><span>ETA</span><strong id="approvedEta">18 hours</strong></div>
-                  <div class="price-line"><span>Total Fee</span><strong id="approvedFee">Rp 520.000</strong></div>
-                  <div class="price-line"><span>Protection Fee</span><strong id="approvedProtection">Rp 85.000</strong></div>
-                  <div class="price-line"><span>Estimated Total</span><strong id="approvedTotal">Rp 605.000</strong></div>
+                  <div class="price-line"><span>Route</span><strong>Jakarta → Bali</strong></div>
+                  <div class="price-line"><span>ETA</span><strong>18 hours</strong></div>
+                  <div class="price-line"><span>Total Fee</span><strong>Rp 605.000</strong></div>
+                  <div class="price-line"><span>Protection</span><strong>Rp 85.000</strong></div>
                 </div>
 
                 <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="primary-btn" id="approveOfferBtn" type="button" style="flex:1;">APPROVE OFFER</button>
-                  <button class="ghost-btn" type="button" id="transactionDetailBtn" style="flex:1;">TRANSACTION DETAIL</button>
+                  <button class="primary-btn" type="button" data-next="agreement" style="flex:1;">APPROVE OFFER</button>
+                  <button class="ghost-btn" type="button" data-go="home">TRANSACTION DETAILS</button>
                 </div>
               </div>
             </div>
@@ -1267,14 +1438,14 @@
           <section id="agreement-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Agreement</div>
+                <div class="section-title">AGREEMENT</div>
               </div>
               <div class="panel">
                 <div class="agreement-box">
                   <h4>DIGITAL AGREEMENT</h4>
                   <ul>
                     <li>Sender: Alex / Jakarta</li>
-                    <li>Traveler/Partner: <span id="agreementPartner">Aulia Rahman</span></li>
+                    <li>Traveler/Partner: Aulia Rahman</li>
                     <li>Recipient: Bali Customer</li>
                     <li>Item: Skincare product package</li>
                     <li>Route: Jakarta → Bali</li>
@@ -1294,8 +1465,8 @@
                 <div class="demo-note">Prototype Demo</div>
 
                 <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="primary-btn" id="acceptAgreementBtn" type="button" style="flex:1;">ACCEPT AGREEMENT</button>
-                  <button class="ghost-btn" type="button" id="viewAgreementBtn" style="flex:1;">VIEW AGREEMENT</button>
+                  <button class="primary-btn" type="button" data-next="escrow" style="flex:1;">ACCEPT AGREEMENT</button>
+                  <button class="ghost-btn" type="button" data-go="home" style="flex:1;">VIEW AGREEMENT</button>
                 </div>
               </div>
             </div>
@@ -1304,7 +1475,7 @@
           <section id="escrow-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Escrow</div>
+                <div class="section-title">ESCROW</div>
               </div>
               <div class="panel">
                 <div class="price-summary">
@@ -1324,8 +1495,8 @@
                 <div class="demo-note" style="margin-top:18px;">Funds are simulated. No real payment is processed.</div>
 
                 <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-                  <button class="primary-btn" id="confirmEscrowBtn" type="button" style="flex:1;">CONFIRM ESCROW</button>
-                  <button class="ghost-btn" type="button" id="viewProtectionBtn" style="flex:1;">VIEW PROTECTION</button>
+                  <button class="primary-btn" type="button" data-next="pickup" style="flex:1;">CONFIRM ESCROW</button>
+                  <button class="ghost-btn" type="button" data-go="home" style="flex:1;">VIEW PROTECTION</button>
                 </div>
               </div>
             </div>
@@ -1334,7 +1505,7 @@
           <section id="pickup-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Pickup</div>
+                <div class="section-title">PICKUP</div>
               </div>
               <div class="panel">
                 <div class="price-summary">
@@ -1342,12 +1513,6 @@
                   <div class="price-line"><span>Scheduled Time</span><strong>Today, 16:30</strong></div>
                   <div class="price-line"><span>Pickup Status</span><strong class="status-chip success">CONFIRMED</strong></div>
                   <div class="price-line"><span>Proof of Pickup</span><strong>Photo + Timestamp</strong></div>
-                </div>
-
-                <div class="detail-card">
-                  <div class="detail-item"><span>Item checklist</span><strong>Verified</strong></div>
-                  <div class="detail-item"><span>Verification status</span><strong>VERIFIED — DEMO</strong></div>
-                  <div class="detail-item"><span>Timestamp</span><strong>2026-10-24 16:32</strong></div>
                 </div>
 
                 <div class="agreement-box" style="margin-top:18px;">
@@ -1360,8 +1525,9 @@
                   </ul>
                 </div>
 
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" id="confirmPickupBtn" type="button" style="width:100%;">CONFIRM PICKUP</button>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" type="button" data-next="tracking" style="flex:1;">CONFIRM PICKUP</button>
+                  <button class="ghost-btn" type="button" data-go="home" style="flex:1;">VIEW RECEIPT</button>
                 </div>
               </div>
             </div>
@@ -1370,7 +1536,7 @@
           <section id="tracking-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Delivery / Tracking</div>
+                <div class="section-title">DELIVERY / TRACKING</div>
               </div>
               <div class="panel">
                 <div class="summary-grid">
@@ -1403,126 +1569,32 @@
                 <div class="detail-card">
                   <div class="detail-item"><span>Current Location</span><strong>Bandung Stopover</strong></div>
                   <div class="detail-item"><span>Estimated Arrival</span><strong>2026-10-25 08:15</strong></div>
-                  <div class="detail-item"><span>Delivery Timeline</span><strong>REQUEST → DELIVERY</strong></div>
+                  <div class="detail-item"><span>Delivery Timeline</span><strong>REQUEST → VERIFY → MATCH → APPROVED → AGREEMENT → ESCROW → PICKUP → DELIVERY → HANDOVER → COMPLETED</strong></div>
                 </div>
 
                 <div class="security-box" style="margin-top:18px;">
-                  <div class="section-title" style="color: var(--muted); margin-bottom:12px;">DEMO SECURITY SCORE</div>
+                  <div class="section-title" style="margin-bottom:8px;">DEMO SECURITY SCORE</div>
                   <div class="security-score">92 <span style="font-size:0.9rem; color:var(--muted);">/ 100</span></div>
                   <div class="meter-box"><div class="meter-fill"></div></div>
-                  <div class="score-grid">
-                    <div class="score-box"><small>Identity Verification</small><strong>92%</strong></div>
-                    <div class="score-box"><small>Item Verification</small><strong>94%</strong></div>
-                    <div class="score-box"><small>Route Check</small><strong>90%</strong></div>
-                    <div class="score-box"><small>Country Restriction Check</small><strong>89%</strong></div>
-                    <div class="score-box"><small>Handover Verification</small><strong>93%</strong></div>
-                  </div>
-                  <div class="status-row">
-                    <span class="badge primary">Verification</span>
-                    <span class="badge success">Protection</span>
-                    <span class="badge warning">Tracking</span>
-                  </div>
                 </div>
 
-                <div class="timeline-card">
-                  <div class="section-title" style="margin-bottom:10px;">Transaction Timeline</div>
-                  <div class="timeline-list" id="timelineList">
-                    <div class="timeline-row active"><span class="dot">1</span><div><strong>REQUEST</strong><div class="muted" style="font-size:0.7rem;">Submitted</div></div></div>
-                    <div class="timeline-row"><span class="dot">2</span><div><strong>VERIFY</strong><div class="muted" style="font-size:0.7rem;">Checked</div></div></div>
-                    <div class="timeline-row"><span class="dot">3</span><div><strong>MATCH</strong><div class="muted" style="font-size:0.7rem;">Partner selected</div></div></div>
-                    <div class="timeline-row"><span class="dot">4</span><div><strong>APPROVED</strong><div class="muted" style="font-size:0.7rem;">Offer accepted</div></div></div>
-                    <div class="timeline-row"><span class="dot">5</span><div><strong>AGREEMENT</strong><div class="muted" style="font-size:0.7rem;">Signed</div></div></div>
-                    <div class="timeline-row"><span class="dot">6</span><div><strong>ESCROW</strong><div class="muted" style="font-size:0.7rem;">Locked</div></div></div>
-                    <div class="timeline-row"><span class="dot">7</span><div><strong>PICKUP</strong><div class="muted" style="font-size:0.7rem;">Confirmed</div></div></div>
-                    <div class="timeline-row"><span class="dot">8</span><div><strong>DELIVERY</strong><div class="muted" style="font-size:0.7rem;">In progress</div></div></div>
-                    <div class="timeline-row"><span class="dot">9</span><div><strong>HANDOVER</strong><div class="muted" style="font-size:0.7rem;">Pending</div></div></div>
-                    <div class="timeline-row"><span class="dot">10</span><div><strong>COMPLETED</strong><div class="muted" style="font-size:0.7rem;">Next</div></div></div>
-                  </div>
+                <div class="score-grid">
+                  <div class="score-box"><small>Identity Verification</small><strong>92%</strong></div>
+                  <div class="score-box"><small>Item Verification</small><strong>94%</strong></div>
+                  <div class="score-box"><small>Route Check</small><strong>90%</strong></div>
+                  <div class="score-box"><small>Country Restriction</small><strong>89%</strong></div>
+                  <div class="score-box"><small>Handover Verification</small><strong>93%</strong></div>
                 </div>
 
-                <div style="margin-top:18px; display:flex; gap:10px;">
-                  <button class="primary-btn" id="updateStatusBtn" type="button" style="flex:1;">UPDATE DEMO STATUS</button>
-                  <button class="ghost-btn" type="button" data-go="handover" style="flex:1;">HANDOVER</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="handover-screen" class="screen">
-            <div class="section-block">
-              <div class="section-header">
-                <div class="section-title">Handover</div>
-              </div>
-              <div class="panel">
-                <div class="agreement-box">
-                  <h4>PROOF OF HANDOVER</h4>
-                  <ul>
-                    <li>Recipient: Nia Wibowo</li>
-                    <li>Delivery location: Bali Central Drop Point</li>
-                    <li>Timestamp: 2026-10-25 08:10</li>
-                    <li>OTP DEMO: 482109</li>
-                    <li>Photo Proof DEMO: Captured</li>
-                    <li>Location Verification DEMO: Confirmed</li>
-                    <li>Status: PENDING / VERIFIED</li>
-                  </ul>
+                <div class="status-row">
+                  <span class="badge primary">Verification</span>
+                  <span class="badge success">Protection</span>
+                  <span class="badge warning">Tracking</span>
                 </div>
 
-                <div class="detail-card">
-                  <div class="detail-item"><span>Recipient</span><strong>Nia Wibowo</strong></div>
-                  <div class="detail-item"><span>Delivery Location</span><strong>Bali Central Drop Point</strong></div>
-                  <div class="detail-item"><span>Timestamp</span><strong>2026-10-25 08:10</strong></div>
-                  <div class="detail-item"><span>OTP DEMO</span><strong>482109</strong></div>
-                  <div class="detail-item"><span>Photo Proof DEMO</span><strong>Captured</strong></div>
-                  <div class="detail-item"><span>Location Verification DEMO</span><strong>Confirmed</strong></div>
-                </div>
-
-                <div class="demo-note" style="margin-top:18px;">Prototype and Demo Only</div>
-
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" id="confirmHandoverBtn" type="button" style="width:100%;">CONFIRM HANDOVER</button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="completed-screen" class="screen">
-            <div class="section-block">
-              <div class="section-header">
-                <div class="section-title">Completed</div>
-              </div>
-              <div class="panel">
-                <div class="checklist">
-                  <div class="check-item">
-                    <div class="check-name"><span class="check-icon">✓</span> Delivery Completed</div>
-                    <span class="status-chip success">COMPLETED</span>
-                  </div>
-                  <div class="check-item">
-                    <div class="check-name"><span class="check-icon">✓</span> Handover Verified</div>
-                    <span class="status-chip success">VERIFIED</span>
-                  </div>
-                  <div class="check-item">
-                    <div class="check-name"><span class="check-icon">✓</span> Transaction Completed</div>
-                    <span class="status-chip success">CLOSED</span>
-                  </div>
-                </div>
-
-                <div class="receipt-box" style="margin-top:18px;">
-                  <div class="section-title" style="margin-bottom:10px; color: var(--muted);">CHELEA TRANSACTION RECEIPT</div>
-                  <div class="detail-item"><span>CHELEA ID</span><strong>CHL-2026-000128</strong></div>
-                  <div class="detail-item"><span>Service</span><strong>Jastip / Personal Delivery</strong></div>
-                  <div class="detail-item"><span>Route</span><strong>Jakarta → Bali</strong></div>
-                  <div class="detail-item"><span>Item</span><strong>Skincare product package</strong></div>
-                  <div class="detail-item"><span>Total Fee</span><strong>Rp 605.000</strong></div>
-                  <div class="detail-item"><span>Protection</span><strong>Rp 85.000</strong></div>
-                  <div class="detail-item"><span>Status</span><strong>COMPLETED</strong></div>
-                  <div class="detail-item"><span>Completion Date</span><strong>2026-10-25</strong></div>
-                  <div class="detail-item"><span>Escrow</span><strong>ESCROW RELEASED — DEMO</strong></div>
-                </div>
-
-                <div style="margin-top:18px; display:flex; flex-wrap:wrap; gap:10px;">
-                  <button class="primary-btn" type="button" id="viewReceiptBtn" style="flex:1;">VIEW RECEIPT</button>
-                  <button class="ghost-btn" type="button" id="downloadReceiptBtn" style="flex:1;">DOWNLOAD RECEIPT — DEMO</button>
-                  <button class="ghost-btn" type="button" id="shareReceiptBtn" style="flex:1;">SHARE RECEIPT — DEMO</button>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" type="button" data-next="home" style="flex:1;">HANDOVER</button>
+                  <button class="ghost-btn" type="button" data-go="control" style="flex:1;">CONTROL</button>
                 </div>
               </div>
             </div>
@@ -1531,40 +1603,35 @@
           <section id="orders-screen" class="screen">
             <div class="section-block">
               <div class="section-header">
-                <div class="section-title">Transaction History</div>
+                <div class="section-title">Orders</div>
               </div>
-
               <div class="panel">
-                <div class="mini-grid">
-                  <div class="summary-box"><strong>Active</strong><div class="num-value">02</div><span>In progress</span></div>
-                  <div class="summary-box"><strong>Completed</strong><div class="num-value">07</div><span>Finished</span></div>
-                  <div class="summary-box"><strong>Cancelled</strong><div class="num-value">01</div><span>Closed</span></div>
-                </div>
-              </div>
-
-              <div class="timeline-card">
                 <div class="transaction-list">
                   <div class="transaction-item">
                     <div>
                       <strong>CHEL-2048</strong>
-                      <span>Jastip / Jakarta → Bali</span>
-                    </div>
-                    <span class="badge primary">Active</span>
-                  </div>
-                  <div class="transaction-item">
-                    <div>
-                      <strong>CHEL-1981</strong>
-                      <span>Traveler / Singapore → Jakarta</span>
+                      <span>Jastip • Jakarta → Bali</span>
                     </div>
                     <span class="badge success">Completed</span>
                   </div>
                   <div class="transaction-item">
                     <div>
-                      <strong>CHEL-1875</strong>
-                      <span>Pickup / Bandung → Surabaya</span>
+                      <strong>CHEL-1981</strong>
+                      <span>Traveler • Singapore → Jakarta</span>
                     </div>
-                    <span class="badge warning">Cancelled</span>
+                    <span class="badge primary">Active</span>
                   </div>
+                  <div class="transaction-item">
+                    <div>
+                      <strong>CHEL-1875</strong>
+                      <span>Pickup • Bandung → Surabaya</span>
+                    </div>
+                    <span class="badge warning">Review</span>
+                  </div>
+                </div>
+                <div style="margin-top:18px; display:flex; gap:10px;">
+                  <button class="primary-btn" type="button" data-go="receipt">View Receipt</button>
+                  <button class="ghost-btn" type="button" data-go="control">Control Center</button>
                 </div>
               </div>
             </div>
@@ -1576,340 +1643,626 @@
                 <div class="section-title">Profile</div>
               </div>
               <div class="panel">
-                <div class="profile-head" style="margin-bottom:18px;">
-                  <div class="avatar" style="width:52px;height:52px;">A</div>
+                <div class="profile-head" style="margin-bottom:16px;">
+                  <div class="avatar">A</div>
                   <div>
                     <div class="profile-name">Alex Johnson</div>
-                    <div class="muted" style="font-size:0.72rem;">Verified member</div>
+                    <div class="muted" style="font-size:0.72rem;">Member • Verified</div>
                   </div>
                 </div>
-
-                <div class="price-summary">
-                  <div class="price-line"><span>Member Tier</span><strong>Gold</strong></div>
-                  <div class="price-line"><span>Delivery Score</span><strong>4.9</strong></div>
-                  <div class="price-line"><span>Trust Level</span><strong>High</strong></div>
-                  <div class="price-line"><span>Demo Mode</span><strong>Enabled</strong></div>
+                <div class="detail-card">
+                  <div class="detail-item"><span>Member ID</span><strong>CHEL-USER-028</strong></div>
+                  <div class="detail-item"><span>Protection</span><strong>ACTIVE — DEMO</strong></div>
+                  <div class="detail-item"><span>Risk Tier</span><strong>LOW RISK</strong></div>
+                  <div class="detail-item"><span>Country</span><strong>Indonesia</strong></div>
+                </div>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" type="button" data-go="control">CONTROL</button>
+                  <button class="ghost-btn" type="button" data-go="home">HOME</button>
                 </div>
               </div>
             </div>
           </section>
-        </div>
 
-        <nav class="nav-bar" aria-label="Bottom navigation">
-          <button class="nav-item active" type="button" data-screen="home"><span class="icon">⌂</span>HOME</button>
-          <button class="nav-item" type="button" data-screen="request"><span class="icon">📦</span>REQUEST</button>
-          <button class="nav-item" type="button" data-screen="tracking"><span class="icon">📍</span>TRACKING</button>
-          <button class="nav-item" type="button" data-screen="orders"><span class="icon">🧾</span>ORDERS</button>
-          <button class="nav-item" type="button" data-screen="profile"><span class="icon">👤</span>PROFILE</button>
-        </nav>
+          <section id="control-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">CHELEA CONTROL CENTER</div>
+              </div>
+
+              <div class="panel">
+                <div class="inline-label">DEMO OPERATIONS DASHBOARD</div>
+                <div class="control-grid" style="margin-top:12px;">
+                  <div class="control-card">
+                    <div class="inline-label">Active Transactions</div>
+                    <div class="metric-big">18</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Pending Verification</div>
+                    <div class="metric-big">06</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">In Transit</div>
+                    <div class="metric-big">09</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Completed Today</div>
+                    <div class="metric-big">27</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Risk Review</div>
+                    <div class="metric-big">03</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Escrow Locked</div>
+                    <div class="metric-big">Rp 2.4M</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Protection Active</div>
+                    <div class="metric-big">94%</div>
+                  </div>
+                  <div class="control-card">
+                    <div class="inline-label">Compliance</div>
+                    <div class="metric-big">LOW</div>
+                  </div>
+                </div>
+                <div class="chip-row">
+                  <span class="demo-chip">BUSINESS CONTROL</span>
+                  <span class="demo-chip">RISK</span>
+                  <span class="demo-chip">COMPLIANCE</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">TRANSACTION CONTROL</div>
+              </div>
+              <div class="status-panel">
+                <div class="detail-item"><span>CHELEA ID</span><strong>CHEL-2026-000128</strong></div>
+                <div class="detail-item"><span>Customer</span><strong>Alex Johnson</strong></div>
+                <div class="detail-item"><span>Service</span><strong>Jastip / Personal Delivery</strong></div>
+                <div class="detail-item"><span>Route</span><strong>Jakarta → Bali</strong></div>
+                <div class="detail-item"><span>Partner</span><strong>Aulia Rahman</strong></div>
+                <div class="detail-item"><span>Current Status</span><strong>APPROVED</strong></div>
+                <div class="detail-item"><span>Risk Level</span><strong><span class="risk-badge low">LOW RISK</span></strong></div>
+                <div class="detail-item"><span>Protection Status</span><strong>ACTIVE — DEMO</strong></div>
+                <div class="detail-item"><span>Payment Status</span><strong>ESCROW LOCKED — DEMO</strong></div>
+                <div class="detail-item"><span>Last Update</span><strong>2 mins ago</strong></div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">RISK &amp; COMPLIANCE</div>
+              </div>
+              <div class="risk-card">
+                <div class="risk-summary">
+                  <strong>RISK STATUS: LOW — DEMO</strong>
+                  <div class="risk-bar"><span style="width: 72%"></span></div>
+                  <span>DEMO RISK ASSESSMENT — NOT A REAL COMPLIANCE DECISION</span>
+                </div>
+                <div class="checklist" style="margin-top:16px;">
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Identity Verification</div><span class="status-chip success">PASSED</span></div>
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Item Verification</div><span class="status-chip success">PASSED</span></div>
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Route Verification</div><span class="status-chip success">PASSED</span></div>
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Country Restriction Check</div><span class="status-chip success">PASSED</span></div>
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Partner Verification</div><span class="status-chip success">PASSED</span></div>
+                  <div class="check-item"><div class="check-name"><span class="check-icon">✓</span> Handover Verification</div><span class="status-chip warning">REVIEW</span></div>
+                </div>
+                <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="risk-toggle" type="button" data-risk="low">LOW RISK</button>
+                  <button class="risk-toggle" type="button" data-risk="medium">MEDIUM RISK</button>
+                  <button class="risk-toggle" type="button" data-risk="high">HIGH RISK</button>
+                  <button class="risk-toggle" type="button" data-risk="review">REVIEW REQUIRED</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">ROUTE &amp; COUNTRY CONTROL</div>
+              </div>
+              <div class="risk-card">
+                <div class="detail-item"><span>Origin</span><strong>Jakarta</strong></div>
+                <div class="detail-item"><span>Destination</span><strong>Singapore</strong></div>
+                <div class="detail-item"><span>Transit Route</span><strong>Jakarta → Singapore</strong></div>
+                <div class="detail-item"><span>Country Check</span><strong>PASSED — DEMO</strong></div>
+                <div class="detail-item"><span>Restricted Item Check</span><strong>PASSED — DEMO</strong></div>
+                <div class="detail-item"><span>Route Risk</span><strong>LOW — DEMO</strong></div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">PARTNER MANAGEMENT</div>
+              </div>
+              <div class="partner-grid">
+                <div class="partner-card">
+                  <div class="partner-top">
+                    <div class="profile-head">
+                      <div class="avatar">T</div>
+                      <div>
+                        <div class="profile-name">Traveler Partner</div>
+                        <div class="muted" style="font-size:0.72rem;">Partner Type</div>
+                      </div>
+                    </div>
+                    <span class="status-chip success">VERIFIED — DEMO</span>
+                  </div>
+                  <div class="detail-item"><span>Rating</span><strong>4.9</strong></div>
+                  <div class="detail-item"><span>Verification Status</span><strong>VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Active Transactions</span><strong>12</strong></div>
+                  <div class="detail-item"><span>Risk Level</span><strong>LOW</strong></div>
+                  <div class="detail-item"><span>Service Area</span><strong>Jakarta / Bali</strong></div>
+                </div>
+
+                <div class="partner-card">
+                  <div class="partner-top">
+                    <div class="profile-head">
+                      <div class="avatar">C</div>
+                      <div>
+                        <div class="profile-name">Cargo Partner</div>
+                        <div class="muted" style="font-size:0.72rem;">Partner Type</div>
+                      </div>
+                    </div>
+                    <span class="status-chip warning">UNDER REVIEW — DEMO</span>
+                  </div>
+                  <div class="detail-item"><span>Rating</span><strong>4.7</strong></div>
+                  <div class="detail-item"><span>Verification Status</span><strong>UNDER REVIEW — DEMO</strong></div>
+                  <div class="detail-item"><span>Active Transactions</span><strong>07</strong></div>
+                  <div class="detail-item"><span>Risk Level</span><strong>MEDIUM</strong></div>
+                  <div class="detail-item"><span>Service Area</span><strong>Bandung / Surabaya</strong></div>
+                </div>
+
+                <div class="partner-card">
+                  <div class="partner-top">
+                    <div class="profile-head">
+                      <div class="avatar">P</div>
+                      <div>
+                        <div class="profile-name">Pickup Partner</div>
+                        <div class="muted" style="font-size:0.72rem;">Partner Type</div>
+                      </div>
+                    </div>
+                    <span class="status-chip success">VERIFIED — DEMO</span>
+                  </div>
+                  <div class="detail-item"><span>Rating</span><strong>4.8</strong></div>
+                  <div class="detail-item"><span>Verification Status</span><strong>VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Active Transactions</span><strong>09</strong></div>
+                  <div class="detail-item"><span>Risk Level</span><strong>LOW</strong></div>
+                  <div class="detail-item"><span>Service Area</span><strong>Jakarta / Bandung</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">ESCROW CONTROL</div>
+              </div>
+              <div class="risk-card">
+                <div class="detail-item"><span>Total Locked</span><strong>Rp 2.4M</strong></div>
+                <div class="detail-item"><span>Pending Release</span><strong>Rp 1.1M</strong></div>
+                <div class="detail-item"><span>Released</span><strong>Rp 0.8M</strong></div>
+                <div class="detail-item"><span>Disputed</span><strong>Rp 0.5M</strong></div>
+                <div class="demo-note">ESCROW SIMULATION — DEMO</div>
+                <div style="margin-top:18px; display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="primary-btn" type="button" data-escrow="view">VIEW ESCROW</button>
+                  <button class="secondary-btn" type="button" data-escrow="release">RELEASE — DEMO</button>
+                  <button class="ghost-btn" type="button" data-escrow="hold">HOLD — DEMO</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">PROTECTION CONTROL</div>
+              </div>
+              <div class="risk-card">
+                <div class="detail-item"><span>Active Protection</span><strong>ACTIVE — DEMO</strong></div>
+                <div class="detail-item"><span>Coverage Value</span><strong>Rp 3.2M</strong></div>
+                <div class="detail-item"><span>Protection Fee</span><strong>Rp 85.000</strong></div>
+                <div class="detail-item"><span>Claim Status</span><strong>NO CLAIM — DEMO</strong></div>
+                <div style="margin-top:18px; display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="primary-btn" type="button" data-protection="view">VIEW PROTECTION</button>
+                  <button class="secondary-btn" type="button" data-protection="claim">VIEW CLAIM — DEMO</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">INCIDENT &amp; REVIEW CENTER</div>
+              </div>
+              <div class="review-list">
+                <div class="status-panel alert-item">
+                  <div>
+                    <strong>CHEL-2026-000128</strong>
+                    <span>No Incident</span>
+                  </div>
+                  <span class="priority-badge low">LOW</span>
+                </div>
+                <div class="status-panel alert-item">
+                  <div>
+                    <strong>CHEL-2026-000134</strong>
+                    <span>Verification Review</span>
+                  </div>
+                  <span class="priority-badge medium">MEDIUM</span>
+                </div>
+                <div class="status-panel alert-item">
+                  <div>
+                    <strong>CHEL-2026-000139</strong>
+                    <span>Delivery Delay</span>
+                  </div>
+                  <span class="priority-badge high">HIGH</span>
+                </div>
+                <div class="status-panel alert-item">
+                  <div>
+                    <strong>CHEL-2026-000147</strong>
+                    <span>Handover Review</span>
+                  </div>
+                  <span class="priority-badge medium">MEDIUM</span>
+                </div>
+              </div>
+              <div style="margin-top:18px; display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="primary-btn" type="button" data-review="view">VIEW CASE</button>
+                <button class="ghost-btn" type="button" data-review="reviewed">MARK REVIEWED — DEMO</button>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">TRANSACTION AUDIT TRAIL</div>
+              </div>
+              <div class="status-panel">
+                <div class="audit-row">
+                  <strong>09:00</strong>
+                  <span>Ops</span>
+                  <span>Request Created</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:12</strong>
+                  <span>Ops</span>
+                  <span>Identity Verified</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:18</strong>
+                  <span>Ops</span>
+                  <span>Item Verified</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:24</strong>
+                  <span>Ops</span>
+                  <span>Partner Matched</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:31</strong>
+                  <span>Ops</span>
+                  <span>Offer Approved</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:42</strong>
+                  <span>Ops</span>
+                  <span>Agreement Signed</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>09:55</strong>
+                  <span>Ops</span>
+                  <span>Escrow Locked</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>16:32</strong>
+                  <span>Pickup</span>
+                  <span>Pickup Verified</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>08:15</strong>
+                  <span>Delivery</span>
+                  <span>Delivery Started</span>
+                  <span class="status-chip warning">REVIEW</span>
+                </div>
+                <div class="audit-row">
+                  <strong>10:10</strong>
+                  <span>Ops</span>
+                  <span>Handover Verified</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+                <div class="audit-row">
+                  <strong>10:45</strong>
+                  <span>Ops</span>
+                  <span>Transaction Completed</span>
+                  <span class="status-chip success">PASSED</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">BUSINESS ALERTS</div>
+              </div>
+              <div class="status-panel">
+                <div class="alert-item" style="margin-bottom:10px;">
+                  <div>
+                    <strong>Verification completed</strong>
+                    <span>Identity and item checks passed</span>
+                  </div>
+                  <span class="severity-badge info">INFO</span>
+                </div>
+                <div class="alert-item" style="margin-bottom:10px;">
+                  <div>
+                    <strong>New transaction received</strong>
+                    <span>Order assigned to team</span>
+                  </div>
+                  <span class="severity-badge warning">NOTICE</span>
+                </div>
+                <div class="alert-item" style="margin-bottom:10px;">
+                  <div>
+                    <strong>Delivery approaching</strong>
+                    <span>ETA in 2 hours</span>
+                  </div>
+                  <span class="severity-badge low">LOW</span>
+                </div>
+                <div class="alert-item" style="margin-bottom:10px;">
+                  <div>
+                    <strong>Handover pending</strong>
+                    <span>Recipient confirmation needed</span>
+                  </div>
+                  <span class="severity-badge warning">MID</span>
+                </div>
+                <div class="alert-item" style="margin-bottom:10px;">
+                  <div>
+                    <strong>Risk review required</strong>
+                    <span>Country check under review</span>
+                  </div>
+                  <span class="severity-badge critical">HIGH</span>
+                </div>
+                <div class="alert-item">
+                  <div>
+                    <strong>Transaction completed</strong>
+                    <span>Final handover confirmed</span>
+                  </div>
+                  <span class="severity-badge info">INFO</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">ADMIN ACTIONS</div>
+              </div>
+              <div class="admin-actions">
+                <button class="control-action" type="button" data-admin="transaction">REVIEW TRANSACTION</button>
+                <button class="control-action" type="button" data-admin="partner">REVIEW PARTNER</button>
+                <button class="control-action" type="button" data-admin="risk">REVIEW RISK</button>
+                <button class="control-action" type="button" data-admin="agreement">VIEW AGREEMENT</button>
+                <button class="control-action" type="button" data-admin="receipt">VIEW RECEIPT</button>
+                <button class="control-action" type="button" data-admin="audit">VIEW AUDIT TRAIL</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="receipt-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Transaction Receipt</div>
+              </div>
+              <div class="receipt-box">
+                <div class="security-box">
+                  <div class="section-title" style="margin-bottom:8px;">CHELEA Transaction ID</div>
+                  <div class="security-score">CHEL-2026-000128</div>
+                  <div class="meter-box"><div class="meter-fill"></div></div>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-item"><span>Order Detail</span><strong>Jastip / Personal Delivery</strong></div>
+                  <div class="detail-item"><span>Sender</span><strong>Alex Johnson</strong></div>
+                  <div class="detail-item"><span>Recipient</span><strong>Bali Customer</strong></div>
+                  <div class="detail-item"><span>Route</span><strong>Jakarta → Bali</strong></div>
+                  <div class="detail-item"><span>Protection Center</span><strong>ACTIVE — DEMO</strong></div>
+                  <div class="detail-item"><span>Insurance Card</span><strong>STANDARD COVERAGE — DEMO</strong></div>
+                  <div class="detail-item"><span>Digital Agreement</span><strong>SIGNED — DEMO</strong></div>
+                  <div class="detail-item"><span>Proof of Pickup</span><strong>VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Proof of Handover</span><strong>VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Transaction Receipt</span><strong>READY — DEMO</strong></div>
+                </div>
+
+                <div class="score-grid">
+                  <div class="score-box"><small>Security Score</small><strong>92 / 100</strong></div>
+                  <div class="score-box"><small>Risk Score</small><strong>LOW — DEMO</strong></div>
+                  <div class="score-box"><small>Escrow</small><strong>LOCKED — DEMO</strong></div>
+                  <div class="score-box"><small>Insurance</small><strong>ACTIVE — DEMO</strong></div>
+                </div>
+
+                <div class="status-row" style="margin-top:18px;">
+                  <button class="primary-btn" type="button" data-go="home">VIEW RECEIPT</button>
+                  <button class="ghost-btn" type="button">Download Receipt — DEMO</button>
+                </div>
+                <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="secondary-btn" type="button">Share Receipt — DEMO</button>
+                  <button class="ghost-btn" type="button" data-go="control">CONTROL</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <nav class="nav-bar" aria-label="CHELEA mobile navigation">
+            <button class="nav-item active" type="button" data-go="home"><span class="icon">🏠</span>HOME</button>
+            <button class="nav-item" type="button" data-go="request"><span class="icon">📝</span>REQUEST</button>
+            <button class="nav-item" type="button" data-go="tracking"><span class="icon">📍</span>TRACKING</button>
+            <button class="nav-item" type="button" data-go="orders"><span class="icon">📦</span>ORDERS</button>
+            <button class="nav-item" type="button" data-go="profile"><span class="icon">👤</span>PROFILE</button>
+            <button class="nav-item" type="button" data-go="control"><span class="icon">🛡️</span>CONTROL</button>
+          </nav>
+        </div>
       </div>
     </div>
 
-    <div id="demoModal" class="modal" aria-hidden="true">
+    <div class="modal" id="demo-modal" aria-modal="true" role="dialog">
       <div class="modal-card">
         <div class="modal-header">
-          <h3 id="modalTitle">Demo</h3>
-          <button class="close-btn" type="button" onclick="closeModal()">×</button>
+          <strong>DEMO ACTION</strong>
+          <button class="close-btn" type="button" id="closeModalBtn">×</button>
         </div>
-        <div id="modalBody" class="modal-body"></div>
+        <div class="modal-body">
+          <strong>CHELEA V4 — BUSINESS CONTROL PROTOTYPE</strong><br />
+          ALL SECURITY, RISK, ESCROW, INSURANCE AND COMPLIANCE RESULTS ARE DEMO DATA.
+        </div>
       </div>
     </div>
 
     <script>
-      const state = {
-        transactionStep: 0,
-        selectedPartner: 'Aulia Rahman',
-        selectedService: 'Jastip / Personal Delivery'
+      const screenMap = {
+        home: 'home-screen',
+        request: 'request-screen',
+        verify: 'verify-screen',
+        match: 'match-screen',
+        approved: 'approved-screen',
+        agreement: 'agreement-screen',
+        escrow: 'escrow-screen',
+        pickup: 'pickup-screen',
+        tracking: 'tracking-screen',
+        orders: 'orders-screen',
+        profile: 'profile-screen',
+        control: 'control-screen',
+        receipt: 'receipt-screen'
       };
 
-      const screens = [
-        'home-screen',
-        'request-screen',
-        'verify-screen',
-        'match-screen',
-        'approved-screen',
-        'agreement-screen',
-        'escrow-screen',
-        'pickup-screen',
-        'tracking-screen',
-        'handover-screen',
-        'completed-screen',
-        'orders-screen',
-        'profile-screen'
-      ];
+      const state = {
+        escrow: 'LOCKED',
+        protection: 'ACTIVE',
+        risk: 'LOW',
+        review: 'No Incident'
+      };
 
-      function showScreen(name) {
-        screens.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el) el.classList.toggle('active', id === name);
+      function showScreen(screenKey) {
+        Object.keys(screenMap).forEach((key) => {
+          const el = document.getElementById(screenMap[key]);
+          if (el) {
+            el.classList.toggle('active', screenMap[key] === screenMap[screenKey]);
+          }
         });
 
-        document.querySelectorAll('.nav-item').forEach((btn) => {
-          const screenName = btn.dataset.screen;
-          btn.classList.toggle('active', screenName === name.replace('-screen', ''));
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((btn) => {
+          const go = btn.getAttribute('data-go');
+          btn.classList.toggle('active', go === screenKey);
         });
       }
 
-      function setSelectedService(service) {
-        state.selectedService = service;
-        document.querySelectorAll('.service-card').forEach((card) => {
-          card.classList.toggle('active', card.dataset.service === service);
+      document.querySelectorAll('[data-go]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.getAttribute('data-go');
+          if (target && screenMap[target]) {
+            showScreen(target);
+          }
         });
-        const serviceSelect = document.getElementById('serviceType');
-        if (serviceSelect) serviceSelect.value = service;
-      }
+      });
 
-      function createRequest() {
-        const service = document.getElementById('serviceType')?.value || state.selectedService;
-        state.selectedService = service;
-        document.getElementById('detailService').textContent = service;
-        document.getElementById('approvedRoute').textContent = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
-        document.getElementById('agreementPartner').textContent = state.selectedPartner;
-        state.transactionStep = 1;
-        showScreen('verify-screen');
-      }
-
-      function continueToMatch() {
-        state.transactionStep = 2;
-        showScreen('match-screen');
-      }
-
-      function selectPartner(name) {
-        state.selectedPartner = name;
-        document.getElementById('approvedPartnerName').textContent = name;
-        document.getElementById('agreementPartner').textContent = name;
-        document.getElementById('detailPartner').textContent = name;
-
-        const route = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
-        document.getElementById('approvedRoute').textContent = route;
-        document.getElementById('approvedEta').textContent = '18 hours';
-        document.getElementById('approvedFee').textContent = 'Rp 520.000';
-        document.getElementById('approvedProtection').textContent = 'Rp 85.000';
-        document.getElementById('approvedTotal').textContent = 'Rp 605.000';
-
-        state.transactionStep = 3;
-        showScreen('approved-screen');
-      }
-
-      function approveOffer() {
-        state.transactionStep = 4;
-        showScreen('agreement-screen');
-      }
-
-      function acceptAgreement() {
-        state.transactionStep = 5;
-        showScreen('escrow-screen');
-      }
-
-      function confirmEscrow() {
-        state.transactionStep = 6;
-        showScreen('pickup-screen');
-      }
-
-      function confirmPickup() {
-        state.transactionStep = 7;
-        showScreen('tracking-screen');
-        updateTimeline();
-      }
-
-      function updateTimeline() {
-        const rows = document.querySelectorAll('#timelineList .timeline-row');
-        const highlightIndex = Math.min(state.transactionStep, 9);
-        rows.forEach((row, idx) => {
-          row.classList.toggle('active', idx <= highlightIndex - 1);
+      document.querySelectorAll('[data-next]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.getAttribute('data-next');
+          if (target && screenMap[target]) {
+            showScreen(target);
+          }
         });
+      });
 
-        const statusMap = {
-          0: ['REQUEST', 'Submitted'],
-          1: ['VERIFY', 'Checked'],
-          2: ['MATCH', 'Partner selected'],
-          3: ['APPROVED', 'Offer accepted'],
-          4: ['AGREEMENT', 'Signed'],
-          5: ['ESCROW', 'Locked'],
-          6: ['PICKUP', 'Confirmed'],
-          7: ['DELIVERY', 'In progress'],
-          8: ['HANDOVER', 'Pending'],
-          9: ['COMPLETED', 'Closed']
-        };
+      document.querySelectorAll('.service-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          document.querySelectorAll('.service-card').forEach((item) => item.classList.remove('active'));
+          card.classList.add('active');
+        });
+      });
 
-        const current = statusMap[Math.min(state.transactionStep, 9)] || statusMap[7];
-        document.getElementById('trackingStatusText').textContent = current[0] === 'DELIVERY' ? 'In Transit' : current[0];
-        document.getElementById('trackingStatusSub').textContent = current[1];
-      }
+      document.getElementById('createRequestBtn')?.addEventListener('click', () => {
+        showScreen('verify');
+      });
 
-      function updateDemoStatus() {
-        const cycle = ['request-screen', 'verify-screen', 'match-screen', 'approved-screen', 'agreement-screen', 'escrow-screen', 'pickup-screen', 'tracking-screen', 'handover-screen', 'completed-screen'];
-        const currentIndex = cycle.indexOf(document.querySelector('.screen.active')?.id || 'tracking-screen');
-        const nextIndex = Math.min(currentIndex + 1, cycle.length - 1);
-        const next = cycle[nextIndex];
+      document.getElementById('continueMatchBtn')?.addEventListener('click', () => {
+        showScreen('match');
+      });
 
-        if (next === 'handover-screen') {
-          state.transactionStep = 8;
-          showScreen('handover-screen');
-          updateTimeline();
-          return;
+      document.querySelectorAll('.risk-toggle').forEach((button) => {
+        button.addEventListener('click', () => {
+          const level = button.getAttribute('data-risk');
+          const riskLabels = {
+            low: 'LOW RISK',
+            medium: 'MEDIUM RISK',
+            high: 'HIGH RISK',
+            review: 'REVIEW REQUIRED'
+          };
+          const node = document.querySelector('.status-panel .detail-item span .risk-badge');
+          const chips = document.querySelectorAll('.status-panel .risk-badge, .risk-badge');
+          chips.forEach((chip) => {
+            chip.textContent = riskLabels[level] || 'LOW RISK';
+            chip.className = 'risk-badge ' + level;
+          });
+          if (node) {
+            node.textContent = riskLabels[level];
+          }
+          showScreen('control');
+        });
+      });
+
+      document.querySelectorAll('[data-escrow]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const action = button.getAttribute('data-escrow');
+          const statusText = action === 'release' ? 'RELEASED — DEMO' : action === 'hold' ? 'HOLD — DEMO' : 'VIEW ESCROW';
+          const detail = document.querySelectorAll('.detail-item strong');
+          detail.forEach((item) => {
+            if (item.textContent.includes('Escrow Status') || item.textContent.includes('ESCROW')) {
+              item.textContent = statusText;
+            }
+          });
+          if (action !== 'view') {
+            showScreen('control');
+          }
+        });
+      });
+
+      document.querySelectorAll('[data-protection]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const action = button.getAttribute('data-protection');
+          if (action === 'claim') {
+            alert('Protection claim view is a frontend demo only.');
+          }
+          showScreen('control');
+        });
+      });
+
+      document.querySelectorAll('[data-review]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const action = button.getAttribute('data-review');
+          if (action === 'reviewed') {
+            state.review = 'Reviewed — DEMO';
+          }
+          document.getElementById('demo-modal').classList.add('show');
+        });
+      });
+
+      document.querySelectorAll('[data-admin]').forEach((button) => {
+        button.addEventListener('click', () => {
+          document.getElementById('demo-modal').classList.add('show');
+        });
+      });
+
+      document.getElementById('closeModalBtn')?.addEventListener('click', () => {
+        document.getElementById('demo-modal').classList.remove('show');
+      });
+
+      document.getElementById('demo-modal')?.addEventListener('click', (event) => {
+        if (event.target.id === 'demo-modal') {
+          event.target.classList.remove('show');
         }
+      });
 
-        if (next === 'completed-screen') {
-          state.transactionStep = 9;
-          showScreen('completed-screen');
-          updateTimeline();
-          return;
-        }
-
-        showScreen(next);
-      }
-
-      function confirmHandover() {
-        state.transactionStep = 9;
-        showScreen('completed-screen');
-        updateTimeline();
-      }
-
-      function openModal(title, html) {
-        const modal = document.getElementById('demoModal');
-        document.getElementById('modalTitle').textContent = title;
-        document.getElementById('modalBody').innerHTML = html;
-        modal.classList.add('show');
-      }
-
-      function closeModal() {
-        document.getElementById('demoModal').classList.remove('show');
-      }
-
-      function viewProtection() {
-        openModal('CHELEA PROTECTION', `
-          <strong>Insurance Protection:</strong> ACTIVE — DEMO<br>
-          <strong>Escrow Protection:</strong> LOCKED — DEMO<br>
-          <strong>Digital Agreement:</strong> SIGNED — DEMO<br>
-          <strong>Handover Verification:</strong> PENDING<br><br>
-          <strong>Demo coverage:</strong> Item value demo coverage for personal shipment protection.<br>
-          <strong>Insurance provider:</strong> Not connected. Demo only.
-        `);
-      }
-
-      function viewAgreement() {
-        openModal('DIGITAL AGREEMENT', `
-          <strong>Agreement ID:</strong> AGR-CHL-000128<br>
-          <strong>Status:</strong> SIGNED — DEMO<br>
-          <strong>Sender:</strong> Alex Johnson<br>
-          <strong>Partner:</strong> ${state.selectedPartner}<br>
-          <strong>Recipient:</strong> Bali Customer<br>
-          <strong>Item:</strong> Skincare product package<br>
-          <strong>Route:</strong> Jakarta → Bali<br>
-          <strong>Responsibilities:</strong> safe packaging, route compliance, handover verification<br>
-          <strong>Cancellation terms:</strong> valid before pickup confirmation<br>
-          <strong>Handover requirements:</strong> recipient ID + verification photo<br><br>
-          <strong>Electronic Signature / TTE:</strong> DEMO ONLY
-        `);
-      }
-
-      function viewReceipt() {
-        openModal('CHELEA TRANSACTION RECEIPT', `
-          <strong>CHELEA ID:</strong> CHL-2026-000128<br>
-          <strong>Service:</strong> Jastip / Personal Delivery<br>
-          <strong>Route:</strong> Jakarta → Bali<br>
-          <strong>Item:</strong> Skincare product package<br>
-          <strong>Total Fee:</strong> Rp 605.000<br>
-          <strong>Protection:</strong> Rp 85.000<br>
-          <strong>Status:</strong> COMPLETED<br>
-          <strong>Completion Date:</strong> 2026-10-25<br>
-          <strong>Escrow:</strong> ESCROW RELEASED — DEMO
-        `);
-      }
-
-      function downloadReceiptDemo() {
-        openModal('DOWNLOAD RECEIPT — DEMO', '<strong>Demo mode:</strong> No file generation or external download is performed. This is a frontend-only prototype action.');
-      }
-
-      function shareReceiptDemo() {
-        openModal('SHARE RECEIPT — DEMO', '<strong>Demo mode:</strong> Sharing is simulated in the interface only. No external sharing service is connected.');
-      }
-
-      function bindNavigation() {
-        document.querySelectorAll('.nav-item').forEach((button) => {
-          button.addEventListener('click', () => {
-            const screen = button.dataset.screen;
-            if (screen === 'home') showScreen('home-screen');
-            if (screen === 'request') showScreen('request-screen');
-            if (screen === 'tracking') showScreen('tracking-screen');
-            if (screen === 'orders') showScreen('orders-screen');
-            if (screen === 'profile') showScreen('profile-screen');
-          });
-        });
-
-        document.querySelectorAll('[data-go]').forEach((button) => {
-          button.addEventListener('click', () => {
-            const target = button.dataset.go;
-            if (target === 'request') showScreen('request-screen');
-            if (target === 'tracking') showScreen('tracking-screen');
-            if (target === 'handover') showScreen('handover-screen');
-          });
-        });
-      }
-
-      function bindServiceCards() {
-        document.querySelectorAll('.service-card').forEach((card) => {
-          card.addEventListener('click', () => {
-            setSelectedService(card.dataset.service);
-          });
-        });
-      }
-
-      function bindButtons() {
-        document.getElementById('createRequestBtn').addEventListener('click', createRequest);
-        document.getElementById('continueMatchBtn').addEventListener('click', continueToMatch);
-        document.querySelectorAll('.select-partner-btn').forEach((btn) => {
-          btn.addEventListener('click', () => selectPartner(btn.dataset.partner));
-        });
-        document.getElementById('approveOfferBtn').addEventListener('click', approveOffer);
-        document.getElementById('acceptAgreementBtn').addEventListener('click', acceptAgreement);
-        document.getElementById('confirmEscrowBtn').addEventListener('click', confirmEscrow);
-        document.getElementById('confirmPickupBtn').addEventListener('click', confirmPickup);
-        document.getElementById('updateStatusBtn').addEventListener('click', updateDemoStatus);
-        document.getElementById('confirmHandoverBtn').addEventListener('click', confirmHandover);
-        document.getElementById('viewProtectionBtn').addEventListener('click', viewProtection);
-        document.getElementById('viewAgreementBtn').addEventListener('click', viewAgreement);
-        document.getElementById('viewReceiptBtn').addEventListener('click', viewReceipt);
-        document.getElementById('downloadReceiptBtn').addEventListener('click', downloadReceiptDemo);
-        document.getElementById('shareReceiptBtn').addEventListener('click', shareReceiptDemo);
-        document.getElementById('transactionDetailBtn').addEventListener('click', () => {
-          openModal('ORDER DETAIL', `
-            <strong>CHELEA ID:</strong> CHL-2026-000128<br>
-            <strong>Service Type:</strong> ${state.selectedService}<br>
-            <strong>Sender:</strong> Alex Johnson<br>
-            <strong>Traveler / Delivery Partner:</strong> ${state.selectedPartner}<br>
-            <strong>Recipient:</strong> Bali Customer<br>
-            <strong>Item:</strong> Skincare product package<br>
-            <strong>Item Category:</strong> Beauty & Fashion<br>
-            <strong>Item Value:</strong> Rp 2.500.000<br>
-            <strong>Weight:</strong> 3.5 kg<br>
-            <strong>Origin:</strong> Jakarta<br>
-            <strong>Destination:</strong> Bali<br>
-            <strong>Pickup Date:</strong> 2026-10-24<br>
-            <strong>Estimated Delivery:</strong> 2026-10-25<br>
-            <strong>Current Status:</strong> APPROVED
-          `);
-        });
-        document.getElementById('viewProtectionBtn').addEventListener('click', viewProtection);
-      }
-
-      function initDates() {
-        const today = new Date();
-        const offset = (n) => {
-          const d = new Date(today);
-          d.setDate(today.getDate() + n);
-          return d.toISOString().split('T')[0];
-        };
-        document.getElementById('pickupDate').value = offset(2);
-        document.getElementById('deliveryDate').value = offset(5);
-      }
-
-      bindNavigation();
-      bindServiceCards();
-      bindButtons();
-      initDates();
-      updateTimeline();
+      showScreen('home');
     </script>
   </body>
 </html>
