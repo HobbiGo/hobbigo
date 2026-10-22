@@ -1,7 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+// SUPABASE CONNECTION TEST
+async function testSupabaseConnection() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("transactions")
+      .select("transaction_id, tracking_id, payment_status, transaction_status")
+      .eq("transaction_id", "CHL-2026-000128")
+      .single();
 
+    if (error) {
+      console.error("SUPABASE ERROR:", error);
+      return;
+    }
+
+    console.log("SUPABASE TEST SUCCESS:", data);
+  } catch (err) {
+    console.error("SUPABASE CONNECTION ERROR:", err);
+  }
+}
+
+testSupabaseConnection();
 <script>
 const SUPABASE_URL = "https://omzgqcndvohegnnwtbko.supabase.co";
 
