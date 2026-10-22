@@ -1,3453 +1,1079 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#061426">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>HOBBIGO ONE — One App. Endless Journey.</title>
+<meta name="theme-color" content="#07111f">
+<title>HOBBIGO TRAVEL — Booking Engine V1</title>
 
 <style>
-:root{
-  --bg:#040b16;
-  --bg2:#071426;
-  --panel:#0b1b30;
-  --panel2:#10243d;
-  --blue:#18bfff;
-  --cyan:#53e7ff;
-  --purple:#8c7cff;
-  --orange:#ffad45;
-  --green:#35e0a1;
-  --red:#ff657a;
-  --text:#f3f9ff;
-  --muted:#8ea5bd;
-  --line:rgba(130,190,230,.15);
-  --shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
-  margin:0;
-  background:
-    radial-gradient(circle at 15% 5%,rgba(0,183,255,.12),transparent 28%),
-    radial-gradient(circle at 90% 20%,rgba(111,83,255,.10),transparent 25%),
-    var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+ margin:0;
+ font-family:Arial,Helvetica,sans-serif;
+ background:#07111f;
+ color:#fff;
 }
-
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 
-.app{
-  min-height:100vh;
-  display:flex;
+.header{
+ background:linear-gradient(135deg,#0a1830,#123b68);
+ padding:18px 20px;
+ position:sticky;
+ top:0;
+ z-index:50;
+ border-bottom:1px solid #24496f;
 }
-
-/* SIDEBAR */
-.sidebar{
-  width:245px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  background:rgba(4,13,26,.94);
-  border-right:1px solid var(--line);
-  padding:22px 16px;
-  z-index:50;
-  backdrop-filter:blur(18px);
+.brand{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:15px;
 }
-
 .logo{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:4px 8px 22px;
-  border-bottom:1px solid var(--line);
+ font-size:25px;
+ font-weight:900;
+ letter-spacing:2px;
 }
-
-.logoMark{
-  width:42px;
-  height:42px;
-  border-radius:13px;
-  display:grid;
-  place-items:center;
-  font-weight:900;
-  font-size:20px;
-  background:linear-gradient(135deg,#0b7cff,#25dfff);
-  box-shadow:0 0 25px rgba(24,191,255,.35);
-}
-
-.logoText b{
-  display:block;
-  letter-spacing:2px;
-  font-size:17px;
-}
-
-.logoText span{
-  color:var(--muted);
-  font-size:9px;
-  letter-spacing:1px;
+.logo span{color:#35c9ff}
+.badge{
+ background:#173f68;
+ border:1px solid #28608e;
+ padding:7px 10px;
+ border-radius:20px;
+ font-size:11px;
 }
 
 .nav{
-  margin-top:20px;
+ display:flex;
+ gap:8px;
+ overflow-x:auto;
+ margin-top:16px;
+ padding-bottom:3px;
 }
-
 .nav button{
-  width:100%;
-  border:0;
-  background:transparent;
-  color:#9bb0c6;
-  padding:13px 13px;
-  border-radius:12px;
-  text-align:left;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:5px;
+ border:1px solid #28537a;
+ background:#102640;
+ color:#d9edff;
+ padding:10px 14px;
+ border-radius:10px;
+ white-space:nowrap;
 }
-
-.nav button:hover,
 .nav button.active{
-  color:#fff;
-  background:linear-gradient(90deg,rgba(24,191,255,.16),rgba(24,191,255,.03));
-  box-shadow:inset 3px 0 var(--blue);
+ background:#18aee8;
+ color:#03101b;
+ border-color:#18aee8;
+ font-weight:bold;
 }
 
-.navIcon{
-  width:24px;
-  text-align:center;
-  font-size:17px;
+.container{
+ max-width:1200px;
+ margin:auto;
+ padding:22px;
 }
 
-.sideBottom{
-  position:absolute;
-  left:16px;
-  right:16px;
-  bottom:18px;
-}
-
-.system{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.025);
-  border-radius:15px;
-  padding:13px;
-}
-
-.systemTitle{
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:1px;
-  margin-bottom:7px;
-}
-
-.systemStatus{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:12px;
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  background:var(--green);
-  border-radius:50%;
-  box-shadow:0 0 12px var(--green);
-}
-
-/* MAIN */
-.main{
-  margin-left:245px;
-  width:calc(100% - 245px);
-  min-height:100vh;
-}
-
-.topbar{
-  height:70px;
-  position:sticky;
-  top:0;
-  z-index:40;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 30px;
-  background:rgba(4,11,22,.82);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(18px);
-}
-
-.topTitle{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.topActions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.topBtn{
-  border:1px solid var(--line);
-  background:#0a1728;
-  color:#d9eaff;
-  width:40px;
-  height:40px;
-  border-radius:12px;
-}
-
-.profileMini{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding-left:8px;
-}
-
-.avatar{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,#116bff,#21d8ff);
-  font-weight:800;
-}
-
-.profileMini span{
-  font-size:12px;
-  color:#dceafa;
-}
-
-/* CONTENT */
-.content{
-  padding:28px;
-  max-width:1500px;
-  margin:auto;
-}
-
-.page{display:none}
-.page.active{display:block}
-
-/* HERO */
 .hero{
-  min-height:350px;
-  border:1px solid rgba(74,190,255,.18);
-  border-radius:28px;
-  overflow:hidden;
-  position:relative;
-  background:
-    linear-gradient(90deg,rgba(3,11,23,.96) 0%,rgba(3,11,23,.80) 38%,rgba(3,11,23,.25) 75%),
-    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5)),
-    url("https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=85")
-    center/cover;
-  box-shadow:var(--shadow);
-  display:flex;
-  align-items:center;
+ background:linear-gradient(135deg,#0c2340,#0b3155);
+ border:1px solid #205078;
+ border-radius:20px;
+ padding:25px;
+ margin-bottom:20px;
 }
-
-.heroContent{
-  width:650px;
-  padding:45px;
-}
-
-.eyebrow{
-  color:var(--cyan);
-  font-size:11px;
-  letter-spacing:2px;
-  font-weight:800;
-  margin-bottom:12px;
-}
-
 .hero h1{
-  font-size:clamp(35px,5vw,66px);
-  line-height:.98;
-  margin:0 0 18px;
-  letter-spacing:-3px;
+ margin:0 0 8px;
+ font-size:32px;
 }
-
-.hero h1 span{
-  background:linear-gradient(90deg,#fff,#58eaff,#668fff);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
 .hero p{
-  color:#b4c9dc;
-  line-height:1.7;
-  max-width:590px;
+ color:#a9c9df;
+ line-height:1.6;
+ margin:0;
 }
 
-.searchBox{
-  margin-top:25px;
-  display:flex;
-  gap:8px;
-  max-width:600px;
-}
-
-.searchBox input{
-  flex:1;
-  min-width:0;
-  border:1px solid rgba(100,210,255,.22);
-  background:rgba(3,14,28,.82);
-  color:#fff;
-  border-radius:14px;
-  padding:15px;
-  outline:none;
-}
-
-.btn{
-  border:0;
-  border-radius:12px;
-  padding:12px 17px;
-  font-weight:800;
-  color:#03111e;
-  background:linear-gradient(135deg,#39dfff,#138cff);
-  box-shadow:0 8px 25px rgba(24,191,255,.2);
-}
-
-.btn:hover{filter:brightness(1.08)}
-
-.btn.secondary{
-  color:#dceeff;
-  background:#10243a;
-  border:1px solid var(--line);
-  box-shadow:none;
-}
-
-.btn.orange{
-  background:linear-gradient(135deg,#ffd06d,#ff8e2b);
-}
-
-.btn.purple{
-  background:linear-gradient(135deg,#b49cff,#7062ff);
-  color:white;
-}
-
-.btn.green{
-  background:linear-gradient(135deg,#63f1bd,#16bd89);
-}
-
-/* SECTION */
-.section{
-  margin-top:28px;
-}
-
-.sectionHead{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:14px;
-}
-
-.sectionHead h2{
-  margin:0;
-  font-size:22px;
-}
-
-.sectionHead span{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* SERVICE CARDS */
-.services{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.service{
-  border:1px solid var(--line);
-  border-radius:21px;
-  padding:22px;
-  min-height:190px;
-  position:relative;
-  overflow:hidden;
-  background:linear-gradient(145deg,rgba(16,38,63,.9),rgba(7,19,34,.95));
-}
-
-.service:after{
-  content:"";
-  position:absolute;
-  width:140px;
-  height:140px;
-  border-radius:50%;
-  right:-50px;
-  top:-50px;
-  background:rgba(24,191,255,.10);
-  filter:blur(2px);
-}
-
-.service.telku:after{background:rgba(140,124,255,.12)}
-.service.chelea:after{background:rgba(255,173,69,.12)}
-
-.serviceIcon{
-  font-size:30px;
-  margin-bottom:14px;
-}
-
-.service h3{
-  margin:0 0 7px;
-  font-size:18px;
-}
-
-.service p{
-  margin:0 0 17px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-}
-
-.serviceTag{
-  font-size:9px;
-  letter-spacing:1px;
-  font-weight:900;
-  color:var(--cyan);
-}
-
-.telku .serviceTag{color:#ae9dff}
-.chelea .serviceTag{color:#ffc16d}
-
-/* STATS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:13px;
-}
-
-.stat{
-  padding:18px;
-  border:1px solid var(--line);
-  background:rgba(10,27,46,.72);
-  border-radius:17px;
-}
-
-.statLabel{
-  color:var(--muted);
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.statValue{
-  font-size:25px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-/* CARDS */
 .grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+ gap:15px;
 }
 
 .card{
-  border:1px solid var(--line);
-  background:linear-gradient(145deg,#0c2037,#081728);
-  border-radius:20px;
-  overflow:hidden;
+ background:#0d1d30;
+ border:1px solid #1d3c5b;
+ border-radius:16px;
+ padding:18px;
+}
+.card:hover{
+ border-color:#299bd1;
+}
+.card h3{margin:8px 0}
+.card p{
+ color:#9fb7ca;
+ line-height:1.5;
+ font-size:14px;
+}
+.icon{
+ font-size:35px;
 }
 
-.cardImg{
-  height:160px;
-  background-size:cover;
-  background-position:center;
+.btn{
+ width:100%;
+ border:0;
+ border-radius:10px;
+ padding:12px;
+ font-weight:bold;
+ background:#17b5ef;
+ color:#03101b;
+ margin-top:10px;
+}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{
+ background:#18344e;
+ color:#dff4ff;
+ border:1px solid #285979;
+}
+.btn.success{background:#26d98a}
+.btn.warning{background:#ffc857}
+
+.section-title{
+ margin:25px 0 14px;
+ font-size:22px;
 }
 
-.cardBody{
-  padding:17px;
+.form{
+ background:#0d1d30;
+ border:1px solid #1d3c5b;
+ border-radius:16px;
+ padding:20px;
 }
-
-.cardBody h3{
-  margin:0 0 7px;
-  font-size:16px;
+.form-grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:13px;
 }
-
-.cardBody p{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.5;
+.field label{
+ display:block;
+ color:#9ebbd0;
+ font-size:12px;
+ margin-bottom:6px;
 }
-
-.cardBottom{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-top:15px;
+.field input,
+.field select,
+.field textarea{
+ width:100%;
+ background:#071522;
+ border:1px solid #284762;
+ color:white;
+ padding:12px;
+ border-radius:9px;
+ outline:none;
 }
+.field textarea{min-height:90px}
 
 .price{
-  font-weight:900;
-  color:#fff;
+ font-size:24px;
+ font-weight:bold;
+ color:#38c7ff;
+ margin:12px 0;
+}
+.muted{
+ color:#8ea8ba;
+ font-size:13px;
 }
 
-.small{
-  color:var(--muted);
-  font-size:10px;
-}
-
-/* PAGE HEADER */
-.pageHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:22px;
-}
-
-.pageHeader h1{
-  margin:0;
-  font-size:29px;
-}
-
-.pageHeader p{
-  color:var(--muted);
-  margin:6px 0 0;
-  font-size:12px;
-}
-
-/* FILTER */
-.filters{
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-bottom:18px;
-}
-
-.filter{
-  padding:9px 13px;
-  border-radius:30px;
-  border:1px solid var(--line);
-  background:#0a192b;
-  color:#a9bfd4;
-  font-size:11px;
-  cursor:pointer;
-}
-
-.filter.active{
-  color:#fff;
-  border-color:rgba(35,207,255,.5);
-  background:rgba(24,191,255,.12);
-}
-
-/* CART */
-.cartLayout{
-  display:grid;
-  grid-template-columns:1.5fr .8fr;
-  gap:18px;
-}
-
-.listPanel,.summaryPanel{
-  border:1px solid var(--line);
-  border-radius:20px;
-  background:#081728;
-}
-
-.listPanel{padding:18px}
-
-.cartItem{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  padding:17px 0;
-  border-bottom:1px solid var(--line);
-}
-
-.cartItem:last-child{border-bottom:0}
-
-.cartInfo{
-  display:flex;
-  gap:13px;
-}
-
-.cartIcon{
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:#102b46;
-  display:grid;
-  place-items:center;
-  font-size:22px;
-}
-
-.cartName{
-  font-weight:800;
-  font-size:14px;
-}
-
-.cartMeta{
-  color:var(--muted);
-  font-size:11px;
-  margin-top:5px;
-}
-
-.serviceBadge{
-  display:inline-block;
-  margin-top:7px;
-  padding:4px 7px;
-  border-radius:6px;
-  font-size:8px;
-  font-weight:900;
-  letter-spacing:.7px;
-  background:rgba(24,191,255,.12);
-  color:var(--cyan);
-}
-
-.serviceBadge.telku{
-  color:#ad9dff;
-  background:rgba(140,124,255,.12);
-}
-
-.serviceBadge.chelea{
-  color:#ffc06c;
-  background:rgba(255,173,69,.12);
-}
-
-.cartPrice{
-  text-align:right;
-  white-space:nowrap;
-  font-weight:900;
-}
-
-.remove{
-  margin-top:7px;
-  color:#ff7585;
-  font-size:10px;
-  background:none;
-  border:0;
-}
-
-.summaryPanel{
-  padding:20px;
-  height:max-content;
-  position:sticky;
-  top:90px;
-}
-
-.summaryPanel h3{
-  margin-top:0;
-}
-
-.sumRow{
-  display:flex;
-  justify-content:space-between;
-  color:#9eb3c7;
-  font-size:12px;
-  padding:9px 0;
-}
-
-.sumRow.total{
-  border-top:1px solid var(--line);
-  margin-top:10px;
-  padding-top:16px;
-  color:#fff;
-  font-size:17px;
-  font-weight:900;
-}
-
-.full{
-  width:100%;
-}
-
-/* ORDERS */
 .order{
-  border:1px solid var(--line);
-  border-radius:19px;
-  padding:18px;
-  background:#09192b;
-  margin-bottom:13px;
+ background:#0c1b2c;
+ border:1px solid #24445f;
+ border-radius:14px;
+ padding:16px;
+ margin-bottom:12px;
 }
-
-.orderTop{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
+.order-head{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
 }
-
-.orderCode{
-  font-size:15px;
-  font-weight:900;
-}
-
 .status{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:9px;
-  font-weight:900;
-  background:rgba(53,224,161,.1);
-  color:#62edbd;
+ background:#143e34;
+ color:#5df1b1;
+ padding:5px 9px;
+ border-radius:20px;
+ font-size:11px;
 }
+.hidden{display:none!important}
 
-.status.pending{
-  color:#ffd072;
-  background:rgba(255,173,69,.1);
-}
-
-.orderItems{
-  margin-top:14px;
-  border-top:1px solid var(--line);
-  padding-top:12px;
-}
-
-.orderItem{
-  display:flex;
-  justify-content:space-between;
-  color:#afc2d4;
-  font-size:11px;
-  padding:6px 0;
-}
-
-.orderTotal{
-  text-align:right;
-  font-weight:900;
-  margin-top:8px;
-}
-
-/* PAYMENT */
-.paymentBox{
-  max-width:900px;
-  margin:auto;
-  border:1px solid var(--line);
-  border-radius:25px;
-  background:#081728;
-  padding:25px;
-}
-
-.paymentGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-
-.paymentMethods{
-  display:grid;
-  gap:10px;
-}
-
-.payMethod{
-  border:1px solid var(--line);
-  background:#0b1c30;
-  padding:14px;
-  border-radius:13px;
-  color:#b8ccde;
-  text-align:left;
-}
-
-.payMethod.selected{
-  border-color:var(--blue);
-  background:rgba(24,191,255,.1);
-  color:white;
-}
-
-.qrBox{
-  width:190px;
-  height:190px;
-  background:white;
-  margin:15px auto;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  padding:8px;
-}
-
-.qrFake{
-  width:160px;
-  height:160px;
-  background:
-    repeating-linear-gradient(0deg,#000 0 5px,#fff 5px 10px),
-    repeating-linear-gradient(90deg,transparent 0 7px,#000 7px 12px);
-  mix-blend-mode:multiply;
-}
-
-.receipt{
-  border-top:1px dashed #456;
-  margin-top:20px;
-  padding-top:20px;
-}
-
-/* PROFILE */
-.profileHero{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  border:1px solid var(--line);
-  border-radius:23px;
-  padding:24px;
-  background:linear-gradient(135deg,#0d2945,#081728);
-}
-
-.bigAvatar{
-  width:75px;
-  height:75px;
-  border-radius:23px;
-  display:grid;
-  place-items:center;
-  font-size:25px;
-  font-weight:900;
-  background:linear-gradient(135deg,#167eff,#2ee4ff);
-}
-
-.profileHero h2{margin:0}
-.profileHero p{
-  color:var(--muted);
-  font-size:12px;
-}
-
-/* EMPTY */
-.empty{
-  text-align:center;
-  padding:55px 20px;
-  color:var(--muted);
-}
-
-.emptyIcon{
-  font-size:42px;
-  margin-bottom:12px;
-}
-
-/* MODAL */
 .modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:100;
-  padding:20px;
-  backdrop-filter:blur(8px);
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.78);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ z-index:100;
 }
-
-.modal.show{display:flex}
-
-.modalBox{
-  width:min(650px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border:1px solid rgba(100,210,255,.25);
-  background:#081728;
-  border-radius:23px;
-  padding:23px;
-  box-shadow:0 30px 90px #000;
+.modal-box{
+ width:min(600px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#0d1d30;
+ border:1px solid #2c5c7e;
+ border-radius:18px;
+ padding:22px;
 }
-
-.modalTop{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
 .close{
-  border:0;
-  background:#10243a;
-  color:#fff;
-  width:35px;
-  height:35px;
-  border-radius:10px;
+ float:right;
+ background:#1c3449;
+ color:white;
+ border:0;
+ border-radius:8px;
+ padding:8px 11px;
 }
 
-/* TOAST */
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:200;
-  background:#102b43;
-  border:1px solid rgba(70,205,255,.3);
-  color:#fff;
-  padding:13px 17px;
-  border-radius:13px;
-  transform:translateY(100px);
-  opacity:0;
-  transition:.25s;
-  font-size:12px;
+.summary{
+ background:#071522;
+ border-radius:12px;
+ padding:15px;
+ margin:15px 0;
+}
+.summary-row{
+ display:flex;
+ justify-content:space-between;
+ padding:7px 0;
+ border-bottom:1px solid #19334a;
+}
+.summary-row:last-child{border:0}
+
+.footer{
+ text-align:center;
+ padding:35px 20px;
+ color:#6f8ca1;
+ font-size:12px;
 }
 
-.toast.show{
-  transform:translateY(0);
-  opacity:1;
-}
-
-/* MOBILE */
-.mobileNav{
-  display:none;
-}
-
-@media(max-width:1000px){
-  .sidebar{
-    width:210px;
-  }
-  .main{
-    margin-left:210px;
-    width:calc(100% - 210px);
-  }
-  .services,.grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-@media(max-width:720px){
-  .sidebar{display:none}
-
-  .main{
-    margin-left:0;
-    width:100%;
-    padding-bottom:72px;
-  }
-
-  .topbar{
-    padding:0 14px;
-    height:60px;
-  }
-
-  .topTitle{display:none}
-
-  .content{
-    padding:15px;
-  }
-
-  .hero{
-    min-height:480px;
-    align-items:end;
-    background-position:center;
-  }
-
-  .heroContent{
-    width:100%;
-    padding:25px 20px;
-    background:linear-gradient(transparent,rgba(3,10,20,.9) 25%);
-  }
-
-  .hero h1{
-    font-size:42px;
-  }
-
-  .searchBox{
-    flex-direction:column;
-  }
-
-  .services,.grid,.stats{
-    grid-template-columns:1fr;
-  }
-
-  .cartLayout,.paymentGrid{
-    grid-template-columns:1fr;
-  }
-
-  .summaryPanel{
-    position:static;
-  }
-
-  .profileMini span{display:none}
-
-  .mobileNav{
-    display:flex;
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    height:64px;
-    background:rgba(5,15,28,.96);
-    border-top:1px solid var(--line);
-    z-index:80;
-    justify-content:space-around;
-    backdrop-filter:blur(18px);
-  }
-
-  .mobileNav button{
-    border:0;
-    background:none;
-    color:#8097ad;
-    font-size:9px;
-  }
-
-  .mobileNav button.active{
-    color:var(--cyan);
-  }
-
-  .mobileNav i{
-    display:block;
-    font-size:19px;
-    font-style:normal;
-    margin-bottom:2px;
-  }
-
-  .pageHeader{
-    align-items:flex-start;
-  }
-
-  .pageHeader h1{
-    font-size:24px;
-  }
+@media(max-width:600px){
+ .container{padding:14px}
+ .hero h1{font-size:25px}
+ .brand{align-items:flex-start}
+ .badge{font-size:9px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<header class="header">
+ <div class="brand">
+   <div class="logo">HOBBI<span>GO</span></div>
+   <div class="badge">TRAVEL BOOKING ENGINE V1</div>
+ </div>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-
-  <div class="logo">
-    <div class="logoMark">H</div>
-    <div class="logoText">
-      <b>HOBBIGO</b>
-      <span>ONE APP. ENDLESS JOURNEY.</span>
-    </div>
-  </div>
-
-  <nav class="nav">
-    <button class="active" onclick="showPage('home',this)">
-      <span class="navIcon">⌂</span> Home
-    </button>
-
-    <button onclick="showPage('travel',this)">
-      <span class="navIcon">✈</span> HOBBIGO Travel
-    </button>
-
-    <button onclick="showPage('telku',this)">
-      <span class="navIcon">◉</span> TELKU eSIM
-    </button>
-
-    <button onclick="showPage('chelea',this)">
-      <span class="navIcon">▣</span> CHELEA Delivery
-    </button>
-
-    <button onclick="showPage('cart',this)">
-      <span class="navIcon">🛒</span> My Cart
-      <span id="sideCartBadge" style="margin-left:auto">0</span>
-    </button>
-
-    <button onclick="showPage('orders',this)">
-      <span class="navIcon">▤</span> My Orders
-    </button>
-
-    <button onclick="showPage('payment',this)">
-      <span class="navIcon">▣</span> Payment & QR
-    </button>
-
-    <button onclick="showPage('profile',this)">
-      <span class="navIcon">◎</span> Master Profile
-    </button>
-  </nav>
-
-  <div class="sideBottom">
-    <div class="system">
-      <div class="systemTitle">HOBBIGO ONE SYSTEM</div>
-      <div class="systemStatus">
-        <span class="dot"></span>
-        System Online
-      </div>
-    </div>
-  </div>
-
-</aside>
-
-<!-- MAIN -->
-<main class="main">
-
-<header class="topbar">
-  <div class="topTitle">
-    TRAVEL • CONNECTIVITY • DELIVERY
-  </div>
-
-  <div class="topActions">
-    <button class="topBtn" onclick="showPage('cart')">🛒</button>
-    <button class="topBtn" onclick="showPage('orders')">▤</button>
-
-    <div class="profileMini">
-      <div class="avatar">H</div>
-      <span>HOBBIGO USER</span>
-    </div>
-  </div>
+ <nav class="nav">
+   <button class="active" onclick="showPage('home',this)">HOME</button>
+   <button onclick="showPage('flight',this)">✈️ FLIGHT</button>
+   <button onclick="showPage('hotel',this)">🏨 HOTEL</button>
+   <button onclick="showPage('activity',this)">🎯 ACTIVITY</button>
+   <button onclick="showPage('experience',this)">🌎 EXPERIENCE</button>
+   <button onclick="showPage('corporate',this)">🏢 CORPORATE</button>
+   <button onclick="showPage('cargo',this)">📦 TRAVELLER CARGO</button>
+   <button onclick="showPage('orders',this)">📋 MY ORDERS</button>
+ </nav>
 </header>
 
-<div class="content">
+<main class="container">
 
 <!-- HOME -->
-<section id="page-home" class="page active">
+<section id="home" class="page">
+ <div class="hero">
+   <h1>AI Journey & Experience Marketplace</h1>
+   <p>
+     Search → Plan → Configure → Package → Book → Experience →
+     Re-optimize
+   </p>
+   <p class="muted" style="margin-top:10px">
+     HobbiGo Travel Booking Engine — Demo Mode
+   </p>
+ </div>
 
-  <div class="hero">
+ <h2 class="section-title">Travel Services</h2>
 
-    <div class="heroContent">
+ <div class="grid">
 
-      <div class="eyebrow">
-        HOBBIGO ONE • GLOBAL JOURNEY PLATFORM
-      </div>
-
-      <h1>
-        YOUR JOURNEY.<br>
-        <span>ONE SMART ECOSYSTEM.</span>
-      </h1>
-
-      <p>
-        Travel, connectivity and delivery dalam satu ecosystem.
-        Rencanakan perjalanan, tetap terhubung dengan eSIM,
-        dan kirim barang bersama traveler dengan satu master profile.
-      </p>
-
-      <div class="searchBox">
-        <input id="globalSearch"
-               placeholder="Search destination, eSIM, delivery...">
-
-        <button class="btn" onclick="globalSearch()">
-          SEARCH
-        </button>
-      </div>
-
-    </div>
+  <div class="card">
+   <div class="icon">✈️</div>
+   <h3>Flight</h3>
+   <p>Search flight and buy ticket manually through the HobbiGo demo engine.</p>
+   <button class="btn" onclick="openBooking('flight')">MANUAL BUY TICKET</button>
   </div>
 
-
-  <div class="section">
-
-    <div class="sectionHead">
-      <h2>One App. Three Powerful Services.</h2>
-      <span>HOBBIGO ONE</span>
-    </div>
-
-    <div class="services">
-
-      <div class="service">
-        <div class="serviceIcon">✈️</div>
-
-        <div class="serviceTag">
-          HOBBIGO TRAVEL
-        </div>
-
-        <h3>Travel & Experience</h3>
-
-        <p>
-          AI Trip Planner, hotel, flight, activity,
-          experience dan complete journey.
-        </p>
-
-        <button class="btn" onclick="showPage('travel')">
-          EXPLORE TRAVEL
-        </button>
-      </div>
-
-
-      <div class="service telku">
-        <div class="serviceIcon">📡</div>
-
-        <div class="serviceTag">
-          TELKU CONNECTIVITY
-        </div>
-
-        <h3>Global eSIM</h3>
-
-        <p>
-          Stay connected saat traveling dengan
-          eSIM data plans Indonesia, Asia dan Global.
-        </p>
-
-        <button class="btn purple" onclick="showPage('telku')">
-          GET eSIM
-        </button>
-      </div>
-
-
-      <div class="service chelea">
-        <div class="serviceIcon">📦</div>
-
-        <div class="serviceTag">
-          CHELEA DELIVERY
-        </div>
-
-        <h3>Traveler Delivery</h3>
-
-        <p>
-          Personal shopping, traveler pickup,
-          cargo dan home delivery.
-        </p>
-
-        <button class="btn orange" onclick="showPage('chelea')">
-          CREATE DELIVERY
-        </button>
-      </div>
-
-    </div>
+  <div class="card">
+   <div class="icon">🏨</div>
+   <h3>Hotel</h3>
+   <p>Select property, room, dates and make a manual booking.</p>
+   <button class="btn" onclick="openBooking('hotel')">MANUAL BOOK HOTEL</button>
   </div>
 
-
-  <div class="section">
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="statLabel">Services</div>
-        <div class="statValue">03</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">Cart Items</div>
-        <div class="statValue" id="statCart">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">Orders</div>
-        <div class="statValue" id="statOrders">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">Master Profile</div>
-        <div class="statValue">01</div>
-      </div>
-
-    </div>
-
+  <div class="card">
+   <div class="icon">🎯</div>
+   <h3>Activity</h3>
+   <p>Book tours, sports, attractions, classes and local activities.</p>
+   <button class="btn" onclick="openBooking('activity')">BOOK ACTIVITY</button>
   </div>
 
-
-  <div class="section">
-
-    <div class="sectionHead">
-      <h2>Featured Journey</h2>
-      <span>HOBBIGO EXPERIENCE</span>
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-
-        <div class="cardImg"
-        style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85')">
-        </div>
-
-        <div class="cardBody">
-          <h3>Bali Smart Journey</h3>
-
-          <p>
-            4D3N • Hotel • Experience • Transport
-          </p>
-
-          <div class="cardBottom">
-            <div>
-              <div class="small">Starting from</div>
-              <div class="price">Rp 4.500.000</div>
-            </div>
-
-            <button class="btn"
-            onclick="addItem(
-              'TRAVEL',
-              'Bali Smart Journey',
-              '4D3N • Hotel • Experience • Transport',
-              4500000,
-              '✈️'
-            )">
-              ADD
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="cardImg"
-        style="background-image:url('https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1000&q=85')">
-        </div>
-
-        <div class="cardBody">
-          <h3>Island Experience</h3>
-
-          <p>
-            Activity • Local Culinary • Adventure
-          </p>
-
-          <div class="cardBottom">
-            <div>
-              <div class="small">Experience</div>
-              <div class="price">Rp 850.000</div>
-            </div>
-
-            <button class="btn"
-            onclick="addItem(
-              'TRAVEL',
-              'Island Experience',
-              'Activity • Culinary • Adventure',
-              850000,
-              '🌴'
-            )">
-              ADD
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="cardImg"
-        style="background-image:url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1000&q=85')">
-        </div>
-
-        <div class="cardBody">
-          <h3>Corporate Retreat</h3>
-
-          <p>
-            Meeting • Team Building • Accommodation
-          </p>
-
-          <div class="cardBottom">
-            <div>
-              <div class="small">Package</div>
-              <div class="price">Rp 7.500.000</div>
-            </div>
-
-            <button class="btn"
-            onclick="addItem(
-              'TRAVEL',
-              'Corporate Retreat',
-              'Meeting • Team Building • Accommodation',
-              7500000,
-              '🏢'
-            )">
-              ADD
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
+  <div class="card">
+   <div class="icon">🌎</div>
+   <h3>Experience</h3>
+   <p>Discover curated local experiences and reserve your schedule.</p>
+   <button class="btn" onclick="openBooking('experience')">BOOK EXPERIENCE</button>
   </div>
 
+  <div class="card">
+   <div class="icon">🏢</div>
+   <h3>Corporate</h3>
+   <p>Create meetings, retreats, team building and corporate journeys.</p>
+   <button class="btn" onclick="openBooking('corporate')">CREATE EVENT</button>
+  </div>
+
+  <div class="card">
+   <div class="icon">📦</div>
+   <h3>Traveller Cargo</h3>
+   <p>Send personal items across countries through verified travelers.</p>
+   <button class="btn" onclick="openBooking('cargo')">CREATE CARGO REQUEST</button>
+  </div>
+
+ </div>
 </section>
 
 
-<!-- TRAVEL -->
-<section id="page-travel" class="page">
+<!-- FLIGHT -->
+<section id="flight" class="page hidden">
+ <div class="hero">
+  <h1>✈️ Flight</h1>
+  <p>Manual Buy Ticket — Demo Booking Engine</p>
+ </div>
 
-  <div class="pageHeader">
+ <div class="grid">
 
-    <div>
-      <h1>HOBBIGO Travel</h1>
-      <p>Plan • Book • Experience • Re-optimize</p>
-    </div>
-
-    <button class="btn"
-    onclick="openTripPlanner()">
-      + AI TRIP PLANNER
-    </button>
-
+  <div class="card">
+   <h3>Jakarta → Bali</h3>
+   <p>Garuda Indonesia · Economy</p>
+   <p>07:00 — 09:55</p>
+   <div class="price">IDR 1,250,000</div>
+   <button class="btn" onclick="selectProduct('Flight','Jakarta → Bali','1250000')">BUY TICKET</button>
   </div>
 
-
-  <div class="filters">
-
-    <div class="filter active">All</div>
-    <div class="filter">Hotels</div>
-    <div class="filter">Flights</div>
-    <div class="filter">Activities</div>
-    <div class="filter">Experience</div>
-    <div class="filter">Corporate</div>
-
+  <div class="card">
+   <h3>Jakarta → Singapore</h3>
+   <p>International · Economy</p>
+   <p>09:00 — 12:00</p>
+   <div class="price">IDR 1,850,000</div>
+   <button class="btn" onclick="selectProduct('Flight','Jakarta → Singapore','1850000')">BUY TICKET</button>
   </div>
 
-
-  <div class="grid">
-
-    <div class="card">
-
-      <div class="cardImg"
-      style="background-image:url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1000&q=85')">
-      </div>
-
-      <div class="cardBody">
-        <h3>Smart Bali Journey</h3>
-
-        <p>
-          AI Score 96% • 4D3N • Smart Route
-        </p>
-
-        <div class="cardBottom">
-          <div class="price">Rp 4.500.000</div>
-
-          <button class="btn"
-          onclick="addItem('TRAVEL','Smart Bali Journey','AI Score 96% • 4D3N • Smart Route',4500000,'✈️')">
-            ADD TO CART
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cardImg"
-      style="background-image:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85')">
-      </div>
-
-      <div class="cardBody">
-        <h3>Premium Hotel Stay</h3>
-
-        <p>
-          Luxury room • Breakfast • Flexible
-        </p>
-
-        <div class="cardBottom">
-          <div class="price">Rp 1.250.000</div>
-
-          <button class="btn"
-          onclick="addItem('TRAVEL','Premium Hotel Stay','Luxury room • Breakfast • Flexible',1250000,'🏨')">
-            ADD TO CART
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cardImg"
-      style="background-image:url('https://images.unsplash.com/photo-1544550285-f813152fb2fd?auto=format&fit=crop&w=1000&q=85')">
-      </div>
-
-      <div class="cardBody">
-        <h3>Ocean Adventure</h3>
-
-        <p>
-          Boat • Island • Local Experience
-        </p>
-
-        <div class="cardBottom">
-          <div class="price">Rp 950.000</div>
-
-          <button class="btn"
-          onclick="addItem('TRAVEL','Ocean Adventure','Boat • Island • Local Experience',950000,'🚤')">
-            ADD TO CART
-          </button>
-        </div>
-      </div>
-
-    </div>
-
+  <div class="card">
+   <h3>Jakarta → Tokyo</h3>
+   <p>International · Economy</p>
+   <p>22:00 — 07:30</p>
+   <div class="price">IDR 5,900,000</div>
+   <button class="btn" onclick="selectProduct('Flight','Jakarta → Tokyo','5900000')">BUY TICKET</button>
   </div>
 
+ </div>
 </section>
 
 
-<!-- TELKU -->
-<section id="page-telku" class="page">
+<!-- HOTEL -->
+<section id="hotel" class="page hidden">
+ <div class="hero">
+  <h1>🏨 Hotel</h1>
+  <p>Manual Hotel Booking</p>
+ </div>
 
-  <div class="pageHeader">
+ <div class="grid">
 
-    <div>
-      <h1>TELKU eSIM</h1>
-      <p>Global connectivity for your journey</p>
-    </div>
-
-    <span class="serviceBadge telku">
-      CONNECTIVITY
-    </span>
-
+  <div class="card">
+   <h3>Bali Beach Resort</h3>
+   <p>Seminyak · Deluxe Room · Breakfast</p>
+   <div class="price">IDR 1,500,000</div>
+   <button class="btn" onclick="selectProduct('Hotel','Bali Beach Resort — Deluxe Room','1500000')">BOOK ROOM</button>
   </div>
 
-
-  <div class="grid">
-
-    <div class="card">
-
-      <div class="cardBody">
-
-        <div class="serviceIcon">🇮🇩</div>
-
-        <div class="serviceTag">INDONESIA</div>
-
-        <h3>Indonesia 3GB</h3>
-
-        <p>
-          3GB data • 7 Days
-        </p>
-
-        <div class="cardBottom">
-
-          <div class="price">
-            Rp 59.000
-          </div>
-
-          <button class="btn purple"
-          onclick="addItem(
-            'TELKU',
-            'Indonesia 3GB eSIM',
-            '3GB • 7 Days',
-            59000,
-            '📡'
-          )">
-            + ORDER
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cardBody">
-
-        <div class="serviceIcon">🌏</div>
-
-        <div class="serviceTag">ASIA TRAVEL</div>
-
-        <h3>Asia Travel 5GB</h3>
-
-        <p>
-          5GB data • 15 Days
-        </p>
-
-        <div class="cardBottom">
-
-          <div class="price">
-            Rp 99.000
-          </div>
-
-          <button class="btn purple"
-          onclick="addItem(
-            'TELKU',
-            'Asia Travel 5GB eSIM',
-            '5GB • 15 Days',
-            99000,
-            '📡'
-          )">
-            + ORDER
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <div class="cardBody">
-
-        <div class="serviceIcon">🌐</div>
-
-        <div class="serviceTag">GLOBAL</div>
-
-        <h3>Global Travel 10GB</h3>
-
-        <p>
-          10GB data • 30 Days
-        </p>
-
-        <div class="cardBottom">
-
-          <div class="price">
-            Rp 249.000
-          </div>
-
-          <button class="btn purple"
-          onclick="addItem(
-            'TELKU',
-            'Global Travel 10GB eSIM',
-            '10GB • 30 Days',
-            249000,
-            '📡'
-          )">
-            + ORDER
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
+  <div class="card">
+   <h3>Jakarta City Hotel</h3>
+   <p>Central Jakarta · Superior Room</p>
+   <div class="price">IDR 950,000</div>
+   <button class="btn" onclick="selectProduct('Hotel','Jakarta City Hotel — Superior','950000')">BOOK ROOM</button>
   </div>
 
-
-  <div class="section">
-
-    <div class="card" style="padding:20px">
-
-      <div class="serviceTag">TELKU FLOW</div>
-
-      <h3>Buy → Payment → eSIM → QR</h3>
-
-      <p>
-        Order TELKU akan masuk ke Master Cart terlebih dahulu.
-        Setelah checkout, order akan muncul di Master Orders.
-      </p>
-
-    </div>
-
+  <div class="card">
+   <h3>Ubud Villa</h3>
+   <p>Ubud · Private Villa · Pool</p>
+   <div class="price">IDR 2,400,000</div>
+   <button class="btn" onclick="selectProduct('Hotel','Ubud Private Villa','2400000')">BOOK VILLA</button>
   </div>
 
+ </div>
 </section>
 
 
-<!-- CHELEA -->
-<section id="page-chelea" class="page">
+<!-- ACTIVITY -->
+<section id="activity" class="page hidden">
+ <div class="hero">
+  <h1>🎯 Activity</h1>
+  <p>Book local activities, attractions and tours.</p>
+ </div>
 
-  <div class="pageHeader">
+ <div class="grid">
 
-    <div>
-      <h1>CHELEA Delivery</h1>
-      <p>Traveler shopping • Pickup • Cargo • Home delivery</p>
-    </div>
-
-    <span class="serviceBadge chelea">
-      SECURE DELIVERY
-    </span>
-
+  <div class="card">
+   <h3>Bali Sunrise Yoga</h3>
+   <p>Morning yoga session · 90 minutes</p>
+   <div class="price">IDR 350,000</div>
+   <button class="btn" onclick="selectProduct('Activity','Bali Sunrise Yoga','350000')">BOOK ACTIVITY</button>
   </div>
 
-
-  <div class="services">
-
-    <div class="service chelea">
-
-      <div class="serviceIcon">🛍️</div>
-
-      <div class="serviceTag">
-        PERSONAL SHOPPING
-      </div>
-
-      <h3>Traveler Jastip</h3>
-
-      <p>
-        Traveler membeli barang sesuai request
-        dan mengirimkannya ke alamat tujuan.
-      </p>
-
-      <button class="btn orange"
-      onclick="addItem(
-        'CHELEA',
-        'Traveler Personal Shopping',
-        'Traveler purchase + home delivery',
-        350000,
-        '🛍️'
-      )">
-        CREATE ORDER
-      </button>
-
-    </div>
-
-
-    <div class="service chelea">
-
-      <div class="serviceIcon">🚚</div>
-
-      <div class="serviceTag">
-        PICKUP & CARGO
-      </div>
-
-      <h3>Pickup Delivery</h3>
-
-      <p>
-        Barang dijemput, diverifikasi,
-        diproses cargo dan dikirim ke rumah.
-      </p>
-
-      <button class="btn orange"
-      onclick="addItem(
-        'CHELEA',
-        'Pickup & Cargo Delivery',
-        'Pickup • Cargo • Home delivery',
-        450000,
-        '🚚'
-      )">
-        CREATE ORDER
-      </button>
-
-    </div>
-
-
-    <div class="service chelea">
-
-      <div class="serviceIcon">🛡️</div>
-
-      <div class="serviceTag">
-        SECURITY ENGINE
-      </div>
-
-      <h3>Protected Delivery</h3>
-
-      <p>
-        Request → Security Check → Approved →
-        Escrow → Pickup → Transit → Delivered.
-      </p>
-
-      <button class="btn orange"
-      onclick="addItem(
-        'CHELEA',
-        'Protected Delivery',
-        'Security • Insurance • Tracking',
-        550000,
-        '🛡️'
-      )">
-        START
-      </button>
-
-    </div>
-
+  <div class="card">
+   <h3>Ubud Cycling Tour</h3>
+   <p>Local village and rice-field experience.</p>
+   <div class="price">IDR 550,000</div>
+   <button class="btn" onclick="selectProduct('Activity','Ubud Cycling Tour','550000')">BOOK ACTIVITY</button>
   </div>
 
-
-  <div class="section">
-
-    <div class="card" style="padding:22px">
-
-      <div class="serviceTag">CHELEA TRACKING ENGINE</div>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:10px;
-        margin-top:18px;
-      ">
-
-        <div class="stat">
-          <div class="statLabel">01</div>
-          <div style="margin-top:6px">REQUEST</div>
-        </div>
-
-        <div class="stat">
-          <div class="statLabel">02</div>
-          <div style="margin-top:6px">PICKUP</div>
-        </div>
-
-        <div class="stat">
-          <div class="statLabel">03</div>
-          <div style="margin-top:6px">TRANSIT</div>
-        </div>
-
-        <div class="stat">
-          <div class="statLabel">04</div>
-          <div style="margin-top:6px">DELIVERED</div>
-        </div>
-
-      </div>
-
-    </div>
-
+  <div class="card">
+   <h3>Water Sports Bali</h3>
+   <p>Adventure package · Half day</p>
+   <div class="price">IDR 750,000</div>
+   <button class="btn" onclick="selectProduct('Activity','Bali Water Sports','750000')">BOOK ACTIVITY</button>
   </div>
 
+ </div>
 </section>
 
 
-<!-- CART -->
-<section id="page-cart" class="page">
+<!-- EXPERIENCE -->
+<section id="experience" class="page hidden">
+ <div class="hero">
+  <h1>🌎 Experience</h1>
+  <p>Curated experiences created for travelers.</p>
+ </div>
 
-  <div class="pageHeader">
+ <div class="grid">
 
-    <div>
-      <h1>My Cart</h1>
-      <p>Semua pilihan Anda dalam satu master cart</p>
-    </div>
+  <div class="card">
+   <h3>Balinese Family Dinner</h3>
+   <p>Local food, culture and private dinner experience.</p>
+   <div class="price">IDR 650,000</div>
+   <button class="btn" onclick="selectProduct('Experience','Balinese Family Dinner','650000')">BOOK EXPERIENCE</button>
+  </div>
 
-    <span id="cartCountText"></span>
+  <div class="card">
+   <h3>Traditional Cooking Class</h3>
+   <p>Learn traditional Balinese cuisine with local host.</p>
+   <div class="price">IDR 700,000</div>
+   <button class="btn" onclick="selectProduct('Experience','Traditional Cooking Class','700000')">BOOK EXPERIENCE</button>
+  </div>
+
+  <div class="card">
+   <h3>Private Cultural Journey</h3>
+   <p>Private guide · Temple · Village · Culture.</p>
+   <div class="price">IDR 1,200,000</div>
+   <button class="btn" onclick="selectProduct('Experience','Private Cultural Journey','1200000')">BOOK EXPERIENCE</button>
+  </div>
+
+ </div>
+</section>
+
+
+<!-- CORPORATE -->
+<section id="corporate" class="page hidden">
+ <div class="hero">
+  <h1>🏢 Corporate Journey</h1>
+  <p>Create Your Own Event — Meeting, Retreat, Team Building & Corporate Travel.</p>
+ </div>
+
+ <div class="form">
+  <div class="form-grid">
+
+   <div class="field">
+    <label>Company Name</label>
+    <input id="corpCompany" placeholder="Company">
+   </div>
+
+   <div class="field">
+    <label>Event Type</label>
+    <select id="corpType">
+     <option>Corporate Meeting</option>
+     <option>Team Building</option>
+     <option>Company Retreat</option>
+     <option>Corporate Gathering</option>
+     <option>Conference</option>
+    </select>
+   </div>
+
+   <div class="field">
+    <label>Destination</label>
+    <input id="corpDestination" placeholder="Bali / Jakarta / Singapore">
+   </div>
+
+   <div class="field">
+    <label>Event Date</label>
+    <input id="corpDate" type="date">
+   </div>
+
+   <div class="field">
+    <label>Participants</label>
+    <input id="corpPeople" type="number" value="20">
+   </div>
+
+   <div class="field">
+    <label>Budget</label>
+    <input id="corpBudget" placeholder="IDR 50,000,000">
+   </div>
 
   </div>
 
+  <div class="field" style="margin-top:14px">
+   <label>Requirements</label>
+   <textarea id="corpRequirement" placeholder="Meeting room, hotel, transportation, meals, activities..."></textarea>
+  </div>
 
-  <div id="cartContainer"></div>
+  <button class="btn success" onclick="createCorporate()">CREATE CORPORATE EVENT</button>
+ </div>
+</section>
 
+
+<!-- CARGO -->
+<section id="cargo" class="page hidden">
+ <div class="hero">
+  <h1>📦 Traveller Cargo</h1>
+  <p>
+   Cross-border item delivery through verified travelers.
+  </p>
+ </div>
+
+ <div class="form">
+  <div class="form-grid">
+
+   <div class="field">
+    <label>Origin Country</label>
+    <input id="cargoOrigin" placeholder="Indonesia">
+   </div>
+
+   <div class="field">
+    <label>Destination Country</label>
+    <input id="cargoDestination" placeholder="Singapore">
+   </div>
+
+   <div class="field">
+    <label>Item</label>
+    <input id="cargoItem" placeholder="Personal goods">
+   </div>
+
+   <div class="field">
+    <label>Estimated Weight (kg)</label>
+    <input id="cargoWeight" type="number" value="1">
+   </div>
+
+   <div class="field">
+    <label>Declared Value</label>
+    <input id="cargoValue" placeholder="IDR 1,000,000">
+   </div>
+
+   <div class="field">
+    <label>Delivery Priority</label>
+    <select id="cargoPriority">
+     <option>Standard</option>
+     <option>Priority</option>
+     <option>Express</option>
+    </select>
+   </div>
+
+  </div>
+
+  <div class="field" style="margin-top:14px">
+   <label>Item Description</label>
+   <textarea id="cargoDescription" placeholder="Describe the item clearly"></textarea>
+  </div>
+
+  <div class="summary">
+   <b>Security Engine</b>
+   <p class="muted">
+    Request will be subject to destination-country regulations,
+    prohibited-item screening and traveler verification.
+   </p>
+  </div>
+
+  <button class="btn success" onclick="createCargo()">CREATE CARGO REQUEST</button>
+ </div>
 </section>
 
 
 <!-- ORDERS -->
-<section id="page-orders" class="page">
+<section id="orders" class="page hidden">
+ <div class="hero">
+  <h1>📋 My Orders</h1>
+  <p>All Flight, Hotel, Activity, Experience, Corporate and Traveller Cargo transactions.</p>
+ </div>
 
-  <div class="pageHeader">
-
-    <div>
-      <h1>My Orders</h1>
-      <p>Master order center — Travel, TELKU & CHELEA</p>
-    </div>
-
-    <button class="btn secondary"
-    onclick="clearOrders()">
-      Clear Demo Orders
-    </button>
-
-  </div>
-
-  <div id="ordersContainer"></div>
-
+ <div id="ordersList"></div>
 </section>
 
-
-<!-- PAYMENT -->
-<section id="page-payment" class="page">
-
-  <div class="pageHeader">
-
-    <div>
-      <h1>Payment & QR</h1>
-      <p>Transaction result and QR center</p>
-    </div>
-
-  </div>
-
-  <div id="paymentContainer"></div>
-
-</section>
-
-
-<!-- PROFILE -->
-<section id="page-profile" class="page">
-
-  <div class="pageHeader">
-
-    <div>
-      <h1>Master Profile</h1>
-      <p>One customer identity across HOBBIGO ONE</p>
-    </div>
-
-  </div>
-
-
-  <div class="profileHero">
-
-    <div class="bigAvatar">H</div>
-
-    <div>
-      <h2>HOBBIGO CUSTOMER</h2>
-
-      <p>
-        Master Customer ID:
-        <strong id="customerId"></strong>
-      </p>
-
-      <div class="serviceTag">
-        TRAVEL • CONNECTIVITY • DELIVERY
-      </div>
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="stats">
-
-      <div class="stat">
-        <div class="statLabel">Travel Orders</div>
-        <div class="statValue" id="profileTravel">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">TELKU Orders</div>
-        <div class="statValue" id="profileTelku">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">CHELEA Orders</div>
-        <div class="statValue" id="profileChelea">0</div>
-      </div>
-
-      <div class="stat">
-        <div class="statLabel">Total Orders</div>
-        <div class="statValue" id="profileOrders">0</div>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="section">
-
-    <div class="card" style="padding:22px">
-
-      <div class="serviceTag">
-        MASTER ECOSYSTEM
-      </div>
-
-      <h3>One Customer. Multiple Services.</h3>
-
-      <p>
-        HOBBIGO, TELKU dan CHELEA dapat digunakan
-        secara independen, tetapi seluruh aktivitas
-        tetap dapat terlihat dalam satu Master Profile.
-      </p>
-
-      <button class="btn" onclick="showPage('orders')">
-        VIEW ALL ORDERS
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-</div>
 </main>
+
+
+<!-- BOOKING MODAL -->
+<div id="bookingModal" class="modal hidden">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal()">✕</button>
+
+  <h2 id="modalTitle">Booking</h2>
+
+  <div id="modalContent"></div>
+ </div>
 </div>
 
 
-<!-- MOBILE NAV -->
-<nav class="mobileNav">
-
-  <button class="active" onclick="showPage('home',this)">
-    <i>⌂</i>Home
-  </button>
-
-  <button onclick="showPage('travel',this)">
-    <i>✈</i>Travel
-  </button>
-
-  <button onclick="showPage('telku',this)">
-    <i>◉</i>TELKU
-  </button>
-
-  <button onclick="showPage('chelea',this)">
-    <i>▣</i>CHELEA
-  </button>
-
-  <button onclick="showPage('cart',this)">
-    <i>🛒</i>Cart
-  </button>
-
-</nav>
-
-
-<!-- MODAL -->
-<div id="modal" class="modal">
-
-  <div class="modalBox">
-
-    <div class="modalTop">
-
-      <h3 id="modalTitle">HOBBIGO</h3>
-
-      <button class="close"
-      onclick="closeModal()">×</button>
-
-    </div>
-
-    <div id="modalBody"></div>
-
-  </div>
-
-</div>
-
-
-<div id="toast" class="toast">
-  Added to Master Cart
-</div>
+<footer class="footer">
+ HOBBIGO TRAVEL · AI Journey & Experience Marketplace<br>
+ Booking Engine V1 · Demo Environment
+</footer>
 
 
 <script>
 
-/* =====================================================
-   HOBBIGO ONE V1
-   SINGLE FILE MASTER APP
-   ===================================================== */
+let selectedProduct = null;
 
-
-/* MASTER CUSTOMER */
-const CUSTOMER_ID =
-  localStorage.getItem("hobbigo_customer_id") ||
-  "HBG-" + Math.random().toString(36).substring(2,8).toUpperCase();
-
-localStorage.setItem("hobbigo_customer_id",CUSTOMER_ID);
-
-
-/* STATE */
-let cart =
-  JSON.parse(localStorage.getItem("hobbigo_cart") || "[]");
-
-let orders =
-  JSON.parse(localStorage.getItem("hobbigo_orders") || "[]");
-
-let lastPayment =
-  JSON.parse(localStorage.getItem("hobbigo_last_payment") || "null");
-
-
-/* MONEY */
 function money(value){
-  return new Intl.NumberFormat("id-ID",{
-    style:"currency",
-    currency:"IDR",
-    maximumFractionDigits:0
-  }).format(Number(value)||0);
+ return new Intl.NumberFormat('id-ID',{
+  style:'currency',
+  currency:'IDR',
+  maximumFractionDigits:0
+ }).format(Number(value));
 }
 
-
-/* SAVE */
-function save(){
-
-  localStorage.setItem(
-    "hobbigo_cart",
-    JSON.stringify(cart)
-  );
-
-  localStorage.setItem(
-    "hobbigo_orders",
-    JSON.stringify(orders)
-  );
-
-  if(lastPayment){
-    localStorage.setItem(
-      "hobbigo_last_payment",
-      JSON.stringify(lastPayment)
-    );
-  }
-
-  updateUI();
-}
-
-
-/* NAVIGATION */
 function showPage(page,button){
 
-  document.querySelectorAll(".page")
-    .forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll('.page').forEach(p=>{
+   p.classList.add('hidden');
+ });
 
-  const target =
-    document.getElementById("page-"+page);
+ const target=document.getElementById(page);
 
-  if(target){
-    target.classList.add("active");
-  }
+ if(target){
+   target.classList.remove('hidden');
+ }
 
-  document.querySelectorAll(".nav button")
-    .forEach(b=>b.classList.remove("active"));
+ document.querySelectorAll('.nav button').forEach(b=>{
+   b.classList.remove('active');
+ });
 
-  if(button){
-    button.classList.add("active");
-  }
+ if(button){
+   button.classList.add('active');
+ }
 
-  if(page==="cart") renderCart();
-  if(page==="orders") renderOrders();
-  if(page==="payment") renderPayment();
-  if(page==="profile") renderProfile();
+ if(page==='orders'){
+   renderOrders();
+ }
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 
 
-/* ADD ITEM */
-function addItem(service,name,detail,price,icon){
+function openBooking(type){
 
-  const item={
-    id:"ITEM-"+Date.now()+"-"+Math.random()
-      .toString(36).substring(2,6),
+ const pages={
+  flight:'flight',
+  hotel:'hotel',
+  activity:'activity',
+  experience:'experience',
+  corporate:'corporate',
+  cargo:'cargo'
+ };
 
-    service,
-    name,
-    detail,
-    price:Number(price),
-    qty:1,
-    icon:icon || "•",
-    createdAt:new Date().toISOString()
-  };
+ if(pages[type]){
+   const button=[...document.querySelectorAll('.nav button')]
+    .find(b=>b.innerText.toLowerCase().includes(type==='cargo'?'traveller cargo':type));
 
-  cart.push(item);
-
-  save();
-
-  toast(
-    service+" added to Master Cart"
-  );
-
-  setTimeout(()=>{
-    showPage("cart");
-  },350);
+   showPage(pages[type],button);
+ }
 }
 
 
-/* REMOVE */
-function removeItem(id){
+function selectProduct(type,name,price){
 
-  cart =
-    cart.filter(item=>item.id!==id);
+ selectedProduct={
+  type:type,
+  name:name,
+  price:Number(price)
+ };
 
-  save();
+ document.getElementById('modalTitle').innerText=
+  'Complete '+type+' Booking';
 
-  renderCart();
+ const html=`
+
+  <div class="summary">
+   <div class="summary-row">
+    <span>Service</span>
+    <b>${type}</b>
+   </div>
+
+   <div class="summary-row">
+    <span>Product</span>
+    <b>${name}</b>
+   </div>
+
+   <div class="summary-row">
+    <span>Price</span>
+    <b>${money(price)}</b>
+   </div>
+  </div>
+
+  <div class="form-grid">
+
+   <div class="field">
+    <label>Customer Name</label>
+    <input id="customerName" placeholder="Full name">
+   </div>
+
+   <div class="field">
+    <label>Phone</label>
+    <input id="customerPhone" placeholder="+62">
+   </div>
+
+   <div class="field">
+    <label>Email</label>
+    <input id="customerEmail" type="email" placeholder="email@example.com">
+   </div>
+
+   <div class="field">
+    <label>Date</label>
+    <input id="customerDate" type="date">
+   </div>
+
+  </div>
+
+  <button class="btn success" onclick="checkout()">CONTINUE TO PAYMENT</button>
+ `;
+
+ document.getElementById('modalContent').innerHTML=html;
+
+ document.getElementById('bookingModal').classList.remove('hidden');
 }
 
 
-/* CALCULATE */
-function calculate(){
-
-  const subtotal =
-    cart.reduce(
-      (sum,item)=>sum+(item.price*item.qty),
-      0
-    );
-
-  const serviceFee =
-    subtotal > 0
-    ? Math.round(subtotal * .025)
-    : 0;
-
-  const insurance =
-    cart.some(i=>i.service==="CHELEA")
-    ? Math.round(subtotal * .01)
-    : 0;
-
-  const total =
-    subtotal + serviceFee + insurance;
-
-  return {
-    subtotal,
-    serviceFee,
-    insurance,
-    total
-  };
-}
-
-
-/* CART */
-function renderCart(){
-
-  const container =
-    document.getElementById("cartContainer");
-
-  const count =
-    cart.reduce((a,b)=>a+b.qty,0);
-
-  document.getElementById("cartCountText")
-    .textContent =
-    count+" item(s)";
-
-  if(!cart.length){
-
-    container.innerHTML=`
-
-      <div class="listPanel">
-
-        <div class="empty">
-
-          <div class="emptyIcon">🛒</div>
-
-          <h3>Master Cart masih kosong</h3>
-
-          <p>
-            Pilih Travel, TELKU atau CHELEA.
-            Semua pilihan akan masuk ke sini.
-          </p>
-
-          <button class="btn"
-          onclick="showPage('travel')">
-            START EXPLORING
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  const calc=calculate();
-
-
-  let html=`
-
-    <div class="cartLayout">
-
-      <div class="listPanel">
-
-  `;
-
-
-  cart.forEach(item=>{
-
-    let badgeClass =
-      item.service==="TELKU"
-      ? "telku"
-      : item.service==="CHELEA"
-      ? "chelea"
-      : "";
-
-    html+=`
-
-      <div class="cartItem">
-
-        <div class="cartInfo">
-
-          <div class="cartIcon">
-            ${item.icon}
-          </div>
-
-          <div>
-
-            <div class="cartName">
-              ${escapeHTML(item.name)}
-            </div>
-
-            <div class="cartMeta">
-              ${escapeHTML(item.detail)}
-            </div>
-
-            <span class="serviceBadge ${badgeClass}">
-              ${item.service}
-            </span>
-
-            <div style="margin-top:8px">
-              Qty: ${item.qty}
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="cartPrice">
-
-          ${money(item.price * item.qty)}
-
-          <br>
-
-          <button class="remove"
-          onclick="removeItem('${item.id}')">
-            REMOVE
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  html+=`
-
-      </div>
-
-      <div class="summaryPanel">
-
-        <h3>Order Summary</h3>
-
-        <div class="sumRow">
-          <span>Items</span>
-          <span>${cart.length}</span>
-        </div>
-
-        <div class="sumRow">
-          <span>Subtotal</span>
-          <span>${money(calc.subtotal)}</span>
-        </div>
-
-        <div class="sumRow">
-          <span>Service Fee</span>
-          <span>${money(calc.serviceFee)}</span>
-        </div>
-
-        <div class="sumRow">
-          <span>Insurance</span>
-          <span>${money(calc.insurance)}</span>
-        </div>
-
-        <div class="sumRow total">
-          <span>TOTAL</span>
-          <span>${money(calc.total)}</span>
-        </div>
-
-        <button class="btn full"
-        style="margin-top:17px"
-        onclick="checkout()">
-          CHECKOUT →
-        </button>
-
-        <button class="btn secondary full"
-        style="margin-top:9px"
-        onclick="showPage('travel')">
-          CONTINUE SHOPPING
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-  container.innerHTML=html;
-}
-
-
-/* CHECKOUT */
 function checkout(){
 
-  if(!cart.length){
-    toast("Cart masih kosong");
-    return;
-  }
+ const name=document.getElementById('customerName').value.trim();
 
-  const calc=calculate();
+ if(!name){
+   alert('Please enter customer name.');
+   return;
+ }
 
-  const orderCode =
-    "HBG-" +
-    new Date().getFullYear() +
-    "-" +
-    Math.random()
-      .toString(36)
-      .substring(2,8)
-      .toUpperCase();
+ const phone=document.getElementById('customerPhone').value.trim();
+ const email=document.getElementById('customerEmail').value.trim();
+ const date=document.getElementById('customerDate').value;
 
+ const html=`
 
-  const order={
+  <div class="summary">
+   <h3>Payment Summary</h3>
 
-    id:orderCode,
+   <div class="summary-row">
+    <span>Service</span>
+    <b>${selectedProduct.type}</b>
+   </div>
 
-    customerId:CUSTOMER_ID,
+   <div class="summary-row">
+    <span>Product</span>
+    <b>${selectedProduct.name}</b>
+   </div>
 
-    createdAt:new Date().toISOString(),
+   <div class="summary-row">
+    <span>Customer</span>
+    <b>${name}</b>
+   </div>
 
-    items:cart.map(x=>({...x})),
+   <div class="summary-row">
+    <span>Total</span>
+    <b>${money(selectedProduct.price)}</b>
+   </div>
+  </div>
 
-    subtotal:calc.subtotal,
+  <p class="muted">
+   Demo payment only. No real money will be charged.
+  </p>
 
-    serviceFee:calc.serviceFee,
+  <button class="btn success"
+   onclick='completeOrder(${JSON.stringify({
+    name,
+    phone,
+    email,
+    date
+   })})'>
+   PAY & CONFIRM BOOKING
+  </button>
+ `;
 
-    insurance:calc.insurance,
-
-    total:calc.total,
-
-    paymentStatus:"PENDING",
-
-    status:"PAYMENT_PENDING"
-
-  };
-
-
-  orders.unshift(order);
-
-  lastPayment={
-    orderId:orderCode,
-    amount:calc.total,
-    status:"PENDING",
-    method:"Not Selected",
-    createdAt:order.createdAt
-  };
-
-
-  cart=[];
-
-  save();
-
-  showPage("payment");
-
-  toast("Order created: "+orderCode);
+ document.getElementById('modalContent').innerHTML=html;
 }
 
 
-/* ORDERS */
-function renderOrders(){
-
-  const container =
-    document.getElementById("ordersContainer");
-
-  if(!orders.length){
-
-    container.innerHTML=`
-
-      <div class="listPanel">
-
-        <div class="empty">
-
-          <div class="emptyIcon">▤</div>
-
-          <h3>Belum ada order</h3>
-
-          <p>
-            Order Travel, TELKU dan CHELEA
-            akan muncul di Master Orders.
-          </p>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  let html="";
-
-
-  orders.forEach(order=>{
-
-    const pending =
-      order.paymentStatus==="PENDING";
-
-    html+=`
-
-      <div class="order">
-
-        <div class="orderTop">
-
-          <div>
-
-            <div class="orderCode">
-              ${order.id}
-            </div>
-
-            <div class="small">
-              ${formatDate(order.createdAt)}
-            </div>
-
-          </div>
-
-          <span class="status ${pending?"pending":""}">
-            ${order.paymentStatus}
-          </span>
-
-        </div>
-
-
-        <div class="orderItems">
-
-    `;
-
-
-    order.items.forEach(item=>{
-
-      html+=`
-
-        <div class="orderItem">
-
-          <span>
-            ${item.icon}
-            ${escapeHTML(item.name)}
-            <small>(${item.service})</small>
-          </span>
-
-          <strong>
-            ${money(item.price*item.qty)}
-          </strong>
-
-        </div>
-
-      `;
-
-    });
-
-
-    html+=`
-
-        </div>
-
-        <div class="orderTotal">
-          ${money(order.total)}
-        </div>
-
-        <div style="
-          display:flex;
-          gap:8px;
-          justify-content:flex-end;
-          margin-top:14px;
-        ">
-
-          <button class="btn secondary"
-          onclick="viewOrder('${order.id}')">
-            VIEW
-          </button>
-
-          ${
-            pending
-            ?
-            `<button class="btn"
-              onclick="payOrder('${order.id}')">
-              PAY
-            </button>`
-            :
-            `<button class="btn green"
-              onclick="viewPayment('${order.id}')">
-              RECEIPT / QR
-            </button>`
-          }
-
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  container.innerHTML=html;
-}
-
-
-/* VIEW ORDER */
-function viewOrder(id){
-
-  const order =
-    orders.find(x=>x.id===id);
-
-  if(!order)return;
-
-  let html=`
-
-    <p>
-      <strong>Customer:</strong>
-      ${CUSTOMER_ID}
-    </p>
-
-    <p>
-      <strong>Status:</strong>
-      ${order.paymentStatus}
-    </p>
-
-    <hr style="border-color:var(--line)">
-
-  `;
-
-  order.items.forEach(item=>{
-
-    html+=`
-
-      <div style="
-        padding:12px 0;
-        border-bottom:1px solid var(--line);
-      ">
-
-        <strong>
-          ${item.icon} ${escapeHTML(item.name)}
-        </strong>
-
-        <div class="small">
-          ${item.service} • ${escapeHTML(item.detail)}
-        </div>
-
-        <div style="margin-top:6px">
-          ${money(item.price)}
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-
-  html+=`
-
-    <h3 style="text-align:right">
-      TOTAL ${money(order.total)}
-    </h3>
-
-  `;
-
-  openModal(
-    "Order "+order.id,
-    html
-  );
-}
-
-
-/* PAYMENT */
-function renderPayment(){
-
-  const container =
-    document.getElementById("paymentContainer");
-
-  if(!lastPayment){
-
-    container.innerHTML=`
-
-      <div class="paymentBox">
-
-        <div class="empty">
-
-          <div class="emptyIcon">▣</div>
-
-          <h3>No Active Transaction</h3>
-
-          <p>
-            Checkout sebuah order terlebih dahulu.
-          </p>
-
-          <button class="btn"
-          onclick="showPage('travel')">
-            EXPLORE
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-    return;
-  }
-
-
-  const order =
-    orders.find(
-      x=>x.id===lastPayment.orderId
-    );
-
-
-  if(!order)return;
-
-
-  const paid =
-    order.paymentStatus==="SUCCESS";
-
-
-  container.innerHTML=`
-
-    <div class="paymentBox">
-
-      <div style="text-align:center">
-
-        <div class="serviceTag">
-          HOBBIGO MASTER PAYMENT
-        </div>
-
-        <h2>
-          ${paid
-            ? "Payment Successful"
-            : "Payment Pending"}
-        </h2>
-
-        <p style="color:var(--muted)">
-          Transaction ID: ${order.id}
-        </p>
-
-      </div>
-
-
-      <div class="paymentGrid">
-
-        <div>
-
-          <h3>Transaction</h3>
-
-          <div class="sumRow">
-            <span>Subtotal</span>
-            <span>${money(order.subtotal)}</span>
-          </div>
-
-          <div class="sumRow">
-            <span>Service Fee</span>
-            <span>${money(order.serviceFee)}</span>
-          </div>
-
-          <div class="sumRow">
-            <span>Insurance</span>
-            <span>${money(order.insurance)}</span>
-          </div>
-
-          <div class="sumRow total">
-            <span>TOTAL</span>
-            <span>${money(order.total)}</span>
-          </div>
-
-
-          ${
-            !paid
-            ?
-            `
-
-              <h3 style="margin-top:25px">
-                Payment Method
-              </h3>
-
-              <div class="paymentMethods">
-
-                <button
-                class="payMethod"
-                onclick="selectPay(this,'Bank Transfer')">
-                  🏦 Bank Transfer
-                </button>
-
-                <button
-                class="payMethod"
-                onclick="selectPay(this,'QRIS')">
-                  ▦ QRIS
-                </button>
-
-                <button
-                class="payMethod"
-                onclick="selectPay(this,'E-Wallet')">
-                  📱 E-Wallet
-                </button>
-
-              </div>
-
-              <button
-              class="btn full"
-              style="margin-top:15px"
-              onclick="simulatePayment('${order.id}')">
-                SIMULATE PAYMENT SUCCESS
-              </button>
-
-              <div class="small"
-              style="margin-top:9px;text-align:center">
-                DEMO ONLY — bukan gateway pembayaran nyata
-              </div>
-
-            `
-            :
-            `
-              <div style="
-                margin-top:20px;
-                padding:14px;
-                border-radius:12px;
-                background:rgba(53,224,161,.08);
-                color:#70edc1;
-              ">
-                ✓ PAYMENT SUCCESS
-              </div>
-
-            `
-          }
-
-        </div>
-
-
-        <div style="text-align:center">
-
-          <h3>QR Center</h3>
-
-          <div class="qrBox">
-
-            <div class="qrFake"></div>
-
-          </div>
-
-          <div class="small">
-            QR Transaction
-          </div>
-
-          <strong>
-            ${order.id}
-          </strong>
-
-          ${
-            paid
-            ?
-            `
-            <button class="btn green full"
-            style="margin-top:15px"
-            onclick="printReceipt('${order.id}')">
-              PRINT RECEIPT
-            </button>
-            `
-            :
-            ""
-          }
-
-        </div>
-
-      </div>
-
-
-      <div class="receipt">
-
-        <div class="small">
-          HOBBIGO ONE
-        </div>
-
-        <p>
-          Travel + Connectivity + Delivery
-        </p>
-
-        <p class="small">
-          Master Customer:
-          ${CUSTOMER_ID}
-        </p>
-
-      </div>
-
+function completeOrder(customer){
+
+ const order={
+  id:'HBG-'+Date.now().toString().slice(-8),
+  type:selectedProduct.type,
+  product:selectedProduct.name,
+  price:selectedProduct.price,
+  customer:customer.name,
+  phone:customer.phone,
+  email:customer.email,
+  date:customer.date,
+  status:'CONFIRMED',
+  payment:'PAID DEMO',
+  created:new Date().toLocaleString('id-ID')
+ };
+
+ saveOrder(order);
+
+ document.getElementById('modalContent').innerHTML=`
+
+  <div style="text-align:center">
+
+   <div style="font-size:55px">✅</div>
+
+   <h2>Booking Confirmed</h2>
+
+   <p class="muted">
+    Your HobbiGo demo booking has been successfully created.
+   </p>
+
+   <div class="summary">
+    <div class="summary-row">
+     <span>Booking ID</span>
+     <b>${order.id}</b>
     </div>
 
+    <div class="summary-row">
+     <span>Service</span>
+     <b>${order.type}</b>
+    </div>
+
+    <div class="summary-row">
+     <span>Status</span>
+     <b style="color:#5df1b1">${order.status}</b>
+    </div>
+
+    <div class="summary-row">
+     <span>Payment</span>
+     <b>${order.payment}</b>
+    </div>
+   </div>
+
+   <button class="btn" onclick="closeModal();showPage('orders')">
+    VIEW MY ORDER
+   </button>
+
+  </div>
+ `;
+
+}
+
+
+function createCorporate(){
+
+ const company=document.getElementById('corpCompany').value.trim();
+ const type=document.getElementById('corpType').value;
+ const destination=document.getElementById('corpDestination').value.trim();
+ const date=document.getElementById('corpDate').value;
+ const people=document.getElementById('corpPeople').value;
+ const budget=document.getElementById('corpBudget').value;
+ const requirement=document.getElementById('corpRequirement').value;
+
+ if(!company || !destination || !date){
+   alert('Please complete Company, Destination and Date.');
+   return;
+ }
+
+ const order={
+  id:'HBG-CORP-'+Date.now().toString().slice(-7),
+  type:'Corporate',
+  product:type+' — '+destination,
+  price:0,
+  customer:company,
+  phone:'',
+  email:'',
+  date:date,
+  participants:people,
+  budget:budget,
+  requirement:requirement,
+  status:'EVENT REQUESTED',
+  payment:'PENDING QUOTE',
+  created:new Date().toLocaleString('id-ID')
+ };
+
+ saveOrder(order);
+
+ alert(
+  'Corporate Event created successfully!\\n\\n'+
+  'Request ID: '+order.id
+ );
+
+ document.getElementById('corpCompany').value='';
+ document.getElementById('corpDestination').value='';
+
+ showPage('orders');
+}
+
+
+function createCargo(){
+
+ const origin=document.getElementById('cargoOrigin').value.trim();
+ const destination=document.getElementById('cargoDestination').value.trim();
+ const item=document.getElementById('cargoItem').value.trim();
+ const weight=document.getElementById('cargoWeight').value;
+ const value=document.getElementById('cargoValue').value;
+ const priority=document.getElementById('cargoPriority').value;
+ const description=document.getElementById('cargoDescription').value;
+
+ if(!origin || !destination || !item){
+   alert('Please complete origin, destination and item.');
+   return;
+ }
+
+ const order={
+  id:'HBG-CARGO-'+Date.now().toString().slice(-7),
+  type:'Traveller Cargo',
+  product:item+' — '+origin+' → '+destination,
+  price:0,
+  customer:'Cargo Customer',
+  phone:'',
+  email:'',
+  date:'',
+  weight:weight,
+  declaredValue:value,
+  priority:priority,
+  description:description,
+  status:'SECURITY REVIEW',
+  payment:'PENDING QUOTE',
+  created:new Date().toLocaleString('id-ID')
+ };
+
+ saveOrder(order);
+
+ alert(
+  'Traveller Cargo request created!\\n\\n'+
+  'Request ID: '+order.id+'\\n\\n'+
+  'Next: Security Review → Traveler Match → Quote → Escrow.'
+ );
+
+ showPage('orders');
+}
+
+
+function saveOrder(order){
+
+ const orders=JSON.parse(
+  localStorage.getItem('hobbigo_orders') || '[]'
+ );
+
+ orders.unshift(order);
+
+ localStorage.setItem(
+  'hobbigo_orders',
+  JSON.stringify(orders)
+ );
+}
+
+
+function getOrders(){
+
+ return JSON.parse(
+  localStorage.getItem('hobbigo_orders') || '[]'
+ );
+}
+
+
+function renderOrders(){
+
+ const list=document.getElementById('ordersList');
+ const orders=getOrders();
+
+ if(!orders.length){
+
+  list.innerHTML=`
+   <div class="card">
+    <h3>No orders yet</h3>
+    <p>
+     Your Flight, Hotel, Activity, Experience,
+     Corporate and Traveller Cargo bookings will appear here.
+    </p>
+   </div>
   `;
-}
 
+  return;
+ }
 
-/* PAYMENT METHOD */
-function selectPay(button,method){
+ list.innerHTML=orders.map(order=>`
 
-  document.querySelectorAll(".payMethod")
-    .forEach(x=>x.classList.remove("selected"));
+  <div class="order">
 
-  button.classList.add("selected");
+   <div class="order-head">
 
-  if(lastPayment){
-    lastPayment.method=method;
+    <div>
+     <div class="muted">${order.type}</div>
+     <h3>${order.product}</h3>
+    </div>
 
-    localStorage.setItem(
-      "hobbigo_last_payment",
-      JSON.stringify(lastPayment)
-    );
-  }
+    <div class="status">${order.status}</div>
 
-  toast("Payment method: "+method);
-}
+   </div>
 
+   <div class="summary">
 
-/* SIMULATE PAYMENT */
-function simulatePayment(id){
+    <div class="summary-row">
+     <span>Order ID</span>
+     <b>${order.id}</b>
+    </div>
 
-  const order =
-    orders.find(x=>x.id===id);
+    <div class="summary-row">
+     <span>Customer</span>
+     <b>${order.customer}</b>
+    </div>
 
-  if(!order)return;
+    <div class="summary-row">
+     <span>Date</span>
+     <b>${order.date || '-'}</b>
+    </div>
 
-  order.paymentStatus="SUCCESS";
-  order.status="CONFIRMED";
+    <div class="summary-row">
+     <span>Payment</span>
+     <b>${order.payment}</b>
+    </div>
 
-  lastPayment={
-    orderId:id,
-    amount:order.total,
-    status:"SUCCESS",
-    method:lastPayment?.method || "DEMO",
-    createdAt:order.createdAt
-  };
+    ${
+     order.price
+     ?
+     `<div class="summary-row">
+       <span>Total</span>
+       <b>${money(order.price)}</b>
+      </div>`
+     :
+     ''
+    }
 
-  save();
+   </div>
 
-  renderPayment();
-  renderOrders();
+  </div>
 
-  toast("DEMO PAYMENT SUCCESS");
-}
-
-
-/* PAY ORDER */
-function payOrder(id){
-
-  const order =
-    orders.find(x=>x.id===id);
-
-  if(!order)return;
-
-  lastPayment={
-    orderId:id,
-    amount:order.total,
-    status:order.paymentStatus,
-    method:"Not Selected",
-    createdAt:order.createdAt
-  };
-
-  localStorage.setItem(
-    "hobbigo_last_payment",
-    JSON.stringify(lastPayment)
-  );
-
-  showPage("payment");
-}
-
-
-/* VIEW PAYMENT */
-function viewPayment(id){
-
-  const order =
-    orders.find(x=>x.id===id);
-
-  if(!order)return;
-
-  lastPayment={
-    orderId:id,
-    amount:order.total,
-    status:order.paymentStatus,
-    method:order.paymentMethod || "DEMO",
-    createdAt:order.createdAt
-  };
-
-  localStorage.setItem(
-    "hobbigo_last_payment",
-    JSON.stringify(lastPayment)
-  );
-
-  showPage("payment");
-}
-
-
-/* PRINT */
-function printReceipt(id){
-
-  const order =
-    orders.find(x=>x.id===id);
-
-  if(!order)return;
-
-  const rows =
-    order.items.map(
-      item=>`
-        <tr>
-          <td>${escapeHTML(item.name)}</td>
-          <td>${item.service}</td>
-          <td style="text-align:right">
-            ${money(item.price)}
-          </td>
-        </tr>
-      `
-    ).join("");
-
-
-  const w=window.open("","_blank");
-
-  w.document.write(`
-
-    <html>
-    <head>
-      <title>HOBBIGO Receipt ${order.id}</title>
-
-      <style>
-        body{
-          font-family:Arial;
-          padding:35px;
-          color:#111;
-        }
-
-        h1{margin-bottom:3px}
-
-        table{
-          width:100%;
-          border-collapse:collapse;
-          margin-top:25px;
-        }
-
-        td{
-          padding:10px;
-          border-bottom:1px solid #ddd;
-        }
-
-        .total{
-          font-size:20px;
-          font-weight:bold;
-          text-align:right;
-          margin-top:20px;
-        }
-      </style>
-
-    </head>
-
-    <body>
-
-      <h1>HOBBIGO</h1>
-
-      <div>
-        ONE APP. ENDLESS JOURNEY.
-      </div>
-
-      <p>
-        Transaction:
-        <strong>${order.id}</strong>
-      </p>
-
-      <p>
-        Customer:
-        ${CUSTOMER_ID}
-      </p>
-
-      <table>
-        ${rows}
-      </table>
-
-      <div class="total">
-        TOTAL: ${money(order.total)}
-      </div>
-
-      <p style="margin-top:40px">
-        Payment Status: SUCCESS
-      </p>
-
-      <p>
-        Travel • Connectivity • Delivery
-      </p>
-
-    </body>
-    </html>
-
-  `);
-
-  w.document.close();
-  w.print();
-}
-
-
-/* PROFILE */
-function renderProfile(){
-
-  document.getElementById("customerId")
-    .textContent=CUSTOMER_ID;
-
-
-  let travel=0;
-  let telku=0;
-  let chelea=0;
-
-  orders.forEach(order=>{
-
-    order.items.forEach(item=>{
-
-      if(item.service==="TRAVEL")travel++;
-      if(item.service==="TELKU")telku++;
-      if(item.service==="CHELEA")chelea++;
-
-    });
-
-  });
-
-
-  document.getElementById("profileTravel")
-    .textContent=travel;
-
-  document.getElementById("profileTelku")
-    .textContent=telku;
-
-  document.getElementById("profileChelea")
-    .textContent=chelea;
-
-  document.getElementById("profileOrders")
-    .textContent=orders.length;
-}
-
-
-/* TRIP PLANNER */
-function openTripPlanner(){
-
-  openModal(
-
-    "AI Trip Planner",
-
-    `
-
-      <p style="color:var(--muted)">
-        Buat demo perjalanan baru.
-      </p>
-
-      <label>Destination</label>
-
-      <input id="tripDestination"
-      class="tripInput"
-      value="Bali, Indonesia"
-      style="
-        width:100%;
-        margin-top:7px;
-        padding:13px;
-        background:#0b1c30;
-        color:white;
-        border:1px solid var(--line);
-        border-radius:11px;
-      ">
-
-      <label style="
-        display:block;
-        margin-top:15px;
-      ">
-        Duration
-      </label>
-
-      <select id="tripDuration"
-      style="
-        width:100%;
-        margin-top:7px;
-        padding:13px;
-        background:#0b1c30;
-        color:white;
-        border:1px solid var(--line);
-        border-radius:11px;
-      ">
-
-        <option>3 Days</option>
-        <option selected>4 Days</option>
-        <option>5 Days</option>
-        <option>7 Days</option>
-
-      </select>
-
-
-      <label style="
-        display:block;
-        margin-top:15px;
-      ">
-        Trip Style
-      </label>
-
-      <select id="tripStyle"
-      style="
-        width:100%;
-        margin-top:7px;
-        padding:13px;
-        background:#0b1c30;
-        color:white;
-        border:1px solid var(--line);
-        border-radius:11px;
-      ">
-
-        <option>Comfort</option>
-        <option>Economy</option>
-        <option>Exclusive</option>
-        <option>Family</option>
-        <option>Corporate</option>
-
-      </select>
-
-
-      <button
-      class="btn full"
-      style="margin-top:20px"
-      onclick="generateTrip()">
-        GENERATE SMART ROUTE
-      </button>
-
-    `
-
-  );
-
-}
-
-
-/* GENERATE TRIP */
-function generateTrip(){
-
-  const destination =
-    document.getElementById("tripDestination").value;
-
-  const duration =
-    document.getElementById("tripDuration").value;
-
-  const style =
-    document.getElementById("tripStyle").value;
-
-
-  const price =
-    style==="Exclusive"
-    ? 7500000
-    : style==="Economy"
-    ? 2800000
-    : 4500000;
-
-
-  document.getElementById("modalBody")
-    .innerHTML=`
-
-      <div style="text-align:center">
-
-        <div class="serviceTag">
-          AI ENGINE
-        </div>
-
-        <h2>
-          Smart Route Generated
-        </h2>
-
-        <div style="
-          font-size:45px;
-          font-weight:900;
-          margin:15px;
-          color:var(--cyan);
-        ">
-          96%
-        </div>
-
-        <p style="color:var(--muted)">
-          AI Journey Score
-        </p>
-
-      </div>
-
-
-      <div class="card"
-      style="padding:17px;margin-top:15px">
-
-        <strong>
-          ${escapeHTML(destination)}
-        </strong>
-
-        <p>
-          ${duration} • ${style}
-        </p>
-
-        <p>
-          Day 1 — Arrival & Hotel<br>
-          Day 2 — Experience & Activity<br>
-          Day 3 — Local Culinary & Explore<br>
-          Day 4 — Leisure & Departure
-        </p>
-
-        <div class="cardBottom">
-
-          <div class="price">
-            ${money(price)}
-          </div>
-
-          <button class="btn"
-          onclick="addTripFromPlanner(
-            '${escapeAttribute(destination)}',
-            '${escapeAttribute(duration)}',
-            '${escapeAttribute(style)}',
-            ${price}
-          )">
-            ADD JOURNEY
-          </button>
-
-        </div>
-
-      </div>
-
-    `;
-
-}
-
-
-/* ADD TRIP */
-function addTripFromPlanner(
-  destination,
-  duration,
-  style,
-  price
-){
-
-  closeModal();
-
-  addItem(
-    "TRAVEL",
-    "AI Smart Journey — "+destination,
-    duration+" • "+style+" • AI Score 96%",
-    price,
-    "✈️"
-  );
-}
-
-
-/* GLOBAL SEARCH */
-function globalSearch(){
-
-  const value =
-    document.getElementById("globalSearch")
-    .value
-    .trim()
-    .toLowerCase();
-
-
-  if(!value){
-
-    toast("Masukkan pencarian");
-
-    return;
-  }
-
-
-  if(
-    value.includes("esim") ||
-    value.includes("telku") ||
-    value.includes("data")
-  ){
-
-    showPage("telku");
-
-    return;
-  }
-
-
-  if(
-    value.includes("delivery") ||
-    value.includes("chelea") ||
-    value.includes("kirim") ||
-    value.includes("jastip")
-  ){
-
-    showPage("chelea");
-
-    return;
-  }
-
-
-  showPage("travel");
-
-  toast(
-    "Searching Travel: "+value
-  );
-}
-
-
-/* MODAL */
-function openModal(title,body){
-
-  document.getElementById("modalTitle")
-    .textContent=title;
-
-  document.getElementById("modalBody")
-    .innerHTML=body;
-
-  document.getElementById("modal")
-    .classList.add("show");
+ `).join('');
 }
 
 
 function closeModal(){
-
-  document.getElementById("modal")
-    .classList.remove("show");
+ document.getElementById('bookingModal').classList.add('hidden');
 }
-
-
-/* TOAST */
-function toast(message){
-
-  const el =
-    document.getElementById("toast");
-
-  el.textContent=message;
-
-  el.classList.add("show");
-
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },2300);
-}
-
-
-/* CLEAR DEMO ORDERS */
-function clearOrders(){
-
-  if(
-    !confirm(
-      "Hapus seluruh DEMO orders?"
-    )
-  )return;
-
-  orders=[];
-  lastPayment=null;
-
-  localStorage.removeItem(
-    "hobbigo_orders"
-  );
-
-  localStorage.removeItem(
-    "hobbigo_last_payment"
-  );
-
-  save();
-
-  renderOrders();
-
-  toast("Demo orders cleared");
-}
-
-
-/* UPDATE UI */
-function updateUI(){
-
-  const count =
-    cart.reduce((a,b)=>a+b.qty,0);
-
-  const badge =
-    document.getElementById("sideCartBadge");
-
-  if(badge)
-    badge.textContent=count;
-
-
-  const statCart =
-    document.getElementById("statCart");
-
-  if(statCart)
-    statCart.textContent=count;
-
-
-  const statOrders =
-    document.getElementById("statOrders");
-
-  if(statOrders)
-    statOrders.textContent=orders.length;
-
-
-  renderProfile();
-}
-
-
-/* ESCAPE */
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-function escapeAttribute(value){
-
-  return String(value)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
-}
-
-
-/* DATE */
-function formatDate(value){
-
-  try{
-
-    return new Intl.DateTimeFormat(
-      "id-ID",
-      {
-        dateStyle:"medium",
-        timeStyle:"short"
-      }
-    ).format(new Date(value));
-
-  }catch(e){
-
-    return value;
-
-  }
-}
-
-
-/* MODAL OUTSIDE CLICK */
-document.getElementById("modal")
-.addEventListener("click",function(e){
-
-  if(e.target===this){
-    closeModal();
-  }
-
-});
-
-
-/* INIT */
-document.addEventListener(
-  "DOMContentLoaded",
-  function(){
-
-    updateUI();
-    renderCart();
-    renderOrders();
-    renderPayment();
-    renderProfile();
-
-  }
-);
 
 </script>
 
