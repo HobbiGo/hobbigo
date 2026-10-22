@@ -5,19 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>CHELEA — HOBBIGO</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>CHELEA — Transaction Flow</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
  --bg:#07111f;
- --bg2:#0b1728;
  --card:#101f33;
- --card2:#13253d;
- --line:#223b5b;
+ --card2:#14263d;
+ --line:#243d5b;
  --text:#f5f8ff;
  --muted:#91a4bd;
  --accent:#35d0ba;
@@ -34,43 +31,31 @@ body{
  min-height:100vh;
 }
 
-button,input,select{
- font:inherit;
-}
-
-button{
- border:0;
- cursor:pointer;
-}
-
 .app{
  width:100%;
  max-width:520px;
  margin:auto;
  min-height:100vh;
  background:var(--bg);
- box-shadow:0 0 50px rgba(0,0,0,.25);
 }
 
 header{
  position:sticky;
  top:0;
  z-index:20;
- padding:15px;
- background:rgba(7,17,31,.95);
+ padding:16px;
+ background:rgba(7,17,31,.96);
  border-bottom:1px solid var(--line);
- backdrop-filter:blur(12px);
 }
 
-.header-row{
+.header{
  display:flex;
  justify-content:space-between;
  align-items:center;
- gap:10px;
 }
 
 .logo{
- font-size:22px;
+ font-size:23px;
  font-weight:900;
  letter-spacing:2px;
 }
@@ -80,18 +65,18 @@ header{
 }
 
 .badge{
+ font-size:10px;
+ font-weight:800;
  padding:7px 10px;
  border-radius:20px;
- background:rgba(53,208,186,.12);
  color:var(--accent);
+ background:rgba(53,208,186,.1);
  border:1px solid rgba(53,208,186,.25);
- font-size:11px;
- font-weight:800;
 }
 
 main{
  padding:15px;
- padding-bottom:95px;
+ padding-bottom:100px;
 }
 
 .screen{
@@ -104,23 +89,23 @@ main{
 
 .hero{
  padding:20px;
- border:1px solid var(--line);
  border-radius:20px;
  background:
  linear-gradient(135deg,rgba(53,208,186,.13),rgba(77,163,255,.08)),
  var(--card);
+ border:1px solid var(--line);
  margin-bottom:14px;
 }
 
 .hero h1{
- font-size:27px;
+ font-size:26px;
  margin-bottom:8px;
 }
 
 .hero p{
  color:var(--muted);
- line-height:1.5;
  font-size:14px;
+ line-height:1.5;
 }
 
 .card{
@@ -132,31 +117,7 @@ main{
 }
 
 .card h3{
- margin-bottom:12px;
- font-size:16px;
-}
-
-.grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px;
-}
-
-.service{
- padding:15px;
- border-radius:15px;
- background:var(--card2);
- border:1px solid var(--line);
-}
-
-.service strong{
- display:block;
- margin-bottom:5px;
-}
-
-.service small{
- color:var(--muted);
- line-height:1.4;
+ margin-bottom:13px;
 }
 
 label{
@@ -169,37 +130,22 @@ label{
 input,select{
  width:100%;
  padding:13px;
+ margin-bottom:11px;
  border-radius:12px;
  border:1px solid var(--line);
  background:#081524;
  color:var(--text);
  outline:none;
- margin-bottom:10px;
-}
-
-input:focus,select:focus{
- border-color:var(--accent);
 }
 
 .btn{
  width:100%;
- padding:13px 15px;
+ padding:14px;
  border-radius:12px;
- font-weight:800;
  margin-top:7px;
- background:var(--accent);
- color:#04121b;
-}
-
-.btn.secondary{
- background:#142942;
- color:var(--text);
- border:1px solid var(--line);
-}
-
-.btn.blue{
- background:var(--blue);
- color:white;
+ font-weight:900;
+ border:0;
+ cursor:pointer;
 }
 
 .btn.green{
@@ -207,23 +153,29 @@ input:focus,select:focus{
  color:#04140c;
 }
 
+.btn.blue{
+ background:var(--blue);
+ color:#fff;
+}
+
+.btn.secondary{
+ background:#142942;
+ color:#fff;
+ border:1px solid var(--line);
+}
+
 .btn.orange{
  background:var(--orange);
  color:#241500;
 }
 
-.btn.red{
- background:var(--red);
- color:white;
-}
-
 .btn:disabled{
- opacity:.5;
+ opacity:.45;
  cursor:not-allowed;
 }
 
 .status{
- padding:12px;
+ padding:13px;
  border-radius:12px;
  background:#081524;
  border:1px solid var(--line);
@@ -235,74 +187,115 @@ input:focus,select:focus{
 
 .status.success{
  color:var(--green);
- border-color:rgba(62,229,139,.3);
-}
-
-.status.error{
- color:var(--red);
- border-color:rgba(255,101,119,.3);
+ border-color:rgba(62,229,139,.35);
+ background:rgba(62,229,139,.06);
 }
 
 .status.warning{
  color:var(--orange);
- border-color:rgba(255,184,77,.3);
+ border-color:rgba(255,184,77,.35);
+}
+
+.status.error{
+ color:var(--red);
+ border-color:rgba(255,101,119,.35);
 }
 
 .idbox{
  background:#07111f;
  border:1px dashed #315275;
  border-radius:13px;
- padding:13px;
+ padding:14px;
  margin-bottom:10px;
 }
 
 .idbox small{
- color:var(--muted);
  display:block;
- margin-bottom:4px;
+ color:var(--muted);
+ margin-bottom:6px;
+ font-size:11px;
 }
 
 .idbox strong{
- font-size:16px;
+ display:block;
+ font-size:17px;
  letter-spacing:1px;
  word-break:break-all;
+ color:var(--accent);
 }
 
-.timeline{
+.flow{
  display:flex;
  flex-direction:column;
  gap:8px;
 }
 
-.step{
- display:flex;
- align-items:center;
- gap:10px;
+.flow-item{
  padding:11px;
+ border-radius:11px;
  background:#0b192b;
  border:1px solid var(--line);
- border-radius:12px;
+ font-size:12px;
+ color:#71859e;
 }
 
-.dot{
- width:11px;
- height:11px;
- border-radius:50%;
- background:#40556e;
- flex:none;
+.flow-item.active{
+ color:var(--accent);
+ border-color:rgba(53,208,186,.4);
 }
 
-.step.done .dot{
- background:var(--green);
- box-shadow:0 0 10px rgba(62,229,139,.45);
+.flow-item.done{
+ color:var(--green);
+ border-color:rgba(62,229,139,.25);
 }
 
-.step.active .dot{
- background:var(--accent);
- box-shadow:0 0 10px rgba(53,208,186,.45);
+.amount{
+ font-size:30px;
+ font-weight:900;
+ color:var(--accent);
+ margin:10px 0;
 }
 
-.step span{
+.row{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ padding:9px 0;
+ border-bottom:1px solid rgba(255,255,255,.05);
+ font-size:13px;
+}
+
+.row:last-child{
+ border-bottom:0;
+}
+
+.row span:first-child{
+ color:var(--muted);
+}
+
+.success-box{
+ text-align:center;
+ padding:20px;
+ border-radius:18px;
+ border:1px solid rgba(62,229,139,.35);
+ background:rgba(62,229,139,.06);
+ margin-bottom:14px;
+}
+
+.success-icon{
+ font-size:45px;
+ margin-bottom:8px;
+}
+
+.success-title{
+ font-size:22px;
+ font-weight:900;
+ color:var(--green);
+}
+
+.success-sub{
+ color:var(--muted);
+ margin-top:6px;
  font-size:13px;
 }
 
@@ -314,66 +307,27 @@ input:focus,select:focus{
  width:100%;
  max-width:520px;
  display:grid;
- grid-template-columns:repeat(5,1fr);
+ grid-template-columns:repeat(4,1fr);
  background:rgba(7,17,31,.97);
  border-top:1px solid var(--line);
  z-index:30;
 }
 
 .nav button{
- padding:10px 4px;
+ padding:13px 4px;
  background:transparent;
  color:#71859e;
+ border:0;
  font-size:10px;
+ font-weight:700;
 }
 
 .nav button.active{
  color:var(--accent);
 }
 
-.price{
- font-size:28px;
- font-weight:900;
- color:var(--accent);
-}
-
-.row{
- display:flex;
- justify-content:space-between;
- gap:10px;
- padding:8px 0;
- border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.row:last-child{
- border-bottom:0;
-}
-
-.row span:first-child{
- color:var(--muted);
-}
-
-.notice{
- font-size:11px;
- color:var(--muted);
- line-height:1.5;
- padding:10px;
- border-left:3px solid var(--orange);
- background:rgba(255,184,77,.05);
- margin-top:10px;
-}
-
-pre{
- white-space:pre-wrap;
- word-break:break-word;
- font-size:11px;
- color:#9fb2ca;
-}
-
-@media(max-width:390px){
- .grid{
-  grid-template-columns:1fr;
- }
+.hidden{
+ display:none!important;
 }
 </style>
 
@@ -384,9 +338,9 @@ pre{
 <div class="app">
 
 <header>
- <div class="header-row">
+ <div class="header">
   <div class="logo">CHELEA<span>.</span></div>
-  <div class="badge">SECURE DELIVERY</div>
+  <div class="badge">TRANSACTION</div>
  </div>
 </header>
 
@@ -397,75 +351,54 @@ pre{
 <section id="home" class="screen active">
 
  <div class="hero">
-  <h1>Smart Personal Delivery</h1>
+  <h1>CHELEA Delivery</h1>
   <p>
-   Jastip, traveler delivery, cargo partner, pickup,
-   verification, payment and live tracking in one CHELEA ecosystem.
+   Create your delivery transaction, receive a unique
+   Transaction ID and Tracking ID, then complete payment.
   </p>
  </div>
 
- <div id="connectionStatus" class="status">
-  Supabase connection belum dites.
- </div>
-
- <div class="grid">
-
-  <div class="service">
-   <strong>📦 Jastip</strong>
-   <small>Personal delivery request.</small>
-  </div>
-
-  <div class="service">
-   <strong>✈️ Traveler</strong>
-   <small>Traveler delivery partner.</small>
-  </div>
-
-  <div class="service">
-   <strong>🚚 Cargo</strong>
-   <small>Cargo partner network.</small>
-  </div>
-
-  <div class="service">
-   <strong>📍 Pickup</strong>
-   <small>Request pickup service.</small>
-  </div>
-
- </div>
-
  <div class="card">
-  <h3>Backend Connection</h3>
-  <button class="btn blue" onclick="testSupabase()">
-   TEST SUPABASE TRANSACTION
-  </button>
+  <h3>Transaction Lifecycle</h3>
+
+  <div class="flow">
+   <div id="flowCreate" class="flow-item active">
+    1. CREATE TRANSACTION
+   </div>
+
+   <div id="flowCreated" class="flow-item">
+    2. TRANSACTION CREATED
+   </div>
+
+   <div id="flowPayment" class="flow-item">
+    3. PAYMENT
+   </div>
+
+   <div id="flowPaid" class="flow-item">
+    4. PAYMENT SUCCESS
+   </div>
+
+   <div id="flowTracking" class="flow-item">
+    5. TRACKING ACTIVE
+   </div>
+  </div>
  </div>
 
- <div class="card">
-  <h3>Current Transaction</h3>
+ <div id="homeCurrent" class="card"></div>
 
-  <div class="idbox">
-   <small>Transaction ID</small>
-   <strong id="homeTransactionId">—</strong>
-  </div>
-
-  <div class="idbox">
-   <small>Tracking ID</small>
-   <strong id="homeTrackingId">—</strong>
-  </div>
-
-  <div id="homeStatus" class="status">
-   No active transaction.
-  </div>
- </div>
+ <button class="btn green" onclick="goCreate()">
+  CREATE NEW TRANSACTION
+ </button>
 
 </section>
 
-<!-- REQUEST -->
+<!-- CREATE -->
 
-<section id="request" class="screen">
+<section id="create" class="screen">
 
  <div class="hero">
-  <h1>Create Delivery Request</h1>
-  <p>Set pickup, destination, package and delivery priority.</p>
+  <h1>Create Transaction</h1>
+  <p>Isi data pengiriman. ID baru akan dibuat otomatis.</p>
  </div>
 
  <div class="card">
@@ -477,16 +410,16 @@ pre{
 <input id="destination" value="Bandung">
 
 <label>Pickup Location</label>
-<input id="pickupLocation" value="Mall Summarecon Bekasi">
+<input id="pickup" value="Mall Summarecon Bekasi">
 
 <label>Delivery Location</label>
-<input id="deliveryLocation" value="Bandung Indah Plaza">
+<input id="delivery" value="Bandung Indah Plaza">
 
 <label>Delivery Date</label>
-<input id="deliveryDate" type="date" value="2026-10-23">
+<input id="date" type="date" value="2026-10-23">
 
-<label>Package Weight (KG)</label>
-<input id="weight" type="number" min="0.1" step="0.1" value="2">
+<label>Weight</label>
+<input id="weight" type="number" value="2" min="0.1" step="0.1">
 
 <label>Priority</label>
 <select id="priority">
@@ -496,120 +429,72 @@ pre{
    <option value="exclusive">Exclusive</option>
   </select>
 
-  <button id="createTransactionBtn" class="btn green" onclick="createTransaction()">
-   CREATE TRANSACTION
-  </button>
-
-  <button class="btn secondary" onclick="newTransaction()">
-   NEW TRANSACTION
-  </button>
+<button id="createBtn"
+       class="btn green"
+       onclick="createTransaction()">
+CREATE TRANSACTION
+</button>
 
  </div>
 
- <div id="requestResult"></div>
+ <div id="createResult"></div>
 
 </section>
 
-<!-- SECURITY -->
+<!-- CREATED -->
 
-<section id="security" class="screen">
+<section id="created" class="screen">
 
  <div class="hero">
-  <h1>Security Center</h1>
-  <p>Identity, item and chain-of-custody verification.</p>
+  <h1>Transaction Created</h1>
+  <p>Transaction berhasil dibuat dan siap masuk ke payment.</p>
+ </div>
+
+ <div class="success-box">
+  <div class="success-icon">✓</div>
+  <div class="success-title">TRANSACTION CREATED</div>
+  <div class="success-sub">
+   Transaction berhasil dibuat.
+  </div>
  </div>
 
  <div class="card">
 
-  <h3>Global Owner Identity</h3>
+  <div class="idbox">
+   <small>TRANSACTION ID</small>
+   <strong id="createdTransactionId">—</strong>
+  </div>
 
-<label>Owner Name</label>
-<input id="ownerName" value="CHELEA Demo Owner">
+  <div class="idbox">
+   <small>TRACKING ID</small>
+   <strong id="createdTrackingId">—</strong>
+  </div>
 
-<label>Phone</label>
-<input id="ownerPhone" value="+62">
+  <div class="row">
+   <span>Origin</span>
+   <strong id="createdOrigin">—</strong>
+  </div>
 
-<label>National ID / Passport</label>
-<input id="ownerIdentity" placeholder="Private identity number">
+  <div class="row">
+   <span>Destination</span>
+   <strong id="createdDestination">—</strong>
+  </div>
 
-  <button class="btn blue" onclick="saveIdentity()">
-   SAVE IDENTITY
-  </button>
+  <div class="row">
+   <span>Status</span>
+   <strong id="createdStatus">REQUEST</strong>
+  </div>
 
- </div>
-
- <div class="card">
-
-  <h3>Item Verification</h3>
-
-<label>Item Description</label>
-<input id="itemDescription" value="Personal package">
-
-<label>Item Photo</label>
-<input id="itemPhoto" type="file" accept="image/*" onchange="previewPhoto(event)">
-
-  <div id="photoPreview"></div>
-
-  <button class="btn blue" onclick="saveItem()">
-   VERIFY ITEM
-  </button>
-
- </div>
-
- <div class="card">
-
-  <h3>Chain of Custody</h3>
-
-  <div class="timeline">
-
-   <div class="step done">
-    <div class="dot"></div>
-    <span>ITEM CREATED</span>
-   </div>
-
-   <div class="step done">
-    <div class="dot"></div>
-    <span>ITEM VERIFIED</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>PHOTO BEFORE PICKUP</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>PICKUP VERIFIED</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>GPS + TIME</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>IN TRANSIT</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>ARRIVAL</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>HANDOVER</span>
-   </div>
-
-   <div class="step">
-    <div class="dot"></div>
-    <span>COMPLETED</span>
-   </div>
-
+  <div class="row">
+   <span>Total</span>
+   <strong id="createdAmount">Rp 0</strong>
   </div>
 
  </div>
+
+ <button class="btn blue" onclick="goPayment()">
+  CONTINUE TO PAYMENT
+ </button>
 
 </section>
 
@@ -619,293 +504,180 @@ pre{
 
  <div class="hero">
   <h1>Payment</h1>
-  <p>Payment flow connected to the current CHELEA transaction.</p>
+  <p>Review transaction sebelum konfirmasi pembayaran.</p>
  </div>
 
  <div class="card">
 
   <div class="idbox">
-   <small>Transaction</small>
+   <small>TRANSACTION ID</small>
    <strong id="paymentTransactionId">—</strong>
   </div>
 
   <div class="idbox">
-   <small>Tracking</small>
+   <small>TRACKING ID</small>
    <strong id="paymentTrackingId">—</strong>
   </div>
 
-  <div id="paymentPrice" class="price">
+  <div class="row">
+   <span>Route</span>
+   <strong id="paymentRoute">—</strong>
+  </div>
+
+  <div class="row">
+   <span>Weight</span>
+   <strong id="paymentWeight">—</strong>
+  </div>
+
+  <div class="row">
+   <span>Priority</span>
+   <strong id="paymentPriority">—</strong>
+  </div>
+
+  <div class="amount" id="paymentAmount">
    Rp 0
   </div>
 
-  <button id="paymentBtn" class="btn green" onclick="confirmPayment()">
-   CONFIRM PAYMENT SUCCESS — DEMO
-  </button>
-
-  <div id="paymentResult"></div>
+<button id="payBtn"
+       class="btn green"
+       onclick="paymentSuccess()">
+CONFIRM PAYMENT SUCCESS
+</button>
 
  </div>
 
+ <div id="paymentResult"></div>
+
 </section>
 
-<!-- LIVE -->
+<!-- SUCCESS -->
 
-<section id="live" class="screen">
+<section id="success" class="screen">
 
- <div class="hero">
-  <h1>Live Delivery</h1>
-  <p>Customer ↔ Traveler tracking foundation.</p>
+ <div class="success-box">
+  <div class="success-icon">✓</div>
+  <div class="success-title">
+   PAYMENT SUCCESS
+  </div>
+
+  <div class="success-sub">
+   Transaction sudah dibayar dan tracking aktif.
+  </div>
  </div>
 
  <div class="card">
 
   <div class="idbox">
-   <small>Tracking ID</small>
-   <strong id="liveTrackingId">—</strong>
+   <small>TRANSACTION ID</small>
+   <strong id="successTransactionId">—</strong>
   </div>
 
-  <div id="gpsStatus" class="status">
-   GPS belum aktif.
+  <div class="idbox">
+   <small>TRACKING ID</small>
+   <strong id="successTrackingId">—</strong>
   </div>
 
-  <button class="btn blue" onclick="startGPS()">
-   START LIVE GPS
-  </button>
+  <div class="row">
+   <span>Payment Status</span>
+   <strong style="color:var(--green)">
+    PAID
+   </strong>
+  </div>
 
-  <button class="btn secondary" onclick="stopGPS()">
-   STOP GPS
-  </button>
+  <div class="row">
+   <span>Transaction Status</span>
+   <strong id="successStatus">
+    PAYMENT SUCCESS
+   </strong>
+  </div>
 
- </div>
-
- <div class="card">
-
-  <h3>Delivery Status</h3>
-
-  <select id="deliveryStatus" onchange="updateDeliveryStatus()">
-   <option value="REQUEST">REQUEST</option>
-   <option value="VERIFY">VERIFY</option>
-   <option value="MATCH">MATCH</option>
-   <option value="APPROVED">APPROVED</option>
-   <option value="PAYMENT">PAYMENT</option>
-   <option value="PICKUP">PICKUP</option>
-   <option value="LIVE DELIVERY">LIVE DELIVERY</option>
-   <option value="ARRIVED">ARRIVED</option>
-   <option value="HANDOVER">HANDOVER</option>
-   <option value="COMPLETED">COMPLETED</option>
-  </select>
-
-  <div id="liveStatusResult" class="status">
-   Current status: REQUEST
+  <div class="row">
+   <span>Total Paid</span>
+   <strong id="successAmount">
+    Rp 0
+   </strong>
   </div>
 
  </div>
 
- <div class="card">
-  <h3>Current GPS</h3>
-  <pre id="gpsData">No GPS data.</pre>
- </div>
+ <button class="btn blue" onclick="goTracking()">
+  OPEN TRACKING
+ </button>
 
 </section>
 
-<!-- PARTNERS -->
+<!-- TRACKING -->
 
-<section id="partners" class="screen">
-
- <div class="hero">
-  <h1>Partner Network</h1>
-  <p>Traveler, pickup, local delivery and cargo partners.</p>
- </div>
-
- <div class="card">
-
-  <div class="service">
-   <strong>✈️ Andi Traveler</strong>
-   <small>Bekasi → Bandung · Available</small>
-  </div>
-
-  <button class="btn green" onclick="assignPartner('Andi Traveler')">
-   ASSIGN PARTNER
-  </button>
-
- </div>
-
- <div class="card">
-
-  <div class="service">
-   <strong>🚚 Cargo Partner</strong>
-   <small>Jakarta / West Java Network</small>
-  </div>
-
-  <button class="btn blue" onclick="assignPartner('Cargo Partner')">
-   ASSIGN PARTNER
-  </button>
-
- </div>
-
- <div id="partnerResult"></div>
-
-</section>
-
-<!-- PRICE -->
-
-<section id="price" class="screen">
+<section id="tracking" class="screen">
 
  <div class="hero">
-  <h1>Price Engine</h1>
-  <p>Prototype delivery pricing calculation.</p>
- </div>
-
- <div class="card">
-
-  <div class="row">
-   <span>Base</span>
-   <strong id="priceBase">Rp 25.000</strong>
-  </div>
-
-  <div class="row">
-   <span>Distance Fee</span>
-   <strong id="priceDistance">Rp 0</strong>
-  </div>
-
-  <div class="row">
-   <span>Weight Fee</span>
-   <strong id="priceWeight">Rp 0</strong>
-  </div>
-
-  <div class="row">
-   <span>Pickup</span>
-   <strong>Rp 10.000</strong>
-  </div>
-
-  <div class="row">
-   <span>Protection</span>
-   <strong>Rp 5.000</strong>
-  </div>
-
-  <div class="row">
-   <span>Platform</span>
-   <strong>Rp 7.500</strong>
-  </div>
-
-  <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
-
-  <div class="price" id="totalPrice">
-   Rp 0
-  </div>
-
- </div>
-
-</section>
-
-<!-- ORDERS -->
-
-<section id="orders" class="screen">
-
- <div class="hero">
-  <h1>Orders</h1>
-  <p>Current CHELEA transaction and delivery lifecycle.</p>
+  <h1>Tracking</h1>
+  <p>Tracking dibuat dari transaksi yang sudah berhasil dibayar.</p>
  </div>
 
  <div class="card">
 
   <div class="idbox">
-   <small>Transaction ID</small>
-   <strong id="orderTransactionId">—</strong>
+   <small>TRANSACTION ID</small>
+   <strong id="trackingTransactionId">—</strong>
   </div>
 
   <div class="idbox">
-   <small>Tracking ID</small>
-   <strong id="orderTrackingId">—</strong>
+   <small>TRACKING ID</small>
+   <strong id="trackingTrackingId">—</strong>
   </div>
 
-  <div id="orderStatus" class="status">
-   No active order.
-  </div>
-
-  <button class="btn blue" onclick="downloadReceipt()">
-   DOWNLOAD RECEIPT
-  </button>
-
- </div>
-
-</section>
-
-<!-- CONTROL -->
-
-<section id="control" class="screen">
-
- <div class="hero">
-  <h1>Control Center</h1>
-  <p>CHELEA transaction operations and audit foundation.</p>
- </div>
-
- <div class="card">
-
-  <div class="row">
-   <span>Transaction</span>
-   <strong id="controlTransaction">—</strong>
-  </div>
-
-  <div class="row">
-   <span>Payment</span>
-   <strong id="controlPayment">PENDING</strong>
-  </div>
-
-  <div class="row">
-   <span>Partner</span>
-   <strong id="controlPartner">UNASSIGNED</strong>
+  <div class="status success">
+   TRACKING ACTIVE
   </div>
 
   <div class="row">
    <span>Status</span>
-   <strong id="controlStatus">REQUEST</strong>
+   <strong id="trackingStatus">
+    PAYMENT SUCCESS
+   </strong>
   </div>
 
  </div>
 
  <div class="card">
-  <h3>Audit Trail</h3>
-  <pre id="auditTrail">No audit events.</pre>
- </div>
 
-</section>
+  <h3>Delivery Timeline</h3>
 
-<!-- ACCOUNT -->
+  <div class="flow">
 
-<section id="account" class="screen">
+   <div class="flow-item done">
+    ✓ TRANSACTION CREATED
+   </div>
 
- <div class="hero">
-  <h1>Account</h1>
-  <p>CHELEA security and system information.</p>
- </div>
+   <div class="flow-item done">
+    ✓ PAYMENT SUCCESS
+   </div>
 
- <div class="card">
+   <div class="flow-item active">
+    ● TRACKING ACTIVE
+   </div>
 
-  <div class="row">
-   <span>Platform</span>
-   <strong>HOBBIGO</strong>
-  </div>
+   <div class="flow-item">
+    ○ PICKUP
+   </div>
 
-  <div class="row">
-   <span>Module</span>
-   <strong>CHELEA</strong>
-  </div>
+   <div class="flow-item">
+    ○ IN TRANSIT
+   </div>
 
-  <div class="row">
-   <span>Security</span>
-   <strong style="color:var(--green)">ACTIVE</strong>
-  </div>
+   <div class="flow-item">
+    ○ ARRIVED
+   </div>
 
-  <div class="row">
-   <span>Backend</span>
-   <strong id="accountBackend">CHECKING</strong>
-  </div>
+   <div class="flow-item">
+    ○ HANDOVER
+   </div>
 
-  <div class="notice">
-   Production deployment requires authentication, private storage,
-   RLS policies, private realtime channels, secure identity handling,
-   real payment/escrow provider and verified insurance integration.
+   <div class="flow-item">
+    ○ COMPLETED
+   </div>
+
   </div>
 
  </div>
@@ -916,24 +688,21 @@ pre{
 
 <nav class="nav">
 
- <button class="active" onclick="showScreen('home',this)">
-  HOME
+<button onclick="showScreen('home',this)"
+      class="active">
+HOME
+</button>
+
+ <button onclick="showScreen('create',this)">
+  CREATE
  </button>
 
- <button onclick="showScreen('request',this)">
-  REQUEST
+ <button onclick="showScreen('payment',this)">
+  PAYMENT
  </button>
 
- <button onclick="showScreen('live',this)">
-  LIVE
- </button>
-
- <button onclick="showScreen('orders',this)">
-  ORDERS
- </button>
-
- <button onclick="showScreen('account',this)">
-  ACCOUNT
+ <button onclick="showScreen('tracking',this)">
+  TRACKING
  </button>
 
 </nav>
@@ -942,101 +711,54 @@ pre{
 
 <script>
 
-/* =========================================================
-   SUPABASE CONFIG
-========================================================= */
+/* =====================================================
+   CHELEA TRANSACTION FLOW
+===================================================== */
 
-const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+const STORAGE_KEY="CHELEA_TRANSACTION_V1";
 
-let supabaseClient = null;
-
-if(
- SUPABASE_URL &&
- SUPABASE_PUBLISHABLE_KEY &&
- !SUPABASE_URL.includes("YOUR-PROJECT") &&
- !SUPABASE_PUBLISHABLE_KEY.includes("YOUR_SUPABASE")
-){
- supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
- );
-}
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-const defaultState = {
- transactionId:"",
- trackingId:"",
- status:"REQUEST",
- paymentStatus:"PENDING",
- partner:"",
- ownerName:"",
- ownerPhone:"",
- ownerIdentity:"",
- itemId:"",
- itemDescription:"",
- price:0,
- gps:null,
- createdAt:"",
- paymentAt:"",
- pickupAt:"",
- arrivalAt:"",
- handoverAt:"",
- completedAt:""
-};
-
-let state = JSON.parse(
- localStorage.getItem("CHELEA_STATE") || "null"
-) || {...defaultState};
-
-let gpsWatchId = null;
-let creatingTransaction = false;
-
-
-/* =========================================================
-   SAVE STATE
-========================================================= */
-
-function saveState(){
-
- localStorage.setItem(
-  "CHELEA_STATE",
-  JSON.stringify(state)
+let transaction=
+ JSON.parse(
+  localStorage.getItem(STORAGE_KEY)||"null"
  );
 
- renderAll();
-}
 
+/* =====================================================
+   ID GENERATOR
+===================================================== */
 
-/* =========================================================
-   ID GENERATORS — FIXED
-========================================================= */
+function randomCode(length=8){
 
-function randomCode(length=6){
+ const chars=
+ "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
- const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ let result="";
 
- let result = "";
+ if(window.crypto &&
+    crypto.getRandomValues){
 
- if(window.crypto && crypto.getRandomValues){
+  const arr=
+   new Uint32Array(length);
 
-  const arr = new Uint32Array(length);
   crypto.getRandomValues(arr);
 
   for(let i=0;i<length;i++){
-   result += chars[arr[i] % chars.length];
+
+   result+=
+    chars[arr[i]%chars.length];
   }
 
  }else{
 
   for(let i=0;i<length;i++){
-   result += chars[Math.floor(Math.random()*chars.length)];
-  }
 
+   result+=
+    chars[
+     Math.floor(
+      Math.random()*chars.length
+     )
+    ];
+  }
  }
 
  return result;
@@ -1045,769 +767,38 @@ function randomCode(length=6){
 
 function generateTransactionId(){
 
- const year = new Date().getFullYear();
-
- return `CHL-${year}-${randomCode(8)}`;
+ return "CHL-"+
+  new Date().getFullYear()+
+  "-"+
+  randomCode(8);
 }
 
 
 function generateTrackingId(){
 
- const year = new Date().getFullYear();
-
- return `CHE-TRK-${year}-${randomCode(8)}`;
+ return "CHE-TRK-"+
+  new Date().getFullYear()+
+  "-"+
+  randomCode(8);
 }
 
 
-function generateItemId(){
-
- const year = new Date().getFullYear();
-
- return `CHE-ITEM-${year}-${randomCode(8)}`;
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showScreen(id,button){
-
- document.querySelectorAll(".screen")
- .forEach(s=>s.classList.remove("active"));
-
- const target=document.getElementById(id);
-
- if(target){
-  target.classList.add("active");
- }
-
- document.querySelectorAll(".nav button")
- .forEach(b=>b.classList.remove("active"));
-
- if(button){
-  button.classList.add("active");
- }
-
- renderAll();
-}
-
-
-/* =========================================================
-   SUPABASE TEST
-========================================================= */
-
-async function testSupabase(){
-
- const box=document.getElementById("connectionStatus");
-
- box.className="status warning";
- box.textContent="Testing Supabase connection...";
-
- if(!supabaseClient){
-
-  box.className="status error";
-  box.textContent="Supabase config belum diisi.";
-
-  return;
- }
-
- try{
-
-  const {error}=await supabaseClient
-   .from("transactions")
-   .select("transaction_id")
-   .limit(1);
-
-  if(error) throw error;
-
-  box.className="status success";
-  box.textContent="SUPABASE CONNECTED SUCCESS";
-
-  document.getElementById("accountBackend").textContent="CONNECTED";
-
- }catch(error){
-
-  console.error(error);
-
-  box.className="status error";
-  box.textContent="Supabase error: "+error.message;
-
-  document.getElementById("accountBackend").textContent="ERROR";
- }
-}
-
-
-/* =========================================================
-   CREATE TRANSACTION — MAIN FIX
-========================================================= */
-
-async function createTransaction(){
-
- if(creatingTransaction) return;
-
- if(!supabaseClient){
-
-  showRequestError("Supabase belum terhubung.");
-
-  return;
- }
-
- creatingTransaction=true;
-
- const button=document.getElementById("createTransactionBtn");
-
- button.disabled=true;
- button.textContent="CREATING TRANSACTION...";
-
- try{
-
-  const origin=document.getElementById("origin").value.trim();
-  const destination=document.getElementById("destination").value.trim();
-  const pickupLocation=document.getElementById("pickupLocation").value.trim();
-  const deliveryLocation=document.getElementById("deliveryLocation").value.trim();
-  const deliveryDate=document.getElementById("deliveryDate").value;
-  const weight=parseFloat(document.getElementById("weight").value) || 0;
-  const priority=document.getElementById("priority").value;
-
-  /*
-   IMPORTANT:
-   Always generate NEW IDs.
-   Never reuse old state.transactionId.
-  */
-
-  let transactionId=generateTransactionId();
-  let trackingId=generateTrackingId();
-
-  const basePrice=25000;
-  const distanceFee=100*3000;
-  const weightFee=weight*5000;
-  const pickupFee=10000;
-  const protectionFee=5000;
-  const platformFee=7500;
-
-  let multiplier=1;
-
-  if(priority==="priority") multiplier=1.25;
-  if(priority==="exclusive") multiplier=1.5;
-
-  const totalPrice=Math.round(
-   (
-    basePrice+
-    distanceFee+
-    weightFee+
-    pickupFee+
-    protectionFee+
-    platformFee
-   )*multiplier
-  );
-
-  const payload={
-   transaction_id:transactionId,
-   tracking_id:trackingId,
-   origin,
-   destination,
-   pickup_location:pickupLocation,
-   delivery_location:deliveryLocation,
-   delivery_date:deliveryDate,
-   weight,
-   priority,
-   status:"REQUEST",
-   total_price:totalPrice
-  };
-
-  let result=await supabaseClient
-   .from("transactions")
-   .insert(payload)
-   .select()
-   .single();
-
-  /*
-   If duplicate somehow occurs, generate completely
-   new IDs and retry once.
-  */
-
-  if(
-   result.error &&
-   result.error.message &&
-   result.error.message.toLowerCase().includes("duplicate")
-  ){
-
-   transactionId=generateTransactionId();
-   trackingId=generateTrackingId();
-
-   payload.transaction_id=transactionId;
-   payload.tracking_id=trackingId;
-
-   result=await supabaseClient
-    .from("transactions")
-    .insert(payload)
-    .select()
-    .single();
-  }
-
-  if(result.error){
-
-   throw result.error;
-  }
-
-  state={
-   ...state,
-   transactionId,
-   trackingId,
-   status:"REQUEST",
-   paymentStatus:"PENDING",
-   price:totalPrice,
-   partner:"",
-   createdAt:new Date().toISOString()
-  };
-
-  saveState();
-
-  addAudit(
-   "TRANSACTION_CREATED",
-   transactionId
-  );
-
-  document.getElementById("requestResult").innerHTML=`
-   <div class="status success">
-    <strong>TRANSACTION CREATED</strong><br><br>
-    Transaction: ${transactionId}<br>
-    Tracking: ${trackingId}<br>
-    Status: REQUEST
-   </div>
-  `;
-
- }catch(error){
-
-  console.error(error);
-
-  showRequestError(
-   "Transaction belum bisa disimpan.<br><br>"+
-   escapeHtml(error.message)
-  );
-
- }finally{
-
-  creatingTransaction=false;
-
-  button.disabled=false;
-  button.textContent="CREATE TRANSACTION";
- }
-}
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-function showRequestError(message){
-
- document.getElementById("requestResult").innerHTML=`
-  <div class="status error">
-   ${message}
-  </div>
- `;
-}
-
-
-/* =========================================================
-   NEW TRANSACTION
-========================================================= */
-
-function newTransaction(){
-
- state={
-  ...defaultState
- };
-
- localStorage.removeItem("CHELEA_STATE");
-
- document.getElementById("requestResult").innerHTML=`
-  <div class="status success">
-   New transaction ready.
-   A fresh ID will be generated when you create it.
-  </div>
- `;
-
- renderAll();
-}
-
-
-/* =========================================================
-   IDENTITY
-========================================================= */
-
-async function saveIdentity(){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- const ownerName=document.getElementById("ownerName").value.trim();
- const ownerPhone=document.getElementById("ownerPhone").value.trim();
- const ownerIdentity=document.getElementById("ownerIdentity").value.trim();
-
- state.ownerName=ownerName;
- state.ownerPhone=ownerPhone;
- state.ownerIdentity=ownerIdentity;
-
- saveState();
-
- if(!supabaseClient){
-
-  alert("Saved locally — Supabase belum terhubung.");
-
-  return;
- }
-
- try{
-
-  const {error}=await supabaseClient
-   .from("global_identities")
-   .insert({
-    transaction_id:state.transactionId,
-    owner_name:ownerName,
-    phone:ownerPhone,
-    identity_number:ownerIdentity
-   });
-
-  if(error) throw error;
-
-  addAudit("IDENTITY_VERIFIED",state.transactionId);
-
-  alert("Identity saved to Supabase.");
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Identity belum bisa disimpan: "+
-   error.message
-  );
- }
-}
-
-
-/* =========================================================
-   ITEM
-========================================================= */
-
-async function saveItem(){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- const description=
-  document.getElementById("itemDescription").value.trim();
-
- const itemId=state.itemId || generateItemId();
-
- state.itemId=itemId;
- state.itemDescription=description;
-
- saveState();
-
- if(!supabaseClient){
-
-  alert("Item saved locally.");
-
-  return;
- }
-
- try{
-
-  const {error}=await supabaseClient
-   .from("items")
-   .insert({
-    item_id:itemId,
-    transaction_id:state.transactionId,
-    description
-   });
-
-  if(error) throw error;
-
-  addAudit("ITEM_VERIFIED",itemId);
-
-  alert("Item verified.");
-
- }catch(error){
-
-  console.error(error);
-
-  alert(
-   "Item belum bisa disimpan: "+
-   error.message
-  );
- }
-}
-
-
-/* =========================================================
-   PHOTO
-========================================================= */
-
-function previewPhoto(event){
-
- const file=event.target.files[0];
-
- if(!file) return;
-
- const url=URL.createObjectURL(file);
-
- document.getElementById("photoPreview").innerHTML=`
-  <div style="margin:10px 0">
-   <img src="${url}"
-        style="width:100%;border-radius:12px;border:1px solid var(--line)">
-  </div>
- `;
-}
-
-
-/* =========================================================
-   PAYMENT
-========================================================= */
-
-async function confirmPayment(){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- if(!supabaseClient){
-
-  alert("Supabase belum terhubung.");
-
-  return;
- }
-
- const paymentAt=new Date().toISOString();
-
- try{
-
-  const {error:paymentError}=await supabaseClient
-   .from("payments")
-   .upsert({
-    transaction_id:state.transactionId,
-    amount:state.price,
-    status:"PAID",
-    paid_at:paymentAt
-   });
-
-  if(paymentError) throw paymentError;
-
-  const {error:transactionError}=await supabaseClient
-   .from("transactions")
-   .update({
-    status:"PAYMENT",
-    payment_status:"PAID"
-   })
-   .eq("transaction_id",state.transactionId);
-
-  if(transactionError) throw transactionError;
-
-  state.paymentStatus="PAID";
-  state.status="PAYMENT";
-  state.paymentAt=paymentAt;
-
-  saveState();
-
-  addAudit(
-   "PAYMENT_SUCCESS",
-   state.transactionId
-  );
-
-  document.getElementById("paymentResult").innerHTML=`
-   <div class="status success">
-    PAYMENT SUCCESS — DEMO<br>
-    Transaction: ${state.transactionId}
-   </div>
-  `;
-
- }catch(error){
-
-  console.error(error);
-
-  document.getElementById("paymentResult").innerHTML=`
-   <div class="status error">
-    Payment belum bisa diproses.<br><br>
-    ${escapeHtml(error.message)}
-   </div>
-  `;
- }
-}
-
-
-/* =========================================================
-   PARTNER
-========================================================= */
-
-async function assignPartner(partner){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- state.partner=partner;
-
- saveState();
-
- if(supabaseClient){
-
-  try{
-
-   const {error}=await supabaseClient
-    .from("transactions")
-    .update({
-     partner_name:partner,
-     status:"MATCH"
-    })
-    .eq(
-     "transaction_id",
-     state.transactionId
-    );
-
-   if(error) throw error;
-
-  }catch(error){
-
-   console.error(error);
-  }
- }
-
- addAudit(
-  "PARTNER_ASSIGNED",
-  partner
- );
-
- document.getElementById("partnerResult").innerHTML=`
-  <div class="status success">
-   PARTNER ASSIGNED<br><br>
-   ${escapeHtml(partner)}
-  </div>
- `;
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-async function updateDeliveryStatus(){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- const status=
-  document.getElementById("deliveryStatus").value;
-
- state.status=status;
-
- const now=new Date().toISOString();
-
- if(status==="PICKUP") state.pickupAt=now;
- if(status==="ARRIVED") state.arrivalAt=now;
- if(status==="HANDOVER") state.handoverAt=now;
- if(status==="COMPLETED") state.completedAt=now;
-
- saveState();
-
- if(supabaseClient){
-
-  try{
-
-   const {error}=await supabaseClient
-    .from("transactions")
-    .update({
-     status
-    })
-    .eq(
-     "transaction_id",
-     state.transactionId
-    );
-
-   if(error) throw error;
-
-   await supabaseClient
-    .from("tracking_events")
-    .insert({
-     transaction_id:state.transactionId,
-     tracking_id:state.trackingId,
-     status,
-     created_at:now
-    });
-
-  }catch(error){
-
-   console.error(error);
-  }
- }
-
- addAudit(
-  "STATUS_CHANGED",
-  status
- );
-
- document.getElementById("liveStatusResult").textContent=
-  "Current status: "+status;
-}
-
-
-/* =========================================================
-   GPS
-========================================================= */
-
-function startGPS(){
-
- if(!state.transactionId){
-
-  alert("Create transaction terlebih dahulu.");
-
-  return;
- }
-
- if(!navigator.geolocation){
-
-  document.getElementById("gpsStatus").textContent=
-   "Browser tidak mendukung GPS.";
-
-  return;
- }
-
- document.getElementById("gpsStatus").className=
-  "status warning";
-
- document.getElementById("gpsStatus").textContent=
-  "Requesting GPS permission...";
-
- gpsWatchId=navigator.geolocation.watchPosition(
-
-  async position=>{
-
-   const coords={
-    lat:position.coords.latitude,
-    lng:position.coords.longitude,
-    accuracy:position.coords.accuracy,
-    timestamp:new Date().toISOString()
-   };
-
-   state.gps=coords;
-
-   saveState();
-
-   document.getElementById("gpsStatus").className=
-    "status success";
-
-   document.getElementById("gpsStatus").textContent=
-    "GPS LIVE · Accuracy "+
-    Math.round(coords.accuracy)+
-    " m";
-
-   document.getElementById("gpsData").textContent=
-    JSON.stringify(coords,null,2);
-
-   if(supabaseClient){
-
-    try{
-
-     await supabaseClient
-      .from("tracking_sessions")
-      .upsert({
-       transaction_id:state.transactionId,
-       tracking_id:state.trackingId,
-       latitude:coords.lat,
-       longitude:coords.lng,
-       accuracy:coords.accuracy,
-       last_update:coords.timestamp
-      });
-
-     await supabaseClient
-      .from("tracking_events")
-      .insert({
-       transaction_id:state.transactionId,
-       tracking_id:state.trackingId,
-       status:"GPS_UPDATE",
-       latitude:coords.lat,
-       longitude:coords.lng,
-       created_at:coords.timestamp
-      });
-
-    }catch(error){
-
-     console.error(error);
-    }
-   }
-
-  },
-
-  error=>{
-
-   document.getElementById("gpsStatus").className=
-    "status error";
-
-   document.getElementById("gpsStatus").textContent=
-    "GPS error: "+error.message;
-  },
-
-  {
-   enableHighAccuracy:true,
-   maximumAge:5000,
-   timeout:15000
-  }
- );
-}
-
-
-function stopGPS(){
-
- if(gpsWatchId!==null){
-
-  navigator.geolocation.clearWatch(
-   gpsWatchId
-  );
-
-  gpsWatchId=null;
- }
-
- document.getElementById("gpsStatus").className=
-  "status";
-
- document.getElementById("gpsStatus").textContent=
-  "GPS stopped.";
-}
-
-
-/* =========================================================
+/* =====================================================
    PRICE
-========================================================= */
+===================================================== */
 
 function calculatePrice(){
 
  const weight=
   parseFloat(
-   document.getElementById("weight")?.value
-  ) || 2;
+   document.getElementById("weight").value
+  )||0;
+
+ const priority=
+  document.getElementById("priority").value;
 
  const base=25000;
- const distance=100*3000;
+ const distanceFee=100*3000;
  const weightFee=weight*5000;
  const pickup=10000;
  const protection=5000;
@@ -1815,360 +806,615 @@ function calculatePrice(){
 
  let multiplier=1;
 
- const priority=
-  document.getElementById("priority")?.value;
+ if(priority==="priority")
+  multiplier=1.25;
 
- if(priority==="priority") multiplier=1.25;
- if(priority==="exclusive") multiplier=1.5;
+ if(priority==="exclusive")
+  multiplier=1.5;
 
- const total=Math.round(
-  (base+
-   distance+
+ return Math.round(
+  (
+   base+
+   distanceFee+
    weightFee+
    pickup+
    protection+
-   platform)*
-  multiplier
+   platform
+  )*multiplier
  );
-
- document.getElementById("priceDistance").textContent=
-  formatRupiah(distance);
-
- document.getElementById("priceWeight").textContent=
-  formatRupiah(weightFee);
-
- document.getElementById("totalPrice").textContent=
-  formatRupiah(total);
-
- document.getElementById("paymentPrice").textContent=
-  formatRupiah(state.price || total);
-
- if(!state.price){
-  state.price=total;
- }
 }
 
 
-/* =========================================================
-   RECEIPT
-========================================================= */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-function downloadReceipt(){
+function showScreen(id,button){
 
- if(!state.transactionId){
+ document
+  .querySelectorAll(".screen")
+  .forEach(
+   s=>s.classList.remove("active")
+  );
 
-  alert("Belum ada transaction.");
+ document
+  .getElementById(id)
+  .classList.add("active");
+
+ document
+  .querySelectorAll(".nav button")
+  .forEach(
+   b=>b.classList.remove("active")
+  );
+
+ if(button)
+  button.classList.add("active");
+
+ render();
+}
+
+
+function goCreate(){
+
+ showScreen("create");
+
+}
+
+
+function goPayment(){
+
+ if(!transaction){
+
+  alert(
+   "Belum ada transaction."
+  );
 
   return;
  }
 
- const html=`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>CHELEA Receipt</title>
-<style>
-body{
- font-family:Arial;
- padding:30px;
- color:#111;
-}
-h1{color:#111}
-.row{
- padding:8px 0;
- border-bottom:1px solid #ddd;
-}
-</style>
+ showScreen("payment");
 
-</head>
-<body>
-
-<h1>CHELEA DELIVERY RECEIPT</h1>
-
-<div class="row">
-Transaction: ${escapeHtml(state.transactionId)}
-</div>
-
-<div class="row">
-Tracking: ${escapeHtml(state.trackingId)}
-</div>
-
-<div class="row">
-Status: ${escapeHtml(state.status)}
-</div>
-
-<div class="row">
-Payment: ${escapeHtml(state.paymentStatus)}
-</div>
-
-<div class="row">
-Partner: ${escapeHtml(state.partner || "Not assigned")}
-</div>
-
-<div class="row">
-Total: ${formatRupiah(state.price || 0)}
-</div>
-
-<br>
-
-<p>
-CHELEA — HOBBIGO<br>
-Smart Personal Delivery & Cross-Border Jastip
-</p>
-
-</body>
-</html>
-`;
-
-const blob=new Blob(
-[html],
-{type:"text/html"}
-);
-
-const url=URL.createObjectURL(blob);
-
-const a=document.createElement("a");
-
-a.href=url;
-
-a.download=
-CHELEA_Receipt_${state.transactionId}.html;
-
-document.body.appendChild(a);
-
-a.click();
-
-a.remove();
-
-URL.revokeObjectURL(url);
 }
 
-/* =========================================================
-AUDIT
-========================================================= */
 
-function addAudit(action,detail){
+function goTracking(){
 
-const key="CHELEA_AUDIT";
+ if(!transaction ||
+    transaction.paymentStatus!=="PAID"){
 
-const logs=JSON.parse(
-localStorage.getItem(key)||"[]"
-);
+  alert(
+   "Tracking baru aktif setelah payment success."
+  );
 
-logs.push({
-time Date().toISOString(),
-action,
-detail
-});
+  return;
+ }
 
-localStorage.setItem(
-key,
-JSON.stringify(logs.slice(-100))
-);
+ showScreen("tracking");
 
-renderAudit();
 }
 
-function renderAudit(){
 
-const logs=JSON.parse(
-localStorage.getItem("CHELEA_AUDIT")||"[]"
-);
+/* =====================================================
+   CREATE TRANSACTION
+===================================================== */
 
-const box=document.getElementById("auditTrail");
+function createTransaction(){
 
-if(!box) return;
+ const button=
+  document.getElementById("createBtn");
 
-if(!logs.length){
+ button.disabled=true;
 
-box.textContent="No audit events.";
+ button.textContent=
+  "CREATING TRANSACTION...";
 
-return;
+ /*
+   ALWAYS create fresh IDs.
+   Never reuse old ID.
+ */
+
+ const transactionId=
+  generateTransactionId();
+
+ const trackingId=
+  generateTrackingId();
+
+ const origin=
+  document.getElementById("origin")
+  .value.trim();
+
+ const destination=
+  document.getElementById("destination")
+  .value.trim();
+
+ const pickup=
+  document.getElementById("pickup")
+  .value.trim();
+
+ const delivery=
+  document.getElementById("delivery")
+  .value.trim();
+
+ const date=
+  document.getElementById("date")
+  .value;
+
+ const weight=
+  parseFloat(
+   document.getElementById("weight")
+   .value
+  )||0;
+
+ const priority=
+  document.getElementById("priority")
+  .value;
+
+ const total=
+  calculatePrice();
+
+ transaction={
+  transactionId,
+  trackingId,
+
+  origin,
+  destination,
+  pickup,
+  delivery,
+  date,
+  weight,
+  priority,
+
+  amount:total,
+
+  status:"CREATED",
+
+  paymentStatus:"PENDING",
+
+  createdAt:
+   new Date().toISOString(),
+
+  paymentAt:null
+ };
+
+ localStorage.setItem(
+  STORAGE_KEY,
+  JSON.stringify(transaction)
+ );
+
+ document.getElementById(
+  "createResult"
+ ).innerHTML=`
+
+  <div class="status success">
+
+   <strong>TRANSACTION CREATED</strong><br><br>
+
+   Transaction ID:<br>
+   <strong>
+    ${transactionId}
+   </strong>
+
+   <br><br>
+
+   Tracking ID:<br>
+   <strong>
+    ${trackingId}
+   </strong>
+
+  </div>
+ `;
+
+ button.disabled=false;
+
+ button.textContent=
+  "CREATE TRANSACTION";
+
+ render();
+
+ setTimeout(
+  ()=>showScreen("created"),
+  400
+ );
 }
 
-box.textContent=
-logs.map(
-x=>${x.time} | ${x.action} | ${x.detail}
-).join("\n");
+
+/* =====================================================
+   PAYMENT SUCCESS
+===================================================== */
+
+function paymentSuccess(){
+
+ if(!transaction){
+
+  alert(
+   "Transaction belum dibuat."
+  );
+
+  return;
+ }
+
+ if(transaction.paymentStatus==="PAID"){
+
+  showScreen("success");
+
+  return;
+ }
+
+ const button=
+  document.getElementById("payBtn");
+
+ button.disabled=true;
+
+ button.textContent=
+  "PROCESSING PAYMENT...";
+
+ setTimeout(()=>{
+
+  transaction.paymentStatus=
+   "PAID";
+
+  transaction.status=
+   "PAYMENT SUCCESS";
+
+  transaction.paymentAt=
+   new Date().toISOString();
+
+  localStorage.setItem(
+   STORAGE_KEY,
+   JSON.stringify(transaction)
+  );
+
+  button.disabled=false;
+
+  button.textContent=
+   "PAYMENT SUCCESS";
+
+  render();
+
+  showScreen("success");
+
+ },800);
 }
 
-/* =========================================================
-RENDER
-========================================================= */
 
-function renderAll(){
+/* =====================================================
+   RENDER
+===================================================== */
 
-const tid=state.transactionId || "—";
-const trk=state.trackingId || "—";
+function render(){
 
-const ids=[
-"homeTransactionId",
-"paymentTransactionId",
-"orderTransactionId",
-"controlTransaction"
-];
+ renderHome();
 
-ids.forEach(id=>{
-const el=document.getElementById(id);
-if(el) el.textContent=tid;
-});
+ renderCreated();
 
-const trackingIds=[
-"homeTrackingId",
-"paymentTrackingId",
-"liveTrackingId",
-"orderTrackingId"
-];
+ renderPayment();
 
-trackingIds.forEach(id=>{
-const el=document.getElementById(id);
-if(el) el.textContent=trk;
-});
+ renderSuccess();
 
-const homeStatus=
-document.getElementById("homeStatus");
+ renderTracking();
 
-if(homeStatus){
+ renderFlow();
 
-if(state.transactionId){
-
-homeStatus.className="status success";
-
-homeStatus.innerHTML=
-ACTIVE · ${escapeHtml(state.status)};
-
-}else{
-
-homeStatus.className="status";
-
-homeStatus.textContent=
-"No active transaction.";
-}
 }
 
-const orderStatus=
-document.getElementById("orderStatus");
 
-if(orderStatus){
+/* =====================================================
+   HOME
+===================================================== */
 
-orderStatus.textContent=
-state.transactionId
-? Status: ${state.status} · Payment: ${state.paymentStatus}
-: "No active order.";
+function renderHome(){
+
+ const box=
+  document.getElementById(
+   "homeCurrent"
+  );
+
+ if(!transaction){
+
+  box.innerHTML=`
+
+   <div class="status">
+    Belum ada transaction aktif.
+   </div>
+
+  `;
+
+  return;
+ }
+
+ box.innerHTML=`
+
+  <h3>Current Transaction</h3>
+
+  <div class="idbox">
+
+   <small>TRANSACTION ID</small>
+
+   <strong>
+    ${transaction.transactionId}
+   </strong>
+
+  </div>
+
+  <div class="idbox">
+
+   <small>TRACKING ID</small>
+
+   <strong>
+    ${transaction.trackingId}
+   </strong>
+
+  </div>
+
+  <div class="row">
+
+   <span>Status</span>
+
+   <strong>
+    ${transaction.status}
+   </strong>
+
+  </div>
+
+  <div class="row">
+
+   <span>Payment</span>
+
+   <strong>
+    ${transaction.paymentStatus}
+   </strong>
+
+  </div>
+
+ `;
+
 }
 
-const controlPayment=
-document.getElementById("controlPayment");
 
-if(controlPayment){
-controlPayment.textContent=
-state.paymentStatus || "PENDING";
+/* =====================================================
+   CREATED
+===================================================== */
+
+function renderCreated(){
+
+ if(!transaction)
+  return;
+
+ const set=(
+  id,value
+ )=>{
+  const el=
+   document.getElementById(id);
+
+  if(el)
+   el.textContent=value;
+ };
+
+ set(
+  "createdTransactionId",
+  transaction.transactionId
+ );
+
+ set(
+  "createdTrackingId",
+  transaction.trackingId
+ );
+
+ set(
+  "createdOrigin",
+  transaction.origin
+ );
+
+ set(
+  "createdDestination",
+  transaction.destination
+ );
+
+ set(
+  "createdStatus",
+  transaction.status
+ );
+
+ set(
+  "createdAmount",
+  rupiah(transaction.amount)
+ );
+
 }
 
-const controlPartner=
-document.getElementById("controlPartner");
 
-if(controlPartner){
-controlPartner.textContent=
-state.partner || "UNASSIGNED";
+/* =====================================================
+   PAYMENT
+===================================================== */
+
+function renderPayment(){
+
+ if(!transaction)
+  return;
+
+ document.getElementById(
+  "paymentTransactionId"
+ ).textContent=
+  transaction.transactionId;
+
+ document.getElementById(
+  "paymentTrackingId"
+ ).textContent=
+  transaction.trackingId;
+
+ document.getElementById(
+  "paymentRoute"
+ ).textContent=
+  transaction.origin+
+  " → "+
+  transaction.destination;
+
+ document.getElementById(
+  "paymentWeight"
+ ).textContent=
+  transaction.weight+
+  " KG";
+
+ document.getElementById(
+  "paymentPriority"
+ ).textContent=
+  transaction.priority
+   .toUpperCase();
+
+ document.getElementById(
+  "paymentAmount"
+ ).textContent=
+  rupiah(transaction.amount);
+
 }
 
-const controlStatus=
-document.getElementById("controlStatus");
 
-if(controlStatus){
-controlStatus.textContent=
-state.status || "REQUEST";
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+function renderSuccess(){
+
+ if(!transaction)
+  return;
+
+ document.getElementById(
+  "successTransactionId"
+ ).textContent=
+  transaction.transactionId;
+
+ document.getElementById(
+  "successTrackingId"
+ ).textContent=
+  transaction.trackingId;
+
+ document.getElementById(
+  "successAmount"
+ ).textContent=
+  rupiah(transaction.amount);
+
+ document.getElementById(
+  "successStatus"
+ ).textContent=
+  transaction.status;
+
 }
 
-const paymentPrice=
-document.getElementById("paymentPrice");
 
-if(paymentPrice){
-paymentPrice.textContent=
-formatRupiah(state.price || 0);
+/* =====================================================
+   TRACKING
+===================================================== */
+
+function renderTracking(){
+
+ if(!transaction)
+  return;
+
+ document.getElementById(
+  "trackingTransactionId"
+ ).textContent=
+  transaction.transactionId;
+
+ document.getElementById(
+  "trackingTrackingId"
+ ).textContent=
+  transaction.trackingId;
+
+ document.getElementById(
+  "trackingStatus"
+ ).textContent=
+  transaction.status;
+
 }
 
-const liveStatus=
-document.getElementById("deliveryStatus");
 
-if(liveStatus){
-liveStatus.value=
-state.status || "REQUEST";
+/* =====================================================
+   FLOW
+===================================================== */
+
+function renderFlow(){
+
+ const items={
+  flowCreate:true,
+  flowCreated:false,
+  flowPayment:false,
+  flowPaid:false,
+  flowTracking:false
+ };
+
+ if(transaction){
+
+  items.flowCreate=true;
+  items.flowCreated=true;
+
+  if(transaction.paymentStatus==="PENDING"){
+
+   items.flowPayment=true;
+
+  }
+
+  if(transaction.paymentStatus==="PAID"){
+
+   items.flowPayment=true;
+   items.flowPaid=true;
+   items.flowTracking=true;
+
+  }
+
+ }
+
+ Object
+  .entries(items)
+  .forEach(([id,done])=>{
+
+   const el=
+    document.getElementById(id);
+
+   if(!el) return;
+
+   el.classList.remove(
+    "active",
+    "done"
+   );
+
+   if(done)
+    el.classList.add("done");
+
+  });
+
 }
 
-const liveStatusResult=
-document.getElementById("liveStatusResult");
 
-if(liveStatusResult){
-liveStatusResult.textContent=
-"Current status: "+
-(state.status || "REQUEST");
-}
-
-if(state.gps){
-
-const gpsData=
-document.getElementById("gpsData");
-
-if(gpsData){
-gpsData.textContent=
-JSON.stringify(state.gps,null,2);
-}
-}
-
-renderAudit();
-calculatePrice();
-}
-
-/* =========================================================
-HELPERS
-========================================================= */
-
-function formatRupiah(value){
-
-return new Intl.NumberFormat(
-"id-ID",
-{
-style:"currency",
-currency:"IDR",
-maximumFractionDigits:0
-}
-).format(value || 0);
-}
-
-function escapeHtml(value){
-
-return String(value ?? "")
-.replace(/&/g,"&")
-.replace(/</g,"<")
-.replace(/>/g,">")
-.replace(/"/g,""")
-.replace(/'/g,"'");
-}
-
-/* =========================================================
-INIT
-========================================================= */
+/* =====================================================
+   CREATED SCREEN BUTTON
+===================================================== */
 
 document.addEventListener(
-"DOMContentLoaded",
-()=>{
+ "DOMContentLoaded",
+ ()=>{
 
-renderAll();
+  render();
 
-const dateInput=
-document.getElementById("deliveryDate");
-
-if(dateInput && !dateInput.value){
-
-dateInput.value=
-new Date().toISOString().split("T")[0];
-}
-
-}
+ }
 );
+
+
+/* =====================================================
+   UTILITY
+===================================================== */
+
+function rupiah(value){
+
+ return new Intl.NumberFormat(
+  "id-ID",
+  {
+   style:"currency",
+   currency:"IDR",
+   maximumFractionDigits:0
+  }
+ ).format(value||0);
+
+}
 
 </script>
 
