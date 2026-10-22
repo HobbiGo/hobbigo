@@ -5,585 +5,4593 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<title>HOBBIGO V77 — AI Journey & Experience Marketplace</title>
 
-<link rel="preconnect" href="https://unpkg.com">
-<link rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      crossorigin="">
+<title>HOBBIGO ONE — AI Journey & Experience Marketplace</title>
 
-<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#07111f;
+  --bg2:#0b1728;
+  --card:#101e31;
+  --card2:#14243a;
+  --line:rgba(255,255,255,.09);
+  --text:#f6f8fb;
+  --muted:#94a5ba;
+  --green:#27d3a2;
+  --green2:#19b98d;
+  --blue:#4da3ff;
+  --orange:#ffb454;
+  --red:#ff647c;
+  --shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(39,211,162,.10),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(77,163,255,.10),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+/* APP */
+
+#app{
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+.container{
+  width:min(1180px,calc(100% - 32px));
+  margin:auto;
+}
+
+/* HEADER */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  backdrop-filter:blur(20px);
+  background:rgba(7,17,31,.82);
+  border-bottom:1px solid var(--line);
+}
+
+.header-inner{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  font-size:21px;
+  letter-spacing:-.6px;
+}
+
+.logo-mark{
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--green),#3de6c0);
+  color:#06151a;
+  box-shadow:0 8px 30px rgba(39,211,162,.22);
+}
+
+.logo small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.desktop-nav{
+  display:flex;
+  gap:5px;
+}
+
+.nav-btn{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:10px 13px;
+  border-radius:12px;
+  font-size:13px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  color:white;
+  background:rgba(255,255,255,.07);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:white;
+}
+
+/* MOBILE NAV */
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:72px;
+  z-index:2000;
+  display:none;
+  background:rgba(7,17,31,.94);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--line);
+}
+
+.bottom-nav-inner{
+  height:100%;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+
+.bottom-item{
+  border:0;
+  background:none;
+  color:var(--muted);
+  font-size:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+}
+
+.bottom-item span:first-child{
+  font-size:20px;
+}
+
+.bottom-item.active{
+  color:var(--green);
+}
+
+/* PAGE */
+
+.page{
+  padding:30px 0;
+  animation:fadeIn .25s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+
+.page-title{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:-1.2px;
+  margin-bottom:8px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  margin-bottom:26px;
+}
+
+.section{
+  margin-top:32px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin-bottom:16px;
+}
+
+.section-title{
+  font-size:21px;
+  font-weight:800;
+}
+
+.section-link{
+  color:var(--green);
+  font-size:13px;
+  border:0;
+  background:none;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:30px;
+  min-height:430px;
+  padding:48px;
+  display:flex;
+  align-items:center;
+  background:
+    linear-gradient(110deg,rgba(7,17,31,.97),rgba(7,17,31,.66)),
+    radial-gradient(circle at 80% 30%,rgba(39,211,162,.32),transparent 25%),
+    radial-gradient(circle at 95% 80%,rgba(77,163,255,.25),transparent 28%),
+    #10253a;
+  box-shadow:var(--shadow);
+}
+
+.hero-content{
+  max-width:650px;
+}
+
+.badge{
+  display:inline-flex;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(39,211,162,.11);
+  border:1px solid rgba(39,211,162,.25);
+  color:var(--green);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.5px;
+  margin-bottom:18px;
+}
+
+.hero h1{
+  font-size:clamp(38px,6vw,70px);
+  line-height:.98;
+  letter-spacing:-3px;
+  margin-bottom:20px;
+}
+
+.hero h1 span{
+  color:var(--green);
+}
+
+.hero p{
+  color:#b9c7d7;
+  font-size:16px;
+  line-height:1.7;
+  max-width:580px;
+}
+
+/* SEARCH */
+
+.search-panel{
+  margin-top:28px;
+  padding:12px;
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr auto;
+  gap:8px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,255,255,.055);
+}
+
+.search-input{
+  min-height:50px;
+  border:1px solid transparent;
+  background:rgba(0,0,0,.18);
+  border-radius:13px;
+  color:white;
+  padding:0 14px;
+  outline:none;
+}
+
+.search-input:focus{
+  border-color:rgba(39,211,162,.4);
+}
+
+/* BUTTONS */
+
+.btn{
+  min-height:46px;
+  padding:0 17px;
+  border:0;
+  border-radius:13px;
+  font-weight:800;
+  color:#06151a;
+  background:var(--green);
+}
+
+.btn:hover{
+  filter:brightness(1.08);
+}
+
+.btn.secondary{
+  color:white;
+  background:rgba(255,255,255,.08);
+  border:1px solid var(--line);
+}
+
+.btn.blue{
+  color:white;
+  background:var(--blue);
+}
+
+.btn.orange{
+  color:#211405;
+  background:var(--orange);
+}
+
+.btn.danger{
+  color:white;
+  background:var(--red);
+}
+
+.btn.full{
+  width:100%;
+}
+
+/* GRID */
+
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,1fr);
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,1fr);
+}
+
+/* CARDS */
+
+.card{
+  background:linear-gradient(145deg,rgba(20,36,58,.92),rgba(12,27,45,.92));
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,.12);
+}
+
+.card:hover{
+  border-color:rgba(255,255,255,.14);
+}
+
+.service-card{
+  min-height:150px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.service-card:hover{
+  transform:translateY(-3px);
+}
+
+.service-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+  background:rgba(39,211,162,.10);
+  margin-bottom:15px;
+}
+
+.service-card h3{
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.service-card p{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* PRODUCT */
+
+.product{
+  overflow:hidden;
+  padding:0;
+}
+
+.product-cover{
+  height:150px;
+  display:grid;
+  place-items:center;
+  font-size:52px;
+  background:
+    radial-gradient(circle at 50% 30%,rgba(39,211,162,.25),transparent 40%),
+    #10283d;
+}
+
+.product-body{
+  padding:18px;
+}
+
+.product-title{
+  font-size:17px;
+  font-weight:800;
+}
+
+.product-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin:6px 0 13px;
+}
+
+.price{
+  font-size:19px;
+  font-weight:900;
+}
+
+.price small{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:500;
+}
+
+/* FORM */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.form-group.full{
+  grid-column:1/-1;
+}
+
+.form-group label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.form-control{
+  width:100%;
+  min-height:48px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#0a1728;
+  color:white;
+  padding:0 13px;
+  outline:none;
+}
+
+textarea.form-control{
+  padding:13px;
+  min-height:100px;
+  resize:vertical;
+}
+
+/* TRIP */
+
+.trip-builder{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.trip-result{
+  min-height:100%;
+}
+
+.itinerary-item{
+  display:grid;
+  grid-template-columns:55px 1fr;
+  gap:13px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.itinerary-item:last-child{
+  border-bottom:0;
+}
+
+.time{
+  color:var(--green);
+  font-weight:900;
+  font-size:13px;
+}
+
+.itinerary-item h4{
+  margin-bottom:4px;
+}
+
+.itinerary-item p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* STAT */
+
+.stat{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.stat-value{
+  font-size:24px;
+  font-weight:900;
+}
+
+/* STATUS */
+
+.status{
+  display:inline-flex;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  background:rgba(39,211,162,.10);
+  color:var(--green);
+}
+
+.status.pending{
+  background:rgba(255,180,84,.10);
+  color:var(--orange);
+}
+
+.status.failed{
+  background:rgba(255,100,124,.10);
+  color:var(--red);
+}
+
+/* LIST */
+
+.list{
+  display:flex;
+  flex-direction:column;
+}
+
+.list-row{
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:center;
+}
+
+.list-row:last-child{
+  border-bottom:0;
+}
+
+.list-main{
+  min-width:0;
+}
+
+.list-title{
+  font-weight:800;
+  font-size:14px;
+}
+
+.list-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+/* PROFILE */
+
+.profile-head{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-bottom:22px;
+}
+
+.avatar{
+  width:66px;
+  height:66px;
+  border-radius:22px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--green),#43a9ff);
+  color:#07111f;
+  font-weight:900;
+  font-size:24px;
+}
+
+.profile-name{
+  font-size:23px;
+  font-weight:900;
+}
+
+.profile-email{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.profile-section{
+  margin-top:18px;
+}
+
+.profile-section-title{
+  font-size:11px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:800;
+  margin:0 0 8px 8px;
+}
+
+.profile-menu{
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  background:rgba(255,255,255,.025);
+}
+
+.profile-menu button{
+  width:100%;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:transparent;
+  color:white;
+  min-height:58px;
+  padding:0 17px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  text-align:left;
+}
+
+.profile-menu button:last-child{
+  border-bottom:0;
+}
+
+.profile-menu button:hover{
+  background:rgba(255,255,255,.045);
+}
+
+.menu-icon{
+  width:35px;
+  height:35px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:rgba(255,255,255,.06);
+}
+
+.menu-copy{
+  flex:1;
+}
+
+.menu-copy strong{
+  display:block;
+  font-size:13px;
+}
+
+.menu-copy span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+}
+
+.chevron{
+  color:var(--muted);
+}
+
+/* CART */
+
+.cart-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:15px;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  padding-top:20px;
+  font-size:20px;
+  font-weight:900;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(10px);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(560px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#0c1b2d;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:23px;
+  box-shadow:var(--shadow);
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.modal-head h2{
+  font-size:21px;
+}
+
+.close{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.05);
+  color:white;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:88px;
+  z-index:7000;
+  background:#11243a;
+  border:1px solid var(--line);
+  color:white;
+  padding:13px 16px;
+  border-radius:13px;
+  box-shadow:var(--shadow);
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:none;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+  .desktop-nav{
+    display:none;
+  }
+
+  .bottom-nav{
+    display:block;
+  }
+
+  .grid-4{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid-3{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .trip-builder{
+    grid-template-columns:1fr;
+  }
+
+  .search-panel{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .search-panel .btn{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:600px){
+  .container{
+    width:min(100% - 22px,1180px);
+  }
+
+  .page{
+    padding:22px 0;
+  }
+
+  .hero{
+    min-height:510px;
+    padding:27px 21px;
+    border-radius:24px;
+  }
+
+  .hero h1{
+    font-size:43px;
+    letter-spacing:-2px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
+
+  .search-panel{
+    grid-template-columns:1fr;
+  }
+
+  .search-panel .btn{
+    grid-column:auto;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-group.full{
+    grid-column:auto;
+  }
+
+  .header-inner{
+    height:62px;
+  }
+
+  .page-title{
+    font-size:27px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<!-- =========================================================
-     HOBBIGO V77
-     AI JOURNEY & EXPERIENCE MARKETPLACE
-     SEARCH → PLAN → CONFIGURE → PACKAGE → BOOK
-     → EXPERIENCE → VIDEO → SHARE → RE-OPTIMIZE
-========================================================= -->
+<div id="app"></div>
 
-<div id="toast" class="toast"></div>
-
-<!-- ================= HEADER ================= -->
-
-<header class="topbar">
-  <div class="brand" onclick="go('home')">
-    <div class="brand-mark">H</div>
-    <div>
-      <div class="brand-name">HOBBIGO</div>
-      <div class="brand-tag">AI Journey & Experience Marketplace</div>
-    </div>
-  </div>
-
-  <nav class="main-nav">
-    <button onclick="go('home')">Home</button>
-    <button onclick="go('travel')">Travel</button>
-    <button onclick="go('planner')">AI Planner</button>
-    <button onclick="go('event')">Corporate</button>
-    <button onclick="go('marketplace')">Marketplace</button>
-    <button onclick="go('mytrip')">My Trip</button>
-  </nav>
-
-  <div class="header-actions">
-    <button class="lang-btn" onclick="toggleLanguage()">🌐 EN</button>
-    <button class="cart-btn" onclick="openCart()">
-      🛒 <span>Cart</span>
-      <b id="cartCount">0</b>
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bottom-item" onclick="openPage('home')" id="bn-home">
+      <span>⌂</span><span>Home</span>
     </button>
-    <button class="menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+    <button class="bottom-item" onclick="openPage('trips')" id="bn-trips">
+      <span>✈</span><span>Trips</span>
+    </button>
+
+    <button class="bottom-item" onclick="openPage('market')" id="bn-market">
+      <span>◈</span><span>Explore</span>
+    </button>
+
+    <button class="bottom-item" onclick="openPage('orders')" id="bn-orders">
+      <span>▣</span><span>Orders</span>
+    </button>
+
+    <button class="bottom-item" onclick="openPage('profile')" id="bn-profile">
+      <span>●</span><span>Profile</span>
+    </button>
   </div>
-</header>
+</nav>
 
-<!-- ================= MOBILE MENU ================= -->
+<div class="toast" id="toast"></div>
 
-<div id="mobileMenu" class="mobile-menu">
-  <button onclick="go('home');toggleMobileMenu()">Home</button>
-  <button onclick="go('travel');toggleMobileMenu()">Travel</button>
-  <button onclick="go('planner');toggleMobileMenu()">AI Planner</button>
-  <button onclick="go('event');toggleMobileMenu()">Corporate Event</button>
-  <button onclick="go('marketplace');toggleMobileMenu()">Marketplace</button>
-  <button onclick="go('experience');toggleMobileMenu()">Experience</button>
-  <button onclick="go('mytrip');toggleMobileMenu()">My Trip</button>
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2 id="modalTitle">Details</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
-<main>
+<script>
 
-<!-- =========================================================
-     HOME
-========================================================= -->
+/* =========================================================
+   HOBBIGO ONE MASTER V1.0
+   HOBBIGO + TELKU + CHELEA
+   ========================================================= */
 
-<section id="home" class="page-section hero-section">
+const SUPABASE_URL =
+  "https://xozjhayxttryegynntld.supabase.co";
 
-  <div class="hero-overlay"></div>
+const SUPABASE_KEY =
+  "sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
 
-  <div class="hero-content">
+let db = null;
 
-    <div class="eyebrow">
-      🌎 GLOBAL TRAVEL • EVENTS • EXPERIENCES
+try{
+  if(window.supabase){
+    db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  }
+}catch(e){
+  console.warn("Supabase unavailable",e);
+}
+
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
+
+const state = {
+  page:"home",
+
+  customer:{
+    id:localStorage.getItem("hobbigo_customer_id") || "",
+    name:localStorage.getItem("hobbigo_name") || "HobbiGo Traveler",
+    email:localStorage.getItem("hobbigo_email") || "",
+    phone:localStorage.getItem("hobbigo_phone") || "",
+    type:localStorage.getItem("hobbigo_customer_type") || "Personal"
+  },
+
+  cart:JSON.parse(
+    localStorage.getItem("hobbigo_cart") || "[]"
+  ),
+
+  trips:JSON.parse(
+    localStorage.getItem("hobbigo_trips") || "[]"
+  ),
+
+  chelea:JSON.parse(
+    localStorage.getItem("hobbigo_chelea") || "[]"
+  ),
+
+  settings:JSON.parse(
+    localStorage.getItem("hobbigo_settings") ||
+    '{"language":"English","currency":"IDR","notifications":true}'
+  )
+};
+
+function saveState(){
+
+  localStorage.setItem(
+    "hobbigo_customer_id",
+    state.customer.id
+  );
+
+  localStorage.setItem(
+    "hobbigo_name",
+    state.customer.name
+  );
+
+  localStorage.setItem(
+    "hobbigo_email",
+    state.customer.email
+  );
+
+  localStorage.setItem(
+    "hobbigo_phone",
+    state.customer.phone
+  );
+
+  localStorage.setItem(
+    "hobbigo_customer_type",
+    state.customer.type
+  );
+
+  localStorage.setItem(
+    "hobbigo_cart",
+    JSON.stringify(state.cart)
+  );
+
+  localStorage.setItem(
+    "hobbigo_trips",
+    JSON.stringify(state.trips)
+  );
+
+  localStorage.setItem(
+    "hobbigo_chelea",
+    JSON.stringify(state.chelea)
+  );
+
+  localStorage.setItem(
+    "hobbigo_settings",
+    JSON.stringify(state.settings)
+  );
+}
+
+function money(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style:"currency",
+      currency:"IDR",
+      maximumFractionDigits:0
+    }
+  ).format(Number(value)||0);
+
+}
+
+function uid(prefix="HB"){
+
+  return prefix +
+    Date.now().toString(36).toUpperCase() +
+    Math.random()
+      .toString(36)
+      .substring(2,6)
+      .toUpperCase();
+
+}
+
+function escapeHtml(text){
+
+  return String(text ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function toast(message){
+
+  const el = document.getElementById("toast");
+
+  el.textContent = message;
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },2500);
+
+}
+
+/* =========================================================
+   MASTER DATA
+   ========================================================= */
+
+const marketplace = [
+
+  {
+    id:"hotel-bali",
+    type:"Hotel",
+    icon:"🏨",
+    title:"Bali Premium Stay",
+    location:"Seminyak, Bali",
+    price:850000,
+    unit:"night",
+    description:"Premium stay for your Bali journey."
+  },
+
+  {
+    id:"experience-bali",
+    type:"Experience",
+    icon:"🌴",
+    title:"Bali Sunset Experience",
+    location:"Bali",
+    price:450000,
+    unit:"person",
+    description:"Curated sunset and local experience."
+  },
+
+  {
+    id:"transport-bali",
+    type:"Transport",
+    icon:"🚗",
+    title:"Private Bali Transfer",
+    location:"Airport → Hotel",
+    price:250000,
+    unit:"trip",
+    description:"Private airport transfer."
+  },
+
+  {
+    id:"food-bali",
+    type:"Food",
+    icon:"🍜",
+    title:"Local Culinary Experience",
+    location:"Denpasar, Bali",
+    price:180000,
+    unit:"person",
+    description:"Discover authentic local cuisine."
+  },
+
+  {
+    id:"hotel-jakarta",
+    type:"Hotel",
+    icon:"🏙️",
+    title:"Jakarta City Hotel",
+    location:"Central Jakarta",
+    price:650000,
+    unit:"night",
+    description:"Comfortable city stay."
+  },
+
+  {
+    id:"experience-yogyakarta",
+    type:"Experience",
+    icon:"🛕",
+    title:"Yogyakarta Heritage Tour",
+    location:"Yogyakarta",
+    price:350000,
+    unit:"person",
+    description:"Culture, heritage and local stories."
+  },
+
+  {
+    id:"transport-jakarta",
+    type:"Transport",
+    icon:"🚘",
+    title:"Jakarta Private Car",
+    location:"Jakarta",
+    price:300000,
+    unit:"trip",
+    description:"Private vehicle with flexible route."
+  },
+
+  {
+    id:"boat-labuan",
+    type:"Boat",
+    icon:"⛵",
+    title:"Labuan Bajo Boat",
+    location:"Labuan Bajo",
+    price:2500000,
+    unit:"boat",
+    description:"Private boat experience."
+  }
+
+];
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+function header(){
+
+  return `
+
+  <header class="header">
+
+    <div class="container header-inner">
+
+      <button
+        class="logo"
+        style="border:0;background:none;color:white"
+        onclick="openPage('home')"
+      >
+
+        <span class="logo-mark">H</span>
+
+        <span>
+          HOBBIGO
+          <small>ONE · TRAVEL ECOSYSTEM</small>
+        </span>
+
+      </button>
+
+      <nav class="desktop-nav">
+
+        <button
+          class="nav-btn ${state.page==="home"?"active":""}"
+          onclick="openPage('home')">
+          Home
+        </button>
+
+        <button
+          class="nav-btn ${state.page==="trips"?"active":""}"
+          onclick="openPage('trips')">
+          Trip Planner
+        </button>
+
+        <button
+          class="nav-btn ${state.page==="market"?"active":""}"
+          onclick="openPage('market')">
+          Explore
+        </button>
+
+        <button
+          class="nav-btn ${state.page==="telku"?"active":""}"
+          onclick="openPage('telku')">
+          TELKU
+        </button>
+
+        <button
+          class="nav-btn ${state.page==="chelea"?"active":""}"
+          onclick="openPage('chelea')">
+          CHELEA
+        </button>
+
+      </nav>
+
+      <div class="header-actions">
+
+        <button
+          class="icon-btn"
+          onclick="openPage('cart')">
+          🛒
+        </button>
+
+        <button
+          class="icon-btn"
+          onclick="openPage('profile')">
+          ●
+        </button>
+
+      </div>
+
     </div>
 
-    <h1>
-      Plan Your Journey.<br>
-      <span>Book Everything.</span><br>
-      Experience More.
-    </h1>
+  </header>
 
-    <p>
-      HOBBIGO combines AI travel planning, global marketplace,
-      corporate events, booking and AI journey experiences
-      in one ecosystem.
+  `;
+
+}
+
+/* =========================================================
+   HOME
+   ========================================================= */
+
+function renderHome(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <section class="hero">
+
+        <div class="hero-content">
+
+          <div class="badge">
+            AI JOURNEY & EXPERIENCE MARKETPLACE
+          </div>
+
+          <h1>
+            Your journey.<br>
+            <span>One ecosystem.</span>
+          </h1>
+
+          <p>
+            Plan your trip, discover experiences, book stays,
+            connect with TELKU eSIM and send your belongings
+            safely with CHELEA — all in one place.
+          </p>
+
+          <div class="search-panel">
+
+            <input
+              id="homeDestination"
+              class="search-input"
+              placeholder="Where do you want to go?"
+            >
+
+            <input
+              id="homeDate"
+              class="search-input"
+              type="date"
+            >
+
+            <input
+              id="homeTraveler"
+              class="search-input"
+              type="number"
+              min="1"
+              value="1"
+              placeholder="Travelers"
+            >
+
+            <button
+              class="btn"
+              onclick="startTrip()">
+              Plan My Journey
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <section class="section">
+
+        <div class="section-head">
+          <div>
+            <div class="section-title">
+              Everything for your journey
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+
+          ${serviceCard("✈️","Trip Planner",
+            "AI itinerary, route and journey budget",
+            "trips")}
+
+          ${serviceCard("🏨","Stay",
+            "Hotels, villas and unique stays",
+            "market","Hotel")}
+
+          ${serviceCard("🎯","Experiences",
+            "Activities, tours and local experiences",
+            "market","Experience")}
+
+          ${serviceCard("🚗","Transport",
+            "Transfers, vehicles and route services",
+            "market","Transport")}
+
+          ${serviceCard("📶","TELKU",
+            "Travel eSIM and mobile connectivity",
+            "telku")}
+
+          ${serviceCard("📦","CHELEA",
+            "Traveler delivery and secure shipment",
+            "chelea")}
+
+          ${serviceCard("🍜","Culinary",
+            "Restaurants, street food and local taste",
+            "market","Food")}
+
+          ${serviceCard("⛵","Boat",
+            "Island trips and private boat packages",
+            "market","Boat")}
+
+        </div>
+
+      </section>
+
+      <section class="section">
+
+        <div class="section-head">
+
+          <div>
+            <div class="section-title">
+              Curated for you
+            </div>
+
+            <div style="color:var(--muted);font-size:12px">
+              Popular products in the HobbiGo marketplace
+            </div>
+          </div>
+
+          <button
+            class="section-link"
+            onclick="openPage('market')">
+            View all →
+          </button>
+
+        </div>
+
+        <div class="grid grid-4">
+
+          ${marketplace.slice(0,4)
+            .map(productCard)
+            .join("")}
+
+        </div>
+
+      </section>
+
+      <section class="section">
+
+        <div class="grid grid-3">
+
+          <div class="card">
+
+            <div class="service-icon">🤖</div>
+
+            <h3>AI Journey Planner</h3>
+
+            <p style="color:var(--muted);font-size:12px;line-height:1.6;margin-top:7px">
+              Tell us where you want to go. HobbiGo
+              builds your route, itinerary and estimated budget.
+            </p>
+
+          </div>
+
+          <div class="card">
+
+            <div class="service-icon">📶</div>
+
+            <h3>TELKU Connectivity</h3>
+
+            <p style="color:var(--muted);font-size:12px;line-height:1.6;margin-top:7px">
+              Keep your journey connected with travel eSIM,
+              usage monitoring and top up.
+            </p>
+
+          </div>
+
+          <div class="card">
+
+            <div class="service-icon">📦</div>
+
+            <h3>CHELEA Traveler Delivery</h3>
+
+            <p style="color:var(--muted);font-size:12px;line-height:1.6;margin-top:7px">
+              Send belongings through travelers or
+              delivery partners with safer tracking.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function serviceCard(icon,title,desc,page,type=""){
+
+  const action =
+    type
+    ? `openMarketType('${type}')`
+    : `openPage('${page}')`;
+
+  return `
+
+  <div class="card service-card"
+       onclick="${action}">
+
+    <div class="service-icon">
+      ${icon}
+    </div>
+
+    <h3>${title}</h3>
+
+    <p>${desc}</p>
+
+  </div>
+
+  `;
+
+}
+
+/* =========================================================
+   TRIP PLANNER
+   ========================================================= */
+
+function renderTrips(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        AI Trip Planner
+      </div>
+
+      <div class="page-subtitle">
+        Search → Plan → Configure → Package → Book → Experience
+      </div>
+
+      <div class="trip-builder">
+
+        <div class="card">
+
+          <div class="section-title" style="margin-bottom:20px">
+            Build your journey
+          </div>
+
+          <div class="form-grid">
+
+            <div class="form-group full">
+              <label>Destination</label>
+              <input
+                id="tripDestination"
+                class="form-control"
+                value="${escapeHtml(window.tripData?.destination || "")}"
+                placeholder="Bali, Jakarta, Tokyo..."
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Start Date</label>
+              <input
+                id="tripDate"
+                type="date"
+                class="form-control"
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Travelers</label>
+              <input
+                id="tripPeople"
+                type="number"
+                min="1"
+                value="1"
+                class="form-control"
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Duration</label>
+
+              <select id="tripDuration" class="form-control">
+
+                <option value="2">2 Days</option>
+                <option value="3" selected>3 Days</option>
+                <option value="4">4 Days</option>
+                <option value="5">5 Days</option>
+                <option value="7">7 Days</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group">
+              <label>Trip Style</label>
+
+              <select id="tripStyle" class="form-control">
+
+                <option>Economy</option>
+                <option selected>Comfort</option>
+                <option>Exclusive</option>
+                <option>Family</option>
+                <option>Corporate</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group full">
+
+              <label>Interests</label>
+
+              <select id="tripInterest" class="form-control">
+
+                <option>Nature & Adventure</option>
+                <option>Food & Culinary</option>
+                <option>Culture & Heritage</option>
+                <option>Beach & Relaxation</option>
+                <option>Shopping</option>
+                <option>Family</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group full">
+
+              <button
+                class="btn full"
+                onclick="generateTrip()">
+                ✨ Generate My Journey
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="card trip-result">
+
+          <div class="section-title">
+            Smart Route
+          </div>
+
+          <div
+            id="tripResult"
+            style="margin-top:15px">
+
+            <div class="empty">
+
+              <div class="empty-icon">🗺️</div>
+
+              <div>
+                Your AI itinerary will appear here.
+              </div>
+
+              <div style="font-size:11px;margin-top:6px">
+                Choose your destination and generate your journey.
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function startTrip(){
+
+  const destination =
+    document.getElementById("homeDestination")?.value
+    || "Bali";
+
+  window.tripData = {
+    destination
+  };
+
+  openPage("trips");
+
+  setTimeout(()=>{
+
+    const input =
+      document.getElementById("tripDestination");
+
+    if(input){
+      input.value = destination;
+    }
+
+  },50);
+
+}
+
+function generateTrip(){
+
+  const destination =
+    document.getElementById("tripDestination").value.trim()
+    || "Bali";
+
+  const date =
+    document.getElementById("tripDate").value
+    || new Date().toISOString().split("T")[0];
+
+  const people =
+    Number(document.getElementById("tripPeople").value)||1;
+
+  const duration =
+    Number(document.getElementById("tripDuration").value)||3;
+
+  const style =
+    document.getElementById("tripStyle").value;
+
+  const interest =
+    document.getElementById("tripInterest").value;
+
+  const hotel =
+    style==="Exclusive"
+      ? 1500000
+      : style==="Economy"
+        ? 500000
+        : 850000;
+
+  const activities =
+    interest==="Food & Culinary"
+      ? 300000
+      : interest==="Nature & Adventure"
+        ? 450000
+        : 350000;
+
+  const transport = 350000;
+
+  const total =
+    hotel * Math.max(1,duration-1)
+    + activities * people
+    + transport;
+
+  const result = document.getElementById("tripResult");
+
+  result.innerHTML = `
+
+    <div class="badge">
+      AI JOURNEY READY
+    </div>
+
+    <h2 style="font-size:25px;margin-bottom:4px">
+      ${escapeHtml(destination)}
+    </h2>
+
+    <p style="color:var(--muted);font-size:12px">
+      ${escapeHtml(date)}
+      · ${people} traveler(s)
+      · ${duration} days
     </p>
 
-    <div class="hero-buttons">
-      <button class="btn btn-primary" onclick="go('planner')">
-        🤖 Start AI Trip
-      </button>
+    <div style="margin-top:18px">
 
-      <button class="btn btn-secondary" onclick="go('marketplace')">
+      ${itinerary("09:00","Arrival & Transfer",
+        "Airport / station transfer to your accommodation.")}
+
+      ${itinerary("11:00","Hotel Check-in",
+        `${style} stay selected for your journey.`)}
+
+      ${itinerary("14:00",interest,
+        "Curated experience based on your travel interest.")}
+
+      ${itinerary("18:30","Local Culinary",
+        "Discover recommended local food and atmosphere.")}
+
+      ${itinerary("20:00","Smart Route",
+        "HobbiGo optimizes your route based on distance and timing.")}
+
+    </div>
+
+    <div class="card"
+         style="margin-top:18px;background:rgba(39,211,162,.07)">
+
+      <div class="stat">
+
+        <div>
+          <div class="stat-label">
+            Estimated Journey Cost
+          </div>
+
+          <div class="stat-value">
+            ${money(total)}
+          </div>
+        </div>
+
+        <button
+          class="btn"
+          onclick="packageTrip('${escapeHtml(destination)}','${date}',${people},${duration},${total})">
+          Package Journey
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+function itinerary(time,title,desc){
+
+  return `
+
+  <div class="itinerary-item">
+
+    <div class="time">${time}</div>
+
+    <div>
+      <h4>${title}</h4>
+      <p>${desc}</p>
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function packageTrip(destination,date,people,duration,total){
+
+  const trip = {
+    id:uid("TRIP-"),
+    destination,
+    date,
+    people,
+    duration,
+    total,
+    status:"PLANNED",
+    created_at:new Date().toISOString()
+  };
+
+  state.trips.unshift(trip);
+  saveState();
+
+  addCart({
+    id:trip.id,
+    type:"Trip",
+    title:`${destination} Journey`,
+    detail:`${duration} days · ${people} traveler(s)`,
+    price:total
+  });
+
+  toast("Journey added to your package.");
+
+  openPage("cart");
+
+}
+
+/* =========================================================
+   MARKETPLACE
+   ========================================================= */
+
+let marketFilter = "All";
+
+function renderMarket(){
+
+  const items =
+    marketFilter==="All"
+      ? marketplace
+      : marketplace.filter(
+          x=>x.type===marketFilter
+        );
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
         Explore Marketplace
-      </button>
-
-      <button class="btn btn-outline" onclick="go('event')">
-        🏢 Create Corporate Event
-      </button>
-    </div>
-
-  </div>
-
-  <div class="hero-search-card">
-
-    <div class="search-card-title">
-      <strong>Where do you want to go?</strong>
-      <span>Search travel, stay, activities & more</span>
-    </div>
-
-    <div class="hero-search-grid">
-
-      <div class="field">
-        <label>Destination</label>
-        <input id="heroDestination"
-               type="text"
-               placeholder="Bali, Singapore, Tokyo...">
       </div>
 
-      <div class="field">
-        <label>Date</label>
-        <input id="heroDate" type="date">
+      <div class="page-subtitle">
+        Discover stays, experiences, transport, food and travel services.
       </div>
 
-      <div class="field">
-        <label>Travelers</label>
-        <input id="heroTravelers"
-               type="number"
-               min="1"
-               value="2">
+      <div style="display:flex;gap:7px;overflow:auto;padding-bottom:10px">
+
+        ${[
+          "All",
+          "Hotel",
+          "Experience",
+          "Transport",
+          "Food",
+          "Boat"
+        ].map(x=>`
+
+          <button
+            class="btn ${marketFilter===x?"":"secondary"}"
+            style="white-space:nowrap;min-height:40px"
+            onclick="openMarketType('${x}')">
+            ${x}
+          </button>
+
+        `).join("")}
+
       </div>
 
-      <button class="btn btn-primary"
-              onclick="heroSearchGo()">
-        🔎 Search
-      </button>
+      <div class="grid grid-4" style="margin-top:18px">
+
+        ${items.map(productCard).join("")}
+
+      </div>
 
     </div>
 
   </div>
 
-</section>
+  `;
 
-<!-- =========================================================
-     CUSTOMER TYPE
-========================================================= -->
+}
 
-<section class="section" id="customerSection">
+function openMarketType(type){
 
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">START YOUR JOURNEY</div>
-      <h2>Who are you travelling with?</h2>
-      <p>HOBBIGO adapts the experience to your travel needs.</p>
-    </div>
-  </div>
+  marketFilter = type;
+  openPage("market");
 
-  <div class="customer-grid">
+}
 
-    <button class="customer-card active"
-            data-customer="personal"
-            onclick="selectCustomerType('personal')">
-      <span>👤</span>
-      <strong>Personal</strong>
-      <small>Solo or individual travel</small>
-    </button>
+function productCard(item){
 
-    <button class="customer-card"
-            data-customer="family"
-            onclick="selectCustomerType('family')">
-      <span>👨‍👩‍👧‍👦</span>
-      <strong>Family</strong>
-      <small>Family holiday & experiences</small>
-    </button>
+  return `
 
-    <button class="customer-card"
-            data-customer="group"
-            onclick="selectCustomerType('group')">
-      <span>👥</span>
-      <strong>Group</strong>
-      <small>Friends, communities & groups</small>
-    </button>
+  <div class="card product">
 
-    <button class="customer-card"
-            data-customer="corporate"
-            onclick="selectCustomerType('corporate');go('event')">
-      <span>🏢</span>
-      <strong>Corporate</strong>
-      <small>Business travel & events</small>
-    </button>
-
-  </div>
-
-</section>
-
-<!-- =========================================================
-     TRAVEL SEARCH
-========================================================= -->
-
-<section class="section" id="travel">
-
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">TRAVEL BOOKING</div>
-      <h2>Search & Book Travel</h2>
-      <p>
-        Flight, hotel, villa, transport, boat, tour,
-        attraction and experiences.
-      </p>
-    </div>
-  </div>
-
-  <div class="search-tabs">
-    <button class="search-tab active"
-            onclick="setTravelTab('flight',this)">
-      ✈️ Flights
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('hotel',this)">
-      🏨 Hotels
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('villa',this)">
-      🏡 Villa
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('transport',this)">
-      🚗 Transport
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('boat',this)">
-      🚢 Boat
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('tour',this)">
-      🧭 Tour
-    </button>
-
-    <button class="search-tab"
-            onclick="setTravelTab('activity',this)">
-      🎟️ Activity
-    </button>
-
-  </div>
-
-  <div class="travel-search-box">
-
-    <div class="search-form flight-form">
-
-      <div class="field">
-        <label>From</label>
-        <input id="flightFrom"
-               type="text"
-               placeholder="Jakarta">
-      </div>
-
-      <div class="swap-button">⇄</div>
-
-      <div class="field">
-        <label>To</label>
-        <input id="flightTo"
-               type="text"
-               placeholder="Bali">
-      </div>
-
-      <div class="field">
-        <label>Departure</label>
-        <input id="flightDate" type="date">
-      </div>
-
-      <div class="field">
-        <label>Return</label>
-        <input id="flightReturn" type="date">
-      </div>
-
-      <div class="field">
-        <label>Passengers</label>
-        <input id="flightPassengers"
-               type="number"
-               min="1"
-               value="1">
-      </div>
-
-      <div class="field">
-        <label>Cabin</label>
-        <select id="flightCabin">
-          <option>Economy</option>
-          <option>Premium Economy</option>
-          <option>Business</option>
-          <option>First Class</option>
-        </select>
-      </div>
-
-      <button class="btn btn-primary"
-              onclick="searchFlights()">
-        Search Flights
-      </button>
-
+    <div class="product-cover">
+      ${item.icon}
     </div>
 
-    <div class="search-form hotel-form hidden">
+    <div class="product-body">
 
-      <div class="field">
-        <label>Destination</label>
-        <input id="hotelDestination"
-               placeholder="Bali">
+      <div style="font-size:10px;color:var(--green);font-weight:800">
+        ${item.type}
       </div>
 
-      <div class="field">
-        <label>Check-in</label>
-        <input id="hotelCheckin" type="date">
+      <div class="product-title">
+        ${item.title}
       </div>
 
-      <div class="field">
-        <label>Check-out</label>
-        <input id="hotelCheckout" type="date">
+      <div class="product-meta">
+        ${item.location}
       </div>
 
-      <div class="field">
-        <label>Guests</label>
-        <input id="hotelGuests"
-               type="number"
-               min="1"
-               value="2">
+      <div class="price">
+        ${money(item.price)}
+        <small>/ ${item.unit}</small>
       </div>
 
-      <div class="field">
-        <label>Rooms</label>
-        <input id="hotelRooms"
-               type="number"
-               min="1"
-               value="1">
-      </div>
-
-      <button class="btn btn-primary"
-              onclick="searchHotels()">
-        Search Hotels
+      <button
+        class="btn full"
+        style="margin-top:14px"
+        onclick="addProductToCart('${item.id}')">
+        Add to Journey
       </button>
 
     </div>
 
   </div>
 
-  <div id="travelResults" class="results-area"></div>
+  `;
 
-</section>
+}
 
-<!-- =========================================================
-     CHELEA
-========================================================= -->
+function addProductToCart(id){
 
-<section class="section" id="chelea">
-  <div class="section-head">
-    <div>
-      <div class="eyebrow">SMART DELIVERY</div>
-      <h2>CHELEA</h2>
-      <p>Smart Personal Delivery &amp; Cross-Border Jastip</p>
+  const item =
+    marketplace.find(x=>x.id===id);
+
+  if(!item) return;
+
+  addCart({
+    id:item.id,
+    type:item.type,
+    title:item.title,
+    detail:item.location,
+    price:item.price
+  });
+
+  toast(`${item.title} added to cart.`);
+
+}
+
+function addCart(item){
+
+  state.cart.push({
+    ...item,
+    cart_id:uid("C-"),
+    quantity:1
+  });
+
+  saveState();
+
+}
+
+/* =========================================================
+   TELKU
+   ========================================================= */
+
+let telkuPlans = [];
+
+async function loadTelkuPlans(){
+
+  try{
+
+    if(!db) return;
+
+    const {data,error} =
+      await db
+      .from("telku_plans_v2")
+      .select("*")
+      .order("price",{ascending:true});
+
+    if(!error && data && data.length){
+      telkuPlans = data;
+    }
+
+  }catch(e){
+
+    console.warn("TELKU plans:",e);
+
+  }
+
+}
+
+function fallbackTelkuPlans(){
+
+  return [
+
+    {
+      code:"ID3",
+      name:"Indonesia 3GB",
+      detail:"7 Days",
+      price:59000
+    },
+
+    {
+      code:"ASIA5",
+      name:"Asia Travel 5GB",
+      detail:"15 Days",
+      price:99000
+    },
+
+    {
+      code:"GLOBAL10",
+      name:"Global Travel 10GB",
+      detail:"30 Days",
+      price:249000
+    }
+
+  ];
+
+}
+
+function renderTelku(){
+
+  const plans =
+    telkuPlans.length
+      ? telkuPlans
+      : fallbackTelkuPlans();
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        TELKU
+      </div>
+
+      <div class="page-subtitle">
+        Travel eSIM connectivity inside your HobbiGo journey.
+      </div>
+
+      <div class="card"
+           style="margin-bottom:20px;background:
+           linear-gradient(120deg,rgba(39,211,162,.10),rgba(77,163,255,.07))">
+
+        <div style="display:flex;justify-content:space-between;gap:20px;align-items:center">
+
+          <div>
+
+            <div class="badge">
+              TRAVEL CONNECTIVITY
+            </div>
+
+            <h2 style="font-size:28px">
+              Stay connected wherever you go.
+            </h2>
+
+            <p style="color:var(--muted);font-size:12px;margin-top:7px">
+              Choose a plan, purchase it, and manage your eSIM
+              from the same HobbiGo profile.
+            </p>
+
+          </div>
+
+          <div style="font-size:60px">
+            📶
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="grid grid-3">
+
+        ${plans.map(telkuCard).join("")}
+
+      </div>
+
     </div>
+
   </div>
 
-  <div class="card" style="padding: 22px;">
-    <div style="display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;">
-      <div style="flex:1; min-width:220px;">
-        <p style="margin:0 0 10px; font-size: 1rem; line-height:1.6; color: var(--text);">
-          "Send, carry, pickup and track your items with verification, protection and secure delivery."
+  `;
+
+}
+
+function telkuCard(plan){
+
+  const code =
+    plan.code ||
+    plan.plan_code ||
+    "TELKU";
+
+  const name =
+    plan.name ||
+    plan.plan_name ||
+    code;
+
+  const detail =
+    plan.detail ||
+    `${plan.duration || 7} Days`;
+
+  const price =
+    Number(plan.price)||0;
+
+  return `
+
+  <div class="card">
+
+    <div class="badge">
+      TELKU eSIM
+    </div>
+
+    <h3 style="font-size:19px">
+      ${escapeHtml(name)}
+    </h3>
+
+    <p style="color:var(--muted);font-size:12px;margin-top:5px">
+      ${escapeHtml(detail)}
+    </p>
+
+    <div class="price" style="margin-top:20px">
+      ${money(price)}
+    </div>
+
+    <button
+      class="btn full"
+      style="margin-top:16px"
+      onclick='buyTelku(${JSON.stringify({
+        code,name,detail,price
+      })})'>
+      Buy Plan
+    </button>
+
+  </div>
+
+  `;
+
+}
+
+async function buyTelku(plan){
+
+  const orderCode =
+    "TK-" +
+    Date.now().toString(36).toUpperCase();
+
+  try{
+
+    if(db){
+
+      const {error} =
+        await db
+        .from("telku_orders")
+        .insert({
+
+          order_code:orderCode,
+
+          plan:plan.name,
+
+          detail:plan.detail,
+
+          price:plan.price,
+
+          status:"PENDING",
+
+          payment:"PENDING"
+
+        });
+
+      if(error){
+        console.warn("TELKU order error:",error);
+      }
+
+    }
+
+  }catch(e){
+
+    console.warn(e);
+
+  }
+
+  addCart({
+    id:orderCode,
+    type:"TELKU",
+    title:plan.name,
+    detail:plan.detail,
+    price:plan.price
+  });
+
+  toast("TELKU plan added to checkout.");
+
+  openPage("cart");
+
+}
+
+/* =========================================================
+   CHELEA
+   ========================================================= */
+
+function renderChelea(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        CHELEA
+      </div>
+
+      <div class="page-subtitle">
+        Traveler delivery — practical, timely and safer.
+      </div>
+
+      <div class="card"
+           style="margin-bottom:20px">
+
+        <div class="badge">
+          TRAVELER DELIVERY NETWORK
+        </div>
+
+        <h2 style="font-size:30px;max-width:700px">
+          Send your belongings through a smarter
+          traveler delivery ecosystem.
+        </h2>
+
+        <p style="color:var(--muted);font-size:13px;line-height:1.7;max-width:700px;margin-top:10px">
+          CHELEA connects sender, traveler and receiver
+          with shipment tracking, delivery information,
+          insurance options and secure handover.
         </p>
+
       </div>
-      <a class="btn btn-primary" href="chelea/chelea.html" style="text-decoration:none; display:inline-block; text-align:center;">
-        OPEN CHELEA
-      </a>
+
+      <div class="grid grid-3">
+
+        <div class="card">
+
+          <div class="service-icon">📍</div>
+
+          <h3>Traveler Pickup</h3>
+
+          <p style="color:var(--muted);font-size:12px;margin-top:7px">
+            Request pickup from a traveler and route
+            it to the destination.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <div class="service-icon">🛡️</div>
+
+          <h3>Protection</h3>
+
+          <p style="color:var(--muted);font-size:12px;margin-top:7px">
+            Shipment value and insurance can be configured
+            before confirmation.
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <div class="service-icon">📹</div>
+
+          <h3>Handover Control</h3>
+
+          <p style="color:var(--muted);font-size:12px;margin-top:7px">
+            Pickup and handover can be documented
+            through the CHELEA process.
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="card">
+
+          <div class="section-title">
+            Create Shipment
+          </div>
+
+          <div class="form-grid" style="margin-top:18px">
+
+            <div class="form-group">
+              <label>Origin</label>
+              <input
+                id="cheleaOrigin"
+                class="form-control"
+                placeholder="Jakarta"
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Destination</label>
+              <input
+                id="cheleaDestination"
+                class="form-control"
+                placeholder="Bali"
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Item Category</label>
+
+              <select
+                id="cheleaCategory"
+                class="form-control">
+
+                <option>Personal Items</option>
+                <option>Documents</option>
+                <option>Clothing</option>
+                <option>Souvenirs</option>
+                <option>Other</option>
+
+              </select>
+
+            </div>
+
+            <div class="form-group">
+              <label>Estimated Weight</label>
+
+              <input
+                id="cheleaWeight"
+                class="form-control"
+                type="number"
+                min="0.1"
+                step=".1"
+                value="1"
+              >
+
+            </div>
+
+            <div class="form-group full">
+
+              <label>
+                Shipment Notes
+              </label>
+
+              <textarea
+                id="cheleaNotes"
+                class="form-control"
+                placeholder="Describe the shipment..."
+              ></textarea>
+
+            </div>
+
+            <div class="form-group full">
+
+              <button
+                class="btn"
+                onclick="createCheleaShipment()">
+                Create Shipment
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          My CHELEA Shipments
+        </div>
+
+        <div
+          class="card"
+          style="margin-top:15px">
+
+          ${renderCheleaList()}
+
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 
-  <div class="module-stack">
-    <div class="card module-card telku-module">
-      <div class="module-card-inner">
+  `;
+
+}
+
+function renderCheleaList(){
+
+  if(!state.chelea.length){
+
+    return `
+
+    <div class="empty">
+
+      <div class="empty-icon">📦</div>
+
+      No shipments yet.
+
+    </div>
+
+    `;
+
+  }
+
+  return `
+
+  <div class="list">
+
+    ${state.chelea.map(x=>`
+
+      <div class="list-row">
+
+        <div class="list-main">
+
+          <div class="list-title">
+            ${escapeHtml(x.code)}
+          </div>
+
+          <div class="list-sub">
+            ${escapeHtml(x.origin)}
+            →
+            ${escapeHtml(x.destination)}
+            · ${escapeHtml(x.category)}
+          </div>
+
+        </div>
+
+        <span class="status">
+          ${escapeHtml(x.status)}
+        </span>
+
+      </div>
+
+    `).join("")}
+
+  </div>
+
+  `;
+
+}
+
+function createCheleaShipment(){
+
+  const origin =
+    document.getElementById("cheleaOrigin").value.trim();
+
+  const destination =
+    document.getElementById("cheleaDestination").value.trim();
+
+  const category =
+    document.getElementById("cheleaCategory").value;
+
+  const weight =
+    Number(document.getElementById("cheleaWeight").value)||1;
+
+  const notes =
+    document.getElementById("cheleaNotes").value.trim();
+
+  if(!origin || !destination){
+
+    toast("Please enter origin and destination.");
+
+    return;
+
+  }
+
+  const shipment = {
+
+    id:uid("CH-"),
+
+    code:uid("CHE-"),
+
+    origin,
+
+    destination,
+
+    category,
+
+    weight,
+
+    notes,
+
+    status:"REQUESTED",
+
+    created_at:new Date().toISOString()
+
+  };
+
+  state.chelea.unshift(shipment);
+
+  saveState();
+
+  toast("CHELEA shipment created.");
+
+  openPage("chelea");
+
+}
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+function renderCart(){
+
+  const total =
+    state.cart.reduce(
+      (sum,x)=>
+        sum + Number(x.price||0)*Number(x.quantity||1),
+      0
+    );
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Your Journey Cart
+      </div>
+
+      <div class="page-subtitle">
+        One cart for your HobbiGo journey.
+      </div>
+
+      <div class="card">
+
+        ${
+          !state.cart.length
+          ?
+
+          `<div class="empty">
+
+            <div class="empty-icon">🛒</div>
+
+            <div>Your cart is empty.</div>
+
+            <button
+              class="btn"
+              style="margin-top:15px"
+              onclick="openPage('market')">
+              Explore Marketplace
+            </button>
+
+          </div>`
+
+          :
+
+          `
+
+          <div class="list">
+
+            ${state.cart.map((x,i)=>`
+
+              <div class="cart-row">
+
+                <div>
+
+                  <div class="list-title">
+                    ${escapeHtml(x.title)}
+                  </div>
+
+                  <div class="list-sub">
+                    ${escapeHtml(x.type)}
+                    · ${escapeHtml(x.detail||"")}
+                  </div>
+
+                  <div style="margin-top:8px;font-weight:800">
+                    ${money(x.price)}
+                  </div>
+
+                </div>
+
+                <button
+                  class="btn danger"
+                  style="min-height:38px;padding:0 11px"
+                  onclick="removeCart(${i})">
+                  Remove
+                </button>
+
+              </div>
+
+            `).join("")}
+
+          </div>
+
+          <div class="cart-total">
+
+            <span>Total</span>
+
+            <span>${money(total)}</span>
+
+          </div>
+
+          <button
+            class="btn full"
+            style="margin-top:20px"
+            onclick="openPage('checkout')">
+            Continue to Checkout
+          </button>
+
+          `
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function removeCart(index){
+
+  state.cart.splice(index,1);
+
+  saveState();
+
+  render();
+
+}
+
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
+
+function renderCheckout(){
+
+  const total =
+    state.cart.reduce(
+      (sum,x)=>
+        sum + Number(x.price||0),
+      0
+    );
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Checkout
+      </div>
+
+      <div class="page-subtitle">
+        Complete your HobbiGo journey package.
+      </div>
+
+      <div class="grid grid-2">
+
+        <div class="card">
+
+          <div class="section-title">
+            Order Summary
+          </div>
+
+          <div class="list" style="margin-top:10px">
+
+            ${state.cart.map(x=>`
+
+              <div class="list-row">
+
+                <div class="list-main">
+
+                  <div class="list-title">
+                    ${escapeHtml(x.title)}
+                  </div>
+
+                  <div class="list-sub">
+                    ${escapeHtml(x.type)}
+                  </div>
+
+                </div>
+
+                <strong>
+                  ${money(x.price)}
+                </strong>
+
+              </div>
+
+            `).join("")}
+
+          </div>
+
+          <div class="cart-total">
+
+            <span>Total</span>
+            <span>${money(total)}</span>
+
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="section-title">
+            Customer
+          </div>
+
+          <div style="margin-top:16px">
+
+            <div class="form-group">
+
+              <label>Name</label>
+
+              <input
+                id="checkoutName"
+                class="form-control"
+                value="${escapeHtml(state.customer.name)}"
+              >
+
+            </div>
+
+            <div class="form-group" style="margin-top:12px">
+
+              <label>Email</label>
+
+              <input
+                id="checkoutEmail"
+                class="form-control"
+                type="email"
+                value="${escapeHtml(state.customer.email)}"
+              >
+
+            </div>
+
+            <div class="form-group" style="margin-top:12px">
+
+              <label>Payment Method</label>
+
+              <select
+                id="checkoutPayment"
+                class="form-control">
+
+                <option>Bank Transfer</option>
+                <option>Credit / Debit Card</option>
+                <option>E-Wallet</option>
+                <option>Company Billing</option>
+
+              </select>
+
+            </div>
+
+            <button
+              class="btn full"
+              style="margin-top:20px"
+              onclick="confirmCheckout()">
+
+              Confirm Order · ${money(total)}
+
+            </button>
+
+            <p style="color:var(--muted);font-size:10px;text-align:center;margin-top:10px">
+              Payment integration can be connected to your selected gateway.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+async function confirmCheckout(){
+
+  if(!state.cart.length){
+
+    toast("Your cart is empty.");
+
+    return;
+
+  }
+
+  state.customer.name =
+    document.getElementById("checkoutName").value.trim();
+
+  state.customer.email =
+    document.getElementById("checkoutEmail").value.trim();
+
+  saveState();
+
+  const orderCode =
+    uid("HBG-");
+
+  const total =
+    state.cart.reduce(
+      (sum,x)=>sum+Number(x.price||0),
+      0
+    );
+
+  const order = {
+
+    id:orderCode,
+
+    customer:state.customer.name,
+
+    email:state.customer.email,
+
+    items:[...state.cart],
+
+    total,
+
+    status:"PENDING PAYMENT",
+
+    payment:document
+      .getElementById("checkoutPayment").value,
+
+    created_at:new Date().toISOString()
+
+  };
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("hobbigo_orders")||"[]"
+    );
+
+  orders.unshift(order);
+
+  localStorage.setItem(
+    "hobbigo_orders",
+    JSON.stringify(orders)
+  );
+
+  state.cart=[];
+
+  saveState();
+
+  toast("Order created successfully.");
+
+  openPage("orders");
+
+}
+
+/* =========================================================
+   ORDERS
+   ========================================================= */
+
+async function loadTelkuOrders(){
+
+  if(!db) return [];
+
+  try{
+
+    const {data,error} =
+      await db
+      .from("telku_orders")
+      .select("*")
+      .order("created_at",{ascending:false})
+      .limit(30);
+
+    if(error){
+
+      console.warn(error);
+
+      return [];
+
+    }
+
+    return data||[];
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+function renderOrders(){
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("hobbigo_orders")||"[]"
+    );
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Orders
+      </div>
+
+      <div class="page-subtitle">
+        Your HobbiGo journey and service orders.
+      </div>
+
+      <div class="card">
+
+        ${
+          orders.length
+          ?
+
+          `<div class="list">
+
+            ${orders.map(x=>`
+
+              <div
+                class="list-row"
+                onclick='showOrder(${JSON.stringify(x).replace(/'/g,"&#39;")})'
+                style="cursor:pointer">
+
+                <div class="list-main">
+
+                  <div class="list-title">
+                    ${escapeHtml(x.id)}
+                  </div>
+
+                  <div class="list-sub">
+                    ${new Date(x.created_at).toLocaleString("id-ID")}
+                    · ${x.items.length} item
+                  </div>
+
+                </div>
+
+                <div style="text-align:right">
+
+                  <div style="font-weight:800">
+                    ${money(x.total)}
+                  </div>
+
+                  <span class="status pending">
+                    ${escapeHtml(x.status)}
+                  </span>
+
+                </div>
+
+              </div>
+
+            `).join("")}
+
+          </div>`
+
+          :
+
+          `<div class="empty">
+
+            <div class="empty-icon">▣</div>
+
+            No HobbiGo orders yet.
+
+            <button
+              class="btn"
+              style="display:block;margin:15px auto 0"
+              onclick="openPage('market')">
+              Start Exploring
+            </button>
+
+          </div>`
+
+        }
+
+      </div>
+
+      <div class="section">
+
+        <div class="section-title">
+          TELKU Orders
+        </div>
+
+        <div
+          id="telkuOrdersBox"
+          class="card"
+          style="margin-top:14px">
+
+          Loading TELKU orders...
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+async function afterOrdersRender(){
+
+  const box =
+    document.getElementById("telkuOrdersBox");
+
+  if(!box) return;
+
+  const data =
+    await loadTelkuOrders();
+
+  if(!data.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+        No TELKU orders found.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  box.innerHTML = `
+
+    <div class="list">
+
+      ${data.map(x=>`
+
+        <div class="list-row">
+
+          <div class="list-main">
+
+            <div class="list-title">
+              ${escapeHtml(x.order_code)}
+            </div>
+
+            <div class="list-sub">
+              ${escapeHtml(x.plan)}
+              · ${escapeHtml(x.detail||"")}
+            </div>
+
+          </div>
+
+          <div style="text-align:right">
+
+            <strong>
+              ${money(x.price)}
+            </strong>
+
+            <br>
+
+            <span class="status">
+              ${escapeHtml(x.status)}
+            </span>
+
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+  `;
+
+}
+
+function showOrder(order){
+
+  openModal(
+    "Order Details",
+    `
+
+    <div class="card">
+
+      <div class="stat">
+
         <div>
-          <div class="eyebrow" style="color: var(--primary);">SERVICE PLATFORM</div>
-          <h3>TELKU</h3>
-        </div>
-        <p>TELKU V1 — Smart Service &amp; Transaction Platform</p>
-        <a class="btn btn-primary" href="https://hobbigo.github.io/TELKU-V1/" target="_blank" rel="noopener noreferrer">OPEN TELKU</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =========================================================
-     AI TRIP PLANNER
-========================================================= -->
-
-<section class="section dark-section" id="planner">
-
-  <div class="section-head light">
-    <div>
-      <div class="eyebrow">AI JOURNEY ENGINE</div>
-      <h2>Build Your Trip With AI</h2>
-      <p>
-        Let AI combine marketplace products into a
-        smart journey that fits your budget.
-      </p>
-    </div>
-  </div>
-
-  <div class="planner-layout">
-
-    <div class="planner-form card-dark">
-
-      <h3>🤖 AI Trip Planner</h3>
-
-      <div class="planning-mode">
-        <label>Planning Mode</label>
-
-        <div class="mode-grid">
-
-          <button class="mode-card active"
-                  data-mode="ai"
-                  onclick="selectPlanningMode('ai')">
-            <strong>AI PLAN</strong>
-            <small>AI builds your journey</small>
-          </button>
-
-          <button class="mode-card"
-                  data-mode="manual"
-                  onclick="selectPlanningMode('manual')">
-            <strong>MANUAL PICK</strong>
-            <small>You select everything</small>
-          </button>
-
-          <button class="mode-card"
-                  data-mode="hybrid"
-                  onclick="selectPlanningMode('hybrid')">
-            <strong>AI + MANUAL</strong>
-            <small>AI recommends, you control</small>
-          </button>
-
-        </div>
-      </div>
-
-      <div class="form-grid">
-
-        <div class="field">
-          <label>Destination</label>
-          <input id="plannerDestination"
-                 placeholder="Bali">
+          <div class="stat-label">Order ID</div>
+          <div style="font-weight:900">
+            ${escapeHtml(order.id)}
+          </div>
         </div>
 
-        <div class="field">
-          <label>Start Date</label>
-          <input id="plannerStartDate" type="date">
-        </div>
-
-        <div class="field">
-          <label>Travelers</label>
-          <input id="plannerTravelers"
-                 type="number"
-                 min="1"
-                 value="2">
-        </div>
-
-        <div class="field">
-          <label>Duration</label>
-          <select id="plannerDuration">
-            <option value="2">2 Days</option>
-            <option value="3">3 Days</option>
-            <option value="4">4 Days</option>
-            <option value="5" selected>5 Days</option>
-            <option value="7">7 Days</option>
-            <option value="10">10 Days</option>
-            <option value="14">14 Days</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Trip Style</label>
-          <select id="plannerStyle">
-            <option>Best Value</option>
-            <option>Economy</option>
-            <option>Comfort</option>
-            <option>Exclusive</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Main Interest</label>
-          <select id="plannerInterest">
-            <option>Beach</option>
-            <option>Culture</option>
-            <option>Culinary</option>
-            <option>Adventure</option>
-            <option>Shopping</option>
-            <option>Nature</option>
-            <option>Family</option>
-            <option>Hobby</option>
-            <option>Mixed Experience</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Budget</label>
-          <input id="plannerBudget"
-                 type="number"
-                 placeholder="15000000">
-        </div>
+        <span class="status pending">
+          ${escapeHtml(order.status)}
+        </span>
 
       </div>
 
-      <button class="btn btn-primary btn-large"
-              onclick="generateTrip()">
-        ✨ GENERATE SMART TRIP
-      </button>
+    </div>
+
+    <div class="list" style="margin-top:12px">
+
+      ${order.items.map(x=>`
+
+        <div class="list-row">
+
+          <div class="list-main">
+
+            <div class="list-title">
+              ${escapeHtml(x.title)}
+            </div>
+
+            <div class="list-sub">
+              ${escapeHtml(x.type)}
+            </div>
+
+          </div>
+
+          <strong>
+            ${money(x.price)}
+          </strong>
+
+        </div>
+
+      `).join("")}
 
     </div>
 
-    <div class="planner-result card-dark">
+    <div class="cart-total">
 
-      <div class="result-header">
+      <span>Total</span>
+      <span>${money(order.total)}</span>
+
+    </div>
+
+    `
+  );
+
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function renderProfile(){
+
+  const initial =
+    (state.customer.name||"H").charAt(0).toUpperCase();
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="profile-head">
+
+        <div class="avatar">
+          ${initial}
+        </div>
+
         <div>
-          <span class="eyebrow">AI RESULT</span>
-          <h3 id="tripResultTitle">Your journey will appear here</h3>
+
+          <div class="profile-name">
+            ${escapeHtml(state.customer.name)}
+          </div>
+
+          <div class="profile-email">
+            ${escapeHtml(
+              state.customer.email ||
+              "Complete your profile"
+            )}
+          </div>
+
         </div>
 
-        <span id="tripStatus"
-              class="status-chip">Ready</span>
       </div>
 
-      <div id="tripResultContent" class="trip-result-content">
-        <div class="empty-state">
-          <p>Select your trip preferences and generate a route.</p>
+      <div class="grid grid-3">
+
+        <div class="card">
+          <div class="stat">
+            <div>
+              <div class="stat-label">Trips</div>
+              <div class="stat-value">
+                ${state.trips.length}
+              </div>
+            </div>
+            ✈️
+          </div>
         </div>
+
+        <div class="card">
+          <div class="stat">
+            <div>
+              <div class="stat-label">Cart</div>
+              <div class="stat-value">
+                ${state.cart.length}
+              </div>
+            </div>
+            🛒
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="stat">
+            <div>
+              <div class="stat-label">Shipments</div>
+              <div class="stat-value">
+                ${state.chelea.length}
+              </div>
+            </div>
+            📦
+          </div>
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <div class="profile-section-title">
+          Journey
+        </div>
+
+        <div class="profile-menu">
+
+          ${profileMenu(
+            "✈️",
+            "My Trips",
+            "View your planned journeys",
+            "mytrips"
+          )}
+
+          ${profileMenu(
+            "🎯",
+            "Experiences",
+            "Your selected travel experiences",
+            "market"
+          )}
+
+          ${profileMenu(
+            "🏨",
+            "Hotels & Stays",
+            "Manage your stays",
+            "market"
+          )}
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <div class="profile-section-title">
+          Connectivity
+        </div>
+
+        <div class="profile-menu">
+
+          ${profileMenu(
+            "📶",
+            "My eSIM",
+            "View TELKU eSIM",
+            "esim"
+          )}
+
+          ${profileMenu(
+            "📊",
+            "Data Usage",
+            "Monitor your travel data",
+            "usage"
+          )}
+
+          ${profileMenu(
+            "➕",
+            "Top Up",
+            "Add TELKU data balance",
+            "topup"
+          )}
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <div class="profile-section-title">
+          CHELEA
+        </div>
+
+        <div class="profile-menu">
+
+          ${profileMenu(
+            "📦",
+            "My Shipments",
+            "Traveler delivery and shipments",
+            "chelea"
+          )}
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <div class="profile-section-title">
+          Payment & Rewards
+        </div>
+
+        <div class="profile-menu">
+
+          ${profileMenu(
+            "▣",
+            "Orders",
+            "All your HobbiGo orders",
+            "orders"
+          )}
+
+          ${profileMenu(
+            "💳",
+            "Wallet",
+            "Wallet and balance",
+            "wallet"
+          )}
+
+          ${profileMenu(
+            "🎁",
+            "Referral",
+            "Invite friends and earn rewards",
+            "referral"
+          )}
+
+        </div>
+
+      </div>
+
+      <div class="profile-section">
+
+        <div class="profile-section-title">
+          Account
+        </div>
+
+        <div class="profile-menu">
+
+          ${profileMenu(
+            "👤",
+            "Customer Profile",
+            "Personal information",
+            "customer"
+          )}
+
+          ${profileMenu(
+            "⚙️",
+            "Settings",
+            "Language, currency and notifications",
+            "settings"
+          )}
+
+        </div>
+
       </div>
 
     </div>
 
   </div>
 
-</section>
+  `;
 
-<!-- rest of file omitted for brevity in this patch; original content preserved below -->
+}
 
-</main>
+function profileMenu(icon,title,desc,page){
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="brand brand-footer">
-      <div class="brand-mark">H</div>
+  return `
+
+  <button onclick="openPage('${page}')">
+
+    <span class="menu-icon">
+      ${icon}
+    </span>
+
+    <span class="menu-copy">
+
+      <strong>${title}</strong>
+
+      <span>${desc}</span>
+
+    </span>
+
+    <span class="chevron">
+      ›
+    </span>
+
+  </button>
+
+  `;
+
+}
+
+/* =========================================================
+   CUSTOMER
+   ========================================================= */
+
+function renderCustomer(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Customer Profile
+      </div>
+
+      <div class="page-subtitle">
+        One customer identity across HobbiGo, TELKU and CHELEA.
+      </div>
+
+      <div class="card">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label>Customer Name</label>
+
+            <input
+              id="customerName"
+              class="form-control"
+              value="${escapeHtml(state.customer.name)}"
+            >
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Customer Type</label>
+
+            <select
+              id="customerType"
+              class="form-control">
+
+              <option ${state.customer.type==="Personal"?"selected":""}>
+                Personal
+              </option>
+
+              <option ${state.customer.type==="Family"?"selected":""}>
+                Family
+              </option>
+
+              <option ${state.customer.type==="Group"?"selected":""}>
+                Group
+              </option>
+
+              <option ${state.customer.type==="Corporate"?"selected":""}>
+                Corporate
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Email</label>
+
+            <input
+              id="customerEmail"
+              type="email"
+              class="form-control"
+              value="${escapeHtml(state.customer.email)}"
+            >
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Phone</label>
+
+            <input
+              id="customerPhone"
+              class="form-control"
+              value="${escapeHtml(state.customer.phone)}"
+            >
+
+          </div>
+
+          <div class="form-group full">
+
+            <button
+              class="btn"
+              onclick="saveCustomer()">
+              Save Profile
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function saveCustomer(){
+
+  state.customer.name =
+    document.getElementById("customerName").value.trim()
+    || "HobbiGo Traveler";
+
+  state.customer.email =
+    document.getElementById("customerEmail").value.trim();
+
+  state.customer.phone =
+    document.getElementById("customerPhone").value.trim();
+
+  state.customer.type =
+    document.getElementById("customerType").value;
+
+  if(!state.customer.id){
+    state.customer.id=uid("CUS-");
+  }
+
+  saveState();
+
+  toast("Profile saved.");
+
+  openPage("profile");
+
+}
+
+/* =========================================================
+   MY TRIPS
+   ========================================================= */
+
+function renderMyTrips(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        My Trips
+      </div>
+
+      <div class="page-subtitle">
+        Your journey plans and itineraries.
+      </div>
+
+      <div class="card">
+
+        ${
+          state.trips.length
+          ?
+
+          `<div class="list">
+
+            ${state.trips.map(x=>`
+
+              <div class="list-row">
+
+                <div class="list-main">
+
+                  <div class="list-title">
+                    ${escapeHtml(x.destination)}
+                  </div>
+
+                  <div class="list-sub">
+                    ${x.date}
+                    · ${x.duration} days
+                    · ${x.people} traveler(s)
+                  </div>
+
+                </div>
+
+                <div style="text-align:right">
+
+                  <div style="font-weight:800">
+                    ${money(x.total)}
+                  </div>
+
+                  <span class="status">
+                    ${x.status}
+                  </span>
+
+                </div>
+
+              </div>
+
+            `).join("")}
+
+          </div>`
+
+          :
+
+          `<div class="empty">
+
+            <div class="empty-icon">✈️</div>
+
+            No trips yet.
+
+            <button
+              class="btn"
+              style="display:block;margin:15px auto 0"
+              onclick="openPage('trips')">
+              Plan a Trip
+            </button>
+
+          </div>`
+
+        }
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+/* =========================================================
+   ESIM
+   ========================================================= */
+
+async function loadEsims(){
+
+  if(!db) return [];
+
+  try{
+
+    const {data,error} =
+      await db
+      .from("telku_esims")
+      .select("*")
+      .order("created_at",{ascending:false})
+      .limit(10);
+
+    if(error){
+
+      console.warn(error);
+
+      return [];
+
+    }
+
+    return data||[];
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+async function renderEsim(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        My eSIM
+      </div>
+
+      <div class="page-subtitle">
+        TELKU connectivity for your journey.
+      </div>
+
+      <div
+        id="esimContent"
+        class="card">
+
+        Loading eSIM...
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+async function afterEsimRender(){
+
+  const box =
+    document.getElementById("esimContent");
+
+  if(!box) return;
+
+  const data =
+    await loadEsims();
+
+  if(!data.length){
+
+    box.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">📶</div>
+
+        <div>No active eSIM found.</div>
+
+        <button
+          class="btn"
+          style="margin-top:15px"
+          onclick="openPage('telku')">
+          Browse TELKU Plans
+        </button>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+  const x=data[0];
+
+  box.innerHTML = `
+
+    <div class="grid grid-2">
+
       <div>
-        <div class="brand-name">HOBBIGO</div>
+
+        <div class="badge">
+          ${escapeHtml(x.status||"ACTIVE")}
+        </div>
+
+        <h2 style="font-size:25px">
+          ${escapeHtml(x.esim_code||"TELKU eSIM")}
+        </h2>
+
+        <div style="margin-top:18px">
+
+          <div class="list-row">
+
+            <span class="stat-label">
+              Order
+            </span>
+
+            <strong>
+              ${escapeHtml(x.order_id||"-")}
+            </strong>
+
+          </div>
+
+          <div class="list-row">
+
+            <span class="stat-label">
+              ICCID
+            </span>
+
+            <strong>
+              ${escapeHtml(x.iccid||"-")}
+            </strong>
+
+          </div>
+
+          <div class="list-row">
+
+            <span class="stat-label">
+              Activation
+            </span>
+
+            <strong>
+              ${escapeHtml(x.activation_code||"-")}
+            </strong>
+
+          </div>
+
+        </div>
+
       </div>
-    </div>
-    <p>© 2026 HOBBIGO. All rights reserved.</p>
-  </div>
-</footer>
 
-<div id="cartModal" class="modal hidden">
-  <div class="modal-card">
-    <div class="modal-header">
-      <h3>My Cart</h3>
-      <button class="close-btn" onclick="closeCart()">×</button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeCart()">Continue</button>
-      <button class="btn btn-primary" onclick="checkoutCart()">Checkout</button>
-    </div>
-  </div>
-</div>
+      <div
+        style="display:flex;align-items:center;justify-content:center">
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="app.js"></script>
+        <div
+          id="qrBox"
+          style="padding:15px;background:white;border-radius:18px">
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  setTimeout(()=>{
+
+    const qr =
+      x.qr_payload ||
+      x.activation_code ||
+      "";
+
+    if(
+      qr &&
+      window.QRCode
+    ){
+
+      new QRCode(
+        document.getElementById("qrBox"),
+        {
+          text:qr,
+          width:180,
+          height:180
+        }
+      );
+
+    }
+
+  },100);
+
+}
+
+/* =========================================================
+   USAGE
+   ========================================================= */
+
+async function renderUsage(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Data Usage
+      </div>
+
+      <div class="page-subtitle">
+        Monitor your TELKU travel connectivity.
+      </div>
+
+      <div
+        id="usageContent"
+        class="grid grid-3">
+
+        <div class="card">
+          Loading usage...
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+async function afterUsageRender(){
+
+  const box =
+    document.getElementById("usageContent");
+
+  if(!box) return;
+
+  let data=[];
+
+  if(db){
+
+    try{
+
+      const {data:rows,error} =
+        await db
+        .from("telku_usage_v2")
+        .select("*")
+        .order("created_at",{ascending:false})
+        .limit(10);
+
+      if(!error){
+        data=rows||[];
+      }
+
+    }catch(e){}
+
+  }
+
+  if(!data.length){
+
+    data=[
+
+      {
+        label:"Data Remaining",
+        value:"3.0 GB"
+      },
+
+      {
+        label:"Used",
+        value:"1.2 GB"
+      },
+
+      {
+        label:"Validity",
+        value:"7 Days"
+      }
+
+    ];
+
+  }
+
+  box.innerHTML =
+    data.slice(0,3).map(x=>`
+
+      <div class="card">
+
+        <div class="stat">
+
+          <div>
+
+            <div class="stat-label">
+              ${escapeHtml(
+                x.label ||
+                x.metric ||
+                x.type ||
+                "Usage"
+              )}
+            </div>
+
+            <div class="stat-value">
+              ${escapeHtml(
+                String(
+                  x.value ??
+                  x.amount ??
+                  x.data ??
+                  "-"
+                )
+              )}
+            </div>
+
+          </div>
+
+          📊
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+/* =========================================================
+   TOP UP
+   ========================================================= */
+
+function renderTopup(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        TELKU Top Up
+      </div>
+
+      <div class="page-subtitle">
+        Add additional data to your travel connectivity.
+      </div>
+
+      <div class="grid grid-3">
+
+        ${[
+          ["1GB","Rp 25.000"],
+          ["3GB","Rp 59.000"],
+          ["5GB","Rp 89.000"]
+        ].map(x=>`
+
+          <div class="card">
+
+            <div class="badge">
+              TELKU
+            </div>
+
+            <h2>${x[0]}</h2>
+
+            <div class="price" style="margin-top:15px">
+              ${x[1]}
+            </div>
+
+            <button
+              class="btn full"
+              style="margin-top:18px"
+              onclick="createTopup('${x[0]}','${x[1]}')">
+              Top Up
+            </button>
+
+          </div>
+
+        `).join("")}
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+async function createTopup(data,priceText){
+
+  const amount =
+    Number(
+      priceText
+      .replace(/[^\d]/g,"")
+    )||0;
+
+  const code=uid("TOP-");
+
+  try{
+
+    if(db){
+
+      await db
+      .from("telku_topups_v2")
+      .insert({
+
+        topup_code:code,
+
+        amount,
+
+        status:"PENDING"
+
+      });
+
+    }
+
+  }catch(e){
+
+    console.warn(e);
+
+  }
+
+  toast(`${data} top up created.`);
+
+}
+
+/* =========================================================
+   WALLET
+   ========================================================= */
+
+async function renderWallet(){
+
+  let balance=0;
+
+  if(db){
+
+    try{
+
+      const {data} =
+        await db
+        .from("telku_wallet_v2")
+        .select("*")
+        .limit(1);
+
+      if(data && data[0]){
+
+        balance =
+          Number(
+            data[0].balance ||
+            data[0].amount ||
+            0
+          );
+
+      }
+
+    }catch(e){}
+
+  }
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Wallet
+      </div>
+
+      <div class="page-subtitle">
+        Your HobbiGo payment balance.
+      </div>
+
+      <div class="card"
+           style="background:
+           linear-gradient(135deg,rgba(39,211,162,.16),rgba(77,163,255,.10))">
+
+        <div class="stat">
+
+          <div>
+
+            <div class="stat-label">
+              Available Balance
+            </div>
+
+            <div class="stat-value"
+                 style="font-size:38px">
+              ${money(balance)}
+            </div>
+
+          </div>
+
+          <div style="font-size:50px">
+            💳
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="section">
+
+        <div class="grid grid-2">
+
+          <button
+            class="btn"
+            onclick="toast('Wallet top up flow ready.')">
+            Add Balance
+          </button>
+
+          <button
+            class="btn secondary"
+            onclick="toast('Transaction history loaded.')">
+            Transaction History
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+/* =========================================================
+   REFERRAL
+   ========================================================= */
+
+function renderReferral(){
+
+  const code =
+    localStorage.getItem("hobbigo_referral")
+    || "HOBBI" +
+       Math.random()
+       .toString(36)
+       .substring(2,7)
+       .toUpperCase();
+
+  localStorage.setItem(
+    "hobbigo_referral",
+    code
+  );
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Referral
+      </div>
+
+      <div class="page-subtitle">
+        Invite friends to travel with HobbiGo.
+      </div>
+
+      <div class="card"
+           style="text-align:center">
+
+        <div style="font-size:55px">
+          🎁
+        </div>
+
+        <h2 style="margin-top:12px">
+          Your Referral Code
+        </h2>
+
+        <div
+          style="font-size:30px;font-weight:900;color:var(--green);margin:18px">
+          ${code}
+        </div>
+
+        <button
+          class="btn"
+          onclick="copyReferral('${code}')">
+          Copy Code
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function copyReferral(code){
+
+  navigator.clipboard?.writeText(code);
+
+  toast("Referral code copied.");
+
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function renderSettings(){
+
+  return `
+
+  <div class="page">
+
+    <div class="container">
+
+      <div class="page-title">
+        Settings
+      </div>
+
+      <div class="page-subtitle">
+        Manage your HobbiGo experience.
+      </div>
+
+      <div class="card">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label>Language</label>
+
+            <select
+              id="settingLanguage"
+              class="form-control">
+
+              <option ${state.settings.language==="English"?"selected":""}>
+                English
+              </option>
+
+              <option ${state.settings.language==="Indonesia"?"selected":""}>
+                Indonesia
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Currency</label>
+
+            <select
+              id="settingCurrency"
+              class="form-control">
+
+              <option selected>IDR</option>
+              <option>USD</option>
+              <option>SGD</option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group full">
+
+            <label>Notifications</label>
+
+            <select
+              id="settingNotifications"
+              class="form-control">
+
+              <option value="true"
+                ${state.settings.notifications?"selected":""}>
+                Enabled
+              </option>
+
+              <option value="false"
+                ${!state.settings.notifications?"selected":""}>
+                Disabled
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group full">
+
+            <button
+              class="btn"
+              onclick="saveSettings()">
+              Save Settings
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+function saveSettings(){
+
+  state.settings.language =
+    document.getElementById("settingLanguage").value;
+
+  state.settings.currency =
+    document.getElementById("settingCurrency").value;
+
+  state.settings.notifications =
+    document.getElementById("settingNotifications").value==="true";
+
+  saveState();
+
+  toast("Settings saved.");
+
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+function openModal(title,body){
+
+  document.getElementById("modalTitle").textContent=title;
+
+  document.getElementById("modalBody").innerHTML=body;
+
+  document
+    .getElementById("modal")
+    .classList.add("show");
+
+}
+
+function closeModal(){
+
+  document
+    .getElementById("modal")
+    .classList.remove("show");
+
+}
+
+/* =========================================================
+   ROUTER
+   ========================================================= */
+
+function openPage(page){
+
+  state.page=page;
+
+  window.scrollTo({
+    top:0,
+    behavior:"instant"
+  });
+
+  render();
+
+}
+
+async function render(){
+
+  let content="";
+
+  switch(state.page){
+
+    case "home":
+      content=renderHome();
+      break;
+
+    case "trips":
+      content=renderTrips();
+      break;
+
+    case "market":
+      content=renderMarket();
+      break;
+
+    case "telku":
+      content=renderTelku();
+      break;
+
+    case "chelea":
+      content=renderChelea();
+      break;
+
+    case "cart":
+      content=renderCart();
+      break;
+
+    case "checkout":
+      content=renderCheckout();
+      break;
+
+    case "orders":
+      content=renderOrders();
+      break;
+
+    case "profile":
+      content=renderProfile();
+      break;
+
+    case "customer":
+      content=renderCustomer();
+      break;
+
+    case "mytrips":
+      content=renderMyTrips();
+      break;
+
+    case "esim":
+      content=await renderEsim();
+      break;
+
+    case "usage":
+      content=await renderUsage();
+      break;
+
+    case "topup":
+      content=renderTopup();
+      break;
+
+    case "wallet":
+      content=await renderWallet();
+      break;
+
+    case "referral":
+      content=renderReferral();
+      break;
+
+    case "settings":
+      content=renderSettings();
+      break;
+
+    default:
+      state.page="home";
+      content=renderHome();
+
+  }
+
+  document.getElementById("app").innerHTML =
+    header()+content;
+
+  updateBottomNav();
+
+  if(state.page==="orders"){
+    afterOrdersRender();
+  }
+
+  if(state.page==="esim"){
+    afterEsimRender();
+  }
+
+  if(state.page==="usage"){
+    afterUsageRender();
+  }
+
+}
+
+function updateBottomNav(){
+
+  document
+    .querySelectorAll(".bottom-item")
+    .forEach(x=>x.classList.remove("active"));
+
+  const map = {
+
+    home:"bn-home",
+
+    trips:"bn-trips",
+
+    market:"bn-market",
+
+    orders:"bn-orders",
+
+    profile:"bn-profile"
+
+  };
+
+  if(map[state.page]){
+
+    document
+      .getElementById(map[state.page])
+      ?.classList.add("active");
+
+  }
+
+}
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+(async function init(){
+
+  if(!state.customer.id){
+
+    state.customer.id=uid("CUS-");
+
+    saveState();
+
+  }
+
+  await loadTelkuPlans();
+
+  render();
+
+})();
+
+</script>
+
 </body>
 </html>
