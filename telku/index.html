@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TELKU V1.8</title>
+  <style>
+    :root {
+      --bg: #08111d;
+      --panel: #0f1a2b;
+      --panel-strong: #12233c;
+      --line: rgba(255,255,255,0.08);
+      --text: #edf4ff;
+      --muted: #9cb0c9;
+      --primary: #3dd7a9;
+      --primary-2: #1db88c;
+      --accent: #4ea6ff;
+      --warning: #ffb454;
+      --danger: #ff6f7d;
+      --success: #39d98a;
+      --shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #07111f 0%, #0c1728 100%);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7,17,31,0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #04120d;
+      font-weight: 900;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .nav a {
+      color: var(--muted);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .nav a.active, .nav a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pill-btn {
+      background: var(--panel-strong);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .primary-btn {
+      border: 1px solid var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #04120d;
+      font-weight: 800;
+      border-radius: 10px;
+      padding: 12px 18px;
+      cursor: pointer;
+    }
+    .hero {
+      padding: 42px 0 28px;
+    }
+    .hero-box {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(62, 193, 163, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)),
+        var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 7px 10px;
+      border: 1px solid rgba(61,215,169,0.24);
+      border-radius: 999px;
+      background: rgba(61,215,169,0.1);
+      color: var(--primary);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 800;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      letter-spacing: -0.05em;
+      line-height: 1.02;
+    }
+    .hero-copy {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-bottom: 22px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .stat {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 14px;
+    }
+    .stat strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .mini-panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+    .mini-panel h3 {
+      margin: 0 0 18px;
+      font-size: 1.2rem;
+    }
+    .feature-list {
+      display: grid;
+      gap: 12px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      padding: 12px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid transparent;
+    }
+    .feature-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(61,215,169,0.12);
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .main {
+      padding: 20px 0 40px;
+    }
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.4vw, 2.5rem);
+      letter-spacing: -0.04em;
+    }
+    .section-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 18px 0 22px;
+    }
+    .chip {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,0.02);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .chip.active {
+      color: var(--primary);
+      border-color: rgba(61,215,169,0.3);
+      background: rgba(61,215,169,0.08);
+    }
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(2, 7, 16, 0.2);
+    }
+    .product-image {
+      height: 180px;
+      background: linear-gradient(135deg, rgba(61,215,169,0.15), rgba(78,166,255,0.08));
+      display: grid;
+      place-items: center;
+      font-size: 3rem;
+      color: rgba(255,255,255,0.75);
+      border-bottom: 1px solid var(--line);
+    }
+    .product-body {
+      padding: 16px;
+    }
+    .product-tag {
+      color: var(--primary);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .product-title {
+      margin: 10px 0 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+    .product-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 52px;
+    }
+    .product-meta {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .price {
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+    .price small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .buy-btn {
+      border: 1px solid var(--primary);
+      background: rgba(61,215,169,0.1);
+      border-radius: 10px;
+      color: var(--primary);
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .footer {
+      padding: 24px 0 40px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+    @media (max-width: 980px) {
+      .hero-box { grid-template-columns: 1fr; }
+      .catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 0;
+      }
+      .nav { justify-content: center; }
+      .hero { padding-top: 18px; }
+      .hero-box { padding: 18px; }
+      .stat-grid, .catalog { grid-template-columns: 1fr; }
+      .section-header { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <span>TELKU</span>
+      </div>
+      <nav class="nav">
+        <a class="active" href="#">Home</a>
+        <a href="#">Marketplace</a>
+        <a href="#">Services</a>
+        <a href="#">Deals</a>
+        <a href="#">Support</a>
+      </nav>
+      <div class="header-actions">
+        <button class="pill-btn">EN</button>
+        <button class="primary-btn">Join Now</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-box">
+      <div>
+        <div class="eyebrow">Smart Service &amp; Transaction Platform</div>
+        <h1>Discover the right service for your lifestyle.</h1>
+        <p class="hero-copy">TELKU helps people discover trusted services, compare offers, and complete transactions with speed and clarity. Built for modern daily needs—from delivery and essentials to smart local shopping experiences.</p>
+        <div class="hero-actions">
+          <button class="primary-btn">Explore Services</button>
+          <button class="pill-btn">View Catalog</button>
+        </div>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>1.2k+</strong>
+            <span>Daily Orders</span>
+          </div>
+          <div class="stat">
+            <strong>96%</strong>
+            <span>Customer Satisfaction</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span>Live Support</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-panel">
+        <h3>Trending Categories</h3>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">✓</div>
+            <div>Fast service fulfillment</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✓</div>
+            <div>Trusted local providers</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✓</div>
+            <div>Flexible package options</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✓</div>
+            <div>Secure transactions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Popular Deals</h2>
+          <p>Handpicked service packages and essentials for everyday use.</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="chip active">All</button>
+        <button class="chip">Delivery</button>
+        <button class="chip">Shopping</button>
+        <button class="chip">Travel</button>
+        <button class="chip">Lifestyle</button>
+      </div>
+
+      <div class="catalog">
+        <article class="card">
+          <div class="product-image">🛒</div>
+          <div class="product-body">
+            <div class="product-tag">Delivery</div>
+            <div class="product-title">Smart Daily Delivery</div>
+            <div class="product-desc">Fast and reliable personal shopping and item drop-off service for busy schedules.</div>
+            <div class="product-meta">
+              <div class="price">Rp 49.000 <small>/ pack</small></div>
+              <button class="buy-btn">Buy</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="product-image">📦</div>
+          <div class="product-body">
+            <div class="product-tag">Service</div>
+            <div class="product-title">Express Pick &amp; Send</div>
+            <div class="product-desc">Convenient pick-up and send service for urgent errands and document handling.</div>
+            <div class="product-meta">
+              <div class="price">Rp 69.000 <small>/ task</small></div>
+              <button class="buy-btn">Buy</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="product-image">🚚</div>
+          <div class="product-body">
+            <div class="product-tag">Travel</div>
+            <div class="product-title">City Transfer Lite</div>
+            <div class="product-desc">Reliable point-to-point transfer for short routes and daily commuting needs.</div>
+            <div class="product-meta">
+              <div class="price">Rp 89.000 <small>/ trip</small></div>
+              <button class="buy-btn">Buy</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="product-image">🎁</div>
+          <div class="product-body">
+            <div class="product-tag">Lifestyle</div>
+            <div class="product-title">Gift Concierge</div>
+            <div class="product-desc">Beautiful gifting support for special moments, curated from trusted local vendors.</div>
+            <div class="product-meta">
+              <div class="price">Rp 119.000 <small>/ order</small></div>
+              <button class="buy-btn">Buy</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    © 2026 TELKU V1.8 — Smart Service &amp; Transaction Platform
+  </footer>
+</body>
+</html>
