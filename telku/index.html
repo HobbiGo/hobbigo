@@ -1,1136 +1,383 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
-<title>TELKU V1.8</title>
+<!-- ================= PROFILE TELKU V1.8 ================= -->
+<section id="profilePage" class="page-section" style="display:none;">
+
+  <div class="profile-header">
+    <div class="profile-avatar">T</div>
+    <div>
+      <h2>My Profile</h2>
+      <p id="profileEmail">TELKU User</p>
+    </div>
+  </div>
+
+  <div class="profile-menu">
+
+    <!-- ORDERS — ACTIVE -->
+    <button class="profile-item active"
+            onclick="openOrders()">
+      <span class="profile-icon">📦</span>
+      <span class="profile-text">
+        <strong>Orders</strong>
+        <small>View your orders & eSIM purchases</small>
+      </span>
+      <span class="profile-arrow">›</span>
+    </button>
+
+    <!-- eSIM — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('eSIM')">
+      <span class="profile-icon">📱</span>
+      <span class="profile-text">
+        <strong>My eSIM</strong>
+        <small>Manage your active eSIM</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+    <!-- USAGE — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('Usage')">
+      <span class="profile-icon">📊</span>
+      <span class="profile-text">
+        <strong>Usage</strong>
+        <small>Monitor your data usage</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+    <!-- TOP UP — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('Top Up')">
+      <span class="profile-icon">💳</span>
+      <span class="profile-text">
+        <strong>Top Up</strong>
+        <small>Add balance to your TELKU account</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+    <!-- WALLET — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('Wallet')">
+      <span class="profile-icon">👛</span>
+      <span class="profile-text">
+        <strong>Wallet</strong>
+        <small>Manage your TELKU wallet</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+    <!-- REFERRAL — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('Referral')">
+      <span class="profile-icon">🎁</span>
+      <span class="profile-text">
+        <strong>Referral</strong>
+        <small>Invite friends & earn rewards</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+    <!-- SETTINGS — COMING SOON -->
+    <button class="profile-item"
+            onclick="comingSoon('Settings')">
+      <span class="profile-icon">⚙️</span>
+      <span class="profile-text">
+        <strong>Settings</strong>
+        <small>Account & application settings</small>
+      </span>
+      <span class="coming-badge">COMING SOON</span>
+    </button>
+
+  </div>
+
+  <div class="profile-version">
+    TELKU V1.8<br>
+    <span>eSIM Travel Platform</span>
+  </div>
+
+</section>
+
+
+<!-- ================= PROFILE STYLE ================= -->
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 
-:root{
-  --bg:#07111f;
-  --bg2:#0b1728;
-  --card:#101f33;
-  --line:#243b55;
-  --text:#f4f8fc;
-  --muted:#8fa5bd;
-  --cyan:#45d6ff;
-  --green:#35d58a;
-  --red:#ff5f6d;
-  --yellow:#ffd166;
+.profile-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:20px;
+  margin-bottom:15px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#101d31,#0b1525);
+  border:1px solid rgba(255,255,255,.08);
 }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
+.profile-avatar{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  font-weight:800;
+  background:#18c7b8;
+  color:#06121f;
 }
 
-button,input,select{
-  font:inherit;
+.profile-header h2{
+  margin:0 0 4px;
+  font-size:20px;
 }
 
-button{
+.profile-header p{
+  margin:0;
+  color:#91a0b5;
+  font-size:13px;
+}
+
+.profile-menu{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.profile-item{
+  width:100%;
+  min-height:72px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  background:#0d1929;
+  color:white;
+  display:flex;
+  align-items:center;
+  text-align:left;
+  padding:12px 14px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.profile-item:hover{
+  background:#132238;
+  transform:translateY(-1px);
+}
+
+.profile-item.active{
+  border-color:rgba(24,199,184,.35);
+}
+
+.profile-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#15263b;
+  font-size:20px;
+  margin-right:12px;
+}
+
+.profile-text{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.profile-text strong{
+  font-size:15px;
+}
+
+.profile-text small{
+  color:#7f91a8;
+  font-size:11px;
+}
+
+.profile-arrow{
+  font-size:25px;
+  color:#18c7b8;
+}
+
+.coming-badge{
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.4px;
+  padding:5px 7px;
+  border-radius:7px;
+  color:#8997a9;
+  background:#172233;
+  border:1px solid rgba(255,255,255,.06);
+  white-space:nowrap;
+}
+
+.profile-version{
+  text-align:center;
+  margin:25px 0 90px;
+  color:#526277;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.profile-version span{
+  color:#34445a;
+}
+
+
+/* ================= COMING SOON POPUP ================= */
+
+#comingSoonModal{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.65);
+  z-index:99999;
+  padding:20px;
+}
+
+.coming-box{
+  width:min(360px,100%);
+  background:#0d1929;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.coming-icon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.coming-box h3{
+  margin:0 0 8px;
+  font-size:20px;
+}
+
+.coming-box p{
+  margin:0 0 20px;
+  color:#8d9bae;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.coming-close{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:12px;
+  background:#18c7b8;
+  color:#06121f;
+  font-weight:800;
   cursor:pointer;
 }
 
-.header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgba(7,17,31,.96);
-  border-bottom:1px solid var(--line);
-  backdrop-filter:blur(12px);
-}
-
-.header-inner{
-  max-width:1150px;
-  margin:auto;
-  padding:15px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.logo span{
-  color:var(--cyan);
-}
-
-.connection{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-.dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:#777;
-}
-
-.dot.ok{
-  background:var(--green);
-}
-
-.dot.bad{
-  background:var(--red);
-}
-
-.container{
-  max-width:1150px;
-  margin:auto;
-  padding:22px 16px 70px;
-}
-
-.hero{
-  background:linear-gradient(135deg,#10243b,#0b1728);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:25px;
-  margin-bottom:18px;
-}
-
-.hero h1{
-  font-size:30px;
-  margin-bottom:8px;
-}
-
-.hero p{
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.error{
-  display:none;
-  background:#38191f;
-  border:1px solid #8d343f;
-  border-radius:13px;
-  padding:15px;
-  margin-bottom:18px;
-  color:#ffb3ba;
-  white-space:pre-wrap;
-  word-break:break-word;
-  line-height:1.5;
-  font-size:12px;
-}
-
-.info{
-  background:#102238;
-  border:1px solid #27435f;
-  border-radius:13px;
-  padding:13px 15px;
-  margin-bottom:18px;
-  color:#a9bed3;
-  font-size:12px;
-  line-height:1.6;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:12px;
-  margin-bottom:18px;
-}
-
-.stat{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-}
-
-.stat small{
-  display:block;
-  color:var(--muted);
-  margin-bottom:8px;
-  font-size:11px;
-}
-
-.stat strong{
-  font-size:24px;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:15px;
-}
-
-.card.full{
-  grid-column:1/-1;
-}
-
-.card h2{
-  font-size:18px;
-  margin-bottom:15px;
-}
-
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  border:0;
-  border-radius:10px;
-  padding:10px 14px;
-  font-weight:700;
-  background:var(--cyan);
-  color:#06101b;
-}
-
-.btn.secondary{
-  background:#192d44;
-  color:#fff;
-  border:1px solid #2b4663;
-}
-
-.btn:hover{
-  opacity:.88;
-}
-
-.table-wrap{
-  overflow-x:auto;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
-
-th,td{
-  padding:11px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-  font-size:12px;
-}
-
-th{
-  color:var(--muted);
-}
-
-td{
-  color:#dce7f1;
-}
-
-.badge{
-  display:inline-block;
-  border-radius:20px;
-  padding:5px 8px;
-  background:#1b2c40;
-  color:#c6d6e6;
-  font-size:10px;
-}
-
-.badge.green{
-  background:#123c2c;
-  color:#65e4a6;
-}
-
-.badge.yellow{
-  background:#3e3417;
-  color:#ffda70;
-}
-
-.badge.red{
-  background:#431b21;
-  color:#ff929b;
-}
-
-.empty{
-  text-align:center;
-  padding:25px;
-  color:#6f849b;
-}
-
-.loading{
-  color:var(--muted);
-  padding:15px 0;
-}
-
-.footer{
-  text-align:center;
-  color:#50677e;
-  font-size:11px;
-  padding-top:15px;
-}
-
-@media(max-width:900px){
-  .stats{
-    grid-template-columns:repeat(3,1fr);
-  }
-}
-
-@media(max-width:700px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .hero h1{
-    font-size:25px;
-  }
-}
 </style>
-</head>
-
-<body>
-
-<header class="header">
-  <div class="header-inner">
-
-    <div class="logo">
-      TEL<span>KU</span>
-    </div>
-
-    <div class="connection">
-      <span id="dot" class="dot"></span>
-      <span id="connectionText">Connecting...</span>
-    </div>
-
-  </div>
-</header>
 
 
-<main class="container">
+<!-- ================= COMING SOON MODAL ================= -->
 
-  <section class="hero">
-    <h1>TELKU eSIM Marketplace</h1>
+<div id="comingSoonModal">
+
+  <div class="coming-box">
+
+    <div class="coming-icon">🚀</div>
+
+    <h3 id="comingSoonTitle">
+      Coming Soon
+    </h3>
+
     <p>
-      eSIM Plans • Orders • eSIM Inventory • Topups • Usage
+      This TELKU feature is currently being prepared
+      and will be available in a future version.
     </p>
-  </section>
 
+    <button class="coming-close"
+            onclick="closeComingSoon()">
+      OK
+    </button>
 
-  <div id="errorBox" class="error"></div>
-
-
-  <div class="info">
-    <b>Database:</b>
-    telku_plans /
-    telku_oder /
-    telku_esims /
-    telku_topups /
-    telku_usage
-    <br>
-    <b>eSIM schema:</b>
-    id UUID • esim_code • order_id • status • iccid •
-    activation_code • qr_payload • created_at
   </div>
 
-
-  <section class="stats">
-
-    <div class="stat">
-      <small>Plans</small>
-      <strong id="plansCount">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>Orders</small>
-      <strong id="ordersCount">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>eSIMs</small>
-      <strong id="esimsCount">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>Topups</small>
-      <strong id="topupsCount">0</strong>
-    </div>
-
-    <div class="stat">
-      <small>Usage</small>
-      <strong id="usageCount">0</strong>
-    </div>
-
-  </section>
+</div>
 
 
-  <section class="grid">
-
-    <!-- PLANS -->
-
-    <div class="card">
-
-      <h2>eSIM Plans</h2>
-
-      <div class="actions">
-        <button class="btn" onclick="loadTable('plans')">
-          Refresh
-        </button>
-      </div>
-
-      <br>
-
-      <div id="plansArea">
-        <div class="loading">Loading...</div>
-      </div>
-
-    </div>
-
-
-    <!-- ORDERS -->
-
-    <div class="card">
-
-      <h2>Orders</h2>
-
-      <div class="actions">
-        <button class="btn" onclick="loadTable('orders')">
-          Refresh
-        </button>
-      </div>
-
-      <br>
-
-      <div id="ordersArea">
-        <div class="loading">Loading...</div>
-      </div>
-
-    </div>
-
-
-    <!-- ESIMS -->
-
-    <div class="card full">
-
-      <h2>eSIM Inventory</h2>
-
-      <div class="actions">
-        <button class="btn" onclick="loadTable('esims')">
-          Refresh
-        </button>
-      </div>
-
-      <br>
-
-      <div id="esimsArea">
-        <div class="loading">Loading...</div>
-      </div>
-
-    </div>
-
-
-    <!-- TOPUPS -->
-
-    <div class="card">
-
-      <h2>Topups</h2>
-
-      <div class="actions">
-        <button class="btn" onclick="loadTable('topups')">
-          Refresh
-        </button>
-      </div>
-
-      <br>
-
-      <div id="topupsArea">
-        <div class="loading">Loading...</div>
-      </div>
-
-    </div>
-
-
-    <!-- USAGE -->
-
-    <div class="card">
-
-      <h2>Usage</h2>
-
-      <div class="actions">
-        <button class="btn" onclick="loadTable('usage')">
-          Refresh
-        </button>
-      </div>
-
-      <br>
-
-      <div id="usageArea">
-        <div class="loading">Loading...</div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <div class="footer">
-    TELKU V1.8 • Database Diagnostic Mode
-  </div>
-
-</main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ================= PROFILE JAVASCRIPT ================= -->
 
 <script>
 
-/* =====================================================
-   SUPABASE
-   ===================================================== */
+function comingSoon(feature){
+
+  const modal = document.getElementById("comingSoonModal");
+  const title = document.getElementById("comingSoonTitle");
+
+  if(title){
+    title.textContent = feature + " — Coming Soon";
+  }
+
+  if(modal){
+    modal.style.display = "flex";
+  }
+}
+
+function closeComingSoon(){
+
+  const modal = document.getElementById("comingSoonModal");
+
+  if(modal){
+    modal.style.display = "none";
+  }
+}
+
 
 /*
-  BOS:
-  PAKAI URL DAN ANON KEY TELKU YANG SUDAH ADA
-  DARI INDEX.HTML SEBELUMNYA.
-
-  JANGAN MEMBUAT PROJECT BARU.
+  ORDERS
+  Tetap gunakan fungsi Orders yang sudah ada
+  di TELKU sebelumnya.
 */
 
-const SUPABASE_URL =
-  "PASTE_URL_TELKU_DI_SINI";
+function openOrders(){
 
-const SUPABASE_ANON_KEY =
-  "PASTE_ANON_KEY_TELKU_DI_SINI";
-
-
-/* =====================================================
-   TABLE NAME
-   ===================================================== */
-
-const TABLES = {
-
-  plans:
-    "telku_plans",
-
-  orders:
-    "telku_oder",
-
-  esims:
-    "telku_esims",
-
-  topups:
-    "telku_topups",
-
-  usage:
-    "telku_usage"
-
-};
-
-
-let db = null;
-
-
-/* =====================================================
-   HELPERS
-   ===================================================== */
-
-function el(id){
-  return document.getElementById(id);
-}
-
-
-function esc(value){
-
-  if(value === null ||
-     value === undefined){
-    return "";
-  }
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-
-function showError(title,error){
-
-  const box =
-    el("errorBox");
-
-  let text =
-    title || "Database Error";
-
-  if(error){
-
-    if(error.message){
-      text +=
-        "\n\n" +
-        error.message;
-    }
-
-    if(error.details){
-      text +=
-        "\n\nDetails: " +
-        error.details;
-    }
-
-    if(error.hint){
-      text +=
-        "\n\nHint: " +
-        error.hint;
-    }
-
-    if(error.code){
-      text +=
-        "\n\nCode: " +
-        error.code;
-    }
-
-  }
-
-  box.textContent = text;
-  box.style.display = "block";
-
-  console.error(
-    title,
-    error
-  );
-}
-
-
-function clearError(){
-
-  const box =
-    el("errorBox");
-
-  box.textContent = "";
-  box.style.display = "none";
-}
-
-
-function connection(ok,text){
-
-  const dot =
-    el("dot");
-
-  dot.className =
-    "dot " +
-    (ok ? "ok" : "bad");
-
-  el("connectionText")
-    .textContent = text;
-}
-
-
-function formatDate(value){
-
-  if(!value){
-    return "-";
-  }
-
-  try{
-    return new Date(value)
-      .toLocaleString("id-ID");
-  }catch{
-    return String(value);
-  }
-}
-
-
-function statusBadge(value){
-
-  const v =
-    String(value || "unknown");
-
-  const lower =
-    v.toLowerCase();
-
-  let cls = "";
-
-  if(
-    lower.includes("active") ||
-    lower.includes("paid") ||
-    lower.includes("success") ||
-    lower.includes("complete")
-  ){
-    cls = "green";
-  }
-
-  else if(
-    lower.includes("pending") ||
-    lower.includes("process")
-  ){
-    cls = "yellow";
-  }
-
-  else if(
-    lower.includes("cancel") ||
-    lower.includes("failed") ||
-    lower.includes("error")
-  ){
-    cls = "red";
-  }
-
-  return `
-    <span class="badge ${cls}">
-      ${esc(v)}
-    </span>
-  `;
-}
-
-
-/* =====================================================
-   INIT
-   ===================================================== */
-
-function init(){
-
-  if(
-    SUPABASE_URL.includes("PASTE_") ||
-    SUPABASE_ANON_KEY.includes("PASTE_")
-  ){
-
-    connection(
-      false,
-      "Supabase config belum diisi"
-    );
-
-    showError(
-      "TELKU belum terhubung ke Supabase.",
-      {
-        message:
-        "Masukkan URL dan anon key TELKU pada bagian SUPABASE di index.html."
-      }
-    );
-
-    return false;
-  }
-
-  try{
-
-    db =
-      window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-      );
-
-    connection(
-      true,
-      "Supabase connected"
-    );
-
-    return true;
-
-  }catch(error){
-
-    connection(
-      false,
-      "Supabase error"
-    );
-
-    showError(
-      "Gagal membuat koneksi Supabase.",
-      error
-    );
-
-    return false;
-  }
-}
-
-
-/* =====================================================
-   GENERIC TABLE LOADER
-   ===================================================== */
-
-async function fetchTable(name){
-
-  const table =
-    TABLES[name];
-
-  const result =
-    await db
-      .from(table)
-      .select("*")
-      .limit(100);
-
-  if(result.error){
-    throw result.error;
-  }
-
-  return result.data || [];
-}
-
-
-/* =====================================================
-   RENDER GENERIC DATA
-   ===================================================== */
-
-function renderGeneric(data){
-
-  if(!data.length){
-
-    return `
-      <div class="empty">
-        Tidak ada data.
-      </div>
-    `;
-  }
-
-
-  const keys =
-    Object.keys(data[0]);
-
-
-  const visibleKeys =
-    keys.slice(0,8);
-
-
-  return `
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-
-            ${
-              visibleKeys
-              .map(key =>
-                `<th>${esc(key)}</th>`
-              )
-              .join("")
-            }
-
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          ${
-            data.map(row => {
-
-              return `
-                <tr>
-
-                  ${
-                    visibleKeys
-                    .map(key => {
-
-                      let value =
-                        row[key];
-
-                      if(
-                        key === "status"
-                      ){
-
-                        return `
-                          <td>
-                            ${statusBadge(value)}
-                          </td>
-                        `;
-                      }
-
-                      if(
-                        key === "created_at"
-                      ){
-
-                        return `
-                          <td>
-                            ${formatDate(value)}
-                          </td>
-                        `;
-                      }
-
-                      return `
-                        <td>
-                          ${esc(value)}
-                        </td>
-                      `;
-
-                    })
-                    .join("")
-                  }
-
-                </tr>
-              `;
-
-            }).join("")
-          }
-
-        </tbody>
-
-      </table>
-
-    </div>
-  `;
-}
-
-
-/* =====================================================
-   LOAD TABLE
-   ===================================================== */
-
-async function loadTable(name){
-
-  clearError();
-
-  const area =
-    el(name + "Area");
-
-  area.innerHTML =
-    `<div class="loading">Loading...</div>`;
-
-  try{
-
-    const data =
-      await fetchTable(name);
-
-
-    if(name === "plans"){
-      el("plansCount")
-        .textContent =
-        data.length;
-    }
-
-    if(name === "orders"){
-      el("ordersCount")
-        .textContent =
-        data.length;
-    }
-
-    if(name === "esims"){
-      el("esimsCount")
-        .textContent =
-        data.length;
-    }
-
-    if(name === "topups"){
-      el("topupsCount")
-        .textContent =
-        data.length;
-    }
-
-    if(name === "usage"){
-      el("usageCount")
-        .textContent =
-        data.length;
-    }
-
-
-    area.innerHTML =
-      renderGeneric(data);
-
-
-  }catch(error){
-
-    area.innerHTML = `
-      <div class="empty">
-        Database tidak dapat dibaca.
-      </div>
-    `;
-
-    showError(
-      "Gagal membaca tabel " +
-      TABLES[name] +
-      ".",
-      error
-    );
-  }
-}
-
-
-/* =====================================================
-   TEST DATABASE
-   ===================================================== */
-
-async function testDatabase(){
-
-  clearError();
-
-  try{
-
-    /*
-      Kita test setiap tabel satu per satu.
-      Tidak melakukan INSERT / UPDATE / DELETE.
-    */
-
-    const results =
-      await Promise.allSettled([
-
-        fetchTable("plans"),
-
-        fetchTable("orders"),
-
-        fetchTable("esims"),
-
-        fetchTable("topups"),
-
-        fetchTable("usage")
-
-      ]);
-
-
-    let failed = [];
-
-
-    results.forEach(
-      (result,index) => {
-
-        if(
-          result.status === "rejected"
-        ){
-
-          failed.push({
-            table:
-              Object.values(TABLES)[index],
-            error:
-              result.reason
-          });
-
-        }
-
-      }
-    );
-
-
-    if(failed.length){
-
-      connection(
-        false,
-        "Database error"
-      );
-
-
-      let message =
-        "Tabel yang gagal dibaca:\n";
-
-
-      failed.forEach(item => {
-
-        message +=
-          "\n• " +
-          item.table;
-
-        if(
-          item.error &&
-          item.error.message
-        ){
-
-          message +=
-            "\n  " +
-            item.error.message;
-        }
-
-        if(
-          item.error &&
-          item.error.code
-        ){
-
-          message +=
-            "\n  Code: " +
-            item.error.code;
-        }
-
-      });
-
-
-      showError(
-        "Database Diagnostics",
-        {
-          message:
-            message
-        }
-      );
-
-
-    }else{
-
-      connection(
-        true,
-        "All database tables OK"
-      );
-
-    }
-
-  }catch(error){
-
-    connection(
-      false,
-      "Database error"
-    );
-
-    showError(
-      "Database Diagnostics Error",
-      error
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   LOAD ALL
-   ===================================================== */
-
-async function loadAll(){
-
-  if(!db){
+  if(typeof showPage === "function"){
+    showPage("ordersPage");
     return;
   }
 
-  await Promise.allSettled([
+  if(typeof showOrders === "function"){
+    showOrders();
+    return;
+  }
 
-    loadTable("plans"),
+  const ordersPage = document.getElementById("ordersPage");
 
-    loadTable("orders"),
+  if(ordersPage){
+    document.querySelectorAll(".page-section").forEach(function(page){
+      page.style.display = "none";
+    });
 
-    loadTable("esims"),
-
-    loadTable("topups"),
-
-    loadTable("usage")
-
-  ]);
-
-  await testDatabase();
-
+    ordersPage.style.display = "block";
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+  }
 }
 
 
-/* =====================================================
-   START
-   ===================================================== */
+/* Close popup jika klik area luar */
 
-window.addEventListener(
-  "DOMContentLoaded",
-  async () => {
+document.addEventListener("click",function(e){
 
-    if(init()){
+  const modal = document.getElementById("comingSoonModal");
 
-      await loadAll();
-
-    }
-
+  if(e.target === modal){
+    closeComingSoon();
   }
-);
+
+});
 
 </script>
-
-</body>
-</html>
