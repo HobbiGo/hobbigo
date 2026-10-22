@@ -4,19 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>TELKU V1.8 FIX DATA</title>
+<title>TELKU V1.8</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#07111f;
+  --bg2:#0b1728;
+  --card:#101f33;
+  --line:#243b55;
+  --text:#f4f8fc;
+  --muted:#8fa5bd;
+  --cyan:#45d6ff;
+  --green:#35d58a;
+  --red:#ff5f6d;
+  --yellow:#ffd166;
 }
 
 body{
+  background:var(--bg);
+  color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
-  background:#07111f;
-  color:#fff;
   min-height:100vh;
 }
 
@@ -31,37 +40,37 @@ button{
 .header{
   position:sticky;
   top:0;
-  z-index:20;
-  background:#0b1728;
-  border-bottom:1px solid #20344d;
-  padding:16px;
+  z-index:100;
+  background:rgba(7,17,31,.96);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px);
 }
 
-.header-row{
-  max-width:1100px;
+.header-inner{
+  max-width:1150px;
   margin:auto;
+  padding:15px 18px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  gap:15px;
+  justify-content:space-between;
 }
 
 .logo{
-  font-size:24px;
-  font-weight:800;
+  font-size:25px;
+  font-weight:900;
   letter-spacing:1px;
 }
 
 .logo span{
-  color:#45d6ff;
+  color:var(--cyan);
 }
 
-.status{
+.connection{
   display:flex;
   align-items:center;
   gap:7px;
   font-size:12px;
-  color:#aabbd0;
+  color:var(--muted);
 }
 
 .dot{
@@ -72,25 +81,25 @@ button{
 }
 
 .dot.ok{
-  background:#32d583;
+  background:var(--green);
 }
 
-.dot.err{
-  background:#ff5c67;
+.dot.bad{
+  background:var(--red);
 }
 
 .container{
-  max-width:1100px;
+  max-width:1150px;
   margin:auto;
-  padding:22px 16px 60px;
+  padding:22px 16px 70px;
 }
 
 .hero{
-  background:linear-gradient(135deg,#10243d,#0b1728);
-  border:1px solid #213954;
-  border-radius:20px;
+  background:linear-gradient(135deg,#10243b,#0b1728);
+  border:1px solid var(--line);
+  border-radius:22px;
   padding:25px;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .hero h1{
@@ -99,22 +108,76 @@ button{
 }
 
 .hero p{
-  color:#9fb2c9;
+  color:var(--muted);
   line-height:1.6;
+}
+
+.error{
+  display:none;
+  background:#38191f;
+  border:1px solid #8d343f;
+  border-radius:13px;
+  padding:15px;
+  margin-bottom:18px;
+  color:#ffb3ba;
+  white-space:pre-wrap;
+  word-break:break-word;
+  line-height:1.5;
+  font-size:12px;
+}
+
+.info{
+  background:#102238;
+  border:1px solid #27435f;
+  border-radius:13px;
+  padding:13px 15px;
+  margin-bottom:18px;
+  color:#a9bed3;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.stat{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+}
+
+.stat small{
+  display:block;
+  color:var(--muted);
+  margin-bottom:8px;
+  font-size:11px;
+}
+
+.stat strong{
+  font-size:24px;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:1fr 1fr;
   gap:15px;
 }
 
 .card{
-  background:#0d1c2e;
-  border:1px solid #20344d;
+  background:var(--card);
+  border:1px solid var(--line);
   border-radius:18px;
   padding:18px;
   margin-bottom:15px;
+}
+
+.card.full{
+  grid-column:1/-1;
 }
 
 .card h2{
@@ -122,70 +185,29 @@ button{
   margin-bottom:15px;
 }
 
-.card h3{
-  font-size:15px;
-  margin-bottom:8px;
-}
-
-.form{
-  display:grid;
-  gap:11px;
-}
-
-label{
-  font-size:12px;
-  color:#8fa4bc;
-  margin-bottom:4px;
-  display:block;
-}
-
-input,select{
-  width:100%;
-  background:#07111f;
-  color:#fff;
-  border:1px solid #29415d;
-  border-radius:10px;
-  padding:12px;
-  outline:none;
-}
-
-input:focus,select:focus{
-  border-color:#45d6ff;
-}
-
-.btn{
-  border:0;
-  border-radius:11px;
-  padding:12px 15px;
-  font-weight:700;
-  background:#45d6ff;
-  color:#06101d;
-}
-
-.btn:hover{
-  opacity:.9;
-}
-
-.btn.secondary{
-  background:#182b42;
-  color:#fff;
-  border:1px solid #2a4562;
-}
-
-.btn.danger{
-  background:#ff5c67;
-  color:#fff;
-}
-
-.btn.success{
-  background:#32d583;
-  color:#06101d;
-}
-
 .actions{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:700;
+  background:var(--cyan);
+  color:#06101b;
+}
+
+.btn.secondary{
+  background:#192d44;
+  color:#fff;
+  border:1px solid #2b4663;
+}
+
+.btn:hover{
+  opacity:.88;
 }
 
 .table-wrap{
@@ -199,169 +221,79 @@ table{
 }
 
 th,td{
-  text-align:left;
   padding:11px;
-  border-bottom:1px solid #20344d;
+  border-bottom:1px solid var(--line);
+  text-align:left;
   font-size:12px;
 }
 
 th{
-  color:#8fa4bc;
-  font-weight:600;
+  color:var(--muted);
 }
 
 td{
-  color:#d9e5f1;
+  color:#dce7f1;
 }
 
 .badge{
   display:inline-block;
-  padding:5px 8px;
   border-radius:20px;
-  background:#182b42;
-  font-size:11px;
+  padding:5px 8px;
+  background:#1b2c40;
+  color:#c6d6e6;
+  font-size:10px;
 }
 
-.badge.success{
-  background:#123c2b;
-  color:#65e7a4;
+.badge.green{
+  background:#123c2c;
+  color:#65e4a6;
 }
 
-.badge.pending{
-  background:#3c3212;
-  color:#ffd76a;
+.badge.yellow{
+  background:#3e3417;
+  color:#ffda70;
 }
 
-.badge.error{
-  background:#421b20;
-  color:#ff8990;
-}
-
-.stat-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
-.stat{
-  background:#0d1c2e;
-  border:1px solid #20344d;
-  border-radius:15px;
-  padding:15px;
-}
-
-.stat small{
-  color:#8197b0;
-  display:block;
-  margin-bottom:7px;
-}
-
-.stat strong{
-  font-size:22px;
-}
-
-.notice{
-  background:#102238;
-  border:1px solid #254461;
-  color:#a9c2da;
-  padding:12px;
-  border-radius:11px;
-  margin-bottom:15px;
-  line-height:1.5;
-  font-size:13px;
-}
-
-.error-box{
-  display:none;
-  background:#35171c;
-  border:1px solid #8b3038;
-  color:#ffadb3;
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:15px;
-  white-space:pre-wrap;
-  word-break:break-word;
+.badge.red{
+  background:#431b21;
+  color:#ff929b;
 }
 
 .empty{
-  padding:25px;
   text-align:center;
-  color:#71869d;
-}
-
-.plan-list{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.plan{
-  background:#0a1727;
-  border:1px solid #203852;
-  border-radius:15px;
-  padding:15px;
-}
-
-.plan .name{
-  font-weight:800;
-  font-size:17px;
-  margin-bottom:8px;
-}
-
-.plan .price{
-  font-size:20px;
-  font-weight:800;
-  color:#45d6ff;
-  margin:10px 0;
-}
-
-.small{
-  font-size:11px;
-  color:#8298b0;
-  line-height:1.6;
+  padding:25px;
+  color:#6f849b;
 }
 
 .loading{
-  color:#8fa4bc;
+  color:var(--muted);
   padding:15px 0;
 }
 
 .footer{
   text-align:center;
-  color:#536b83;
+  color:#50677e;
   font-size:11px;
-  margin-top:30px;
+  padding-top:15px;
 }
 
-@media(max-width:800px){
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:700px){
   .grid{
     grid-template-columns:1fr;
   }
 
-  .stat-grid{
+  .stats{
     grid-template-columns:repeat(2,1fr);
-  }
-
-  .plan-list{
-    grid-template-columns:1fr;
   }
 
   .hero h1{
     font-size:25px;
-  }
-}
-
-@media(max-width:500px){
-  .container{
-    padding:15px 11px 50px;
-  }
-
-  .stat-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .actions .btn{
-    flex:1;
   }
 }
 </style>
@@ -370,64 +302,77 @@ td{
 <body>
 
 <header class="header">
-  <div class="header-row">
-    <div class="logo">TEL<span>KU</span></div>
+  <div class="header-inner">
 
-    <div class="status">
-      <span id="statusDot" class="dot"></span>
-      <span id="statusText">Connecting...</span>
+    <div class="logo">
+      TEL<span>KU</span>
     </div>
+
+    <div class="connection">
+      <span id="dot" class="dot"></span>
+      <span id="connectionText">Connecting...</span>
+    </div>
+
   </div>
 </header>
+
 
 <main class="container">
 
   <section class="hero">
     <h1>TELKU eSIM Marketplace</h1>
     <p>
-      Manage eSIM plans, orders, activations, topups and usage
-      from one simple dashboard.
+      eSIM Plans • Orders • eSIM Inventory • Topups • Usage
     </p>
   </section>
 
-  <div id="errorBox" class="error-box"></div>
 
-  <div class="notice">
-    <b>Database Mode:</b>
-    TELKU menggunakan tabel
-    <b>telku_plans</b>,
-    <b>telku_oder</b>,
-    <b>telku_esims</b>,
-    <b>telku_topups</b>,
-    dan
-    <b>telku_usage</b>.
+  <div id="errorBox" class="error"></div>
+
+
+  <div class="info">
+    <b>Database:</b>
+    telku_plans /
+    telku_oder /
+    telku_esims /
+    telku_topups /
+    telku_usage
+    <br>
+    <b>eSIM schema:</b>
+    id UUID • esim_code • order_id • status • iccid •
+    activation_code • qr_payload • created_at
   </div>
 
-  <section class="stat-grid">
+
+  <section class="stats">
 
     <div class="stat">
       <small>Plans</small>
-      <strong id="statPlans">0</strong>
+      <strong id="plansCount">0</strong>
     </div>
 
     <div class="stat">
       <small>Orders</small>
-      <strong id="statOrders">0</strong>
+      <strong id="ordersCount">0</strong>
     </div>
 
     <div class="stat">
       <small>eSIMs</small>
-      <strong id="statEsims">0</strong>
+      <strong id="esimsCount">0</strong>
     </div>
 
     <div class="stat">
       <small>Topups</small>
-      <strong id="statTopups">0</strong>
+      <strong id="topupsCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Usage</small>
+      <strong id="usageCount">0</strong>
     </div>
 
   </section>
 
-  <br>
 
   <section class="grid">
 
@@ -438,157 +383,108 @@ td{
       <h2>eSIM Plans</h2>
 
       <div class="actions">
-        <button class="btn" onclick="loadPlans()">
-          Refresh Plans
+        <button class="btn" onclick="loadTable('plans')">
+          Refresh
         </button>
       </div>
 
       <br>
 
-      <div id="plansArea" class="plan-list">
-        <div class="loading">Loading plans...</div>
+      <div id="plansArea">
+        <div class="loading">Loading...</div>
       </div>
 
     </div>
 
-    <!-- CREATE ORDER -->
+
+    <!-- ORDERS -->
 
     <div class="card">
 
-      <h2>Create Order</h2>
+      <h2>Orders</h2>
 
-      <form id="orderForm" class="form">
-
-        <div>
-          <label>Plan ID</label>
-          <input
-            id="orderPlanId"
-            type="text"
-            placeholder="Masukkan ID plan"
-            required
-          >
-        </div>
-
-        <div>
-          <label>Customer Name</label>
-          <input
-            id="customerName"
-            type="text"
-            placeholder="Nama customer"
-          >
-        </div>
-
-        <div>
-          <label>Customer Email</label>
-          <input
-            id="customerEmail"
-            type="email"
-            placeholder="email@example.com"
-          >
-        </div>
-
-        <div>
-          <label>Quantity</label>
-          <input
-            id="quantity"
-            type="number"
-            value="1"
-            min="1"
-          >
-        </div>
-
-        <button class="btn success" type="submit">
-          Create Order
+      <div class="actions">
+        <button class="btn" onclick="loadTable('orders')">
+          Refresh
         </button>
+      </div>
 
-      </form>
+      <br>
+
+      <div id="ordersArea">
+        <div class="loading">Loading...</div>
+      </div>
+
+    </div>
+
+
+    <!-- ESIMS -->
+
+    <div class="card full">
+
+      <h2>eSIM Inventory</h2>
+
+      <div class="actions">
+        <button class="btn" onclick="loadTable('esims')">
+          Refresh
+        </button>
+      </div>
+
+      <br>
+
+      <div id="esimsArea">
+        <div class="loading">Loading...</div>
+      </div>
+
+    </div>
+
+
+    <!-- TOPUPS -->
+
+    <div class="card">
+
+      <h2>Topups</h2>
+
+      <div class="actions">
+        <button class="btn" onclick="loadTable('topups')">
+          Refresh
+        </button>
+      </div>
+
+      <br>
+
+      <div id="topupsArea">
+        <div class="loading">Loading...</div>
+      </div>
+
+    </div>
+
+
+    <!-- USAGE -->
+
+    <div class="card">
+
+      <h2>Usage</h2>
+
+      <div class="actions">
+        <button class="btn" onclick="loadTable('usage')">
+          Refresh
+        </button>
+      </div>
+
+      <br>
+
+      <div id="usageArea">
+        <div class="loading">Loading...</div>
+      </div>
 
     </div>
 
   </section>
 
-  <!-- ORDERS -->
-
-  <section class="card">
-
-    <h2>Orders</h2>
-
-    <div class="actions">
-      <button class="btn" onclick="loadOrders()">
-        Refresh Orders
-      </button>
-    </div>
-
-    <br>
-
-    <div id="ordersArea" class="table-wrap">
-      <div class="loading">Loading orders...</div>
-    </div>
-
-  </section>
-
-  <!-- ESIMS -->
-
-  <section class="card">
-
-    <h2>eSIM Inventory</h2>
-
-    <div class="actions">
-      <button class="btn" onclick="loadEsims()">
-        Refresh eSIM
-      </button>
-    </div>
-
-    <br>
-
-    <div id="esimsArea" class="table-wrap">
-      <div class="loading">Loading eSIM...</div>
-    </div>
-
-  </section>
-
-  <!-- TOPUPS -->
-
-  <section class="card">
-
-    <h2>Topups</h2>
-
-    <div class="actions">
-      <button class="btn" onclick="loadTopups()">
-        Refresh Topups
-      </button>
-    </div>
-
-    <br>
-
-    <div id="topupsArea" class="table-wrap">
-      <div class="loading">Loading topups...</div>
-    </div>
-
-  </section>
-
-  <!-- USAGE -->
-
-  <section class="card">
-
-    <h2>Usage</h2>
-
-    <div class="actions">
-      <button class="btn" onclick="loadUsage()">
-        Refresh Usage
-      </button>
-    </div>
-
-    <br>
-
-    <div id="usageArea" class="table-wrap">
-      <div class="loading">Loading usage...</div>
-    </div>
-
-  </section>
 
   <div class="footer">
-    TELKU V1.8 • Database Safe Mode
+    TELKU V1.8 • Database Diagnostic Mode
   </div>
 
 </main>
@@ -598,46 +494,65 @@ td{
 
 <script>
 
-/* =========================================================
-   SUPABASE CONFIG
-   =========================================================
-   PENTING:
-   GANTI DUA NILAI DI BAWAH DENGAN CONFIG SUPABASE BOS.
-   ========================================================= */
+/* =====================================================
+   SUPABASE
+   ===================================================== */
 
-const SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
+/*
+  BOS:
+  PAKAI URL DAN ANON KEY TELKU YANG SUDAH ADA
+  DARI INDEX.HTML SEBELUMNYA.
 
-const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+  JANGAN MEMBUAT PROJECT BARU.
+*/
+
+const SUPABASE_URL =
+  "PASTE_URL_TELKU_DI_SINI";
+
+const SUPABASE_ANON_KEY =
+  "PASTE_ANON_KEY_TELKU_DI_SINI";
 
 
-/* =========================================================
-   DATABASE
-   ========================================================= */
+/* =====================================================
+   TABLE NAME
+   ===================================================== */
 
 const TABLES = {
-  plans: "telku_plans",
-  orders: "telku_oder",
-  esims: "telku_esims",
-  topups: "telku_topups",
-  usage: "telku_usage"
+
+  plans:
+    "telku_plans",
+
+  orders:
+    "telku_oder",
+
+  esims:
+    "telku_esims",
+
+  topups:
+    "telku_topups",
+
+  usage:
+    "telku_usage"
+
 };
 
 
-let supabaseClient = null;
+let db = null;
 
 
-/* =========================================================
+/* =====================================================
    HELPERS
-   ========================================================= */
+   ===================================================== */
 
-function $(id){
+function el(id){
   return document.getElementById(id);
 }
 
 
-function escapeHtml(value){
+function esc(value){
 
-  if(value === null || value === undefined){
+  if(value === null ||
+     value === undefined){
     return "";
   }
 
@@ -652,56 +567,71 @@ function escapeHtml(value){
 
 function showError(title,error){
 
-  const box = $("errorBox");
+  const box =
+    el("errorBox");
 
-  let message = title || "Database Error";
+  let text =
+    title || "Database Error";
 
   if(error){
 
     if(error.message){
-      message += "\n\n" + error.message;
+      text +=
+        "\n\n" +
+        error.message;
     }
 
     if(error.details){
-      message += "\n\nDetails: " + error.details;
+      text +=
+        "\n\nDetails: " +
+        error.details;
     }
 
     if(error.hint){
-      message += "\n\nHint: " + error.hint;
+      text +=
+        "\n\nHint: " +
+        error.hint;
     }
 
     if(error.code){
-      message += "\n\nCode: " + error.code;
+      text +=
+        "\n\nCode: " +
+        error.code;
     }
+
   }
 
-  box.textContent = message;
+  box.textContent = text;
   box.style.display = "block";
 
-  console.error(message,error);
+  console.error(
+    title,
+    error
+  );
 }
 
 
 function clearError(){
-  $("errorBox").style.display = "none";
-  $("errorBox").textContent = "";
+
+  const box =
+    el("errorBox");
+
+  box.textContent = "";
+  box.style.display = "none";
 }
 
 
-function setConnection(ok,text){
+function connection(ok,text){
 
-  const dot = $("statusDot");
-  const status = $("statusText");
+  const dot =
+    el("dot");
 
-  dot.className = "dot";
+  dot.className =
+    "dot " +
+    (ok ? "ok" : "bad");
 
-  if(ok){
-    dot.classList.add("ok");
-  }else{
-    dot.classList.add("err");
-  }
-
-  status.textContent = text;
+  el("connectionText")
+    .textContent = text;
 }
 
 
@@ -712,89 +642,77 @@ function formatDate(value){
   }
 
   try{
-    return new Date(value).toLocaleString("id-ID");
+    return new Date(value)
+      .toLocaleString("id-ID");
   }catch{
-    return value;
+    return String(value);
   }
 }
 
 
-function formatMoney(value){
+function statusBadge(value){
 
-  if(value === null || value === undefined || value === ""){
-    return "-";
-  }
+  const v =
+    String(value || "unknown");
 
-  const number = Number(value);
-
-  if(Number.isNaN(number)){
-    return escapeHtml(value);
-  }
-
-  return new Intl.NumberFormat("id-ID",{
-    style:"currency",
-    currency:"IDR",
-    maximumFractionDigits:0
-  }).format(number);
-}
-
-
-function badge(value){
-
-  const text = value || "unknown";
-
-  const lower = String(text).toLowerCase();
+  const lower =
+    v.toLowerCase();
 
   let cls = "";
 
   if(
     lower.includes("active") ||
     lower.includes("paid") ||
-    lower.includes("complete") ||
-    lower.includes("success")
+    lower.includes("success") ||
+    lower.includes("complete")
   ){
-    cls = "success";
+    cls = "green";
   }
 
   else if(
     lower.includes("pending") ||
     lower.includes("process")
   ){
-    cls = "pending";
+    cls = "yellow";
   }
 
   else if(
     lower.includes("cancel") ||
-    lower.includes("error") ||
-    lower.includes("failed")
+    lower.includes("failed") ||
+    lower.includes("error")
   ){
-    cls = "error";
+    cls = "red";
   }
 
-  return `<span class="badge ${cls}">
-    ${escapeHtml(text)}
-  </span>`;
+  return `
+    <span class="badge ${cls}">
+      ${esc(v)}
+    </span>
+  `;
 }
 
 
-/* =========================================================
-   INIT SUPABASE
-   ========================================================= */
+/* =====================================================
+   INIT
+   ===================================================== */
 
-function initSupabase(){
+function init(){
 
   if(
     SUPABASE_URL.includes("PASTE_") ||
     SUPABASE_ANON_KEY.includes("PASTE_")
   ){
 
-    setConnection(false,"Supabase config belum diisi");
+    connection(
+      false,
+      "Supabase config belum diisi"
+    );
 
     showError(
-      "Supabase belum dikonfigurasi.",
+      "TELKU belum terhubung ke Supabase.",
       {
         message:
-        "Isi SUPABASE_URL dan SUPABASE_ANON_KEY pada bagian CONFIG di index.html."
+        "Masukkan URL dan anon key TELKU pada bagian SUPABASE di index.html."
       }
     );
 
@@ -803,19 +721,25 @@ function initSupabase(){
 
   try{
 
-    supabaseClient =
+    db =
       window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
       );
 
-    setConnection(true,"Supabase connected");
+    connection(
+      true,
+      "Supabase connected"
+    );
 
     return true;
 
   }catch(error){
 
-    setConnection(false,"Supabase error");
+    connection(
+      false,
+      "Supabase error"
+    );
 
     showError(
       "Gagal membuat koneksi Supabase.",
@@ -827,808 +751,381 @@ function initSupabase(){
 }
 
 
-/* =========================================================
+/* =====================================================
+   GENERIC TABLE LOADER
+   ===================================================== */
+
+async function fetchTable(name){
+
+  const table =
+    TABLES[name];
+
+  const result =
+    await db
+      .from(table)
+      .select("*")
+      .limit(100);
+
+  if(result.error){
+    throw result.error;
+  }
+
+  return result.data || [];
+}
+
+
+/* =====================================================
+   RENDER GENERIC DATA
+   ===================================================== */
+
+function renderGeneric(data){
+
+  if(!data.length){
+
+    return `
+      <div class="empty">
+        Tidak ada data.
+      </div>
+    `;
+  }
+
+
+  const keys =
+    Object.keys(data[0]);
+
+
+  const visibleKeys =
+    keys.slice(0,8);
+
+
+  return `
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            ${
+              visibleKeys
+              .map(key =>
+                `<th>${esc(key)}</th>`
+              )
+              .join("")
+            }
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            data.map(row => {
+
+              return `
+                <tr>
+
+                  ${
+                    visibleKeys
+                    .map(key => {
+
+                      let value =
+                        row[key];
+
+                      if(
+                        key === "status"
+                      ){
+
+                        return `
+                          <td>
+                            ${statusBadge(value)}
+                          </td>
+                        `;
+                      }
+
+                      if(
+                        key === "created_at"
+                      ){
+
+                        return `
+                          <td>
+                            ${formatDate(value)}
+                          </td>
+                        `;
+                      }
+
+                      return `
+                        <td>
+                          ${esc(value)}
+                        </td>
+                      `;
+
+                    })
+                    .join("")
+                  }
+
+                </tr>
+              `;
+
+            }).join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+}
+
+
+/* =====================================================
+   LOAD TABLE
+   ===================================================== */
+
+async function loadTable(name){
+
+  clearError();
+
+  const area =
+    el(name + "Area");
+
+  area.innerHTML =
+    `<div class="loading">Loading...</div>`;
+
+  try{
+
+    const data =
+      await fetchTable(name);
+
+
+    if(name === "plans"){
+      el("plansCount")
+        .textContent =
+        data.length;
+    }
+
+    if(name === "orders"){
+      el("ordersCount")
+        .textContent =
+        data.length;
+    }
+
+    if(name === "esims"){
+      el("esimsCount")
+        .textContent =
+        data.length;
+    }
+
+    if(name === "topups"){
+      el("topupsCount")
+        .textContent =
+        data.length;
+    }
+
+    if(name === "usage"){
+      el("usageCount")
+        .textContent =
+        data.length;
+    }
+
+
+    area.innerHTML =
+      renderGeneric(data);
+
+
+  }catch(error){
+
+    area.innerHTML = `
+      <div class="empty">
+        Database tidak dapat dibaca.
+      </div>
+    `;
+
+    showError(
+      "Gagal membaca tabel " +
+      TABLES[name] +
+      ".",
+      error
+    );
+  }
+}
+
+
+/* =====================================================
    TEST DATABASE
-   ========================================================= */
+   ===================================================== */
 
 async function testDatabase(){
 
-  if(!supabaseClient){
-    return false;
-  }
+  clearError();
 
   try{
 
-    const { error } =
-      await supabaseClient
-      .from(TABLES.plans)
-      .select("*")
-      .limit(1);
+    /*
+      Kita test setiap tabel satu per satu.
+      Tidak melakukan INSERT / UPDATE / DELETE.
+    */
 
-    if(error){
-      setConnection(false,"Database error");
-      showError(
-        "Database tidak dapat dibaca dari telku_plans.",
-        error
+    const results =
+      await Promise.allSettled([
+
+        fetchTable("plans"),
+
+        fetchTable("orders"),
+
+        fetchTable("esims"),
+
+        fetchTable("topups"),
+
+        fetchTable("usage")
+
+      ]);
+
+
+    let failed = [];
+
+
+    results.forEach(
+      (result,index) => {
+
+        if(
+          result.status === "rejected"
+        ){
+
+          failed.push({
+            table:
+              Object.values(TABLES)[index],
+            error:
+              result.reason
+          });
+
+        }
+
+      }
+    );
+
+
+    if(failed.length){
+
+      connection(
+        false,
+        "Database error"
       );
-      return false;
-    }
 
-    setConnection(true,"Database connected");
-    return true;
 
-  }catch(error){
+      let message =
+        "Tabel yang gagal dibaca:\n";
 
-    setConnection(false,"Database error");
 
-    showError(
-      "Database connection failed.",
-      error
-    );
+      failed.forEach(item => {
 
-    return false;
-  }
-}
+        message +=
+          "\n• " +
+          item.table;
 
+        if(
+          item.error &&
+          item.error.message
+        ){
 
-/* =========================================================
-   LOAD PLANS
-   ========================================================= */
+          message +=
+            "\n  " +
+            item.error.message;
+        }
 
-async function loadPlans(){
+        if(
+          item.error &&
+          item.error.code
+        ){
 
-  clearError();
+          message +=
+            "\n  Code: " +
+            item.error.code;
+        }
 
-  const area = $("plansArea");
+      });
 
-  area.innerHTML =
-    `<div class="loading">Loading plans...</div>`;
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-      .from(TABLES.plans)
-      .select("*")
-      .limit(100);
-
-    if(error){
-      throw error;
-    }
-
-    $("statPlans").textContent =
-      data ? data.length : 0;
-
-    if(!data || data.length === 0){
-
-      area.innerHTML =
-        `<div class="empty">
-          Belum ada data plan.
-        </div>`;
-
-      return;
-    }
-
-    area.innerHTML =
-      data.map(plan => {
-
-        const id =
-          plan.id ??
-          plan.plan_id ??
-          "";
-
-        const name =
-          plan.name ??
-          plan.plan_name ??
-          plan.title ??
-          "eSIM Plan";
-
-        const price =
-          plan.price ??
-          plan.selling_price ??
-          plan.amount ??
-          "";
-
-        const dataQuota =
-          plan.data ??
-          plan.data_amount ??
-          plan.quota ??
-          plan.data_quota ??
-          "";
-
-        const validity =
-          plan.validity ??
-          plan.validity_days ??
-          plan.duration ??
-          "";
-
-        return `
-          <div class="plan">
-
-            <div class="name">
-              ${escapeHtml(name)}
-            </div>
-
-            <div class="small">
-              ID: ${escapeHtml(id)}
-            </div>
-
-            <div class="price">
-              ${formatMoney(price)}
-            </div>
-
-            <div class="small">
-              Data: ${escapeHtml(dataQuota || "-")}<br>
-              Validity: ${escapeHtml(validity || "-")}
-            </div>
-
-            <br>
-
-            <button
-              class="btn secondary"
-              onclick="selectPlan('${escapeHtml(id)}')">
-              Select Plan
-            </button>
-
-          </div>
-        `;
-
-      }).join("");
-
-  }catch(error){
-
-    area.innerHTML =
-      `<div class="empty">
-        Gagal membaca plans.
-      </div>`;
-
-    showError(
-      "Gagal membaca telku_plans.",
-      error
-    );
-  }
-}
-
-
-function selectPlan(id){
-
-  $("orderPlanId").value = id;
-
-  window.scrollTo({
-    top:$("orderForm").getBoundingClientRect().top +
-        window.scrollY -
-        100,
-    behavior:"smooth"
-  });
-}
-
-
-/* =========================================================
-   LOAD ORDERS
-   ========================================================= */
-
-async function loadOrders(){
-
-  clearError();
-
-  const area = $("ordersArea");
-
-  area.innerHTML =
-    `<div class="loading">Loading orders...</div>`;
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-      .from(TABLES.orders)
-      .select("*")
-      .limit(100);
-
-    if(error){
-      throw error;
-    }
-
-    $("statOrders").textContent =
-      data ? data.length : 0;
-
-    if(!data || data.length === 0){
-
-      area.innerHTML =
-        `<div class="empty">
-          Belum ada order.
-        </div>`;
-
-      return;
-    }
-
-    area.innerHTML = `
-      <table>
-
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Email</th>
-            <th>Plan</th>
-            <th>Status</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${
-            data.map(row => {
-
-              const id =
-                row.id ??
-                row.order_id ??
-                "";
-
-              const customer =
-                row.customer_name ??
-                row.name ??
-                row.customer ??
-                "-";
-
-              const email =
-                row.customer_email ??
-                row.email ??
-                "-";
-
-              const plan =
-                row.plan_id ??
-                row.plan ??
-                "-";
-
-              const status =
-                row.status ??
-                "pending";
-
-              return `
-                <tr>
-
-                  <td>
-                    ${escapeHtml(id)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(customer)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(email)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(plan)}
-                  </td>
-
-                  <td>
-                    ${badge(status)}
-                  </td>
-
-                  <td>
-                    ${formatDate(
-                      row.created_at
-                    )}
-                  </td>
-
-                </tr>
-              `;
-
-            }).join("")
-          }
-
-        </tbody>
-
-      </table>
-    `;
-
-  }catch(error){
-
-    area.innerHTML =
-      `<div class="empty">
-        Gagal membaca orders.
-      </div>`;
-
-    showError(
-      "Gagal membaca telku_oder.",
-      error
-    );
-  }
-}
-
-
-/* =========================================================
-   LOAD ESIMS
-   ========================================================= */
-
-async function loadEsims(){
-
-  clearError();
-
-  const area = $("esimsArea");
-
-  area.innerHTML =
-    `<div class="loading">Loading eSIM...</div>`;
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-      .from(TABLES.esims)
-      .select("*")
-      .limit(100);
-
-    if(error){
-      throw error;
-    }
-
-    $("statEsims").textContent =
-      data ? data.length : 0;
-
-    if(!data || data.length === 0){
-
-      area.innerHTML =
-        `<div class="empty">
-          Belum ada eSIM.
-        </div>`;
-
-      return;
-    }
-
-    area.innerHTML = `
-      <table>
-
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>eSIM Code</th>
-            <th>Order</th>
-            <th>Status</th>
-            <th>ICCID</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${
-            data.map(row => {
-
-              return `
-                <tr>
-
-                  <td>
-                    ${escapeHtml(row.id)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(row.esim_code)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(row.order_id)}
-                  </td>
-
-                  <td>
-                    ${badge(row.status)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(row.iccid)}
-                  </td>
-
-                  <td>
-                    ${formatDate(row.created_at)}
-                  </td>
-
-                </tr>
-              `;
-
-            }).join("")
-          }
-
-        </tbody>
-
-      </table>
-    `;
-
-  }catch(error){
-
-    area.innerHTML =
-      `<div class="empty">
-        Gagal membaca eSIM.
-      </div>`;
-
-    showError(
-      "Gagal membaca telku_esims.",
-      error
-    );
-  }
-}
-
-
-/* =========================================================
-   LOAD TOPUPS
-   ========================================================= */
-
-async function loadTopups(){
-
-  clearError();
-
-  const area = $("topupsArea");
-
-  area.innerHTML =
-    `<div class="loading">Loading topups...</div>`;
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-      .from(TABLES.topups)
-      .select("*")
-      .limit(100);
-
-    if(error){
-      throw error;
-    }
-
-    $("statTopups").textContent =
-      data ? data.length : 0;
-
-    if(!data || data.length === 0){
-
-      area.innerHTML =
-        `<div class="empty">
-          Belum ada topup.
-        </div>`;
-
-      return;
-    }
-
-    area.innerHTML = `
-      <table>
-
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Order/eSIM</th>
-            <th>Amount</th>
-            <th>Status</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${
-            data.map(row => {
-
-              const id =
-                row.id ??
-                "-";
-
-              const reference =
-                row.order_id ??
-                row.esim_id ??
-                row.esim_code ??
-                "-";
-
-              const amount =
-                row.amount ??
-                row.price ??
-                row.total ??
-                "";
-
-              const status =
-                row.status ??
-                "pending";
-
-              return `
-                <tr>
-
-                  <td>
-                    ${escapeHtml(id)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(reference)}
-                  </td>
-
-                  <td>
-                    ${formatMoney(amount)}
-                  </td>
-
-                  <td>
-                    ${badge(status)}
-                  </td>
-
-                  <td>
-                    ${formatDate(row.created_at)}
-                  </td>
-
-                </tr>
-              `;
-
-            }).join("")
-          }
-
-        </tbody>
-
-      </table>
-    `;
-
-  }catch(error){
-
-    area.innerHTML =
-      `<div class="empty">
-        Gagal membaca topups.
-      </div>`;
-
-    showError(
-      "Gagal membaca telku_topups.",
-      error
-    );
-  }
-}
-
-
-/* =========================================================
-   LOAD USAGE
-   ========================================================= */
-
-async function loadUsage(){
-
-  clearError();
-
-  const area = $("usageArea");
-
-  area.innerHTML =
-    `<div class="loading">Loading usage...</div>`;
-
-  try{
-
-    const {data,error} =
-      await supabaseClient
-      .from(TABLES.usage)
-      .select("*")
-      .limit(100);
-
-    if(error){
-      throw error;
-    }
-
-    if(!data || data.length === 0){
-
-      area.innerHTML =
-        `<div class="empty">
-          Belum ada usage data.
-        </div>`;
-
-      return;
-    }
-
-    area.innerHTML = `
-      <table>
-
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>eSIM</th>
-            <th>Data Used</th>
-            <th>Minutes</th>
-            <th>SMS</th>
-            <th>Created</th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-          ${
-            data.map(row => {
-
-              const esim =
-                row.esim_id ??
-                row.esim_code ??
-                "-";
-
-              const dataUsed =
-                row.data_used ??
-                row.used_data ??
-                row.data ??
-                "-";
-
-              const minutes =
-                row.minutes ??
-                row.voice_minutes ??
-                "-";
-
-              const sms =
-                row.sms ??
-                row.sms_count ??
-                "-";
-
-              return `
-                <tr>
-
-                  <td>
-                    ${escapeHtml(row.id)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(esim)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(dataUsed)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(minutes)}
-                  </td>
-
-                  <td>
-                    ${escapeHtml(sms)}
-                  </td>
-
-                  <td>
-                    ${formatDate(row.created_at)}
-                  </td>
-
-                </tr>
-              `;
-
-            }).join("")
-          }
-
-        </tbody>
-
-      </table>
-    `;
-
-  }catch(error){
-
-    area.innerHTML =
-      `<div class="empty">
-        Gagal membaca usage.
-      </div>`;
-
-    showError(
-      "Gagal membaca telku_usage.",
-      error
-    );
-  }
-}
-
-
-/* =========================================================
-   CREATE ORDER
-   ========================================================= */
-
-$("orderForm").addEventListener(
-  "submit",
-  async function(event){
-
-    event.preventDefault();
-
-    clearError();
-
-    const planId =
-      $("orderPlanId").value.trim();
-
-    const customerName =
-      $("customerName").value.trim();
-
-    const customerEmail =
-      $("customerEmail").value.trim();
-
-    const quantity =
-      Number($("quantity").value || 1);
-
-    if(!planId){
 
       showError(
-        "Order tidak dapat dibuat.",
+        "Database Diagnostics",
         {
-          message:"Plan ID wajib diisi."
+          message:
+            message
         }
       );
 
-      return;
-    }
 
-    try{
+    }else{
 
-      /*
-       * Karena struktur telku_oder yang lengkap
-       * belum dipastikan di database, kita hanya
-       * menggunakan kolom yang umum dan aman.
-       *
-       * Jika database mempunyai kolom yang berbeda,
-       * Supabase akan memberikan error yang terlihat
-       * di Database Error Box.
-       */
-
-      const payload = {
-        plan_id:planId,
-        customer_name:
-          customerName || null,
-        customer_email:
-          customerEmail || null,
-        quantity:quantity,
-        status:"pending"
-      };
-
-      const {data,error} =
-        await supabaseClient
-        .from(TABLES.orders)
-        .insert(payload)
-        .select();
-
-      if(error){
-        throw error;
-      }
-
-      alert("Order berhasil dibuat.");
-
-      $("orderForm").reset();
-
-      $("quantity").value = 1;
-
-      await loadOrders();
-
-    }catch(error){
-
-      showError(
-        "Gagal membuat order di telku_oder.",
-        error
+      connection(
+        true,
+        "All database tables OK"
       );
+
     }
 
+  }catch(error){
+
+    connection(
+      false,
+      "Database error"
+    );
+
+    showError(
+      "Database Diagnostics Error",
+      error
+    );
+
   }
-);
 
-
-/* =========================================================
-   LOAD EVERYTHING
-   ========================================================= */
-
-async function loadEverything(){
-
-  if(!supabaseClient){
-    return;
-  }
-
-  await testDatabase();
-
-  await Promise.allSettled([
-    loadPlans(),
-    loadOrders(),
-    loadEsims(),
-    loadTopups(),
-    loadUsage()
-  ]);
 }
 
 
-/* =========================================================
+/* =====================================================
+   LOAD ALL
+   ===================================================== */
+
+async function loadAll(){
+
+  if(!db){
+    return;
+  }
+
+  await Promise.allSettled([
+
+    loadTable("plans"),
+
+    loadTable("orders"),
+
+    loadTable("esims"),
+
+    loadTable("topups"),
+
+    loadTable("usage")
+
+  ]);
+
+  await testDatabase();
+
+}
+
+
+/* =====================================================
    START
-   ========================================================= */
+   ===================================================== */
 
-document.addEventListener(
+window.addEventListener(
   "DOMContentLoaded",
-  async function(){
+  async () => {
 
-    const connected =
-      initSupabase();
+    if(init()){
 
-    if(!connected){
-      return;
+      await loadAll();
+
     }
-
-    await loadEverything();
 
   }
 );
