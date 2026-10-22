@@ -2,11 +2,1488 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TELKU V1.8</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TELKU V1.8.1</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#f4f7fb;
+  color:#172033;
+}
+
+header{
+  background:#111827;
+  color:#fff;
+  padding:18px;
+  text-align:center;
+  font-size:23px;
+  font-weight:700;
+}
+
+.container{
+  max-width:540px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+h2{
+  margin-bottom:12px;
+}
+
+h3{
+  margin-bottom:8px;
+}
+
+p{
+  line-height:1.5;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  margin:7px 0 12px;
+  border:1px solid #d6dce5;
+  border-radius:10px;
+  font-size:15px;
+  background:#fff;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:#111827;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+}
+
+.plan{
+  background:#fff;
+  border:1px solid #e1e5eb;
+  border-radius:15px;
+  padding:16px;
+  margin:10px 0;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.plan:hover{
+  transform:translateY(-1px);
+}
+
+.plan.selected{
+  border:2px solid #111827;
+  background:#f3f4f6;
+}
+
+.plan-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.plan-code{
+  font-size:12px;
+  color:#667085;
+  margin-top:5px;
+}
+
+.plan-info{
+  margin-top:9px;
+  color:#475467;
+}
+
+.price{
+  font-size:20px;
+  font-weight:700;
+  margin-top:8px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.status{
+  padding:13px;
+  border-radius:10px;
+  margin-top:12px;
+  font-size:14px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+.success{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.error{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.info{
+  background:#e0f2fe;
+  color:#075985;
+}
+
+.code{
+  background:#f3f4f6;
+  padding:10px;
+  border-radius:8px;
+  margin-top:6px;
+  font-family:monospace;
+  word-break:break-all;
+}
+
+.small{
+  font-size:13px;
+  color:#667085;
+}
+
+.flag{
+  font-size:25px;
+}
+</style>
 </head>
+
 <body>
-<h1>TELKU V1.8</h1>
-<p>TELKU module inside HOBBIGO.</p>
+
+<header>
+TELKU
+</header>
+
+<div class="container">
+
+<!-- ==================================================
+     HOME
+================================================== -->
+
+<div id="home">
+
+  <div class="card">
+    <h2>🌍 TELKU Global eSIM</h2>
+    <p>
+      Stay connected across countries with TELKU.
+    </p>
+  </div>
+
+
+  <!-- CUSTOMER -->
+
+  <div class="card">
+
+    <h3>Customer Information</h3>
+
+    <input
+      id="fullName"
+      placeholder="Full Name"
+      autocomplete="name"
+    >
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+      autocomplete="email"
+    >
+
+    <input
+      id="phone"
+      placeholder="Phone"
+      autocomplete="tel"
+    >
+
+  </div>
+
+
+  <!-- COUNTRY -->
+
+  <div class="card">
+
+    <h3>Choose Country</h3>
+
+    <select
+      id="countrySelect"
+      onchange="loadPlans()"
+    >
+
+      <option value="">
+        Select Country
+      </option>
+
+    </select>
+
+    <div
+      id="countryStatus"
+      class="small"
+    >
+      Loading countries...
+    </div>
+
+  </div>
+
+
+  <!-- PLANS -->
+
+  <div id="plans"></div>
+
+</div>
+
+
+<!-- ==================================================
+     PAYMENT
+================================================== -->
+
+<div id="paymentPage" class="hidden">
+
+  <div class="card">
+
+    <h2>💳 Payment</h2>
+
+    <div id="paymentSummary"></div>
+
+    <h3 style="margin-top:18px;">
+      Payment Method
+    </h3>
+
+    <select id="paymentMethod">
+
+      <option value="online">
+        Online Payment
+      </option>
+
+      <option value="card">
+        Credit / Debit Card
+      </option>
+
+      <option value="bank_transfer">
+        Bank Transfer
+      </option>
+
+    </select>
+
+    <button
+      id="payButton"
+      onclick="processPayment()"
+    >
+      Pay Now
+    </button>
+
+    <div id="paymentStatus"></div>
+
+  </div>
+
+</div>
+
+
+<!-- ==================================================
+     SUCCESS
+================================================== -->
+
+<div id="successPage" class="hidden">
+
+  <div class="card">
+
+    <h2>✅ Transaction Success</h2>
+
+    <p>
+      Your TELKU transaction has been created.
+    </p>
+
+    <div id="successData"></div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+"https://xozjhayxttryegynntld.supabase.co";
+
+
+/*
+  PENTING:
+  Ganti nilai di bawah dengan Publishable Key TELKU
+  yang sebelumnya sudah digunakan.
+*/
+
+const SUPABASE_KEY =
+"YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY";
+
+
+/* =====================================================
+   GLOBAL STATE
+===================================================== */
+
+let selectedPlan = null;
+
+
+/* =====================================================
+   SUPABASE REQUEST
+===================================================== */
+
+async function supabaseRequest(
+  table,
+  method = "GET",
+  body = null,
+  query = ""
+){
+
+  const options = {
+
+    method:method,
+
+    headers:{
+      "apikey":SUPABASE_KEY,
+      "Authorization":"Bearer " + SUPABASE_KEY,
+      "Content-Type":"application/json",
+      "Prefer":"return=representation"
+    }
+
+  };
+
+
+  if(body !== null){
+
+    options.body =
+      JSON.stringify(body);
+
+  }
+
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/rest/v1/" +
+      table +
+      query,
+      options
+    );
+
+
+  const text =
+    await response.text();
+
+
+  let data = null;
+
+
+  try{
+
+    data =
+      text
+      ? JSON.parse(text)
+      : null;
+
+  }catch(e){
+
+    data = text;
+
+  }
+
+
+  if(!response.ok){
+
+    let message = "";
+
+
+    if(data && data.message){
+
+      message =
+        data.message;
+
+    }else if(data && data.hint){
+
+      message =
+        data.hint;
+
+    }else if(data && data.details){
+
+      message =
+        data.details;
+
+    }else{
+
+      message =
+        text ||
+        "Unknown Supabase error";
+
+    }
+
+
+    throw new Error(
+      "HTTP " +
+      response.status +
+      " - " +
+      message
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+/* =====================================================
+   RANDOM CODE
+===================================================== */
+
+function randomCode(prefix){
+
+  const timestamp =
+    Date.now()
+    .toString()
+    .slice(-8);
+
+  const random =
+    Math.floor(
+      Math.random()*9000
+    ) + 1000;
+
+
+  return (
+    prefix +
+    "-" +
+    timestamp +
+    "-" +
+    random
+  );
+
+}
+
+
+/* =====================================================
+   LOAD COUNTRIES FROM TELKU_PLANS
+===================================================== */
+
+async function loadCountries(){
+
+  const select =
+    document.getElementById(
+      "countrySelect"
+    );
+
+  const status =
+    document.getElementById(
+      "countryStatus"
+    );
+
+
+  try{
+
+    const plans =
+      await supabaseRequest(
+        "telku_plans",
+        "GET",
+        null,
+        "?select=country&order=country.asc"
+      );
+
+
+    const countries = [
+      ...new Set(
+        (plans || [])
+          .map(x => x.country)
+          .filter(Boolean)
+      )
+    ];
+
+
+    select.innerHTML =
+      `<option value="">
+        Select Country
+      </option>`;
+
+
+    countries.forEach(country => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        country;
+
+      option.textContent =
+        country;
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+
+    status.innerText =
+      countries.length +
+      " countries available";
+
+  }catch(error){
+
+    console.error(error);
+
+    status.innerText =
+      "Unable to load countries.";
+
+  }
+
+}
+
+
+/* =====================================================
+   LOAD PLANS
+===================================================== */
+
+async function loadPlans(){
+
+  const country =
+    document
+      .getElementById(
+        "countrySelect"
+      )
+      .value;
+
+
+  const container =
+    document.getElementById(
+      "plans"
+    );
+
+
+  container.innerHTML = "";
+
+  selectedPlan = null;
+
+
+  if(!country){
+
+    return;
+
+  }
+
+
+  try{
+
+    const plans =
+      await supabaseRequest(
+        "telku_plans",
+        "GET",
+        null,
+        "?country=eq." +
+        encodeURIComponent(country) +
+        "&select=id,plan_code,country,flag,data_gb,validity_days,price&order=price.asc"
+      );
+
+
+    if(!plans || plans.length === 0){
+
+      container.innerHTML = `
+        <div class="card">
+          <p>
+            No plans available for this country.
+          </p>
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    plans.forEach(plan => {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "plan";
+
+
+      const flag =
+        plan.flag || "🌍";
+
+
+      div.innerHTML = `
+
+        <div class="plan-top">
+
+          <div>
+
+            <span class="flag">
+              ${flag}
+            </span>
+
+            <strong>
+              ${plan.country}
+            </strong>
+
+          </div>
+
+          <strong>
+            ${plan.data_gb} GB
+          </strong>
+
+        </div>
+
+
+        <div class="plan-code">
+          Plan: ${plan.plan_code}
+        </div>
+
+
+        <div class="plan-info">
+          Valid for ${plan.validity_days} days
+        </div>
+
+
+        <div class="price">
+          IDR
+          ${Number(plan.price)
+            .toLocaleString("id-ID")}
+        </div>
+
+      `;
+
+
+      div.onclick = function(){
+
+        document
+          .querySelectorAll(".plan")
+          .forEach(x =>
+            x.classList.remove(
+              "selected"
+            )
+          );
+
+
+        div.classList.add(
+          "selected"
+        );
+
+
+        /*
+          IMPORTANT:
+          selectedPlan.id sekarang adalah
+          UUID ASLI dari telku_plans.
+        */
+
+        selectedPlan =
+          plan;
+
+
+        showPayment();
+
+      };
+
+
+      container.appendChild(
+        div
+      );
+
+    });
+
+
+  }catch(error){
+
+    console.error(error);
+
+
+    container.innerHTML = `
+
+      <div class="card">
+
+        <div class="status error">
+
+          Failed to load plans.
+
+          <br><br>
+
+          ${error.message}
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   PAYMENT PAGE
+===================================================== */
+
+function showPayment(){
+
+  if(!selectedPlan){
+
+    return;
+
+  }
+
+
+  document
+    .getElementById("home")
+    .classList.add(
+      "hidden"
+    );
+
+
+  document
+    .getElementById("paymentPage")
+    .classList.remove(
+      "hidden"
+    );
+
+
+  document
+    .getElementById(
+      "paymentSummary"
+    )
+    .innerHTML = `
+
+      <p>
+        <strong>
+          ${selectedPlan.country}
+        </strong>
+      </p>
+
+      <p>
+        ${selectedPlan.data_gb} GB
+        /
+        ${selectedPlan.validity_days} days
+      </p>
+
+      <p class="small">
+        Plan Code:
+        ${selectedPlan.plan_code}
+      </p>
+
+      <div class="price">
+
+        IDR
+        ${Number(
+          selectedPlan.price
+        ).toLocaleString("id-ID")}
+
+      </div>
+
+      <p class="small"
+         style="margin-top:8px;">
+
+        Plan UUID:
+        ${selectedPlan.id}
+
+      </p>
+
+  `;
+
+}
+
+
+/* =====================================================
+   GET OR CREATE CUSTOMER
+===================================================== */
+
+async function getOrCreateCustomer(){
+
+  const fullName =
+    document
+      .getElementById(
+        "fullName"
+      )
+      .value
+      .trim();
+
+
+  const email =
+    document
+      .getElementById(
+        "email"
+      )
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById(
+        "phone"
+      )
+      .value
+      .trim();
+
+
+  const country =
+    document
+      .getElementById(
+        "countrySelect"
+      )
+      .value;
+
+
+  if(!fullName){
+
+    throw new Error(
+      "Full Name wajib diisi."
+    );
+
+  }
+
+
+  if(!email){
+
+    throw new Error(
+      "Email wajib diisi."
+    );
+
+  }
+
+
+  if(!country){
+
+    throw new Error(
+      "Country wajib dipilih."
+    );
+
+  }
+
+
+  /* FIND CUSTOMER */
+
+  const existing =
+    await supabaseRequest(
+      "telku_customer",
+      "GET",
+      null,
+      "?email=eq." +
+      encodeURIComponent(email) +
+      "&select=*"
+    );
+
+
+  if(
+    existing &&
+    existing.length > 0
+  ){
+
+    return existing[0];
+
+  }
+
+
+  /* CREATE CUSTOMER */
+
+  const customerCode =
+    randomCode("CUS");
+
+
+  const created =
+    await supabaseRequest(
+      "telku_customer",
+      "POST",
+      {
+
+        customer_code:
+          customerCode,
+
+        full_name:
+          fullName,
+
+        email:
+          email,
+
+        phone:
+          phone,
+
+        country:
+          country
+
+      }
+    );
+
+
+  if(
+    !created ||
+    !created.length
+  ){
+
+    throw new Error(
+      "Customer tidak berhasil dibuat."
+    );
+
+  }
+
+
+  return created[0];
+
+}
+
+
+/* =====================================================
+   CREATE ORDER
+===================================================== */
+
+async function createOrder(customer){
+
+  /*
+    selectedPlan.id = UUID asli
+    dari telku_plans.
+  */
+
+  const planUUID =
+    selectedPlan.id;
+
+
+  if(!planUUID){
+
+    throw new Error(
+      "Plan UUID tidak ditemukan."
+    );
+
+  }
+
+
+  /*
+    Validasi sederhana UUID.
+  */
+
+  const uuidPattern =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+
+  if(
+    !uuidPattern.test(
+      String(planUUID)
+    )
+  ){
+
+    throw new Error(
+      "Plan ID bukan UUID valid: " +
+      planUUID
+    );
+
+  }
+
+
+  const orderCode =
+    randomCode("ORD");
+
+
+  const payload = {
+    order_code:
+      orderCode,
+    cust_id:
+      customer.id,
+    plan_id:
+      planUUID,
+    status:
+      "pending",
+    total:
+      Number(
+        selectedPlan.price
+      ),
+    currency:
+      "IDR"
+  };
+
+
+  console.log(
+    "ORDER PAYLOAD:",
+    payload
+  );
+
+
+  const result =
+    await supabaseRequest(
+      "telku_orders",
+      "POST",
+      payload
+    );
+
+
+  if(
+    !result ||
+    !result.length
+  ){
+
+    throw new Error(
+      "Order tidak berhasil dibuat."
+    );
+
+  }
+
+
+  return result[0];
+
+}
+
+
+/* =====================================================
+   CREATE PAYMENT
+===================================================== */
+
+async function createPayment(order){
+
+  const paymentCode =
+    randomCode("PAY");
+
+
+  const method =
+    document
+      .getElementById(
+        "paymentMethod"
+      )
+      .value;
+
+
+  const result =
+    await supabaseRequest(
+      "telku_payments",
+      "POST",
+      {
+
+        payment_code:
+          paymentCode,
+        order_id:
+          order.id,
+        method:
+          method,
+        status:
+          "paid",
+        amount:
+          Number(
+            selectedPlan.price
+          ),
+        currency:
+          "IDR"
+      }
+    );
+
+
+  if(
+    !result ||
+    !result.length
+  ){
+
+    throw new Error(
+      "Payment tidak berhasil dibuat."
+    );
+
+  }
+
+
+  return result[0];
+
+}
+
+
+/* =====================================================
+   CREATE INVOICE
+===================================================== */
+
+async function createInvoice(order){
+
+  const invoiceCode =
+    randomCode("INV");
+
+
+  const result =
+    await supabaseRequest(
+      "telku_invoices",
+      "POST",
+      {
+
+        invoice_code:
+          invoiceCode,
+        order_id:
+          order.id,
+        status:
+          "paid",
+        issued_at:
+          new Date().toISOString()
+      }
+    );
+
+
+  if(
+    !result ||
+    !result.length
+  ){
+
+    throw new Error(
+      "Invoice tidak berhasil dibuat."
+    );
+
+  }
+
+
+  return result[0];
+
+}
+
+
+/* =====================================================
+   CREATE ESIM
+===================================================== */
+
+async function createEsim(order){
+
+  const esimCode =
+    randomCode("ESIM");
+
+
+  const result =
+    await supabaseRequest(
+      "telku_esims",
+      "POST",
+      {
+
+        esim_code:
+          esimCode,
+        order_id:
+          order.id,
+        status:
+          "pending"
+      }
+    );
+
+
+  if(
+    !result ||
+    !result.length
+  ){
+
+    throw new Error(
+      "eSIM tidak berhasil dibuat."
+    );
+
+  }
+
+
+  return result[0];
+
+}
+
+
+/* =====================================================
+   UPDATE ORDER
+===================================================== */
+
+async function markOrderPaid(order){
+
+  await supabaseRequest(
+    "telku_orders",
+    "PATCH",
+    {
+      status:"paid"
+    },
+    "?id=eq." +
+    encodeURIComponent(
+      order.id
+    )
+  );
+
+}
+
+
+/* =====================================================
+   SAVE TRANSACTION
+===================================================== */
+
+async function saveTransaction(){
+
+  let customer;
+  let order;
+  let payment;
+  let invoice;
+  let esim;
+
+
+  /* STEP 1 */
+
+  try{
+    customer =
+      await getOrCreateCustomer();
+  }catch(error){
+    throw new Error(
+      "STEP 1 ERROR: " +
+      error.message
+    );
+  }
+
+
+  /* STEP 2 */
+
+  try{
+    order =
+      await createOrder(
+        customer
+      );
+  }catch(error){
+    throw new Error(
+      "STEP 2 ERROR: " +
+      error.message
+    );
+  }
+
+
+  /* STEP 3 */
+
+  try{
+    payment =
+      await createPayment(
+        order
+      );
+  }catch(error){
+    throw new Error(
+      "STEP 3 ERROR: " +
+      error.message
+    );
+  }
+
+
+  /* STEP 4 */
+
+  try{
+    invoice =
+      await createInvoice(
+        order
+      );
+  }catch(error){
+    throw new Error(
+      "STEP 4 ERROR: " +
+      error.message
+    );
+  }
+
+
+  /* STEP 5 */
+
+  try{
+    esim =
+      await createEsim(
+        order
+      );
+  }catch(error){
+    throw new Error(
+      "STEP 5 ERROR: " +
+      error.message
+    );
+  }
+
+
+  /* FINAL */
+
+  try{
+    await markOrderPaid(
+      order
+    );
+  }catch(error){
+    throw new Error(
+      "FINAL ORDER UPDATE ERROR: " +
+      error.message
+    );
+  }
+
+
+  return {
+    customer:
+      customer,
+    order:
+      order,
+    payment:
+      payment,
+    invoice:
+      invoice,
+    esim:
+      esim
+  };
+
+}
+
+
+/* =====================================================
+   PAY NOW
+===================================================== */
+
+async function processPayment(){
+
+  const button =
+    document.getElementById(
+      "payButton"
+    );
+
+  const status =
+    document.getElementById(
+      "paymentStatus"
+    );
+
+
+  if(!selectedPlan){
+
+    status.innerHTML = `
+      <div class="status error">
+
+        Please select a plan first.
+
+      </div>
+    `;
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+  button.innerText =
+    "Processing...";
+
+  status.innerHTML = `
+    <div class="status info">
+      Processing TELKU transaction...
+    </div>
+  `;
+
+  try{
+    const result =
+      await saveTransaction();
+
+    status.innerHTML = `
+      <div class="status success">
+        Transaction completed successfully.
+      </div>
+    `;
+
+    document
+      .getElementById("paymentPage")
+      .classList.add(
+        "hidden"
+      );
+
+    document
+      .getElementById("successPage")
+      .classList.remove(
+        "hidden"
+      );
+
+    document
+      .getElementById("successData")
+      .innerHTML = `
+
+        <p>
+          Customer Code
+        </p>
+        <div class="code">
+          ${result.customer.customer_code || "-"}
+        </div>
+
+        <p style="margin-top:12px;">
+          Order Code
+        </p>
+        <div class="code">
+          ${result.order.order_code}
+        </div>
+
+        <p style="margin-top:12px;">
+          Payment Code
+        </p>
+        <div class="code">
+          ${result.payment.payment_code}
+        </div>
+
+        <p style="margin-top:12px;">
+          Invoice Code
+        </p>
+        <div class="code">
+          ${result.invoice.invoice_code}
+        </div>
+
+        <p style="margin-top:12px;">
+          eSIM Code
+        </p>
+        <div class="code">
+          ${result.esim.esim_code}
+        </div>
+
+      `;
+
+  }catch(error){
+
+    console.error(
+      "TELKU TRANSACTION ERROR:",
+      error
+    );
+
+    status.innerHTML = `
+      <div class="status error">
+        <strong>
+          Transaction Error
+        </strong>
+        <br><br>
+        ${error.message}
+      </div>
+    `;
+
+    button.disabled =
+      false;
+
+    button.innerText =
+      "Pay Now";
+  }
+
+}
+
+
+/* =====================================================
+   START APP
+===================================================== */
+
+loadCountries();
+
+</script>
+
 </body>
 </html>
