@@ -3,7 +3,3461 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
+<meta name="theme-color" content<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#061426">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>HOBBIGO ONE — One App. Endless Journey.</title>
+
+<style>
+:root{
+  --bg:#040b16;
+  --bg2:#071426;
+  --panel:#0b1b30;
+  --panel2:#10243d;
+  --blue:#18bfff;
+  --cyan:#53e7ff;
+  --purple:#8c7cff;
+  --orange:#ffad45;
+  --green:#35e0a1;
+  --red:#ff657a;
+  --text:#f3f9ff;
+  --muted:#8ea5bd;
+  --line:rgba(130,190,230,.15);
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(0,183,255,.12),transparent 28%),
+    radial-gradient(circle at 90% 20%,rgba(111,83,255,.10),transparent 25%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+button,input,select{font:inherit}
+button{cursor:pointer}
+
+.app{
+  min-height:100vh;
+  display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:245px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  background:rgba(4,13,26,.94);
+  border-right:1px solid var(--line);
+  padding:22px 16px;
+  z-index:50;
+  backdrop-filter:blur(18px);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:4px 8px 22px;
+  border-bottom:1px solid var(--line);
+}
+
+.logoMark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  font-size:20px;
+  background:linear-gradient(135deg,#0b7cff,#25dfff);
+  box-shadow:0 0 25px rgba(24,191,255,.35);
+}
+
+.logoText b{
+  display:block;
+  letter-spacing:2px;
+  font-size:17px;
+}
+
+.logoText span{
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:1px;
+}
+
+.nav{
+  margin-top:20px;
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#9bb0c6;
+  padding:13px 13px;
+  border-radius:12px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:5px;
+}
+
+.nav button:hover,
+.nav button.active{
+  color:#fff;
+  background:linear-gradient(90deg,rgba(24,191,255,.16),rgba(24,191,255,.03));
+  box-shadow:inset 3px 0 var(--blue);
+}
+
+.navIcon{
+  width:24px;
+  text-align:center;
+  font-size:17px;
+}
+
+.sideBottom{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:18px;
+}
+
+.system{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  border-radius:15px;
+  padding:13px;
+}
+
+.systemTitle{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1px;
+  margin-bottom:7px;
+}
+
+.systemStatus{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:12px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 12px var(--green);
+}
+
+/* MAIN */
+.main{
+  margin-left:245px;
+  width:calc(100% - 245px);
+  min-height:100vh;
+}
+
+.topbar{
+  height:70px;
+  position:sticky;
+  top:0;
+  z-index:40;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  background:rgba(4,11,22,.82);
+  border-bottom:1px solid var(--line);
+  backdrop-filter:blur(18px);
+}
+
+.topTitle{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.topActions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.topBtn{
+  border:1px solid var(--line);
+  background:#0a1728;
+  color:#d9eaff;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+}
+
+.profileMini{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding-left:8px;
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#116bff,#21d8ff);
+  font-weight:800;
+}
+
+.profileMini span{
+  font-size:12px;
+  color:#dceafa;
+}
+
+/* CONTENT */
+.content{
+  padding:28px;
+  max-width:1500px;
+  margin:auto;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+/* HERO */
+.hero{
+  min-height:350px;
+  border:1px solid rgba(74,190,255,.18);
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  background:
+    linear-gradient(90deg,rgba(3,11,23,.96) 0%,rgba(3,11,23,.80) 38%,rgba(3,11,23,.25) 75%),
+    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5)),
+    url("https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+}
+
+.heroContent{
+  width:650px;
+  padding:45px;
+}
+
+.eyebrow{
+  color:var(--cyan);
+  font-size:11px;
+  letter-spacing:2px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+.hero h1{
+  font-size:clamp(35px,5vw,66px);
+  line-height:.98;
+  margin:0 0 18px;
+  letter-spacing:-3px;
+}
+
+.hero h1 span{
+  background:linear-gradient(90deg,#fff,#58eaff,#668fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  color:#b4c9dc;
+  line-height:1.7;
+  max-width:590px;
+}
+
+.searchBox{
+  margin-top:25px;
+  display:flex;
+  gap:8px;
+  max-width:600px;
+}
+
+.searchBox input{
+  flex:1;
+  min-width:0;
+  border:1px solid rgba(100,210,255,.22);
+  background:rgba(3,14,28,.82);
+  color:#fff;
+  border-radius:14px;
+  padding:15px;
+  outline:none;
+}
+
+.btn{
+  border:0;
+  border-radius:12px;
+  padding:12px 17px;
+  font-weight:800;
+  color:#03111e;
+  background:linear-gradient(135deg,#39dfff,#138cff);
+  box-shadow:0 8px 25px rgba(24,191,255,.2);
+}
+
+.btn:hover{filter:brightness(1.08)}
+
+.btn.secondary{
+  color:#dceeff;
+  background:#10243a;
+  border:1px solid var(--line);
+  box-shadow:none;
+}
+
+.btn.orange{
+  background:linear-gradient(135deg,#ffd06d,#ff8e2b);
+}
+
+.btn.purple{
+  background:linear-gradient(135deg,#b49cff,#7062ff);
+  color:white;
+}
+
+.btn.green{
+  background:linear-gradient(135deg,#63f1bd,#16bd89);
+}
+
+/* SECTION */
+.section{
+  margin-top:28px;
+}
+
+.sectionHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  margin-bottom:14px;
+}
+
+.sectionHead h2{
+  margin:0;
+  font-size:22px;
+}
+
+.sectionHead span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* SERVICE CARDS */
+.services{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.service{
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:22px;
+  min-height:190px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(16,38,63,.9),rgba(7,19,34,.95));
+}
+
+.service:after{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  right:-50px;
+  top:-50px;
+  background:rgba(24,191,255,.10);
+  filter:blur(2px);
+}
+
+.service.telku:after{background:rgba(140,124,255,.12)}
+.service.chelea:after{background:rgba(255,173,69,.12)}
+
+.serviceIcon{
+  font-size:30px;
+  margin-bottom:14px;
+}
+
+.service h3{
+  margin:0 0 7px;
+  font-size:18px;
+}
+
+.service p{
+  margin:0 0 17px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+.serviceTag{
+  font-size:9px;
+  letter-spacing:1px;
+  font-weight:900;
+  color:var(--cyan);
+}
+
+.telku .serviceTag{color:#ae9dff}
+.chelea .serviceTag{color:#ffc16d}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.stat{
+  padding:18px;
+  border:1px solid var(--line);
+  background:rgba(10,27,46,.72);
+  border-radius:17px;
+}
+
+.statLabel{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.statValue{
+  font-size:25px;
+  font-weight:900;
+  margin-top:8px;
+}
+
+/* CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.card{
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,#0c2037,#081728);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.cardImg{
+  height:160px;
+  background-size:cover;
+  background-position:center;
+}
+
+.cardBody{
+  padding:17px;
+}
+
+.cardBody h3{
+  margin:0 0 7px;
+  font-size:16px;
+}
+
+.cardBody p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.cardBottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:15px;
+}
+
+.price{
+  font-weight:900;
+  color:#fff;
+}
+
+.small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* PAGE HEADER */
+.pageHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+
+.pageHeader h1{
+  margin:0;
+  font-size:29px;
+}
+
+.pageHeader p{
+  color:var(--muted);
+  margin:6px 0 0;
+  font-size:12px;
+}
+
+/* FILTER */
+.filters{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.filter{
+  padding:9px 13px;
+  border-radius:30px;
+  border:1px solid var(--line);
+  background:#0a192b;
+  color:#a9bfd4;
+  font-size:11px;
+  cursor:pointer;
+}
+
+.filter.active{
+  color:#fff;
+  border-color:rgba(35,207,255,.5);
+  background:rgba(24,191,255,.12);
+}
+
+/* CART */
+.cartLayout{
+  display:grid;
+  grid-template-columns:1.5fr .8fr;
+  gap:18px;
+}
+
+.listPanel,.summaryPanel{
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:#081728;
+}
+
+.listPanel{padding:18px}
+
+.cartItem{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:17px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.cartItem:last-child{border-bottom:0}
+
+.cartInfo{
+  display:flex;
+  gap:13px;
+}
+
+.cartIcon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:#102b46;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+}
+
+.cartName{
+  font-weight:800;
+  font-size:14px;
+}
+
+.cartMeta{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.serviceBadge{
+  display:inline-block;
+  margin-top:7px;
+  padding:4px 7px;
+  border-radius:6px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.7px;
+  background:rgba(24,191,255,.12);
+  color:var(--cyan);
+}
+
+.serviceBadge.telku{
+  color:#ad9dff;
+  background:rgba(140,124,255,.12);
+}
+
+.serviceBadge.chelea{
+  color:#ffc06c;
+  background:rgba(255,173,69,.12);
+}
+
+.cartPrice{
+  text-align:right;
+  white-space:nowrap;
+  font-weight:900;
+}
+
+.remove{
+  margin-top:7px;
+  color:#ff7585;
+  font-size:10px;
+  background:none;
+  border:0;
+}
+
+.summaryPanel{
+  padding:20px;
+  height:max-content;
+  position:sticky;
+  top:90px;
+}
+
+.summaryPanel h3{
+  margin-top:0;
+}
+
+.sumRow{
+  display:flex;
+  justify-content:space-between;
+  color:#9eb3c7;
+  font-size:12px;
+  padding:9px 0;
+}
+
+.sumRow.total{
+  border-top:1px solid var(--line);
+  margin-top:10px;
+  padding-top:16px;
+  color:#fff;
+  font-size:17px;
+  font-weight:900;
+}
+
+.full{
+  width:100%;
+}
+
+/* ORDERS */
+.order{
+  border:1px solid var(--line);
+  border-radius:19px;
+  padding:18px;
+  background:#09192b;
+  margin-bottom:13px;
+}
+
+.orderTop{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.orderCode{
+  font-size:15px;
+  font-weight:900;
+}
+
+.status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:9px;
+  font-weight:900;
+  background:rgba(53,224,161,.1);
+  color:#62edbd;
+}
+
+.status.pending{
+  color:#ffd072;
+  background:rgba(255,173,69,.1);
+}
+
+.orderItems{
+  margin-top:14px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+
+.orderItem{
+  display:flex;
+  justify-content:space-between;
+  color:#afc2d4;
+  font-size:11px;
+  padding:6px 0;
+}
+
+.orderTotal{
+  text-align:right;
+  font-weight:900;
+  margin-top:8px;
+}
+
+/* PAYMENT */
+.paymentBox{
+  max-width:900px;
+  margin:auto;
+  border:1px solid var(--line);
+  border-radius:25px;
+  background:#081728;
+  padding:25px;
+}
+
+.paymentGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.paymentMethods{
+  display:grid;
+  gap:10px;
+}
+
+.payMethod{
+  border:1px solid var(--line);
+  background:#0b1c30;
+  padding:14px;
+  border-radius:13px;
+  color:#b8ccde;
+  text-align:left;
+}
+
+.payMethod.selected{
+  border-color:var(--blue);
+  background:rgba(24,191,255,.1);
+  color:white;
+}
+
+.qrBox{
+  width:190px;
+  height:190px;
+  background:white;
+  margin:15px auto;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  padding:8px;
+}
+
+.qrFake{
+  width:160px;
+  height:160px;
+  background:
+    repeating-linear-gradient(0deg,#000 0 5px,#fff 5px 10px),
+    repeating-linear-gradient(90deg,transparent 0 7px,#000 7px 12px);
+  mix-blend-mode:multiply;
+}
+
+.receipt{
+  border-top:1px dashed #456;
+  margin-top:20px;
+  padding-top:20px;
+}
+
+/* PROFILE */
+.profileHero{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  border:1px solid var(--line);
+  border-radius:23px;
+  padding:24px;
+  background:linear-gradient(135deg,#0d2945,#081728);
+}
+
+.bigAvatar{
+  width:75px;
+  height:75px;
+  border-radius:23px;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:900;
+  background:linear-gradient(135deg,#167eff,#2ee4ff);
+}
+
+.profileHero h2{margin:0}
+.profileHero p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:55px 20px;
+  color:var(--muted);
+}
+
+.emptyIcon{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:20px;
+  backdrop-filter:blur(8px);
+}
+
+.modal.show{display:flex}
+
+.modalBox{
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border:1px solid rgba(100,210,255,.25);
+  background:#081728;
+  border-radius:23px;
+  padding:23px;
+  box-shadow:0 30px 90px #000;
+}
+
+.modalTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.close{
+  border:0;
+  background:#10243a;
+  color:#fff;
+  width:35px;
+  height:35px;
+  border-radius:10px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:200;
+  background:#102b43;
+  border:1px solid rgba(70,205,255,.3);
+  color:#fff;
+  padding:13px 17px;
+  border-radius:13px;
+  transform:translateY(100px);
+  opacity:0;
+  transition:.25s;
+  font-size:12px;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* MOBILE */
+.mobileNav{
+  display:none;
+}
+
+@media(max-width:1000px){
+  .sidebar{
+    width:210px;
+  }
+  .main{
+    margin-left:210px;
+    width:calc(100% - 210px);
+  }
+  .services,.grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:720px){
+  .sidebar{display:none}
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding-bottom:72px;
+  }
+
+  .topbar{
+    padding:0 14px;
+    height:60px;
+  }
+
+  .topTitle{display:none}
+
+  .content{
+    padding:15px;
+  }
+
+  .hero{
+    min-height:480px;
+    align-items:end;
+    background-position:center;
+  }
+
+  .heroContent{
+    width:100%;
+    padding:25px 20px;
+    background:linear-gradient(transparent,rgba(3,10,20,.9) 25%);
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+
+  .searchBox{
+    flex-direction:column;
+  }
+
+  .services,.grid,.stats{
+    grid-template-columns:1fr;
+  }
+
+  .cartLayout,.paymentGrid{
+    grid-template-columns:1fr;
+  }
+
+  .summaryPanel{
+    position:static;
+  }
+
+  .profileMini span{display:none}
+
+  .mobileNav{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    height:64px;
+    background:rgba(5,15,28,.96);
+    border-top:1px solid var(--line);
+    z-index:80;
+    justify-content:space-around;
+    backdrop-filter:blur(18px);
+  }
+
+  .mobileNav button{
+    border:0;
+    background:none;
+    color:#8097ad;
+    font-size:9px;
+  }
+
+  .mobileNav button.active{
+    color:var(--cyan);
+  }
+
+  .mobileNav i{
+    display:block;
+    font-size:19px;
+    font-style:normal;
+    margin-bottom:2px;
+  }
+
+  .pageHeader{
+    align-items:flex-start;
+  }
+
+  .pageHeader h1{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logoMark">H</div>
+    <div class="logoText">
+      <b>HOBBIGO</b>
+      <span>ONE APP. ENDLESS JOURNEY.</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button class="active" onclick="showPage('home',this)">
+      <span class="navIcon">⌂</span> Home
+    </button>
+
+    <button onclick="showPage('travel',this)">
+      <span class="navIcon">✈</span> HOBBIGO Travel
+    </button>
+
+    <button onclick="showPage('telku',this)">
+      <span class="navIcon">◉</span> TELKU eSIM
+    </button>
+
+    <button onclick="showPage('chelea',this)">
+      <span class="navIcon">▣</span> CHELEA Delivery
+    </button>
+
+    <button onclick="showPage('cart',this)">
+      <span class="navIcon">🛒</span> My Cart
+      <span id="sideCartBadge" style="margin-left:auto">0</span>
+    </button>
+
+    <button onclick="showPage('orders',this)">
+      <span class="navIcon">▤</span> My Orders
+    </button>
+
+    <button onclick="showPage('payment',this)">
+      <span class="navIcon">▣</span> Payment & QR
+    </button>
+
+    <button onclick="showPage('profile',this)">
+      <span class="navIcon">◎</span> Master Profile
+    </button>
+  </nav>
+
+  <div class="sideBottom">
+    <div class="system">
+      <div class="systemTitle">HOBBIGO ONE SYSTEM</div>
+      <div class="systemStatus">
+        <span class="dot"></span>
+        System Online
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<header class="topbar">
+  <div class="topTitle">
+    TRAVEL • CONNECTIVITY • DELIVERY
+  </div>
+
+  <div class="topActions">
+    <button class="topBtn" onclick="showPage('cart')">🛒</button>
+    <button class="topBtn" onclick="showPage('orders')">▤</button>
+
+    <div class="profileMini">
+      <div class="avatar">H</div>
+      <span>HOBBIGO USER</span>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+
+<!-- HOME -->
+<section id="page-home" class="page active">
+
+  <div class="hero">
+
+    <div class="heroContent">
+
+      <div class="eyebrow">
+        HOBBIGO ONE • GLOBAL JOURNEY PLATFORM
+      </div>
+
+      <h1>
+        YOUR JOURNEY.<br>
+        <span>ONE SMART ECOSYSTEM.</span>
+      </h1>
+
+      <p>
+        Travel, connectivity and delivery dalam satu ecosystem.
+        Rencanakan perjalanan, tetap terhubung dengan eSIM,
+        dan kirim barang bersama traveler dengan satu master profile.
+      </p>
+
+      <div class="searchBox">
+        <input id="globalSearch"
+               placeholder="Search destination, eSIM, delivery...">
+
+        <button class="btn" onclick="globalSearch()">
+          SEARCH
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="section">
+
+    <div class="sectionHead">
+      <h2>One App. Three Powerful Services.</h2>
+      <span>HOBBIGO ONE</span>
+    </div>
+
+    <div class="services">
+
+      <div class="service">
+        <div class="serviceIcon">✈️</div>
+
+        <div class="serviceTag">
+          HOBBIGO TRAVEL
+        </div>
+
+        <h3>Travel & Experience</h3>
+
+        <p>
+          AI Trip Planner, hotel, flight, activity,
+          experience dan complete journey.
+        </p>
+
+        <button class="btn" onclick="showPage('travel')">
+          EXPLORE TRAVEL
+        </button>
+      </div>
+
+
+      <div class="service telku">
+        <div class="serviceIcon">📡</div>
+
+        <div class="serviceTag">
+          TELKU CONNECTIVITY
+        </div>
+
+        <h3>Global eSIM</h3>
+
+        <p>
+          Stay connected saat traveling dengan
+          eSIM data plans Indonesia, Asia dan Global.
+        </p>
+
+        <button class="btn purple" onclick="showPage('telku')">
+          GET eSIM
+        </button>
+      </div>
+
+
+      <div class="service chelea">
+        <div class="serviceIcon">📦</div>
+
+        <div class="serviceTag">
+          CHELEA DELIVERY
+        </div>
+
+        <h3>Traveler Delivery</h3>
+
+        <p>
+          Personal shopping, traveler pickup,
+          cargo dan home delivery.
+        </p>
+
+        <button class="btn orange" onclick="showPage('chelea')">
+          CREATE DELIVERY
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="section">
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="statLabel">Services</div>
+        <div class="statValue">03</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">Cart Items</div>
+        <div class="statValue" id="statCart">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">Orders</div>
+        <div class="statValue" id="statOrders">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">Master Profile</div>
+        <div class="statValue">01</div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="sectionHead">
+      <h2>Featured Journey</h2>
+      <span>HOBBIGO EXPERIENCE</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <div class="cardImg"
+        style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1000&q=85')">
+        </div>
+
+        <div class="cardBody">
+          <h3>Bali Smart Journey</h3>
+
+          <p>
+            4D3N • Hotel • Experience • Transport
+          </p>
+
+          <div class="cardBottom">
+            <div>
+              <div class="small">Starting from</div>
+              <div class="price">Rp 4.500.000</div>
+            </div>
+
+            <button class="btn"
+            onclick="addItem(
+              'TRAVEL',
+              'Bali Smart Journey',
+              '4D3N • Hotel • Experience • Transport',
+              4500000,
+              '✈️'
+            )">
+              ADD
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="cardImg"
+        style="background-image:url('https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1000&q=85')">
+        </div>
+
+        <div class="cardBody">
+          <h3>Island Experience</h3>
+
+          <p>
+            Activity • Local Culinary • Adventure
+          </p>
+
+          <div class="cardBottom">
+            <div>
+              <div class="small">Experience</div>
+              <div class="price">Rp 850.000</div>
+            </div>
+
+            <button class="btn"
+            onclick="addItem(
+              'TRAVEL',
+              'Island Experience',
+              'Activity • Culinary • Adventure',
+              850000,
+              '🌴'
+            )">
+              ADD
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="cardImg"
+        style="background-image:url('https://images.unsplash.com/photo-1526772662000-3f88f10405ff?auto=format&fit=crop&w=1000&q=85')">
+        </div>
+
+        <div class="cardBody">
+          <h3>Corporate Retreat</h3>
+
+          <p>
+            Meeting • Team Building • Accommodation
+          </p>
+
+          <div class="cardBottom">
+            <div>
+              <div class="small">Package</div>
+              <div class="price">Rp 7.500.000</div>
+            </div>
+
+            <button class="btn"
+            onclick="addItem(
+              'TRAVEL',
+              'Corporate Retreat',
+              'Meeting • Team Building • Accommodation',
+              7500000,
+              '🏢'
+            )">
+              ADD
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- TRAVEL -->
+<section id="page-travel" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>HOBBIGO Travel</h1>
+      <p>Plan • Book • Experience • Re-optimize</p>
+    </div>
+
+    <button class="btn"
+    onclick="openTripPlanner()">
+      + AI TRIP PLANNER
+    </button>
+
+  </div>
+
+
+  <div class="filters">
+
+    <div class="filter active">All</div>
+    <div class="filter">Hotels</div>
+    <div class="filter">Flights</div>
+    <div class="filter">Activities</div>
+    <div class="filter">Experience</div>
+    <div class="filter">Corporate</div>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="cardImg"
+      style="background-image:url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1000&q=85')">
+      </div>
+
+      <div class="cardBody">
+        <h3>Smart Bali Journey</h3>
+
+        <p>
+          AI Score 96% • 4D3N • Smart Route
+        </p>
+
+        <div class="cardBottom">
+          <div class="price">Rp 4.500.000</div>
+
+          <button class="btn"
+          onclick="addItem('TRAVEL','Smart Bali Journey','AI Score 96% • 4D3N • Smart Route',4500000,'✈️')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardImg"
+      style="background-image:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1000&q=85')">
+      </div>
+
+      <div class="cardBody">
+        <h3>Premium Hotel Stay</h3>
+
+        <p>
+          Luxury room • Breakfast • Flexible
+        </p>
+
+        <div class="cardBottom">
+          <div class="price">Rp 1.250.000</div>
+
+          <button class="btn"
+          onclick="addItem('TRAVEL','Premium Hotel Stay','Luxury room • Breakfast • Flexible',1250000,'🏨')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardImg"
+      style="background-image:url('https://images.unsplash.com/photo-1544550285-f813152fb2fd?auto=format&fit=crop&w=1000&q=85')">
+      </div>
+
+      <div class="cardBody">
+        <h3>Ocean Adventure</h3>
+
+        <p>
+          Boat • Island • Local Experience
+        </p>
+
+        <div class="cardBottom">
+          <div class="price">Rp 950.000</div>
+
+          <button class="btn"
+          onclick="addItem('TRAVEL','Ocean Adventure','Boat • Island • Local Experience',950000,'🚤')">
+            ADD TO CART
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TELKU -->
+<section id="page-telku" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>TELKU eSIM</h1>
+      <p>Global connectivity for your journey</p>
+    </div>
+
+    <span class="serviceBadge telku">
+      CONNECTIVITY
+    </span>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <div class="serviceIcon">🇮🇩</div>
+
+        <div class="serviceTag">INDONESIA</div>
+
+        <h3>Indonesia 3GB</h3>
+
+        <p>
+          3GB data • 7 Days
+        </p>
+
+        <div class="cardBottom">
+
+          <div class="price">
+            Rp 59.000
+          </div>
+
+          <button class="btn purple"
+          onclick="addItem(
+            'TELKU',
+            'Indonesia 3GB eSIM',
+            '3GB • 7 Days',
+            59000,
+            '📡'
+          )">
+            + ORDER
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <div class="serviceIcon">🌏</div>
+
+        <div class="serviceTag">ASIA TRAVEL</div>
+
+        <h3>Asia Travel 5GB</h3>
+
+        <p>
+          5GB data • 15 Days
+        </p>
+
+        <div class="cardBottom">
+
+          <div class="price">
+            Rp 99.000
+          </div>
+
+          <button class="btn purple"
+          onclick="addItem(
+            'TELKU',
+            'Asia Travel 5GB eSIM',
+            '5GB • 15 Days',
+            99000,
+            '📡'
+          )">
+            + ORDER
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <div class="serviceIcon">🌐</div>
+
+        <div class="serviceTag">GLOBAL</div>
+
+        <h3>Global Travel 10GB</h3>
+
+        <p>
+          10GB data • 30 Days
+        </p>
+
+        <div class="cardBottom">
+
+          <div class="price">
+            Rp 249.000
+          </div>
+
+          <button class="btn purple"
+          onclick="addItem(
+            'TELKU',
+            'Global Travel 10GB eSIM',
+            '10GB • 30 Days',
+            249000,
+            '📡'
+          )">
+            + ORDER
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="card" style="padding:20px">
+
+      <div class="serviceTag">TELKU FLOW</div>
+
+      <h3>Buy → Payment → eSIM → QR</h3>
+
+      <p>
+        Order TELKU akan masuk ke Master Cart terlebih dahulu.
+        Setelah checkout, order akan muncul di Master Orders.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CHELEA -->
+<section id="page-chelea" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>CHELEA Delivery</h1>
+      <p>Traveler shopping • Pickup • Cargo • Home delivery</p>
+    </div>
+
+    <span class="serviceBadge chelea">
+      SECURE DELIVERY
+    </span>
+
+  </div>
+
+
+  <div class="services">
+
+    <div class="service chelea">
+
+      <div class="serviceIcon">🛍️</div>
+
+      <div class="serviceTag">
+        PERSONAL SHOPPING
+      </div>
+
+      <h3>Traveler Jastip</h3>
+
+      <p>
+        Traveler membeli barang sesuai request
+        dan mengirimkannya ke alamat tujuan.
+      </p>
+
+      <button class="btn orange"
+      onclick="addItem(
+        'CHELEA',
+        'Traveler Personal Shopping',
+        'Traveler purchase + home delivery',
+        350000,
+        '🛍️'
+      )">
+        CREATE ORDER
+      </button>
+
+    </div>
+
+
+    <div class="service chelea">
+
+      <div class="serviceIcon">🚚</div>
+
+      <div class="serviceTag">
+        PICKUP & CARGO
+      </div>
+
+      <h3>Pickup Delivery</h3>
+
+      <p>
+        Barang dijemput, diverifikasi,
+        diproses cargo dan dikirim ke rumah.
+      </p>
+
+      <button class="btn orange"
+      onclick="addItem(
+        'CHELEA',
+        'Pickup & Cargo Delivery',
+        'Pickup • Cargo • Home delivery',
+        450000,
+        '🚚'
+      )">
+        CREATE ORDER
+      </button>
+
+    </div>
+
+
+    <div class="service chelea">
+
+      <div class="serviceIcon">🛡️</div>
+
+      <div class="serviceTag">
+        SECURITY ENGINE
+      </div>
+
+      <h3>Protected Delivery</h3>
+
+      <p>
+        Request → Security Check → Approved →
+        Escrow → Pickup → Transit → Delivered.
+      </p>
+
+      <button class="btn orange"
+      onclick="addItem(
+        'CHELEA',
+        'Protected Delivery',
+        'Security • Insurance • Tracking',
+        550000,
+        '🛡️'
+      )">
+        START
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="card" style="padding:22px">
+
+      <div class="serviceTag">CHELEA TRACKING ENGINE</div>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:10px;
+        margin-top:18px;
+      ">
+
+        <div class="stat">
+          <div class="statLabel">01</div>
+          <div style="margin-top:6px">REQUEST</div>
+        </div>
+
+        <div class="stat">
+          <div class="statLabel">02</div>
+          <div style="margin-top:6px">PICKUP</div>
+        </div>
+
+        <div class="stat">
+          <div class="statLabel">03</div>
+          <div style="margin-top:6px">TRANSIT</div>
+        </div>
+
+        <div class="stat">
+          <div class="statLabel">04</div>
+          <div style="margin-top:6px">DELIVERED</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CART -->
+<section id="page-cart" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>My Cart</h1>
+      <p>Semua pilihan Anda dalam satu master cart</p>
+    </div>
+
+    <span id="cartCountText"></span>
+
+  </div>
+
+
+  <div id="cartContainer"></div>
+
+</section>
+
+
+<!-- ORDERS -->
+<section id="page-orders" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>My Orders</h1>
+      <p>Master order center — Travel, TELKU & CHELEA</p>
+    </div>
+
+    <button class="btn secondary"
+    onclick="clearOrders()">
+      Clear Demo Orders
+    </button>
+
+  </div>
+
+  <div id="ordersContainer"></div>
+
+</section>
+
+
+<!-- PAYMENT -->
+<section id="page-payment" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>Payment & QR</h1>
+      <p>Transaction result and QR center</p>
+    </div>
+
+  </div>
+
+  <div id="paymentContainer"></div>
+
+</section>
+
+
+<!-- PROFILE -->
+<section id="page-profile" class="page">
+
+  <div class="pageHeader">
+
+    <div>
+      <h1>Master Profile</h1>
+      <p>One customer identity across HOBBIGO ONE</p>
+    </div>
+
+  </div>
+
+
+  <div class="profileHero">
+
+    <div class="bigAvatar">H</div>
+
+    <div>
+      <h2>HOBBIGO CUSTOMER</h2>
+
+      <p>
+        Master Customer ID:
+        <strong id="customerId"></strong>
+      </p>
+
+      <div class="serviceTag">
+        TRAVEL • CONNECTIVITY • DELIVERY
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="statLabel">Travel Orders</div>
+        <div class="statValue" id="profileTravel">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">TELKU Orders</div>
+        <div class="statValue" id="profileTelku">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">CHELEA Orders</div>
+        <div class="statValue" id="profileChelea">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="statLabel">Total Orders</div>
+        <div class="statValue" id="profileOrders">0</div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="section">
+
+    <div class="card" style="padding:22px">
+
+      <div class="serviceTag">
+        MASTER ECOSYSTEM
+      </div>
+
+      <h3>One Customer. Multiple Services.</h3>
+
+      <p>
+        HOBBIGO, TELKU dan CHELEA dapat digunakan
+        secara independen, tetapi seluruh aktivitas
+        tetap dapat terlihat dalam satu Master Profile.
+      </p>
+
+      <button class="btn" onclick="showPage('orders')">
+        VIEW ALL ORDERS
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+</div>
+</main>
+</div>
+
+
+<!-- MOBILE NAV -->
+<nav class="mobileNav">
+
+  <button class="active" onclick="showPage('home',this)">
+    <i>⌂</i>Home
+  </button>
+
+  <button onclick="showPage('travel',this)">
+    <i>✈</i>Travel
+  </button>
+
+  <button onclick="showPage('telku',this)">
+    <i>◉</i>TELKU
+  </button>
+
+  <button onclick="showPage('chelea',this)">
+    <i>▣</i>CHELEA
+  </button>
+
+  <button onclick="showPage('cart',this)">
+    <i>🛒</i>Cart
+  </button>
+
+</nav>
+
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+
+  <div class="modalBox">
+
+    <div class="modalTop">
+
+      <h3 id="modalTitle">HOBBIGO</h3>
+
+      <button class="close"
+      onclick="closeModal()">×</button>
+
+    </div>
+
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+
+<div id="toast" class="toast">
+  Added to Master Cart
+</div>
+
+
+<script>
+
+/* =====================================================
+   HOBBIGO ONE V1
+   SINGLE FILE MASTER APP
+   ===================================================== */
+
+
+/* MASTER CUSTOMER */
+const CUSTOMER_ID =
+  localStorage.getItem("hobbigo_customer_id") ||
+  "HBG-" + Math.random().toString(36).substring(2,8).toUpperCase();
+
+localStorage.setItem("hobbigo_customer_id",CUSTOMER_ID);
+
+
+/* STATE */
+let cart =
+  JSON.parse(localStorage.getItem("hobbigo_cart") || "[]");
+
+let orders =
+  JSON.parse(localStorage.getItem("hobbigo_orders") || "[]");
+
+let lastPayment =
+  JSON.parse(localStorage.getItem("hobbigo_last_payment") || "null");
+
+
+/* MONEY */
+function money(value){
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(Number(value)||0);
+}
+
+
+/* SAVE */
+function save(){
+
+  localStorage.setItem(
+    "hobbigo_cart",
+    JSON.stringify(cart)
+  );
+
+  localStorage.setItem(
+    "hobbigo_orders",
+    JSON.stringify(orders)
+  );
+
+  if(lastPayment){
+    localStorage.setItem(
+      "hobbigo_last_payment",
+      JSON.stringify(lastPayment)
+    );
+  }
+
+  updateUI();
+}
+
+
+/* NAVIGATION */
+function showPage(page,button){
+
+  document.querySelectorAll(".page")
+    .forEach(p=>p.classList.remove("active"));
+
+  const target =
+    document.getElementById("page-"+page);
+
+  if(target){
+    target.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav button")
+    .forEach(b=>b.classList.remove("active"));
+
+  if(button){
+    button.classList.add("active");
+  }
+
+  if(page==="cart") renderCart();
+  if(page==="orders") renderOrders();
+  if(page==="payment") renderPayment();
+  if(page==="profile") renderProfile();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+/* ADD ITEM */
+function addItem(service,name,detail,price,icon){
+
+  const item={
+    id:"ITEM-"+Date.now()+"-"+Math.random()
+      .toString(36).substring(2,6),
+
+    service,
+    name,
+    detail,
+    price:Number(price),
+    qty:1,
+    icon:icon || "•",
+    createdAt:new Date().toISOString()
+  };
+
+  cart.push(item);
+
+  save();
+
+  toast(
+    service+" added to Master Cart"
+  );
+
+  setTimeout(()=>{
+    showPage("cart");
+  },350);
+}
+
+
+/* REMOVE */
+function removeItem(id){
+
+  cart =
+    cart.filter(item=>item.id!==id);
+
+  save();
+
+  renderCart();
+}
+
+
+/* CALCULATE */
+function calculate(){
+
+  const subtotal =
+    cart.reduce(
+      (sum,item)=>sum+(item.price*item.qty),
+      0
+    );
+
+  const serviceFee =
+    subtotal > 0
+    ? Math.round(subtotal * .025)
+    : 0;
+
+  const insurance =
+    cart.some(i=>i.service==="CHELEA")
+    ? Math.round(subtotal * .01)
+    : 0;
+
+  const total =
+    subtotal + serviceFee + insurance;
+
+  return {
+    subtotal,
+    serviceFee,
+    insurance,
+    total
+  };
+}
+
+
+/* CART */
+function renderCart(){
+
+  const container =
+    document.getElementById("cartContainer");
+
+  const count =
+    cart.reduce((a,b)=>a+b.qty,0);
+
+  document.getElementById("cartCountText")
+    .textContent =
+    count+" item(s)";
+
+  if(!cart.length){
+
+    container.innerHTML=`
+
+      <div class="listPanel">
+
+        <div class="empty">
+
+          <div class="emptyIcon">🛒</div>
+
+          <h3>Master Cart masih kosong</h3>
+
+          <p>
+            Pilih Travel, TELKU atau CHELEA.
+            Semua pilihan akan masuk ke sini.
+          </p>
+
+          <button class="btn"
+          onclick="showPage('travel')">
+            START EXPLORING
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  const calc=calculate();
+
+
+  let html=`
+
+    <div class="cartLayout">
+
+      <div class="listPanel">
+
+  `;
+
+
+  cart.forEach(item=>{
+
+    let badgeClass =
+      item.service==="TELKU"
+      ? "telku"
+      : item.service==="CHELEA"
+      ? "chelea"
+      : "";
+
+    html+=`
+
+      <div class="cartItem">
+
+        <div class="cartInfo">
+
+          <div class="cartIcon">
+            ${item.icon}
+          </div>
+
+          <div>
+
+            <div class="cartName">
+              ${escapeHTML(item.name)}
+            </div>
+
+            <div class="cartMeta">
+              ${escapeHTML(item.detail)}
+            </div>
+
+            <span class="serviceBadge ${badgeClass}">
+              ${item.service}
+            </span>
+
+            <div style="margin-top:8px">
+              Qty: ${item.qty}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="cartPrice">
+
+          ${money(item.price * item.qty)}
+
+          <br>
+
+          <button class="remove"
+          onclick="removeItem('${item.id}')">
+            REMOVE
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  html+=`
+
+      </div>
+
+      <div class="summaryPanel">
+
+        <h3>Order Summary</h3>
+
+        <div class="sumRow">
+          <span>Items</span>
+          <span>${cart.length}</span>
+        </div>
+
+        <div class="sumRow">
+          <span>Subtotal</span>
+          <span>${money(calc.subtotal)}</span>
+        </div>
+
+        <div class="sumRow">
+          <span>Service Fee</span>
+          <span>${money(calc.serviceFee)}</span>
+        </div>
+
+        <div class="sumRow">
+          <span>Insurance</span>
+          <span>${money(calc.insurance)}</span>
+        </div>
+
+        <div class="sumRow total">
+          <span>TOTAL</span>
+          <span>${money(calc.total)}</span>
+        </div>
+
+        <button class="btn full"
+        style="margin-top:17px"
+        onclick="checkout()">
+          CHECKOUT →
+        </button>
+
+        <button class="btn secondary full"
+        style="margin-top:9px"
+        onclick="showPage('travel')">
+          CONTINUE SHOPPING
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  container.innerHTML=html;
+}
+
+
+/* CHECKOUT */
+function checkout(){
+
+  if(!cart.length){
+    toast("Cart masih kosong");
+    return;
+  }
+
+  const calc=calculate();
+
+  const orderCode =
+    "HBG-" +
+    new Date().getFullYear() +
+    "-" +
+    Math.random()
+      .toString(36)
+      .substring(2,8)
+      .toUpperCase();
+
+
+  const order={
+
+    id:orderCode,
+
+    customerId:CUSTOMER_ID,
+
+    createdAt:new Date().toISOString(),
+
+    items:cart.map(x=>({...x})),
+
+    subtotal:calc.subtotal,
+
+    serviceFee:calc.serviceFee,
+
+    insurance:calc.insurance,
+
+    total:calc.total,
+
+    paymentStatus:"PENDING",
+
+    status:"PAYMENT_PENDING"
+
+  };
+
+
+  orders.unshift(order);
+
+  lastPayment={
+    orderId:orderCode,
+    amount:calc.total,
+    status:"PENDING",
+    method:"Not Selected",
+    createdAt:order.createdAt
+  };
+
+
+  cart=[];
+
+  save();
+
+  showPage("payment");
+
+  toast("Order created: "+orderCode);
+}
+
+
+/* ORDERS */
+function renderOrders(){
+
+  const container =
+    document.getElementById("ordersContainer");
+
+  if(!orders.length){
+
+    container.innerHTML=`
+
+      <div class="listPanel">
+
+        <div class="empty">
+
+          <div class="emptyIcon">▤</div>
+
+          <h3>Belum ada order</h3>
+
+          <p>
+            Order Travel, TELKU dan CHELEA
+            akan muncul di Master Orders.
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  let html="";
+
+
+  orders.forEach(order=>{
+
+    const pending =
+      order.paymentStatus==="PENDING";
+
+    html+=`
+
+      <div class="order">
+
+        <div class="orderTop">
+
+          <div>
+
+            <div class="orderCode">
+              ${order.id}
+            </div>
+
+            <div class="small">
+              ${formatDate(order.createdAt)}
+            </div>
+
+          </div>
+
+          <span class="status ${pending?"pending":""}">
+            ${order.paymentStatus}
+          </span>
+
+        </div>
+
+
+        <div class="orderItems">
+
+    `;
+
+
+    order.items.forEach(item=>{
+
+      html+=`
+
+        <div class="orderItem">
+
+          <span>
+            ${item.icon}
+            ${escapeHTML(item.name)}
+            <small>(${item.service})</small>
+          </span>
+
+          <strong>
+            ${money(item.price*item.qty)}
+          </strong>
+
+        </div>
+
+      `;
+
+    });
+
+
+    html+=`
+
+        </div>
+
+        <div class="orderTotal">
+          ${money(order.total)}
+        </div>
+
+        <div style="
+          display:flex;
+          gap:8px;
+          justify-content:flex-end;
+          margin-top:14px;
+        ">
+
+          <button class="btn secondary"
+          onclick="viewOrder('${order.id}')">
+            VIEW
+          </button>
+
+          ${
+            pending
+            ?
+            `<button class="btn"
+              onclick="payOrder('${order.id}')">
+              PAY
+            </button>`
+            :
+            `<button class="btn green"
+              onclick="viewPayment('${order.id}')">
+              RECEIPT / QR
+            </button>`
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  container.innerHTML=html;
+}
+
+
+/* VIEW ORDER */
+function viewOrder(id){
+
+  const order =
+    orders.find(x=>x.id===id);
+
+  if(!order)return;
+
+  let html=`
+
+    <p>
+      <strong>Customer:</strong>
+      ${CUSTOMER_ID}
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      ${order.paymentStatus}
+    </p>
+
+    <hr style="border-color:var(--line)">
+
+  `;
+
+  order.items.forEach(item=>{
+
+    html+=`
+
+      <div style="
+        padding:12px 0;
+        border-bottom:1px solid var(--line);
+      ">
+
+        <strong>
+          ${item.icon} ${escapeHTML(item.name)}
+        </strong>
+
+        <div class="small">
+          ${item.service} • ${escapeHTML(item.detail)}
+        </div>
+
+        <div style="margin-top:6px">
+          ${money(item.price)}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  html+=`
+
+    <h3 style="text-align:right">
+      TOTAL ${money(order.total)}
+    </h3>
+
+  `;
+
+  openModal(
+    "Order "+order.id,
+    html
+  );
+}
+
+
+/* PAYMENT */
+function renderPayment(){
+
+  const container =
+    document.getElementById("paymentContainer");
+
+  if(!lastPayment){
+
+    container.innerHTML=`
+
+      <div class="paymentBox">
+
+        <div class="empty">
+
+          <div class="emptyIcon">▣</div>
+
+          <h3>No Active Transaction</h3>
+
+          <p>
+            Checkout sebuah order terlebih dahulu.
+          </p>
+
+          <button class="btn"
+          onclick="showPage('travel')">
+            EXPLORE
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  const order =
+    orders.find(
+      x=>x.id===lastPayment.orderId
+    );
+
+
+  if(!order)return;
+
+
+  const paid =
+    order.paymentStatus==="SUCCESS";
+
+
+  container.innerHTML=`
+
+    <div class="paymentBox">
+
+      <div style="text-align:center">
+
+        <div class="serviceTag">
+          HOBBIGO MASTER PAYMENT
+        </div>
+
+        <h2>
+          ${paid
+            ? "Payment Successful"
+            : "Payment Pending"}
+        </h2>
+
+        <p style="color:var(--muted)">
+          Transaction ID: ${order.id}
+        </p>
+
+      </div>
+
+
+      <div class="paymentGrid">
+
+        <div>
+
+          <h3>Transaction</h3>
+
+          <div class="sumRow">
+            <span>Subtotal</span>
+            <span>${money(order.subtotal)}</span>
+          </div>
+
+          <div class="sumRow">
+            <span>Service Fee</span>
+            <span>${money(order.serviceFee)}</span>
+          </div>
+
+          <div class="sumRow">
+            <span>Insurance</span>
+            <span>${money(order.insurance)}</span>
+          </div>
+
+          <div class="sumRow total">
+            <span>TOTAL</span>
+            <span>${money(order.total)}</span>
+          </div>
+
+
+          ${
+            !paid
+            ?
+            `
+
+              <h3 style="margin-top:25px">
+                Payment Method
+              </h3>
+
+              <div class="paymentMethods">
+
+                <button
+                class="payMethod"
+                onclick="selectPay(this,'Bank Transfer')">
+                  🏦 Bank Transfer
+                </button>
+
+                <button
+                class="payMethod"
+                onclick="selectPay(this,'QRIS')">
+                  ▦ QRIS
+                </button>
+
+                <button
+                class="payMethod"
+                onclick="selectPay(this,'E-Wallet')">
+                  📱 E-Wallet
+                </button>
+
+              </div>
+
+              <button
+              class="btn full"
+              style="margin-top:15px"
+              onclick="simulatePayment('${order.id}')">
+                SIMULATE PAYMENT SUCCESS
+              </button>
+
+              <div class="small"
+              style="margin-top:9px;text-align:center">
+                DEMO ONLY — bukan gateway pembayaran nyata
+              </div>
+
+            `
+            :
+            `
+              <div style="
+                margin-top:20px;
+                padding:14px;
+                border-radius:12px;
+                background:rgba(53,224,161,.08);
+                color:#70edc1;
+              ">
+                ✓ PAYMENT SUCCESS
+              </div>
+
+            `
+          }
+
+        </div>
+
+
+        <div style="text-align:center">
+
+          <h3>QR Center</h3>
+
+          <div class="qrBox">
+
+            <div class="qrFake"></div>
+
+          </div>
+
+          <div class="small">
+            QR Transaction
+          </div>
+
+          <strong>
+            ${order.id}
+          </strong>
+
+          ${
+            paid
+            ?
+            `
+            <button class="btn green full"
+            style="margin-top:15px"
+            onclick="printReceipt('${order.id}')">
+              PRINT RECEIPT
+            </button>
+            `
+            :
+            ""
+          }
+
+        </div>
+
+      </div>
+
+
+      <div class="receipt">
+
+        <div class="small">
+          HOBBIGO ONE
+        </div>
+
+        <p>
+          Travel + Connectivity + Delivery
+        </p>
+
+        <p class="small">
+          Master Customer:
+          ${CUSTOMER_ID}
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+}
+
+
+/* PAYMENT METHOD */
+function selectPay(button,method){
+
+  document.querySelectorAll(".payMethod")
+    .forEach(x=>x.classList.remove("selected"));
+
+  button.classList.add("selected");
+
+  if(lastPayment){
+    lastPayment.method=method;
+
+    localStorage.setItem(
+      "hobbigo_last_payment",
+      JSON.stringify(lastPayment)
+    );
+  }
+
+  toast("Payment method: "+method);
+}
+
+
+/* SIMULATE PAYMENT */
+function simulatePayment(id){
+
+  const order =
+    orders.find(x=>x.id===id);
+
+  if(!order)return;
+
+  order.paymentStatus="SUCCESS";
+  order.status="CONFIRMED";
+
+  lastPayment={
+    orderId:id,
+    amount:order.total,
+    status:"SUCCESS",
+    method:lastPayment?.method || "DEMO",
+    createdAt:order.createdAt
+  };
+
+  save();
+
+  renderPayment();
+  renderOrders();
+
+  toast("DEMO PAYMENT SUCCESS");
+}
+
+
+/* PAY ORDER */
+function payOrder(id){
+
+  const order =
+    orders.find(x=>x.id===id);
+
+  if(!order)return;
+
+  lastPayment={
+    orderId:id,
+    amount:order.total,
+    status:order.paymentStatus,
+    method:"Not Selected",
+    createdAt:order.createdAt
+  };
+
+  localStorage.setItem(
+    "hobbigo_last_payment",
+    JSON.stringify(lastPayment)
+  );
+
+  showPage("payment");
+}
+
+
+/* VIEW PAYMENT */
+function viewPayment(id){
+
+  const order =
+    orders.find(x=>x.id===id);
+
+  if(!order)return;
+
+  lastPayment={
+    orderId:id,
+    amount:order.total,
+    status:order.paymentStatus,
+    method:order.paymentMethod || "DEMO",
+    createdAt:order.createdAt
+  };
+
+  localStorage.setItem(
+    "hobbigo_last_payment",
+    JSON.stringify(lastPayment)
+  );
+
+  showPage("payment");
+}
+
+
+/* PRINT */
+function printReceipt(id){
+
+  const order =
+    orders.find(x=>x.id===id);
+
+  if(!order)return;
+
+  const rows =
+    order.items.map(
+      item=>`
+        <tr>
+          <td>${escapeHTML(item.name)}</td>
+          <td>${item.service}</td>
+          <td style="text-align:right">
+            ${money(item.price)}
+          </td>
+        </tr>
+      `
+    ).join("");
+
+
+  const w=window.open("","_blank");
+
+  w.document.write(`
+
+    <html>
+    <head>
+      <title>HOBBIGO Receipt ${order.id}</title>
+
+      <style>
+        body{
+          font-family:Arial;
+          padding:35px;
+          color:#111;
+        }
+
+        h1{margin-bottom:3px}
+
+        table{
+          width:100%;
+          border-collapse:collapse;
+          margin-top:25px;
+        }
+
+        td{
+          padding:10px;
+          border-bottom:1px solid #ddd;
+        }
+
+        .total{
+          font-size:20px;
+          font-weight:bold;
+          text-align:right;
+          margin-top:20px;
+        }
+      </style>
+
+    </head>
+
+    <body>
+
+      <h1>HOBBIGO</h1>
+
+      <div>
+        ONE APP. ENDLESS JOURNEY.
+      </div>
+
+      <p>
+        Transaction:
+        <strong>${order.id}</strong>
+      </p>
+
+      <p>
+        Customer:
+        ${CUSTOMER_ID}
+      </p>
+
+      <table>
+        ${rows}
+      </table>
+
+      <div class="total">
+        TOTAL: ${money(order.total)}
+      </div>
+
+      <p style="margin-top:40px">
+        Payment Status: SUCCESS
+      </p>
+
+      <p>
+        Travel • Connectivity • Delivery
+      </p>
+
+    </body>
+    </html>
+
+  `);
+
+  w.document.close();
+  w.print();
+}
+
+
+/* PROFILE */
+function renderProfile(){
+
+  document.getElementById("customerId")
+    .textContent=CUSTOMER_ID;
+
+
+  let travel=0;
+  let telku=0;
+  let chelea=0;
+
+  orders.forEach(order=>{
+
+    order.items.forEach(item=>{
+
+      if(item.service==="TRAVEL")travel++;
+      if(item.service==="TELKU")telku++;
+      if(item.service==="CHELEA")chelea++;
+
+    });
+
+  });
+
+
+  document.getElementById("profileTravel")
+    .textContent=travel;
+
+  document.getElementById("profileTelku")
+    .textContent=telku;
+
+  document.getElementById("profileChelea")
+    .textContent=chelea;
+
+  document.getElementById("profileOrders")
+    .textContent=orders.length;
+}
+
+
+/* TRIP PLANNER */
+function openTripPlanner(){
+
+  openModal(
+
+    "AI Trip Planner",
+
+    `
+
+      <p style="color:var(--muted)">
+        Buat demo perjalanan baru.
+      </p>
+
+      <label>Destination</label>
+
+      <input id="tripDestination"
+      class="tripInput"
+      value="Bali, Indonesia"
+      style="
+        width:100%;
+        margin-top:7px;
+        padding:13px;
+        background:#0b1c30;
+        color:white;
+        border:1px solid var(--line);
+        border-radius:11px;
+      ">
+
+      <label style="
+        display:block;
+        margin-top:15px;
+      ">
+        Duration
+      </label>
+
+      <select id="tripDuration"
+      style="
+        width:100%;
+        margin-top:7px;
+        padding:13px;
+        background:#0b1c30;
+        color:white;
+        border:1px solid var(--line);
+        border-radius:11px;
+      ">
+
+        <option>3 Days</option>
+        <option selected>4 Days</option>
+        <option>5 Days</option>
+        <option>7 Days</option>
+
+      </select>
+
+
+      <label style="
+        display:block;
+        margin-top:15px;
+      ">
+        Trip Style
+      </label>
+
+      <select id="tripStyle"
+      style="
+        width:100%;
+        margin-top:7px;
+        padding:13px;
+        background:#0b1c30;
+        color:white;
+        border:1px solid var(--line);
+        border-radius:11px;
+      ">
+
+        <option>Comfort</option>
+        <option>Economy</option>
+        <option>Exclusive</option>
+        <option>Family</option>
+        <option>Corporate</option>
+
+      </select>
+
+
+      <button
+      class="btn full"
+      style="margin-top:20px"
+      onclick="generateTrip()">
+        GENERATE SMART ROUTE
+      </button>
+
+    `
+
+  );
+
+}
+
+
+/* GENERATE TRIP */
+function generateTrip(){
+
+  const destination =
+    document.getElementById("tripDestination").value;
+
+  const duration =
+    document.getElementById("tripDuration").value;
+
+  const style =
+    document.getElementById("tripStyle").value;
+
+
+  const price =
+    style==="Exclusive"
+    ? 7500000
+    : style==="Economy"
+    ? 2800000
+    : 4500000;
+
+
+  document.getElementById("modalBody")
+    .innerHTML=`
+
+      <div style="text-align:center">
+
+        <div class="serviceTag">
+          AI ENGINE
+        </div>
+
+        <h2>
+          Smart Route Generated
+        </h2>
+
+        <div style="
+          font-size:45px;
+          font-weight:900;
+          margin:15px;
+          color:var(--cyan);
+        ">
+          96%
+        </div>
+
+        <p style="color:var(--muted)">
+          AI Journey Score
+        </p>
+
+      </div>
+
+
+      <div class="card"
+      style="padding:17px;margin-top:15px">
+
+        <strong>
+          ${escapeHTML(destination)}
+        </strong>
+
+        <p>
+          ${duration} • ${style}
+        </p>
+
+        <p>
+          Day 1 — Arrival & Hotel<br>
+          Day 2 — Experience & Activity<br>
+          Day 3 — Local Culinary & Explore<br>
+          Day 4 — Leisure & Departure
+        </p>
+
+        <div class="cardBottom">
+
+          <div class="price">
+            ${money(price)}
+          </div>
+
+          <button class="btn"
+          onclick="addTripFromPlanner(
+            '${escapeAttribute(destination)}',
+            '${escapeAttribute(duration)}',
+            '${escapeAttribute(style)}',
+            ${price}
+          )">
+            ADD JOURNEY
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+}
+
+
+/* ADD TRIP */
+function addTripFromPlanner(
+  destination,
+  duration,
+  style,
+  price
+){
+
+  closeModal();
+
+  addItem(
+    "TRAVEL",
+    "AI Smart Journey — "+destination,
+    duration+" • "+style+" • AI Score 96%",
+    price,
+    "✈️"
+  );
+}
+
+
+/* GLOBAL SEARCH */
+function globalSearch(){
+
+  const value =
+    document.getElementById("globalSearch")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  if(!value){
+
+    toast("Masukkan pencarian");
+
+    return;
+  }
+
+
+  if(
+    value.includes("esim") ||
+    value.includes("telku") ||
+    value.includes("data")
+  ){
+
+    showPage("telku");
+
+    return;
+  }
+
+
+  if(
+    value.includes("delivery") ||
+    value.includes("chelea") ||
+    value.includes("kirim") ||
+    value.includes("jastip")
+  ){
+
+    showPage("chelea");
+
+    return;
+  }
+
+
+  showPage("travel");
+
+  toast(
+    "Searching Travel: "+value
+  );
+}
+
+
+/* MODAL */
+function openModal(title,body){
+
+  document.getElementById("modalTitle")
+    .textContent=title;
+
+  document.getElementById("modalBody")
+    .innerHTML=body;
+
+  document.getElementById("modal")
+    .classList.add("show");
+}
+
+
+function closeModal(){
+
+  document.getElementById("modal")
+    .classList.remove("show");
+}
+
+
+/* TOAST */
+function toast(message){
+
+  const el =
+    document.getElementById("toast");
+
+  el.textContent=message;
+
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },2300);
+}
+
+
+/* CLEAR DEMO ORDERS */
+function clearOrders(){
+
+  if(
+    !confirm(
+      "Hapus seluruh DEMO orders?"
+    )
+  )return;
+
+  orders=[];
+  lastPayment=null;
+
+  localStorage.removeItem(
+    "hobbigo_orders"
+  );
+
+  localStorage.removeItem(
+    "hobbigo_last_payment"
+  );
+
+  save();
+
+  renderOrders();
+
+  toast("Demo orders cleared");
+}
+
+
+/* UPDATE UI */
+function updateUI(){
+
+  const count =
+    cart.reduce((a,b)=>a+b.qty,0);
+
+  const badge =
+    document.getElementById("sideCartBadge");
+
+  if(badge)
+    badge.textContent=count;
+
+
+  const statCart =
+    document.getElementById("statCart");
+
+  if(statCart)
+    statCart.textContent=count;
+
+
+  const statOrders =
+    document.getElementById("statOrders");
+
+  if(statOrders)
+    statOrders.textContent=orders.length;
+
+
+  renderProfile();
+}
+
+
+/* ESCAPE */
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+function escapeAttribute(value){
+
+  return String(value)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+}
+
+
+/* DATE */
+function formatDate(value){
+
+  try{
+
+    return new Intl.DateTimeFormat(
+      "id-ID",
+      {
+        dateStyle:"medium",
+        timeStyle:"short"
+      }
+    ).format(new Date(value));
+
+  }catch(e){
+
+    return value;
+
+  }
+}
+
+
+/* MODAL OUTSIDE CLICK */
+document.getElementById("modal")
+.addEventListener("click",function(e){
+
+  if(e.target===this){
+    closeModal();
+  }
+
+});
+
+
+/* INIT */
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    updateUI();
+    renderCart();
+    renderOrders();
+    renderPayment();
+    renderProfile();
+
+  }
+);
+
+</script>
+
+</body>
+</html>"#07111f">
 <title>HOBBIGO TRAVEL — Booking Engine V1</title>
 
 <style>
