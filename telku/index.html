@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07111f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<title>TELKU V3.0 Connectivity Engine</title>
+<title>TELKU V3.1B — Supabase Connected</title>
 
 <style>
 *{
@@ -31,7 +31,8 @@
 
 body{
   font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#06101d,#091727 55%,#07111f);
+  background:
+    linear-gradient(180deg,#06101d,#091727 55%,#07111f);
   color:var(--text);
   min-height:100vh;
 }
@@ -50,7 +51,7 @@ button{
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(7,17,31,.95);
+  background:rgba(7,17,31,.96);
   border-bottom:1px solid var(--line);
   backdrop-filter:blur(12px);
 }
@@ -58,7 +59,7 @@ button{
 .header-inner{
   max-width:1100px;
   margin:auto;
-  padding:16px 20px;
+  padding:15px 20px;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -72,15 +73,14 @@ button{
 }
 
 .logo{
-  width:42px;
-  height:42px;
+  width:43px;
+  height:43px;
   border-radius:12px;
   background:linear-gradient(135deg,#2da8ff,#1673d1);
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:900;
-  font-size:18px;
 }
 
 .brand h1{
@@ -92,14 +92,40 @@ button{
   font-size:11px;
 }
 
-.mode{
+.connection{
+  display:flex;
+  align-items:center;
+  gap:7px;
   padding:7px 11px;
   border-radius:20px;
-  background:rgba(255,200,87,.12);
-  border:1px solid rgba(255,200,87,.35);
-  color:var(--yellow);
   font-size:11px;
-  font-weight:700;
+  font-weight:800;
+  border:1px solid;
+}
+
+.connection.online{
+  color:var(--green);
+  background:rgba(39,209,127,.10);
+  border-color:rgba(39,209,127,.28);
+}
+
+.connection.offline{
+  color:var(--red);
+  background:rgba(255,100,124,.10);
+  border-color:rgba(255,100,124,.28);
+}
+
+.connection.loading{
+  color:var(--yellow);
+  background:rgba(255,200,87,.10);
+  border-color:rgba(255,200,87,.28);
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:currentColor;
 }
 
 .container{
@@ -109,19 +135,18 @@ button{
 }
 
 .hero{
-  padding:26px 0 20px;
+  padding:20px 0;
 }
 
 .hero h2{
   font-size:30px;
-  line-height:1.15;
   margin-bottom:9px;
 }
 
 .hero p{
   color:var(--muted);
-  max-width:720px;
   line-height:1.6;
+  max-width:750px;
 }
 
 .nav{
@@ -192,6 +217,138 @@ button{
   margin-bottom:7px;
 }
 
+.stat{
+  background:#0a192a;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:15px;
+}
+
+.stat .value{
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:5px;
+}
+
+.stat .name{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.badge-green{
+  background:rgba(39,209,127,.12);
+  color:var(--green);
+  border:1px solid rgba(39,209,127,.25);
+}
+
+.badge-yellow{
+  background:rgba(255,200,87,.12);
+  color:var(--yellow);
+  border:1px solid rgba(255,200,87,.25);
+}
+
+.badge-blue{
+  background:rgba(61,169,255,.12);
+  color:var(--blue);
+  border:1px solid rgba(61,169,255,.25);
+}
+
+.badge-red{
+  background:rgba(255,100,124,.12);
+  color:var(--red);
+  border:1px solid rgba(255,100,124,.25);
+}
+
+.alert{
+  padding:14px;
+  border-radius:11px;
+  margin-bottom:16px;
+  line-height:1.5;
+  font-size:13px;
+}
+
+.alert-info{
+  background:rgba(61,169,255,.09);
+  border:1px solid rgba(61,169,255,.25);
+  color:#b9ddff;
+}
+
+.alert-success{
+  background:rgba(39,209,127,.09);
+  border:1px solid rgba(39,209,127,.25);
+  color:#a9f2cc;
+}
+
+.alert-error{
+  background:rgba(255,100,124,.09);
+  border:1px solid rgba(255,100,124,.25);
+  color:#ffb0bd;
+}
+
+.provider{
+  min-height:190px;
+}
+
+.provider-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.provider-name{
+  font-weight:800;
+  font-size:17px;
+}
+
+.provider-type{
+  color:var(--blue);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.network{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:12px 0;
+  border-bottom:1px solid #1a3047;
+}
+
+.network:last-child{
+  border-bottom:0;
+}
+
+.network-info{
+  flex:1;
+}
+
+.network-info strong{
+  display:block;
+  margin-bottom:4px;
+}
+
+.network-info span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:13px;
+}
+
 input,
 select{
   width:100%;
@@ -201,18 +358,6 @@ select{
   border-radius:10px;
   padding:12px;
   outline:none;
-}
-
-input:focus,
-select:focus{
-  border-color:var(--blue);
-}
-
-.form-row{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
-  margin-top:13px;
 }
 
 .btn{
@@ -250,131 +395,22 @@ select:focus{
   width:100%;
 }
 
-.provider{
-  position:relative;
-}
-
-.provider-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.provider-name{
-  font-weight:800;
-  font-size:17px;
-}
-
-.provider-type{
-  color:var(--blue);
-  font-size:11px;
-  margin-top:4px;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:800;
-}
-
-.badge-green{
-  background:rgba(39,209,127,.12);
-  color:var(--green);
-  border:1px solid rgba(39,209,127,.25);
-}
-
-.badge-yellow{
-  background:rgba(255,200,87,.12);
-  color:var(--yellow);
-  border:1px solid rgba(255,200,87,.25);
-}
-
-.badge-blue{
-  background:rgba(61,169,255,.12);
-  color:var(--blue);
-  border:1px solid rgba(61,169,255,.25);
-}
-
-.stat{
-  background:#0a192a;
-  border:1px solid var(--line);
-  border-radius:13px;
-  padding:15px;
-}
-
-.stat .value{
-  font-size:24px;
-  font-weight:900;
-  margin-bottom:5px;
-}
-
-.stat .name{
-  color:var(--muted);
-  font-size:12px;
-}
-
-.network{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 0;
-  border-bottom:1px solid #1a3047;
-}
-
-.network:last-child{
-  border-bottom:0;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 12px rgba(39,209,127,.6);
-}
-
-.network-info{
-  flex:1;
-}
-
-.network-info strong{
-  display:block;
-  margin-bottom:3px;
-}
-
-.network-info span{
-  color:var(--muted);
-  font-size:12px;
-}
-
 .plan{
   border:1px solid var(--line);
   border-radius:13px;
-  padding:15px;
+  padding:16px;
   background:#0b1a2c;
-  cursor:pointer;
-  transition:.2s;
-}
-
-.plan:hover,
-.plan.selected{
-  border-color:#3da9ff;
-  background:#102944;
 }
 
 .plan .gb{
-  font-size:22px;
+  font-size:23px;
   font-weight:900;
 }
 
 .plan .price{
   color:var(--green);
-  margin-top:6px;
   font-weight:800;
+  margin-top:7px;
 }
 
 .plan .valid{
@@ -383,75 +419,16 @@ select:focus{
   margin-top:5px;
 }
 
-.table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:10px;
-}
-
-.table th,
-.table td{
-  text-align:left;
-  padding:11px 8px;
-  border-bottom:1px solid #1c3248;
-  font-size:12px;
-}
-
-.table th{
-  color:#a9bad0;
-}
-
-.table td{
-  color:#e8f0fa;
-}
-
 .code{
   background:#06111d;
   border:1px solid #1b3046;
   border-radius:10px;
-  padding:13px;
+  padding:12px;
   font-family:monospace;
-  font-size:12px;
+  font-size:11px;
   overflow:auto;
   color:#8ed0ff;
-}
-
-.log{
-  border-left:3px solid var(--blue);
-  padding:9px 12px;
-  margin:9px 0;
-  background:#0a192a;
-  border-radius:0 9px 9px 0;
-}
-
-.log strong{
-  display:block;
-  margin-bottom:3px;
-}
-
-.log span{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.alert{
-  padding:13px;
-  border-radius:10px;
-  margin-bottom:15px;
-  line-height:1.5;
-  font-size:13px;
-}
-
-.alert-info{
-  background:rgba(61,169,255,.09);
-  border:1px solid rgba(61,169,255,.25);
-  color:#b9ddff;
-}
-
-.alert-warning{
-  background:rgba(255,200,87,.09);
-  border:1px solid rgba(255,200,87,.25);
-  color:#ffe2a0;
+  word-break:break-all;
 }
 
 .progress{
@@ -469,6 +446,30 @@ select:focus{
   transition:.3s;
 }
 
+.log{
+  border-left:3px solid var(--blue);
+  padding:10px 12px;
+  margin:9px 0;
+  background:#0a192a;
+  border-radius:0 9px 9px 0;
+}
+
+.log strong{
+  display:block;
+  margin-bottom:3px;
+}
+
+.log span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.empty{
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+}
+
 .footer{
   text-align:center;
   color:#60758b;
@@ -481,6 +482,7 @@ select:focus{
 }
 
 @media(max-width:760px){
+
   .grid,
   .grid3,
   .form-row{
@@ -504,6 +506,11 @@ select:focus{
   .brand h1{
     font-size:18px;
   }
+
+  .connection{
+    font-size:9px;
+  }
+
 }
 </style>
 </head>
@@ -511,292 +518,536 @@ select:focus{
 <body>
 
 <header class="header">
+
   <div class="header-inner">
+
     <div class="brand">
+
       <div class="logo">TK</div>
+
       <div>
         <h1>TELKU</h1>
         <small>Global Connectivity Engine</small>
       </div>
+
     </div>
-    <div class="mode">V3.0 DEMO</div>
+
+    <div id="connectionStatus"
+         class="connection loading">
+
+      <span class="dot"></span>
+      CONNECTING
+
+    </div>
+
   </div>
+
 </header>
+
 
 <main class="container">
 
   <section class="hero">
+
     <h2>Global Connectivity Engine</h2>
+
     <p>
-      TELKU V3.0 adalah fondasi untuk menghubungkan customer
-      dengan provider eSIM lokal maupun global melalui satu sistem.
+      TELKU V3.1B sekarang terhubung ke Supabase.
+      Data provider, network, plan dan eSIM dapat
+      dibaca dari database TELKU.
     </p>
+
   </section>
 
+
   <nav class="nav">
-    <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
-    <button onclick="showPage('providers',this)">Providers</button>
-    <button onclick="showPage('networks',this)">Networks</button>
-    <button onclick="showPage('plans',this)">Plans</button>
-    <button onclick="showPage('esim',this)">My eSIM</button>
-    <button onclick="showPage('logs',this)">Sync Logs</button>
-    <button onclick="showPage('architecture',this)">Architecture</button>
+
+    <button class="active"
+            onclick="showPage('dashboard',this)">
+      Dashboard
+    </button>
+
+    <button onclick="showPage('providers',this)">
+      Providers
+    </button>
+
+    <button onclick="showPage('networks',this)">
+      Networks
+    </button>
+
+    <button onclick="showPage('plans',this)">
+      Plans
+    </button>
+
+    <button onclick="showPage('esim',this)">
+      My eSIM
+    </button>
+
+    <button onclick="showPage('logs',this)">
+      Sync Logs
+    </button>
+
   </nav>
 
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="page active">
 
-    <div class="alert alert-info">
-      <strong>Connectivity Engine aktif dalam DEMO MODE.</strong><br>
-      Data provider dan jaringan di bawah adalah data simulasi lokal.
-      Belum ada provisioning eSIM nyata.
+  <!-- DASHBOARD -->
+
+  <section id="dashboard"
+           class="page active">
+
+    <div id="systemAlert"
+         class="alert alert-info">
+
+      Connecting to TELKU Supabase...
+
     </div>
+
 
     <div class="grid3">
-      <div class="stat">
-        <div class="value" id="providerCount">0</div>
-        <div class="name">Providers</div>
-      </div>
 
       <div class="stat">
-        <div class="value" id="countryCount">0</div>
-        <div class="name">Countries</div>
+
+        <div class="value"
+             id="providerCount">
+          -
+        </div>
+
+        <div class="name">
+          Providers
+        </div>
+
       </div>
 
+
       <div class="stat">
-        <div class="value" id="networkCount">0</div>
-        <div class="name">Networks</div>
+
+        <div class="value"
+             id="countryCount">
+          -
+        </div>
+
+        <div class="name">
+          Countries
+        </div>
+
       </div>
+
+
+      <div class="stat">
+
+        <div class="value"
+             id="networkCount">
+          -
+        </div>
+
+        <div class="name">
+          Networks
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="grid" style="margin-top:16px">
+
+    <div class="grid"
+         style="margin-top:16px">
 
       <div class="card">
-        <h3>Connectivity Status</h3>
-        <p>Simulasi status konektivitas customer.</p>
+
+        <h3>
+          Database Connection
+        </h3>
+
+        <p>
+          Live status koneksi TELKU ke Supabase.
+        </p>
 
         <div style="margin-top:16px">
-          <span class="badge badge-green">● CONNECTED</span>
+
+          <span id="dbBadge"
+                class="badge badge-yellow">
+            CHECKING
+          </span>
+
         </div>
 
-        <div class="network">
-          <div class="dot"></div>
-          <div class="network-info">
-            <strong id="dashNetwork">Singtel</strong>
-            <span id="dashProvider">TELKU Global Provider</span>
-          </div>
+        <div class="log">
+
+          <strong>
+            Project
+          </strong>
+
+          <span>
+            TELKU HOBBIGO
+          </span>
+
         </div>
 
-        <div class="form-row">
-          <div>
-            <span class="label">Country</span>
-            <strong id="dashCountry">Singapore</strong>
-          </div>
+        <div class="log">
 
-          <div>
-            <span class="label">Data Remaining</span>
-            <strong id="dashData">7.4 GB</strong>
-          </div>
+          <strong>
+            Database
+          </strong>
+
+          <span>
+            Supabase PostgreSQL
+          </span>
+
         </div>
+
+        <div class="log">
+
+          <strong>
+            Data API
+          </strong>
+
+          <span>
+            Enabled
+          </span>
+
+        </div>
+
       </div>
 
+
       <div class="card">
-        <h3>Provider Routing</h3>
-        <p>TELKU menentukan provider berdasarkan negara dan availability.</p>
+
+        <h3>
+          Connectivity Engine
+        </h3>
+
+        <p>
+          Status engine yang membaca data provider.
+        </p>
 
         <div class="log">
-          <strong>Country detected</strong>
-          <span>Singapore</span>
+
+          <strong>
+            Provider Manager
+          </strong>
+
+          <span id="engineProviders">
+            Loading...
+          </span>
+
         </div>
 
         <div class="log">
-          <strong>Provider selected</strong>
-          <span>TELKU Global Provider</span>
+
+          <strong>
+            Network Directory
+          </strong>
+
+          <span id="engineNetworks">
+            Loading...
+          </span>
+
         </div>
 
         <div class="log">
-          <strong>Network selected</strong>
-          <span>Singtel</span>
+
+          <strong>
+            Plan Catalog
+          </strong>
+
+          <span id="enginePlans">
+            Loading...
+          </span>
+
         </div>
 
-        <div class="log">
-          <strong>Connectivity</strong>
-          <span>ACTIVE</span>
-        </div>
       </div>
 
     </div>
 
+
     <div class="card">
-      <h3>Customer Test</h3>
-      <p>Simulasikan customer memilih negara dan paket.</p>
+
+      <h3>
+        Customer Connectivity Test
+      </h3>
+
+      <p>
+        Pilih negara untuk mencari network dari database TELKU.
+      </p>
 
       <div class="form-row">
-        <div>
-          <span class="label">Country</span>
-          <select id="customerCountry">
-            <option value="Singapore">Singapore</option>
-            <option value="Indonesia">Indonesia</option>
-            <option value="Japan">Japan</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="Thailand">Thailand</option>
-            <option value="Australia">Australia</option>
-          </select>
-        </div>
 
         <div>
-          <span class="label">Data Package</span>
-          <select id="customerPlan">
-            <option value="5">5 GB</option>
-            <option value="10" selected>10 GB</option>
-            <option value="20">20 GB</option>
+
+          <span class="label">
+            Country
+          </span>
+
+          <select id="customerCountry">
+            <option value="">
+              Loading countries...
+            </option>
           </select>
+
         </div>
+
+
+        <div>
+
+          <span class="label">
+            Data Package
+          </span>
+
+          <select id="customerPlan">
+
+            <option value="5">
+              5 GB
+            </option>
+
+            <option value="10"
+                    selected>
+              10 GB
+            </option>
+
+            <option value="20">
+              20 GB
+            </option>
+
+          </select>
+
+        </div>
+
       </div>
 
-      <button class="btn btn-primary btn-full" onclick="simulateRouting()">
-        Find Best Provider
+
+      <button class="btn btn-primary btn-full"
+              onclick="findProvider()">
+
+        Find Provider & Network
+
       </button>
+
+    </div>
+
+
+    <div id="routingResult"
+         class="card hidden">
+
+      <h3>
+        Routing Result
+      </h3>
+
+      <div id="routingContent"></div>
+
     </div>
 
   </section>
 
 
   <!-- PROVIDERS -->
-  <section id="providers" class="page">
+
+  <section id="providers"
+           class="page">
 
     <div class="card">
-      <h3>Provider Manager</h3>
+
+      <h3>
+        Provider Manager
+      </h3>
+
       <p>
-        Tempat TELKU mengelola partner provider lokal dan global.
+        Provider yang tersimpan di Supabase TELKU.
       </p>
+
     </div>
 
-    <div id="providerList" class="grid"></div>
+    <div id="providerList"
+         class="grid">
 
-    <div class="card">
-      <h3>Add Provider</h3>
-
-      <div class="form-row">
-        <div>
-          <span class="label">Provider Name</span>
-          <input id="newProviderName" placeholder="Example Provider">
-        </div>
-
-        <div>
-          <span class="label">Provider Type</span>
-          <select id="newProviderType">
-            <option>Global Aggregator</option>
-            <option>Local Provider</option>
-            <option>Direct Operator</option>
-          </select>
-        </div>
+      <div class="empty">
+        Loading providers...
       </div>
 
-      <button class="btn btn-primary" onclick="addProvider()">
-        Add Demo Provider
-      </button>
     </div>
 
   </section>
 
 
   <!-- NETWORKS -->
-  <section id="networks" class="page">
+
+  <section id="networks"
+           class="page">
 
     <div class="card">
-      <h3>Network Directory</h3>
+
+      <h3>
+        Network Directory
+      </h3>
+
       <p>
-        Daftar operator/network yang tersedia melalui provider TELKU.
+        Operator/network yang tersedia dari database TELKU.
       </p>
+
     </div>
 
+
     <div class="card">
-      <div id="networkList"></div>
+
+      <div id="networkList">
+
+        <div class="empty">
+          Loading networks...
+        </div>
+
+      </div>
+
     </div>
 
   </section>
 
 
   <!-- PLANS -->
-  <section id="plans" class="page">
+
+  <section id="plans"
+           class="page">
 
     <div class="card">
-      <h3>Global eSIM Plans</h3>
+
+      <h3>
+        Provider Plans
+      </h3>
+
       <p>
-        Contoh katalog paket yang nantinya berasal dari API provider.
+        Paket eSIM dari tabel provider_plans.
       </p>
+
     </div>
 
-    <div id="planList" class="grid3"></div>
+
+    <div id="planList"
+         class="grid3">
+
+      <div class="empty">
+        Loading plans...
+      </div>
+
+    </div>
 
   </section>
 
 
   <!-- ESIM -->
-  <section id="esim" class="page">
+
+  <section id="esim"
+           class="page">
 
     <div class="card">
 
       <div class="provider-top">
+
         <div>
-          <h3>My eSIM</h3>
-          <p>Demo connectivity profile</p>
+
+          <h3>
+            My eSIM
+          </h3>
+
+          <p>
+            Data eSIM dari database TELKU.
+          </p>
+
         </div>
 
-        <span class="badge badge-green" id="esimStatus">
-          ACTIVE
+        <span id="esimStatus"
+              class="badge badge-yellow">
+          NO DATA
         </span>
+
       </div>
+
 
       <div class="form-row">
 
         <div>
-          <span class="label">eSIM ID</span>
-          <div class="code" id="esimId">TELKU-ESIM-DEMO-001</div>
-        </div>
 
-        <div>
-          <span class="label">ICCID</span>
-          <div class="code" id="iccid">
-            8965012345678901234
+          <span class="label">
+            eSIM ID
+          </span>
+
+          <div id="esimId"
+               class="code">
+            -
           </div>
+
+        </div>
+
+
+        <div>
+
+          <span class="label">
+            ICCID
+          </span>
+
+          <div id="iccid"
+               class="code">
+            -
+          </div>
+
         </div>
 
       </div>
 
+
       <div class="form-row">
 
         <div>
-          <span class="label">Provider</span>
+
+          <span class="label">
+            Provider
+          </span>
+
           <strong id="esimProvider">
-            TELKU Global Provider
+            -
           </strong>
+
         </div>
 
+
         <div>
-          <span class="label">Network</span>
+
+          <span class="label">
+            Network
+          </span>
+
           <strong id="esimNetwork">
-            Singtel
+            -
           </strong>
+
         </div>
 
       </div>
 
+
       <div class="form-row">
 
         <div>
-          <span class="label">Country</span>
+
+          <span class="label">
+            Country
+          </span>
+
           <strong id="esimCountry">
-            Singapore
+            -
           </strong>
+
         </div>
 
+
         <div>
-          <span class="label">Validity</span>
-          <strong id="esimValidity">
-            30 days
+
+          <span class="label">
+            Remaining Data
+          </span>
+
+          <strong id="esimRemaining">
+            -
           </strong>
+
         </div>
 
       </div>
@@ -806,62 +1057,65 @@ select:focus{
 
     <div class="card">
 
-      <h3>Data Usage</h3>
+      <h3>
+        Data Usage
+      </h3>
+
       <p>
-        Simulasi data usage yang nantinya berasal dari provider API.
+        Data ini akan berasal dari usage_logs
+        ketika provider sungguhan sudah terhubung.
       </p>
 
-      <div style="margin-top:18px;display:flex;justify-content:space-between">
-        <strong id="usageText">2.6 GB / 10 GB</strong>
-        <span id="usagePercent">26%</span>
+      <div style="margin-top:18px;
+                  display:flex;
+                  justify-content:space-between">
+
+        <strong id="usageText">
+          -
+        </strong>
+
+        <span id="usagePercent">
+          -
+        </span>
+
       </div>
+
 
       <div class="progress">
-        <div class="progress-bar" id="usageBar"></div>
-      </div>
 
-      <button class="btn btn-secondary" onclick="simulateUsage()">
-        Simulate Usage +0.5 GB
-      </button>
+        <div id="usageBar"
+             class="progress-bar">
+        </div>
+
+      </div>
 
     </div>
 
 
-    <div class="grid">
+    <div class="card">
 
-      <div class="card">
-        <h3>Provider Sync</h3>
+      <h3>
+        Last Provider Sync
+      </h3>
 
-        <div class="log">
-          <strong>Last sync</strong>
-          <span id="lastSync">Waiting...</span>
-        </div>
+      <div class="log">
 
-        <div class="log">
-          <strong>Provider status</strong>
-          <span id="providerStatus">ONLINE</span>
-        </div>
+        <strong>
+          Last synced
+        </strong>
 
-        <button class="btn btn-success btn-full" onclick="syncProvider()">
-          Sync Provider
-        </button>
+        <span id="lastSync">
+          -
+        </span>
+
       </div>
 
-      <div class="card">
-        <h3>eSIM Management</h3>
+      <button class="btn btn-success btn-full"
+              onclick="loadAllData()">
 
-        <button class="btn btn-primary btn-full" onclick="activateESIM()">
-          Activate
-        </button>
+        Sync Database
 
-        <button class="btn btn-danger btn-full" onclick="deactivateESIM()">
-          Deactivate
-        </button>
-
-        <button class="btn btn-secondary btn-full" onclick="newESIM()">
-          + New Demo eSIM
-        </button>
-      </div>
+      </button>
 
     </div>
 
@@ -869,131 +1123,44 @@ select:focus{
 
 
   <!-- LOGS -->
-  <section id="logs" class="page">
+
+  <section id="logs"
+           class="page">
 
     <div class="card">
-      <h3>Provider Sync Logs</h3>
+
+      <h3>
+        Sync Logs
+      </h3>
+
       <p>
-        Semua aktivitas komunikasi TELKU dengan provider akan
-        tercatat di sini.
+        Log aktivitas koneksi TELKU dengan Supabase.
       </p>
+
     </div>
 
-    <div class="card">
-      <div id="syncLogs"></div>
-    </div>
-
-  </section>
-
-
-  <!-- ARCHITECTURE -->
-  <section id="architecture" class="page">
-
-    <div class="card">
-      <h3>TELKU V3 Architecture</h3>
-      <p>Target arsitektur ketika masuk ke backend nyata.</p>
-    </div>
 
     <div class="card">
 
-      <div class="code">
-CUSTOMER APP
-      │
-      ▼
-TELKU FRONTEND
-      │
-      ▼
-TELKU API / EDGE FUNCTIONS
-      │
-      ├───────────────┐
-      ▼               ▼
-Provider Router   Order Engine
-      │               │
-      ▼               ▼
-Provider Adapter  eSIM Provisioning
-      │               │
-      ├───────┬───────┤
-      ▼       ▼       ▼
-Provider A Provider B Operator
-      │       │       │
-      └───────┼───────┘
-              ▼
-       Connectivity
-              │
-              ▼
-          CUSTOMER HP
-      </div>
+      <div id="syncLogs">
 
-    </div>
-
-    <div class="grid">
-
-      <div class="card">
-        <h3>Supabase Tables</h3>
-
-        <div class="log">
-          <strong>providers</strong>
-          <span>Partner provider master data</span>
-        </div>
-
-        <div class="log">
-          <strong>provider_plans</strong>
-          <span>Plans, price, quota, validity</span>
-        </div>
-
-        <div class="log">
-          <strong>esims</strong>
-          <span>ICCID, eSIM ID, status</span>
-        </div>
-
-        <div class="log">
-          <strong>usage_logs</strong>
-          <span>Usage history</span>
-        </div>
-
-        <div class="log">
-          <strong>webhook_events</strong>
-          <span>Provider event records</span>
+        <div class="empty">
+          No logs yet.
         </div>
 
       </div>
 
-      <div class="card">
-        <h3>Provider API Adapter</h3>
-
-        <div class="code">
-getPlans(country)
-
-createOrder(planId, customer)
-
-getEsim(iccid)
-
-getStatus(iccid)
-
-getUsage(iccid)
-
-topUp(iccid, planId)
-
-cancelOrder(orderId)
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="alert alert-warning">
-      <strong>Penting:</strong>
-      API key provider, secret key, payment credential,
-      dan provisioning credential tidak boleh diletakkan
-      di index.html. Semua credential harus berada di backend
-      / Edge Function.
     </div>
 
   </section>
 
 
   <footer class="footer">
-    TELKU Global Connectivity Engine · HOBBIGO Technology · V3.0 Demo
+
+    TELKU Global Connectivity Engine ·
+    HOBBIGO Technology ·
+    V3.1B Supabase Connected
+
   </footer>
 
 </main>
@@ -1001,915 +1168,90 @@ cancelOrder(orderId)
 
 <script>
 
-const STORAGE_PROVIDER = "telku_v30_providers";
-const STORAGE_LOGS = "telku_v30_sync_logs";
-const STORAGE_ESIM = "telku_v30_esim";
+/*
+=========================================================
+TELKU V3.1B
+SUPABASE CONFIGURATION
+=========================================================
+*/
 
-const DEFAULT_PROVIDERS = [
+const SUPABASE_URL =
+  "https://" +
+  "xozjhayxttryegynntld" +
+  ".supabase.co";
 
-  {
-    id:"PROV-GLOBAL-001",
-    name:"TELKU Global Provider",
-    type:"Global Aggregator",
-    status:"ONLINE",
-    countries:120,
-    networks:420
-  },
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
 
-  {
-    id:"PROV-LOCAL-001",
-    name:"TELKU Indonesia Provider",
-    type:"Local Provider",
-    status:"ONLINE",
-    countries:1,
-    networks:4
-  },
 
-  {
-    id:"PROV-ASIA-001",
-    name:"TELKU Asia Provider",
-    type:"Regional Provider",
-    status:"ONLINE",
-    countries:18,
-    networks:75
-  }
+/*
+=========================================================
+DATABASE TABLES
+=========================================================
+*/
 
-];
+const TABLES = {
 
+  providers:
+    "providers",
 
-const NETWORKS = [
+  networks:
+    "networks",
 
-  {
-    country:"Singapore",
-    operator:"Singtel",
-    provider:"TELKU Global Provider",
-    status:"ONLINE"
-  },
+  providerPlans:
+    "provider_plans",
 
-  {
-    country:"Singapore",
-    operator:"StarHub",
-    provider:"TELKU Global Provider",
-    status:"ONLINE"
-  },
+  esims:
+    "esims",
 
-  {
-    country:"Indonesia",
-    operator:"Telkomsel",
-    provider:"TELKU Indonesia Provider",
-    status:"ONLINE"
-  },
+  usageLogs:
+    "usage_logs",
 
-  {
-    country:"Indonesia",
-    operator:"Indosat",
-    provider:"TELKU Indonesia Provider",
-    status:"ONLINE"
-  },
+  statusLogs:
+    "status_logs",
 
-  {
-    country:"Indonesia",
-    operator:"XL",
-    provider:"TELKU Indonesia Provider",
-    status:"ONLINE"
-  },
+  webhookEvents:
+    "webhook_events"
 
-  {
-    country:"Japan",
-    operator:"NTT Docomo",
-    provider:"TELKU Global Provider",
-    status:"ONLINE"
-  },
+};
 
-  {
-    country:"Japan",
-    operator:"KDDI",
-    provider:"TELKU Global Provider",
-    status:"ONLINE"
-  },
 
-  {
-    country:"Malaysia",
-    operator:"Maxis",
-    provider:"TELKU Asia Provider",
-    status:"ONLINE"
-  },
+/*
+=========================================================
+APP STATE
+=========================================================
+*/
 
-  {
-    country:"Thailand",
-    operator:"AIS",
-    provider:"TELKU Asia Provider",
-    status:"ONLINE"
-  },
+const state = {
 
-  {
-    country:"Australia",
-    operator:"Optus",
-    provider:"TELKU Global Provider",
-    status:"ONLINE"
-  }
+  providers: [],
 
-];
+  networks: [],
 
+  plans: [],
 
-const PLANS = [
+  esims: [],
 
-  {
-    id:"PLAN-SG-5",
-    country:"Singapore",
-    provider:"TELKU Global Provider",
-    data:5,
-    validity:15,
-    price:8
-  },
+  usageLogs: [],
 
-  {
-    id:"PLAN-SG-10",
-    country:"Singapore",
-    provider:"TELKU Global Provider",
-    data:10,
-    validity:30,
-    price:15
-  },
+  statusLogs: [],
 
-  {
-    id:"PLAN-ID-10",
-    country:"Indonesia",
-    provider:"TELKU Indonesia Provider",
-    data:10,
-    validity:30,
-    price:10
-  },
+  webhookEvents: [],
 
-  {
-    id:"PLAN-JP-10",
-    country:"Japan",
-    provider:"TELKU Global Provider",
-    data:10,
-    validity:30,
-    price:18
-  },
+  connected: false
 
-  {
-    id:"PLAN-MY-10",
-    country:"Malaysia",
-    provider:"TELKU Asia Provider",
-    data:10,
-    validity:30,
-    price:12
-  },
+};
 
-  {
-    id:"PLAN-AU-10",
-    country:"Australia",
-    provider:"TELKU Global Provider",
-    data:10,
-    validity:30,
-    price:20
-  }
 
-];
-
-
-function loadProviders(){
-
-  let data =
-    localStorage.getItem(STORAGE_PROVIDER);
-
-  if(!data){
-
-    localStorage.setItem(
-      STORAGE_PROVIDER,
-      JSON.stringify(DEFAULT_PROVIDERS)
-    );
-
-    return DEFAULT_PROVIDERS;
-
-  }
-
-  try{
-    return JSON.parse(data);
-  }catch(e){
-    return DEFAULT_PROVIDERS;
-  }
-
-}
-
-
-function saveProviders(data){
-
-  localStorage.setItem(
-    STORAGE_PROVIDER,
-    JSON.stringify(data)
-  );
-
-}
-
-
-function loadLogs(){
-
-  let data =
-    localStorage.getItem(STORAGE_LOGS);
-
-  if(!data) return [];
-
-  try{
-    return JSON.parse(data);
-  }catch(e){
-    return [];
-  }
-
-}
-
-
-function saveLogs(data){
-
-  localStorage.setItem(
-    STORAGE_LOGS,
-    JSON.stringify(data)
-  );
-
-}
-
-
-function addLog(title,message){
-
-  const logs = loadLogs();
-
-  logs.unshift({
-    time:new Date().toLocaleString(),
-    title:title,
-    message:message
-  });
-
-  saveLogs(logs.slice(0,50));
-
-  renderLogs();
-
-}
-
-
-function showPage(id,button){
-
-  document
-    .querySelectorAll(".page")
-    .forEach(page=>{
-      page.classList.remove("active");
-    });
-
-  const target =
-    document.getElementById(id);
-
-  if(target){
-    target.classList.add("active");
-  }
-
-  document
-    .querySelectorAll(".nav button")
-    .forEach(btn=>{
-      btn.classList.remove("active");
-    });
-
-  if(button){
-    button.classList.add("active");
-  }
-
-}
-
-
-function renderProviders(){
-
-  const providers = loadProviders();
-
-  const box =
-    document.getElementById("providerList");
-
-  box.innerHTML = "";
-
-  providers.forEach(p=>{
-
-    box.innerHTML += `
-
-      <div class="card provider">
-
-        <div class="provider-top">
-
-          <div>
-            <div class="provider-name">
-              ${escapeHTML(p.name)}
-            </div>
-
-            <div class="provider-type">
-              ${escapeHTML(p.type)}
-            </div>
-          </div>
-
-          <span class="badge badge-green">
-            ${escapeHTML(p.status)}
-          </span>
-
-        </div>
-
-        <div class="form-row">
-
-          <div>
-            <span class="label">Countries</span>
-            <strong>${p.countries}</strong>
-          </div>
-
-          <div>
-            <span class="label">Networks</span>
-            <strong>${p.networks}</strong>
-          </div>
-
-        </div>
-
-        <div class="code" style="margin-top:13px">
-          ${escapeHTML(p.id)}
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-function renderNetworks(){
-
-  const box =
-    document.getElementById("networkList");
-
-  box.innerHTML = "";
-
-  NETWORKS.forEach(n=>{
-
-    box.innerHTML += `
-
-      <div class="network">
-
-        <div class="dot"></div>
-
-        <div class="network-info">
-
-          <strong>
-            ${escapeHTML(n.operator)}
-          </strong>
-
-          <span>
-            ${escapeHTML(n.country)}
-            · ${escapeHTML(n.provider)}
-          </span>
-
-        </div>
-
-        <span class="badge badge-green">
-          ${escapeHTML(n.status)}
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-function renderPlans(){
-
-  const box =
-    document.getElementById("planList");
-
-  box.innerHTML = "";
-
-  PLANS.forEach(plan=>{
-
-    box.innerHTML += `
-
-      <div class="plan"
-           onclick="selectPlan('${plan.id}')">
-
-        <div class="gb">
-          ${plan.data} GB
-        </div>
-
-        <div>
-          ${escapeHTML(plan.country)}
-        </div>
-
-        <div class="valid">
-          ${plan.validity} days
-        </div>
-
-        <div class="price">
-          $${plan.price}
-        </div>
-
-        <div style="color:#71879e;font-size:11px;margin-top:6px">
-          ${escapeHTML(plan.provider)}
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-function selectPlan(id){
-
-  const plan =
-    PLANS.find(x=>x.id===id);
-
-  if(!plan) return;
-
-  localStorage.setItem(
-    "telku_v30_selected_plan",
-    JSON.stringify(plan)
-  );
-
-  alert(
-    "Plan selected:\n\n"+
-    plan.country+
-    " · "+
-    plan.data+
-    " GB · "+
-    plan.validity+
-    " days"
-  );
-
-}
-
-
-function addProvider(){
-
-  const name =
-    document
-      .getElementById("newProviderName")
-      .value
-      .trim();
-
-  const type =
-    document
-      .getElementById("newProviderType")
-      .value;
-
-  if(!name){
-
-    alert("Masukkan nama provider.");
-
-    return;
-
-  }
-
-  const providers =
-    loadProviders();
-
-  providers.push({
-
-    id:
-      "PROV-DEMO-"+Date.now(),
-
-    name:name,
-
-    type:type,
-
-    status:"ONLINE",
-
-    countries:1,
-
-    networks:1
-
-  });
-
-  saveProviders(providers);
-
-  document
-    .getElementById("newProviderName")
-    .value="";
-
-  renderProviders();
-
-  updateStats();
-
-  addLog(
-    "Provider added",
-    name+" berhasil ditambahkan sebagai demo provider."
-  );
-
-}
-
-
-function simulateRouting(){
-
-  const country =
-    document
-      .getElementById("customerCountry")
-      .value;
-
-  const data =
-    document
-      .getElementById("customerPlan")
-      .value;
-
-  let result =
-    NETWORKS.find(
-      n=>n.country===country
-    );
-
-  if(!result){
-
-    alert(
-      "Belum ada provider demo untuk negara tersebut."
-    );
-
-    return;
-
-  }
-
-  document.getElementById("dashCountry")
-    .textContent=country;
-
-  document.getElementById("dashNetwork")
-    .textContent=result.operator;
-
-  document.getElementById("dashProvider")
-    .textContent=result.provider;
-
-  document.getElementById("dashData")
-    .textContent=data+" GB";
-
-  document.getElementById("esimCountry")
-    .textContent=country;
-
-  document.getElementById("esimNetwork")
-    .textContent=result.operator;
-
-  document.getElementById("esimProvider")
-    .textContent=result.provider;
-
-  addLog(
-    "Provider routing",
-    "Country "+country+
-    " → "+result.provider+
-    " → "+result.operator+
-    " → "+data+" GB"
-  );
-
-  alert(
-    "Provider ditemukan!\n\n"+
-    "Country: "+country+
-    "\nProvider: "+result.provider+
-    "\nNetwork: "+result.operator+
-    "\nData: "+data+" GB"
-  );
-
-}
-
-
-function loadESIM(){
-
-  let data =
-    localStorage.getItem(STORAGE_ESIM);
-
-  if(data){
-
-    try{
-
-      return JSON.parse(data);
-
-    }catch(e){}
-
-  }
-
-  const esim={
-
-    id:"TELKU-ESIM-DEMO-001",
-
-    iccid:"8965012345678901234",
-
-    provider:"TELKU Global Provider",
-
-    network:"Singtel",
-
-    country:"Singapore",
-
-    status:"ACTIVE",
-
-    total:10,
-
-    used:2.6,
-
-    validity:30,
-
-    created:new Date().toISOString(),
-
-    lastSync:null
-
-  };
-
-  localStorage.setItem(
-    STORAGE_ESIM,
-    JSON.stringify(esim)
-  );
-
-  return esim;
-
-}
-
-
-function saveESIM(esim){
-
-  localStorage.setItem(
-    STORAGE_ESIM,
-    JSON.stringify(esim)
-  );
-
-}
-
-
-function renderESIM(){
-
-  const esim=loadESIM();
-
-  document.getElementById("esimId")
-    .textContent=esim.id;
-
-  document.getElementById("iccid")
-    .textContent=esim.iccid;
-
-  document.getElementById("esimProvider")
-    .textContent=esim.provider;
-
-  document.getElementById("esimNetwork")
-    .textContent=esim.network;
-
-  document.getElementById("esimCountry")
-    .textContent=esim.country;
-
-  document.getElementById("esimValidity")
-    .textContent=esim.validity+" days";
-
-  document.getElementById("esimStatus")
-    .textContent=esim.status;
-
-  document.getElementById("providerStatus")
-    .textContent=
-      esim.status==="ACTIVE"
-      ?"ONLINE"
-      :"OFFLINE";
-
-  const percent =
-    Math.min(
-      100,
-      (esim.used/esim.total)*100
-    );
-
-  document.getElementById("usageText")
-    .textContent=
-      esim.used.toFixed(1)+
-      " GB / "+
-      esim.total+
-      " GB";
-
-  document.getElementById("usagePercent")
-    .textContent=
-      Math.round(percent)+"%";
-
-  document.getElementById("usageBar")
-    .style.width=percent+"%";
-
-  document.getElementById("lastSync")
-    .textContent=
-      esim.lastSync
-      ?new Date(esim.lastSync).toLocaleString()
-      :"Waiting...";
-
-}
-
-
-function simulateUsage(){
-
-  const esim=loadESIM();
-
-  if(esim.status!=="ACTIVE"){
-
-    alert("eSIM belum ACTIVE.");
-
-    return;
-
-  }
-
-  esim.used =
-    Math.min(
-      esim.total,
-      esim.used+0.5
-    );
-
-  saveESIM(esim);
-
-  renderESIM();
-
-  addLog(
-    "Usage update",
-    "Demo usage bertambah 0.5 GB."
-  );
-
-}
-
-
-function syncProvider(){
-
-  const esim=loadESIM();
-
-  esim.lastSync =
-    new Date().toISOString();
-
-  saveESIM(esim);
-
-  renderESIM();
-
-  addLog(
-    "Provider sync",
-    "Demo provider berhasil disinkronkan."
-  );
-
-  alert(
-    "Provider sync berhasil.\n\n"+
-    "Status: ONLINE\n"+
-    "Network: "+esim.network+
-    "\nData: "+
-    (esim.total-esim.used).toFixed(1)+
-    " GB remaining"
-  );
-
-}
-
-
-function activateESIM(){
-
-  const esim=loadESIM();
-
-  esim.status="ACTIVE";
-
-  saveESIM(esim);
-
-  renderESIM();
-
-  addLog(
-    "eSIM activated",
-    "Demo eSIM status berubah menjadi ACTIVE."
-  );
-
-}
-
-
-function deactivateESIM(){
-
-  const esim=loadESIM();
-
-  esim.status="OFF";
-
-  saveESIM(esim);
-
-  renderESIM();
-
-  addLog(
-    "eSIM deactivated",
-    "Demo eSIM status berubah menjadi OFF."
-  );
-
-}
-
-
-function newESIM(){
-
-  const id =
-    "TELKU-ESIM-"+Date.now();
-
-  const iccid =
-    "89650"+
-    Math.floor(
-      100000000000000000+
-      Math.random()*899999999999999999
-    );
-
-  const esim={
-
-    id:id,
-
-    iccid:String(iccid),
-
-    provider:"TELKU Global Provider",
-
-    network:"Singtel",
-
-    country:"Singapore",
-
-    status:"READY",
-
-    total:10,
-
-    used:0,
-
-    validity:30,
-
-    created:new Date().toISOString(),
-
-    lastSync:null
-
-  };
-
-  saveESIM(esim);
-
-  renderESIM();
-
-  addLog(
-    "New eSIM",
-    "Demo eSIM baru dibuat: "+id
-  );
-
-  alert(
-    "Demo eSIM baru berhasil dibuat."
-  );
-
-}
-
-
-function renderLogs(){
-
-  const box =
-    document.getElementById("syncLogs");
-
-  const logs=loadLogs();
-
-  if(!logs.length){
-
-    box.innerHTML=
-      `<p style="color:#91a4ba">
-        Belum ada aktivitas.
-      </p>`;
-
-    return;
-
-  }
-
-  box.innerHTML="";
-
-  logs.forEach(log=>{
-
-    box.innerHTML += `
-
-      <div class="log">
-
-        <strong>
-          ${escapeHTML(log.title)}
-        </strong>
-
-        <span>
-          ${escapeHTML(log.message)}
-          · ${escapeHTML(log.time)}
-        </span>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-function updateStats(){
-
-  const providers =
-    loadProviders();
-
-  const countries =
-    new Set(
-      NETWORKS.map(n=>n.country)
-    );
-
-  document.getElementById("providerCount")
-    .textContent=providers.length;
-
-  document.getElementById("countryCount")
-    .textContent=countries.size;
-
-  document.getElementById("networkCount")
-    .textContent=NETWORKS.length;
-
-}
-
+/*
+=========================================================
+UTILITY
+=========================================================
+*/
 
 function escapeHTML(value){
 
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -1919,20 +1261,1701 @@ function escapeHTML(value){
 }
 
 
-function init(){
+function formatNumber(value){
 
-  loadProviders();
-  loadESIM();
+  const n =
+    Number(value);
 
-  renderProviders();
-  renderNetworks();
-  renderPlans();
-  renderESIM();
-  renderLogs();
+  if(Number.isNaN(n)){
+    return "0";
+  }
+
+  return n.toLocaleString();
+
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "-";
+  }
+
+  const d =
+    new Date(value);
+
+  if(Number.isNaN(d.getTime())){
+    return "-";
+  }
+
+  return d.toLocaleString();
+
+}
+
+
+function addLog(title,message){
+
+  const box =
+    document.getElementById("syncLogs");
+
+  if(
+    box.innerHTML.includes(
+      "No logs yet"
+    )
+  ){
+
+    box.innerHTML = "";
+
+  }
+
+  box.innerHTML =
+    `
+    <div class="log">
+      <strong>
+        ${escapeHTML(title)}
+      </strong>
+      <span>
+        ${escapeHTML(message)}
+        · ${escapeHTML(
+          new Date().toLocaleString()
+        )}
+      </span>
+    </div>
+    ` +
+    box.innerHTML;
+
+}
+
+
+/*
+=========================================================
+SUPABASE REST REQUEST
+=========================================================
+*/
+
+async function supabaseRequest(
+  table,
+  params = {},
+  method = "GET",
+  body = null
+){
+
+  let url =
+    SUPABASE_URL +
+    "/rest/v1/" +
+    table;
+
+  const search =
+    new URLSearchParams();
+
+  Object.keys(params).forEach(
+    key=>{
+
+      if(
+        params[key] !== undefined &&
+        params[key] !== null
+      ){
+
+        search.set(
+          key,
+          params[key]
+        );
+
+      }
+
+    }
+  );
+
+  const query =
+    search.toString();
+
+  if(query){
+    url += "?" + query;
+  }
+
+  const options = {
+
+    method:method,
+
+    headers:{
+
+      "apikey":
+        SUPABASE_PUBLISHABLE_KEY,
+
+      "Authorization":
+        "Bearer " +
+        SUPABASE_PUBLISHABLE_KEY,
+
+      "Content-Type":
+        "application/json",
+
+      "Accept":
+        "application/json"
+
+    }
+
+  };
+
+  if(body){
+
+    options.body =
+      JSON.stringify(body);
+
+  }
+
+  const response =
+    await fetch(
+      url,
+      options
+    );
+
+  const text =
+    await response.text();
+
+  let data = null;
+
+  try{
+
+    data =
+      text
+      ?JSON.parse(text)
+      :null;
+
+  }catch(e){
+
+    data=text;
+
+  }
+
+  if(!response.ok){
+
+    throw new Error(
+      typeof data==="object"
+      ?(
+        data.message ||
+        data.hint ||
+        data.details ||
+        "Supabase API error"
+      )
+      :String(data)
+    );
+
+  }
+
+  return data;
+
+}
+
+
+/*
+=========================================================
+LOAD PROVIDERS
+=========================================================
+*/
+
+async function loadProviders(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.providers,
+        {
+          select:"*",
+          order:"created_at.desc"
+        }
+      );
+
+    state.providers =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    renderProviders();
+
+    addLog(
+      "Providers loaded",
+      state.providers.length +
+      " provider(s) loaded from Supabase."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Providers error:",
+      error
+    );
+
+    addLog(
+      "Providers error",
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD NETWORKS
+=========================================================
+*/
+
+async function loadNetworks(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.networks,
+        {
+          select:"*",
+          order:"country_name.asc"
+        }
+      );
+
+    state.networks =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    renderNetworks();
+
+    buildCountrySelector();
+
+    addLog(
+      "Networks loaded",
+      state.networks.length +
+      " network(s) loaded from Supabase."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Networks error:",
+      error
+    );
+
+    addLog(
+      "Networks error",
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD PLANS
+=========================================================
+*/
+
+async function loadPlans(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.providerPlans,
+        {
+          select:"*",
+          order:"country_name.asc"
+        }
+      );
+
+    state.plans =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    renderPlans();
+
+    addLog(
+      "Plans loaded",
+      state.plans.length +
+      " plan(s) loaded from Supabase."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Plans error:",
+      error
+    );
+
+    addLog(
+      "Plans error",
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD ESIMS
+=========================================================
+*/
+
+async function loadEsims(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.esims,
+        {
+          select:"*",
+          order:"created_at.desc",
+          limit:"10"
+        }
+      );
+
+    state.esims =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    renderESIM();
+
+    addLog(
+      "eSIM loaded",
+      state.esims.length +
+      " eSIM record(s) loaded."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "eSIM error:",
+      error
+    );
+
+    addLog(
+      "eSIM error",
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD USAGE
+=========================================================
+*/
+
+async function loadUsage(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.usageLogs,
+        {
+          select:"*",
+          order:"created_at.desc",
+          limit:"20"
+        }
+      );
+
+    state.usageLogs =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    addLog(
+      "Usage loaded",
+      state.usageLogs.length +
+      " usage record(s) loaded."
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Usage error:",
+      error
+    );
+
+    addLog(
+      "Usage error",
+      error.message
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD STATUS LOGS
+=========================================================
+*/
+
+async function loadStatusLogs(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.statusLogs,
+        {
+          select:"*",
+          order:"created_at.desc",
+          limit:"20"
+        }
+      );
+
+    state.statusLogs =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Status logs error:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD WEBHOOK EVENTS
+=========================================================
+*/
+
+async function loadWebhookEvents(){
+
+  try{
+
+    const data =
+      await supabaseRequest(
+        TABLES.webhookEvents,
+        {
+          select:"*",
+          order:"created_at.desc",
+          limit:"20"
+        }
+      );
+
+    state.webhookEvents =
+      Array.isArray(data)
+      ?data
+      :[];
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Webhook error:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/*
+=========================================================
+LOAD EVERYTHING
+=========================================================
+*/
+
+async function loadAllData(){
+
+  setConnection(
+    "loading",
+    "SYNCING"
+  );
+
+  try{
+
+    const results =
+      await Promise.all([
+
+        loadProviders(),
+
+        loadNetworks(),
+
+        loadPlans(),
+
+        loadEsims(),
+
+        loadUsage(),
+
+        loadStatusLogs(),
+
+        loadWebhookEvents()
+
+      ]);
+
+    const successCount =
+      results.filter(Boolean).length;
+
+    state.connected =
+      successCount >= 3;
+
+    updateStats();
+
+    if(state.connected){
+
+      setConnection(
+        "online",
+        "SUPABASE CONNECTED"
+      );
+
+      document
+        .getElementById("dbBadge")
+        .className =
+          "badge badge-green";
+
+      document
+        .getElementById("dbBadge")
+        .textContent =
+          "CONNECTED";
+
+      document
+        .getElementById("systemAlert")
+        .className =
+          "alert alert-success";
+
+      document
+        .getElementById("systemAlert")
+        .innerHTML =
+          "<strong>Supabase connected.</strong><br>" +
+          "TELKU berhasil membaca data dari database.";
+
+      addLog(
+        "Database connected",
+        successCount +
+        "/7 data modules loaded."
+      );
+
+    }else{
+
+      throw new Error(
+        "Database modules gagal dimuat."
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Database connection:",
+      error
+    );
+
+    state.connected=false;
+
+    setConnection(
+      "offline",
+      "DATABASE ERROR"
+    );
+
+    document
+      .getElementById("dbBadge")
+      .className =
+        "badge badge-red";
+
+    document
+      .getElementById("dbBadge")
+      .textContent =
+        "ERROR";
+
+    document
+      .getElementById("systemAlert")
+      .className =
+        "alert alert-error";
+
+    document
+      .getElementById("systemAlert")
+      .innerHTML =
+        "<strong>Supabase belum dapat dibaca.</strong><br>" +
+        escapeHTML(error.message);
+
+    addLog(
+      "Database connection error",
+      error.message
+    );
+
+  }
+
+}
+
+
+/*
+=========================================================
+CONNECTION UI
+=========================================================
+*/
+
+function setConnection(
+  mode,
+  text
+){
+
+  const el =
+    document.getElementById(
+      "connectionStatus"
+    );
+
+  el.className =
+    "connection " +
+    mode;
+
+  el.innerHTML =
+    `
+    <span class="dot"></span>
+    ${escapeHTML(text)}
+    `;
+
+}
+
+
+/*
+=========================================================
+STATS
+=========================================================
+*/
+
+function updateStats(){
+
+  document
+    .getElementById(
+      "providerCount"
+    )
+    .textContent =
+      formatNumber(
+        state.providers.length
+      );
+
+  const countries =
+    new Set(
+      state.networks
+        .map(
+          x=>x.country_name
+        )
+        .filter(Boolean)
+    );
+
+  document
+    .getElementById(
+      "countryCount"
+    )
+    .textContent =
+      formatNumber(
+        countries.size
+      );
+
+  document
+    .getElementById(
+      "networkCount"
+    )
+    .textContent =
+      formatNumber(
+        state.networks.length
+      );
+
+  document
+    .getElementById(
+      "engineProviders"
+    )
+    .textContent =
+      state.providers.length +
+      " provider(s)";
+
+  document
+    .getElementById(
+      "engineNetworks"
+    )
+    .textContent =
+      state.networks.length +
+      " network(s)";
+
+  document
+    .getElementById(
+      "enginePlans"
+    )
+    .textContent =
+      state.plans.length +
+      " plan(s)";
+
+}
+
+
+/*
+=========================================================
+PROVIDER RENDER
+=========================================================
+*/
+
+function renderProviders(){
+
+  const box =
+    document.getElementById(
+      "providerList"
+    );
+
+  if(!state.providers.length){
+
+    box.innerHTML =
+      `
+      <div class="card empty">
+        No provider data found.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  box.innerHTML =
+    state.providers
+      .map(
+        p=>`
+
+        <div class="card provider">
+
+          <div class="provider-top">
+
+            <div>
+
+              <div class="provider-name">
+                ${escapeHTML(
+                  p.provider_name
+                )}
+              </div>
+
+              <div class="provider-type">
+                ${escapeHTML(
+                  p.provider_type
+                )}
+              </div>
+
+            </div>
+
+            <span class="
+              badge
+              ${
+                p.status==="active"
+                ?"badge-green"
+                :"badge-red"
+              }
+            ">
+              ${escapeHTML(
+                p.status
+              )}
+            </span>
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div>
+
+              <span class="label">
+                Provider Code
+              </span>
+
+              <strong>
+                ${escapeHTML(
+                  p.provider_code
+                )}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span class="label">
+                API Enabled
+              </span>
+
+              <strong>
+                ${
+                  p.api_enabled
+                  ?"YES"
+                  :"DEMO"
+                }
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div>
+
+              <span class="label">
+                Countries
+              </span>
+
+              <strong>
+                ${formatNumber(
+                  p.countries_count
+                )}
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <span class="label">
+                Networks
+              </span>
+
+              <strong>
+                ${formatNumber(
+                  p.networks_count
+                )}
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/*
+=========================================================
+NETWORK RENDER
+=========================================================
+*/
+
+function renderNetworks(){
+
+  const box =
+    document.getElementById(
+      "networkList"
+    );
+
+  if(!state.networks.length){
+
+    box.innerHTML =
+      `
+      <div class="empty">
+        No network data found.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  box.innerHTML =
+    state.networks
+      .map(
+        n=>`
+
+        <div class="network">
+
+          <span
+            class="dot"
+            style="
+              color:${
+                n.status==="active"
+                ?"var(--green)"
+                :"var(--red)"
+              };
+            ">
+          </span>
+
+          <div class="network-info">
+
+            <strong>
+              ${escapeHTML(
+                n.operator_name
+              )}
+            </strong>
+
+            <span>
+              ${escapeHTML(
+                n.country_name
+              )}
+              ·
+              ${escapeHTML(
+                n.country_code
+              )}
+              ·
+              ${escapeHTML(
+                n.technology
+              )}
+            </span>
+
+          </div>
+
+          <span class="
+            badge
+            ${
+              n.status==="active"
+              ?"badge-green"
+              :"badge-red"
+            }
+          ">
+            ${escapeHTML(
+              n.status
+            )}
+          </span>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/*
+=========================================================
+PLAN RENDER
+=========================================================
+*/
+
+function renderPlans(){
+
+  const box =
+    document.getElementById(
+      "planList"
+    );
+
+  if(!state.plans.length){
+
+    box.innerHTML =
+      `
+      <div class="card empty">
+        No plan data found.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  box.innerHTML =
+    state.plans
+      .map(
+        p=>`
+
+        <div class="plan">
+
+          <div class="gb">
+            ${escapeHTML(
+              p.data_gb
+            )} GB
+          </div>
+
+          <div style="margin-top:5px">
+            ${escapeHTML(
+              p.country_name
+            )}
+          </div>
+
+          <div class="valid">
+            ${escapeHTML(
+              p.validity_days
+            )} days
+          </div>
+
+          <div class="price">
+            ${escapeHTML(
+              p.currency
+            )}
+            ${escapeHTML(
+              p.telku_price
+            )}
+          </div>
+
+          <div style="
+            color:#71879e;
+            font-size:11px;
+            margin-top:7px;
+          ">
+            ${escapeHTML(
+              p.plan_code
+            )}
+          </div>
+
+          <div style="
+            color:#71879e;
+            font-size:11px;
+            margin-top:3px;
+          ">
+            Provider:
+            ${escapeHTML(
+              p.provider_id
+            )}
+          </div>
+
+        </div>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/*
+=========================================================
+COUNTRY SELECTOR
+=========================================================
+*/
+
+function buildCountrySelector(){
+
+  const select =
+    document.getElementById(
+      "customerCountry"
+    );
+
+  const countries =
+    [
+      ...new Map(
+        state.networks
+          .filter(
+            n=>n.country_code
+          )
+          .map(
+            n=>[
+              n.country_code,
+              n.country_name
+            ]
+          )
+      ).entries()
+    ];
+
+  if(!countries.length){
+
+    select.innerHTML =
+      `
+      <option value="">
+        No countries found
+      </option>
+      `;
+
+    return;
+
+  }
+
+  select.innerHTML =
+    `
+    <option value="">
+      Select country
+    </option>
+    ` +
+    countries
+      .map(
+        c=>`
+
+        <option value="${escapeHTML(c[0])}">
+          ${escapeHTML(c[1])}
+        </option>
+
+        `
+      )
+      .join("");
+
+}
+
+
+/*
+=========================================================
+FIND PROVIDER
+=========================================================
+*/
+
+function findProvider(){
+
+  const countryCode =
+    document
+      .getElementById(
+        "customerCountry"
+      )
+      .value;
+
+  const packageGB =
+    document
+      .getElementById(
+        "customerPlan"
+      )
+      .value;
+
+  if(!countryCode){
+
+    alert(
+      "Pilih negara terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+  const networks =
+    state.networks
+      .filter(
+        n=>
+          n.country_code===
+          countryCode &&
+          n.status==="active"
+      );
+
+  const plans =
+    state.plans
+      .filter(
+        p=>
+          p.country_code===
+          countryCode &&
+          p.status==="active"
+      )
+      .sort(
+        (a,b)=>
+          Number(a.telku_price) -
+          Number(b.telku_price)
+      );
+
+  const result =
+    document.getElementById(
+      "routingResult"
+    );
+
+  const content =
+    document.getElementById(
+      "routingContent"
+    );
+
+  result.classList.remove(
+    "hidden"
+  );
+
+  if(!networks.length){
+
+    content.innerHTML =
+      `
+      <div class="alert alert-error">
+        Tidak ada network aktif untuk negara ini.
+      </div>
+      `;
+
+    return;
+
+  }
+
+  const firstNetwork =
+    networks[0];
+
+  const bestPlan =
+    plans.find(
+      p=>
+        Number(p.data_gb)>=
+        Number(packageGB)
+    ) ||
+    plans[0];
+
+  content.innerHTML =
+    `
+
+    <div class="grid">
+
+      <div>
+
+        <div class="log">
+
+          <strong>
+            Country
+          </strong>
+
+          <span>
+            ${escapeHTML(
+              firstNetwork.country_name
+            )}
+          </span>
+
+        </div>
+
+
+        <div class="log">
+
+          <strong>
+            Network
+          </strong>
+
+          <span>
+            ${escapeHTML(
+              firstNetwork.operator_name
+            )}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <div class="log">
+
+          <strong>
+            Recommended Plan
+          </strong>
+
+          <span>
+            ${
+              bestPlan
+              ?escapeHTML(
+                bestPlan.plan_name
+              )
+              :"No plan"
+            }
+          </span>
+
+        </div>
+
+
+        <div class="log">
+
+          <strong>
+            Data
+          </strong>
+
+          <span>
+            ${
+              bestPlan
+              ?escapeHTML(
+                bestPlan.data_gb
+              )+
+              " GB / "+
+              escapeHTML(
+                bestPlan.validity_days
+              )+
+              " days"
+              :"No plan"
+            }
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="alert alert-success"
+         style="margin-top:15px">
+
+      <strong>
+        Provider routing ditemukan.
+      </strong>
+
+      <br>
+
+      TELKU menemukan
+      ${networks.length}
+      network aktif untuk
+      ${escapeHTML(
+        firstNetwork.country_name
+      )}.
+
+    </div>
+
+    `;
+
+  addLog(
+    "Provider routing",
+    firstNetwork.country_name+
+    " → "+
+    firstNetwork.operator_name+
+    " → "+
+    (
+      bestPlan
+      ?bestPlan.plan_name
+      :"No plan"
+    )
+  );
+
+}
+
+
+/*
+=========================================================
+ESIM RENDER
+=========================================================
+*/
+
+function renderESIM(){
+
+  if(!state.esims.length){
+
+    document
+      .getElementById(
+        "esimStatus"
+      )
+      .className =
+        "badge badge-yellow";
+
+    document
+      .getElementById(
+        "esimStatus"
+      )
+      .textContent =
+        "NO DATA";
+
+    document
+      .getElementById(
+        "esimId"
+      )
+      .textContent =
+        "No eSIM record";
+
+    document
+      .getElementById(
+        "iccid"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "esimProvider"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "esimNetwork"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "esimCountry"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "esimRemaining"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "usageText"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "usagePercent"
+      )
+      .textContent =
+        "-";
+
+    document
+      .getElementById(
+        "usageBar"
+      )
+      .style.width =
+        "0%";
+
+    document
+      .getElementById(
+        "lastSync"
+      )
+      .textContent =
+        "-";
+
+    return;
+
+  }
+
+  const esim =
+    state.esims[0];
+
+  const status =
+    String(
+      esim.status ||
+      "ready"
+    ).toUpperCase();
+
+  const badge =
+    document
+      .getElementById(
+        "esimStatus"
+      );
+
+  badge.textContent =
+    status;
+
+  badge.className =
+    "badge " +
+    (
+      status==="ACTIVE"
+      ?"badge-green"
+      :
+      status==="OFF"
+      ?"badge-red"
+      :"badge-yellow"
+    );
+
+  document
+    .getElementById(
+      "esimId"
+    )
+    .textContent =
+      esim.esim_code ||
+      esim.provider_esim_id ||
+      esim.id ||
+      "-";
+
+  document
+    .getElementById(
+      "iccid"
+    )
+    .textContent =
+      esim.iccid ||
+      "-";
+
+  document
+    .getElementById(
+      "esimProvider"
+    )
+    .textContent =
+      esim.provider_id ||
+      "-";
+
+  document
+    .getElementById(
+      "esimNetwork"
+    )
+    .textContent =
+      esim.network_name ||
+      "-";
+
+  document
+    .getElementById(
+      "esimCountry"
+    )
+    .textContent =
+      esim.country_name ||
+      esim.country_code ||
+      "-";
+
+  const total =
+    Number(
+      esim.total_data_gb ||
+      0
+    );
+
+  const used =
+    Number(
+      esim.used_data_gb ||
+      0
+    );
+
+  const remaining =
+    Number(
+      esim.remaining_data_gb ||
+      Math.max(
+        0,
+        total-used
+      )
+    );
+
+  document
+    .getElementById(
+      "esimRemaining"
+    )
+    .textContent =
+      remaining.toFixed(2)+
+      " GB";
+
+  const percent =
+    total>0
+    ?Math.min(
+      100,
+      (used/total)*100
+    )
+    :0;
+
+  document
+    .getElementById(
+      "usageText"
+    )
+    .textContent =
+      used.toFixed(2)+
+      " GB used / "+
+      total.toFixed(2)+
+      " GB";
+
+  document
+    .getElementById(
+      "usagePercent"
+    )
+    .textContent =
+      Math.round(percent)+
+      "%";
+
+  document
+    .getElementById(
+      "usageBar"
+    )
+    .style.width =
+      percent+"%";
+
+  document
+    .getElementById(
+      "lastSync"
+    )
+    .textContent =
+      formatDate(
+        esim.last_synced_at
+      );
+
+}
+
+
+/*
+=========================================================
+PAGE NAVIGATION
+=========================================================
+*/
+
+function showPage(
+  id,
+  button
+){
+
+  document
+    .querySelectorAll(
+      ".page"
+    )
+    .forEach(
+      page=>
+        page.classList.remove(
+          "active"
+        )
+    );
+
+  const target =
+    document.getElementById(
+      id
+    );
+
+  if(target){
+
+    target.classList.add(
+      "active"
+    );
+
+  }
+
+  document
+    .querySelectorAll(
+      ".nav button"
+    )
+    .forEach(
+      btn=>
+        btn.classList.remove(
+          "active"
+        )
+    );
+
+  if(button){
+
+    button.classList.add(
+      "active"
+    );
+
+  }
+
+}
+
+
+/*
+=========================================================
+START
+=========================================================
+*/
+
+async function init(){
+
+  addLog(
+    "TELKU started",
+    "Starting Supabase connection..."
+  );
+
+  await loadAllData();
+
   updateStats();
 
 }
 
+
+/*
+=========================================================
+RUN
+=========================================================
+*/
 
 init();
 
