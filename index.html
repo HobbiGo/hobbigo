@@ -2,137 +2,1944 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>HobbiGo V75 - AI Journey & Experience Marketplace</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#087f5b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>HobbiGo V76.8 — AI Journey & Experience Marketplace</title>
+
+<!-- Leaflet Map -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+/>
+
+<!-- HobbiGo CSS -->
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 </head>
+
 <body>
 
+<!-- =========================================================
+     HEADER
+========================================================= -->
 <header>
-  <div class="logo">Hobbi<span>Go</span></div>
+
+  <div class="logo" onclick="go('home')" style="cursor:pointer;">
+    Hobbi<span>Go</span>
+  </div>
+
   <nav>
-    <button onclick="go('home')">Home</button>
-    <button onclick="go('search-hub')">Search (Hotel/Flight)</button>
-    <button onclick="go('market')">Marketplace</button>
-    <button onclick="go('planner')">AI Trip Planner</button>
-    <button onclick="go('package')">Package</button>
-    <button onclick="go('account')">My Trips</button>
-    <button onclick="go('admin')">Dashboard</button>
+
+    <button onclick="go('home')">
+      <i class="fa-solid fa-house"></i> Home
+    </button>
+
+    <button onclick="go('search-hub')">
+      <i class="fa-solid fa-magnifying-glass"></i> Search
+    </button>
+
+    <button onclick="go('marketplace')">
+      <i class="fa-solid fa-store"></i> Marketplace
+    </button>
+
+    <button onclick="go('planner')">
+      <i class="fa-solid fa-wand-magic-sparkles"></i> AI Trip Planner
+    </button>
+
+    <button onclick="go('package')">
+      <i class="fa-solid fa-box"></i> Package
+    </button>
+
+    <button onclick="go('account')">
+      <i class="fa-solid fa-suitcase"></i> My Trips
+    </button>
+
+    <button onclick="go('dashboard')">
+      <i class="fa-solid fa-chart-line"></i> Dashboard
+    </button>
+
   </nav>
-  <button class="cartBtn" onclick="openCart()">My Cart <span id="cartCount">0</span></button>
+
+  <button class="cartBtn" onclick="openCart()">
+    <i class="fa-solid fa-cart-shopping"></i>
+    My Cart
+    <span id="cartCount">0</span>
+  </button>
+
 </header>
 
-<main id="home">
-  <!-- HERO SECTION -->
-  <section class="hero">
+
+<!-- =========================================================
+     HOME
+========================================================= -->
+<section id="home" class="hero">
+
+  <div>
+
+    <span class="badge">
+      <i class="fa-solid fa-globe"></i>
+      AI Journey & Experience Marketplace
+    </span>
+
+    <h1>
+      Explore the World<br>
+      with <span style="color:#087f5b;">HobbiGo</span>
+    </h1>
+
+    <p>
+      Satu platform untuk mencari, merencanakan, mengatur,
+      menggabungkan, memesan dan menikmati perjalanan.
+    </p>
+
+    <p>
+      <b>
+        Search → Plan → Configure → Package →
+        Book → Experience → Re-optimize
+      </b>
+    </p>
+
+    <div class="searchBox">
+
+      <input
+        id="heroSearch"
+        type="text"
+        placeholder="Mau pergi ke mana?"
+      >
+
+      <button
+        class="primary"
+        onclick="heroSearchGo()"
+      >
+        <i class="fa-solid fa-search"></i>
+        Explore
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="heroCard">
+
+    <h3>
+      <i class="fa-solid fa-route"></i>
+      HobbiGo Journey Flow
+    </h3>
+
+    <div class="flow">
+      <span>01</span>
+      <strong>Search</strong>
+    </div>
+
+    <div class="flow">
+      <span>02</span>
+      <strong>Plan</strong>
+    </div>
+
+    <div class="flow">
+      <span>03</span>
+      <strong>Configure</strong>
+    </div>
+
+    <div class="flow">
+      <span>04</span>
+      <strong>Package</strong>
+    </div>
+
+    <div class="flow">
+      <span>05</span>
+      <strong>Book & Pay</strong>
+    </div>
+
+    <div class="flow">
+      <span>06</span>
+      <strong>E-Ticket</strong>
+    </div>
+
+    <div class="notice">
+      <b>AI Re-optimization</b><br>
+      HobbiGo dapat menyesuaikan perjalanan
+      berdasarkan budget, waktu, jarak dan pilihan traveler.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CUSTOMER TYPE
+========================================================= -->
+<section id="customer-type">
+
+  <div class="sectionHead">
+
     <div>
-      <span class="badge">AI Journey & Experience Marketplace</span>
-      <h1>Explore the World with HobbiGo</h1>
-      <p>Plan → Configure → Package → Book → Experience → Re-optimize.</p>
-      <div class="searchBox">
-        <input id="heroSearch" placeholder="Search hotel, villa, flight...">
-        <button class="primary" onclick="searchHero()">Search</button>
-      </div>
+      <h2>Who Are You Travelling With?</h2>
+      <p class="muted">
+        Pilih tipe perjalanan Anda.
+      </p>
     </div>
-    <div class="heroCard">
-      <h3>HobbiGo Journey Flow</h3>
-      <div class="flow"><span>01 Search</span><strong>✓</strong></div>
-      <div class="flow"><span>02 Plan</span><strong>✓</strong></div>
-      <div class="flow"><span>03 Configure</span><strong>✓</strong></div>
-      <div class="flow"><span>04 Package</span><strong>✓</strong></div>
-      <div class="flow"><span>05 Book & Pay</span><strong>✓</strong></div>
-      <div class="flow"><span>06 E-Ticket</span><strong>✓</strong></div>
-    </div>
-  </section>
 
-  <!-- SEARCH HUB -->
-  <section id="search-hub" style="padding: 40px 5%;">
+  </div>
+
+
+  <div class="chips" id="customerTypeChips">
+
+    <button
+      class="chip active"
+      onclick="selectCustomerType(this,'Personal')"
+    >
+      👤 Personal
+    </button>
+
+    <button
+      class="chip"
+      onclick="selectCustomerType(this,'Family')"
+    >
+      👨‍👩‍👧 Family
+    </button>
+
+    <button
+      class="chip"
+      onclick="selectCustomerType(this,'Group')"
+    >
+      👥 Group
+    </button>
+
+    <button
+      class="chip"
+      onclick="selectCustomerType(this,'Corporate')"
+    >
+      🏢 Corporate
+    </button>
+
+  </div>
+
+  <input type="hidden" id="customerType" value="Personal">
+
+</section>
+
+
+<!-- =========================================================
+     SEARCH HUB
+========================================================= -->
+<section id="search-hub">
+
+  <div class="sectionHead">
+
+    <div>
+      <h2>Search Travel</h2>
+
+      <p class="muted">
+        Cari hotel, penerbangan dan kebutuhan perjalanan.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="tabs">
+
+    <button
+      class="tab active"
+      onclick="switchSearchTab(this,'hotel')"
+    >
+      <i class="fa-solid fa-hotel"></i>
+      Stays
+    </button>
+
+    <button
+      class="tab"
+      onclick="switchSearchTab(this,'flight')"
+    >
+      <i class="fa-solid fa-plane"></i>
+      Flights
+    </button>
+
+  </div>
+
+
+  <!-- HOTEL SEARCH -->
+
+  <div id="form-hotel" class="form">
+
+    <div class="formGrid">
+
+      <div>
+        <label>Destination</label>
+        <input
+          id="hotelDestination"
+          type="text"
+          value="Jakarta"
+          placeholder="Jakarta, Bali, Singapore..."
+        >
+      </div>
+
+      <div>
+        <label>Check-in</label>
+        <input
+          id="hotelCheckin"
+          type="date"
+        >
+      </div>
+
+      <div>
+        <label>Check-out</label>
+        <input
+          id="hotelCheckout"
+          type="date"
+        >
+      </div>
+
+      <div>
+        <label>Guests</label>
+        <input
+          id="hotelGuests"
+          type="number"
+          value="2"
+          min="1"
+        >
+      </div>
+
+      <div class="full">
+
+        <button
+          class="primary"
+          onclick="executeNewSearch('hotel')"
+        >
+          <i class="fa-solid fa-search"></i>
+          Search Hotels
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- FLIGHT SEARCH -->
+
+  <div
+    id="form-flight"
+    class="form"
+    style="display:none;"
+  >
+
+    <div class="formGrid">
+
+      <div>
+        <label>From</label>
+
+        <input
+          id="flightFrom"
+          value="CGK"
+          placeholder="Airport code"
+        >
+      </div>
+
+      <div>
+        <label>To</label>
+
+        <input
+          id="flightTo"
+          value="DPS"
+          placeholder="Airport code"
+        >
+      </div>
+
+      <div>
+        <label>Departure</label>
+
+        <input
+          id="flightDate"
+          type="date"
+        >
+      </div>
+
+      <div>
+        <label>Passengers</label>
+
+        <input
+          id="flightPassengers"
+          type="number"
+          value="1"
+          min="1"
+        >
+      </div>
+
+      <div class="full">
+
+        <button
+          class="primary"
+          onclick="executeNewSearch('flight')"
+        >
+          <i class="fa-solid fa-plane-departure"></i>
+          Search Flights
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SEARCH RESULTS -->
+
+  <div
+    id="search-results"
+    style="display:none;margin-top:25px;"
+  >
+
     <div class="sectionHead">
-      <div><h2>🔍 Search Engine</h2><div class="muted">Cari hotel & pesawat.</div></div>
-    </div>
-    <div class="search-widget" style="background:#fff; padding:20px; border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.05);">
-      <div class="tabs" style="margin-bottom:15px;">
-        <button class="tab active" onclick="switchSearchTab(this, 'hotel')"><i class="fa-solid fa-bed"></i> Stays</button>
-        <button class="tab" onclick="switchSearchTab(this, 'flight')"><i class="fa-solid fa-plane"></i> Flights</button>
-      </div>
-      <div id="form-hotel" class="formGrid form">
-        <div><label>Where to?</label><input type="text" value="Jakarta"></div>
-        <div><label>Dates</label><input type="text" value="Oct 30 - Nov 1"></div>
-        <div><label>Travelers</label><input type="text" value="2 travellers, 1 room"></div>
-        <div class="full"><button class="primary" onclick="executeNewSearch('hotel')">Search Hotels</button></div>
-      </div>
-      <div id="form-flight" class="formGrid form" style="display:none;">
-        <div><label>Leaving from</label><input type="text" value="Jakarta (CGK)"></div>
-        <div><label>Going to</label><input type="text" value="Bali (DPS)"></div>
-        <div><label>Dates</label><input type="text" value="Nov 4 - Nov 11"></div>
-        <div class="full"><button class="primary" onclick="executeNewSearch('flight')">Search Flights</button></div>
-      </div>
-    </div>
-    <div id="search-results" style="margin-top:30px; display:none;">
-      <h3 id="res-title" style="color:var(--green); margin-bottom:15px;"></h3>
-      <div id="res-list" class="grid"></div>
-    </div>
-  </section>
 
-  <!-- MARKETPLACE -->
-  <section id="market">
+      <div>
+        <h3 id="res-title">
+          Search Results
+        </h3>
+      </div>
+
+    </div>
+
+    <div
+      id="res-list"
+      class="grid"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     AI TRIP PLANNER
+========================================================= -->
+<section id="planner">
+
+  <div class="planner">
+
     <div class="sectionHead">
-      <div><h2>Global Marketplace</h2><div class="muted">Hotel • Villa • Flight • Car • Ticket • Food</div></div>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div class="marketTools">
-      <input id="marketSearch" oninput="renderProducts()" placeholder="Search marketplace...">
-      <select id="sort" onchange="renderProducts()">
-        <option value="">Recommended</option>
-        <option value="low">Price Low</option>
-        <option value="high">Price High</option>
-      </select>
-      <button class="secondary" onclick="resetMarket()">Reset</button>
-    </div>
-    <div class="grid" id="products"></div>
-  </section>
 
-  <!-- AI PLANNER -->
-  <section id="planner">
-    <div class="planner">
-      <div class="sectionHead"><div><h2>✨ AI Trip Planner 2.0</h2></div></div>
-      <div class="plannerGrid">
-        <div class="field"><label>DESTINATION</label><input id="dest" value="Bali"></div>
-        <div class="field"><label>TRAVEL DATE</label><input id="date" type="date"></div>
-        <div class="field"><label>TRAVELERS</label><input id="people" type="number" value="2" min="1"></div>
-        <div class="field"><label>DURATION</label><select id="duration"><option>3 Days 2 Nights</option></select></div>
-        <div class="field"><label>TRIP STYLE</label><select id="style"><option>Comfort</option></select></div>
-        <div class="field"><label>MAIN INTEREST</label><select id="interest"><option>Nature</option></select></div>
+      <div>
+
+        <h2>
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          AI Trip Planner
+        </h2>
+
+        <p style="color:#b8d5ca;">
+          Buat perjalanan berdasarkan kebutuhan Anda.
+        </p>
+
       </div>
-      <br>
-      <button class="primary" onclick="generateTrip()">✨ Generate Smart Trip & Peta</button>
-      <div id="tripResult"></div>
-      <div id="map" style="height:350px; width:100%; border-radius:15px; margin-top:20px; display:none; border:2px solid #087f5b;"></div>
+
     </div>
-  </section>
 
-  <section id="package">
-    <div class="sectionHead"><div><h2>Package Builder</h2></div><button class="secondary" onclick="openCart()">Open My Cart</button></div>
-    <div class="dashboard">
-      <div class="stat">Selected Items<b id="pkgItems">0</b></div>
-      <div class="stat">Subtotal<b id="pkgTotal">Rp 0</b></div>
-      <div class="stat">Service Demo<b>5%</b></div>
-      <div class="stat">Estimated Final<b id="pkgFinal">Rp 0</b></div>
+
+    <!-- PLANNING MODE -->
+
+    <div style="margin-bottom:25px;">
+
+      <label
+        style="
+          display:block;
+          color:#b8d5ca;
+          font-size:12px;
+          margin-bottom:8px;
+        "
+      >
+        Planning Mode
+      </label>
+
+      <div class="chips">
+
+        <button
+          class="chip active"
+          id="modeAI"
+          onclick="selectPlanningMode(this,'AI Plan')"
+        >
+          🤖 AI Plan
+        </button>
+
+        <button
+          class="chip"
+          onclick="selectPlanningMode(this,'Manual Pick')"
+        >
+          ✋ Manual Pick
+        </button>
+
+        <button
+          class="chip"
+          onclick="selectPlanningMode(this,'AI + Manual')"
+        >
+          🔄 AI + Manual
+        </button>
+
+      </div>
+
+      <input
+        type="hidden"
+        id="planningMode"
+        value="AI Plan"
+      >
+
     </div>
-  </section>
 
-  <section id="account"><div class="sectionHead"><h2>My Account</h2></div><div id="accountContent"></div></section>
-  <section id="admin"><div class="sectionHead"><h2>HobbiGo Dashboard</h2></div><div id="dashContent"></div></section>
-</main>
 
-<footer><div class="footerGrid"><div class="logo">Hobbi<span>Go</span></div><p>© 2026 Investor Demo.</p></div></footer>
+    <!-- PLANNER FORM -->
 
-<div class="modal" id="modal"><div class="modalBox" id="modalBox"></div></div>
-<div class="toast" id="toast"></div>
+    <div class="plannerGrid">
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+      <div class="field">
+
+        <label>Destination</label>
+
+        <input
+          id="dest"
+          value="Bali"
+          placeholder="Contoh: Bali"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Travel Date</label>
+
+        <input
+          id="date"
+          type="date"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Travelers</label>
+
+        <input
+          id="people"
+          type="number"
+          value="2"
+          min="1"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Duration</label>
+
+        <select id="duration">
+
+          <option value="2">2 Days</option>
+          <option value="3" selected>3 Days</option>
+          <option value="4">4 Days</option>
+          <option value="5">5 Days</option>
+          <option value="7">7 Days</option>
+          <option value="10">10 Days</option>
+          <option value="14">14 Days</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Trip Style</label>
+
+        <select id="tripStyle">
+
+          <option value="Best Price">
+            Best Price
+          </option>
+
+          <option value="Economy">
+            Economy
+          </option>
+
+          <option value="Comfort" selected>
+            Comfort
+          </option>
+
+          <option value="Exclusive">
+            Exclusive
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Main Interest</label>
+
+        <select id="interest">
+
+          <option value="Beach">
+            🏖️ Beach
+          </option>
+
+          <option value="Wellness">
+            🧘 Wellness
+          </option>
+
+          <option value="Yoga">
+            🧘‍♀️ Yoga
+          </option>
+
+          <option value="Adventure">
+            🧗 Adventure
+          </option>
+
+          <option value="Nature">
+            🌿 Nature
+          </option>
+
+          <option value="Culinary">
+            🍜 Culinary
+          </option>
+
+          <option value="Culture">
+            🏛️ Art & Culture
+          </option>
+
+          <option value="Family">
+            👨‍👩‍👧 Family
+          </option>
+
+          <option value="Shopping">
+            🛍️ Shopping
+          </option>
+
+          <option value="Nightlife">
+            🌃 Night Activity
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <div style="margin-top:18px;">
+
+      <button
+        class="primary"
+        onclick="generateTrip()"
+      >
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        Generate Smart Trip & Peta
+      </button>
+
+    </div>
+
+
+    <!-- AI RESULT -->
+
+    <div id="tripResult"></div>
+
+
+    <!-- SMART ROUTE MAP -->
+
+    <div
+      id="map"
+      style="
+        display:none;
+        width:100%;
+        height:450px;
+        margin-top:20px;
+        border-radius:18px;
+        overflow:hidden;
+      "
+    ></div>
+
+
+    <!-- ROUTE SUMMARY -->
+
+    <div
+      id="routeSummary"
+      style="margin-top:15px;"
+    ></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     MARKETPLACE
+========================================================= -->
+<section id="marketplace">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        Global Marketplace
+      </h2>
+
+      <p class="muted">
+        Pilih produk perjalanan yang Anda butuhkan.
+      </p>
+
+    </div>
+
+    <button
+      class="secondary"
+      onclick="go('planner')"
+    >
+      <i class="fa-solid fa-wand-magic-sparkles"></i>
+      Build With AI
+    </button>
+
+  </div>
+
+
+  <!-- MARKETPLACE CATEGORIES -->
+
+  <div
+    id="chips"
+    class="chips"
+  ></div>
+
+
+  <!-- MARKETPLACE TOOLS -->
+
+  <div class="marketTools">
+
+    <input
+      id="marketSearch"
+      type="text"
+      placeholder="Search hotel, flight, restaurant, activity..."
+      oninput="renderProducts()"
+    >
+
+    <select
+      id="sort"
+      onchange="renderProducts()"
+    >
+
+      <option value="default">
+        Sort
+      </option>
+
+      <option value="low">
+        Price: Low → High
+      </option>
+
+      <option value="high">
+        Price: High → Low
+      </option>
+
+    </select>
+
+    <button
+      class="secondary"
+      onclick="
+        document.getElementById('marketSearch').value='';
+        document.getElementById('sort').value='default';
+        setCat('All');
+      "
+    >
+      Reset
+    </button>
+
+  </div>
+
+
+  <!-- PRODUCT GRID -->
+
+  <div
+    id="products"
+    class="grid"
+  ></div>
+
+</section>
+
+
+<!-- =========================================================
+     MARKETPLACE ECOSYSTEM
+========================================================= -->
+<section id="marketplace-ecosystem">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        Explore Every Travel Experience
+      </h2>
+
+      <p class="muted">
+        HobbiGo menghubungkan berbagai kategori partner
+        dalam satu perjalanan.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🏨 Hotels</h3>
+        <p class="muted">
+          Hotel, resort dan accommodation.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🏡 Villa & Home Rental</h3>
+        <p class="muted">
+          Villa, apartment dan private home.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>✈️ Flights & Tickets</h3>
+        <p class="muted">
+          Penerbangan dan berbagai tiket perjalanan.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🚗 Transport & Vehicle</h3>
+        <p class="muted">
+          Car rental, driver, shuttle dan transport.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🚤 Boat</h3>
+        <p class="muted">
+          Boat, speedboat dan island transfer.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🗺️ Tour</h3>
+        <p class="muted">
+          Tour operator dan local experience.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🎯 Attraction</h3>
+        <p class="muted">
+          Tourism spot, attraction dan destination.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🎨 Activity & Hobby</h3>
+        <p class="muted">
+          Yoga, diving, surfing, hiking,
+          cooking dan aktivitas lainnya.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🍜 Culinary</h3>
+        <p class="muted">
+          Restaurant, cafe, local food dan
+          culinary experience.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🏢 Meeting Point</h3>
+        <p class="muted">
+          Meeting room, retreat dan corporate event.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>👔 Agent</h3>
+        <p class="muted">
+          Travel agent dan local partner.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardBody">
+        <h3>🤝 Partner</h3>
+        <p class="muted">
+          Global tourism ecosystem.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PACKAGE BUILDER
+========================================================= -->
+<section id="package">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        <i class="fa-solid fa-box"></i>
+        Package Builder
+      </h2>
+
+      <p class="muted">
+        Gabungkan pilihan Anda menjadi satu perjalanan.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- PACKAGE STYLE -->
+
+  <div class="chips">
+
+    <button
+      class="chip"
+      onclick="selectPackageStyle(this,'Best Price')"
+    >
+      💰 Best Price
+    </button>
+
+    <button
+      class="chip"
+      onclick="selectPackageStyle(this,'Economy')"
+    >
+      🪙 Economy
+    </button>
+
+    <button
+      class="chip active"
+      onclick="selectPackageStyle(this,'Comfort')"
+    >
+      ⭐ Comfort
+    </button>
+
+    <button
+      class="chip"
+      onclick="selectPackageStyle(this,'Exclusive')"
+    >
+      👑 Exclusive
+    </button>
+
+  </div>
+
+  <input
+    type="hidden"
+    id="packageStyle"
+    value="Comfort"
+  >
+
+
+  <div
+    class="summary"
+    style="margin-top:20px;"
+  >
+
+    <div class="summaryItem">
+
+      <b>
+        Selected Items
+      </b>
+
+      <b id="pkgItems">
+        0
+      </b>
+
+    </div>
+
+
+    <div class="summaryItem">
+
+      <span>
+        Subtotal
+      </span>
+
+      <b
+        class="price"
+        id="pkgTotal"
+      >
+        Rp 0
+      </b>
+
+    </div>
+
+
+    <div class="summaryItem">
+
+      <span>
+        Service Demo 5%
+      </span>
+
+      <span>
+        Included
+      </span>
+
+    </div>
+
+
+    <div class="summaryItem">
+
+      <b>
+        Estimated Final
+      </b>
+
+      <b
+        class="price"
+        id="pkgFinal"
+      >
+        Rp 0
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <!-- BUDGET CONTROL -->
+
+  <div class="notice">
+
+    <b>
+      <i class="fa-solid fa-wallet"></i>
+      Budget Control
+    </b>
+
+    <p>
+      HobbiGo akan membandingkan total pilihan
+      dengan budget perjalanan.
+    </p>
+
+    <div class="formGrid">
+
+      <div>
+
+        <label>Target Budget</label>
+
+        <input
+          id="budgetInput"
+          type="number"
+          placeholder="Contoh: 10000000"
+        >
+
+      </div>
+
+      <div>
+
+        <label>Budget Status</label>
+
+        <div
+          id="budgetStatus"
+          style="
+            padding:12px;
+            background:white;
+            border-radius:10px;
+            font-weight:800;
+          "
+        >
+          Belum dihitung
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- AI RE-OPTIMIZE -->
+
+  <button
+    class="primary"
+    onclick="aiOptimize()"
+  >
+    <i class="fa-solid fa-arrows-rotate"></i>
+    AI Re-Optimize Package
+  </button>
+
+
+  <button
+    class="secondary"
+    onclick="openCart()"
+    style="margin-left:8px;"
+  >
+    <i class="fa-solid fa-cart-shopping"></i>
+    Review Cart
+  </button>
+
+</section>
+
+
+<!-- =========================================================
+     SMART JOURNEY
+========================================================= -->
+<section id="smart-journey">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        <i class="fa-solid fa-route"></i>
+        Smart Journey
+      </h2>
+
+      <p class="muted">
+        Rute perjalanan yang mempertimbangkan
+        lokasi, jarak dan waktu.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="dashboard">
+
+    <div class="stat">
+
+      <span class="muted">
+        Distance
+      </span>
+
+      <b id="journeyDistance">
+        —
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Travel Time
+      </span>
+
+      <b id="journeyTime">
+        —
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Stops
+      </span>
+
+      <b id="journeyStops">
+        —
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Route Status
+      </span>
+
+      <b id="routeStatus">
+        Ready
+      </b>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     BOOKING
+========================================================= -->
+<section id="booking">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        <i class="fa-solid fa-calendar-check"></i>
+        Booking
+      </h2>
+
+      <p class="muted">
+        Semua pilihan perjalanan masuk ke satu transaksi.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="notice">
+
+    <b>Booking Flow</b>
+
+    <p>
+      Package → Cart → Checkout → Payment →
+      Confirmation → E-Ticket → My Trip
+    </p>
+
+  </div>
+
+
+  <button
+    class="primary"
+    onclick="openCart()"
+  >
+    <i class="fa-solid fa-arrow-right"></i>
+    Continue to Booking
+  </button>
+
+</section>
+
+
+<!-- =========================================================
+     MY TRIPS
+========================================================= -->
+<section id="account">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        <i class="fa-solid fa-suitcase-rolling"></i>
+        My Trips
+      </h2>
+
+      <p class="muted">
+        Semua perjalanan dan booking Anda.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div id="accountContent"></div>
+
+
+  <!-- FUTURE LIVE JOURNEY -->
+
+  <div
+    class="notice"
+    style="margin-top:20px;"
+  >
+
+    <b>
+      <i class="fa-solid fa-location-crosshairs"></i>
+      Live Journey
+    </b>
+
+    <p>
+      Fitur Live Journey akan menghubungkan
+      traveler dengan itinerary, lokasi, route,
+      booking dan aktivitas secara real-time.
+    </p>
+
+    <button
+      class="secondary"
+      onclick="openLiveJourney()"
+    >
+      Open Live Journey
+    </button>
+
+  </div>
+
+
+  <!-- FUTURE AI VIDEO -->
+
+  <div
+    class="notice"
+    style="margin-top:15px;"
+  >
+
+    <b>
+      <i class="fa-solid fa-video"></i>
+      AI Journey Video
+    </b>
+
+    <p>
+      Destination → Itinerary → Scene →
+      Narration → Cost → Travel Video.
+    </p>
+
+    <button
+      class="secondary"
+      onclick="openJourneyVideo()"
+    >
+      Create AI Journey Video
+    </button>
+
+  </div>
+
+
+  <!-- FUTURE SHARE -->
+
+  <div
+    class="notice"
+    style="margin-top:15px;"
+  >
+
+    <b>
+      <i class="fa-solid fa-share-nodes"></i>
+      Share Journey
+    </b>
+
+    <p>
+      Bagikan perjalanan melalui social media
+      dan digital journey link.
+    </p>
+
+    <button
+      class="secondary"
+      onclick="shareJourney()"
+    >
+      Share My Journey
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     ADMIN DASHBOARD
+========================================================= -->
+<section id="dashboard">
+
+  <div class="sectionHead">
+
+    <div>
+
+      <h2>
+        <i class="fa-solid fa-chart-pie"></i>
+        Admin Dashboard
+      </h2>
+
+      <p class="muted">
+        Control center untuk marketplace HobbiGo.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="dashboard">
+
+    <div class="stat">
+
+      <span class="muted">
+        Marketplace Products
+      </span>
+
+      <b id="adminProducts">
+        0
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Cart Items
+      </span>
+
+      <b id="adminCart">
+        0
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Bookings
+      </span>
+
+      <b id="adminBookings">
+        0
+      </b>
+
+    </div>
+
+
+    <div class="stat">
+
+      <span class="muted">
+        Marketplace Status
+      </span>
+
+      <b>
+        ACTIVE
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <div class="notice">
+
+    <b>
+      Partner / Inventory Source
+    </b>
+
+    <p>
+      ADMIN → PARTNER → API / AFFILIATE
+    </p>
+
+    <p>
+      Struktur ini disiapkan agar inventory HobbiGo
+      dapat berkembang dari data manual menuju
+      marketplace global dengan API partner.
+    </p>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <h3>
+          🏨 Hotel Partners
+        </h3>
+
+        <p class="muted">
+          Manage hotel inventory.
+        </p>
+
+        <button
+          class="small"
+          onclick="adminFeature('Hotel')"
+        >
+          Manage
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <h3>
+          🍜 Restaurant Partners
+        </h3>
+
+        <p class="muted">
+          Manage culinary inventory.
+        </p>
+
+        <button
+          class="small"
+          onclick="adminFeature('Restaurant')"
+        >
+          Manage
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <h3>
+          🚗 Vehicle Partners
+        </h3>
+
+        <p class="muted">
+          Manage transport and rental.
+        </p>
+
+        <button
+          class="small"
+          onclick="adminFeature('Vehicle')"
+        >
+          Manage
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="cardBody">
+
+        <h3>
+          🎯 Activity Partners
+        </h3>
+
+        <p class="muted">
+          Manage activity and experience.
+        </p>
+
+        <button
+          class="small"
+          onclick="adminFeature('Activity')"
+        >
+          Manage
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer
+  style="
+    background:#103d31;
+    color:white;
+    padding:45px 5%;
+    margin-top:30px;
+  "
+>
+
+  <div
+    style="
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:30px;
+    "
+  >
+
+    <div>
+
+      <h2 style="margin-top:0;">
+        Hobbi<span style="color:#f0a52b;">Go</span>
+      </h2>
+
+      <p style="color:#b8d5ca;">
+        AI Journey & Experience Marketplace
+      </p>
+
+      <p style="color:#b8d5ca;">
+        Search → Plan → Configure → Package →
+        Book → Experience → Re-optimize
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h4>Travel</h4>
+
+      <p>Hotels</p>
+      <p>Flights</p>
+      <p>Transport</p>
+      <p>Activities</p>
+
+    </div>
+
+
+    <div>
+
+      <h4>Marketplace</h4>
+
+      <p>Partners</p>
+      <p>Tour</p>
+      <p>Culinary</p>
+      <p>Experience</p>
+
+    </div>
+
+
+    <div>
+
+      <h4>HobbiGo</h4>
+
+      <p>About</p>
+      <p>Partner</p>
+      <p>Investor</p>
+      <p>Contact</p>
+
+    </div>
+
+  </div>
+
+
+  <hr
+    style="
+      border:0;
+      border-top:1px solid rgba(255,255,255,.15);
+      margin:30px 0;
+    "
+  >
+
+  <small style="color:#b8d5ca;">
+    © 2026 HobbiGo. AI Journey & Experience Marketplace.
+  </small>
+
+</footer>
+
+
+<!-- =========================================================
+     MODAL
+========================================================= -->
+<div
+  id="modal"
+  class="modal"
+>
+
+  <div
+    id="modalBox"
+    class="modalBox"
+  ></div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<!-- =========================================================
+     LEAFLET JS
+========================================================= -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+<!-- =========================================================
+     HOBBIGO APP
+========================================================= -->
 <script src="app.js"></script>
+
+
+<!-- =========================================================
+     SAFE FALLBACK FUNCTIONS
+     Fungsi utama tetap akan kita sempurnakan di app.js
+========================================================= -->
+<script>
+
+function heroSearchGo(){
+
+  const value =
+    document.getElementById("heroSearch").value.trim();
+
+  if(value){
+
+    document.getElementById("dest").value = value;
+
+  }
+
+  go("planner");
+
+}
+
+
+function selectCustomerType(button,type){
+
+  document
+    .querySelectorAll("#customerTypeChips .chip")
+    .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document.getElementById("customerType").value = type;
+
+}
+
+
+function selectPlanningMode(button,mode){
+
+  document
+    .querySelectorAll("#planner .chips .chip")
+    .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document.getElementById("planningMode").value = mode;
+
+}
+
+
+function selectPackageStyle(button,style){
+
+  document
+    .querySelectorAll("#package .chips .chip")
+    .forEach(x=>x.classList.remove("active"));
+
+  button.classList.add("active");
+
+  document.getElementById("packageStyle").value = style;
+
+}
+
+
+function aiOptimize(){
+
+  const budget =
+    Number(
+      document.getElementById("budgetInput")?.value || 0
+    );
+
+  const finalText =
+    document.getElementById("pkgFinal")?.textContent || "Rp 0";
+
+  if(!budget){
+
+    toast("Masukkan target budget terlebih dahulu.");
+
+    return;
+
+  }
+
+  const current =
+    Number(
+      finalText
+        .replace(/[^\d]/g,"")
+    ) || 0;
+
+  const status =
+    document.getElementById("budgetStatus");
+
+  if(current <= budget){
+
+    status.innerHTML =
+      "✅ Package masih dalam budget.";
+
+  }else{
+
+    status.innerHTML =
+      "⚠️ Package melebihi budget. AI akan mencari kombinasi lebih efisien.";
+
+  }
+
+  toast("AI Re-Optimize siap diproses.");
+
+}
+
+
+function openLiveJourney(){
+
+  openModal(`
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2>
+      <i class="fa-solid fa-location-crosshairs"></i>
+      Live Journey
+    </h2>
+
+    <p class="muted">
+      Modul Live Journey akan menghubungkan
+      itinerary, lokasi, route, booking dan
+      aktivitas traveler secara real-time.
+    </p>
+
+    <div class="notice">
+      Destination → Route → Activity →
+      Booking → Live Status
+    </div>
+  `);
+
+}
+
+
+function openJourneyVideo(){
+
+  openModal(`
+    <button class="close" onclick="closeModal()">×</button>
+
+    <h2>
+      <i class="fa-solid fa-video"></i>
+      AI Journey Video
+    </h2>
+
+    <p class="muted">
+      Konsep AI video HobbiGo:
+    </p>
+
+    <div class="notice">
+
+      Destination<br>
+      ↓<br>
+      Itinerary<br>
+      ↓<br>
+      Scene<br>
+      ↓<br>
+      Narration<br>
+      ↓<br>
+      Cost<br>
+      ↓<br>
+      AI Journey Video
+
+    </div>
+
+  `);
+
+}
+
+
+function shareJourney(){
+
+  if(navigator.share){
+
+    navigator.share({
+
+      title:"My HobbiGo Journey",
+
+      text:"My journey planned with HobbiGo."
+
+    }).catch(()=>{});
+
+  }else{
+
+    toast("Share Journey siap diintegrasikan.");
+
+  }
+
+}
+
+
+function adminFeature(category){
+
+  toast(
+    category +
+    " Partner Management — modul admin berikutnya."
+  );
+
+}
+
+
+/* Admin counters */
+
+setTimeout(()=>{
+
+  try{
+
+    const productCount =
+      document.querySelectorAll("#products .card").length;
+
+    document.getElementById("adminProducts").textContent =
+      productCount;
+
+    const cartCount =
+      document.getElementById("cartCount")?.textContent || "0";
+
+    document.getElementById("adminCart").textContent =
+      cartCount;
+
+    const bookings =
+      JSON.parse(
+        localStorage.getItem("hbg_bookings") || "[]"
+      );
+
+    document.getElementById("adminBookings").textContent =
+      bookings.length;
+
+  }catch(e){}
+
+},500);
+
+
+/* Default dates */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  const today =
+    new Date().toISOString().slice(0,10);
+
+  const date =
+    document.getElementById("date");
+
+  const flightDate =
+    document.getElementById("flightDate");
+
+  const checkin =
+    document.getElementById("hotelCheckin");
+
+  if(date && !date.value)
+    date.value=today;
+
+  if(flightDate && !flightDate.value)
+    flightDate.value=today;
+
+  if(checkin && !checkin.value)
+    checkin.value=today;
+
+});
+
+</script>
+
 </body>
 </html>
