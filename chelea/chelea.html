@@ -3,138 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#07111f">
-<title>CHELEA V12</title>
-
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<meta name="theme-color" content="#06111f">
+<title>CHELEA V15 MASTER</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
- --bg:#07111f;
+ --bg:#06111f;
  --bg2:#0b1728;
  --card:#101f33;
  --card2:#14263d;
- --line:#263b55;
- --text:#f5f8fc;
- --muted:#91a5bd;
- --blue:#42a5ff;
- --green:#21d18a;
- --yellow:#f4c95d;
- --orange:#ff9f43;
- --red:#ff6377;
+ --line:#223b58;
+ --text:#f4f8ff;
+ --muted:#91a4bb;
+ --green:#20d39b;
+ --blue:#38a8ff;
+ --yellow:#ffc857;
+ --red:#ff5d73;
+ --purple:#9b7cff;
 }
 
 body{
- font-family:Arial,Helvetica,sans-serif;
- background:linear-gradient(180deg,#07111f,#0a1727);
+ font-family:Inter,Arial,sans-serif;
+ background:linear-gradient(180deg,#06111f,#091827 60%,#06111f);
  color:var(--text);
  min-height:100vh;
 }
 
-button,input,select{font:inherit}
+button,input,select,textarea{
+ font:inherit;
+}
 
-button{cursor:pointer}
+button{
+ cursor:pointer;
+ border:0;
+}
 
 .app{
- max-width:920px;
+ width:100%;
+ max-width:900px;
  margin:auto;
  padding-bottom:90px;
 }
 
-.header{
+header{
  position:sticky;
  top:0;
- z-index:999;
- background:rgba(7,17,31,.96);
- backdrop-filter:blur(14px);
+ z-index:50;
+ background:rgba(6,17,31,.94);
+ backdrop-filter:blur(16px);
  border-bottom:1px solid var(--line);
  padding:14px 16px;
 }
 
-.headerRow{
+.header-row{
  display:flex;
  justify-content:space-between;
  align-items:center;
+ gap:12px;
 }
 
-.brand{
+.logo{
  font-size:23px;
  font-weight:900;
  letter-spacing:2px;
 }
 
-.brand small{
- display:block;
- color:var(--muted);
- font-size:9px;
- letter-spacing:1px;
- margin-top:3px;
-}
-
-.secure{
+.logo span{
  color:var(--green);
- border:1px solid rgba(33,209,138,.3);
- background:rgba(33,209,138,.08);
- border-radius:20px;
+}
+
+.security{
+ font-size:11px;
+ color:var(--green);
+ border:1px solid rgba(32,211,155,.35);
  padding:7px 10px;
- font-size:9px;
- font-weight:900;
-}
-
-.back{
- width:100%;
- margin-top:12px;
- padding:10px;
- border-radius:10px;
- border:1px solid var(--line);
- background:#0c1a2d;
- color:#fff;
-}
-
-.section{
- padding:16px;
+ border-radius:20px;
 }
 
 .hero{
- padding:20px;
- border-radius:20px;
- border:1px solid var(--line);
- background:
- radial-gradient(circle at 90% 0%,rgba(66,165,255,.18),transparent 35%),
- linear-gradient(145deg,#10253e,#0b1728);
- margin-bottom:14px;
+ padding:24px 16px 14px;
 }
 
 .hero h1{
- font-size:28px;
- margin-bottom:8px;
+ font-size:30px;
+ line-height:1.1;
+ margin-bottom:9px;
 }
 
 .hero p{
  color:var(--muted);
- font-size:13px;
- line-height:1.5;
+ line-height:1.6;
 }
 
 .card{
- background:var(--card);
+ background:linear-gradient(180deg,rgba(20,38,61,.96),rgba(13,28,46,.96));
  border:1px solid var(--line);
- border-radius:17px;
+ border-radius:18px;
  padding:16px;
- margin-bottom:14px;
+ margin:12px 16px;
+ box-shadow:0 12px 30px rgba(0,0,0,.16);
 }
 
 .card h2{
- font-size:16px;
+ font-size:17px;
  margin-bottom:12px;
 }
 
 .card h3{
  font-size:14px;
- margin-bottom:7px;
+ margin-bottom:8px;
 }
 
 .grid{
@@ -143,413 +122,451 @@ button{cursor:pointer}
  gap:10px;
 }
 
-@media(max-width:600px){
- .grid{grid-template-columns:1fr}
+.grid3{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+}
+
+@media(max-width:620px){
+ .grid,.grid3{
+  grid-template-columns:1fr;
+ }
 }
 
 .stat{
- background:#0a192b;
+ background:#0b1a2d;
  border:1px solid var(--line);
- border-radius:12px;
- padding:12px;
-}
-
-.stat span{
- display:block;
- color:var(--muted);
- font-size:9px;
- text-transform:uppercase;
-}
-
-.stat strong{
- display:block;
- margin-top:5px;
- font-size:17px;
-}
-
-.btn{
- width:100%;
- border:0;
+ border-radius:14px;
  padding:13px;
- border-radius:11px;
- margin-top:8px;
+}
+
+.stat .value{
+ font-size:21px;
  font-weight:900;
+ margin-top:4px;
 }
 
-.primary{background:var(--blue);color:#03101b}
-.green{background:var(--green);color:#03150e}
-.yellow{background:var(--yellow);color:#1a1300}
-.orange{background:var(--orange);color:#211000}
-.red{background:var(--red);color:#25050b}
-
-.dark{
- background:#0b192b;
- color:#fff;
- border:1px solid var(--line);
-}
-
-.btn:disabled{
- opacity:.35;
- cursor:not-allowed;
+.stat .label{
+ font-size:11px;
+ color:var(--muted);
 }
 
 label{
  display:block;
- color:var(--muted);
- font-size:10px;
+ color:#b8c7d9;
+ font-size:12px;
  margin-bottom:6px;
 }
 
-.formGroup{
+input,select,textarea{
+ width:100%;
+ background:#081728;
+ color:white;
+ border:1px solid #29435f;
+ border-radius:11px;
+ padding:11px 12px;
+ outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+ border-color:var(--blue);
+}
+
+textarea{
+ min-height:85px;
+ resize:vertical;
+}
+
+.field{
  margin-bottom:11px;
 }
 
-input,select{
+.btn{
  width:100%;
- background:#081526;
- color:#fff;
+ padding:12px 14px;
+ border-radius:12px;
+ color:white;
+ font-weight:800;
+ background:#173452;
+ border:1px solid #2c4e70;
+ margin-top:7px;
+}
+
+.btn:hover{
+ filter:brightness(1.12);
+}
+
+.btn.primary{
+ background:linear-gradient(135deg,#18b988,#1b9cff);
+ border:0;
+}
+
+.btn.green{
+ background:#087d61;
+}
+
+.btn.blue{
+ background:#126ca8;
+}
+
+.btn.yellow{
+ background:#785b11;
+ color:#fff5c7;
+}
+
+.btn.red{
+ background:#72263a;
+}
+
+.btn.purple{
+ background:#493a91;
+}
+
+.btn.small{
+ width:auto;
+ padding:8px 11px;
+ font-size:12px;
+}
+
+.row{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+}
+
+.badge{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ padding:6px 9px;
+ border-radius:20px;
+ font-size:11px;
+ font-weight:800;
+ background:#13283f;
+ border:1px solid #29435f;
+}
+
+.badge.green{
+ color:#65f2c5;
+ border-color:#1a705c;
+}
+
+.badge.yellow{
+ color:#ffd66b;
+ border-color:#705b24;
+}
+
+.badge.red{
+ color:#ff8294;
+ border-color:#733144;
+}
+
+.badge.blue{
+ color:#68bdff;
+ border-color:#235b85;
+}
+
+.badge.purple{
+ color:#baaaff;
+ border-color:#564a99;
+}
+
+.section-title{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ margin-bottom:12px;
+}
+
+.timeline{
+ position:relative;
+ margin-left:8px;
+}
+
+.event{
+ position:relative;
+ padding:0 0 16px 25px;
+ border-left:1px solid #29435f;
+ margin-left:6px;
+}
+
+.event:last-child{
+ border-left:0;
+}
+
+.dot{
+ position:absolute;
+ left:-7px;
+ top:1px;
+ width:13px;
+ height:13px;
+ border-radius:50%;
+ background:#29435f;
+ border:2px solid #081728;
+}
+
+.event.done .dot{
+ background:var(--green);
+}
+
+.event.active .dot{
+ background:var(--blue);
+ box-shadow:0 0 0 5px rgba(56,168,255,.12);
+}
+
+.event strong{
+ font-size:13px;
+}
+
+.event small{
+ display:block;
+ color:var(--muted);
+ margin-top:4px;
+}
+
+.map{
+ height:300px;
+ border-radius:15px;
+ overflow:hidden;
  border:1px solid var(--line);
+ background:
+ radial-gradient(circle at 40% 40%,rgba(56,168,255,.2),transparent 20%),
+ linear-gradient(135deg,#0b1d31,#102b45);
+ position:relative;
+}
+
+.map-grid{
+ position:absolute;
+ inset:0;
+ opacity:.25;
+ background-image:
+ linear-gradient(#4d7393 1px,transparent 1px),
+ linear-gradient(90deg,#4d7393 1px,transparent 1px);
+ background-size:40px 40px;
+ transform:rotate(-8deg) scale(1.2);
+}
+
+.route{
+ position:absolute;
+ left:15%;
+ right:14%;
+ top:53%;
+ height:3px;
+ background:linear-gradient(90deg,var(--green),var(--blue));
+ transform:rotate(-13deg);
+}
+
+.pin{
+ position:absolute;
+ width:18px;
+ height:18px;
+ border-radius:50%;
+ border:4px solid white;
+ box-shadow:0 0 0 8px rgba(255,255,255,.08);
+}
+
+.pin.owner{
+ left:13%;
+ top:67%;
+ background:var(--green);
+}
+
+.pin.traveler{
+ left:52%;
+ top:48%;
+ background:var(--blue);
+ animation:pulse 1.5s infinite;
+}
+
+.pin.destination{
+ right:10%;
+ top:28%;
+ background:var(--red);
+}
+
+@keyframes pulse{
+ 0%{box-shadow:0 0 0 0 rgba(56,168,255,.5)}
+ 70%{box-shadow:0 0 0 18px rgba(56,168,255,0)}
+ 100%{box-shadow:0 0 0 0 rgba(56,168,255,0)}
+}
+
+.map-label{
+ position:absolute;
+ background:rgba(5,15,28,.88);
+ padding:7px 9px;
+ border-radius:8px;
+ font-size:10px;
+ border:1px solid #29435f;
+}
+
+.ml1{left:7%;bottom:12%}
+.ml2{left:46%;top:37%}
+.ml3{right:5%;top:16%}
+
+.photo-preview{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:8px;
+ margin-top:9px;
+}
+
+.photo-box{
+ min-height:90px;
+ background:#081728;
+ border:1px dashed #36516c;
  border-radius:10px;
- padding:12px;
- outline:none;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ overflow:hidden;
+ font-size:10px;
+ color:var(--muted);
+}
+
+.photo-box img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
+
+.security-score{
+ font-size:34px;
+ font-weight:900;
+ color:var(--green);
+}
+
+.progress{
+ height:9px;
+ border-radius:10px;
+ background:#081728;
+ overflow:hidden;
+ margin:9px 0;
+}
+
+.progress div{
+ height:100%;
+ background:linear-gradient(90deg,var(--green),var(--blue));
+ width:92%;
 }
 
 .notice{
  padding:11px;
  border-radius:11px;
- background:rgba(66,165,255,.08);
- border:1px solid rgba(66,165,255,.25);
- color:#a9d6ff;
- font-size:11px;
- line-height:1.5;
- margin-bottom:12px;
-}
-
-.success{
- background:rgba(33,209,138,.08);
- border-color:rgba(33,209,138,.3);
- color:#8bf0c7;
+ background:#0c2135;
+ border:1px solid #214563;
+ color:#a9c2d9;
+ font-size:12px;
+ line-height:1.55;
 }
 
 .warning{
- background:rgba(244,201,93,.08);
- border-color:rgba(244,201,93,.3);
- color:#f8dd8c;
+ border-color:#705b24;
+ background:#302711;
+ color:#ffe09a;
 }
 
-.idBox{
- background:#07111f;
- border:1px solid var(--line);
- border-radius:13px;
- padding:13px;
- margin-top:14px;
+.success{
+ border-color:#1d6d59;
+ background:#092a23;
+ color:#86f1cf;
 }
 
-.idRow{
- display:flex;
- justify-content:space-between;
- gap:10px;
- padding:5px 0;
- font-size:11px;
+.danger{
+ border-color:#703044;
+ background:#321421;
+ color:#ff9dad;
 }
 
-.idRow span{color:var(--muted)}
-
-.status{
- display:inline-flex;
- align-items:center;
- gap:7px;
- padding:7px 10px;
- border-radius:20px;
- background:#0a192b;
- border:1px solid var(--line);
- font-size:10px;
- font-weight:900;
+.hidden{
+ display:none!important;
 }
 
-.dot{
- width:8px;
- height:8px;
- border-radius:50%;
- background:var(--blue);
-}
-
-.statusGreen{color:var(--green)}
-.statusBlue{color:var(--blue)}
-.statusOrange{color:var(--orange)}
-.statusYellow{color:var(--yellow)}
-
-.flow{
- display:flex;
- overflow-x:auto;
- gap:7px;
- padding-bottom:5px;
-}
-
-.flowItem{
- min-width:92px;
- padding:10px 7px;
- border-radius:10px;
- background:#0a192b;
- border:1px solid var(--line);
- text-align:center;
- color:var(--muted);
- font-size:9px;
- font-weight:900;
-}
-
-.flowItem.done{
- color:var(--green);
- border-color:rgba(33,209,138,.35);
-}
-
-.flowItem.active{
- color:var(--blue);
- border-color:rgba(66,165,255,.4);
-}
-
-.timeline{
- position:relative;
- padding-left:25px;
-}
-
-.timeline:before{
- content:"";
- position:absolute;
- left:8px;
- top:4px;
- bottom:4px;
- width:2px;
- background:#263b55;
-}
-
-.event{
- position:relative;
- margin-bottom:18px;
-}
-
-.eventDot{
- position:absolute;
- left:-22px;
- top:2px;
- width:13px;
- height:13px;
- border-radius:50%;
- background:#263b55;
- border:2px solid #07111f;
-}
-
-.event.done .eventDot{
- background:var(--green);
-}
-
-.event.active .eventDot{
- background:var(--blue);
- box-shadow:0 0 0 5px rgba(66,165,255,.12);
-}
-
-.eventTitle{
- font-size:12px;
- font-weight:900;
-}
-
-.eventTime{
- font-size:10px;
- color:var(--muted);
- margin-top:3px;
-}
-
-.eventNote{
- font-size:10px;
- color:#b8c8d9;
- margin-top:4px;
-}
-
-.map{
- width:100%;
- height:320px;
- border-radius:14px;
- overflow:hidden;
- border:1px solid var(--line);
-}
-
-.gpsGrid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:8px;
- margin-top:10px;
-}
-
-.gpsBox{
- background:#081526;
- border:1px solid var(--line);
- border-radius:10px;
- padding:10px;
-}
-
-.gpsBox span{
- display:block;
- color:var(--muted);
- font-size:9px;
-}
-
-.gpsBox strong{
- display:block;
- margin-top:4px;
- font-size:12px;
-}
-
-.partner{
- display:flex;
- align-items:center;
- gap:12px;
- background:#0a192b;
- border:1px solid var(--line);
- padding:12px;
- border-radius:13px;
-}
-
-.avatar{
- width:44px;
- height:44px;
- border-radius:50%;
- background:linear-gradient(135deg,#42a5ff,#21d18a);
- color:#06121f;
- display:flex;
- align-items:center;
- justify-content:center;
- font-weight:900;
-}
-
-.partnerInfo{
- flex:1;
-}
-
-.partnerInfo strong{
- display:block;
- font-size:13px;
-}
-
-.partnerInfo span{
- display:block;
- color:var(--muted);
- font-size:10px;
- margin-top:3px;
-}
-
-.price{
- font-size:30px;
- font-weight:900;
- margin:8px 0;
-}
-
-.price small{
- color:var(--muted);
- font-size:11px;
- font-weight:normal;
-}
-
-.receipt{
- background:#f7fafc;
- color:#102033;
- border-radius:14px;
- padding:16px;
-}
-
-.receipt h2{
- margin-bottom:12px;
-}
-
-.receiptRow{
- display:flex;
- justify-content:space-between;
- gap:12px;
- padding:8px 0;
- border-bottom:1px solid #dce3ea;
- font-size:11px;
-}
-
-.receiptTotal{
- display:flex;
- justify-content:space-between;
- font-size:17px;
- font-weight:900;
- padding-top:12px;
-}
-
-.bigCheck{
- width:76px;
- height:76px;
- margin:4px auto 15px;
- border-radius:50%;
- border:2px solid var(--green);
- color:var(--green);
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:38px;
- background:rgba(33,209,138,.08);
-}
-
-.center{text-align:center}
-
-.small{
- font-size:10px;
- color:var(--muted);
- line-height:1.5;
-}
-
-.bottomNav{
+.bottom-nav{
  position:fixed;
- left:50%;
- transform:translateX(-50%);
  bottom:0;
- width:min(920px,100%);
- z-index:1100;
+ left:0;
+ right:0;
+ z-index:100;
+ max-width:900px;
+ margin:auto;
+ background:rgba(5,15,27,.96);
+ border-top:1px solid var(--line);
  display:grid;
  grid-template-columns:repeat(6,1fr);
- background:rgba(7,17,31,.98);
- border-top:1px solid var(--line);
+ padding:8px 5px;
+ backdrop-filter:blur(16px);
 }
 
-.navBtn{
- border:0;
+.nav-btn{
  background:transparent;
- color:var(--muted);
- padding:9px 2px;
- font-size:8px;
+ color:#7e94ab;
+ font-size:10px;
+ padding:7px 2px;
 }
 
-.navBtn.active{color:#fff}
+.nav-btn.active{
+ color:var(--green);
+}
 
-.navIcon{
+.nav-icon{
  display:block;
  font-size:17px;
  margin-bottom:3px;
 }
 
-.hidden{display:none!important}
-
-#toast{
+.toast{
  position:fixed;
  left:50%;
- bottom:82px;
- transform:translateX(-50%) translateY(15px);
+ bottom:78px;
+ transform:translateX(-50%);
+ background:#132a42;
+ border:1px solid #335472;
+ padding:11px 14px;
+ border-radius:12px;
+ font-size:12px;
+ z-index:200;
  opacity:0;
  pointer-events:none;
- background:#14263d;
- border:1px solid var(--line);
- color:#fff;
- border-radius:12px;
- padding:11px 15px;
- font-size:11px;
- z-index:5000;
  transition:.25s;
 }
 
-#toast.show{
+.toast.show{
  opacity:1;
- transform:translateX(-50%) translateY(0);
+}
+
+hr{
+ border:0;
+ border-top:1px solid var(--line);
+ margin:14px 0;
+}
+
+.mono{
+ font-family:monospace;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ font-size:11px;
+}
+
+td,th{
+ padding:8px 5px;
+ border-bottom:1px solid #1d344d;
+ text-align:left;
+}
+
+th{
+ color:#8fa6bd;
+}
+
+footer{
+ padding:20px 16px;
+ text-align:center;
+ color:#60758c;
+ font-size:10px;
 }
 </style>
 </head>
@@ -558,1578 +575,1374 @@ input,select{
 
 <div class="app">
 
-<header class="header">
-
- <div class="headerRow">
-
-  <div>
-   <div class="brand">CHELEA</div>
-   <small>SMART PERSONAL DELIVERY</small>
-  </div>
-
-  <div class="secure">
-   ● SECURE DEMO
-  </div>
-
+<header>
+ <div class="header-row">
+  <div class="logo">CHELEA<span>.</span></div>
+  <div class="security">● SECURE CONTROL</div>
  </div>
-
- <button class="back" onclick="backHobbigo()">
-  ← BACK TO HOBBIGO
- </button>
-
 </header>
 
-<main id="content"></main>
+<section class="hero">
+ <h1>Smart Personal Delivery</h1>
+ <p>
+  Global Jastip • Traveler • Cargo • Pickup • Live Delivery
+  <br>
+  V13 + V14 + V15 MASTER
+ </p>
+</section>
 
-<nav class="bottomNav">
+<!-- DASHBOARD -->
+<section id="home" class="page">
 
- <button class="navBtn active" onclick="page('home',this)">
-  <span class="navIcon">⌂</span>
-  HOME
+<div class="card">
+ <div class="section-title">
+  <h2>Transaction Control</h2>
+  <span class="badge green" id="mainStatus">APPROVED</span>
+ </div>
+
+ <div class="grid3">
+  <div class="stat">
+   <div class="label">Transaction</div>
+   <div class="value mono" id="transactionDisplay">CHL-2026-000128</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Tracking</div>
+   <div class="value mono" id="trackingDisplay">CHE-TRK-000128</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Payment</div>
+   <div class="value" id="paymentDisplay">SUCCESS</div>
+  </div>
+ </div>
+</div>
+
+<div class="card">
+ <div class="section-title">
+  <h2>Security Score</h2>
+  <span class="badge green">ACTIVE</span>
+ </div>
+
+ <div class="security-score">92/100</div>
+ <div class="progress"><div></div></div>
+
+ <div class="row">
+  <span class="badge green">IDENTITY</span>
+  <span class="badge green">ITEM</span>
+  <span class="badge green">PAYMENT</span>
+  <span class="badge green">GPS</span>
+  <span class="badge blue">AUDIT</span>
+ </div>
+</div>
+
+<div class="card">
+ <h2>System Flow</h2>
+
+ <div class="timeline" id="mainTimeline"></div>
+</div>
+
+<div class="card">
+ <h2>Control Center</h2>
+
+ <div class="grid">
+  <div class="stat">
+   <div class="label">Active Transactions</div>
+   <div class="value">12</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Pickup</div>
+   <div class="value">4</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">In Transit</div>
+   <div class="value">6</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Risk Review</div>
+   <div class="value">1</div>
+  </div>
+ </div>
+</div>
+
+</section>
+
+<!-- REQUEST -->
+<section id="request" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Create Delivery Request</h2>
+  <span class="badge blue">V15</span>
+ </div>
+
+ <div class="field">
+  <label>Origin</label>
+  <input id="origin" value="Bekasi">
+ </div>
+
+ <div class="field">
+  <label>Destination</label>
+  <input id="destination" value="Bandung">
+ </div>
+
+ <div class="field">
+  <label>Pickup Location</label>
+  <input id="pickupLocation" value="Mall Summarecon Bekasi">
+ </div>
+
+ <div class="field">
+  <label>Delivery Location</label>
+  <input id="deliveryLocation" value="Bandung Indah Plaza">
+ </div>
+
+ <div class="grid">
+  <div class="field">
+   <label>Delivery Date</label>
+   <input id="deliveryDate" type="date" value="2026-10-23">
+  </div>
+
+  <div class="field">
+   <label>Weight KG</label>
+   <input id="weight" type="number" value="2" min="0.1">
+  </div>
+ </div>
+
+ <div class="field">
+  <label>Priority</label>
+  <select id="priority">
+   <option value="standard">Standard</option>
+   <option value="priority" selected>Priority</option>
+   <option value="exclusive">Exclusive</option>
+  </select>
+ </div>
+
+ <button class="btn primary" onclick="createTransaction()">
+  CREATE CHELEA TRANSACTION
+ </button>
+</div>
+
+<!-- OWNER -->
+<div class="card">
+ <div class="section-title">
+  <h2>Owner / Pemilik Barang</h2>
+  <span class="badge purple">GLOBAL ID</span>
+ </div>
+
+ <div class="field">
+  <label>CHELEA Global Identity ID</label>
+  <input id="ownerCgid" value="CGID-ID-000001">
+ </div>
+
+ <div class="field">
+  <label>Full Name</label>
+  <input id="ownerName" value="Demo Owner">
+ </div>
+
+ <div class="field">
+  <label>Phone Number</label>
+  <input id="ownerPhone" value="+62 812 0000 0000">
+ </div>
+
+ <div class="grid">
+  <div class="field">
+   <label>Country</label>
+   <input id="ownerCountry" value="Indonesia">
+  </div>
+
+  <div class="field">
+   <label>Identity Type</label>
+   <select id="ownerIdType">
+    <option>KTP</option>
+    <option>Passport</option>
+    <option>National ID</option>
+    <option>Other</option>
+   </select>
+  </div>
+ </div>
+
+ <div class="field">
+  <label>Identity Number</label>
+  <input id="ownerIdNumber" type="password" value="327xxxxxxxxxxxxx">
+ </div>
+
+ <div class="notice warning">
+  Data identitas sensitif hanya untuk verification. Pada production,
+  nomor identitas dan dokumen harus disimpan secara private/encrypted,
+  bukan di public frontend atau GitHub.
+ </div>
+
+ <button class="btn purple" onclick="verifyOwner()">
+  VERIFY OWNER ID
  </button>
 
- <button class="navBtn" onclick="page('request',this)">
-  <span class="navIcon">＋</span>
-  REQUEST
+ <div id="ownerVerify" class="notice success hidden">
+  ✓ OWNER VERIFIED — DEMO
+ </div>
+</div>
+
+<!-- PICKUP CONTROLLER -->
+<div class="card">
+ <div class="section-title">
+  <h2>Pickup Controller</h2>
+  <span class="badge blue">CONTROL</span>
+ </div>
+
+ <div class="field">
+  <label>Controller Global ID</label>
+  <input id="controllerId" value="CGID-ID-PICKUP-0001">
+ </div>
+
+ <div class="field">
+  <label>Controller Name</label>
+  <input id="controllerName" value="Pickup Controller">
+ </div>
+
+ <div class="field">
+  <label>Phone Number</label>
+  <input id="controllerPhone" value="+62 813 0000 0000">
+ </div>
+
+ <div class="grid">
+  <div class="field">
+   <label>Identity Type</label>
+   <select id="controllerIdType">
+    <option>KTP</option>
+    <option>Passport</option>
+    <option>National ID</option>
+    <option>Other</option>
+   </select>
+  </div>
+
+  <div class="field">
+   <label>Relation to Owner</label>
+   <select id="controllerRelation">
+    <option>Owner</option>
+    <option>Family</option>
+    <option>Employee</option>
+    <option>Authorized Representative</option>
+    <option>Other</option>
+   </select>
+  </div>
+ </div>
+
+ <button class="btn blue" onclick="verifyController()">
+  VERIFY PICKUP CONTROLLER
  </button>
 
- <button class="navBtn" onclick="page('payment',this)">
-  <span class="navIcon">₿</span>
-  PAYMENT
+ <div id="controllerVerify" class="notice success hidden">
+  ✓ PICKUP CONTROLLER VERIFIED — DEMO
+ </div>
+</div>
+
+<!-- ITEM -->
+<div class="card">
+ <div class="section-title">
+  <h2>Item Security</h2>
+  <span class="badge green">ITEM ID</span>
+ </div>
+
+ <div class="field">
+  <label>Item ID</label>
+  <input id="itemId" value="CHE-ITEM-2026-000128">
+ </div>
+
+ <div class="field">
+  <label>Item Name / Description</label>
+  <input id="itemName" value="Personal Package">
+ </div>
+
+ <div class="grid">
+  <div class="field">
+   <label>Category</label>
+   <select id="itemCategory">
+    <option>Personal Goods</option>
+    <option>Document</option>
+    <option>Clothing</option>
+    <option>Electronics</option>
+    <option>Other</option>
+   </select>
+  </div>
+
+  <div class="field">
+   <label>Declared Value (IDR)</label>
+   <input id="declaredValue" type="number" value="500000">
+  </div>
+ </div>
+
+ <div class="field">
+  <label>Item Notes</label>
+  <textarea id="itemNotes">Demo package for CHELEA security testing.</textarea>
+ </div>
+
+ <label>Photos Before Pickup</label>
+ <input id="itemPhotos" type="file" accept="image/*" multiple onchange="previewPhotos(event)">
+
+ <div class="photo-preview" id="photoPreview">
+  <div class="photo-box">PHOTO 1</div>
+  <div class="photo-box">PHOTO 2</div>
+  <div class="photo-box">PHOTO 3</div>
+ </div>
+
+ <button class="btn primary" onclick="verifyItem()">
+  VERIFY ITEM & GENERATE ITEM RECORD
  </button>
 
- <button class="navBtn" onclick="page('tracking',this)">
-  <span class="navIcon">⌖</span>
-  TRACK
+ <div id="itemVerify" class="notice success hidden">
+  ✓ ITEM VERIFIED — PHOTO BEFORE PICKUP REGISTERED — DEMO
+ </div>
+</div>
+
+</section>
+
+<!-- LIVE -->
+<section id="live" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Customer ↔ Traveler Live Delivery</h2>
+  <span class="badge green" id="gpsBadge">GPS READY</span>
+ </div>
+
+ <div class="row">
+  <button class="btn small green" onclick="startGPS()">START GPS</button>
+  <button class="btn small blue" onclick="centerGPS()">CENTER GPS</button>
+  <button class="btn small red" onclick="stopGPS()">STOP GPS</button>
+ </div>
+
+ <div class="map" id="mapBox">
+  <div class="map-grid"></div>
+  <div class="route"></div>
+
+  <div class="pin owner"></div>
+  <div class="pin traveler" id="travelerPin"></div>
+  <div class="pin destination"></div>
+
+  <div class="map-label ml1">PICKUP</div>
+  <div class="map-label ml2">TRAVELER</div>
+  <div class="map-label ml3">DESTINATION</div>
+ </div>
+
+ <div class="grid">
+  <div class="stat">
+   <div class="label">Latitude</div>
+   <div class="value" id="lat">-</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Longitude</div>
+   <div class="value" id="lng">-</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Accuracy</div>
+   <div class="value" id="accuracy">-</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Last Update</div>
+   <div class="value" id="lastUpdate">-</div>
+  </div>
+ </div>
+</div>
+
+<div class="card">
+ <h2>Delivery Status</h2>
+
+ <select id="deliveryStatus" onchange="changeDeliveryStatus()">
+  <option>REQUEST</option>
+  <option>MATCHED</option>
+  <option>APPROVED</option>
+  <option>PICKUP READY</option>
+  <option>PICKUP</option>
+  <option>IN TRANSIT</option>
+  <option>ARRIVED</option>
+  <option>HANDOVER</option>
+  <option>COMPLETED</option>
+ </select>
+
+ <button class="btn green" onclick="confirmPickup()">
+  CONFIRM PICKUP + GPS PROOF
  </button>
 
- <button class="navBtn" onclick="page('live',this)">
-  <span class="navIcon">●</span>
-  LIVE
+ <button class="btn blue" onclick="startDelivery()">
+  START DELIVERY / IN TRANSIT
  </button>
 
- <button class="navBtn" onclick="page('orders',this)">
-  <span class="navIcon">▣</span>
-  ORDERS
+ <button class="btn yellow" onclick="confirmArrival()">
+  CONFIRM ARRIVAL
  </button>
 
-</nav>
+ <button class="btn purple" onclick="confirmHandover()">
+  CONFIRM HANDOVER
+ </button>
+
+ <button class="btn primary" onclick="completeDelivery()">
+  CONFIRM DELIVERY / COMPLETED
+ </button>
+</div>
+
+<div class="card">
+ <h2>Tracking Timeline</h2>
+ <div class="timeline" id="trackingTimeline"></div>
+</div>
+
+</section>
+
+<!-- PARTNERS -->
+<section id="partners" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Global Partner Network</h2>
+  <span class="badge purple">V15</span>
+ </div>
+
+ <div class="grid">
+  <div class="stat">
+   <div class="label">Traveler</div>
+   <div class="value">24</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Cargo Partner</div>
+   <div class="value">18</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Pickup Partner</div>
+   <div class="value">31</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Local Delivery</div>
+   <div class="value">42</div>
+  </div>
+ </div>
+</div>
+
+<div class="card">
+ <h2>Assigned Partner</h2>
+
+ <div class="stat">
+  <div class="label">Partner ID</div>
+  <div class="value mono">CHE-PARTNER-000128</div>
+ </div>
+
+ <hr>
+
+ <div class="grid">
+  <div>
+   <div class="label">Name</div>
+   <strong>Andi Traveler</strong>
+  </div>
+
+  <div>
+   <div class="label">Phone</div>
+   <strong>+62 814 0000 0000</strong>
+  </div>
+
+  <div>
+   <div class="label">Country</div>
+   <strong>Indonesia</strong>
+  </div>
+
+  <div>
+   <div class="label">Status</div>
+   <span class="badge green">VERIFIED</span>
+  </div>
+ </div>
+
+ <button class="btn primary" onclick="assignPartner()">
+  CONFIRM PARTNER
+ </button>
+</div>
+
+</section>
+
+<!-- PRICE -->
+<section id="price" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Smart Price Engine</h2>
+  <span class="badge yellow">V15</span>
+ </div>
+
+ <div class="grid">
+  <div class="stat">
+   <div class="label">Base</div>
+   <div class="value">Rp25.000</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Distance</div>
+   <div class="value">Rp75.000</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Weight</div>
+   <div class="value">Rp10.000</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Pickup</div>
+   <div class="value">Rp10.000</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Protection</div>
+   <div class="value">Rp5.000</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Platform</div>
+   <div class="value">Rp7.500</div>
+  </div>
+ </div>
+
+ <hr>
+
+ <div class="stat">
+  <div class="label">TOTAL ESTIMATE</div>
+  <div class="value" id="totalPrice">Rp165.000</div>
+ </div>
+</div>
+
+<div class="card">
+ <h2>Protection</h2>
+
+ <div class="row">
+  <span class="badge green">ITEM PROTECTION</span>
+  <span class="badge green">DELIVERY PROTECTION</span>
+  <span class="badge blue">ESCROW — DEMO</span>
+ </div>
+
+ <div class="notice warning" style="margin-top:12px">
+  Insurance, escrow and payment integration in this version are
+  demonstration controls. Production requires verified providers,
+  contracts and backend processing.
+ </div>
+</div>
+
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Transaction Detail</h2>
+  <span class="badge green" id="orderStatus">APPROVED</span>
+ </div>
+
+ <table>
+  <tr><th>Transaction</th><td class="mono">CHL-2026-000128</td></tr>
+  <tr><th>Tracking</th><td class="mono">CHE-TRK-000128</td></tr>
+  <tr><th>Item</th><td class="mono">CHE-ITEM-2026-000128</td></tr>
+  <tr><th>Owner</th><td class="mono">CGID-ID-000001</td></tr>
+  <tr><th>Payment</th><td>SUCCESS</td></tr>
+  <tr><th>Origin</th><td id="orderOrigin">Bekasi</td></tr>
+  <tr><th>Destination</th><td id="orderDestination">Bandung</td></tr>
+ </table>
+</div>
+
+<div class="card">
+ <h2>Documents</h2>
+
+ <button class="btn blue" onclick="downloadPaymentReceipt()">
+  DOWNLOAD PAYMENT STRUK
+ </button>
+
+ <button class="btn primary" onclick="downloadFinalReceipt()">
+  DOWNLOAD FINAL RECEIPT
+ </button>
+</div>
+
+<div class="card">
+ <h2>Reset Demo</h2>
+ <button class="btn red" onclick="resetDemo()">
+  RESET CHELEA DEMO
+ </button>
+</div>
+
+</section>
+
+<!-- ACCOUNT / CONTROL -->
+<section id="account" class="page hidden">
+
+<div class="card">
+ <div class="section-title">
+  <h2>Security & Compliance Center</h2>
+  <span class="badge green">V14</span>
+ </div>
+
+ <div class="grid">
+  <div class="stat">
+   <div class="label">Identity Verification</div>
+   <div class="value">✓</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Item Verification</div>
+   <div class="value">✓</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Route Check</div>
+   <div class="value">✓</div>
+  </div>
+
+  <div class="stat">
+   <div class="label">Country Check</div>
+   <div class="value">✓</div>
+  </div>
+ </div>
+</div>
+
+<div class="card">
+ <h2>Risk & Compliance</h2>
+
+ <div class="notice success">
+  LOW RISK — DEMO
+ </div>
+
+ <div style="margin-top:10px" class="notice">
+  Production rules should verify identity, transaction ownership,
+  payment state, item restrictions, route restrictions and partner
+  authorization before pickup/tracking actions are permitted.
+ </div>
+</div>
+
+<div class="card">
+ <h2>Audit Trail</h2>
+ <div id="auditLog"></div>
+</div>
+
+<div class="card">
+ <h2>Data Privacy</h2>
+
+ <div class="notice">
+  Public identifiers:
+  Transaction ID, Item ID, Tracking ID, Partner ID and masked CGID.
+  <br><br>
+  Private data:
+  phone numbers, identity numbers, identity documents and private
+  verification evidence.
+ </div>
+</div>
+
+</section>
+
+<footer>
+ CHELEA • HOBBIGO GLOBAL DELIVERY ECOSYSTEM
+ <br>
+ V13 REALTIME • V14 CONTROL • V15 BUSINESS
+</footer>
 
 </div>
 
-<div id="toast"></div>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<button class="nav-btn active" onclick="showPage('home',this)">
+ <span class="nav-icon">⌂</span>HOME
+</button>
+
+<button class="nav-btn" onclick="showPage('request',this)">
+ <span class="nav-icon">＋</span>REQUEST
+</button>
+
+<button class="nav-btn" onclick="showPage('live',this)">
+ <span class="nav-icon">⌖</span>LIVE
+</button>
+
+<button class="nav-btn" onclick="showPage('partners',this)">
+ <span class="nav-icon">♙</span>PARTNER
+</button>
+
+<button class="nav-btn" onclick="showPage('price',this)">
+ <span class="nav-icon">Rp</span>PRICE
+</button>
+
+<button class="nav-btn" onclick="showPage('account',this)">
+ <span class="nav-icon">⚙</span>CONTROL
+</button>
+
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<!-- Supabase client siap untuk V13 production realtime -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
 /* =========================================================
- CHELEA V12 MASTER DATA
-========================================================= */
+   CHELEA V15 MASTER
+   V13 + V14 + V15
+   ========================================================= */
 
-const STORAGE_KEY="CHELEA_V12_MASTER";
+/* =========================================================
+   SUPABASE CONFIG
+   =========================================================
+   Isi hanya jika project Supabase sudah dibuat.
 
-const initialData={
- transactionId:"CHL-2026-000128",
- trackingId:null,
+   Jangan masukkan secret/service-role key di browser.
+   Gunakan publishable key.
+   ========================================================= */
 
- service:"Traveler Delivery",
+const SUPABASE_URL = "";
+const SUPABASE_PUBLISHABLE_KEY = "";
 
- customer:"CHELEA Customer",
+let supabaseClient = null;
 
- origin:"Bekasi",
- destination:"Bandung",
-
- pickupLocation:
- "Mall Summarecon Bekasi, Jl. Boulevard Ahmad Yani, Bekasi",
-
- deliveryLocation:
- "Bandung Indah Plaza, Jl. Merdeka, Bandung",
-
- date:"23/10/2026",
-
- weight:2,
-
- priority:"Priority",
-
- partner:{
-  name:"Andi Traveler",
-  type:"Traveler Partner",
-  rating:"4.9",
-  vehicle:"Private Car"
- },
-
- price:0,
-
- paymentStatus:"PENDING",
-
- paymentReceipt:null,
-
- status:"REQUEST",
-
- pickupAt:null,
- pickupLocationGPS:null,
-
- arrivalAt:null,
- arrivalLocationGPS:null,
-
- handoverAt:null,
- handoverLocationGPS:null,
-
- completedAt:null,
- completedLocationGPS:null,
-
- live:false,
-
- events:[]
-};
-
-let tx=loadData();
-
-let map=null;
-let gpsMarker=null;
-let gpsCircle=null;
-let routeLine=null;
-let watchId=null;
-
-let gps={
- lat:null,
- lng:null,
- accuracy:null
-};
-
-function loadData(){
-
- try{
-
-  const x=localStorage.getItem(STORAGE_KEY);
-
-  if(x){
-   return JSON.parse(x);
-  }
-
- }catch(e){}
-
- return JSON.parse(JSON.stringify(initialData));
+if(
+ SUPABASE_URL &&
+ SUPABASE_PUBLISHABLE_KEY &&
+ window.supabase
+){
+ supabaseClient =
+  window.supabase.createClient(
+   SUPABASE_URL,
+   SUPABASE_PUBLISHABLE_KEY
+  );
 }
 
-function saveData(){
+/* =========================================================
+   MASTER TRANSACTION
+   ========================================================= */
+
+const state = {
+
+ transactionId:"CHL-2026-000128",
+
+ trackingId:"CHE-TRK-000128",
+
+ itemId:"CHE-ITEM-2026-000128",
+
+ ownerId:"CGID-ID-000001",
+
+ controllerId:"CGID-ID-PICKUP-0001",
+
+ partnerId:"CHE-PARTNER-000128",
+
+ paymentStatus:"SUCCESS",
+
+ status:"APPROVED",
+
+ gps:{
+  lat:null,
+  lng:null,
+  accuracy:null,
+  lastUpdate:null
+ },
+
+ gpsWatch:null,
+
+ ownerVerified:false,
+
+ controllerVerified:false,
+
+ itemVerified:false,
+
+ partnerVerified:false,
+
+ pickupConfirmed:false,
+
+ arrivalConfirmed:false,
+
+ handoverConfirmed:false,
+
+ completed:false,
+
+ audit:[],
+
+ photos:[]
+
+};
+
+/* =========================================================
+   PAGE CONTROL
+   ========================================================= */
+
+function showPage(id,btn){
+
+ document.querySelectorAll(".page")
+ .forEach(p=>p.classList.add("hidden"));
+
+ const page=document.getElementById(id);
+
+ if(page) page.classList.remove("hidden");
+
+ document.querySelectorAll(".nav-btn")
+ .forEach(b=>b.classList.remove("active"));
+
+ if(btn) btn.classList.add("active");
+
+ if(id==="home") renderTimeline();
+ if(id==="live") renderTrackingTimeline();
+ if(id==="account") renderAudit();
+
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+function toast(message){
+
+ const el=document.getElementById("toast");
+
+ el.textContent=message;
+ el.classList.add("show");
+
+ setTimeout(()=>{
+  el.classList.remove("show");
+ },2600);
+
+}
+
+/* =========================================================
+   AUDIT
+   ========================================================= */
+
+function audit(action,details=""){
+
+ const record={
+  time:new Date().toISOString(),
+  action,
+  details
+ };
+
+ state.audit.unshift(record);
 
  localStorage.setItem(
-  STORAGE_KEY,
-  JSON.stringify(tx)
+  "CHELEA_V15_AUDIT",
+  JSON.stringify(state.audit)
+ );
+
+ renderAudit();
+
+}
+
+/* =========================================================
+   VERIFY OWNER
+   ========================================================= */
+
+function verifyOwner(){
+
+ const name=
+  document.getElementById("ownerName").value.trim();
+
+ const phone=
+  document.getElementById("ownerPhone").value.trim();
+
+ const id=
+  document.getElementById("ownerCgid").value.trim();
+
+ if(!name || !phone || !id){
+
+  toast("Lengkapi data owner terlebih dahulu");
+  return;
+
+ }
+
+ state.ownerId=id;
+ state.ownerVerified=true;
+
+ document
+ .getElementById("ownerVerify")
+ .classList.remove("hidden");
+
+ audit(
+  "OWNER_VERIFIED",
+  id
+ );
+
+ toast("Owner verified — DEMO");
+
+}
+
+/* =========================================================
+   VERIFY CONTROLLER
+   ========================================================= */
+
+function verifyController(){
+
+ const id=
+  document.getElementById("controllerId").value.trim();
+
+ const name=
+  document.getElementById("controllerName").value.trim();
+
+ const phone=
+  document.getElementById("controllerPhone").value.trim();
+
+ if(!id || !name || !phone){
+
+  toast("Lengkapi pickup controller");
+
+  return;
+
+ }
+
+ state.controllerId=id;
+ state.controllerVerified=true;
+
+ document
+ .getElementById("controllerVerify")
+ .classList.remove("hidden");
+
+ audit(
+  "PICKUP_CONTROLLER_VERIFIED",
+  id
+ );
+
+ toast("Pickup controller verified — DEMO");
+
+}
+
+/* =========================================================
+   PHOTO PREVIEW
+   ========================================================= */
+
+function previewPhotos(event){
+
+ const files=
+  Array.from(event.target.files || []);
+
+ state.photos=[];
+
+ const preview=
+  document.getElementById("photoPreview");
+
+ preview.innerHTML="";
+
+ files.slice(0,6).forEach((file,index)=>{
+
+  state.photos.push({
+   name:file.name,
+   type:file.type,
+   size:file.size,
+   time:new Date().toISOString()
+  });
+
+  const box=
+   document.createElement("div");
+
+  box.className="photo-box";
+
+  const img=
+   document.createElement("img");
+
+  img.src=
+   URL.createObjectURL(file);
+
+  box.appendChild(img);
+
+  preview.appendChild(box);
+
+ });
+
+ if(!files.length){
+
+  preview.innerHTML=
+   '<div class="photo-box">PHOTO 1</div>'+
+   '<div class="photo-box">PHOTO 2</div>'+
+   '<div class="photo-box">PHOTO 3</div>';
+
+ }
+
+}
+
+/* =========================================================
+   VERIFY ITEM
+   ========================================================= */
+
+function verifyItem(){
+
+ if(!state.ownerVerified){
+
+  toast("Verify owner terlebih dahulu");
+  return;
+
+ }
+
+ const itemName=
+  document.getElementById("itemName")
+  .value.trim();
+
+ if(!itemName){
+
+  toast("Masukkan nama/deskripsi barang");
+  return;
+
+ }
+
+ state.itemVerified=true;
+
+ document
+ .getElementById("itemVerify")
+ .classList.remove("hidden");
+
+ audit(
+  "ITEM_VERIFIED",
+  state.itemId
+ );
+
+ toast(
+  "Item verified + foto sebelum pickup tercatat — DEMO"
  );
 
 }
 
-function resetDemo(){
+/* =========================================================
+   CREATE TRANSACTION
+   ========================================================= */
 
- if(!confirm("Reset CHELEA V12 demo?")) return;
+function createTransaction(){
 
- tx=JSON.parse(JSON.stringify(initialData));
+ if(!state.ownerVerified){
 
- saveData();
+  toast("OWNER belum verified");
+  return;
+
+ }
+
+ if(!state.itemVerified){
+
+  toast("ITEM belum verified");
+  return;
+
+ }
+
+ if(!state.controllerVerified){
+
+  toast("PICKUP CONTROLLER belum verified");
+  return;
+
+ }
+
+ state.status="APPROVED";
+
+ state.paymentStatus="SUCCESS";
+
+ audit(
+  "TRANSACTION_CREATED",
+  state.transactionId
+ );
+
+ localStorage.setItem(
+  "CHELEA_V15_STATE",
+  JSON.stringify(state)
+ );
+
+ updateUI();
+
+ toast(
+  "Transaction approved — payment SUCCESS — DEMO"
+ );
+
+}
+
+/* =========================================================
+   PARTNER
+   ========================================================= */
+
+function assignPartner(){
+
+ state.partnerVerified=true;
+
+ audit(
+  "PARTNER_ASSIGNED",
+  state.partnerId
+ );
+
+ toast("Partner verified & assigned — DEMO");
+
+}
+
+/* =========================================================
+   DELIVERY STATUS GUARD
+   ========================================================= */
+
+function canStartTracking(){
+
+ if(state.paymentStatus!=="SUCCESS"){
+
+  toast("Tracking blocked: payment belum SUCCESS");
+  return false;
+
+ }
+
+ if(!state.ownerVerified){
+
+  toast("Tracking blocked: owner belum verified");
+  return false;
+
+ }
+
+ if(!state.itemVerified){
+
+  toast("Tracking blocked: item belum verified");
+  return false;
+
+ }
+
+ if(!state.partnerVerified){
+
+  toast("Tracking blocked: partner belum verified");
+  return false;
+
+ }
+
+ if(state.completed){
+
+  toast("Transaction sudah COMPLETED");
+  return false;
+
+ }
+
+ return true;
+
+}
+
+/* =========================================================
+   PICKUP
+   ========================================================= */
+
+function confirmPickup(){
+
+ if(!canStartTracking()) return;
+
+ state.pickupConfirmed=true;
+
+ state.status="PICKUP";
+
+ const position=state.gps;
+
+ audit(
+  "PICKUP_CONFIRMED",
+  JSON.stringify(position)
+ );
+
+ document.getElementById("deliveryStatus")
+ .value="PICKUP";
+
+ updateUI();
+
+ toast(
+  "PICKUP confirmed + GPS proof — DEMO"
+ );
+
+ startGPS();
+
+}
+
+/* =========================================================
+   START DELIVERY
+   ========================================================= */
+
+function startDelivery(){
+
+ if(!state.pickupConfirmed){
+
+  toast("Confirm pickup terlebih dahulu");
+  return;
+
+ }
+
+ state.status="IN TRANSIT";
+
+ audit(
+  "DELIVERY_STARTED",
+  state.trackingId
+ );
+
+ document.getElementById("deliveryStatus")
+ .value="IN TRANSIT";
+
+ updateUI();
+
+ startGPS();
+
+ toast("LIVE DELIVERY ACTIVE");
+
+}
+
+/* =========================================================
+   ARRIVAL
+   ========================================================= */
+
+function confirmArrival(){
+
+ if(state.status!=="IN TRANSIT"){
+
+  toast("Delivery belum IN TRANSIT");
+  return;
+
+ }
+
+ state.arrivalConfirmed=true;
+
+ state.status="ARRIVED";
+
+ audit(
+  "ARRIVAL_CONFIRMED",
+  gpsText()
+ );
+
+ document.getElementById("deliveryStatus")
+ .value="ARRIVED";
+
+ updateUI();
+
+ toast("Arrival confirmed — DEMO");
+
+}
+
+/* =========================================================
+   HANDOVER
+   ========================================================= */
+
+function confirmHandover(){
+
+ if(!state.arrivalConfirmed){
+
+  toast("Arrival belum confirmed");
+  return;
+
+ }
+
+ state.handoverConfirmed=true;
+
+ state.status="HANDOVER";
+
+ audit(
+  "HANDOVER_CONFIRMED",
+  gpsText()
+ );
+
+ document.getElementById("deliveryStatus")
+ .value="HANDOVER";
+
+ updateUI();
+
+ toast("Handover verified — DEMO");
+
+}
+
+/* =========================================================
+   COMPLETE
+   ========================================================= */
+
+function completeDelivery(){
+
+ if(!state.handoverConfirmed){
+
+  toast("Handover belum confirmed");
+  return;
+
+ }
+
+ state.completed=true;
+
+ state.status="COMPLETED";
+
+ audit(
+  "TRANSACTION_COMPLETED",
+  state.transactionId
+ );
+
+ document.getElementById("deliveryStatus")
+ .value="COMPLETED";
 
  stopGPS();
 
- location.reload();
+ updateUI();
+
+ toast("DELIVERY COMPLETED");
 
 }
 
-
 /* =========================================================
- UTILITIES
-========================================================= */
+   MANUAL STATUS
+   ========================================================= */
 
-function timeNow(){
+function changeDeliveryStatus(){
 
- return new Date().toLocaleString(
-  "id-ID",
-  {
-   dateStyle:"short",
-   timeStyle:"medium"
-  }
+ const value=
+  document.getElementById("deliveryStatus")
+  .value;
+
+ state.status=value;
+
+ audit(
+  "STATUS_CHANGED",
+  value
  );
 
-}
-
-function toast(text){
-
- const t=document.getElementById("toast");
-
- t.textContent=text;
-
- t.classList.add("show");
-
- setTimeout(()=>{
-  t.classList.remove("show");
- },2500);
+ updateUI();
 
 }
-
-function backHobbigo(){
-
- location.href="../index.html";
-
-}
-
 
 /* =========================================================
- EVENT LOG
-========================================================= */
-
-function addEvent(
- key,
- title,
- note
-){
-
- if(!tx.events){
-  tx.events=[];
- }
-
- tx.events.push({
-  key:key,
-  title:title,
-  note:note,
-  time:timeNow()
- });
-
- saveData();
-
-}
-
-
-/* =========================================================
- PRICE
-========================================================= */
-
-function calculatePrice(){
-
- const base=25000;
-
- const distanceFee=tx.distance||72;
-
- const distanceCost=distanceFee*3000;
-
- const weightCost=Number(tx.weight||2)*5000;
-
- const pickup=10000;
-
- const protection=5000;
-
- const platform=7500;
-
- let multiplier=1;
-
- if(tx.priority==="Priority"){
-  multiplier=1.25;
- }
-
- if(tx.priority==="Exclusive"){
-  multiplier=1.5;
- }
-
- const subtotal=
-  base+
-  distanceCost+
-  weightCost+
-  pickup+
-  protection+
-  platform;
-
- tx.price=Math.round(
-  subtotal*multiplier
- );
-
- saveData();
-
- return tx.price;
-}
-
-
-/* =========================================================
- FLOW
-========================================================= */
-
-const FLOW=[
- "REQUEST",
- "VERIFY",
- "MATCH",
- "APPROVED",
- "PAYMENT",
- "TRACKING",
- "PICKUP",
- "IN TRANSIT",
- "ARRIVED",
- "HANDOVER",
- "COMPLETED"
-];
-
-function flowPosition(){
-
- let status=tx.status;
-
- if(status==="REQUEST") return 0;
- if(status==="VERIFY") return 1;
- if(status==="MATCH") return 2;
- if(status==="APPROVED") return 3;
- if(status==="PAYMENT SUCCESS") return 4;
- if(status==="TRACKING ACTIVE") return 5;
- if(status==="PICKUP") return 6;
- if(status==="IN TRANSIT") return 7;
- if(status==="ARRIVED") return 8;
- if(status==="HANDOVER") return 9;
- if(status==="COMPLETED") return 10;
-
- return 0;
-}
-
-function flowHTML(){
-
- const pos=flowPosition();
-
- return `
- <div class="flow">
- ${FLOW.map((x,i)=>`
-
-  <div class="flowItem
-   ${i<pos?"done":""}
-   ${i===pos?"active":""}">
-   ${x}
-  </div>
-
- `).join("")}
- </div>
- `;
-}
-
-
-/* =========================================================
- HOME
-========================================================= */
-
-function page(name,btn){
-
- document
-  .querySelectorAll(".navBtn")
-  .forEach(x=>x.classList.remove("active"));
-
- if(btn)btn.classList.add("active");
-
- if(name==="home")renderHome();
- if(name==="request")renderRequest();
- if(name==="payment")renderPayment();
- if(name==="tracking")renderTracking();
- if(name==="live")renderLive();
- if(name==="orders")renderOrders();
-
-}
-
-function renderHome(){
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="hero">
-
-   <h1>CHELEA V12</h1>
-
-   <p>
-    Smart Personal Delivery & Cross-Border Jastip.
-    One transaction ID controls payment, tracking,
-    pickup, live delivery, handover and completion.
-   </p>
-
-   <div class="idBox">
-
-    <div class="idRow">
-     <span>TRANSACTION ID</span>
-     <strong>${tx.transactionId}</strong>
-    </div>
-
-    <div class="idRow">
-     <span>TRACKING ID</span>
-     <strong>
-      ${tx.trackingId||"GENERATED AFTER PAYMENT"}
-     </strong>
-    </div>
-
-    <div class="idRow">
-     <span>PAYMENT</span>
-     <strong>${tx.paymentStatus}</strong>
-    </div>
-
-    <div class="idRow">
-     <span>STATUS</span>
-     <strong>${tx.status}</strong>
-    </div>
-
-   </div>
-
-  </div>
-
-  ${flowHTML()}
-
-  <div class="card">
-
-   <h2>Transaction Control</h2>
-
-   <div class="grid">
-
-    <div class="stat">
-     <span>Origin</span>
-     <strong>${tx.origin}</strong>
-    </div>
-
-    <div class="stat">
-     <span>Destination</span>
-     <strong>${tx.destination}</strong>
-    </div>
-
-    <div class="stat">
-     <span>Weight</span>
-     <strong>${tx.weight} KG</strong>
-    </div>
-
-    <div class="stat">
-     <span>Price</span>
-     <strong>
-      Rp ${calculatePrice().toLocaleString("id-ID")}
-     </strong>
-    </div>
-
-   </div>
-
-  </div>
-
-  <div class="card">
-
-   <h2>Current Status</h2>
-
-   <div class="notice success">
-
-    Transaction:
-    <strong>${tx.transactionId}</strong><br>
-
-    Payment:
-    <strong>${tx.paymentStatus}</strong><br>
-
-    Tracking:
-    <strong>
-     ${tx.trackingId||"NOT ACTIVE"}
-    </strong><br>
-
-    Current:
-    <strong>${tx.status}</strong>
-
-   </div>
-
-   <button class="btn primary"
-    onclick="page('request')">
-    CREATE / REVIEW TRANSACTION
-   </button>
-
-   <button class="btn dark"
-    onclick="page('payment')">
-    PAYMENT & RECEIPT
-   </button>
-
-   <button class="btn dark"
-    onclick="page('tracking')">
-    CUSTOMER TRACKING
-   </button>
-
-   <button class="btn dark"
-    onclick="page('live')">
-    LIVE DELIVERY
-   </button>
-
-   <button class="btn red"
-    onclick="resetDemo()">
-    RESET DEMO
-   </button>
-
-  </div>
-
- </section>
- `;
-}
-
-
-/* =========================================================
- REQUEST
-========================================================= */
-
-function renderRequest(){
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="hero">
-
-   <h1>CREATE REQUEST</h1>
-
-   <p>
-    Transaction ID diterbitkan sebagai pusat
-    seluruh proses CHELEA.
-   </p>
-
-  </div>
-
-  <div class="card">
-
-   <div class="formGroup">
-    <label>ORIGIN</label>
-    <input id="origin"
-     value="${tx.origin}">
-   </div>
-
-   <div class="formGroup">
-    <label>DESTINATION</label>
-    <input id="destination"
-     value="${tx.destination}">
-   </div>
-
-   <div class="formGroup">
-    <label>PICKUP LOCATION</label>
-    <input id="pickup"
-     value="${tx.pickupLocation}">
-   </div>
-
-   <div class="formGroup">
-    <label>DELIVERY LOCATION</label>
-    <input id="delivery"
-     value="${tx.deliveryLocation}">
-   </div>
-
-   <div class="formGroup">
-    <label>WEIGHT KG</label>
-    <input id="weight"
-     type="number"
-     value="${tx.weight}">
-   </div>
-
-   <div class="formGroup">
-    <label>SERVICE</label>
-    <select id="priority">
-
-     <option ${tx.priority==="Standard"?"selected":""}>
-      Standard
-     </option>
-
-     <option ${tx.priority==="Priority"?"selected":""}>
-      Priority
-     </option>
-
-     <option ${tx.priority==="Exclusive"?"selected":""}>
-      Exclusive
-     </option>
-
-    </select>
-   </div>
-
-   <button class="btn primary"
-    onclick="createRequest()">
-    CREATE TRANSACTION
-   </button>
-
-  </div>
-
-  <div class="card">
-
-   <h2>Transaction ID</h2>
-
-   <div class="notice">
-    ${tx.transactionId}
-   </div>
-
-   <p class="small">
-    Transaction ID ini akan menjadi referensi
-    payment, tracking, pickup, delivery,
-    handover dan completed.
-   </p>
-
-  </div>
-
- </section>
- `;
-}
-
-function createRequest(){
-
- tx.origin=document.getElementById("origin").value;
- tx.destination=document.getElementById("destination").value;
-
- tx.pickupLocation=document.getElementById("pickup").value;
- tx.deliveryLocation=document.getElementById("delivery").value;
-
- tx.weight=Number(
-  document.getElementById("weight").value
- );
-
- tx.priority=document.getElementById("priority").value;
-
- tx.status="VERIFY";
-
- tx.paymentStatus="PENDING";
-
- tx.trackingId=null;
-
- tx.events=[];
-
- addEvent(
-  "REQUEST",
-  "REQUEST CREATED",
-  "Delivery request created."
- );
-
- addEvent(
-  "VERIFY",
-  "VERIFIED",
-  "Identity, item and route verification completed."
- );
-
- addEvent(
-  "MATCH",
-  "PARTNER MATCHED",
-  "Andi Traveler selected."
- );
-
- tx.status="APPROVED";
-
- addEvent(
-  "APPROVED",
-  "APPROVED",
-  "Transaction approved for payment."
- );
-
- saveData();
-
- toast("TRANSACTION APPROVED");
-
- renderPayment();
-}
-
-
-/* =========================================================
- PAYMENT
-========================================================= */
-
-function renderPayment(){
-
- const price=calculatePrice();
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="hero">
-
-   <h1>PAYMENT</h1>
-
-   <p>
-    Payment harus SUCCESS sebelum
-    Tracking ID diterbitkan.
-   </p>
-
-   <div class="idBox">
-
-    <div class="idRow">
-     <span>TRANSACTION</span>
-     <strong>${tx.transactionId}</strong>
-    </div>
-
-    <div class="idRow">
-     <span>PAYMENT STATUS</span>
-     <strong>${tx.paymentStatus}</strong>
-    </div>
-
-   </div>
-
-  </div>
-
-  <div class="card">
-
-   <h2>Order Summary</h2>
-
-   <div class="grid">
-
-    <div class="stat">
-     <span>Route</span>
-     <strong>
-      ${tx.origin} → ${tx.destination}
-     </strong>
-    </div>
-
-    <div class="stat">
-     <span>Weight</span>
-     <strong>${tx.weight} KG</strong>
-    </div>
-
-    <div class="stat">
-     <span>Service</span>
-     <strong>${tx.priority}</strong>
-    </div>
-
-    <div class="stat">
-     <span>Partner</span>
-     <strong>${tx.partner.name}</strong>
-    </div>
-
-   </div>
-
-   <div class="price">
-    Rp ${price.toLocaleString("id-ID")}
-    <small>total payment</small>
-   </div>
-
-   ${
-    tx.paymentStatus==="SUCCESS"
-    ?`
-     <div class="notice success">
-      PAYMENT SUCCESS<br>
-      Tracking ID:
-      <strong>${tx.trackingId}</strong>
-     </div>
-
-     <button class="btn green"
-      onclick="showPaymentReceipt()">
-      VIEW PAYMENT RECEIPT
-     </button>
-
-     <button class="btn primary"
-      onclick="page('tracking')">
-      OPEN CUSTOMER TRACKING
-     </button>
-    `
-    :`
-     <button class="btn green"
-      onclick="confirmPayment()">
-      CONFIRM PAYMENT SUCCESS — DEMO
-     </button>
-    `
-   }
-
-  </div>
-
-  ${
-   tx.paymentReceipt
-   ?`
-
-   <div class="card">
-
-    <h2>Payment Receipt Available</h2>
-
-    <div class="notice success">
-     Receipt ID:
-     <strong>
-      ${tx.paymentReceipt.receiptId}
-     </strong>
-    </div>
-
-    <button class="btn dark"
-     onclick="showPaymentReceipt()">
-     OPEN STRUK PAYMENT
-    </button>
-
-   </div>
-
-   `
-   :""
-  }
-
- </section>
- `;
-}
-
-
-/* =========================================================
- PAYMENT SUCCESS
-========================================================= */
-
-function confirmPayment(){
-
- if(tx.status!=="APPROVED"){
-  toast("TRANSACTION NOT APPROVED");
-  return;
- }
-
- tx.paymentStatus="SUCCESS";
-
- tx.status="PAYMENT SUCCESS";
-
- tx.trackingId=
-  "CHE-TRK-"+tx.transactionId.split("-").pop();
-
- tx.paymentReceipt={
-  receiptId:
-   "PAY-"+Date.now(),
-
-  transactionId:tx.transactionId,
-
-  trackingId:tx.trackingId,
-
-  amount:calculatePrice(),
-
-  paymentMethod:"CHELEA DEMO PAYMENT",
-
-  status:"PAID",
-
-  paidAt:timeNow()
- };
-
- addEvent(
-  "PAYMENT",
-  "PAYMENT SUCCESS",
-  "Payment confirmed successfully."
- );
-
- saveData();
-
- toast("PAYMENT SUCCESS — TRACKING ID GENERATED");
-
- renderPayment();
-}
-
-
-/* =========================================================
- PAYMENT RECEIPT
-========================================================= */
-
-function showPaymentReceipt(){
-
- if(!tx.paymentReceipt){
-  toast("PAYMENT RECEIPT NOT AVAILABLE");
-  return;
- }
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="card">
-
-   <div class="center">
-
-    <div class="bigCheck">✓</div>
-
-    <h2>PAYMENT SUCCESS</h2>
-
-    <p class="small">
-     Pembayaran berhasil.
-     Tracking ID telah diterbitkan.
-    </p>
-
-   </div>
-
-   <br>
-
-   <div class="receipt"
-    id="paymentReceipt">
-
-    <h2>CHELEA PAYMENT RECEIPT</h2>
-
-    <div class="receiptRow">
-     <span>Receipt ID</span>
-     <strong>${tx.paymentReceipt.receiptId}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Transaction ID</span>
-     <strong>${tx.transactionId}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Tracking ID</span>
-     <strong>${tx.trackingId}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Customer</span>
-     <strong>${tx.customer}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Route</span>
-     <strong>
-      ${tx.origin} → ${tx.destination}
-     </strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Service</span>
-     <strong>${tx.service}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Payment Method</span>
-     <strong>
-      ${tx.paymentReceipt.paymentMethod}
-     </strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Payment Status</span>
-     <strong>PAID</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Paid At</span>
-     <strong>
-      ${tx.paymentReceipt.paidAt}
-     </strong>
-    </div>
-
-    <div class="receiptTotal">
-     <span>TOTAL</span>
-     <span>
-      Rp ${tx.paymentReceipt.amount
-       .toLocaleString("id-ID")}
-     </span>
-    </div>
-
-   </div>
-
-   <button class="btn primary"
-    onclick="downloadPaymentReceipt()">
-    DOWNLOAD PAYMENT STRUK
-   </button>
-
-   <button class="btn green"
-    onclick="page('tracking')">
-    OPEN TRACKING ID
-   </button>
-
-  </div>
-
- </section>
- `;
-}
-
-
-/* =========================================================
- DOWNLOAD PAYMENT RECEIPT
-========================================================= */
-
-function downloadPaymentReceipt(){
-
- const html=`
-
- <!DOCTYPE html>
- <html>
-
- <head>
-  <meta charset="UTF-8">
-  <title>CHELEA Payment Receipt</title>
-
-  <style>
-   body{
-    font-family:Arial;
-    padding:30px;
-    color:#111;
-   }
-
-   h1{
-    color:#0a5fa8;
-   }
-
-   table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-   }
-
-   td{
-    border-bottom:1px solid #ddd;
-    padding:10px;
-   }
-
-   .total{
-    font-size:20px;
-    font-weight:bold;
-   }
-  </style>
-
- </head>
-
- <body>
-
-  <h1>CHELEA PAYMENT RECEIPT</h1>
-
-  <table>
-
-   <tr>
-    <td>Receipt ID</td>
-    <td>${tx.paymentReceipt.receiptId}</td>
-   </tr>
-
-   <tr>
-    <td>Transaction ID</td>
-    <td>${tx.transactionId}</td>
-   </tr>
-
-   <tr>
-    <td>Tracking ID</td>
-    <td>${tx.trackingId}</td>
-   </tr>
-
-   <tr>
-    <td>Customer</td>
-    <td>${tx.customer}</td>
-   </tr>
-
-   <tr>
-    <td>Route</td>
-    <td>${tx.origin} → ${tx.destination}</td>
-   </tr>
-
-   <tr>
-    <td>Payment Status</td>
-    <td>PAID</td>
-   </tr>
-
-   <tr>
-    <td>Paid At</td>
-    <td>${tx.paymentReceipt.paidAt}</td>
-   </tr>
-
-   <tr class="total">
-    <td>TOTAL</td>
-    <td>
-     Rp ${tx.paymentReceipt.amount
-      .toLocaleString("id-ID")}
-    </td>
-   </tr>
-
-  </table>
-
-  <p style="margin-top:30px">
-   CHELEA Secure Transaction — DEMO
-  </p>
-
- </body>
-
- </html>
- `;
-
- const blob=new Blob(
-  [html],
-  {type:"text/html"}
- );
-
- const url=URL.createObjectURL(blob);
-
- const a=document.createElement("a");
-
- a.href=url;
-
- a.download=
-  "CHELEA_PAYMENT_"+tx.transactionId+".html";
-
- document.body.appendChild(a);
-
- a.click();
-
- a.remove();
-
- URL.revokeObjectURL(url);
-
- toast("PAYMENT STRUK DOWNLOADED");
-}
-
-
-/* =========================================================
- TRACKING
-========================================================= */
-
-function renderTracking(){
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="hero">
-
-   <h1>TRACK MY PACKAGE</h1>
-
-   <p>
-    Customer tracking otomatis terhubung
-    dengan Transaction ID dan Payment Success.
-   </p>
-
-  </div>
-
-  ${
-   tx.trackingId
-   ?`
-
-   <div class="card">
-
-    <h2>ACTIVE TRACKING</h2>
-
-    <div class="idBox">
-
-     <div class="idRow">
-      <span>TRANSACTION ID</span>
-      <strong>${tx.transactionId}</strong>
-     </div>
-
-     <div class="idRow">
-      <span>TRACKING ID</span>
-      <strong>${tx.trackingId}</strong>
-     </div>
-
-     <div class="idRow">
-      <span>STATUS</span>
-      <strong>${tx.status}</strong>
-     </div>
-
-     <div class="idRow">
-      <span>PAYMENT</span>
-      <strong>${tx.paymentStatus}</strong>
-     </div>
-
-    </div>
-
-   </div>
-
-   <div class="card">
-
-    <h2>Delivery Status</h2>
-
-    <div class="grid">
-
-     <div class="stat">
-      <span>Origin</span>
-      <strong>${tx.origin}</strong>
-     </div>
-
-     <div class="stat">
-      <span>Destination</span>
-      <strong>${tx.destination}</strong>
-     </div>
-
-     <div class="stat">
-      <span>Traveler</span>
-      <strong>${tx.partner.name}</strong>
-     </div>
-
-     <div class="stat">
-      <span>ETA</span>
-      <strong>
-       ${tx.status==="COMPLETED"
-        ?"DELIVERED"
-        :"2h 15m"}
-      </strong>
-     </div>
-
-    </div>
-
-   </div>
-
-   <div class="card">
-
-    <h2>Delivery Timeline</h2>
-
-    ${timelineHTML()}
-
-   </div>
-
-   ${
-    tx.status!=="COMPLETED"
-    ?`
-    <button class="btn primary"
-     onclick="page('live')">
-     OPEN LIVE DELIVERY
-    </button>
-    `
-    :`
-    <div class="notice success">
-     DELIVERY COMPLETED.<br>
-     Tracking session has been closed.
-    </div>
-
-    <button class="btn green"
-     onclick="finalReceipt()">
-     VIEW FINAL DELIVERY RECEIPT
-    </button>
-    `
-   }
-
-   `
-   :`
-
-   <div class="card">
-
-    <div class="center">
-
-     <div class="bigCheck">⌖</div>
-
-     <h2>TRACKING NOT ACTIVE</h2>
-
-     <p class="small">
-      Tracking ID akan diterbitkan otomatis
-      setelah Payment Success.
-     </p>
-
-    </div>
-
-    <button class="btn yellow"
-     onclick="page('payment')">
-     GO TO PAYMENT
-    </button>
-
-   </div>
-
-   `
-  }
-
- </section>
- `;
-}
-
-
-/* =========================================================
- TIMELINE
-========================================================= */
-
-function timelineHTML(){
-
- if(!tx.events || !tx.events.length){
-
-  return `
-   <div class="notice">
-    Transaction belum dimulai.
-   </div>
-  `;
-
- }
-
- const current=tx.status;
-
- return `
- <div class="timeline">
-
- ${tx.events.map((e,i)=>`
-
-  <div class="event
-   ${
-    i===tx.events.length-1
-    ?"active"
-    :"done"
-   }">
-
-   <div class="eventDot"></div>
-
-   <div class="eventTitle">
-    ${e.title}
-   </div>
-
-   <div class="eventTime">
-    ${e.time}
-   </div>
-
-   <div class="eventNote">
-    ${e.note}
-   </div>
-
-  </div>
-
- `).join("")}
-
- </div>
- `;
-}
-
-
-/* =========================================================
- LIVE DELIVERY
-========================================================= */
-
-function renderLive(){
-
- document.getElementById("content").innerHTML=`
-
- <section class="section">
-
-  <div class="hero">
-
-   <h1>LIVE DELIVERY</h1>
-
-   <p>
-    Traveler GPS menjadi sumber posisi live
-    selama delivery aktif.
-   </p>
-
-   ${
-    tx.trackingId
-    ?`
-     <div class="idBox">
-
-      <div class="idRow">
-       <span>TRACKING ID</span>
-       <strong>${tx.trackingId}</strong>
-      </div>
-
-      <div class="idRow">
-       <span>STATUS</span>
-       <strong>${tx.status}</strong>
-      </div>
-
-     </div>
-    `
-    :`
-     <div class="notice warning">
-      Tracking belum aktif.
-      Payment harus SUCCESS terlebih dahulu.
-     </div>
-    `
-   }
-
-  </div>
-
-  ${
-   !tx.trackingId
-   ?`
-    <button class="btn yellow"
-     onclick="page('payment')">
-     GO TO PAYMENT
-    </button>
-   `
-   :`
-
-   <div class="card">
-
-    <h2>LIVE MAP</h2>
-
-    <div id="map" class="map"></div>
-
-    <div class="gpsGrid">
-
-     <div class="gpsBox">
-      <span>LATITUDE</span>
-      <strong id="lat">-</strong>
-     </div>
-
-     <div class="gpsBox">
-      <span>LONGITUDE</span>
-      <strong id="lng">-</strong>
-     </div>
-
-     <div class="gpsBox">
-      <span>ACCURACY</span>
-      <strong id="accuracy">-</strong>
-     </div>
-
-     <div class="gpsBox">
-      <span>GPS STATUS</span>
-      <strong id="gpsStatus">
-       NOT STARTED
-      </strong>
-     </div>
-
-    </div>
-
-    <button class="btn primary"
-     onclick="startGPS()">
-     START GPS
-    </button>
-
-    <button class="btn dark"
-     onclick="centerGPS()">
-     CENTER GPS
-    </button>
-
-    <button class="btn dark"
-     onclick="stopGPS()">
-     STOP GPS
-    </button>
-
-   </div>
-
-   <div class="card">
-
-    <h2>Traveler / Partner</h2>
-
-    <div class="partner">
-
-     <div class="avatar">AT</div>
-
-     <div class="partnerInfo">
-      <strong>${tx.partner.name}</strong>
-      <span>
-       ${tx.partner.type} · ⭐ ${tx.partner.rating}
-      </span>
-      <span>
-       ${tx.partner.vehicle}
-      </span>
-     </div>
-
-    </div>
-
-   </div>
-
-   <div class="card">
-
-    <h2>Delivery Control</h2>
-
-    ${
-     tx.status==="PAYMENT SUCCESS"
-     ?`
-      <button class="btn primary"
-       onclick="confirmPickup()">
-       CONFIRM PICKUP
-      </button>
-     `
-     :""
-    }
-
-    ${
-     tx.status==="PICKUP"
-     ?`
-      <button class="btn primary"
-       onclick="startTransit()">
-       START DELIVERY / IN TRANSIT
-      </button>
-     `
-     :""
-    }
-
-    ${
-     tx.status==="IN TRANSIT"
-     ?`
-      <button class="btn orange"
-       onclick="confirmArrival()">
-       CONFIRM ARRIVAL
-      </button>
-     `
-     :""
-    }
-
-    ${
-     tx.status==="ARRIVED"
-     ?`
-      <button class="btn yellow"
-       onclick="confirmHandover()">
-       CONFIRM HANDOVER
-      </button>
-     `
-     :""
-    }
-
-    ${
-     tx.status==="HANDOVER"
-     ?`
-      <button class="btn green"
-       onclick="confirmCompleted()">
-       CONFIRM DELIVERY / COMPLETED
-      </button>
-     `
-     :""
-    }
-
-    ${
-     tx.status==="COMPLETED"
-     ?`
-      <div class="notice success">
-
-       DELIVERY COMPLETED ✓<br><br>
-
-       Transaction:
-       <strong>${tx.transactionId}</strong><br>
-
-       Tracking:
-       <strong>${tx.trackingId}</strong><br>
-
-       Tracking session:
-       <strong>CLOSED</strong>
-
-      </div>
-
-      <button class="btn green"
-       onclick="finalReceipt()">
-       VIEW FINAL RECEIPT
-      </button>
-     `
-     :""
-    }
-
-   </div>
-
-   `
-  }
-
- </section>
- `;
-
- if(tx.trackingId){
-
-  setTimeout(()=>{
-   initializeMap();
-  },100);
-
- }
-
-}
-
-
-/* =========================================================
- GPS
-========================================================= */
+   GPS
+   ========================================================= */
 
 function startGPS(){
 
  if(!navigator.geolocation){
 
-  toast("GPS TIDAK TERSEDIA DI BROWSER");
-
+  toast("Browser tidak mendukung GPS");
   return;
+
  }
 
- if(tx.status==="COMPLETED"){
+ if(state.completed){
 
-  toast("TRACKING SUDAH SELESAI");
-
+  toast("GPS stopped: transaction completed");
   return;
+
  }
 
- const status=document.getElementById("gpsStatus");
+ document.getElementById("gpsBadge")
+ .textContent="GPS ACTIVE";
 
- if(status){
-  status.textContent="REQUESTING...";
- }
-
- watchId=navigator.geolocation.watchPosition(
+ state.gpsWatch=
+ navigator.geolocation.watchPosition(
 
   position=>{
 
-   gps.lat=position.coords.latitude;
+   state.gps.lat=
+    position.coords.latitude;
 
-   gps.lng=position.coords.longitude;
+   state.gps.lng=
+    position.coords.longitude;
 
-   gps.accuracy=position.coords.accuracy;
+   state.gps.accuracy=
+    position.coords.accuracy;
 
-   updateGPSUI();
+   state.gps.lastUpdate=
+    new Date().toISOString();
 
-   updateMapGPS();
+   updateGPS();
+
+   broadcastGPS();
 
   },
 
   error=>{
 
-   console.log(error);
-
-   const status=document.getElementById("gpsStatus");
-
-   if(status){
-    status.textContent="GPS ERROR";
-   }
+   document.getElementById("gpsBadge")
+   .textContent="GPS ERROR";
 
    toast(
-    "GPS tidak dapat diakses. Pastikan permission lokasi aktif."
+    "GPS error: "+error.message
    );
 
   },
@@ -2142,650 +1955,663 @@ function startGPS(){
 
  );
 
- const status=document.getElementById("gpsStatus");
-
- if(status){
-  status.textContent="WATCHING GPS";
- }
-
- toast("GPS LIVE AKTIF");
+ audit(
+  "GPS_STARTED",
+  state.trackingId
+ );
 
 }
+
+/* =========================================================
+   STOP GPS
+   ========================================================= */
 
 function stopGPS(){
 
- if(watchId!==null){
+ if(
+  state.gpsWatch!==null &&
+  navigator.geolocation
+ ){
 
   navigator.geolocation.clearWatch(
-   watchId
+   state.gpsWatch
   );
-
-  watchId=null;
 
  }
 
- const status=document.getElementById("gpsStatus");
+ state.gpsWatch=null;
 
- if(status){
-  status.textContent="STOPPED";
+ const badge=
+  document.getElementById("gpsBadge");
+
+ if(badge)
+  badge.textContent="GPS STOPPED";
+
+ audit(
+  "GPS_STOPPED",
+  state.trackingId
+ );
+
+}
+
+/* =========================================================
+   UPDATE GPS
+   ========================================================= */
+
+function updateGPS(){
+
+ document.getElementById("lat")
+ .textContent=
+ state.gps.lat ?
+ state.gps.lat.toFixed(6) :
+ "-";
+
+ document.getElementById("lng")
+ .textContent=
+ state.gps.lng ?
+ state.gps.lng.toFixed(6) :
+ "-";
+
+ document.getElementById("accuracy")
+ .textContent=
+ state.gps.accuracy ?
+ Math.round(state.gps.accuracy)+" m" :
+ "-";
+
+ document.getElementById("lastUpdate")
+ .textContent=
+ state.gps.lastUpdate ?
+ new Date(
+  state.gps.lastUpdate
+ ).toLocaleTimeString() :
+ "-";
+
+ /* visual demo movement */
+
+ if(state.gps.lat){
+
+  const pin=
+   document.getElementById("travelerPin");
+
+  const percent=
+   ((Math.abs(state.gps.lng)%1)*100);
+
+  if(pin)
+   pin.style.left=
+    Math.max(20,Math.min(75,percent))+"%";
+
  }
 
 }
+
+/* =========================================================
+   CENTER GPS
+   ========================================================= */
 
 function centerGPS(){
 
- if(
-  map &&
-  gps.lat!==null &&
-  gps.lng!==null
- ){
+ if(!state.gps.lat){
 
-  map.setView(
-   [gps.lat,gps.lng],
-   16
-  );
-
- }else{
-
-  toast("GPS BELUM TERSEDIA");
+  toast("GPS belum aktif");
+  return;
 
  }
 
-}
-
-function updateGPSUI(){
-
- const lat=document.getElementById("lat");
- const lng=document.getElementById("lng");
- const acc=document.getElementById("accuracy");
-
- if(lat)lat.textContent=
-  gps.lat.toFixed(6);
-
- if(lng)lng.textContent=
-  gps.lng.toFixed(6);
-
- if(acc)acc.textContent=
-  Math.round(gps.accuracy)+" m";
+ toast(
+  "GPS centered: "+
+  state.gps.lat.toFixed(6)+
+  ", "+
+  state.gps.lng.toFixed(6)
+ );
 
 }
-
 
 /* =========================================================
- MAP
-========================================================= */
+   BROADCAST GPS
+   ========================================================= */
 
-function initializeMap(){
+async function broadcastGPS(){
 
- const el=document.getElementById("map");
+ if(!supabaseClient) return;
 
- if(!el)return;
+ try{
 
- if(map){
+  const channel=
+   supabaseClient.channel(
+    "tracking:"+state.trackingId
+   );
 
-  map.remove();
+  await channel.send({
+   type:"broadcast",
+   event:"gps",
+   payload:{
+    transaction_id:
+     state.transactionId,
 
-  map=null;
+    tracking_id:
+     state.trackingId,
 
- }
+    lat:
+     state.gps.lat,
 
- map=L.map("map").setView(
-  [-6.2,106.816],
-  8
- );
+    lng:
+     state.gps.lng,
 
- L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-  {
-   maxZoom:19,
-   attribution:"© OpenStreetMap"
-  }
- ).addTo(map);
+    accuracy:
+     state.gps.accuracy,
 
- const origin=[-6.2383,106.9756];
+    status:
+     state.status,
 
- const destination=[-6.9175,107.6191];
-
- routeLine=L.polyline(
-  [origin,destination],
-  {
-   weight:4
-  }
- ).addTo(map);
-
- L.marker(origin)
-  .addTo(map)
-  .bindPopup("Pickup: Bekasi");
-
- L.marker(destination)
-  .addTo(map)
-  .bindPopup("Delivery: Bandung");
-
- map.fitBounds(
-  routeLine.getBounds(),
-  {padding:[20,20]}
- );
-
-}
-
-function updateMapGPS(){
-
- if(!map)return;
-
- if(
-  gps.lat===null ||
-  gps.lng===null
- )return;
-
- if(!gpsMarker){
-
-  gpsMarker=L.marker(
-   [gps.lat,gps.lng]
-  )
-  .addTo(map)
-  .bindPopup("Traveler / Current GPS");
-
- }else{
-
-  gpsMarker.setLatLng(
-   [gps.lat,gps.lng]
-  );
-
- }
-
- if(!gpsCircle){
-
-  gpsCircle=L.circle(
-   [gps.lat,gps.lng],
-   {
-    radius:gps.accuracy||20
+    updated_at:
+     state.gps.lastUpdate
    }
-  ).addTo(map);
+  });
 
- }else{
+ }catch(error){
 
-  gpsCircle.setLatLng(
-   [gps.lat,gps.lng]
-  );
-
-  gpsCircle.setRadius(
-   gps.accuracy||20
+  console.log(
+   "Realtime broadcast demo:",
+   error
   );
 
  }
 
 }
 
-
 /* =========================================================
- CAPTURE GPS FOR TRANSACTION EVENT
-========================================================= */
+   SUPABASE TRACKING CHANNEL
+   ========================================================= */
 
-function captureLocation(){
+async function subscribeTracking(){
 
- return {
-  lat:gps.lat,
-  lng:gps.lng,
-  accuracy:gps.accuracy,
-  capturedAt:timeNow()
- };
+ if(!supabaseClient){
 
-}
-
-
-/* =========================================================
- PICKUP
-========================================================= */
-
-function confirmPickup(){
-
- if(tx.paymentStatus!=="SUCCESS"){
-
-  toast("PAYMENT BELUM SUCCESS");
+  console.log(
+   "Supabase not configured. Local demo active."
+  );
 
   return;
+
  }
 
- if(!tx.trackingId){
+ const channel=
+  supabaseClient.channel(
+   "tracking:"+state.trackingId
+  );
 
-  toast("TRACKING ID BELUM TERBIT");
+ channel.on(
+  "broadcast",
+  {event:"gps"},
+  payload=>{
 
-  return;
- }
+   const data=
+    payload.payload;
 
- const loc=captureLocation();
+   if(!data) return;
 
- tx.pickupAt=timeNow();
+   state.gps.lat=data.lat;
+   state.gps.lng=data.lng;
+   state.gps.accuracy=data.accuracy;
+   state.gps.lastUpdate=data.updated_at;
 
- tx.pickupLocationGPS=loc;
+   if(data.status)
+    state.status=data.status;
 
- tx.status="PICKUP";
+   updateGPS();
+   updateUI();
 
- tx.live=true;
-
- addEvent(
-  "PICKUP",
-  "PICKUP CONFIRMED",
-  "Package picked up by traveler."
+  }
  );
 
- saveData();
+ channel.on(
+  "broadcast",
+  {event:"status"},
+  payload=>{
 
- toast("PICKUP CONFIRMED");
+   if(
+    payload.payload &&
+    payload.payload.status
+   ){
 
- renderLive();
+    state.status=
+     payload.payload.status;
+
+    updateUI();
+
+   }
+
+  }
+ );
+
+ await channel.subscribe();
 
 }
 
-
 /* =========================================================
- IN TRANSIT
-========================================================= */
+   STATUS BROADCAST
+   ========================================================= */
 
-function startTransit(){
+async function broadcastStatus(){
 
- if(tx.status!=="PICKUP"){
+ if(!supabaseClient) return;
 
-  toast("PICKUP BELUM CONFIRMED");
+ const channel=
+  supabaseClient.channel(
+   "tracking:"+state.trackingId
+  );
 
-  return;
- }
+ await channel.send({
 
- tx.status="IN TRANSIT";
+  type:"broadcast",
 
- tx.live=true;
+  event:"status",
 
- addEvent(
-  "TRANSIT",
-  "IN TRANSIT",
-  "Package is now moving to destination."
- );
+  payload:{
+   transaction_id:
+    state.transactionId,
 
- saveData();
+   tracking_id:
+    state.trackingId,
 
- toast("LIVE DELIVERY STARTED");
+   status:
+    state.status,
 
- renderLive();
+   updated_at:
+    new Date().toISOString()
+  }
+
+ });
 
 }
 
-
 /* =========================================================
- ARRIVAL
-========================================================= */
+   TIMELINE
+   ========================================================= */
 
-function confirmArrival(){
+const flow=[
+ "REQUEST",
+ "VERIFY",
+ "MATCH",
+ "APPROVED",
+ "PAYMENT",
+ "STRUK",
+ "TRACKING ID",
+ "PICKUP",
+ "LIVE DELIVERY",
+ "ARRIVED",
+ "HANDOVER",
+ "COMPLETED",
+ "FINAL RECEIPT"
+];
 
- if(tx.status!=="IN TRANSIT"){
+function renderTimeline(){
 
-  toast("DELIVERY BELUM IN TRANSIT");
+ const container=
+  document.getElementById(
+   "mainTimeline"
+  );
 
-  return;
+ if(!container) return;
+
+ container.innerHTML="";
+
+ let activeIndex=
+  flow.indexOf(
+   state.status
+  );
+
+ if(activeIndex<0){
+
+  if(state.status==="IN TRANSIT")
+   activeIndex=8;
+  else
+   activeIndex=3;
+
  }
 
- const loc=captureLocation();
+ flow.forEach((item,index)=>{
 
- tx.arrivalAt=timeNow();
+  const div=
+   document.createElement("div");
 
- tx.arrivalLocationGPS=loc;
+  div.className="event";
 
- tx.status="ARRIVED";
+  if(index<activeIndex)
+   div.classList.add("done");
 
- addEvent(
-  "ARRIVED",
-  "ARRIVED",
-  "Traveler reached delivery area."
- );
+  if(index===activeIndex)
+   div.classList.add("active");
 
- saveData();
+  div.innerHTML=
+   '<div class="dot"></div>'+
+   '<strong>'+item+'</strong>'+
+   '<small>'+
+   (index<=activeIndex?
+    "ACTIVE / VERIFIED":
+    "PENDING")+
+   '</small>';
 
- toast("ARRIVAL CONFIRMED");
+  container.appendChild(div);
 
- renderLive();
+ });
 
 }
 
-
 /* =========================================================
- HANDOVER
-========================================================= */
+   TRACKING TIMELINE
+   ========================================================= */
 
-function confirmHandover(){
+function renderTrackingTimeline(){
 
- if(tx.status!=="ARRIVED"){
+ const container=
+  document.getElementById(
+   "trackingTimeline"
+  );
 
-  toast("BELUM ARRIVED");
+ if(!container) return;
 
-  return;
- }
+ const items=[
+  ["PAYMENT","SUCCESS"],
+  ["TRACKING ID",state.trackingId],
+  ["PICKUP",state.pickupConfirmed?"CONFIRMED":"READY"],
+  ["LIVE DELIVERY",state.status==="IN TRANSIT"?"ACTIVE":"PENDING"],
+  ["ARRIVED",state.arrivalConfirmed?"CONFIRMED":"PENDING"],
+  ["HANDOVER",state.handoverConfirmed?"CONFIRMED":"PENDING"],
+  ["COMPLETED",state.completed?"COMPLETED":"PENDING"]
+ ];
 
- const loc=captureLocation();
+ container.innerHTML="";
 
- tx.handoverAt=timeNow();
+ items.forEach(item=>{
 
- tx.handoverLocationGPS=loc;
+  const div=
+   document.createElement("div");
 
- tx.status="HANDOVER";
+  const done=
+   item[1]!=="PENDING" &&
+   item[1]!=="READY";
 
- addEvent(
-  "HANDOVER",
-  "HANDOVER CONFIRMED",
-  "Package handover has been verified."
- );
+  div.className=
+   "event "+(done?"done":"");
 
- saveData();
+  div.innerHTML=
+   '<div class="dot"></div>'+
+   '<strong>'+item[0]+'</strong>'+
+   '<small>'+item[1]+'</small>';
 
- toast("HANDOVER CONFIRMED");
+  container.appendChild(div);
 
- renderLive();
+ });
 
 }
 
-
 /* =========================================================
- COMPLETED
-========================================================= */
+   UPDATE UI
+   ========================================================= */
 
-function confirmCompleted(){
+function updateUI(){
 
- if(tx.status!=="HANDOVER"){
+ document.getElementById(
+  "mainStatus"
+ ).textContent=
+  state.status;
 
-  toast("HANDOVER BELUM CONFIRMED");
+ document.getElementById(
+  "paymentDisplay"
+ ).textContent=
+  state.paymentStatus;
 
-  return;
- }
+ document.getElementById(
+  "orderStatus"
+ ).textContent=
+  state.status;
 
- const loc=captureLocation();
+ document.getElementById(
+  "transactionDisplay"
+ ).textContent=
+  state.transactionId;
 
- tx.completedAt=timeNow();
+ document.getElementById(
+  "trackingDisplay"
+ ).textContent=
+  state.trackingId;
 
- tx.completedLocationGPS=loc;
+ renderTimeline();
+ renderTrackingTimeline();
+ updateGPS();
 
- tx.status="COMPLETED";
-
- tx.live=false;
-
- addEvent(
-  "COMPLETED",
-  "COMPLETED",
-  "Delivery completed successfully."
- );
-
- saveData();
-
- stopGPS();
-
- toast("DELIVERY COMPLETED");
-
- renderLive();
+ broadcastStatus();
 
 }
 
-
 /* =========================================================
- FINAL RECEIPT
-========================================================= */
+   GPS TEXT
+   ========================================================= */
 
-function finalReceipt(){
+function gpsText(){
 
- document.getElementById("content").innerHTML=`
+ if(!state.gps.lat)
+  return "GPS unavailable";
 
- <section class="section">
-
-  <div class="card">
-
-   <div class="center">
-
-    <div class="bigCheck">✓</div>
-
-    <h2>DELIVERY COMPLETED</h2>
-
-    <p class="small">
-     CHELEA transaction has been completed.
-    </p>
-
-   </div>
-
-   <br>
-
-   <div class="receipt"
-    id="finalReceipt">
-
-    <h2>CHELEA FINAL DELIVERY RECEIPT</h2>
-
-    <div class="receiptRow">
-     <span>Transaction ID</span>
-     <strong>${tx.transactionId}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Tracking ID</span>
-     <strong>${tx.trackingId}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Customer</span>
-     <strong>${tx.customer}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Route</span>
-     <strong>
-      ${tx.origin} → ${tx.destination}
-     </strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Traveler</span>
-     <strong>${tx.partner.name}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Payment</span>
-     <strong>SUCCESS / PAID</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Pickup</span>
-     <strong>${tx.pickupAt||"-"}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Arrival</span>
-     <strong>${tx.arrivalAt||"-"}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Handover</span>
-     <strong>${tx.handoverAt||"-"}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Completed</span>
-     <strong>${tx.completedAt||"-"}</strong>
-    </div>
-
-    <div class="receiptRow">
-     <span>Final Status</span>
-     <strong>COMPLETED</strong>
-    </div>
-
-    <div class="receiptTotal">
-     <span>TOTAL PAID</span>
-     <span>
-      Rp ${calculatePrice()
-       .toLocaleString("id-ID")}
-     </span>
-    </div>
-
-   </div>
-
-   <button class="btn primary"
-    onclick="downloadFinalReceipt()">
-    DOWNLOAD FINAL RECEIPT
-   </button>
-
-   <button class="btn dark"
-    onclick="page('tracking')">
-    BACK TO TRACKING
-   </button>
-
-  </div>
-
- </section>
- `;
-}
-
-
-/* =========================================================
- FINAL RECEIPT DOWNLOAD
-========================================================= */
-
-function downloadFinalReceipt(){
-
- const html=`
-
- <!DOCTYPE html>
-
- <html>
-
- <head>
-
- <meta charset="UTF-8">
-
- <title>
-  CHELEA Final Receipt
- </title>
-
- <style>
-
- body{
-  font-family:Arial;
-  padding:30px;
-  color:#111;
- }
-
- h1{
-  color:#0a5fa8;
- }
-
- table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
- }
-
- td{
-  padding:10px;
-  border-bottom:1px solid #ddd;
- }
-
- .total{
-  font-size:20px;
-  font-weight:bold;
- }
-
- </style>
-
- </head>
-
- <body>
-
- <h1>
-  CHELEA FINAL DELIVERY RECEIPT
- </h1>
-
- <table>
-
- <tr>
-  <td>Transaction ID</td>
-  <td>${tx.transactionId}</td>
- </tr>
-
- <tr>
-  <td>Tracking ID</td>
-  <td>${tx.trackingId}</td>
- </tr>
-
- <tr>
-  <td>Customer</td>
-  <td>${tx.customer}</td>
- </tr>
-
- <tr>
-  <td>Route</td>
-  <td>
-   ${tx.origin} → ${tx.destination}
-  </td>
- </tr>
-
- <tr>
-  <td>Traveler</td>
-  <td>${tx.partner.name}</td>
- </tr>
-
- <tr>
-  <td>Payment</td>
-  <td>SUCCESS / PAID</td>
- </tr>
-
- <tr>
-  <td>Pickup</td>
-  <td>${tx.pickupAt||"-"}</td>
- </tr>
-
- <tr>
-  <td>Arrival</td>
-  <td>${tx.arrivalAt||"-"}</td>
- </tr>
-
- <tr>
-  <td>Handover</td>
-  <td>${tx.handoverAt||"-"}</td>
- </tr>
-
- <tr>
-  <td>Completed</td>
-  <td>${tx.completedAt||"-"}</td>
- </tr>
-
- <tr>
-  <td>Final Status</td>
-  <td>COMPLETED</td>
- </tr>
-
- <tr class="total">
-  <td>TOTAL PAID</td>
-  <td>
-   Rp ${calculatePrice()
-    .toLocaleString("id-ID")}
-  </td>
- </tr>
-
- </table>
-
- <p style="margin-top:30px">
-  CHELEA Secure Transaction — DEMO
- </p>
-
- </body>
-
- </html>
- `;
-
- const blob=new Blob(
-  [html],
-  {type:"text/html"}
+ return(
+  state.gps.lat.toFixed(6)+
+  ","+
+  state.gps.lng.toFixed(6)
  );
 
- const url=URL.createObjectURL(blob);
+}
 
- const a=document.createElement("a");
+/* =========================================================
+   PAYMENT RECEIPT
+   ========================================================= */
+
+function paymentReceiptHTML(){
+
+ return `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CHELEA Payment Receipt</title>
+<style>
+body{
+ font-family:Arial;
+ padding:30px;
+ color:#111;
+}
+.box{
+ max-width:650px;
+ margin:auto;
+ border:1px solid #ddd;
+ padding:25px;
+ border-radius:12px;
+}
+h1{color:#087d61}
+.row{
+ display:flex;
+ justify-content:space-between;
+ padding:8px 0;
+ border-bottom:1px solid #eee;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>CHELEA PAYMENT RECEIPT</h1>
+
+<div class="row">
+<strong>Transaction</strong>
+<span>${state.transactionId}</span>
+</div>
+
+<div class="row">
+<strong>Tracking ID</strong>
+<span>${state.trackingId}</span>
+</div>
+
+<div class="row">
+<strong>Payment</strong>
+<span>SUCCESS — DEMO</span>
+</div>
+
+<div class="row">
+<strong>Amount</strong>
+<span>Rp165.000</span>
+</div>
+
+<div class="row">
+<strong>Date</strong>
+<span>${new Date().toLocaleString()}</span>
+</div>
+
+<hr>
+
+<p>
+This document is a CHELEA prototype payment receipt.
+Production payment requires a real payment provider.
+</p>
+
+</div>
+</body>
+</html>
+`;
+
+}
+
+/* =========================================================
+   FINAL RECEIPT
+   ========================================================= */
+
+function finalReceiptHTML(){
+
+ return `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CHELEA Final Delivery Receipt</title>
+<style>
+body{
+ font-family:Arial;
+ padding:30px;
+ color:#111;
+}
+.box{
+ max-width:700px;
+ margin:auto;
+ border:1px solid #ddd;
+ padding:25px;
+ border-radius:12px;
+}
+h1{color:#087d61}
+.row{
+ display:flex;
+ justify-content:space-between;
+ padding:8px 0;
+ border-bottom:1px solid #eee;
+}
+.badge{
+ display:inline-block;
+ padding:5px 10px;
+ background:#d8f8ed;
+ border-radius:20px;
+}
+</style>
+</head>
+<body>
+<div class="box">
+
+<h1>CHELEA FINAL DELIVERY RECEIPT</h1>
+
+<p>
+<span class="badge">COMPLETED</span>
+</p>
+
+<div class="row">
+<strong>Transaction ID</strong>
+<span>${state.transactionId}</span>
+</div>
+
+<div class="row">
+<strong>Tracking ID</strong>
+<span>${state.trackingId}</span>
+</div>
+
+<div class="row">
+<strong>Item ID</strong>
+<span>${state.itemId}</span>
+</div>
+
+<div class="row">
+<strong>Owner ID</strong>
+<span>${state.ownerId}</span>
+</div>
+
+<div class="row">
+<strong>Pickup Controller</strong>
+<span>${state.controllerId}</span>
+</div>
+
+<div class="row">
+<strong>Partner</strong>
+<span>${state.partnerId}</span>
+</div>
+
+<div class="row">
+<strong>GPS</strong>
+<span>${gpsText()}</span>
+</div>
+
+<div class="row">
+<strong>Completed</strong>
+<span>${new Date().toLocaleString()}</span>
+</div>
+
+<hr>
+
+<p>
+CHELEA Chain of Custody:
+REQUEST → VERIFY → PICKUP → LIVE DELIVERY →
+ARRIVAL → HANDOVER → COMPLETED
+</p>
+
+<p>
+Prototype document. Production implementation requires
+verified backend, identity verification provider,
+storage security, payment provider and legal compliance.
+</p>
+
+</div>
+</body>
+</html>
+`;
+
+}
+
+/* =========================================================
+   DOWNLOAD FILE
+   ========================================================= */
+
+function downloadFile(
+ filename,
+ content
+){
+
+ const blob=
+  new Blob(
+   [content],
+   {type:"text/html"}
+  );
+
+ const url=
+  URL.createObjectURL(blob);
+
+ const a=
+  document.createElement("a");
 
  a.href=url;
-
- a.download=
-  "CHELEA_FINAL_"+tx.transactionId+".html";
+ a.download=filename;
 
  document.body.appendChild(a);
 
@@ -2795,102 +2621,368 @@ function downloadFinalReceipt(){
 
  URL.revokeObjectURL(url);
 
- toast("FINAL RECEIPT DOWNLOADED");
 }
 
+/* =========================================================
+   PAYMENT DOWNLOAD
+   ========================================================= */
+
+function downloadPaymentReceipt(){
+
+ downloadFile(
+  "CHELEA_Payment_Struk_"+state.transactionId+".html",
+  paymentReceiptHTML()
+ );
+
+ audit(
+  "PAYMENT_RECEIPT_DOWNLOADED",
+  state.transactionId
+ );
+
+}
 
 /* =========================================================
- ORDERS
-========================================================= */
+   FINAL RECEIPT DOWNLOAD
+   ========================================================= */
 
-function renderOrders(){
+function downloadFinalReceipt(){
 
- document.getElementById("content").innerHTML=`
+ if(!state.completed){
 
- <section class="section">
+  toast(
+   "Final receipt tersedia setelah COMPLETED"
+  );
 
-  <div class="hero">
+  return;
 
-   <h1>ORDERS</h1>
+ }
 
-   <p>
-    Semua data transaksi CHELEA
-    terhubung dengan Transaction ID.
-   </p>
+ downloadFile(
+  "CHELEA_Final_Receipt_"+state.transactionId+".html",
+  finalReceiptHTML()
+ );
 
-  </div>
+ audit(
+  "FINAL_RECEIPT_DOWNLOADED",
+  state.transactionId
+ );
 
-  <div class="card">
+}
 
-   <h2>${tx.transactionId}</h2>
+/* =========================================================
+   AUDIT RENDER
+   ========================================================= */
 
-   <div class="idBox">
+function renderAudit(){
 
-    <div class="idRow">
-     <span>TRACKING</span>
-     <strong>
-      ${tx.trackingId||"NOT ACTIVE"}
-     </strong>
+ const box=
+  document.getElementById(
+   "auditLog"
+  );
+
+ if(!box) return;
+
+ if(!state.audit.length){
+
+  box.innerHTML=
+   '<div class="notice">No audit events yet.</div>';
+
+  return;
+
+ }
+
+ box.innerHTML=
+  state.audit
+  .slice(0,15)
+  .map(item=>`
+
+   <div class="stat" style="margin-bottom:8px">
+
+    <strong>${item.action}</strong>
+
+    <div class="label">
+     ${new Date(item.time).toLocaleString()}
     </div>
 
-    <div class="idRow">
-     <span>PAYMENT</span>
-     <strong>${tx.paymentStatus}</strong>
-    </div>
-
-    <div class="idRow">
-     <span>STATUS</span>
-     <strong>${tx.status}</strong>
-    </div>
-
-    <div class="idRow">
-     <span>PARTNER</span>
-     <strong>${tx.partner.name}</strong>
+    <div style="font-size:11px;margin-top:5px">
+     ${item.details}
     </div>
 
    </div>
 
-   <button class="btn primary"
-    onclick="page('tracking')">
-    OPEN TRACKING
-   </button>
+  `)
+  .join("");
 
-   <button class="btn dark"
-    onclick="page('payment')">
-    PAYMENT / RECEIPT
-   </button>
-
-   ${
-    tx.status==="COMPLETED"
-    ?`
-     <button class="btn green"
-      onclick="finalReceipt()">
-      FINAL RECEIPT
-     </button>
-    `
-    :""
-   }
-
-  </div>
-
-  <div class="card">
-
-   <h2>Transaction Timeline</h2>
-
-   ${timelineHTML()}
-
-  </div>
-
- </section>
- `;
 }
 
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetDemo(){
+
+ const yes=
+  confirm(
+   "Reset CHELEA V15 demo?"
+  );
+
+ if(!yes) return;
+
+ localStorage.removeItem(
+  "CHELEA_V15_STATE"
+ );
+
+ localStorage.removeItem(
+  "CHELEA_V15_AUDIT"
+ );
+
+ location.reload();
+
+}
 
 /* =========================================================
- INITIAL
-========================================================= */
+   LOAD STATE
+   ========================================================= */
 
-renderHome();
+function loadState(){
+
+ try{
+
+  const saved=
+   localStorage.getItem(
+    "CHELEA_V15_STATE"
+   );
+
+  if(saved){
+
+   const data=
+    JSON.parse(saved);
+
+   Object.assign(
+    state,
+    data
+   );
+
+  }
+
+ }catch(error){
+
+  console.log(error);
+
+ }
+
+ try{
+
+  const auditSaved=
+   localStorage.getItem(
+    "CHELEA_V15_AUDIT"
+   );
+
+  if(auditSaved){
+
+   state.audit=
+    JSON.parse(
+     auditSaved
+    );
+
+  }
+
+ }catch(error){
+
+  console.log(error);
+
+ }
+
+}
+
+/* =========================================================
+   SAVE STATE
+   ========================================================= */
+
+function saveState(){
+
+ localStorage.setItem(
+  "CHELEA_V15_STATE",
+  JSON.stringify(state)
+ );
+
+}
+
+/* =========================================================
+   AUTO SAVE
+   ========================================================= */
+
+setInterval(
+ saveState,
+ 3000
+);
+
+/* =========================================================
+   INIT
+   ========================================================= */
+
+loadState();
+
+document
+ .getElementById("orderOrigin")
+ .textContent=
+ document.getElementById("origin")
+ .value;
+
+document
+ .getElementById("orderDestination")
+ .textContent=
+ document.getElementById("destination")
+ .value;
+
+renderTimeline();
+
+renderTrackingTimeline();
+
+renderAudit();
+
+updateGPS();
+
+subscribeTracking();
+
+/* =========================================================
+   AUTO UPDATE ORDER LOCATION
+   ========================================================= */
+
+document
+ .getElementById("origin")
+ .addEventListener(
+  "input",
+  e=>{
+   document.getElementById(
+    "orderOrigin"
+   ).textContent=e.target.value;
+  }
+ );
+
+document
+ .getElementById("destination")
+ .addEventListener(
+  "input",
+  e=>{
+   document.getElementById(
+    "orderDestination"
+   ).textContent=e.target.value;
+  }
+ );
+
+/* =========================================================
+   PRICE ENGINE
+   ========================================================= */
+
+function calculatePrice(){
+
+ const weight=
+  Number(
+   document.getElementById("weight")
+   ?.value || 2
+  );
+
+ const priority=
+  document.getElementById("priority")
+  ?.value || "standard";
+
+ const base=25000;
+
+ const distanceFee=75000;
+
+ const weightFee=
+  weight*5000;
+
+ const pickup=10000;
+
+ const protection=5000;
+
+ const platform=7500;
+
+ let multiplier=1;
+
+ if(priority==="priority")
+  multiplier=1.25;
+
+ if(priority==="exclusive")
+  multiplier=1.5;
+
+ const subtotal=
+  base+
+  distanceFee+
+  weightFee+
+  pickup+
+  protection+
+  platform;
+
+ const total=
+  Math.round(
+   subtotal*multiplier
+  );
+
+ const output=
+  document.getElementById(
+   "totalPrice"
+  );
+
+ if(output){
+
+  output.textContent=
+   "Rp"+
+   total.toLocaleString(
+    "id-ID"
+   );
+
+ }
+
+}
+
+document
+ .getElementById("weight")
+ ?.addEventListener(
+  "input",
+  calculatePrice
+ );
+
+document
+ .getElementById("priority")
+ ?.addEventListener(
+  "change",
+  calculatePrice
+ );
+
+calculatePrice();
+
+/* =========================================================
+   DEVELOPMENT MESSAGE
+   ========================================================= */
+
+console.log(
+ "CHELEA V15 MASTER loaded."
+);
+
+console.log(
+ "Transaction:",
+ state.transactionId
+);
+
+console.log(
+ "Tracking:",
+ state.trackingId
+);
+
+console.log(
+ "Item:",
+ state.itemId
+);
+
+console.log(
+ "Supabase:",
+ supabaseClient ?
+ "CONFIGURED" :
+ "NOT CONFIGURED — LOCAL DEMO"
+);
 
 </script>
 
