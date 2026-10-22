@@ -2,552 +2,270 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#07111f">
-<title>TELKU - eSIM Travel</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>TELKU — eSIM Travel</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html,body{
-  min-height:100%;
-  background:#07111f;
-  color:#ffffff;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
+*{box-sizing:border-box}
 body{
-  padding-bottom:85px;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#07111f;
+  color:#fff;
 }
-
-button,
-input,
-select{
-  font-family:inherit;
+button,input,select{
+  font:inherit;
 }
-
 button{
   cursor:pointer;
 }
-
 .app{
-  width:100%;
-  max-width:760px;
+  max-width:520px;
+  min-height:100vh;
   margin:auto;
+  background:#07111f;
+  padding-bottom:90px;
 }
-
 .header{
+  padding:18px 18px 12px;
   position:sticky;
   top:0;
   z-index:20;
-  padding:18px;
-  background:#07111f;
-  border-bottom:1px solid #172536;
+  background:#07111fee;
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #ffffff0d;
 }
-
-.header-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
 .logo{
-  font-size:27px;
+  font-size:25px;
   font-weight:900;
+  letter-spacing:1px;
 }
-
 .logo span{
-  color:#25d8ff;
+  color:#19d3ae;
 }
-
-.subtitle{
-  color:#7f91a7;
-  font-size:11px;
+.sub{
+  color:#91a0b5;
+  font-size:12px;
   margin-top:4px;
 }
-
-.header-button{
-  width:42px;
-  height:42px;
-  border:1px solid #203247;
-  border-radius:14px;
-  background:#0d1c2c;
-  color:#ffffff;
-  font-size:19px;
-}
-
-main{
+.page{
   padding:18px;
 }
-
-.page{
-  display:none;
-}
-
-.page.active{
-  display:block;
-}
-
 .hero{
-  padding:25px;
-  border-radius:25px;
+  background:linear-gradient(135deg,#10263a,#0a1727);
+  border:1px solid #ffffff12;
+  border-radius:24px;
+  padding:24px;
   margin-bottom:16px;
-  background:linear-gradient(145deg,#12314a,#0b1828);
-  border:1px solid #20364b;
 }
-
 .hero h1{
-  font-size:29px;
-  line-height:1.1;
-  margin-bottom:10px;
+  margin:0 0 8px;
+  font-size:28px;
 }
-
 .hero p{
-  color:#9aacbf;
-  font-size:14px;
+  color:#9cabbc;
   line-height:1.5;
 }
-
-.section{
-  margin-top:20px;
+.btn{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  background:#19d3ae;
+  color:#03120f;
+  font-weight:800;
 }
-
-.section-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.btn.secondary{
+  background:#15283b;
+  color:#fff;
+}
+.btn.danger{
+  background:#6b2430;
+  color:#fff;
+}
+.card{
+  background:#0d1c2c;
+  border:1px solid #ffffff10;
+  border-radius:18px;
+  padding:16px;
   margin-bottom:12px;
 }
-
-.section-header h2{
-  font-size:18px;
+.card h3{
+  margin:0 0 8px;
 }
-
-.link{
-  border:0;
-  background:none;
-  color:#25d8ff;
-  font-size:12px;
+.muted{
+  color:#8e9db0;
+  font-size:13px;
 }
-
+.price{
+  font-size:24px;
+  font-weight:900;
+  color:#19d3ae;
+}
 .grid{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-
-.card{
-  background:#0d1b2b;
-  border:1px solid #1b2c3f;
-  border-radius:20px;
-  padding:16px;
-}
-
-.plan-tag{
-  display:inline-block;
-  color:#25d8ff;
-  background:#102d3c;
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:10px;
-  margin-bottom:10px;
-}
-
-.card h3{
-  font-size:16px;
-  margin-bottom:6px;
-}
-
-.muted{
-  color:#7f91a7;
-}
-
-.small{
-  font-size:11px;
-}
-
-.price{
-  font-size:20px;
-  font-weight:900;
-  margin:14px 0;
-}
-
-.primary{
-  width:100%;
-  padding:13px;
-  border:0;
-  border-radius:13px;
-  background:#25d8ff;
-  color:#04121d;
-  font-weight:900;
-}
-
-.secondary{
-  width:100%;
-  padding:12px;
-  border:1px solid #26394e;
-  border-radius:13px;
-  background:#122235;
-  color:#ffffff;
-  font-weight:700;
-}
-
-.stats{
-  display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-.stat{
-  padding:16px;
-  border-radius:18px;
-  background:#0d1b2b;
-  border:1px solid #1b2c3f;
-}
-
-.stat-label{
-  color:#7f91a7;
-  font-size:10px;
-  margin-bottom:8px;
-}
-
-.stat-value{
-  font-size:20px;
-  font-weight:900;
-}
-
-.list{
-  display:flex;
-  flex-direction:column;
   gap:10px;
 }
-
-.list-button{
-  width:100%;
-  border:1px solid #1b2c3f;
-  border-radius:17px;
-  background:#0d1b2b;
-  color:#ffffff;
-  padding:15px;
-  text-align:left;
-}
-
-.list-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-
-.item-title{
-  font-size:14px;
-  font-weight:800;
-}
-
-.item-sub{
-  color:#7f91a7;
-  font-size:11px;
-  margin-top:5px;
-}
-
-.badge{
-  display:inline-block;
-  background:#143044;
-  color:#68dfff;
-  padding:5px 8px;
-  border-radius:20px;
-  font-size:10px;
-  font-weight:800;
-}
-
-.profile{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:18px;
-  background:#0d1b2b;
-  border:1px solid #1b2c3f;
-  border-radius:21px;
-  margin-bottom:14px;
-}
-
-.avatar{
-  width:52px;
-  height:52px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:17px;
-  background:#25d8ff;
-  color:#04121d;
-  font-size:20px;
-  font-weight:900;
-}
-
-.profile-name{
-  font-size:15px;
-  font-weight:900;
-}
-
-.profile-id{
-  color:#7f91a7;
-  font-size:10px;
-  margin-top:4px;
-}
-
 .menu{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
-}
-
-.menu-button{
   width:100%;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:12px;
-  min-height:63px;
-  border:1px solid #1b2c3f;
-  border-radius:17px;
-  background:#0d1b2b;
-  color:#ffffff;
   text-align:left;
-}
-
-.menu-icon{
-  width:40px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:13px;
-  background:#14263a;
-  font-size:18px;
-}
-
-.menu-content{
-  flex:1;
-}
-
-.menu-title{
-  font-size:14px;
-  font-weight:800;
-}
-
-.menu-sub{
-  color:#7f91a7;
-  font-size:10px;
-  margin-top:3px;
-}
-
-.arrow{
-  color:#708197;
-  font-size:20px;
-}
-
-.form-group{
-  margin-bottom:14px;
-}
-
-label{
-  display:block;
-  color:#8ea0b5;
-  font-size:11px;
-  margin-bottom:7px;
-}
-
-input,
-select{
-  width:100%;
-  padding:13px;
-  border:1px solid #24374b;
-  border-radius:13px;
-  background:#0a1726;
-  color:#ffffff;
-  outline:none;
-}
-
-.notice{
-  padding:13px;
-  border-radius:14px;
-  background:#102437;
-  color:#94a7ba;
-  font-size:11px;
-  line-height:1.5;
-  margin-bottom:14px;
-}
-
-.empty{
-  padding:30px 15px;
-  text-align:center;
-  border:1px dashed #26394e;
-  border-radius:18px;
-  color:#7f91a7;
-}
-
-.loading{
-  padding:25px;
-  text-align:center;
-  color:#7f91a7;
-}
-
-.detail{
-  background:#091623;
-  border:1px solid #1b2c3f;
+  background:#0d1c2c;
+  color:#fff;
+  border:1px solid #ffffff0d;
   border-radius:17px;
-  padding:15px;
-  margin-bottom:13px;
+  padding:16px;
 }
-
-.detail-row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:9px 0;
-  border-bottom:1px solid #172536;
+.menu .icon{
+  font-size:25px;
+  display:block;
+  margin-bottom:10px;
+}
+.menu strong{
+  display:block;
+  margin-bottom:5px;
+}
+.menu small{
+  color:#8393a8;
+}
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  border:1px solid #26384b;
+  background:#091625;
+  color:#fff;
+  outline:none;
+  margin:7px 0 12px;
+}
+label{
+  color:#9aabbd;
   font-size:12px;
 }
-
-.detail-row:last-child{
-  border-bottom:0;
-}
-
-.detail-row span:first-child{
-  color:#7f91a7;
-}
-
-.qr{
-  width:220px;
-  height:220px;
-  background:#ffffff;
-  border-radius:15px;
-  margin:15px auto;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.bottom-nav{
+.bottom{
   position:fixed;
   bottom:0;
   left:50%;
   transform:translateX(-50%);
-  width:100%;
-  max-width:760px;
-  z-index:50;
+  width:min(520px,100%);
+  background:#091725f5;
+  backdrop-filter:blur(15px);
+  border-top:1px solid #ffffff10;
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  padding:8px 8px 10px;
-  background:#07111f;
-  border-top:1px solid #172536;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  z-index:50;
 }
-
-.nav-button{
-  border:0;
+.nav{
   background:none;
-  color:#65778d;
-  padding:7px 3px;
-  border-radius:12px;
-  font-size:10px;
+  border:0;
+  color:#718198;
+  padding:7px 2px;
+  font-size:11px;
 }
-
-.nav-icon{
+.nav .ni{
   display:block;
-  font-size:19px;
+  font-size:20px;
   margin-bottom:3px;
 }
-
-.nav-button.active{
-  color:#25d8ff;
-  background:#0d2030;
+.nav.active{
+  color:#19d3ae;
 }
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(0,0,0,.75);
-  align-items:flex-end;
-  padding:12px;
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:100%;
-  max-width:720px;
-  max-height:92vh;
-  overflow:auto;
-  margin:auto;
-  background:#0b1827;
-  border:1px solid #203247;
-  border-radius:24px;
-  padding:20px;
-}
-
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-.modal-header h3{
-  font-size:18px;
-}
-
-.close{
-  width:36px;
-  height:36px;
+.back{
   border:0;
-  border-radius:12px;
-  background:#16283b;
-  color:#ffffff;
-  font-size:18px;
+  background:#122337;
+  color:#fff;
+  border-radius:11px;
+  padding:9px 13px;
+  margin-bottom:15px;
 }
-
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#17372f;
+  color:#19d3ae;
+  font-size:11px;
+  font-weight:bold;
+}
+.row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:#7f8fa2;
+}
+hr{
+  border:0;
+  border-top:1px solid #ffffff0c;
+  margin:15px 0;
+}
 .toast{
   position:fixed;
   left:50%;
-  bottom:95px;
-  transform:translateX(-50%);
-  z-index:200;
-  background:#10283b;
-  border:1px solid #24516a;
-  color:#ffffff;
-  padding:12px 16px;
+  bottom:100px;
+  transform:translateX(-50%) translateY(20px);
+  background:#142a3c;
+  border:1px solid #ffffff15;
+  padding:12px 17px;
   border-radius:13px;
-  font-size:11px;
-  display:none;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:100;
+  max-width:90%;
+  text-align:center;
 }
-
 .toast.show{
-  display:block;
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
-
-@media(max-width:480px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  main{
-    padding:14px;
-  }
-
-  .hero h1{
-    font-size:26px;
-  }
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0009;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:80;
+}
+.modal.show{
+  display:flex;
+}
+.sheet{
+  width:min(520px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#0b1928;
+  border-radius:25px 25px 0 0;
+  padding:20px;
+}
+.close{
+  float:right;
+  background:#16293b;
+  border:0;
+  color:#fff;
+  border-radius:10px;
+  padding:7px 11px;
+}
+.qr{
+  background:#fff;
+  padding:12px;
+  width:max-content;
+  margin:15px auto;
+}
+.hidden{
+  display:none!important;
 }
 </style>
 </head>
@@ -556,2751 +274,1574 @@ select{
 
 <div class="app">
 
-<header class="header">
-  <div class="header-row">
-    <div>
-      <div class="logo">TEL<span>KU</span></div>
-      <div class="subtitle">Global eSIM Travel Platform</div>
-    </div>
+  <header class="header">
+    <div class="logo">TELKU<span>.</span></div>
+    <div class="sub">Global eSIM Travel Platform</div>
+  </header>
 
-    <button
-      id="profileTopButton"
-      class="header-button"
-      type="button">
-      👤
+  <main id="app"></main>
+
+  <nav class="bottom">
+    <button class="nav active" data-page="home">
+      <span class="ni">⌂</span>Home
     </button>
-  </div>
-</header>
-
-<main>
-
-<!-- HOME -->
-<section id="page-home" class="page active">
-
-  <div class="hero">
-    <h1>Travel connected.<br>Anywhere.</h1>
-    <p>
-      Buy your travel eSIM, manage your data,
-      top up and stay connected wherever you go.
-    </p>
-  </div>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-label">MY ORDERS</div>
-      <div id="homeOrders" class="stat-value">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">MY eSIM</div>
-      <div id="homeEsims" class="stat-value">0</div>
-    </div>
-
-  </div>
-
-  <div class="section">
-
-    <div class="section-header">
-      <h2>Popular Plans</h2>
-
-      <button
-        class="link"
-        type="button"
-        data-page="plans">
-        View All
-      </button>
-    </div>
-
-    <div id="homePlans" class="grid">
-      <div class="loading">Loading...</div>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PLANS -->
-<section id="page-plans" class="page">
-
-  <div class="section-header">
-    <h2>eSIM Plans</h2>
-
-    <button
-      id="refreshPlans"
-      class="link"
-      type="button">
-      Refresh
+    <button class="nav" data-page="plans">
+      <span class="ni">▣</span>Plans
     </button>
-  </div>
-
-  <div class="notice">
-    Select the eSIM plan that matches your destination,
-    data requirement and travel duration.
-  </div>
-
-  <div id="plansList" class="grid">
-    <div class="loading">Loading...</div>
-  </div>
-
-</section>
-
-<!-- ORDERS -->
-<section id="page-orders" class="page">
-
-  <div class="section-header">
-    <h2>My Orders</h2>
-
-    <button
-      id="refreshOrders"
-      class="link"
-      type="button">
-      Refresh
+    <button class="nav" data-page="orders">
+      <span class="ni">▤</span>Orders
     </button>
-  </div>
-
-  <div id="ordersList">
-    <div class="loading">Loading...</div>
-  </div>
-
-</section>
-
-<!-- ESIM -->
-<section id="page-esims" class="page">
-
-  <div class="section-header">
-    <h2>My eSIM</h2>
-
-    <button
-      id="refreshEsims"
-      class="link"
-      type="button">
-      Refresh
+    <button class="nav" data-page="profile">
+      <span class="ni">●</span>Profile
     </button>
-  </div>
-
-  <div class="notice">
-    Your eSIM activation profile will appear here.
-  </div>
-
-  <div id="esimsList">
-    <div class="loading">Loading...</div>
-  </div>
-
-</section>
-
-<!-- USAGE -->
-<section id="page-usage" class="page">
-
-  <div class="section-header">
-    <h2>Data Usage</h2>
-
-    <button
-      id="refreshUsage"
-      class="link"
-      type="button">
-      Refresh
-    </button>
-  </div>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-label">USED</div>
-      <div id="usageUsed" class="stat-value">0 MB</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">REMAINING</div>
-      <div id="usageRemaining" class="stat-value">0 MB</div>
-    </div>
-
-  </div>
-
-  <div class="section">
-    <div id="usageList">
-      <div class="empty">No usage data yet.</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- TOP UP -->
-<section id="page-topup" class="page">
-
-  <div class="section-header">
-    <h2>Top Up</h2>
-  </div>
-
-  <div class="card">
-
-    <div class="form-group">
-      <label>eSIM Code</label>
-      <input
-        id="topupEsim"
-        type="text"
-        placeholder="TELKU eSIM code">
-    </div>
-
-    <div class="form-group">
-      <label>Amount</label>
-
-      <select id="topupAmount">
-        <option value="25000">Rp 25.000</option>
-        <option value="50000">Rp 50.000</option>
-        <option value="100000">Rp 100.000</option>
-        <option value="200000">Rp 200.000</option>
-      </select>
-    </div>
-
-    <button
-      id="topupButton"
-      class="primary"
-      type="button">
-      Submit Top Up
-    </button>
-
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>History</h2>
-    </div>
-
-    <div id="topupList">
-      <div class="loading">Loading...</div>
-    </div>
-  </div>
-
-</section>
-
-<!-- WALLET -->
-<section id="page-wallet" class="page">
-
-  <div class="section-header">
-    <h2>My Wallet</h2>
-
-    <button
-      id="refreshWallet"
-      class="link"
-      type="button">
-      Refresh
-    </button>
-  </div>
-
-  <div class="hero">
-    <div class="stat-label">AVAILABLE BALANCE</div>
-
-    <div
-      id="walletBalance"
-      style="font-size:32px;font-weight:900;margin-top:8px">
-      Rp 0
-    </div>
-  </div>
-
-  <div class="notice">
-    Your TELKU wallet balance can be used for supported
-    TELKU transactions.
-  </div>
-
-</section>
-
-<!-- REFERRAL -->
-<section id="page-referral" class="page">
-
-  <div class="section-header">
-    <h2>Referral</h2>
-  </div>
-
-  <div class="hero">
-
-    <div class="stat-label">
-      YOUR REFERRAL CODE
-    </div>
-
-    <div
-      id="referralCode"
-      style="font-size:27px;font-weight:900;margin:10px 0 16px">
-      -
-    </div>
-
-    <button
-      id="copyReferral"
-      class="primary"
-      type="button">
-      Copy Code
-    </button>
-
-  </div>
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-label">REFERRALS</div>
-      <div id="referralCount" class="stat-value">0</div>
-    </div>
-
-    <div class="stat">
-      <div class="stat-label">REWARD</div>
-      <div id="referralReward" class="stat-value">Rp 0</div>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- PROFILE -->
-<section id="page-profile" class="page">
-
-  <div class="profile">
-
-    <div id="avatar" class="avatar">
-      T
-    </div>
-
-    <div>
-      <div id="profileName" class="profile-name">
-        TELKU Customer
-      </div>
-
-      <div id="profileId" class="profile-id">
-        Customer
-      </div>
-    </div>
-
-  </div>
-
-  <div class="menu">
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="orders">
-
-      <div class="menu-icon">🧾</div>
-
-      <div class="menu-content">
-        <div class="menu-title">My Orders</div>
-        <div class="menu-sub">Purchase history</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="esims">
-
-      <div class="menu-icon">📱</div>
-
-      <div class="menu-content">
-        <div class="menu-title">My eSIM</div>
-        <div class="menu-sub">eSIM profiles and activation</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="usage">
-
-      <div class="menu-icon">📊</div>
-
-      <div class="menu-content">
-        <div class="menu-title">Usage</div>
-        <div class="menu-sub">Monitor data usage</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="topup">
-
-      <div class="menu-icon">➕</div>
-
-      <div class="menu-content">
-        <div class="menu-title">Top Up</div>
-        <div class="menu-sub">Add data or balance</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="wallet">
-
-      <div class="menu-icon">💳</div>
-
-      <div class="menu-content">
-        <div class="menu-title">Wallet</div>
-        <div class="menu-sub">Manage your balance</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      class="menu-button"
-      type="button"
-      data-page="referral">
-
-      <div class="menu-icon">🎁</div>
-
-      <div class="menu-content">
-        <div class="menu-title">Referral</div>
-        <div class="menu-sub">Invite friends and earn rewards</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-    <button
-      id="settingsButton"
-      class="menu-button"
-      type="button">
-
-      <div class="menu-icon">⚙️</div>
-
-      <div class="menu-content">
-        <div class="menu-title">Settings</div>
-        <div class="menu-sub">Account preferences</div>
-      </div>
-
-      <div class="arrow">›</div>
-
-    </button>
-
-  </div>
-
-</section>
-
-</main>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-
-  <button
-    class="nav-button active"
-    type="button"
-    data-page="home">
-
-    <span class="nav-icon">⌂</span>
-    Home
-
-  </button>
-
-  <button
-    class="nav-button"
-    type="button"
-    data-page="plans">
-
-    <span class="nav-icon">🌐</span>
-    Plans
-
-  </button>
-
-  <button
-    class="nav-button"
-    type="button"
-    data-page="orders">
-
-    <span class="nav-icon">🧾</span>
-    Orders
-
-  </button>
-
-  <button
-    class="nav-button"
-    type="button"
-    data-page="profile">
-
-    <span class="nav-icon">👤</span>
-    Profile
-
-  </button>
-
-</nav>
-
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div id="checkoutModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h3>Buy Plan</h3>
-
-      <button
-        class="close"
-        type="button"
-        data-close="checkoutModal">
-        ×
-      </button>
-    </div>
-
-    <div id="checkoutContent"></div>
-
-  </div>
-
-</div>
-
-<!-- ORDER MODAL -->
-<div id="orderModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h3>Order Detail</h3>
-
-      <button
-        class="close"
-        type="button"
-        data-close="orderModal">
-        ×
-      </button>
-    </div>
-
-    <div id="orderContent">
-      <div class="loading">Loading...</div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- ESIM MODAL -->
-<div id="esimModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h3>eSIM Detail</h3>
-
-      <button
-        class="close"
-        type="button"
-        data-close="esimModal">
-        ×
-      </button>
-    </div>
-
-    <div id="esimContent"></div>
-
-  </div>
-
-</div>
-
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal">
-
-  <div class="modal-box">
-
-    <div class="modal-header">
-      <h3>Settings</h3>
-
-      <button
-        class="close"
-        type="button"
-        data-close="settingsModal">
-        ×
-      </button>
-    </div>
-
-    <div class="form-group">
-      <label>Name</label>
-
-      <input
-        id="settingsName"
-        type="text"
-        placeholder="Your name">
-    </div>
-
-    <div class="form-group">
-      <label>Email</label>
-
-      <input
-        id="settingsEmail"
-        type="email"
-        placeholder="Email">
-    </div>
-
-    <div class="form-group">
-      <label>Phone</label>
-
-      <input
-        id="settingsPhone"
-        type="text"
-        placeholder="+62">
-    </div>
-
-    <button
-      id="saveSettings"
-      class="primary"
-      type="button">
-      Save Settings
-    </button>
-
-  </div>
+  </nav>
 
 </div>
 
 <div id="toast" class="toast"></div>
 
+<div id="modal" class="modal">
+  <div class="sheet">
+    <button class="close" id="closeModal">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
 <script>
+/* =========================================================
+   TELKU V2.0
+   FULL PROFILE + CUSTOMER AREA
+   ========================================================= */
 
-/* =====================================================
-   TELKU CONFIG
-   ===================================================== */
+/* ---------- SUPABASE ---------- */
 
-var SUPABASE_URL =
+const SUPABASE_URL =
   "https://xozjhayxttryegynntld.supabase.co";
 
-var SUPABASE_KEY =
+const SUPABASE_KEY =
   "sb_publishable_oe2mqFxqjRqkx7IxO2dk8w_3UGaVsRr";
 
-var supabaseClient = null;
+let db = null;
 
 try{
-  supabaseClient =
-    window.supabase.createClient(
+  if(window.supabase){
+    db = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
-}catch(error){
-  console.log("Supabase error:",error);
+  }
+}catch(e){
+  console.log("Supabase init:",e);
 }
 
-/* =====================================================
-   CUSTOMER
-   ===================================================== */
+/* ---------- CUSTOMER ---------- */
 
-function createCustomerId(){
+function getCustomer(){
+  let customer = localStorage.getItem("telku_customer");
 
-  var id =
-    localStorage.getItem(
-      "telku_customer_id"
-    );
-
-  if(!id){
-
-    id =
-      "TELKU-" +
-      Date.now() +
+  if(!customer){
+    customer = "TELKU-" +
+      Date.now().toString(36).toUpperCase() +
       "-" +
-      Math.floor(
-        Math.random() * 99999
-      );
+      Math.random().toString(36).substring(2,7).toUpperCase();
 
-    localStorage.setItem(
-      "telku_customer_id",
-      id
-    );
+    localStorage.setItem("telku_customer",customer);
   }
 
-  return id;
+  return customer;
 }
 
-var customerId =
-  createCustomerId();
+const CUSTOMER_ID = getCustomer();
 
-var customerName =
-  localStorage.getItem(
-    "telku_customer_name"
-  ) ||
-  "TELKU Customer";
+let currentPage = "home";
+let selectedPlan = null;
 
-var customerEmail =
-  localStorage.getItem(
-    "telku_customer_email"
-  ) ||
-  "";
+/* ---------- HELPERS ---------- */
 
-var customerPhone =
-  localStorage.getItem(
-    "telku_customer_phone"
-  ) ||
-  "";
-
-var selectedPlan = null;
-
-/* =====================================================
-   HELPERS
-   ===================================================== */
+function esc(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 
 function money(value){
-
-  return "Rp " +
-    Number(value || 0)
-      .toLocaleString("id-ID");
+  return "Rp " + Number(value || 0).toLocaleString("id-ID");
 }
 
-function escapeHtml(value){
+function toast(message){
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
 
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-function showToast(message){
-
-  var toast =
-    document.getElementById("toast");
-
-  toast.innerText =
-    message;
-
-  toast.classList.add("show");
-
-  setTimeout(function(){
-
-    toast.classList.remove("show");
-
+  setTimeout(()=>{
+    el.classList.remove("show");
   },2500);
 }
 
-function openModal(id){
-
-  var modal =
-    document.getElementById(id);
-
-  if(modal){
-    modal.classList.add("show");
-  }
+function showModal(html){
+  document.getElementById("modalContent").innerHTML = html;
+  document.getElementById("modal").classList.add("show");
 }
 
-function closeModal(id){
-
-  var modal =
-    document.getElementById(id);
-
-  if(modal){
-    modal.classList.remove("show");
-  }
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
 }
 
-/* =====================================================
-   NAVIGATION
-   ===================================================== */
+document.getElementById("closeModal").onclick = closeModal;
 
-function showPage(page){
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal"){
+    closeModal();
+  }
+});
 
-  var pages =
-    document.querySelectorAll(".page");
-
-  pages.forEach(function(item){
-
-    item.classList.remove("active");
-
+function setActiveNav(page){
+  document.querySelectorAll(".nav").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.page === page
+    );
   });
+}
 
-  var target =
-    document.getElementById(
-      "page-" + page
-    );
+/* ---------- ROUTER ---------- */
 
-  if(target){
-    target.classList.add("active");
-  }
+function openPage(page){
+  currentPage = page;
+  setActiveNav(page);
 
-  var navs =
-    document.querySelectorAll(
-      ".nav-button"
-    );
+  if(page==="home") return renderHome();
+  if(page==="plans") return renderPlans();
+  if(page==="orders") return renderOrders();
+  if(page==="profile") return renderProfile();
 
-  navs.forEach(function(item){
+  if(page==="esim") return renderESIM();
+  if(page==="usage") return renderUsage();
+  if(page==="topup") return renderTopUp();
+  if(page==="wallet") return renderWallet();
+  if(page==="referral") return renderReferral();
+  if(page==="settings") return renderSettings();
+  if(page==="customer") return renderCustomer();
+}
 
-    if(item.getAttribute("data-page") === page){
-
-      item.classList.add("active");
-
-    }else{
-
-      item.classList.remove("active");
-
-    }
-
+document.querySelectorAll(".nav").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    openPage(btn.dataset.page);
   });
+});
 
-  window.scrollTo(0,0);
+/* ---------- HOME ---------- */
 
-  if(page === "home"){
-    loadHome();
-  }
+function renderHome(){
+  document.getElementById("app").innerHTML = `
+    <section class="page">
 
-  if(page === "plans"){
-    loadPlans();
-  }
+      <div class="hero">
+        <h1>Travel connected.</h1>
+        <p>
+          Buy eSIM plans for your journey and manage
+          your orders, data usage and account in one place.
+        </p>
 
-  if(page === "orders"){
-    loadOrders();
-  }
+        <button class="btn" onclick="openPage('plans')">
+          Explore eSIM Plans
+        </button>
+      </div>
 
-  if(page === "esims"){
-    loadEsims();
-  }
+      <div class="card">
+        <div class="row">
+          <div>
+            <strong>Customer ID</strong>
+            <div class="muted">${esc(CUSTOMER_ID)}</div>
+          </div>
+          <span class="badge">ACTIVE</span>
+        </div>
+      </div>
 
-  if(page === "usage"){
-    loadUsage();
-  }
+      <h3>Quick Access</h3>
 
-  if(page === "topup"){
-    loadTopups();
-  }
+      <div class="grid">
 
-  if(page === "wallet"){
-    loadWallet();
-  }
+        <button class="menu" onclick="openPage('orders')">
+          <span class="icon">📦</span>
+          <strong>My Orders</strong>
+          <small>View purchases</small>
+        </button>
 
-  if(page === "referral"){
-    loadReferral();
-  }
+        <button class="menu" onclick="openPage('esim')">
+          <span class="icon">📱</span>
+          <strong>My eSIM</strong>
+          <small>eSIM details</small>
+        </button>
 
-  if(page === "profile"){
-    updateProfile();
-  }
+        <button class="menu" onclick="openPage('usage')">
+          <span class="icon">📊</span>
+          <strong>Usage</strong>
+          <small>Data consumption</small>
+        </button>
+
+        <button class="menu" onclick="openPage('topup')">
+          <span class="icon">💳</span>
+          <strong>Top Up</strong>
+          <small>Add balance</small>
+        </button>
+
+      </div>
+
+    </section>
+  `;
 }
 
-/* =====================================================
-   PROFILE
-   ===================================================== */
+/* ---------- PLANS ---------- */
 
-function updateProfile(){
+async function renderPlans(){
 
-  document.getElementById(
-    "profileName"
-  ).innerText =
-    customerName;
+  document.getElementById("app").innerHTML = `
+    <section class="page">
+      <h2>eSIM Plans</h2>
+      <div class="muted">Choose a plan for your destination.</div>
+      <br>
+      <div id="plansList">
+        <div class="empty">Loading plans...</div>
+      </div>
+    </section>
+  `;
 
-  document.getElementById(
-    "profileId"
-  ).innerText =
-    customerId;
+  let plans = [];
 
-  document.getElementById(
-    "avatar"
-  ).innerText =
-    customerName
-      .charAt(0)
-      .toUpperCase();
-}
-
-/* =====================================================
-   PLANS
-   ===================================================== */
-
-async function loadPlans(){
-
-  var home =
-    document.getElementById(
-      "homePlans"
-    );
-
-  var list =
-    document.getElementById(
-      "plansList"
-    );
-
-  if(home){
-    home.innerHTML =
-      '<div class="loading">Loading...</div>';
-  }
-
-  if(list){
-    list.innerHTML =
-      '<div class="loading">Loading...</div>';
-  }
-
-  if(!supabaseClient){
-
-    renderDefaultPlans();
-
-    return;
-  }
-
-  try{
-
-    var result =
-      await supabaseClient
+  if(db){
+    try{
+      const result = await db
         .from("telku_plans_v2")
         .select("*")
-        .order(
-          "price",
-          {ascending:true}
-        );
+        .order("price",{ascending:true});
 
-    if(result.error){
-      throw result.error;
-    }
-
-    if(!result.data || !result.data.length){
-
-      renderDefaultPlans();
-
-    }else{
-
-      renderPlans(
-        result.data
-      );
-
-    }
-
-  }catch(error){
-
-    console.log(
-      "Plans:",
-      error
-    );
-
-    renderDefaultPlans();
+      if(!result.error && result.data){
+        plans = result.data;
+      }
+    }catch(e){}
   }
+
+  if(!plans.length){
+    plans = [
+      {
+        plan_code:"ID3",
+        name:"Indonesia 3GB",
+        country:"Indonesia",
+        data_gb:3,
+        validity_days:7,
+        price:59000
+      },
+      {
+        plan_code:"ASIA5",
+        name:"Asia Travel 5GB",
+        country:"Asia",
+        data_gb:5,
+        validity_days:15,
+        price:99000
+      },
+      {
+        plan_code:"GLOBAL10",
+        name:"Global Travel 10GB",
+        country:"Global",
+        data_gb:10,
+        validity_days:30,
+        price:249000
+      }
+    ];
+  }
+
+  document.getElementById("plansList").innerHTML =
+    plans.map((p,i)=>{
+
+      const code =
+        p.plan_code ||
+        p.code ||
+        p.id ||
+        ("PLAN-"+i);
+
+      const name =
+        p.name ||
+        p.plan_name ||
+        code;
+
+      const data =
+        p.data_gb ||
+        p.data ||
+        p.quota ||
+        0;
+
+      const days =
+        p.validity_days ||
+        p.validity ||
+        p.days ||
+        0;
+
+      const price =
+        p.price ||
+        0;
+
+      return `
+        <div class="card">
+
+          <div class="row">
+            <div>
+              <h3>${esc(name)}</h3>
+              <div class="muted">${esc(p.country || "Travel eSIM")}</div>
+            </div>
+
+            <span class="badge">${esc(code)}</span>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div>
+              <div class="price">${money(price)}</div>
+              <div class="muted">
+                ${esc(data)} GB · ${esc(days)} days
+              </div>
+            </div>
+
+            <button
+              class="btn"
+              style="width:auto;padding:12px 18px"
+              onclick='buyPlan(${JSON.stringify({
+                code,
+                name,
+                price,
+                data,
+                days
+              })})'>
+              Buy
+            </button>
+          </div>
+
+        </div>
+      `;
+    }).join("");
 }
 
-function renderDefaultPlans(){
+/* ---------- BUY PLAN ---------- */
 
-  renderPlans([
-    {
-      plan_code:"ID3",
-      name:"Indonesia 3GB",
-      country:"Indonesia",
-      data_gb:3,
-      validity_days:7,
-      price:59000
-    },
-    {
-      plan_code:"ASIA5",
-      name:"Asia Travel 5GB",
-      country:"Asia",
-      data_gb:5,
-      validity_days:15,
-      price:99000
-    },
-    {
-      plan_code:"GLOBAL10",
-      name:"Global Travel 10GB",
-      country:"Global",
-      data_gb:10,
-      validity_days:30,
-      price:249000
-    }
-  ]);
+function buyPlan(plan){
+
+  selectedPlan = plan;
+
+  showModal(`
+    <h2>Confirm Plan</h2>
+
+    <div class="card">
+      <h3>${esc(plan.name)}</h3>
+      <div class="muted">
+        ${esc(plan.data)} GB ·
+        ${esc(plan.days)} days
+      </div>
+      <br>
+      <div class="price">${money(plan.price)}</div>
+    </div>
+
+    <label>Customer name</label>
+    <input id="buyName" placeholder="Your name">
+
+    <label>Email</label>
+    <input id="buyEmail" type="email" placeholder="your@email.com">
+
+    <label>Phone</label>
+    <input id="buyPhone" placeholder="+62">
+
+    <button class="btn" onclick="submitOrder()">
+      Confirm Order
+    </button>
+  `);
 }
 
-function renderPlans(plans){
+async function submitOrder(){
 
-  var home =
-    document.getElementById(
-      "homePlans"
-    );
+  const name =
+    document.getElementById("buyName").value.trim();
 
-  var list =
-    document.getElementById(
-      "plansList"
-    );
+  const email =
+    document.getElementById("buyEmail").value.trim();
 
-  var homeHtml = "";
+  const phone =
+    document.getElementById("buyPhone").value.trim();
 
-  var allHtml = "";
+  if(!name){
+    toast("Please enter your name");
+    return;
+  }
 
-  plans.forEach(function(plan,index){
+  const orderCode =
+    "TELKU-" +
+    Date.now().toString(36).toUpperCase();
 
-    var html =
-      createPlanCard(plan);
-
-    allHtml += html;
-
-    if(index < 4){
-      homeHtml += html;
-    }
-
+  const detail = JSON.stringify({
+    customer_id:CUSTOMER_ID,
+    name,
+    email,
+    phone,
+    data:selectedPlan.data,
+    validity:selectedPlan.days
   });
 
-  home.innerHTML =
-    homeHtml ||
-    '<div class="empty">No plans.</div>';
-
-  list.innerHTML =
-    allHtml ||
-    '<div class="empty">No plans.</div>';
-}
-
-function createPlanCard(plan){
-
-  var code =
-    plan.plan_code ||
-    plan.code ||
-    plan.id ||
-    "";
-
-  var name =
-    plan.name ||
-    plan.plan_name ||
-    "Travel eSIM";
-
-  var country =
-    plan.country ||
-    plan.destination ||
-    "Global";
-
-  var gb =
-    plan.data_gb ||
-    plan.data ||
-    plan.gb ||
-    0;
-
-  var days =
-    plan.validity_days ||
-    plan.days ||
-    plan.validity ||
-    0;
-
-  var price =
-    Number(plan.price || 0);
-
-  return `
-    <div class="card">
-
-      <span class="plan-tag">
-        ${escapeHtml(country)}
-      </span>
-
-      <h3>
-        ${escapeHtml(name)}
-      </h3>
-
-      <div class="muted small">
-        ${escapeHtml(gb)} GB
-        ·
-        ${escapeHtml(days)} days
-      </div>
-
-      <div class="price">
-        ${money(price)}
-      </div>
-
-      <button
-        class="primary buy-button"
-        type="button"
-        data-code="${escapeHtml(code)}"
-        data-name="${escapeHtml(name)}"
-        data-country="${escapeHtml(country)}"
-        data-gb="${escapeHtml(gb)}"
-        data-days="${escapeHtml(days)}"
-        data-price="${price}">
-        Buy Plan
-      </button>
-
-    </div>
-  `;
-}
-
-/* =====================================================
-   CHECKOUT
-   ===================================================== */
-
-function startCheckout(button){
-
-  selectedPlan = {
-
-    code:
-      button.getAttribute("data-code"),
-
-    name:
-      button.getAttribute("data-name"),
-
-    country:
-      button.getAttribute("data-country"),
-
-    gb:
-      button.getAttribute("data-gb"),
-
-    days:
-      button.getAttribute("data-days"),
-
-    price:
-      Number(
-        button.getAttribute("data-price") || 0
-      )
-
+  const order = {
+    order_code:orderCode,
+    plan:selectedPlan.name,
+    detail,
+    price:selectedPlan.price,
+    status:"PENDING",
+    payment:"PENDING"
   };
 
-  var box =
-    document.getElementById(
-      "checkoutContent"
-    );
-
-  box.innerHTML = `
-
-    <div class="detail">
-
-      <div class="detail-row">
-        <span>Plan</span>
-        <strong>${escapeHtml(selectedPlan.name)}</strong>
-      </div>
-
-      <div class="detail-row">
-        <span>Destination</span>
-        <strong>${escapeHtml(selectedPlan.country)}</strong>
-      </div>
-
-      <div class="detail-row">
-        <span>Data</span>
-        <strong>${selectedPlan.gb} GB</strong>
-      </div>
-
-      <div class="detail-row">
-        <span>Validity</span>
-        <strong>${selectedPlan.days} days</strong>
-      </div>
-
-      <div class="detail-row">
-        <span>Total</span>
-        <strong>${money(selectedPlan.price)}</strong>
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>Name</label>
-      <input
-        id="checkoutName"
-        value="${escapeHtml(customerName)}">
-    </div>
-
-    <div class="form-group">
-      <label>Email</label>
-      <input
-        id="checkoutEmail"
-        type="email"
-        value="${escapeHtml(customerEmail)}">
-    </div>
-
-    <div class="form-group">
-      <label>Payment Method</label>
-
-      <select id="checkoutMethod">
-        <option value="BANK_TRANSFER">
-          Bank Transfer
-        </option>
-
-        <option value="EWALLET">
-          E-Wallet
-        </option>
-
-        <option value="CARD">
-          Card
-        </option>
-      </select>
-
-    </div>
-
-    <button
-      id="confirmOrder"
-      class="primary"
-      type="button">
-      Create Order - ${money(selectedPlan.price)}
-    </button>
-  `;
-
-  openModal("checkoutModal");
-
-  document
-    .getElementById("confirmOrder")
-    .onclick =
-      createOrder;
-}
-
-/* =====================================================
-   CREATE ORDER
-   ===================================================== */
-
-async function createOrder(){
-
-  if(!selectedPlan){
-
-    showToast(
-      "Please select a plan."
-    );
-
-    return;
-  }
-
-  var name =
-    document.getElementById(
-      "checkoutName"
-    ).value;
-
-  var email =
-    document.getElementById(
-      "checkoutEmail"
-    ).value;
-
-  var method =
-    document.getElementById(
-      "checkoutMethod"
-    ).value;
-
-  customerName =
-    name || "TELKU Customer";
-
-  customerEmail =
-    email || "";
-
-  localStorage.setItem(
-    "telku_customer_name",
-    customerName
-  );
-
-  localStorage.setItem(
-    "telku_customer_email",
-    customerEmail
-  );
-
-  var orderCode =
-    "TKU-" +
-    Date.now();
-
-  var detail =
-    selectedPlan.country +
-    " · " +
-    selectedPlan.gb +
-    "GB · " +
-    selectedPlan.days +
-    " days";
-
-  if(!supabaseClient){
-
-    showToast(
-      "Database unavailable."
-    );
-
-    return;
-  }
-
-  try{
-
-    var orderResult =
-      await supabaseClient
-        .from("telku_orders")
-        .insert({
-
-          order_code:
-            orderCode,
-
-          plan:
-            selectedPlan.name,
-
-          detail:
-            detail,
-
-          price:
-            selectedPlan.price,
-
-          status:
-            "PENDING",
-
-          payment:
-            "PENDING"
-
-        })
-        .select()
-        .single();
-
-    if(orderResult.error){
-      throw orderResult.error;
-    }
+  if(db){
 
     try{
 
-      await supabaseClient
-        .from("telku_payments")
-        .insert({
+      const result =
+        await db
+          .from("telku_orders")
+          .insert(order)
+          .select()
+          .single();
 
-          order_id:
-            orderResult.data.id,
+      if(result.error){
+        console.log(result.error);
+        toast("Order could not be saved");
+        return;
+      }
 
-          order_code:
-            orderCode,
+      try{
+        await db
+          .from("telku_payments")
+          .insert({
+            order_id:result.data.id,
+            order_code:orderCode,
+            amount:selectedPlan.price,
+            method:"UNPAID",
+            status:"PENDING"
+          });
+      }catch(e){}
 
-          amount:
-            selectedPlan.price,
-
-          method:
-            method,
-
-          status:
-            "PENDING"
-
-        });
-
-    }catch(paymentError){
-
-      console.log(
-        "Payment record:",
-        paymentError
-      );
-
-    }
-
-    closeModal(
-      "checkoutModal"
-    );
-
-    showToast(
-      "Order created: " +
-      orderCode
-    );
-
-    showPage("orders");
-
-  }catch(error){
-
-    console.log(
-      "Create order:",
-      error
-    );
-
-    showToast(
-      "Order gagal dibuat."
-    );
-  }
-}
-
-/* =====================================================
-   ORDERS
-   ===================================================== */
-
-async function loadOrders(){
-
-  var box =
-    document.getElementById(
-      "ordersList"
-    );
-
-  box.innerHTML =
-    '<div class="loading">Loading orders...</div>';
-
-  if(!supabaseClient){
-
-    box.innerHTML =
-      '<div class="empty">Database unavailable.</div>';
-
-    return;
-  }
-
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_orders")
-        .select("*")
-        .order(
-          "created_at",
-          {ascending:false}
-        );
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var orders =
-      result.data || [];
-
-    document.getElementById(
-      "homeOrders"
-    ).innerText =
-      orders.length;
-
-    if(!orders.length){
-
-      box.innerHTML =
-        '<div class="empty">No orders yet.</div>';
-
+    }catch(e){
+      console.log(e);
+      toast("Database connection error");
       return;
     }
 
-    var html =
-      '<div class="list">';
-
-    orders.forEach(function(order){
-
-      html += `
-
-        <button
-          class="list-button order-button"
-          type="button"
-          data-id="${escapeHtml(order.id)}">
-
-          <div class="list-row">
-
-            <div>
-
-              <div class="item-title">
-                ${escapeHtml(
-                  order.plan ||
-                  "TELKU Plan"
-                )}
-              </div>
-
-              <div class="item-sub">
-                ${escapeHtml(
-                  order.order_code ||
-                  order.id
-                )}
-              </div>
-
-              <div class="item-sub">
-                ${order.created_at
-                  ? new Date(
-                      order.created_at
-                    ).toLocaleString("id-ID")
-                  : ""}
-              </div>
-
-            </div>
-
-            <div style="text-align:right">
-
-              <span class="badge">
-                ${escapeHtml(
-                  order.status ||
-                  "PENDING"
-                )}
-              </span>
-
-              <div
-                style="font-weight:800;margin-top:7px">
-                ${money(order.price)}
-              </div>
-
-            </div>
-
-          </div>
-
-        </button>
-
-      `;
-
-    });
-
-    html += "</div>";
-
-    box.innerHTML =
-      html;
-
-  }catch(error){
-
-    console.log(
-      "Orders:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">Unable to load orders.</div>';
   }
+
+  closeModal();
+
+  showModal(`
+    <h2>Order Created</h2>
+
+    <div class="card">
+      <div class="muted">Order ID</div>
+      <h3>${esc(orderCode)}</h3>
+
+      <div class="muted">Plan</div>
+      <strong>${esc(selectedPlan.name)}</strong>
+
+      <hr>
+
+      <div class="muted">Amount</div>
+      <div class="price">${money(selectedPlan.price)}</div>
+
+      <hr>
+
+      <span class="badge">PAYMENT PENDING</span>
+    </div>
+
+    <button class="btn" onclick="closeModal();openPage('orders')">
+      View My Orders
+    </button>
+  `);
 }
 
-/* =====================================================
-   ORDER DETAIL
-   ===================================================== */
+/* ---------- ORDERS ---------- */
 
-async function openOrder(id){
+async function renderOrders(){
 
-  var box =
-    document.getElementById(
-      "orderContent"
-    );
+  document.getElementById("app").innerHTML = `
+    <section class="page">
 
-  openModal(
-    "orderModal"
-  );
+      <h2>My Orders</h2>
 
-  box.innerHTML =
-    '<div class="loading">Loading...</div>';
-
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_orders")
-        .select("*")
-        .eq("id",id)
-        .single();
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var order =
-      result.data;
-
-    box.innerHTML = `
-
-      <div class="detail">
-
-        <div class="detail-row">
-          <span>Order ID</span>
-          <strong>
-            ${escapeHtml(
-              order.order_code ||
-              order.id
-            )}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Plan</span>
-          <strong>
-            ${escapeHtml(
-              order.plan
-            )}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Detail</span>
-          <strong>
-            ${escapeHtml(
-              order.detail
-            )}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Price</span>
-          <strong>
-            ${money(order.price)}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Status</span>
-          <span class="badge">
-            ${escapeHtml(
-              order.status ||
-              "PENDING"
-            )}
-          </span>
-        </div>
-
-        <div class="detail-row">
-          <span>Payment</span>
-          <span class="badge">
-            ${escapeHtml(
-              order.payment ||
-              "PENDING"
-            )}
-          </span>
-        </div>
-
+      <div class="muted">
+        Customer ID: ${esc(CUSTOMER_ID)}
       </div>
 
-      <div class="notice">
-        Payment remains PENDING until a real
-        payment provider confirms the transaction.
+      <br>
+
+      <div id="ordersList">
+        <div class="empty">Loading orders...</div>
       </div>
 
+    </section>
+  `;
+
+  let orders = [];
+
+  if(db){
+
+    try{
+
+      const result =
+        await db
+          .from("telku_orders")
+          .select("*")
+          .order("created_at",{ascending:false});
+
+      if(!result.error){
+        orders = result.data || [];
+      }
+
+    }catch(e){}
+  }
+
+  if(!orders.length){
+
+    document.getElementById("ordersList").innerHTML = `
+      <div class="card empty">
+        <div style="font-size:35px">📦</div>
+        <h3>No orders yet</h3>
+        <div>Choose an eSIM plan to create your first order.</div>
+        <br>
+        <button class="btn" onclick="openPage('plans')">
+          Browse Plans
+        </button>
+      </div>
     `;
 
-  }catch(error){
-
-    console.log(
-      "Order detail:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">Order not found.</div>';
-  }
-}
-
-/* =====================================================
-   ESIM
-   ===================================================== */
-
-async function loadEsims(){
-
-  var box =
-    document.getElementById(
-      "esimsList"
-    );
-
-  box.innerHTML =
-    '<div class="loading">Loading eSIM...</div>';
-
-  if(!supabaseClient){
-
-    box.innerHTML =
-      '<div class="empty">Database unavailable.</div>';
-
     return;
   }
 
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_esims")
-        .select("*")
-        .order(
-          "created_at",
-          {ascending:false}
-        );
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var data =
-      result.data || [];
-
-    document.getElementById(
-      "homeEsims"
-    ).innerText =
-      data.length;
-
-    if(!data.length){
-
-      box.innerHTML =
-        '<div class="empty">No eSIM profile yet.</div>';
-
-      return;
-    }
-
-    var html =
-      '<div class="list">';
-
-    data.forEach(function(esim){
-
-      html += `
-
-        <button
-          class="list-button esim-button"
-          type="button"
-          data-id="${escapeHtml(esim.id)}">
-
-          <div class="list-row">
-
-            <div>
-
-              <div class="item-title">
-                ${escapeHtml(
-                  esim.esim_code ||
-                  "eSIM"
-                )}
-              </div>
-
-              <div class="item-sub">
-                ICCID:
-                ${escapeHtml(
-                  esim.iccid ||
-                  "-"
-                )}
-              </div>
-
-            </div>
-
-            <span class="badge">
-              ${escapeHtml(
-                esim.status ||
-                "PENDING"
-              )}
-            </span>
-
-          </div>
-
-        </button>
-
-      `;
-
-    });
-
-    html += "</div>";
-
-    box.innerHTML =
-      html;
-
-  }catch(error){
-
-    console.log(
-      "eSIM:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">Unable to load eSIM.</div>';
-  }
-}
-
-/* =====================================================
-   ESIM DETAIL
-   ===================================================== */
-
-async function openEsim(id){
-
-  var box =
-    document.getElementById(
-      "esimContent"
-    );
-
-  openModal(
-    "esimModal"
-  );
-
-  box.innerHTML =
-    '<div class="loading">Loading...</div>';
-
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_esims")
-        .select("*")
-        .eq("id",id)
-        .single();
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var esim =
-      result.data;
-
-    var payload =
-      esim.qr_payload ||
-      esim.activation_code ||
-      esim.iccid ||
-      "";
-
-    box.innerHTML = `
-
-      <div class="detail">
-
-        <div class="detail-row">
-          <span>eSIM Code</span>
-          <strong>
-            ${escapeHtml(
-              esim.esim_code ||
-              "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>ICCID</span>
-          <strong>
-            ${escapeHtml(
-              esim.iccid ||
-              "-"
-            )}
-          </strong>
-        </div>
-
-        <div class="detail-row">
-          <span>Status</span>
-          <span class="badge">
-            ${escapeHtml(
-              esim.status ||
-              "PENDING"
-            )}
-          </span>
-        </div>
-
-        <div class="detail-row">
-          <span>Activation</span>
-          <strong>
-            ${escapeHtml(
-              esim.activation_code ||
-              "-"
-            )}
-          </strong>
-        </div>
-
-      </div>
-
-      <div
-        id="qrArea"
-        class="qr">
-      </div>
+  document.getElementById("ordersList").innerHTML =
+    orders.map(order=>`
 
       <button
-        id="copyActivation"
-        class="secondary"
-        type="button">
-        Copy Activation Code
+        class="menu"
+        style="margin-bottom:10px"
+        onclick='showOrder(${JSON.stringify(order)})'>
+
+        <div class="row">
+
+          <div>
+            <strong>${esc(order.plan || "eSIM Plan")}</strong>
+
+            <div class="muted">
+              ${esc(order.order_code || order.id)}
+            </div>
+
+            <div class="muted">
+              ${order.created_at
+                ? new Date(order.created_at).toLocaleString("id-ID")
+                : ""}
+            </div>
+          </div>
+
+          <span class="badge">
+            ${esc(order.status || "PENDING")}
+          </span>
+
+        </div>
+
       </button>
 
+    `).join("");
+}
+
+function showOrder(order){
+
+  showModal(`
+
+    <h2>Order Detail</h2>
+
+    <div class="card">
+
+      <div class="muted">Order ID</div>
+      <h3>${esc(order.order_code || order.id)}</h3>
+
+      <div class="muted">Plan</div>
+      <strong>${esc(order.plan || "-")}</strong>
+
+      <hr>
+
+      <div class="muted">Amount</div>
+      <div class="price">${money(order.price)}</div>
+
+      <hr>
+
+      <div class="muted">Order Status</div>
+      <span class="badge">${esc(order.status || "-")}</span>
+
+      <br><br>
+
+      <div class="muted">Payment</div>
+      <span class="badge">${esc(order.payment || "-")}</span>
+
+    </div>
+
+    <button class="btn secondary" onclick="closeModal()">
+      Close
+    </button>
+  `);
+}
+
+/* ---------- PROFILE ---------- */
+
+function renderProfile(){
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <div class="hero">
+        <h1>My Profile</h1>
+
+        <p>
+          Manage your TELKU account, eSIM,
+          usage, wallet and preferences.
+        </p>
+
+        <div class="badge">
+          CUSTOMER ACTIVE
+        </div>
+      </div>
+
+      <div class="card">
+
+        <div class="muted">Customer ID</div>
+
+        <strong>
+          ${esc(CUSTOMER_ID)}
+        </strong>
+
+      </div>
+
+      <div class="grid">
+
+        <button class="menu" onclick="openPage('customer')">
+          <span class="icon">👤</span>
+          <strong>Customer Profile</strong>
+          <small>Name, email & phone</small>
+        </button>
+
+        <button class="menu" onclick="openPage('orders')">
+          <span class="icon">📦</span>
+          <strong>My Orders</strong>
+          <small>Orders & status</small>
+        </button>
+
+        <button class="menu" onclick="openPage('esim')">
+          <span class="icon">📱</span>
+          <strong>My eSIM</strong>
+          <small>eSIM & QR code</small>
+        </button>
+
+        <button class="menu" onclick="openPage('usage')">
+          <span class="icon">📊</span>
+          <strong>Usage</strong>
+          <small>Data usage</small>
+        </button>
+
+        <button class="menu" onclick="openPage('topup')">
+          <span class="icon">💳</span>
+          <strong>Top Up</strong>
+          <small>Add balance</small>
+        </button>
+
+        <button class="menu" onclick="openPage('wallet')">
+          <span class="icon">💰</span>
+          <strong>Wallet</strong>
+          <small>Balance & funds</small>
+        </button>
+
+        <button class="menu" onclick="openPage('referral')">
+          <span class="icon">🎁</span>
+          <strong>Referral</strong>
+          <small>Referral program</small>
+        </button>
+
+        <button class="menu" onclick="openPage('settings')">
+          <span class="icon">⚙️</span>
+          <strong>Settings</strong>
+          <small>Account preferences</small>
+        </button>
+
+      </div>
+
+    </section>
+  `;
+}
+
+/* ---------- CUSTOMER PROFILE ---------- */
+
+async function renderCustomer(){
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem("telku_profile") || "{}"
+    );
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>Customer Profile</h2>
+
+      <div class="card">
+
+        <div class="muted">Customer ID</div>
+
+        <strong>${esc(CUSTOMER_ID)}</strong>
+
+      </div>
+
+      <label>Full Name</label>
+      <input
+        id="profileName"
+        value="${esc(saved.name || "")}"
+        placeholder="Your full name">
+
+      <label>Email</label>
+      <input
+        id="profileEmail"
+        type="email"
+        value="${esc(saved.email || "")}"
+        placeholder="Email">
+
+      <label>Phone</label>
+      <input
+        id="profilePhone"
+        value="${esc(saved.phone || "")}"
+        placeholder="+62">
+
+      <button class="btn" onclick="saveCustomerProfile()">
+        Save Customer Profile
+      </button>
+
+    </section>
+  `;
+}
+
+async function saveCustomerProfile(){
+
+  const profile = {
+    customer_id:CUSTOMER_ID,
+    name:document.getElementById("profileName").value.trim(),
+    email:document.getElementById("profileEmail").value.trim(),
+    phone:document.getElementById("profilePhone").value.trim()
+  };
+
+  localStorage.setItem(
+    "telku_profile",
+    JSON.stringify(profile)
+  );
+
+  if(db){
+
+    try{
+
+      await db
+        .from("telku_settings_v2")
+        .upsert({
+          customer_id:CUSTOMER_ID,
+          name:profile.name,
+          email:profile.email,
+          phone:profile.phone
+        },{
+          onConflict:"customer_id"
+        });
+
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  toast("Customer profile saved");
+}
+
+/* ---------- eSIM ---------- */
+
+async function renderESIM(){
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>My eSIM</h2>
+
+      <div class="muted">
+        Your activated eSIM profiles.
+      </div>
+
+      <br>
+
+      <div id="esimList">
+        <div class="empty">Loading eSIM...</div>
+      </div>
+
+    </section>
+  `;
+
+  let rows=[];
+
+  if(db){
+
+    try{
+
+      const result =
+        await db
+          .from("telku_esims")
+          .select("*")
+          .order("created_at",{ascending:false});
+
+      if(!result.error){
+        rows=result.data || [];
+      }
+
+    }catch(e){}
+  }
+
+  if(!rows.length){
+
+    document.getElementById("esimList").innerHTML = `
+      <div class="card empty">
+
+        <div style="font-size:40px">📱</div>
+
+        <h3>No eSIM profile</h3>
+
+        <div>
+          Your eSIM will appear here after
+          the order is provisioned.
+        </div>
+
+        <br>
+
+        <button class="btn" onclick="openPage('plans')">
+          Buy eSIM
+        </button>
+
+      </div>
     `;
 
-    var qrArea =
-      document.getElementById(
-        "qrArea"
-      );
+    return;
+  }
 
-    if(
-      window.QRCode &&
-      payload
-    ){
+  document.getElementById("esimList").innerHTML =
+    rows.map(row=>`
+
+      <div class="card">
+
+        <div class="row">
+          <strong>
+            ${esc(row.esim_code || "eSIM")}
+          </strong>
+
+          <span class="badge">
+            ${esc(row.status || "ACTIVE")}
+          </span>
+        </div>
+
+        <hr>
+
+        <div class="muted">
+          ICCID
+        </div>
+
+        <strong>
+          ${esc(row.iccid || "-")}
+        </strong>
+
+        <br><br>
+
+        <button
+          class="btn"
+          onclick='showESIM(${JSON.stringify(row)})'>
+          View eSIM
+        </button>
+
+      </div>
+
+    `).join("");
+}
+
+function showESIM(row){
+
+  showModal(`
+
+    <h2>eSIM Details</h2>
+
+    <div class="card">
+
+      <div class="muted">eSIM Code</div>
+      <strong>${esc(row.esim_code || "-")}</strong>
+
+      <hr>
+
+      <div class="muted">ICCID</div>
+      <strong>${esc(row.iccid || "-")}</strong>
+
+      <hr>
+
+      <div class="muted">Activation Code</div>
+      <strong>${esc(row.activation_code || "-")}</strong>
+
+      <hr>
+
+      <div class="muted">Status</div>
+      <span class="badge">${esc(row.status || "-")}</span>
+
+    </div>
+
+    <div id="qr" class="qr"></div>
+
+    <button
+      class="btn secondary"
+      onclick="closeModal()">
+      Close
+    </button>
+  `);
+
+  setTimeout(()=>{
+
+    const payload =
+      row.qr_payload ||
+      row.activation_code ||
+      "";
+
+    if(payload && window.QRCode){
 
       new QRCode(
-        qrArea,
+        document.getElementById("qr"),
         {
-          text:String(payload),
-          width:190,
-          height:190
+          text:payload,
+          width:180,
+          height:180
         }
       );
 
     }else{
 
-      qrArea.innerHTML =
-        "<span style='color:#111;font-size:10px'>" +
-        escapeHtml(payload) +
-        "</span>";
+      document.getElementById("qr").innerHTML =
+        `<div style="color:#111;padding:20px">
+          QR payload not available
+        </div>`;
+
     }
 
-    document.getElementById(
-      "copyActivation"
-    ).onclick =
-      function(){
-
-        copyText(
-          esim.activation_code ||
-          esim.qr_payload ||
-          ""
-        );
-
-      };
-
-  }catch(error){
-
-    console.log(
-      "eSIM detail:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">eSIM not found.</div>';
-  }
+  },100);
 }
 
-/* =====================================================
-   USAGE
-   ===================================================== */
+/* ---------- USAGE ---------- */
 
-async function loadUsage(){
+async function renderUsage(){
 
-  var box =
-    document.getElementById(
-      "usageList"
-    );
+  document.getElementById("app").innerHTML = `
 
-  box.innerHTML =
-    '<div class="loading">Loading...</div>';
+    <section class="page">
 
-  if(!supabaseClient){
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>Data Usage</h2>
+
+      <div class="card">
+        <div class="muted">Customer</div>
+        <strong>${esc(CUSTOMER_ID)}</strong>
+      </div>
+
+      <div id="usageList">
+        <div class="empty">Loading usage...</div>
+      </div>
+
+    </section>
+  `;
+
+  let rows=[];
+
+  if(db){
+
+    try{
+
+      const result =
+        await db
+          .from("telku_usage_v2")
+          .select("*")
+          .order("created_at",{ascending:false});
+
+      if(!result.error){
+        rows=result.data || [];
+      }
+
+    }catch(e){}
+  }
+
+  if(!rows.length){
+
+    document.getElementById("usageList").innerHTML = `
+      <div class="card empty">
+
+        <div style="font-size:38px">📊</div>
+
+        <h3>No usage data yet</h3>
+
+        <div>
+          Data consumption will appear here
+          when usage information is available.
+        </div>
+
+      </div>
+    `;
+
     return;
   }
 
-  try{
+  document.getElementById("usageList").innerHTML =
+    rows.map(row=>`
 
-    var result =
-      await supabaseClient
-        .from("telku_usage_v2")
-        .select("*")
-        .order(
-          "created_at",
-          {ascending:false}
-        );
+      <div class="card">
 
-    if(result.error){
-      throw result.error;
-    }
+        <div class="row">
+          <strong>
+            ${esc(row.esim_code || row.iccid || "eSIM")}
+          </strong>
 
-    var data =
-      result.data || [];
-
-    if(!data.length){
-
-      document.getElementById(
-        "usageUsed"
-      ).innerText =
-        "0 MB";
-
-      document.getElementById(
-        "usageRemaining"
-      ).innerText =
-        "0 MB";
-
-      box.innerHTML =
-        '<div class="empty">No usage data yet.</div>';
-
-      return;
-    }
-
-    var used = 0;
-    var remaining = 0;
-
-    data.forEach(function(row){
-
-      used += Number(
-        row.used_mb ||
-        row.data_used_mb ||
-        row.used ||
-        0
-      );
-
-      remaining += Number(
-        row.remaining_mb ||
-        row.data_remaining_mb ||
-        row.remaining ||
-        0
-      );
-
-    });
-
-    document.getElementById(
-      "usageUsed"
-    ).innerText =
-      used.toLocaleString("id-ID") +
-      " MB";
-
-    document.getElementById(
-      "usageRemaining"
-    ).innerText =
-      remaining.toLocaleString("id-ID") +
-      " MB";
-
-    var html =
-      '<div class="list">';
-
-    data.forEach(function(row){
-
-      html += `
-
-        <div class="list-button">
-
-          <div class="list-row">
-
-            <div>
-              <div class="item-title">
-                ${escapeHtml(
-                  row.esim_code ||
-                  row.iccid ||
-                  "eSIM"
-                )}
-              </div>
-
-              <div class="item-sub">
-                Usage record
-              </div>
-            </div>
-
-            <div style="text-align:right">
-              <strong>
-                ${Number(
-                  row.used_mb ||
-                  row.used ||
-                  0
-                ).toLocaleString("id-ID")}
-                MB
-              </strong>
-            </div>
-
-          </div>
-
+          <span class="badge">
+            ${esc(row.status || "ACTIVE")}
+          </span>
         </div>
 
-      `;
+        <hr>
 
-    });
-
-    html += "</div>";
-
-    box.innerHTML =
-      html;
-
-  }catch(error){
-
-    console.log(
-      "Usage:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">Usage data unavailable.</div>';
-  }
-}
-
-/* =====================================================
-   TOP UP
-   ===================================================== */
-
-async function loadTopups(){
-
-  var box =
-    document.getElementById(
-      "topupList"
-    );
-
-  box.innerHTML =
-    '<div class="loading">Loading...</div>';
-
-  if(!supabaseClient){
-    return;
-  }
-
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_topups_v2")
-        .select("*")
-        .order(
-          "created_at",
-          {ascending:false}
-        );
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var data =
-      result.data || [];
-
-    if(!data.length){
-
-      box.innerHTML =
-        '<div class="empty">No top up history.</div>';
-
-      return;
-    }
-
-    var html =
-      '<div class="list">';
-
-    data.forEach(function(row){
-
-      html += `
-
-        <div class="list-button">
-
-          <div class="list-row">
-
-            <div>
-
-              <div class="item-title">
-                ${escapeHtml(
-                  row.esim_code ||
-                  row.iccid ||
-                  "Top Up"
-                )}
-              </div>
-
-              <div class="item-sub">
-                ${row.created_at
-                  ? new Date(
-                      row.created_at
-                    ).toLocaleString("id-ID")
-                  : ""}
-              </div>
-
-            </div>
-
-            <div style="text-align:right">
-
-              <strong>
-                ${money(
-                  row.amount ||
-                  row.price ||
-                  0
-                )}
-              </strong>
-
-              <div>
-                <span class="badge">
-                  ${escapeHtml(
-                    row.status ||
-                    "PENDING"
-                  )}
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-
+        <div class="row">
+          <span class="muted">Used</span>
+          <strong>
+            ${esc(row.used_gb || row.used || 0)} GB
+          </strong>
         </div>
 
-      `;
+        <div class="row">
+          <span class="muted">Remaining</span>
+          <strong>
+            ${esc(row.remaining_gb || row.remaining || 0)} GB
+          </strong>
+        </div>
 
-    });
+      </div>
 
-    html += "</div>";
-
-    box.innerHTML =
-      html;
-
-  }catch(error){
-
-    console.log(
-      "Topup:",
-      error
-    );
-
-    box.innerHTML =
-      '<div class="empty">Top up history unavailable.</div>';
-  }
+    `).join("");
 }
 
-async function submitTopup(){
+/* ---------- TOP UP ---------- */
 
-  var esim =
-    document.getElementById(
-      "topupEsim"
-    ).value.trim();
+function renderTopUp(){
 
-  var amount =
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>Top Up</h2>
+
+      <div class="card">
+        <div class="muted">Customer ID</div>
+        <strong>${esc(CUSTOMER_ID)}</strong>
+      </div>
+
+      <label>Top Up Amount</label>
+
+      <input
+        id="topupAmount"
+        type="number"
+        min="10000"
+        step="1000"
+        placeholder="Example: 50000">
+
+      <label>Payment Method</label>
+
+      <select id="topupMethod">
+        <option value="BANK_TRANSFER">
+          Bank Transfer
+        </option>
+        <option value="QRIS">
+          QRIS
+        </option>
+        <option value="CARD">
+          Card
+        </option>
+      </select>
+
+      <button class="btn" onclick="submitTopUp()">
+        Create Top Up
+      </button>
+
+      <br><br>
+
+      <div class="card">
+
+        <h3>How it works</h3>
+
+        <div class="muted">
+          1. Enter the amount.<br><br>
+          2. Select payment method.<br><br>
+          3. Submit the top up request.<br><br>
+          4. Payment status can be managed
+          from the payment system.
+        </div>
+
+      </div>
+
+    </section>
+  `;
+}
+
+async function submitTopUp(){
+
+  const amount =
     Number(
-      document.getElementById(
-        "topupAmount"
-      ).value
+      document.getElementById("topupAmount").value
     );
 
-  if(!esim){
+  const method =
+    document.getElementById("topupMethod").value;
 
-    showToast(
-      "Masukkan eSIM Code."
-    );
-
+  if(!amount || amount < 10000){
+    toast("Minimum top up is Rp 10,000");
     return;
   }
 
-  try{
+  const topupCode =
+    "TOP-" +
+    Date.now().toString(36).toUpperCase();
 
-    var result =
-      await supabaseClient
-        .from("telku_topups_v2")
-        .insert({
+  let saved=false;
 
-          esim_code:
-            esim,
+  if(db){
 
-          amount:
+    try{
+
+      const result =
+        await db
+          .from("telku_topups_v2")
+          .insert({
+            customer_id:CUSTOMER_ID,
+            topup_code:topupCode,
             amount,
+            method,
+            status:"PENDING"
+          });
 
-          status:
-            "PENDING"
+      if(!result.error){
+        saved=true;
+      }
 
-        });
-
-    if(result.error){
-      throw result.error;
+    }catch(e){
+      console.log(e);
     }
-
-    document.getElementById(
-      "topupEsim"
-    ).value = "";
-
-    showToast(
-      "Top up request dibuat."
-    );
-
-    loadTopups();
-
-  }catch(error){
-
-    console.log(
-      "Submit topup:",
-      error
-    );
-
-    showToast(
-      "Top up gagal."
-    );
-  }
-}
-
-/* =====================================================
-   WALLET
-   ===================================================== */
-
-async function loadWallet(){
-
-  var box =
-    document.getElementById(
-      "walletBalance"
-    );
-
-  box.innerText =
-    "Loading...";
-
-  if(!supabaseClient){
-
-    box.innerText =
-      "Rp 0";
-
-    return;
   }
 
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_wallet_v2")
-        .select("*")
-        .limit(1);
-
-    if(result.error){
-      throw result.error;
-    }
-
-    var row =
-      result.data &&
-      result.data.length
-        ? result.data[0]
-        : null;
-
-    var balance =
-      row
-        ? Number(
-            row.balance ||
-            row.amount ||
-            0
-          )
-        : 0;
-
-    box.innerText =
-      money(balance);
-
-  }catch(error){
-
-    console.log(
-      "Wallet:",
-      error
+  const local =
+    JSON.parse(
+      localStorage.getItem("telku_topups") || "[]"
     );
 
-    box.innerText =
-      "Rp 0";
-  }
-}
+  local.unshift({
+    code:topupCode,
+    amount,
+    method,
+    status:"PENDING",
+    created_at:new Date().toISOString()
+  });
 
-/* =====================================================
-   REFERRAL
-   ===================================================== */
-
-async function loadReferral(){
-
-  var code =
-    "TELKU-" +
-    customerId
-      .replace(/[^A-Z0-9]/gi,"")
-      .slice(-6)
-      .toUpperCase();
-
-  document.getElementById(
-    "referralCode"
-  ).innerText =
-    code;
-
-  if(!supabaseClient){
-    return;
-  }
-
-  try{
-
-    var result =
-      await supabaseClient
-        .from("telku_referrals_v2")
-        .select("*")
-        .limit(1);
-
-    if(result.error){
-      throw result.error;
-    }
-
-    if(
-      result.data &&
-      result.data.length
-    ){
-
-      var row =
-        result.data[0];
-
-      document.getElementById(
-        "referralCode"
-      ).innerText =
-        row.referral_code ||
-        code;
-
-      document.getElementById(
-        "referralCount"
-      ).innerText =
-        row.referral_count ||
-        row.count ||
-        0;
-
-      document.getElementById(
-        "referralReward"
-      ).innerText =
-        money(
-          row.reward || 0
-        );
-    }
-
-  }catch(error){
-
-    console.log(
-      "Referral:",
-      error
-    );
-  }
-}
-
-/* =====================================================
-   SETTINGS
-   ===================================================== */
-
-function openSettings(){
-
-  document.getElementById(
-    "settingsName"
-  ).value =
-    customerName;
-
-  document.getElementById(
-    "settingsEmail"
-  ).value =
-    customerEmail;
-
-  document.getElementById(
-    "settingsPhone"
-  ).value =
-    customerPhone;
-
-  openModal(
-    "settingsModal"
+  localStorage.setItem(
+    "telku_topups",
+    JSON.stringify(local)
   );
+
+  showModal(`
+
+    <h2>Top Up Created</h2>
+
+    <div class="card">
+
+      <div class="muted">Top Up Code</div>
+
+      <h3>${esc(topupCode)}</h3>
+
+      <div class="muted">Amount</div>
+
+      <div class="price">
+        ${money(amount)}
+      </div>
+
+      <hr>
+
+      <div class="muted">Method</div>
+
+      <strong>${esc(method)}</strong>
+
+      <hr>
+
+      <span class="badge">
+        PAYMENT PENDING
+      </span>
+
+    </div>
+
+    <button class="btn" onclick="closeModal()">
+      Done
+    </button>
+
+  `);
+}
+
+/* ---------- WALLET ---------- */
+
+async function renderWallet(){
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>My Wallet</h2>
+
+      <div id="walletBox">
+        <div class="empty">Loading wallet...</div>
+      </div>
+
+    </section>
+  `;
+
+  let balance=0;
+
+  if(db){
+
+    try{
+
+      const result =
+        await db
+          .from("telku_wallet_v2")
+          .select("*")
+          .limit(1);
+
+      if(!result.error && result.data?.length){
+
+        const row=result.data[0];
+
+        balance =
+          row.balance ||
+          row.wallet_balance ||
+          0;
+      }
+
+    }catch(e){}
+  }
+
+  document.getElementById("walletBox").innerHTML = `
+
+    <div class="hero">
+
+      <div class="muted">
+        Available Balance
+      </div>
+
+      <div class="price" style="font-size:34px">
+        ${money(balance)}
+      </div>
+
+      <br>
+
+      <button class="btn" onclick="openPage('topup')">
+        Add Balance
+      </button>
+
+    </div>
+
+    <div class="card">
+
+      <h3>Wallet Account</h3>
+
+      <div class="muted">
+        Customer ID
+      </div>
+
+      <strong>
+        ${esc(CUSTOMER_ID)}
+      </strong>
+
+    </div>
+
+  `;
+}
+
+/* ---------- REFERRAL ---------- */
+
+async function renderReferral(){
+
+  let code =
+    localStorage.getItem("telku_referral_code");
+
+  if(!code){
+
+    code =
+      "TELKU-" +
+      CUSTOMER_ID.substring(
+        Math.max(0,CUSTOMER_ID.length-6)
+      );
+
+    localStorage.setItem(
+      "telku_referral_code",
+      code
+    );
+  }
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>Referral</h2>
+
+      <div class="hero">
+
+        <div class="muted">
+          Your referral code
+        </div>
+
+        <h1>${esc(code)}</h1>
+
+        <button
+          class="btn"
+          onclick="copyReferral('${esc(code)}')">
+          Copy Referral Code
+        </button>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Referral Program</h3>
+
+        <div class="muted">
+          Share your TELKU referral code
+          with friends and track your referral
+          activity here.
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <div class="row">
+          <span class="muted">Referrals</span>
+          <strong id="refCount">0</strong>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <span class="muted">Rewards</span>
+          <strong>Rp 0</strong>
+        </div>
+
+      </div>
+
+    </section>
+  `;
+}
+
+async function copyReferral(code){
+
+  try{
+
+    await navigator.clipboard.writeText(code);
+
+    toast("Referral code copied");
+
+  }catch(e){
+
+    toast(code);
+
+  }
+}
+
+/* ---------- SETTINGS ---------- */
+
+function renderSettings(){
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem("telku_settings") || "{}"
+    );
+
+  document.getElementById("app").innerHTML = `
+
+    <section class="page">
+
+      <button class="back" onclick="openPage('profile')">
+        ← Profile
+      </button>
+
+      <h2>Settings</h2>
+
+      <div class="card">
+
+        <h3>Language</h3>
+
+        <select id="setLanguage">
+
+          <option value="en"
+            ${saved.language==="en"?"selected":""}>
+            English
+          </option>
+
+          <option value="id"
+            ${saved.language==="id"?"selected":""}>
+            Bahasa Indonesia
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Notifications</h3>
+
+        <select id="setNotifications">
+
+          <option value="ON"
+            ${saved.notifications!=="OFF"?"selected":""}>
+            ON
+          </option>
+
+          <option value="OFF"
+            ${saved.notifications==="OFF"?"selected":""}>
+            OFF
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Currency</h3>
+
+        <select id="setCurrency">
+
+          <option value="IDR"
+            ${saved.currency!=="USD"?"selected":""}>
+            IDR — Rupiah
+          </option>
+
+          <option value="USD"
+            ${saved.currency==="USD"?"selected":""}>
+            USD — US Dollar
+          </option>
+
+        </select>
+
+      </div>
+
+      <button class="btn" onclick="saveSettings()">
+        Save Settings
+      </button>
+
+      <br><br>
+
+      <button
+        class="btn secondary"
+        onclick="resetLocalSettings()">
+        Reset Local Settings
+      </button>
+
+    </section>
+  `;
 }
 
 async function saveSettings(){
 
-  customerName =
-    document.getElementById(
-      "settingsName"
-    ).value ||
-    "TELKU Customer";
+  const settings = {
 
-  customerEmail =
-    document.getElementById(
-      "settingsEmail"
-    ).value ||
-    "";
+    language:
+      document.getElementById("setLanguage").value,
 
-  customerPhone =
-    document.getElementById(
-      "settingsPhone"
-    ).value ||
-    "";
+    notifications:
+      document.getElementById("setNotifications").value,
+
+    currency:
+      document.getElementById("setCurrency").value
+  };
 
   localStorage.setItem(
-    "telku_customer_name",
-    customerName
+    "telku_settings",
+    JSON.stringify(settings)
   );
 
-  localStorage.setItem(
-    "telku_customer_email",
-    customerEmail
-  );
-
-  localStorage.setItem(
-    "telku_customer_phone",
-    customerPhone
-  );
-
-  updateProfile();
-
-  if(supabaseClient){
+  if(db){
 
     try{
 
-      await supabaseClient
+      await db
         .from("telku_settings_v2")
         .upsert({
-
-          customer_id:
-            customerId,
-
-          name:
-            customerName,
-
-          email:
-            customerEmail,
-
-          phone:
-            customerPhone
-
+          customer_id:CUSTOMER_ID,
+          language:settings.language,
+          notifications:settings.notifications,
+          currency:settings.currency
+        },{
+          onConflict:"customer_id"
         });
 
-    }catch(error){
-
-      console.log(
-        "Settings database:",
-        error
-      );
+    }catch(e){
+      console.log(e);
     }
   }
 
-  closeModal(
-    "settingsModal"
-  );
-
-  showToast(
-    "Settings saved."
-  );
+  toast("Settings saved");
 }
 
-/* =====================================================
-   COPY
-   ===================================================== */
+function resetLocalSettings(){
 
-function copyText(text){
+  localStorage.removeItem("telku_settings");
 
-  if(
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ){
+  toast("Local settings reset");
 
-    navigator.clipboard.writeText(
-      text
-    ).then(function(){
-
-      showToast(
-        "Copied."
-      );
-
-    }).catch(function(){
-
-      showToast(
-        "Copy failed."
-      );
-
-    });
-
-  }else{
-
-    var area =
-      document.createElement(
-        "textarea"
-      );
-
-    area.value =
-      text;
-
-    document.body.appendChild(
-      area
-    );
-
-    area.select();
-
-    document.execCommand(
-      "copy"
-    );
-
-    area.remove();
-
-    showToast(
-      "Copied."
-    );
-  }
+  setTimeout(()=>{
+    renderSettings();
+  },400);
 }
 
-/* =====================================================
-   HOME
-   ===================================================== */
+/* ---------- INITIAL ---------- */
 
-async function loadHome(){
-
-  loadPlans();
-
-  if(!supabaseClient){
-    return;
-  }
-
-  try{
-
-    var orders =
-      await supabaseClient
-        .from("telku_orders")
-        .select("id");
-
-    if(!orders.error){
-
-      document.getElementById(
-        "homeOrders"
-      ).innerText =
-        orders.data.length;
-    }
-
-    var esims =
-      await supabaseClient
-        .from("telku_esims")
-        .select("id");
-
-    if(!esims.error){
-
-      document.getElementById(
-        "homeEsims"
-      ).innerText =
-        esims.data.length;
-    }
-
-  }catch(error){
-
-    console.log(
-      "Home:",
-      error
-    );
-  }
-}
-
-/* =====================================================
-   GLOBAL CLICK HANDLER
-   ===================================================== */
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    var pageButton =
-      event.target.closest(
-        "[data-page]"
-      );
-
-    if(pageButton){
-
-      var page =
-        pageButton.getAttribute(
-          "data-page"
-        );
-
-      showPage(page);
-
-      return;
-    }
-
-    var buyButton =
-      event.target.closest(
-        ".buy-button"
-      );
-
-    if(buyButton){
-
-      startCheckout(
-        buyButton
-      );
-
-      return;
-    }
-
-    var orderButton =
-      event.target.closest(
-        ".order-button"
-      );
-
-    if(orderButton){
-
-      openOrder(
-        orderButton.getAttribute(
-          "data-id"
-        )
-      );
-
-      return;
-    }
-
-    var esimButton =
-      event.target.closest(
-        ".esim-button"
-      );
-
-    if(esimButton){
-
-      openEsim(
-        esimButton.getAttribute(
-          "data-id"
-        )
-      );
-
-      return;
-    }
-
-    var closeButton =
-      event.target.closest(
-        "[data-close]"
-      );
-
-    if(closeButton){
-
-      closeModal(
-        closeButton.getAttribute(
-          "data-close"
-        )
-      );
-
-      return;
-    }
-
-  }
-);
-
-/* =====================================================
-   BUTTONS
-   ===================================================== */
-
-document.getElementById(
-  "profileTopButton"
-).onclick =
-  function(){
-
-    showPage(
-      "profile"
-    );
-
-  };
-
-document.getElementById(
-  "settingsButton"
-).onclick =
-  function(){
-
-    openSettings();
-
-  };
-
-document.getElementById(
-  "saveSettings"
-).onclick =
-  function(){
-
-    saveSettings();
-
-  };
-
-document.getElementById(
-  "refreshPlans"
-).onclick =
-  function(){
-
-    loadPlans();
-
-  };
-
-document.getElementById(
-  "refreshOrders"
-).onclick =
-  function(){
-
-    loadOrders();
-
-  };
-
-document.getElementById(
-  "refreshEsims"
-).onclick =
-  function(){
-
-    loadEsims();
-
-  };
-
-document.getElementById(
-  "refreshUsage"
-).onclick =
-  function(){
-
-    loadUsage();
-
-  };
-
-document.getElementById(
-  "refreshWallet"
-).onclick =
-  function(){
-
-    loadWallet();
-
-  };
-
-document.getElementById(
-  "topupButton"
-).onclick =
-  function(){
-
-    submitTopup();
-
-  };
-
-document.getElementById(
-  "copyReferral"
-).onclick =
-  function(){
-
-    copyText(
-      document.getElementById(
-        "referralCode"
-      ).innerText
-    );
-
-  };
-
-/* =====================================================
-   MODAL BACKGROUND
-   ===================================================== */
-
-document.addEventListener(
-  "click",
-  function(event){
-
-    if(
-      event.target.classList.contains(
-        "modal"
-      )
-    ){
-
-      event.target.classList.remove(
-        "show"
-      );
-
-    }
-
-  }
-);
-
-/* =====================================================
-   START
-   ===================================================== */
-
-updateProfile();
-
-loadHome();
+openPage("home");
 
 </script>
 
