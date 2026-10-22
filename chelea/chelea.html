@@ -3,48 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CHELEA</title>
+    <title>CHELEA V2</title>
     <style>
       :root {
-        --bg: #f5f7fb;
-        --panel: rgba(255, 255, 255, 0.9);
+        --bg: #eef4ff;
+        --bg-2: #f7f9fd;
+        --panel: rgba(255, 255, 255, 0.88);
         --panel-strong: #ffffff;
         --primary: #1b6ef3;
-        --primary-strong: #0e4fc6;
+        --primary-strong: #0d49ba;
         --primary-soft: #eaf2ff;
-        --accent: #13b7a6;
+        --accent: #12b9a4;
         --accent-soft: #ebfffb;
-        --text: #122033;
-        --muted: #63738a;
-        --line: #dfe7f3;
-        --success: #1ab27d;
+        --warning: #ffb648;
+        --warning-soft: #fff4dd;
+        --danger: #ec5c5c;
+        --danger-soft: #ffe8e8;
+        --text: #132336;
+        --muted: #64748b;
+        --line: #dfe8f3;
         --shadow: 0 18px 48px rgba(16, 38, 73, 0.12);
-        --radius-lg: 28px;
-        --radius-md: 20px;
-        --radius-sm: 14px;
+        --radius-xl: 30px;
+        --radius-lg: 24px;
+        --radius-md: 18px;
+        --radius-sm: 12px;
       }
 
       * { box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(180deg, #edf4ff 0%, #f8fafc 25%, #f5f7fb 100%);
+        background: linear-gradient(180deg, #edf4ff 0%, #f8fafc 24%, #f5f7fb 100%);
         color: var(--text);
       }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      button {
-        font: inherit;
-      }
+      a { color: inherit; text-decoration: none; }
+      button, input, select, textarea { font: inherit; }
+      button { cursor: pointer; }
 
       .page-shell {
         max-width: 1180px;
@@ -67,8 +62,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 12px;
         padding: 18px 18px 14px;
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.72);
         border-bottom: 1px solid rgba(223, 231, 243, 0.8);
       }
 
@@ -86,19 +82,18 @@
         display: grid;
         place-items: center;
         color: #fff;
-        font-weight: 700;
+        font-weight: 800;
         font-size: 15px;
         box-shadow: 0 10px 25px rgba(27, 110, 243, 0.35);
       }
 
       .brand-name {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
         font-weight: 800;
         letter-spacing: 0.08em;
       }
 
       .secure-status {
-        margin-left: auto;
         display: inline-flex;
         align-items: center;
         gap: 8px;
@@ -114,7 +109,7 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--success);
+        background: #1ab27d;
         box-shadow: 0 0 0 4px rgba(26, 178, 125, 0.15);
       }
 
@@ -130,28 +125,29 @@
         color: var(--text);
         font-weight: 700;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .back-btn:hover,
-      .back-btn:focus-visible,
-      .primary-btn:hover,
-      .primary-btn:focus-visible,
-      .svc-card:hover,
-      .svc-card:focus-visible,
-      .nav-item:hover,
-      .nav-item:focus-visible {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(19, 41, 82, 0.12);
       }
 
       .content {
         padding: 12px 18px 24px;
       }
 
+      .screen {
+        display: none;
+        animation: fadeIn 0.25s ease;
+      }
+
+      .screen.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
       .hero {
         background: linear-gradient(135deg, rgba(27, 110, 243, 0.96), rgba(17, 56, 135, 0.92));
-        border-radius: var(--radius-lg);
+        border-radius: var(--radius-xl);
         padding: 26px 20px 20px;
         position: relative;
         overflow: hidden;
@@ -204,25 +200,54 @@
       }
 
       .primary-btn,
-      .secondary-btn {
+      .secondary-btn,
+      .ghost-btn,
+      .action-btn,
+      .nav-item,
+      .service-card,
+      .partner-card,
+      .mini-btn {
         border: none;
-        cursor: pointer;
         border-radius: 14px;
-        padding: 12px 16px;
-        font-weight: 700;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
       }
 
-      .primary-btn {
+      .primary-btn,
+      .action-btn {
         background: linear-gradient(135deg, #fff, #dfeeff);
         color: var(--primary-strong);
         box-shadow: 0 12px 24px rgba(255, 255, 255, 0.22);
       }
 
-      .secondary-btn {
+      .primary-btn, .secondary-btn, .ghost-btn, .action-btn, .mini-btn {
+        padding: 12px 16px;
+        font-weight: 700;
+      }
+
+      .secondary-btn, .ghost-btn {
         background: rgba(255, 255, 255, 0.08);
         color: #fff;
         border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .ghost-btn {
+        background: var(--primary-soft);
+        color: var(--primary-strong);
+        border-color: rgba(27, 110, 243, 0.12);
+      }
+
+      .card,
+      .panel,
+      .status-box,
+      .timeline-card,
+      .service-card,
+      .partner-card,
+      .request-card {
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        box-shadow: 0 8px 18px rgba(16, 27, 45, 0.03);
       }
 
       .section-block {
@@ -237,7 +262,7 @@
       }
 
       .section-title {
-        font-size: 0.9rem;
+        font-size: 0.76rem;
         font-weight: 800;
         letter-spacing: 0.12em;
         text-transform: uppercase;
@@ -250,18 +275,14 @@
         gap: 12px;
       }
 
-      .svc-card {
-        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-        border: 1px solid var(--line);
-        border-radius: var(--radius-md);
+      .service-card {
         padding: 16px 12px 14px;
-        box-shadow: 0 8px 18px rgba(16, 27, 45, 0.03);
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        text-align: left;
+        width: 100%;
       }
 
-      .svc-card.active {
-        border-color: rgba(27, 110, 243, 0.5);
+      .service-card.active {
+        border-color: rgba(27, 110, 243, 0.45);
         background: linear-gradient(180deg, var(--primary-soft) 0%, #fff 100%);
       }
 
@@ -278,128 +299,467 @@
         color: var(--primary-strong);
       }
 
-      .svc-card:nth-child(2) .card-icon { background: linear-gradient(135deg, #eafaf7, #d6f6ee); color: #0c7966; }
-      .svc-card:nth-child(3) .card-icon { background: linear-gradient(135deg, #eef4ff, #dfe9ff); color: #3d57b6; }
-      .svc-card:nth-child(4) .card-icon { background: linear-gradient(135deg, #fff2e6, #ffe8d4); color: #c86b1a; }
+      .service-card:nth-child(2) .card-icon { background: linear-gradient(135deg, #eafaf7, #d6f6ee); color: #0c7966; }
+      .service-card:nth-child(3) .card-icon { background: linear-gradient(135deg, #eef4ff, #dfe9ff); color: #3d57b6; }
+      .service-card:nth-child(4) .card-icon { background: linear-gradient(135deg, #fff2e6, #ffe8d4); color: #c86b1a; }
 
-      .svc-card h3 {
+      .service-card h3 {
         margin: 0 0 7px;
-        font-size: 0.9rem;
+        font-size: 0.82rem;
         line-height: 1.2;
         letter-spacing: 0.01em;
       }
 
-      .svc-card p {
+      .service-card p {
         margin: 0;
-        font-size: 0.74rem;
+        font-size: 0.72rem;
         color: var(--muted);
         line-height: 1.45;
       }
 
-      .feature-stack,
+      .summary-grid,
       .tracking-grid,
-      .flow-rail {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+      .transaction-grid,
+      .info-grid,
+      .form-grid,
+      .mini-grid {
+        display: grid;
+        gap: 12px;
       }
 
-      .info-item,
+      .summary-grid,
+      .tracking-grid,
+      .mini-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .summary-box,
       .metric-box,
-      .flow-step {
+      .transaction-item,
+      .info-item,
+      .check-row,
+      .timeline-row {
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255,255,255,0.7);
         border-radius: 16px;
         padding: 12px 13px;
       }
 
-      .info-item {
-        flex: 1 1 46%;
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        min-width: 150px;
+      .summary-box strong,
+      .metric-box strong,
+      .transaction-item strong,
+      .info-item strong {
+        display: block;
+        font-size: 0.78rem;
+        margin-bottom: 4px;
       }
 
-      .item-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        font-size: 1rem;
-        background: var(--primary-soft);
-        color: var(--primary-strong);
-        flex-shrink: 0;
-      }
-
-      .info-item h4,
-      .metric-box h4 {
-        margin: 0 0 4px;
-        font-size: 0.76rem;
-      }
-
-      .info-item p,
-      .metric-box p {
-        margin: 0;
-        font-size: 0.7rem;
-        line-height: 1.5;
+      .summary-box span,
+      .metric-box span,
+      .transaction-item span,
+      .info-item span {
+        font-size: 0.72rem;
         color: var(--muted);
       }
 
-      .tracking-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .metric-box {
-        min-height: 110px;
-        background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
-      }
-
-      .metric-figure {
-        font-size: 1.3rem;
+      .num-value {
+        color: var(--primary-strong);
+        font-size: 1.1rem;
         font-weight: 800;
-        margin-bottom: 6px;
-        color: var(--text);
       }
 
-      .status-pill {
+      .transaction-list,
+      .status-list,
+      .timeline-list,
+      .checklist {
+        display: grid;
+        gap: 10px;
+      }
+
+      .transaction-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .badge,
+      .status-chip,
+      .tag {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        padding: 7px 10px;
+        justify-content: center;
         border-radius: 999px;
         font-size: 0.66rem;
-        font-weight: 700;
-        margin-bottom: 8px;
+        font-weight: 800;
+        padding: 6px 10px;
+        white-space: nowrap;
+      }
+
+      .badge.primary, .status-chip.primary, .tag.primary {
         background: var(--primary-soft);
         color: var(--primary-strong);
       }
 
-      .flow-rail {
+      .badge.success, .status-chip.success, .tag.success {
+        background: var(--accent-soft);
+        color: #0b7b6d;
+      }
+
+      .badge.warning, .status-chip.warning, .tag.warning {
+        background: var(--warning-soft);
+        color: #9c6705;
+      }
+
+      .badge.danger, .status-chip.danger, .tag.danger {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      .request-card,
+      .partner-card,
+      .timeline-card,
+      .panel {
+        padding: 16px;
+      }
+
+      .field {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        border: 1px solid var(--line);
+        background: white;
+        border-radius: 12px;
+        min-height: 44px;
+        padding: 11px 12px;
+        color: var(--text);
+        font-size: 0.95rem;
+      }
+
+      .field textarea {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      .form-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr));
+      }
+
+      .full-width { grid-column: 1 / -1; }
+
+      .check-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255,255,255,0.75);
+      }
+
+      .check-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .check-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        background: var(--accent-soft);
+        color: #0b7b6d;
+      }
+
+      .check-item.pending .check-icon {
+        background: var(--warning-soft);
+        color: #9c6705;
+      }
+
+      .check-item.review .check-icon {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      .check-item.pending .status-chip {
+        background: var(--warning-soft);
+        color: #9c6705;
+      }
+
+      .check-item.review .status-chip {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      .partner-card {
+        padding: 16px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .partner-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .profile-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #dfeeff, #cfe2ff);
+        color: var(--primary-strong);
+        font-weight: 800;
+      }
+
+      .profile-name {
+        font-size: 0.92rem;
+        font-weight: 800;
+      }
+
+      .mini-meta {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        padding: 6px 0 0;
       }
 
-      .flow-step {
-        flex: 1 1 auto;
-        min-width: 110px;
-        text-align: center;
-        font-size: 0.72rem;
-        font-weight: 700;
-        color: var(--text);
-        background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
-      }
-
-      .flow-step.arrow {
-        background: transparent;
-        border: none;
-        padding: 8px 2px 0;
-        min-width: auto;
+      .mini-meta span {
+        background: var(--primary-soft);
         color: var(--primary-strong);
+        border-radius: 999px;
+        font-size: 0.66rem;
+        padding: 6px 9px;
+        font-weight: 700;
+      }
+
+      .rating-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .price-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        gap: 10px;
+      }
+
+      .amount-box {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: #f8fbff;
+      }
+
+      .amount-box small {
+        display: block;
+        color: var(--muted);
+        font-size: 0.64rem;
+        margin-bottom: 4px;
+      }
+
+      .amount-box strong {
+        font-size: 0.95rem;
+      }
+
+      .timeline-card {
+        margin-top: 12px;
+      }
+
+      .timeline-list {
+        margin-top: 10px;
+      }
+
+      .timeline-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+      }
+
+      .timeline-row::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 30px;
+        bottom: -12px;
+        width: 2px;
+        background: var(--line);
+      }
+
+      .timeline-row:last-child::before { display: none; }
+
+      .dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 0.68rem;
+        font-weight: 800;
+        background: var(--primary-soft);
+        color: var(--primary-strong);
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-row.active .dot {
+        background: var(--accent-soft);
+        color: #0b7b6d;
+      }
+
+      .delivery-track {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f9fbff, #edf4ff);
+      }
+
+      .route-map {
+        position: relative;
+        height: 130px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #eef5ff, #dfeeff);
+        border: 1px solid #d5e4fd;
+      }
+
+      .route-map::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(27,110,243,0.12), rgba(18,185,164,0.08));
+      }
+
+      .route-line {
+        position: absolute;
+        left: 24px;
+        right: 28px;
+        top: 54px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 999px;
+        transform: rotate(8deg);
+      }
+
+      .route-dot {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--primary-strong);
+        box-shadow: 0 0 0 6px rgba(27,110,243,0.15);
+      }
+
+      .route-dot.start { left: 18px; top: 56px; }
+      .route-dot.end { right: 18px; top: 52px; background: var(--accent); box-shadow: 0 0 0 6px rgba(18,185,164,0.15); }
+
+      .route-pin {
+        position: absolute;
+        left: 48%;
+        top: 32%;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--warning);
+        box-shadow: 0 0 0 6px rgba(255,182,72,0.2);
+      }
+
+      .route-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 700;
+      }
+
+      .agreement-box {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #f9fbff;
+        padding: 12px;
+      }
+
+      .agreement-box h4 { margin: 0 0 8px; }
+      .agreement-box ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 0.75rem;
+        line-height: 1.8;
+      }
+
+      .sig-box {
+        margin-top: 12px;
+        padding: 12px;
+        border: 1px dashed rgba(27,110,243,0.3);
+        border-radius: 12px;
+        background: rgba(27,110,243,0.04);
+        color: var(--primary-strong);
+        font-weight: 700;
+      }
+
+      .demo-note {
+        margin-top: 10px;
+        display: inline-flex;
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 0.66rem;
+        font-weight: 800;
+        background: var(--warning-soft);
+        color: #9c6705;
+      }
+
+      .price-summary {
+        display: grid;
+        gap: 8px;
+      }
+
+      .price-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+      }
+
+      .price-line:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
       }
 
       .nav-bar {
@@ -415,16 +775,13 @@
       }
 
       .nav-item {
-        flex: 1 1 25%;
-        border: none;
+        flex: 1 1 20%;
         background: transparent;
         color: var(--muted);
         font-size: 0.72rem;
         font-weight: 700;
         padding: 10px 6px 8px;
         border-radius: 12px;
-        cursor: pointer;
-        transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
       }
 
       .nav-item.active {
@@ -438,31 +795,15 @@
         margin-bottom: 5px;
       }
 
+      .muted { color: var(--muted); }
+      .hidden { display: none !important; }
+
       @media (min-width: 700px) {
-        .page-shell {
-          padding-top: 36px;
-        }
-
-        .mobile-frame {
-          width: min(100%, 860px);
-          border-radius: 36px;
-        }
-
-        .topbar {
-          padding: 22px 22px 16px;
-        }
-
-        .content {
-          padding: 20px 22px 30px;
-        }
-
-        .hero {
-          padding: 28px 26px 24px;
-        }
-
-        .section-block {
-          margin-top: 28px;
-        }
+        .page-shell { padding-top: 36px; }
+        .mobile-frame { width: min(100%, 860px); border-radius: 36px; }
+        .topbar { padding: 22px 22px 16px; }
+        .content { padding: 20px 22px 30px; }
+        .hero { padding: 28px 26px 24px; }
       }
     </style>
   </head>
@@ -474,7 +815,6 @@
             <div class="brand-badge">C</div>
             <div class="brand-name">CHELEA</div>
           </div>
-
           <div class="secure-status">
             <span class="status-dot"></span>
             Secure
@@ -482,253 +822,851 @@
         </header>
 
         <div class="content">
-          <button class="back-btn" type="button" onclick="window.location.href='../index.html'">
-            ← HOBBIGO
-          </button>
+          <button class="back-btn" type="button" onclick="window.location.href='../index.html'">← HOBBIGO</button>
 
-          <section class="hero" aria-label="CHELEA hero section">
-            <div class="eyebrow">Global Delivery</div>
-            <h1>Send Anything,<br />Anywhere — Safely</h1>
-            <p>
-              Flexible personal delivery and cross-border titip service for travelers,
-              shoppers, cargo partners, and everyday package transfers across borders.
-            </p>
+          <section id="home-screen" class="screen active">
+            <div class="hero" aria-label="CHELEA hero section">
+              <div class="eyebrow">Global Delivery</div>
+              <h1>Send Anything,<br />Anywhere — Safely</h1>
+              <p>
+                Flexible personal delivery and cross-border titip service for travelers,
+                shoppers, cargo partners, and everyday package transfers across borders.
+              </p>
+              <div class="cta-row">
+                <button class="primary-btn" type="button" data-go="request">Create Request</button>
+                <button class="secondary-btn" type="button" data-go="tracking">Track Delivery</button>
+              </div>
+            </div>
 
-            <div class="cta-row">
-              <button class="primary-btn" type="button">Create Request</button>
-              <button class="secondary-btn" type="button">Explore Service</button>
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Services</div>
+              </div>
+              <div class="service-grid">
+                <button class="service-card active" type="button" data-service="Jastip / Personal Delivery">
+                  <div class="card-icon">📦</div>
+                  <h3>Jastip / Personal Delivery</h3>
+                  <p>Send personal items efficiently.</p>
+                </button>
+                <button class="service-card" type="button" data-service="Traveler Delivery">
+                  <div class="card-icon">✈️</div>
+                  <h3>Traveler Delivery</h3>
+                  <p>Match with trusted travelers.</p>
+                </button>
+                <button class="service-card" type="button" data-service="Cargo Partner">
+                  <div class="card-icon">🚚</div>
+                  <h3>Cargo Partner</h3>
+                  <p>Partner with logistics routes.</p>
+                </button>
+                <button class="service-card" type="button" data-service="Request Pickup">
+                  <div class="card-icon">📍</div>
+                  <h3>Request Pickup</h3>
+                  <p>Arrange pickup in minutes.</p>
+                </button>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Overview</div>
+              </div>
+              <div class="summary-grid">
+                <div class="summary-box">
+                  <strong>Active Delivery</strong>
+                  <div class="num-value">02</div>
+                  <span>In progress</span>
+                </div>
+                <div class="summary-box">
+                  <strong>Recent Transactions</strong>
+                  <div class="num-value">07</div>
+                  <span>Completed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Recent Transactions</div>
+              </div>
+              <div class="transaction-list">
+                <div class="transaction-item">
+                  <div>
+                    <strong>CHEL-2048</strong>
+                    <span>Jastip • Jakarta → Bali</span>
+                  </div>
+                  <span class="badge primary">Active</span>
+                </div>
+                <div class="transaction-item">
+                  <div>
+                    <strong>CHEL-1981</strong>
+                    <span>Traveler • Singapore → Jakarta</span>
+                  </div>
+                  <span class="badge success">Completed</span>
+                </div>
+                <div class="transaction-item">
+                  <div>
+                    <strong>CHEL-1875</strong>
+                    <span>Pickup • Bandung → Surabaya</span>
+                  </div>
+                  <span class="badge warning">Review</span>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section class="section-block" aria-label="Service cards">
-            <div class="section-header">
-              <div class="section-title">Services</div>
-            </div>
+          <section id="request-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Create Request</div>
+              </div>
+              <div class="request-card">
+                <div class="form-grid">
+                  <div class="field">
+                    <label>Service Type</label>
+                    <select id="serviceType">
+                      <option selected>Jastip / Personal Delivery</option>
+                      <option>Traveler Delivery</option>
+                      <option>Cargo Partner</option>
+                      <option>Request Pickup</option>
+                    </select>
+                  </div>
 
-            <div class="service-grid">
-              <button class="svc-card active" type="button">
-                <div class="card-icon">📦</div>
-                <h3>SEND A PACKAGE</h3>
-                <p>Ship personal items efficiently.</p>
-              </button>
+                  <div class="field">
+                    <label>Item Category</label>
+                    <select id="itemCategory">
+                      <option selected>Beauty & Fashion</option>
+                      <option>Electronics</option>
+                      <option>Food</option>
+                      <option>Document</option>
+                      <option>Gift</option>
+                    </select>
+                  </div>
 
-              <button class="svc-card" type="button">
-                <div class="card-icon">✈️</div>
-                <h3>TRAVELER DELIVERY</h3>
-                <p>Match with trusted travelers.</p>
-              </button>
+                  <div class="field full-width">
+                    <label>Item Description</label>
+                    <textarea id="itemDescription" placeholder="Example: 2 boxes of skincare products, sealed with bubble wrap">2 boxes of skincare products, sealed and protected</textarea>
+                  </div>
 
-              <button class="svc-card" type="button">
-                <div class="card-icon">🚚</div>
-                <h3>CARGO PARTNER</h3>
-                <p>Partner with logistics routes.</p>
-              </button>
+                  <div class="field">
+                    <label>Item Value</label>
+                    <input id="itemValue" type="number" value="2500000" />
+                  </div>
 
-              <button class="svc-card" type="button">
-                <div class="card-icon">📍</div>
-                <h3>REQUEST PICKUP</h3>
-                <p>Arrange pickup in minutes.</p>
-              </button>
+                  <div class="field">
+                    <label>Weight</label>
+                    <input id="weight" type="number" value="3.5" step="0.1" />
+                  </div>
+
+                  <div class="field">
+                    <label>Origin</label>
+                    <input id="origin" value="Jakarta" />
+                  </div>
+
+                  <div class="field">
+                    <label>Destination</label>
+                    <input id="destination" value="Bali" />
+                  </div>
+
+                  <div class="field">
+                    <label>Pickup Date</label>
+                    <input id="pickupDate" type="date" />
+                  </div>
+
+                  <div class="field">
+                    <label>Delivery Date</label>
+                    <input id="deliveryDate" type="date" />
+                  </div>
+
+                  <div class="field full-width">
+                    <label>Protection / Insurance</label>
+                    <select id="protectionOption">
+                      <option selected>Standard Protection</option>
+                      <option>Plus Protection</option>
+                      <option>Premium Protection</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style="display:flex; margin-top:18px;">
+                  <button class="primary-btn" type="button" id="createRequestBtn" style="width:100%;">CREATE REQUEST</button>
+                </div>
+              </div>
             </div>
           </section>
 
-          <section class="section-block" aria-label="Security section">
-            <div class="section-header">
-              <div class="section-title">Security</div>
-            </div>
-
-            <div class="feature-stack">
-              <div class="info-item">
-                <div class="item-icon">✓</div>
-                <div>
-                  <h4>Identity Verification</h4>
-                  <p>Know who is handling your item.</p>
-                </div>
+          <section id="verify-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Verify</div>
               </div>
-
-              <div class="info-item">
-                <div class="item-icon">🧾</div>
-                <div>
-                  <h4>Item Verification</h4>
-                  <p>Validate contents before handover.</p>
+              <div class="panel">
+                <div class="checklist">
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Identity Verification</div>
+                    <span class="status-chip success">VERIFIED</span>
+                  </div>
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Item Verification</div>
+                    <span class="status-chip success">VERIFIED</span>
+                  </div>
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Country Restriction Check</div>
+                    <span class="status-chip warning">REVIEW</span>
+                  </div>
+                  <div class="check-item review">
+                    <div class="check-name"><span class="check-icon">!</span> Risk Review</div>
+                    <span class="status-chip danger">PENDING</span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="info-item">
-                <div class="item-icon">🌍</div>
-                <div>
-                  <h4>Country Restriction Check</h4>
-                  <p>Check compliance before dispatch.</p>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <span class="badge success">Identity OK</span>
+                  <span class="badge warning">Route Review</span>
+                  <span class="badge primary">Protected</span>
                 </div>
-              </div>
 
-              <div class="info-item">
-                <div class="item-icon">📹</div>
-                <div>
-                  <h4>Live Handover Verification</h4>
-                  <p>Capture every transfer safely.</p>
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" type="button" id="continueMatchBtn" style="width:100%;">CONTINUE TO MATCH</button>
                 </div>
               </div>
             </div>
           </section>
 
-          <section class="section-block" aria-label="Protection section">
-            <div class="section-header">
-              <div class="section-title">Protection</div>
+          <section id="match-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Match</div>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-top">
+                  <div class="profile-head">
+                    <div class="avatar">A</div>
+                    <div>
+                      <div class="profile-name">Aulia Rahman</div>
+                      <div class="muted" style="font-size:0.7rem;">Traveler Delivery</div>
+                    </div>
+                  </div>
+                  <span class="status-chip success">Trust Verified</span>
+                </div>
+
+                <div class="mini-meta">
+                  <span>Jakarta → Bali</span>
+                  <span>Rating 4.9</span>
+                </div>
+
+                <div class="rating-row">
+                  <span>ETA: 18 hours</span>
+                  <span>Route: Direct</span>
+                </div>
+
+                <div class="price-row">
+                  <div class="amount-box"><small>Delivery Fee</small><strong>Rp 520.000</strong></div>
+                  <div class="amount-box"><small>Protection</small><strong>Rp 85.000</strong></div>
+                </div>
+
+                <button class="primary-btn select-partner-btn" type="button" data-partner="Aulia Rahman">SELECT PARTNER</button>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-top">
+                  <div class="profile-head">
+                    <div class="avatar">N</div>
+                    <div>
+                      <div class="profile-name">Nabila Putri</div>
+                      <div class="muted" style="font-size:0.7rem;">Cargo Partner</div>
+                    </div>
+                  </div>
+                  <span class="status-chip primary">High Trust</span>
+                </div>
+
+                <div class="mini-meta">
+                  <span>Jakarta → Denpasar</span>
+                  <span>Rating 4.8</span>
+                </div>
+
+                <div class="rating-row">
+                  <span>ETA: 21 hours</span>
+                  <span>Route: Priority</span>
+                </div>
+
+                <div class="price-row">
+                  <div class="amount-box"><small>Delivery Fee</small><strong>Rp 610.000</strong></div>
+                  <div class="amount-box"><small>Protection</small><strong>Rp 95.000</strong></div>
+                </div>
+
+                <button class="primary-btn select-partner-btn" type="button" data-partner="Nabila Putri">SELECT PARTNER</button>
+              </div>
+
+              <div class="partner-card">
+                <div class="partner-top">
+                  <div class="profile-head">
+                    <div class="avatar">R</div>
+                    <div>
+                      <div class="profile-name">Rizky Aditya</div>
+                      <div class="muted" style="font-size:0.7rem;">Request Pickup</div>
+                    </div>
+                  </div>
+                  <span class="status-chip warning">Fastest</span>
+                </div>
+
+                <div class="mini-meta">
+                  <span>Jakarta → Bali</span>
+                  <span>Rating 4.7</span>
+                </div>
+
+                <div class="rating-row">
+                  <span>ETA: 14 hours</span>
+                  <span>Route: Express</span>
+                </div>
+
+                <div class="price-row">
+                  <div class="amount-box"><small>Delivery Fee</small><strong>Rp 680.000</strong></div>
+                  <div class="amount-box"><small>Protection</small><strong>Rp 110.000</strong></div>
+                </div>
+
+                <button class="primary-btn select-partner-btn" type="button" data-partner="Rizky Aditya">SELECT PARTNER</button>
+              </div>
             </div>
+          </section>
 
-            <div class="feature-stack">
-              <div class="info-item">
-                <div class="item-icon">🛡️</div>
-                <div>
-                  <h4>Insurance</h4>
-                  <p>Coverage for delivery risk.</p>
+          <section id="approved-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Approved</div>
+              </div>
+              <div class="panel">
+                <div class="partner-top">
+                  <div class="profile-head">
+                    <div class="avatar">A</div>
+                    <div>
+                      <div class="profile-name" id="approvedPartnerName">Aulia Rahman</div>
+                      <div class="muted" style="font-size:0.7rem;">Selected partner</div>
+                    </div>
+                  </div>
+                  <span class="status-chip success">Offer Selected</span>
+                </div>
+
+                <div class="price-summary" style="margin-top:18px;">
+                  <div class="price-line"><span>Route</span><strong id="approvedRoute">Jakarta → Bali</strong></div>
+                  <div class="price-line"><span>ETA</span><strong id="approvedEta">18 hours</strong></div>
+                  <div class="price-line"><span>Total Fee</span><strong id="approvedFee">Rp 520.000</strong></div>
+                  <div class="price-line"><span>Protection Fee</span><strong id="approvedProtection">Rp 85.000</strong></div>
+                  <div class="price-line"><span>Estimated Total</span><strong id="approvedTotal">Rp 605.000</strong></div>
+                </div>
+
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" id="approveOfferBtn" type="button" style="width:100%;">APPROVE OFFER</button>
                 </div>
               </div>
+            </div>
+          </section>
 
-              <div class="info-item">
-                <div class="item-icon">💳</div>
-                <div>
-                  <h4>Escrow Payment</h4>
-                  <p>Secure payment release conditions.</p>
-                </div>
+          <section id="agreement-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Agreement</div>
               </div>
-
-              <div class="info-item">
-                <div class="item-icon">📝</div>
-                <div>
+              <div class="panel">
+                <div class="agreement-box">
                   <h4>Digital Agreement</h4>
-                  <p>Terms clearly documented.</p>
+                  <ul>
+                    <li>Sender: Alex / Jakarta</li>
+                    <li>Traveler/Partner: <span id="agreementPartner">Aulia Rahman</span></li>
+                    <li>Recipient: Bali Customer</li>
+                    <li>Item: Skincare product package</li>
+                    <li>Route: Jakarta → Bali</li>
+                    <li>Value: Rp 2.500.000</li>
+                    <li>Responsibilities: secure packaging, route compliance, handover confirmation</li>
+                    <li>Cancellation terms: valid before pickup confirmation</li>
+                    <li>Handover requirements: recipient ID + verification photo</li>
+                  </ul>
                 </div>
-              </div>
 
-              <div class="info-item">
-                <div class="item-icon">✍️</div>
-                <div>
-                  <h4>Electronic Signature / TTE</h4>
-                  <p>Confirm acceptance digitally.</p>
+                <div class="sig-box">Electronic Signature / TTE — DEMO / PROTOTYPE ONLY</div>
+                <div class="demo-note">Prototype Demo</div>
+
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" id="acceptAgreementBtn" type="button" style="width:100%;">ACCEPT AGREEMENT</button>
                 </div>
               </div>
             </div>
           </section>
 
-          <section class="section-block" aria-label="Tracking section">
-            <div class="section-header">
-              <div class="section-title">Tracking</div>
-            </div>
-
-            <div class="tracking-grid">
-              <div class="metric-box">
-                <div class="status-pill">● Active</div>
-                <div class="metric-figure">04</div>
-                <h4>Active Delivery</h4>
-                <p>Live requests currently in motion.</p>
+          <section id="escrow-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Escrow</div>
               </div>
+              <div class="panel">
+                <div class="price-summary">
+                  <div class="price-line"><span>Total Transaction Amount</span><strong>Rp 605.000</strong></div>
+                  <div class="price-line"><span>Protection Fee</span><strong>Rp 85.000</strong></div>
+                  <div class="price-line"><span>Service Fee</span><strong>Rp 520.000</strong></div>
+                  <div class="price-line"><span>Escrow Status</span><strong class="status-chip primary">ESCROW LOCKED — DEMO</strong></div>
+                </div>
 
-              <div class="metric-box">
-                <div class="status-pill">⚡ Live</div>
-                <div class="metric-figure">24/7</div>
-                <h4>Live Status</h4>
-                <p>Process status visible in-app.</p>
-              </div>
+                <div class="demo-note" style="margin-top:18px;">Funds are simulated. No real payment is processed.</div>
 
-              <div class="metric-box">
-                <div class="status-pill">📡 GPS</div>
-                <div class="metric-figure">Map</div>
-                <h4>GPS Tracking</h4>
-                <p>Location updates and routing view.</p>
-              </div>
-
-              <div class="metric-box">
-                <div class="status-pill">🕒 Timeline</div>
-                <div class="metric-figure">8 Steps</div>
-                <h4>Delivery Timeline</h4>
-                <p>Track progress from request to handover.</p>
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" id="confirmEscrowBtn" type="button" style="width:100%;">CONFIRM ESCROW</button>
+                </div>
               </div>
             </div>
           </section>
 
-          <section class="section-block" aria-label="Transaction flow visual">
-            <div class="section-header">
-              <div class="section-title">Flow</div>
-            </div>
+          <section id="pickup-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Pickup</div>
+              </div>
+              <div class="panel">
+                <div class="price-summary">
+                  <div class="price-line"><span>Pickup Location</span><strong>Jakarta Center</strong></div>
+                  <div class="price-line"><span>Scheduled Time</span><strong>Today, 16:30</strong></div>
+                  <div class="price-line"><span>Pickup Status</span><strong class="status-chip success">CONFIRMED</strong></div>
+                  <div class="price-line"><span>Proof of Pickup</span><strong>Photo + Timestamp</strong></div>
+                </div>
 
-            <div class="flow-rail" aria-label="Transaction flow">
-              <div class="flow-step">REQUEST</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">VERIFY</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">MATCH</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">APPROVED</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">AGREEMENT</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">ESCROW</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">PICKUP</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">DELIVERY</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">HANDOVER</div>
-              <div class="flow-step arrow">→</div>
-              <div class="flow-step">COMPLETED</div>
+                <div class="agreement-box" style="margin-top:18px;">
+                  <h4>Item Checklist</h4>
+                  <ul>
+                    <li>Item sealed and tagged</li>
+                    <li>Protection wrap verified</li>
+                    <li>Package integrity checked</li>
+                    <li>Receiver information validated</li>
+                  </ul>
+                </div>
+
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" id="confirmPickupBtn" type="button" style="width:100%;">CONFIRM PICKUP</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="tracking-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Delivery / Tracking</div>
+              </div>
+              <div class="panel">
+                <div class="summary-grid">
+                  <div class="summary-box">
+                    <strong>Delivery Status</strong>
+                    <div class="num-value" id="trackingStatusText">In Transit</div>
+                    <span id="trackingStatusSub">Route active</span>
+                  </div>
+                  <div class="summary-box">
+                    <strong>ETA</strong>
+                    <div class="num-value">08:15</div>
+                    <span>Estimated arrival</span>
+                  </div>
+                </div>
+
+                <div class="delivery-track" style="margin-top:18px;">
+                  <div class="route-map">
+                    <div class="route-line"></div>
+                    <div class="route-dot start"></div>
+                    <div class="route-dot end"></div>
+                    <div class="route-pin"></div>
+                  </div>
+                  <div class="route-labels">
+                    <span>Jakarta</span>
+                    <span>Current</span>
+                    <span>Bali</span>
+                  </div>
+                </div>
+
+                <div class="timeline-card">
+                  <div class="section-title" style="margin-bottom:10px;">Transaction Timeline</div>
+                  <div class="timeline-list" id="timelineList">
+                    <div class="timeline-row active"><span class="dot">1</span><div><strong>REQUEST</strong><div class="muted" style="font-size:0.7rem;">Submitted</div></div></div>
+                    <div class="timeline-row"><span class="dot">2</span><div><strong>VERIFY</strong><div class="muted" style="font-size:0.7rem;">Checked</div></div></div>
+                    <div class="timeline-row"><span class="dot">3</span><div><strong>MATCH</strong><div class="muted" style="font-size:0.7rem;">Partner selected</div></div></div>
+                    <div class="timeline-row"><span class="dot">4</span><div><strong>APPROVED</strong><div class="muted" style="font-size:0.7rem;">Offer accepted</div></div></div>
+                    <div class="timeline-row"><span class="dot">5</span><div><strong>AGREEMENT</strong><div class="muted" style="font-size:0.7rem;">Signed</div></div></div>
+                    <div class="timeline-row"><span class="dot">6</span><div><strong>ESCROW</strong><div class="muted" style="font-size:0.7rem;">Locked</div></div></div>
+                    <div class="timeline-row"><span class="dot">7</span><div><strong>PICKUP</strong><div class="muted" style="font-size:0.7rem;">Confirmed</div></div></div>
+                    <div class="timeline-row"><span class="dot">8</span><div><strong>DELIVERY</strong><div class="muted" style="font-size:0.7rem;">In progress</div></div></div>
+                    <div class="timeline-row"><span class="dot">9</span><div><strong>HANDOVER</strong><div class="muted" style="font-size:0.7rem;">Pending</div></div></div>
+                    <div class="timeline-row"><span class="dot">10</span><div><strong>COMPLETED</strong><div class="muted" style="font-size:0.7rem;">Next</div></div></div>
+                  </div>
+                </div>
+
+                <div style="margin-top:18px; display:flex; gap:10px;">
+                  <button class="primary-btn" id="updateStatusBtn" type="button" style="flex:1;">UPDATE DEMO STATUS</button>
+                  <button class="ghost-btn" type="button" data-go="handover" style="flex:1;">HANDOVER</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="handover-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Handover</div>
+              </div>
+              <div class="panel">
+                <div class="agreement-box">
+                  <h4>Recipient Information</h4>
+                  <ul>
+                    <li>Recipient: Nia Wibowo</li>
+                    <li>Delivery Location: Bali Central Drop Point</li>
+                    <li>Handover Verification: <span class="status-chip success">VERIFIED</span></li>
+                    <li>OTP DEMO: 482109</li>
+                    <li>Photo Proof DEMO: Captured</li>
+                    <li>Timestamp DEMO: 18:25</li>
+                    <li>Location Verification DEMO: Confirmed</li>
+                  </ul>
+                </div>
+
+                <div class="demo-note" style="margin-top:18px;">Prototype and Demo Only</div>
+
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" id="confirmHandoverBtn" type="button" style="width:100%;">CONFIRM HANDOVER</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="completed-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Completed</div>
+              </div>
+              <div class="panel">
+                <div class="checklist">
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Delivery Completed</div>
+                    <span class="status-chip success">COMPLETED</span>
+                  </div>
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Handover Verified</div>
+                    <span class="status-chip success">VERIFIED</span>
+                  </div>
+                  <div class="check-item">
+                    <div class="check-name"><span class="check-icon">✓</span> Transaction Completed</div>
+                    <span class="status-chip success">CLOSED</span>
+                  </div>
+                </div>
+
+                <div class="price-summary" style="margin-top:18px;">
+                  <div class="price-line"><span>Final Transaction Summary</span><strong>CHEL-2048</strong></div>
+                  <div class="price-line"><span>Demo Escrow Release</span><strong>Rp 605.000</strong></div>
+                  <div class="price-line"><span>Protection Status</span><strong>Active</strong></div>
+                  <div class="price-line"><span>Rating / Review</span><strong>4.9 / Excellent</strong></div>
+                </div>
+
+                <div style="margin-top:18px; display:flex;">
+                  <button class="primary-btn" type="button" data-go="orders" style="width:100%;">VIEW HISTORY</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="orders-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Transaction History</div>
+              </div>
+
+              <div class="panel">
+                <div class="mini-grid">
+                  <div class="summary-box"><strong>Active</strong><div class="num-value">02</div><span>In progress</span></div>
+                  <div class="summary-box"><strong>Completed</strong><div class="num-value">07</div><span>Finished</span></div>
+                  <div class="summary-box"><strong>Cancelled</strong><div class="num-value">01</div><span>Closed</span></div>
+                </div>
+              </div>
+
+              <div class="timeline-card">
+                <div class="transaction-list">
+                  <div class="transaction-item">
+                    <div>
+                      <strong>CHEL-2048</strong>
+                      <span>Jastip / Jakarta → Bali</span>
+                    </div>
+                    <span class="badge primary">Active</span>
+                  </div>
+                  <div class="transaction-item">
+                    <div>
+                      <strong>CHEL-1981</strong>
+                      <span>Traveler / Singapore → Jakarta</span>
+                    </div>
+                    <span class="badge success">Completed</span>
+                  </div>
+                  <div class="transaction-item">
+                    <div>
+                      <strong>CHEL-1875</strong>
+                      <span>Pickup / Bandung → Surabaya</span>
+                    </div>
+                    <span class="badge warning">Cancelled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="profile-screen" class="screen">
+            <div class="section-block">
+              <div class="section-header">
+                <div class="section-title">Profile</div>
+              </div>
+              <div class="panel">
+                <div class="profile-head" style="margin-bottom:18px;">
+                  <div class="avatar" style="width:52px;height:52px;">A</div>
+                  <div>
+                    <div class="profile-name">Alex Johnson</div>
+                    <div class="muted" style="font-size:0.72rem;">Verified member</div>
+                  </div>
+                </div>
+
+                <div class="price-summary">
+                  <div class="price-line"><span>Member Tier</span><strong>Gold</strong></div>
+                  <div class="price-line"><span>Delivery Score</span><strong>4.9</strong></div>
+                  <div class="price-line"><span>Trust Level</span><strong>High</strong></div>
+                  <div class="price-line"><span>Demo Mode</span><strong>Enabled</strong></div>
+                </div>
+              </div>
             </div>
           </section>
         </div>
 
         <nav class="nav-bar" aria-label="Bottom navigation">
-          <button class="nav-item active" type="button" data-label="HOME">
-            <span class="icon">⌂</span>HOME
-          </button>
-          <button class="nav-item" type="button" data-label="ORDERS">
-            <span class="icon">📦</span>ORDERS
-          </button>
-          <button class="nav-item" type="button" data-label="TRACKING">
-            <span class="icon">📍</span>TRACKING
-          </button>
-          <button class="nav-item" type="button" data-label="PROFILE">
-            <span class="icon">👤</span>PROFILE
-          </button>
+          <button class="nav-item active" type="button" data-screen="home"><span class="icon">⌂</span>HOME</button>
+          <button class="nav-item" type="button" data-screen="request"><span class="icon">📦</span>REQUEST</button>
+          <button class="nav-item" type="button" data-screen="tracking"><span class="icon">📍</span>TRACKING</button>
+          <button class="nav-item" type="button" data-screen="orders"><span class="icon">🧾</span>ORDERS</button>
+          <button class="nav-item" type="button" data-screen="profile"><span class="icon">👤</span>PROFILE</button>
         </nav>
       </div>
     </div>
 
     <script>
-      const serviceCards = document.querySelectorAll('.svc-card');
-      serviceCards.forEach((card) => {
-        card.addEventListener('click', () => {
-          serviceCards.forEach((item) => item.classList.remove('active'));
-          card.classList.add('active');
-          const label = card.querySelector('h3')?.textContent || 'Service';
-          alert(label + ' selected');
-        });
-      });
+      const state = {
+        transactionStep: 0,
+        selectedPartner: 'Aulia Rahman',
+        selectedService: 'Jastip / Personal Delivery'
+      };
 
-      const primaryButtons = document.querySelectorAll('.primary-btn, .secondary-btn');
-      primaryButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-          button.animate(
-            [
-              { transform: 'scale(1)' },
-              { transform: 'scale(0.97)' },
-              { transform: 'scale(1.02)' },
-              { transform: 'scale(1)' }
-            ],
-            { duration: 220, easing: 'ease-out' }
-          );
-        });
-      });
+      const stepOrder = [
+        'REQUEST',
+        'VERIFY',
+        'MATCH',
+        'APPROVED',
+        'AGREEMENT',
+        'ESCROW',
+        'PICKUP',
+        'DELIVERY',
+        'HANDOVER',
+        'COMPLETED'
+      ];
 
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach((item) => {
-        item.addEventListener('click', () => {
-          navItems.forEach((nav) => nav.classList.remove('active'));
-          item.classList.add('active');
-          const label = item.dataset.label || 'Menu';
-          alert(label + ' selected');
+      const screens = [
+        'home-screen',
+        'request-screen',
+        'verify-screen',
+        'match-screen',
+        'approved-screen',
+        'agreement-screen',
+        'escrow-screen',
+        'pickup-screen',
+        'tracking-screen',
+        'handover-screen',
+        'completed-screen',
+        'orders-screen',
+        'profile-screen'
+      ];
+
+      function showScreen(name) {
+        screens.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('active', id === name);
         });
-      });
+
+        document.querySelectorAll('.nav-item').forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.screen === name.replace('-screen', ''));
+        });
+      }
+
+      function setSelectedService(service) {
+        state.selectedService = service;
+        document.querySelectorAll('.service-card').forEach((card) => {
+          card.classList.toggle('active', card.dataset.service === service);
+        });
+        const serviceSelect = document.getElementById('serviceType');
+        if (serviceSelect) serviceSelect.value = service;
+      }
+
+      function createRequest() {
+        const service = document.getElementById('serviceType')?.value || state.selectedService;
+        state.selectedService = service;
+        document.getElementById('approvedRoute').textContent = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
+        document.getElementById('agreementPartner').textContent = state.selectedPartner;
+        state.transactionStep = 1;
+        showScreen('verify-screen');
+      }
+
+      function continueToMatch() {
+        state.transactionStep = 2;
+        showScreen('match-screen');
+      }
+
+      function selectPartner(name) {
+        state.selectedPartner = name;
+        document.getElementById('approvedPartnerName').textContent = name;
+        document.getElementById('agreementPartner').textContent = name;
+
+        const route = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
+        document.getElementById('approvedRoute').textContent = route;
+        document.getElementById('approvedEta').textContent = '18 hours';
+        document.getElementById('approvedFee').textContent = 'Rp 520.000';
+        document.getElementById('approvedProtection').textContent = 'Rp 85.000';
+        document.getElementById('approvedTotal').textContent = 'Rp 605.000';
+
+        state.transactionStep = 3;
+        showScreen('approved-screen');
+      }
+
+      function approveOffer() {
+        state.transactionStep = 4;
+        showScreen('agreement-screen');
+      }
+
+      function acceptAgreement() {
+        state.transactionStep = 5;
+        showScreen('escrow-screen');
+      }
+
+      function confirmEscrow() {
+        state.transactionStep = 6;
+        showScreen('pickup-screen');
+      }
+
+      function confirmPickup() {
+        state.transactionStep = 7;
+        showScreen('tracking-screen');
+        updateTimeline();
+      }
+
+      function updateTimeline() {
+        const timelineRows = document.querySelectorAll('#timelineList .timeline-row');
+        const highlightIndex = Math.min(state.transactionStep, 9);
+
+        timelineRows.forEach((row, idx) => {
+          row.classList.toggle('active', idx <= highlightIndex - 1);
+          const dot = row.querySelector('.dot');
+          if (dot && idx <= highlightIndex - 1) {
+            dot.style.background = 'var(--accent-soft)';
+            dot.style.color = '#0b7b6d';
+          }
+        });
+
+        const statusMap = {
+          0: ['REQUEST', 'Submitted'],
+          1: ['VERIFY', 'Checked'],
+          2: ['MATCH', 'Partner selected'],
+          3: ['APPROVED', 'Offer accepted'],
+          4: ['AGREEMENT', 'Signed'],
+          5: ['ESCROW', 'Locked'],
+          6: ['PICKUP', 'Confirmed'],
+          7: ['DELIVERY', 'In progress'],
+          8: ['HANDOVER', 'Pending'],
+          9: ['COMPLETED', 'Closed']
+        };
+
+        const current = statusMap[Math.min(state.transactionStep, 9)] || statusMap[7];
+        document.getElementById('trackingStatusText').textContent = current[0] === 'DELIVERY' ? 'In Transit' : current[0];
+        document.getElementById('trackingStatusSub').textContent = current[1];
+      }
+
+      function updateDemoStatus() {
+        const cycle = ['request-screen', 'verify-screen', 'match-screen', 'approved-screen', 'agreement-screen', 'escrow-screen', 'pickup-screen', 'tracking-screen', 'handover-screen', 'completed-screen'];
+        const currentIndex = cycle.indexOf(document.querySelector('.screen.active')?.id || 'tracking-screen');
+        const nextIndex = Math.min(currentIndex + 1, cycle.length - 1);
+        const next = cycle[nextIndex];
+        if (next === 'handover-screen') {
+          state.transactionStep = 8;
+          showScreen('handover-screen');
+          updateTimeline();
+          return;
+        }
+        if (next === 'completed-screen') {
+          state.transactionStep = 9;
+          showScreen('completed-screen');
+          updateTimeline();
+          return;
+        }
+        showScreen(next);
+      }
+
+      function confirmHandover() {
+        state.transactionStep = 9;
+        showScreen('completed-screen');
+        updateTimeline();
+      }
+
+      function bindNavigation() {
+        document.querySelectorAll('.nav-item').forEach((button) => {
+          button.addEventListener('click', () => {
+            const screen = button.dataset.screen;
+            if (screen === 'home') showScreen('home-screen');
+            if (screen === 'request') showScreen('request-screen');
+            if (screen === 'tracking') showScreen('tracking-screen');
+            if (screen === 'orders') showScreen('orders-screen');
+            if (screen === 'profile') showScreen('profile-screen');
+          });
+        });
+
+        document.querySelectorAll('[data-go]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const target = button.dataset.go;
+            if (target === 'request') showScreen('request-screen');
+            if (target === 'tracking') showScreen('tracking-screen');
+            if (target === 'handover') showScreen('handover-screen');
+            if (target === 'orders') showScreen('orders-screen');
+          });
+        });
+      }
+
+      function bindServiceCards() {
+        document.querySelectorAll('.service-card').forEach((card) => {
+          card.addEventListener('click', () => {
+            setSelectedService(card.dataset.service);
+          });
+        });
+      }
+
+      function bindButtons() {
+        document.getElementById('createRequestBtn').addEventListener('click', createRequest);
+        document.getElementById('continueMatchBtn').addEventListener('click', continueToMatch);
+        document.querySelectorAll('.select-partner-btn').forEach((btn) => {
+          btn.addEventListener('click', () => selectPartner(btn.dataset.partner));
+        });
+        document.getElementById('approveOfferBtn').addEventListener('click', approveOffer);
+        document.getElementById('acceptAgreementBtn').addEventListener('click', acceptAgreement);
+        document.getElementById('confirmEscrowBtn').addEventListener('click', confirmEscrow);
+        document.getElementById('confirmPickupBtn').addEventListener('click', confirmPickup);
+        document.getElementById('updateStatusBtn').addEventListener('click', updateDemoStatus);
+        document.getElementById('confirmHandoverBtn').addEventListener('click', confirmHandover);
+      }
+
+      function initDates() {
+        const today = new Date();
+        const offset = (n) => {
+          const d = new Date(today);
+          d.setDate(today.getDate() + n);
+          return d.toISOString().split('T')[0];
+        };
+        document.getElementById('pickupDate').value = offset(2);
+        document.getElementById('deliveryDate').value = offset(5);
+      }
+
+      bindNavigation();
+      bindServiceCards();
+      bindButtons();
+      initDates();
+      updateTimeline();
     </script>
   </body>
 </html>
