@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CHELEA V2</title>
+    <title>CHELEA V3</title>
     <style>
       :root {
         --bg: #eef4ff;
@@ -50,7 +50,7 @@
       .mobile-frame {
         width: min(100%, 440px);
         margin: 0 auto;
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.72);
         backdrop-filter: blur(8px);
         border: 1px solid rgba(219, 228, 241, 0.9);
         border-radius: 32px;
@@ -105,6 +105,10 @@
         font-weight: 700;
       }
 
+      .secure-status strong {
+        letter-spacing: .03em;
+      }
+
       .status-dot {
         width: 8px;
         height: 8px;
@@ -136,9 +140,7 @@
         animation: fadeIn 0.25s ease;
       }
 
-      .screen.active {
-        display: block;
-      }
+      .screen.active { display: block; }
 
       @keyframes fadeIn {
         from { opacity: 0; transform: translateY(8px); }
@@ -202,25 +204,25 @@
       .primary-btn,
       .secondary-btn,
       .ghost-btn,
-      .action-btn,
+      .mini-btn,
       .nav-item,
       .service-card,
       .partner-card,
-      .mini-btn {
+      .detail-btn {
         border: none;
         border-radius: 14px;
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       }
 
       .primary-btn,
-      .action-btn {
+      .detail-btn {
         background: linear-gradient(135deg, #fff, #dfeeff);
         color: var(--primary-strong);
         box-shadow: 0 12px 24px rgba(255, 255, 255, 0.22);
       }
 
-      .primary-btn, .secondary-btn, .ghost-btn, .action-btn, .mini-btn {
+      .primary-btn, .secondary-btn, .ghost-btn, .mini-btn, .detail-btn {
         padding: 12px 16px;
         font-weight: 700;
       }
@@ -239,20 +241,21 @@
 
       .card,
       .panel,
-      .status-box,
-      .timeline-card,
+      .summary-box,
+      .metric-box,
+      .transaction-item,
       .service-card,
       .partner-card,
-      .request-card {
+      .request-card,
+      .timeline-card,
+      .detail-card {
         background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
         border: 1px solid var(--line);
         border-radius: var(--radius-md);
         box-shadow: 0 8px 18px rgba(16, 27, 45, 0.03);
       }
 
-      .section-block {
-        margin-top: 22px;
-      }
+      .section-block { margin-top: 22px; }
 
       .section-header {
         display: flex;
@@ -322,14 +325,16 @@
       .transaction-grid,
       .info-grid,
       .form-grid,
-      .mini-grid {
+      .mini-grid,
+      .score-grid {
         display: grid;
         gap: 12px;
       }
 
       .summary-grid,
       .tracking-grid,
-      .mini-grid {
+      .mini-grid,
+      .score-grid {
         grid-template-columns: repeat(2, minmax(0,1fr));
       }
 
@@ -338,7 +343,8 @@
       .transaction-item,
       .info-item,
       .check-row,
-      .timeline-row {
+      .timeline-row,
+      .score-box {
         border: 1px solid var(--line);
         background: rgba(255,255,255,0.7);
         border-radius: 16px;
@@ -348,7 +354,8 @@
       .summary-box strong,
       .metric-box strong,
       .transaction-item strong,
-      .info-item strong {
+      .info-item strong,
+      .score-box strong {
         display: block;
         font-size: 0.78rem;
         margin-bottom: 4px;
@@ -371,7 +378,8 @@
       .transaction-list,
       .status-list,
       .timeline-list,
-      .checklist {
+      .checklist,
+      .detail-list {
         display: grid;
         gap: 10px;
       }
@@ -396,30 +404,16 @@
         white-space: nowrap;
       }
 
-      .badge.primary, .status-chip.primary, .tag.primary {
-        background: var(--primary-soft);
-        color: var(--primary-strong);
-      }
-
-      .badge.success, .status-chip.success, .tag.success {
-        background: var(--accent-soft);
-        color: #0b7b6d;
-      }
-
-      .badge.warning, .status-chip.warning, .tag.warning {
-        background: var(--warning-soft);
-        color: #9c6705;
-      }
-
-      .badge.danger, .status-chip.danger, .tag.danger {
-        background: var(--danger-soft);
-        color: var(--danger);
-      }
+      .badge.primary, .status-chip.primary, .tag.primary { background: var(--primary-soft); color: var(--primary-strong); }
+      .badge.success, .status-chip.success, .tag.success { background: var(--accent-soft); color: #0b7b6d; }
+      .badge.warning, .status-chip.warning, .tag.warning { background: var(--warning-soft); color: #9c6705; }
+      .badge.danger, .status-chip.danger, .tag.danger { background: var(--danger-soft); color: var(--danger); }
 
       .request-card,
       .partner-card,
       .timeline-card,
-      .panel {
+      .panel,
+      .detail-card {
         padding: 16px;
       }
 
@@ -455,10 +449,7 @@
         resize: vertical;
       }
 
-      .form-grid {
-        grid-template-columns: repeat(2, minmax(0,1fr));
-      }
-
+      .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .full-width { grid-column: 1 / -1; }
 
       .check-item {
@@ -491,25 +482,10 @@
         color: #0b7b6d;
       }
 
-      .check-item.pending .check-icon {
-        background: var(--warning-soft);
-        color: #9c6705;
-      }
-
-      .check-item.review .check-icon {
-        background: var(--danger-soft);
-        color: var(--danger);
-      }
-
-      .check-item.pending .status-chip {
-        background: var(--warning-soft);
-        color: #9c6705;
-      }
-
-      .check-item.review .status-chip {
-        background: var(--danger-soft);
-        color: var(--danger);
-      }
+      .check-item.pending .check-icon { background: var(--warning-soft); color: #9c6705; }
+      .check-item.review .check-icon { background: var(--danger-soft); color: var(--danger); }
+      .check-item.pending .status-chip { background: var(--warning-soft); color: #9c6705; }
+      .check-item.review .status-chip { background: var(--danger-soft); color: var(--danger); }
 
       .partner-card {
         padding: 16px;
@@ -541,10 +517,7 @@
         font-weight: 800;
       }
 
-      .profile-name {
-        font-size: 0.92rem;
-        font-weight: 800;
-      }
+      .profile-name { font-size: 0.92rem; font-weight: 800; }
 
       .mini-meta {
         display: flex;
@@ -590,17 +563,10 @@
         margin-bottom: 4px;
       }
 
-      .amount-box strong {
-        font-size: 0.95rem;
-      }
+      .amount-box strong { font-size: 0.95rem; }
 
-      .timeline-card {
-        margin-top: 12px;
-      }
-
-      .timeline-list {
-        margin-top: 10px;
-      }
+      .timeline-card { margin-top: 12px; }
+      .timeline-list { margin-top: 10px; }
 
       .timeline-row {
         display: flex;
@@ -620,7 +586,6 @@
       }
 
       .timeline-row:last-child::before { display: none; }
-
       .dot {
         width: 24px;
         height: 24px;
@@ -685,7 +650,6 @@
 
       .route-dot.start { left: 18px; top: 56px; }
       .route-dot.end { right: 18px; top: 52px; background: var(--accent); box-shadow: 0 0 0 6px rgba(18,185,164,0.15); }
-
       .route-pin {
         position: absolute;
         left: 48%;
@@ -762,6 +726,76 @@
         padding-bottom: 0;
       }
 
+      .detail-card {
+        margin-top: 14px;
+      }
+
+      .detail-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.76rem;
+      }
+
+      .detail-item:last-child { border-bottom: none; }
+      .detail-item span:first-child { color: var(--muted); }
+
+      .security-box {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #fff, #f8fbff);
+        padding: 14px;
+      }
+
+      .security-score {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary-strong);
+      }
+
+      .meter-box {
+        margin-top: 12px;
+        width: 100%;
+        border-radius: 999px;
+        height: 12px;
+        background: #edf2fb;
+        overflow: hidden;
+      }
+
+      .meter-fill {
+        width: 92%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: inherit;
+      }
+
+      .score-grid {
+        margin-top: 12px;
+      }
+
+      .score-box small {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--muted);
+      }
+
+      .status-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .receipt-box {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: linear-gradient(180deg, #fefefe, #f6faff);
+        padding: 14px;
+      }
+
       .nav-bar {
         position: sticky;
         bottom: 0;
@@ -798,6 +832,56 @@
       .muted { color: var(--muted); }
       .hidden { display: none !important; }
 
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 25, 42, 0.6);
+        z-index: 1000;
+        padding: 20px;
+      }
+
+      .modal.show { display: flex; }
+
+      .modal-card {
+        width: min(100%, 420px);
+        background: white;
+        border-radius: 24px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .close-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--primary-soft);
+        border: none;
+        color: var(--primary-strong);
+        font-size: 1.15rem;
+        font-weight: 700;
+      }
+
+      .modal-body {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .modal-body strong {
+        color: var(--text);
+      }
+
       @media (min-width: 700px) {
         .page-shell { padding-top: 36px; }
         .mobile-frame { width: min(100%, 860px); border-radius: 36px; }
@@ -817,7 +901,7 @@
           </div>
           <div class="secure-status">
             <span class="status-dot"></span>
-            Secure
+            <strong>CHELEA SECURE TRANSACTION</strong>
           </div>
         </header>
 
@@ -1147,6 +1231,23 @@
                   <span class="status-chip success">Offer Selected</span>
                 </div>
 
+                <div class="detail-card">
+                  <div class="detail-item"><span>CHELEA ID</span><strong id="detailId">CHL-2026-000128</strong></div>
+                  <div class="detail-item"><span>Service Type</span><strong id="detailService">Jastip / Personal Delivery</strong></div>
+                  <div class="detail-item"><span>Sender</span><strong>Alex Johnson</strong></div>
+                  <div class="detail-item"><span>Traveler / Delivery Partner</span><strong id="detailPartner">Aulia Rahman</strong></div>
+                  <div class="detail-item"><span>Recipient</span><strong>Bali Customer</strong></div>
+                  <div class="detail-item"><span>Item</span><strong>Skincare product package</strong></div>
+                  <div class="detail-item"><span>Item Category</span><strong>Beauty & Fashion</strong></div>
+                  <div class="detail-item"><span>Item Value</span><strong>Rp 2.500.000</strong></div>
+                  <div class="detail-item"><span>Weight</span><strong>3.5 kg</strong></div>
+                  <div class="detail-item"><span>Origin</span><strong>Jakarta</strong></div>
+                  <div class="detail-item"><span>Destination</span><strong>Bali</strong></div>
+                  <div class="detail-item"><span>Pickup Date</span><strong>2026-10-24</strong></div>
+                  <div class="detail-item"><span>Estimated Delivery</span><strong>2026-10-25</strong></div>
+                  <div class="detail-item"><span>Current Status</span><strong>APPROVED</strong></div>
+                </div>
+
                 <div class="price-summary" style="margin-top:18px;">
                   <div class="price-line"><span>Route</span><strong id="approvedRoute">Jakarta → Bali</strong></div>
                   <div class="price-line"><span>ETA</span><strong id="approvedEta">18 hours</strong></div>
@@ -1155,8 +1256,9 @@
                   <div class="price-line"><span>Estimated Total</span><strong id="approvedTotal">Rp 605.000</strong></div>
                 </div>
 
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" id="approveOfferBtn" type="button" style="width:100%;">APPROVE OFFER</button>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" id="approveOfferBtn" type="button" style="flex:1;">APPROVE OFFER</button>
+                  <button class="ghost-btn" type="button" id="transactionDetailBtn" style="flex:1;">TRANSACTION DETAIL</button>
                 </div>
               </div>
             </div>
@@ -1169,7 +1271,7 @@
               </div>
               <div class="panel">
                 <div class="agreement-box">
-                  <h4>Digital Agreement</h4>
+                  <h4>DIGITAL AGREEMENT</h4>
                   <ul>
                     <li>Sender: Alex / Jakarta</li>
                     <li>Traveler/Partner: <span id="agreementPartner">Aulia Rahman</span></li>
@@ -1183,11 +1285,17 @@
                   </ul>
                 </div>
 
-                <div class="sig-box">Electronic Signature / TTE — DEMO / PROTOTYPE ONLY</div>
+                <div class="detail-card">
+                  <div class="detail-item"><span>Agreement ID</span><strong>AGR-CHL-000128</strong></div>
+                  <div class="detail-item"><span>Status</span><strong>SIGNED — DEMO</strong></div>
+                </div>
+
+                <div class="sig-box">Electronic Signature / TTE — DEMO ONLY</div>
                 <div class="demo-note">Prototype Demo</div>
 
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" id="acceptAgreementBtn" type="button" style="width:100%;">ACCEPT AGREEMENT</button>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" id="acceptAgreementBtn" type="button" style="flex:1;">ACCEPT AGREEMENT</button>
+                  <button class="ghost-btn" type="button" id="viewAgreementBtn" style="flex:1;">VIEW AGREEMENT</button>
                 </div>
               </div>
             </div>
@@ -1206,10 +1314,18 @@
                   <div class="price-line"><span>Escrow Status</span><strong class="status-chip primary">ESCROW LOCKED — DEMO</strong></div>
                 </div>
 
+                <div class="detail-card">
+                  <div class="detail-item"><span>Insurance Protection</span><strong>ACTIVE — DEMO</strong></div>
+                  <div class="detail-item"><span>Escrow Protection</span><strong>LOCKED — DEMO</strong></div>
+                  <div class="detail-item"><span>Digital Agreement</span><strong>SIGNED — DEMO</strong></div>
+                  <div class="detail-item"><span>Handover Verification</span><strong>PENDING</strong></div>
+                </div>
+
                 <div class="demo-note" style="margin-top:18px;">Funds are simulated. No real payment is processed.</div>
 
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" id="confirmEscrowBtn" type="button" style="width:100%;">CONFIRM ESCROW</button>
+                <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="primary-btn" id="confirmEscrowBtn" type="button" style="flex:1;">CONFIRM ESCROW</button>
+                  <button class="ghost-btn" type="button" id="viewProtectionBtn" style="flex:1;">VIEW PROTECTION</button>
                 </div>
               </div>
             </div>
@@ -1228,13 +1344,19 @@
                   <div class="price-line"><span>Proof of Pickup</span><strong>Photo + Timestamp</strong></div>
                 </div>
 
+                <div class="detail-card">
+                  <div class="detail-item"><span>Item checklist</span><strong>Verified</strong></div>
+                  <div class="detail-item"><span>Verification status</span><strong>VERIFIED — DEMO</strong></div>
+                  <div class="detail-item"><span>Timestamp</span><strong>2026-10-24 16:32</strong></div>
+                </div>
+
                 <div class="agreement-box" style="margin-top:18px;">
-                  <h4>Item Checklist</h4>
+                  <h4>PROOF OF PICKUP</h4>
                   <ul>
-                    <li>Item sealed and tagged</li>
-                    <li>Protection wrap verified</li>
-                    <li>Package integrity checked</li>
-                    <li>Receiver information validated</li>
+                    <li>Pickup location: Jakarta Center</li>
+                    <li>Timestamp: 2026-10-24 16:32</li>
+                    <li>Item checklist: sealed, tagged, protected</li>
+                    <li>Verification status: VERIFIED — DEMO</li>
                   </ul>
                 </div>
 
@@ -1278,6 +1400,30 @@
                   </div>
                 </div>
 
+                <div class="detail-card">
+                  <div class="detail-item"><span>Current Location</span><strong>Bandung Stopover</strong></div>
+                  <div class="detail-item"><span>Estimated Arrival</span><strong>2026-10-25 08:15</strong></div>
+                  <div class="detail-item"><span>Delivery Timeline</span><strong>REQUEST → DELIVERY</strong></div>
+                </div>
+
+                <div class="security-box" style="margin-top:18px;">
+                  <div class="section-title" style="color: var(--muted); margin-bottom:12px;">DEMO SECURITY SCORE</div>
+                  <div class="security-score">92 <span style="font-size:0.9rem; color:var(--muted);">/ 100</span></div>
+                  <div class="meter-box"><div class="meter-fill"></div></div>
+                  <div class="score-grid">
+                    <div class="score-box"><small>Identity Verification</small><strong>92%</strong></div>
+                    <div class="score-box"><small>Item Verification</small><strong>94%</strong></div>
+                    <div class="score-box"><small>Route Check</small><strong>90%</strong></div>
+                    <div class="score-box"><small>Country Restriction Check</small><strong>89%</strong></div>
+                    <div class="score-box"><small>Handover Verification</small><strong>93%</strong></div>
+                  </div>
+                  <div class="status-row">
+                    <span class="badge primary">Verification</span>
+                    <span class="badge success">Protection</span>
+                    <span class="badge warning">Tracking</span>
+                  </div>
+                </div>
+
                 <div class="timeline-card">
                   <div class="section-title" style="margin-bottom:10px;">Transaction Timeline</div>
                   <div class="timeline-list" id="timelineList">
@@ -1309,16 +1455,25 @@
               </div>
               <div class="panel">
                 <div class="agreement-box">
-                  <h4>Recipient Information</h4>
+                  <h4>PROOF OF HANDOVER</h4>
                   <ul>
                     <li>Recipient: Nia Wibowo</li>
-                    <li>Delivery Location: Bali Central Drop Point</li>
-                    <li>Handover Verification: <span class="status-chip success">VERIFIED</span></li>
+                    <li>Delivery location: Bali Central Drop Point</li>
+                    <li>Timestamp: 2026-10-25 08:10</li>
                     <li>OTP DEMO: 482109</li>
                     <li>Photo Proof DEMO: Captured</li>
-                    <li>Timestamp DEMO: 18:25</li>
                     <li>Location Verification DEMO: Confirmed</li>
+                    <li>Status: PENDING / VERIFIED</li>
                   </ul>
+                </div>
+
+                <div class="detail-card">
+                  <div class="detail-item"><span>Recipient</span><strong>Nia Wibowo</strong></div>
+                  <div class="detail-item"><span>Delivery Location</span><strong>Bali Central Drop Point</strong></div>
+                  <div class="detail-item"><span>Timestamp</span><strong>2026-10-25 08:10</strong></div>
+                  <div class="detail-item"><span>OTP DEMO</span><strong>482109</strong></div>
+                  <div class="detail-item"><span>Photo Proof DEMO</span><strong>Captured</strong></div>
+                  <div class="detail-item"><span>Location Verification DEMO</span><strong>Confirmed</strong></div>
                 </div>
 
                 <div class="demo-note" style="margin-top:18px;">Prototype and Demo Only</div>
@@ -1351,15 +1506,23 @@
                   </div>
                 </div>
 
-                <div class="price-summary" style="margin-top:18px;">
-                  <div class="price-line"><span>Final Transaction Summary</span><strong>CHEL-2048</strong></div>
-                  <div class="price-line"><span>Demo Escrow Release</span><strong>Rp 605.000</strong></div>
-                  <div class="price-line"><span>Protection Status</span><strong>Active</strong></div>
-                  <div class="price-line"><span>Rating / Review</span><strong>4.9 / Excellent</strong></div>
+                <div class="receipt-box" style="margin-top:18px;">
+                  <div class="section-title" style="margin-bottom:10px; color: var(--muted);">CHELEA TRANSACTION RECEIPT</div>
+                  <div class="detail-item"><span>CHELEA ID</span><strong>CHL-2026-000128</strong></div>
+                  <div class="detail-item"><span>Service</span><strong>Jastip / Personal Delivery</strong></div>
+                  <div class="detail-item"><span>Route</span><strong>Jakarta → Bali</strong></div>
+                  <div class="detail-item"><span>Item</span><strong>Skincare product package</strong></div>
+                  <div class="detail-item"><span>Total Fee</span><strong>Rp 605.000</strong></div>
+                  <div class="detail-item"><span>Protection</span><strong>Rp 85.000</strong></div>
+                  <div class="detail-item"><span>Status</span><strong>COMPLETED</strong></div>
+                  <div class="detail-item"><span>Completion Date</span><strong>2026-10-25</strong></div>
+                  <div class="detail-item"><span>Escrow</span><strong>ESCROW RELEASED — DEMO</strong></div>
                 </div>
 
-                <div style="margin-top:18px; display:flex;">
-                  <button class="primary-btn" type="button" data-go="orders" style="width:100%;">VIEW HISTORY</button>
+                <div style="margin-top:18px; display:flex; flex-wrap:wrap; gap:10px;">
+                  <button class="primary-btn" type="button" id="viewReceiptBtn" style="flex:1;">VIEW RECEIPT</button>
+                  <button class="ghost-btn" type="button" id="downloadReceiptBtn" style="flex:1;">DOWNLOAD RECEIPT — DEMO</button>
+                  <button class="ghost-btn" type="button" id="shareReceiptBtn" style="flex:1;">SHARE RECEIPT — DEMO</button>
                 </div>
               </div>
             </div>
@@ -1442,25 +1605,22 @@
       </div>
     </div>
 
+    <div id="demoModal" class="modal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="modalTitle">Demo</h3>
+          <button class="close-btn" type="button" onclick="closeModal()">×</button>
+        </div>
+        <div id="modalBody" class="modal-body"></div>
+      </div>
+    </div>
+
     <script>
       const state = {
         transactionStep: 0,
         selectedPartner: 'Aulia Rahman',
         selectedService: 'Jastip / Personal Delivery'
       };
-
-      const stepOrder = [
-        'REQUEST',
-        'VERIFY',
-        'MATCH',
-        'APPROVED',
-        'AGREEMENT',
-        'ESCROW',
-        'PICKUP',
-        'DELIVERY',
-        'HANDOVER',
-        'COMPLETED'
-      ];
 
       const screens = [
         'home-screen',
@@ -1485,7 +1645,8 @@
         });
 
         document.querySelectorAll('.nav-item').forEach((btn) => {
-          btn.classList.toggle('active', btn.dataset.screen === name.replace('-screen', ''));
+          const screenName = btn.dataset.screen;
+          btn.classList.toggle('active', screenName === name.replace('-screen', ''));
         });
       }
 
@@ -1501,6 +1662,7 @@
       function createRequest() {
         const service = document.getElementById('serviceType')?.value || state.selectedService;
         state.selectedService = service;
+        document.getElementById('detailService').textContent = service;
         document.getElementById('approvedRoute').textContent = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
         document.getElementById('agreementPartner').textContent = state.selectedPartner;
         state.transactionStep = 1;
@@ -1516,6 +1678,7 @@
         state.selectedPartner = name;
         document.getElementById('approvedPartnerName').textContent = name;
         document.getElementById('agreementPartner').textContent = name;
+        document.getElementById('detailPartner').textContent = name;
 
         const route = `${document.getElementById('origin').value || 'Jakarta'} → ${document.getElementById('destination').value || 'Bali'}`;
         document.getElementById('approvedRoute').textContent = route;
@@ -1550,16 +1713,10 @@
       }
 
       function updateTimeline() {
-        const timelineRows = document.querySelectorAll('#timelineList .timeline-row');
+        const rows = document.querySelectorAll('#timelineList .timeline-row');
         const highlightIndex = Math.min(state.transactionStep, 9);
-
-        timelineRows.forEach((row, idx) => {
+        rows.forEach((row, idx) => {
           row.classList.toggle('active', idx <= highlightIndex - 1);
-          const dot = row.querySelector('.dot');
-          if (dot && idx <= highlightIndex - 1) {
-            dot.style.background = 'var(--accent-soft)';
-            dot.style.color = '#0b7b6d';
-          }
         });
 
         const statusMap = {
@@ -1585,18 +1742,21 @@
         const currentIndex = cycle.indexOf(document.querySelector('.screen.active')?.id || 'tracking-screen');
         const nextIndex = Math.min(currentIndex + 1, cycle.length - 1);
         const next = cycle[nextIndex];
+
         if (next === 'handover-screen') {
           state.transactionStep = 8;
           showScreen('handover-screen');
           updateTimeline();
           return;
         }
+
         if (next === 'completed-screen') {
           state.transactionStep = 9;
           showScreen('completed-screen');
           updateTimeline();
           return;
         }
+
         showScreen(next);
       }
 
@@ -1604,6 +1764,66 @@
         state.transactionStep = 9;
         showScreen('completed-screen');
         updateTimeline();
+      }
+
+      function openModal(title, html) {
+        const modal = document.getElementById('demoModal');
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalBody').innerHTML = html;
+        modal.classList.add('show');
+      }
+
+      function closeModal() {
+        document.getElementById('demoModal').classList.remove('show');
+      }
+
+      function viewProtection() {
+        openModal('CHELEA PROTECTION', `
+          <strong>Insurance Protection:</strong> ACTIVE — DEMO<br>
+          <strong>Escrow Protection:</strong> LOCKED — DEMO<br>
+          <strong>Digital Agreement:</strong> SIGNED — DEMO<br>
+          <strong>Handover Verification:</strong> PENDING<br><br>
+          <strong>Demo coverage:</strong> Item value demo coverage for personal shipment protection.<br>
+          <strong>Insurance provider:</strong> Not connected. Demo only.
+        `);
+      }
+
+      function viewAgreement() {
+        openModal('DIGITAL AGREEMENT', `
+          <strong>Agreement ID:</strong> AGR-CHL-000128<br>
+          <strong>Status:</strong> SIGNED — DEMO<br>
+          <strong>Sender:</strong> Alex Johnson<br>
+          <strong>Partner:</strong> ${state.selectedPartner}<br>
+          <strong>Recipient:</strong> Bali Customer<br>
+          <strong>Item:</strong> Skincare product package<br>
+          <strong>Route:</strong> Jakarta → Bali<br>
+          <strong>Responsibilities:</strong> safe packaging, route compliance, handover verification<br>
+          <strong>Cancellation terms:</strong> valid before pickup confirmation<br>
+          <strong>Handover requirements:</strong> recipient ID + verification photo<br><br>
+          <strong>Electronic Signature / TTE:</strong> DEMO ONLY
+        `);
+      }
+
+      function viewReceipt() {
+        openModal('CHELEA TRANSACTION RECEIPT', `
+          <strong>CHELEA ID:</strong> CHL-2026-000128<br>
+          <strong>Service:</strong> Jastip / Personal Delivery<br>
+          <strong>Route:</strong> Jakarta → Bali<br>
+          <strong>Item:</strong> Skincare product package<br>
+          <strong>Total Fee:</strong> Rp 605.000<br>
+          <strong>Protection:</strong> Rp 85.000<br>
+          <strong>Status:</strong> COMPLETED<br>
+          <strong>Completion Date:</strong> 2026-10-25<br>
+          <strong>Escrow:</strong> ESCROW RELEASED — DEMO
+        `);
+      }
+
+      function downloadReceiptDemo() {
+        openModal('DOWNLOAD RECEIPT — DEMO', '<strong>Demo mode:</strong> No file generation or external download is performed. This is a frontend-only prototype action.');
+      }
+
+      function shareReceiptDemo() {
+        openModal('SHARE RECEIPT — DEMO', '<strong>Demo mode:</strong> Sharing is simulated in the interface only. No external sharing service is connected.');
       }
 
       function bindNavigation() {
@@ -1624,7 +1844,6 @@
             if (target === 'request') showScreen('request-screen');
             if (target === 'tracking') showScreen('tracking-screen');
             if (target === 'handover') showScreen('handover-screen');
-            if (target === 'orders') showScreen('orders-screen');
           });
         });
       }
@@ -1649,6 +1868,30 @@
         document.getElementById('confirmPickupBtn').addEventListener('click', confirmPickup);
         document.getElementById('updateStatusBtn').addEventListener('click', updateDemoStatus);
         document.getElementById('confirmHandoverBtn').addEventListener('click', confirmHandover);
+        document.getElementById('viewProtectionBtn').addEventListener('click', viewProtection);
+        document.getElementById('viewAgreementBtn').addEventListener('click', viewAgreement);
+        document.getElementById('viewReceiptBtn').addEventListener('click', viewReceipt);
+        document.getElementById('downloadReceiptBtn').addEventListener('click', downloadReceiptDemo);
+        document.getElementById('shareReceiptBtn').addEventListener('click', shareReceiptDemo);
+        document.getElementById('transactionDetailBtn').addEventListener('click', () => {
+          openModal('ORDER DETAIL', `
+            <strong>CHELEA ID:</strong> CHL-2026-000128<br>
+            <strong>Service Type:</strong> ${state.selectedService}<br>
+            <strong>Sender:</strong> Alex Johnson<br>
+            <strong>Traveler / Delivery Partner:</strong> ${state.selectedPartner}<br>
+            <strong>Recipient:</strong> Bali Customer<br>
+            <strong>Item:</strong> Skincare product package<br>
+            <strong>Item Category:</strong> Beauty & Fashion<br>
+            <strong>Item Value:</strong> Rp 2.500.000<br>
+            <strong>Weight:</strong> 3.5 kg<br>
+            <strong>Origin:</strong> Jakarta<br>
+            <strong>Destination:</strong> Bali<br>
+            <strong>Pickup Date:</strong> 2026-10-24<br>
+            <strong>Estimated Delivery:</strong> 2026-10-25<br>
+            <strong>Current Status:</strong> APPROVED
+          `);
+        });
+        document.getElementById('viewProtectionBtn').addEventListener('click', viewProtection);
       }
 
       function initDates() {
