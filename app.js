@@ -1,898 +1,2138 @@
 /* =========================================================
-   HOBBIGO V76.8
+   HOBBIGO V77
    AI JOURNEY & EXPERIENCE MARKETPLACE
-========================================================= */
+   APP.JS - FULL
+   ========================================================= */
 
-
-/* =========================================================
-   PRODUCT DATABASE
-   Struktur:
-   id, name, category, location, price, image,
-   lat, lng, provider, rating, duration, capacity,
-   source, description
-========================================================= */
-
-const products = [
-
-  /* =========================
-     HOTELS
-  ========================= */
-
-  [
-    "P01",
-    "Bali Beach Resort",
-    "Hotels",
-    "Bali",
-    850000,
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
-    -8.7486,
-    115.1672,
-    "HobbiGo Hotel Partner",
-    4.6,
-    "1 Night",
-    2,
-    "PARTNER",
-    "Beach resort dekat area Bali Selatan."
-  ],
-
-  [
-    "P02",
-    "Ubud Jungle Resort",
-    "Hotels",
-    "Ubud",
-    1250000,
-    "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=800&q=80",
-    -8.5069,
-    115.2625,
-    "Ubud Local Partner",
-    4.8,
-    "1 Night",
-    2,
-    "PARTNER",
-    "Jungle resort dengan suasana alam."
-  ],
-
-  [
-    "P03",
-    "Seminyak Comfort Hotel",
-    "Hotels",
-    "Seminyak",
-    950000,
-    "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80",
-    -8.6913,
-    115.1686,
-    "HobbiGo Hotel Partner",
-    4.5,
-    "1 Night",
-    2,
-    "PARTNER",
-    "Hotel comfort untuk traveler."
-  ],
-
-
-  /* =========================
-     VILLA
-  ========================= */
-
-  [
-    "P04",
-    "Canggu Private Villa",
-    "Villa",
-    "Canggu",
-    1800000,
-    "https://images.unsplash.com/photo-1582610116397-edb318620f90?auto=format&fit=crop&w=800&q=80",
-    -8.6478,
-    115.1385,
-    "Canggu Villa Partner",
-    4.7,
-    "1 Night",
-    4,
-    "PARTNER",
-    "Private villa untuk family atau group."
-  ],
-
-
-  /* =========================
-     HOME RENTAL
-  ========================= */
-
-  [
-    "P05",
-    "Bali Family Home",
-    "Home Rental",
-    "Denpasar",
-    1100000,
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-    -8.6705,
-    115.2126,
-    "Bali Home Partner",
-    4.5,
-    "1 Night",
-    6,
-    "PARTNER",
-    "Private home untuk keluarga."
-  ],
-
-
-  /* =========================
-     FLIGHTS
-  ========================= */
-
-  [
-    "P07",
-    "Flight Jakarta → Bali",
-    "Flights",
-    "Indonesia",
-    950000,
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
-    -8.7486,
-    115.1672,
-    "Airline Partner",
-    4.5,
-    "1 Flight",
-    1,
-    "API",
-    "Penerbangan CGK → DPS."
-  ],
-
-  [
-    "P08",
-    "Flight Jakarta → Singapore",
-    "Flights",
-    "Singapore",
-    1200000,
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80",
-    1.3644,
-    103.9915,
-    "Airline Partner",
-    4.6,
-    "1 Flight",
-    1,
-    "API",
-    "Penerbangan CGK → SIN."
-  ],
-
-
-  /* =========================
-     VEHICLE
-  ========================= */
-
-  [
-    "P09",
-    "Toyota Alphard Rental",
-    "Cars",
-    "Bali",
-    2500000,
-    "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
-    -8.6738,
-    115.2126,
-    "HobbiGo Vehicle Partner",
-    4.7,
-    "1 Day",
-    6,
-    "PARTNER",
-    "Luxury vehicle dengan driver."
-  ],
-
-  [
-    "P10",
-    "Toyota Innova Rental",
-    "Cars",
-    "Bali",
-    850000,
-    "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
-    -8.6705,
-    115.2126,
-    "Bali Transport Partner",
-    4.6,
-    "1 Day",
-    7,
-    "PARTNER",
-    "MPV untuk family dan group."
-  ],
-
-
-  /* =========================
-     TOUR
-  ========================= */
-
-  [
-    "P11",
-    "Uluwatu Sunset Tour",
-    "Tour",
-    "Uluwatu",
-    650000,
-    "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
-    -8.8291,
-    115.0849,
-    "Bali Tour Partner",
-    4.8,
-    "6 Hours",
-    10,
-    "PARTNER",
-    "Tour Uluwatu dan sunset experience."
-  ],
-
-
-  /* =========================
-     ATTRACTION
-  ========================= */
-
-  [
-    "P12",
-    "Uluwatu Temple",
-    "Attraction",
-    "Uluwatu",
-    150000,
-    "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
-    -8.8291,
-    115.0849,
-    "Local Attraction",
-    4.8,
-    "3 Hours",
-    100,
-    "PARTNER",
-    "Salah satu landmark Bali."
-  ],
-
-
-  /* =========================
-     ACTIVITIES
-  ========================= */
-
-  [
-    "P13",
-    "Morning Yoga Ubud",
-    "Activity",
-    "Ubud",
-    250000,
-    "https://images.unsplash.com/photo-1545205597-3d9d02c29597?auto=format&fit=crop&w=800&q=80",
-    -8.5069,
-    115.2625,
-    "Yoga Partner",
-    4.9,
-    "2 Hours",
-    15,
-    "PARTNER",
-    "Morning yoga dan meditation."
-  ],
-
-  [
-    "P14",
-    "Sunset Yoga Canggu",
-    "Activity",
-    "Canggu",
-    300000,
-    "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
-    -8.6478,
-    115.1385,
-    "Yoga Canggu",
-    4.8,
-    "2 Hours",
-    20,
-    "PARTNER",
-    "Sunset yoga experience."
-  ],
-
-  [
-    "P15",
-    "Bali Diving Experience",
-    "Activity",
-    "Nusa Dua",
-    850000,
-    "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80",
-    -8.8005,
-    115.2312,
-    "Diving Partner",
-    4.9,
-    "4 Hours",
-    12,
-    "PARTNER",
-    "Diving experience untuk traveler."
-  ],
-
-
-  /* =========================
-     RESTAURANT
-  ========================= */
-
-  [
-    "P20",
-    "Jimbaran Seafood Dinner",
-    "Restaurant",
-    "Jimbaran",
-    550000,
-    "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80",
-    -8.7846,
-    115.1627,
-    "Jimbaran Culinary Partner",
-    4.7,
-    "2 Hours",
-    4,
-    "PARTNER",
-    "Seafood dinner experience."
-  ],
-
-  [
-    "P21",
-    "Ubud Local Culinary",
-    "Restaurant",
-    "Ubud",
-    250000,
-    "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=80",
-    -8.5069,
-    115.2625,
-    "Ubud Culinary Partner",
-    4.8,
-    "2 Hours",
-    4,
-    "PARTNER",
-    "Local Balinese culinary experience."
-  ],
-
-
-  /* =========================
-     BOAT
-  ========================= */
-
-  [
-    "P22",
-    "Nusa Penida Boat Transfer",
-    "Boat",
-    "Sanur",
-    450000,
-    "https://images.unsplash.com/photo-1544550285-f813152fb2fd?auto=format&fit=crop&w=800&q=80",
-    -8.7096,
-    115.2625,
-    "Boat Partner",
-    4.6,
-    "45 Minutes",
-    30,
-    "PARTNER",
-    "Fast boat menuju Nusa Penida."
-  ],
-
-
-  /* =========================
-     MEETING POINT
-  ========================= */
-
-  [
-    "P23",
-    "Bali Corporate Meeting Point",
-    "Meeting Point",
-    "Nusa Dua",
-    3500000,
-    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80",
-    -8.8005,
-    115.2312,
-    "Event Partner",
-    4.6,
-    "1 Day",
-    50,
-    "PARTNER",
-    "Meeting dan corporate event venue."
-  ],
-
-
-  /* =========================
-     HOBBY
-  ========================= */
-
-  [
-    "P24",
-    "Bali Cooking Class",
-    "Hobby",
-    "Ubud",
-    450000,
-    "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
-    -8.5069,
-    115.2625,
-    "Cooking Partner",
-    4.9,
-    "3 Hours",
-    12,
-    "PARTNER",
-    "Balinese cooking experience."
-  ]
-
-];
-
-
-/* =========================================================
-   MARKETPLACE CATEGORIES
-========================================================= */
-
-const cats = [
-
-  "All",
-  "Hotels",
-  "Villa",
-  "Home Rental",
-  "Flights",
-  "Cars",
-  "Tour",
-  "Attraction",
-  "Activity",
-  "Hobby",
-  "Restaurant",
-  "Boat",
-  "Meeting Point"
-
-];
-
-let activeCat = "All";
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-let cart =
-  JSON.parse(
-    localStorage.getItem("hbg_cart") || "[]"
-  );
-
-let bookings =
-  JSON.parse(
-    localStorage.getItem("hbg_bookings") || "[]"
-  );
-
+"use strict";
 
 /* =========================================================
    GLOBAL STATE
-========================================================= */
+   ========================================================= */
 
-let mapInstance = null;
+const HBG = {
+  customerType: "personal",
+  planningMode: "ai",
+  packageStyle: "comfort",
+  travelTab: "flights",
+  marketplaceCategory: "All",
+  paymentMethod: "Demo Payment",
+  currentProduct: null,
+  currentBooking: null,
+  selectedCorporatePackage: null,
+  map: null,
+  routeLayer: null,
 
-let routeLayer = null;
+  cart: JSON.parse(localStorage.getItem("hbg_cart") || "[]"),
+  bookings: JSON.parse(localStorage.getItem("hbg_bookings") || "[]"),
 
-let customerType = "Personal";
-
-let planningMode = "AI Plan";
-
-let packageStyle = "Comfort";
-
-let currentTrip = null;
-
+  products: [
+    {
+      id:"HTL001",
+      category:"Hotels",
+      name:"Ocean View Resort Bali",
+      location:"Nusa Dua, Bali",
+      price:1250000,
+      unit:"night",
+      rating:4.8,
+      icon:"🏨",
+      description:"Premium beachfront resort dengan fasilitas lengkap.",
+      tags:["Beach","Family","Luxury"]
+    },
+    {
+      id:"HTL002",
+      category:"Hotels",
+      name:"Ubud Green Hotel",
+      location:"Ubud, Bali",
+      price:850000,
+      unit:"night",
+      rating:4.6,
+      icon:"🏨",
+      description:"Hotel nyaman di kawasan Ubud.",
+      tags:["Nature","Culture","Relax"]
+    },
+    {
+      id:"VIL001",
+      category:"Villa",
+      name:"Jungle Private Villa",
+      location:"Ubud, Bali",
+      price:1850000,
+      unit:"night",
+      rating:4.9,
+      icon:"🏡",
+      description:"Private villa dengan kolam renang dan view hutan.",
+      tags:["Private","Pool","Couple"]
+    },
+    {
+      id:"HOM001",
+      category:"Home Rental",
+      name:"Family Holiday House",
+      location:"Canggu, Bali",
+      price:1400000,
+      unit:"night",
+      rating:4.7,
+      icon:"🏠",
+      description:"Rumah liburan untuk keluarga dan group.",
+      tags:["Family","Group","Kitchen"]
+    },
+    {
+      id:"FLT001",
+      category:"Flights",
+      name:"Jakarta → Bali Economy",
+      location:"CGK → DPS",
+      price:950000,
+      unit:"person",
+      rating:4.5,
+      icon:"✈️",
+      description:"Tiket penerbangan ekonomi.",
+      tags:["Flight","Economy"]
+    },
+    {
+      id:"FLT002",
+      category:"Flights",
+      name:"Jakarta → Bali Business",
+      location:"CGK → DPS",
+      price:2800000,
+      unit:"person",
+      rating:4.8,
+      icon:"✈️",
+      description:"Penerbangan business class.",
+      tags:["Flight","Business"]
+    },
+    {
+      id:"TRN001",
+      category:"Transport",
+      name:"Airport Private Transfer",
+      location:"Bali Airport → Hotel",
+      price:250000,
+      unit:"trip",
+      rating:4.8,
+      icon:"🚐",
+      description:"Private airport transfer.",
+      tags:["Airport","Private"]
+    },
+    {
+      id:"CAR001",
+      category:"Car Rental",
+      name:"Toyota Innova Rental",
+      location:"Bali",
+      price:650000,
+      unit:"day",
+      rating:4.7,
+      icon:"🚙",
+      description:"Rental kendaraan harian.",
+      tags:["Car","Family","Driver"]
+    },
+    {
+      id:"BOA001",
+      category:"Boat",
+      name:"Nusa Penida Boat Trip",
+      location:"Sanur → Nusa Penida",
+      price:450000,
+      unit:"person",
+      rating:4.8,
+      icon:"🚤",
+      description:"Fast boat menuju Nusa Penida.",
+      tags:["Boat","Island","Sea"]
+    },
+    {
+      id:"TOU001",
+      category:"Tour",
+      name:"Bali Heritage Tour",
+      location:"Ubud → Kintamani",
+      price:650000,
+      unit:"person",
+      rating:4.9,
+      icon:"🗺️",
+      description:"Tour budaya dan alam Bali.",
+      tags:["Culture","Nature"]
+    },
+    {
+      id:"ATT001",
+      category:"Attraction",
+      name:"Water Temple Experience",
+      location:"Bali",
+      price:120000,
+      unit:"person",
+      rating:4.7,
+      icon:"🏯",
+      description:"Pengalaman wisata pura air.",
+      tags:["Culture","Photo"]
+    },
+    {
+      id:"ACT001",
+      category:"Activity",
+      name:"Bali Rafting Adventure",
+      location:"Ayung River",
+      price:550000,
+      unit:"person",
+      rating:4.8,
+      icon:"🛶",
+      description:"Aktivitas rafting untuk adventure traveler.",
+      tags:["Adventure","Outdoor"]
+    },
+    {
+      id:"HOB001",
+      category:"Hobby",
+      name:"Bali Photography Experience",
+      location:"Ubud",
+      price:750000,
+      unit:"session",
+      rating:4.9,
+      icon:"📸",
+      description:"Photography experience bersama local guide.",
+      tags:["Photography","Hobby"]
+    },
+    {
+      id:"RES001",
+      category:"Restaurant",
+      name:"Sunset Seafood Dinner",
+      location:"Jimbaran, Bali",
+      price:350000,
+      unit:"person",
+      rating:4.7,
+      icon:"🍽️",
+      description:"Dinner seafood dengan sunset view.",
+      tags:["Culinary","Sunset"]
+    },
+    {
+      id:"RES002",
+      category:"Restaurant",
+      name:"Balinese Royal Dinner",
+      location:"Ubud, Bali",
+      price:475000,
+      unit:"person",
+      rating:4.8,
+      icon:"🍛",
+      description:"Pengalaman makan malam khas Bali.",
+      tags:["Food","Culture"]
+    },
+    {
+      id:"MEE001",
+      category:"Meeting Venue",
+      name:"Bali Executive Meeting Center",
+      location:"Nusa Dua, Bali",
+      price:8500000,
+      unit:"day",
+      rating:4.8,
+      icon:"🏢",
+      description:"Meeting venue untuk corporate event.",
+      tags:["Corporate","Meeting","AV"]
+    },
+    {
+      id:"MEE002",
+      category:"Meeting Venue",
+      name:"Ubud Retreat Venue",
+      location:"Ubud, Bali",
+      price:6500000,
+      unit:"day",
+      rating:4.7,
+      icon:"🌴",
+      description:"Venue retreat dan team building.",
+      tags:["Retreat","Nature","Team"]
+    },
+    {
+      id:"AGT001",
+      category:"Agent",
+      name:"Bali Destination Management",
+      location:"Bali",
+      price:0,
+      unit:"service",
+      rating:4.8,
+      icon:"🤝",
+      description:"Local destination management partner.",
+      tags:["DMC","Corporate"]
+    }
+  ]
+};
 
 /* =========================================================
    HELPERS
-========================================================= */
+   ========================================================= */
 
-function money(n){
-
-  return "Rp " +
-    Number(n || 0).toLocaleString("id-ID");
-
+function $(id){
+  return document.getElementById(id);
 }
 
-
-function save(){
-
-  localStorage.setItem(
-    "hbg_cart",
-    JSON.stringify(cart)
-  );
-
-  localStorage.setItem(
-    "hbg_bookings",
-    JSON.stringify(bookings)
-  );
-
+function qs(selector){
+  return document.querySelector(selector);
 }
 
+function qsa(selector){
+  return [...document.querySelectorAll(selector)];
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function formatIDR(value){
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(Number(value)||0);
+}
+
+function saveState(){
+  localStorage.setItem("hbg_cart",JSON.stringify(HBG.cart));
+  localStorage.setItem("hbg_bookings",JSON.stringify(HBG.bookings));
+}
+
+function showToast(message,type="success"){
+  let container=$("toastContainer");
+
+  if(!container){
+    container=document.createElement("div");
+    container.id="toastContainer";
+    container.className="toast-container";
+    document.body.appendChild(container);
+  }
+
+  const toast=document.createElement("div");
+  toast.className=`toast ${type}`;
+  toast.textContent=message;
+
+  container.appendChild(toast);
+
+  setTimeout(()=>{
+    toast.remove();
+  },3200);
+}
 
 function go(id){
-
-  const el =
-    document.getElementById(id);
+  const el=$(id);
 
   if(el){
-
     el.scrollIntoView({
       behavior:"smooth",
       block:"start"
     });
-
   }
 
+  qsa(".nav button").forEach(btn=>{
+    btn.classList.remove("active");
+  });
 }
 
+function toggleLanguage(){
+  const current=document.documentElement.lang || "en";
 
-function toast(text){
+  document.documentElement.lang=current==="en"?"id":"en";
 
-  const t =
-    document.getElementById("toast");
-
-  if(!t) return;
-
-  t.textContent = text;
-
-  t.style.display = "block";
-
-  clearTimeout(window.hbgToastTimer);
-
-  window.hbgToastTimer =
-    setTimeout(()=>{
-
-      t.style.display = "none";
-
-    },2200);
-
-}
-
-
-function getProduct(id){
-
-  return products.find(
-    p => p[0] === id
+  showToast(
+    current==="en"
+      ? "Language switched to Indonesian"
+      : "Bahasa diubah ke English"
   );
-
 }
 
+function setActive(elements,active){
+  elements.forEach(el=>el.classList.remove("active"));
 
-function productPrice(id){
-
-  const p = getProduct(id);
-
-  return p ? Number(p[4]) : 0;
-
+  if(active){
+    active.classList.add("active");
+  }
 }
 
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
 
-function cartSubtotal(){
+function toggleMobileMenu(){
+  const nav=qs(".nav");
 
-  return cart.reduce(
-    (sum,item)=>
-      sum + productPrice(item.id) * item.qty,
-    0
-  );
+  if(!nav) return;
 
+  const isOpen=nav.style.display==="flex";
+
+  if(isOpen){
+    nav.style.display="";
+  }else{
+    nav.style.display="flex";
+    nav.style.position="absolute";
+    nav.style.top="62px";
+    nav.style.left="0";
+    nav.style.right="0";
+    nav.style.padding="12px";
+    nav.style.flexDirection="column";
+    nav.style.background="#07111f";
+    nav.style.borderBottom="1px solid #203a57";
+  }
 }
 
+/* =========================================================
+   HERO SEARCH
+   ========================================================= */
 
-function cartCount(){
+function heroSearchGo(){
 
-  return cart.reduce(
-    (sum,item)=>sum + item.qty,
-    0
-  );
+  const destination=$("heroDestination")?.value || "";
+  const date=$("heroDate")?.value || "";
+  const travelers=Number($("heroTravelers")?.value || 1);
 
+  if(!destination){
+    showToast("Masukkan tujuan perjalanan terlebih dahulu","error");
+    go("planner");
+    return;
+  }
+
+  if($("tripDestination")){
+    $("tripDestination").value=destination;
+  }
+
+  if($("tripStartDate") && date){
+    $("tripStartDate").value=date;
+  }
+
+  if($("tripTravelers")){
+    $("tripTravelers").value=travelers;
+  }
+
+  go("planner");
+
+  showToast(`AI Planner siap untuk ${destination}`);
+
+  setTimeout(()=>{
+    generateTrip();
+  },400);
 }
-
 
 /* =========================================================
    CUSTOMER TYPE
-========================================================= */
+   ========================================================= */
 
-function selectCustomerType(button,type){
+function selectCustomerType(type,element){
 
-  customerType = type;
+  HBG.customerType=type;
 
-  document
-    .querySelectorAll("#customerTypeChips .chip")
-    .forEach(
-      x => x.classList.remove("active")
-    );
+  const buttons=qsa(".customer-type-btn,.customer-option,[data-customer-type]");
 
-  button.classList.add("active");
+  if(element){
+    setActive(buttons,element);
+  }
 
-  const input =
-    document.getElementById("customerType");
-
-  if(input)
-    input.value = type;
-
-  toast(
-    "Traveler type: " + type
+  showToast(
+    `Mode customer: ${type.charAt(0).toUpperCase()+type.slice(1)}`
   );
-
 }
-
 
 /* =========================================================
-   PLANNING MODE
-========================================================= */
+   TRAVEL TABS
+   ========================================================= */
 
-function selectPlanningMode(button,mode){
+function setTravelTab(tab,element){
 
-  planningMode = mode;
+  HBG.travelTab=tab;
 
-  document
-    .querySelectorAll("#planner .chips .chip")
-    .forEach(
-      x => x.classList.remove("active")
-    );
+  const buttons=qsa(".travel-tab,[data-travel-tab]");
 
-  button.classList.add("active");
+  if(element){
+    setActive(buttons,element);
+  }
 
-  const input =
-    document.getElementById("planningMode");
+  qsa(".travel-form").forEach(form=>{
+    form.classList.add("hidden");
+  });
 
-  if(input)
-    input.value = mode;
+  const target=$(`travel-${tab}`);
 
-  toast(
-    "Planning mode: " + mode
-  );
-
+  if(target){
+    target.classList.remove("hidden");
+  }
 }
 
+/* =========================================================
+   FLIGHT SEARCH
+   ========================================================= */
+
+function searchFlights(){
+
+  const from=$("flightFrom")?.value || "Jakarta";
+  const to=$("flightTo")?.value || "Bali";
+  const departure=$("flightDeparture")?.value || "";
+  const passengers=Number($("flightPassengers")?.value || 1);
+
+  const flights=HBG.products.filter(p=>p.category==="Flights");
+
+  renderSearchResults(
+    flights,
+    `${from} → ${to}`,
+    departure,
+    passengers
+  );
+}
+
+function searchHotels(){
+
+  const destination=$("hotelDestination")?.value || "Bali";
+  const checkin=$("hotelCheckin")?.value || "";
+  const checkout=$("hotelCheckout")?.value || "";
+  const guests=Number($("hotelGuests")?.value || 1);
+
+  const hotels=HBG.products.filter(p=>
+    p.category==="Hotels" ||
+    p.category==="Villa" ||
+    p.category==="Home Rental"
+  );
+
+  renderSearchResults(
+    hotels,
+    destination,
+    `${checkin} → ${checkout}`,
+    guests
+  );
+}
+
+function renderSearchResults(products,title,detail,count){
+
+  const target=$("travelSearchResults");
+
+  if(!target){
+    renderMarketplace(products);
+    go("marketplace");
+    showToast(`Menampilkan hasil untuk ${title}`);
+    return;
+  }
+
+  target.innerHTML=`
+    <div class="card panel">
+      <div class="result-header">
+        <div>
+          <span class="badge">SEARCH RESULT</span>
+          <h3>${escapeHTML(title)}</h3>
+          <p class="section-subtitle">
+            ${escapeHTML(detail || "")}
+            · ${count} traveler
+          </p>
+        </div>
+        <button class="btn btn-secondary btn-sm"
+          onclick="go('marketplace')">
+          Open Marketplace
+        </button>
+      </div>
+
+      <div class="product-grid">
+        ${products.map(productCardHTML).join("")}
+      </div>
+    </div>
+  `;
+
+  target.classList.remove("hidden");
+}
+
+/* =========================================================
+   AI PLANNER
+   ========================================================= */
+
+function selectPlanningMode(mode,element){
+
+  HBG.planningMode=mode;
+
+  const buttons=qsa(".planning-mode-btn,[data-planning-mode]");
+
+  if(element){
+    setActive(buttons,element);
+  }
+
+  showToast(`Planning mode: ${mode.toUpperCase()}`);
+}
+
+function getPlannerData(){
+
+  return {
+    destination:$("tripDestination")?.value || "Bali",
+    startDate:$("tripStartDate")?.value || "",
+    travelers:Number($("tripTravelers")?.value || 2),
+    duration:Number($("tripDuration")?.value || 4),
+    style:$("tripStyle")?.value || "Comfort",
+    interest:$("tripInterest")?.value || "Nature",
+    budget:Number($("tripBudget")?.value || 10000000)
+  };
+}
+
+function generateTrip(){
+
+  const data=getPlannerData();
+
+  const days=Math.max(1,data.duration);
+
+  const hotel=HBG.products.find(p=>p.category==="Hotels");
+  const transfer=HBG.products.find(p=>p.category==="Transport");
+  const tour=HBG.products.find(p=>p.category==="Tour");
+  const restaurant=HBG.products.find(p=>p.category==="Restaurant");
+
+  const hotelCost=(hotel?.price||0)*Math.max(1,days-1);
+  const transferCost=(transfer?.price||0)*2;
+  const tourCost=(tour?.price||0)*data.travelers;
+  const foodCost=(restaurant?.price||0)*data.travelers*2;
+
+  let total=hotelCost+transferCost+tourCost+foodCost;
+
+  total=Math.round(total);
+
+  const result=$("aiTripResult");
+
+  if(!result){
+    showToast(`AI Trip generated: ${formatIDR(total)}`);
+    buildSmartRoute();
+    return;
+  }
+
+  result.innerHTML=`
+    <div class="result-header">
+      <div>
+        <span class="badge">AI GENERATED TRIP</span>
+        <h3>${escapeHTML(data.destination)}</h3>
+        <p class="section-subtitle">
+          ${days} hari · ${data.travelers} traveler ·
+          ${escapeHTML(data.style)} ·
+          ${escapeHTML(data.interest)}
+        </p>
+      </div>
+
+      <div class="price">${formatIDR(total)}</div>
+    </div>
+
+    <div class="route-metrics">
+      <div class="metric">
+        <small>Duration</small>
+        <strong>${days} Days</strong>
+      </div>
+
+      <div class="metric">
+        <small>Travelers</small>
+        <strong>${data.travelers}</strong>
+      </div>
+
+      <div class="metric">
+        <small>Style</small>
+        <strong>${escapeHTML(data.style)}</strong>
+      </div>
+
+      <div class="metric">
+        <small>Budget</small>
+        <strong>${formatIDR(data.budget)}</strong>
+      </div>
+    </div>
+
+    <div class="itinerary">
+
+      ${createItineraryItem(
+        "08:00",
+        "Airport / Hotel Transfer",
+        "Arrival and private transfer"
+      )}
+
+      ${createItineraryItem(
+        "10:30",
+        "Destination Experience",
+        `${data.interest} experience`
+      )}
+
+      ${createItineraryItem(
+        "13:00",
+        "Local Culinary",
+        "Recommended restaurant based on route"
+      )}
+
+      ${createItineraryItem(
+        "15:30",
+        "Main Attraction",
+        "AI-selected attraction"
+      )}
+
+      ${createItineraryItem(
+        "19:00",
+        "Dinner & Relax",
+        "Evening culinary experience"
+      )}
+
+    </div>
+
+    <div class="travel-actions">
+      <button class="btn btn-secondary"
+        onclick="buildSmartRoute()">
+        🗺️ Smart Route
+      </button>
+
+      <button class="btn btn-purple"
+        onclick="aiOptimize()">
+        ✨ AI Re-optimize
+      </button>
+
+      <button class="btn btn-primary"
+        onclick="addAITripToCart()">
+        Add Trip Package
+      </button>
+    </div>
+
+    <div id="routeMap" class="map-box"></div>
+  `;
+
+  result.classList.remove("hidden");
+
+  setTimeout(()=>{
+    initMap();
+  },150);
+
+  showToast("AI Trip berhasil dibuat");
+}
+
+function createItineraryItem(time,title,description){
+
+  return `
+    <div class="itinerary-item">
+      <div class="itinerary-time">${time}</div>
+
+      <div class="itinerary-info">
+        <h4>${escapeHTML(title)}</h4>
+        <p>${escapeHTML(description)}</p>
+      </div>
+
+      <span class="badge">AI</span>
+    </div>
+  `;
+}
+
+function buildSmartRoute(){
+
+  const result=$("aiTripResult");
+
+  if(result){
+    const map=$("routeMap");
+
+    if(map){
+      map.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+    }
+
+    initMap();
+  }
+
+  showToast("Smart Route dioptimalkan");
+}
+
+function aiOptimize(){
+
+  const budget=Number($("tripBudget")?.value || 10000000);
+
+  const totalElement=qs(".ai-result .price");
+
+  if(totalElement){
+
+    const current=parseInt(
+      totalElement.textContent.replace(/[^\d]/g,"")
+    ) || 0;
+
+    const optimized=Math.min(
+      current,
+      Math.round(budget*0.9)
+    );
+
+    totalElement.textContent=formatIDR(optimized);
+  }
+
+  showToast(
+    "AI melakukan re-optimasi berdasarkan budget"
+  );
+}
+
+function addAITripToCart(){
+
+  const data=getPlannerData();
+
+  const price=calculateAITripPrice(data);
+
+  const item={
+    id:"AI-"+Date.now(),
+    category:"AI Trip Package",
+    name:`AI Trip ${data.destination}`,
+    location:data.destination,
+    price:price,
+    quantity:1,
+    icon:"🤖",
+    metadata:data
+  };
+
+  HBG.cart.push(item);
+
+  saveState();
+  updateCartUI();
+
+  showToast("AI Trip Package masuk ke cart");
+}
+
+function calculateAITripPrice(data){
+
+  const hotel=HBG.products.find(p=>p.category==="Hotels");
+  const transfer=HBG.products.find(p=>p.category==="Transport");
+  const tour=HBG.products.find(p=>p.category==="Tour");
+  const restaurant=HBG.products.find(p=>p.category==="Restaurant");
+
+  return Math.round(
+    ((hotel?.price||0)*Math.max(1,data.duration-1)) +
+    ((transfer?.price||0)*2) +
+    ((tour?.price||0)*data.travelers) +
+    ((restaurant?.price||0)*data.travelers*2)
+  );
+}
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
+function initMap(){
+
+  if(typeof L==="undefined"){
+    return;
+  }
+
+  const mapElement=$("routeMap");
+
+  if(!mapElement){
+    return;
+  }
+
+  if(HBG.map){
+    try{
+      HBG.map.remove();
+    }catch(e){}
+  }
+
+  HBG.map=L.map(mapElement).setView(
+    [-8.4095,115.1889],
+    10
+  );
+
+  L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution:"© OpenStreetMap contributors"
+    }
+  ).addTo(HBG.map);
+
+  const points=[
+    [-8.4095,115.1889],
+    [-8.5069,115.2625],
+    [-8.3405,115.0920],
+    [-8.7183,115.1686]
+  ];
+
+  points.forEach((point,index)=>{
+    L.marker(point)
+      .addTo(HBG.map)
+      .bindPopup(`HobbiGo Stop ${index+1}`);
+  });
+
+  HBG.routeLayer=L.polyline(
+    points,
+    {
+      weight:5
+    }
+  ).addTo(HBG.map);
+
+  HBG.map.fitBounds(
+    HBG.routeLayer.getBounds(),
+    {padding:[25,25]}
+  );
+}
+
+/* =========================================================
+   MARKETPLACE
+   ========================================================= */
+
+function filterMarketplace(category,element){
+
+  HBG.marketplaceCategory=category;
+
+  if(element){
+    setActive(
+      qsa(".marketplace-chip,.chip"),
+      element
+    );
+  }
+
+  renderMarketplace();
+}
+
+function getMarketplaceSearch(){
+
+  return (
+    $("marketplaceSearch")?.value ||
+    $("marketSearch")?.value ||
+    ""
+  ).toLowerCase().trim();
+}
+
+function renderMarketplace(customProducts=null){
+
+  let products=customProducts || [...HBG.products];
+
+  const search=getMarketplaceSearch();
+
+  if(!customProducts && HBG.marketplaceCategory!=="All"){
+    products=products.filter(
+      p=>p.category===HBG.marketplaceCategory
+    );
+  }
+
+  if(search){
+    products=products.filter(p=>
+      `${p.name} ${p.location} ${p.category} ${p.description} ${p.tags.join(" ")}`
+      .toLowerCase()
+      .includes(search)
+    );
+  }
+
+  const sort=$("marketplaceSort")?.value || "recommended";
+
+  if(sort==="low"){
+    products.sort((a,b)=>a.price-b.price);
+  }
+
+  if(sort==="high"){
+    products.sort((a,b)=>b.price-a.price);
+  }
+
+  if(sort==="rating"){
+    products.sort((a,b)=>b.rating-a.rating);
+  }
+
+  const grid=$("marketplaceGrid");
+
+  if(!grid){
+    return;
+  }
+
+  if(!products.length){
+    grid.innerHTML=`
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon">🔎</div>
+        <strong>Produk tidak ditemukan</strong>
+        <p>Coba kategori atau kata kunci lain.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML=products.map(productCardHTML).join("");
+}
+
+function productCardHTML(product){
+
+  return `
+    <div class="product-card">
+
+      <div class="product-image">
+        ${product.image
+          ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}">`
+          : escapeHTML(product.icon || "🌍")
+        }
+      </div>
+
+      <div class="product-body">
+
+        <div class="product-category">
+          ${escapeHTML(product.category)}
+        </div>
+
+        <div class="product-title">
+          ${escapeHTML(product.name)}
+        </div>
+
+        <div class="product-location">
+          📍 ${escapeHTML(product.location)}
+        </div>
+
+        <div class="product-price">
+          ${product.price>0
+            ? formatIDR(product.price)
+            : "Contact Partner"
+          }
+          ${product.unit && product.price>0
+            ? `<small style="color:#7890a8"> / ${escapeHTML(product.unit)}</small>`
+            : ""
+          }
+        </div>
+
+        <div class="product-footer">
+
+          <span style="color:#fbbf24;font-size:12px">
+            ★ ${product.rating}
+          </span>
+
+          <button class="btn btn-primary btn-sm"
+            onclick="openProductModal('${product.id}')">
+            View
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+function openProductModal(id){
+
+  const product=HBG.products.find(p=>p.id===id);
+
+  if(!product) return;
+
+  HBG.currentProduct=product;
+
+  const modal=$("productModal");
+
+  if(!modal){
+
+    addDynamicProductModal();
+
+  }
+
+  $("productModalTitle").textContent=product.name;
+
+  $("productModalBody").innerHTML=`
+    <div class="product-image" style="height:220px;border-radius:14px;margin-bottom:18px">
+      ${product.image
+        ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}">`
+        : escapeHTML(product.icon || "🌍")
+      }
+    </div>
+
+    <span class="badge">
+      ${escapeHTML(product.category)}
+    </span>
+
+    <h2 style="margin:12px 0 5px">
+      ${escapeHTML(product.name)}
+    </h2>
+
+    <p class="text-muted">
+      📍 ${escapeHTML(product.location)}
+    </p>
+
+    <p style="margin-top:15px;color:#b6c8d9">
+      ${escapeHTML(product.description)}
+    </p>
+
+    <div class="route-metrics">
+
+      <div class="metric">
+        <small>Rating</small>
+        <strong>★ ${product.rating}</strong>
+      </div>
+
+      <div class="metric">
+        <small>Price</small>
+        <strong>
+          ${product.price>0
+            ? formatIDR(product.price)
+            : "Contact"
+          }
+        </strong>
+      </div>
+
+      <div class="metric">
+        <small>Unit</small>
+        <strong>${escapeHTML(product.unit || "-")}</strong>
+      </div>
+
+      <div class="metric">
+        <small>Booking</small>
+        <strong>Instant</strong>
+      </div>
+
+    </div>
+
+    <div class="option-row mt-20">
+      ${product.tags.map(tag=>
+        `<span class="badge">${escapeHTML(tag)}</span>`
+      ).join("")}
+    </div>
+  `;
+
+  $("productModal").classList.add("show");
+}
+
+function closeProductModal(){
+
+  $("productModal")?.classList.remove("show");
+}
+
+function addProductToCart(){
+
+  if(!HBG.currentProduct){
+    return;
+  }
+
+  addToCart(HBG.currentProduct);
+
+  closeProductModal();
+}
+
+function addToCart(product){
+
+  const existing=HBG.cart.find(
+    item=>item.id===product.id
+  );
+
+  if(existing){
+    existing.quantity=(existing.quantity||1)+1;
+  }else{
+    HBG.cart.push({
+      ...product,
+      quantity:1
+    });
+  }
+
+  saveState();
+  updateCartUI();
+
+  showToast(`${product.name} ditambahkan ke cart`);
+}
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+function openCart(){
+
+  const drawer=$("cartDrawer");
+
+  if(drawer){
+    drawer.classList.add("show");
+  }
+
+  renderCart();
+}
+
+function closeCart(){
+
+  $("cartDrawer")?.classList.remove("show");
+}
+
+function updateCartUI(){
+
+  const count=HBG.cart.reduce(
+    (sum,item)=>sum+(item.quantity||1),
+    0
+  );
+
+  qsa(".cart-count").forEach(el=>{
+    el.textContent=count;
+  });
+
+  renderCart();
+}
+
+function renderCart(){
+
+  const body=$("cartItems");
+
+  if(!body){
+    return;
+  }
+
+  if(!HBG.cart.length){
+
+    body.innerHTML=`
+      <div class="empty-state">
+        <div class="empty-icon">🛒</div>
+        <strong>Cart masih kosong</strong>
+        <p>Tambahkan hotel, flight, tour atau package.</p>
+      </div>
+    `;
+
+  }else{
+
+    body.innerHTML=HBG.cart.map((item,index)=>`
+
+      <div class="cart-item">
+
+        <div class="cart-item-icon">
+          ${escapeHTML(item.icon || "🌍")}
+        </div>
+
+        <div>
+          <strong>${escapeHTML(item.name)}</strong>
+          <div class="text-muted" style="font-size:11px">
+            ${item.quantity||1} ×
+            ${formatIDR(item.price)}
+          </div>
+        </div>
+
+        <button class="btn btn-danger btn-sm"
+          onclick="removeFromCart(${index})">
+          ×
+        </button>
+
+      </div>
+
+    `).join("");
+  }
+
+  const subtotal=cartSubtotal();
+  const fee=Math.round(subtotal*0.05);
+  const total=subtotal+fee;
+
+  if($("cartSubtotal")){
+    $("cartSubtotal").textContent=formatIDR(subtotal);
+  }
+
+  if($("cartFee")){
+    $("cartFee").textContent=formatIDR(fee);
+  }
+
+  if($("cartTotal")){
+    $("cartTotal").textContent=formatIDR(total);
+  }
+}
+
+function cartSubtotal(){
+
+  return HBG.cart.reduce(
+    (sum,item)=>
+      sum+(Number(item.price)||0)*(item.quantity||1),
+    0
+  );
+}
+
+function removeFromCart(index){
+
+  HBG.cart.splice(index,1);
+
+  saveState();
+  updateCartUI();
+
+  showToast("Item dihapus dari cart");
+}
+
+function clearCart(){
+
+  HBG.cart=[];
+
+  saveState();
+  updateCartUI();
+
+  showToast("Cart dikosongkan");
+}
+
+function checkoutCart(){
+
+  if(!HBG.cart.length){
+    showToast("Cart masih kosong","error");
+    return;
+  }
+
+  openBookingModal();
+}
 
 /* =========================================================
    PACKAGE STYLE
-========================================================= */
+   ========================================================= */
 
-function selectPackageStyle(button,style){
+function selectPackageStyle(style,element){
 
-  packageStyle = style;
+  HBG.packageStyle=style;
 
-  document
-    .querySelectorAll("#package .chips .chip")
-    .forEach(
-      x => x.classList.remove("active")
+  if(element){
+    setActive(
+      qsa(".package-style"),
+      element
     );
+  }
 
-  button.classList.add("active");
+  updatePackageSummary();
 
-  const input =
-    document.getElementById("packageStyle");
-
-  if(input)
-    input.value = style;
-
-  toast(
-    "Package style: " + style
-  );
-
+  showToast(`Package style: ${style}`);
 }
 
+function updatePackageSummary(){
 
-/* =========================================================
-   SEARCH TABS
-========================================================= */
+  const subtotal=cartSubtotal();
 
-function switchSearchTab(btn,type){
+  const multiplier={
+    "best-price":.92,
+    "economy":.96,
+    "comfort":1,
+    "exclusive":1.25
+  }[HBG.packageStyle] || 1;
 
-  document
-    .querySelectorAll("#search-hub .tab")
-    .forEach(
-      t => t.classList.remove("active")
-    );
+  const adjusted=Math.round(subtotal*multiplier);
+  const fee=Math.round(adjusted*.05);
+  const total=adjusted+fee;
 
-  btn.classList.add("active");
+  if($("packageSubtotal")){
+    $("packageSubtotal").textContent=formatIDR(adjusted);
+  }
 
-  const hotel =
-    document.getElementById("form-hotel");
+  if($("packageFee")){
+    $("packageFee").textContent=formatIDR(fee);
+  }
 
-  const flight =
-    document.getElementById("form-flight");
+  if($("packageTotal")){
+    $("packageTotal").textContent=formatIDR(total);
+  }
 
-  if(hotel)
-    hotel.style.display =
-      type === "hotel"
-        ? "block"
-        : "none";
-
-  if(flight)
-    flight.style.display =
-      type === "flight"
-        ? "block"
-        : "none";
-
-  const results =
-    document.getElementById("search-results");
-
-  if(results)
-    results.style.display = "none";
-
+  return total;
 }
 
-
 /* =========================================================
-   SEARCH ENGINE
-========================================================= */
+   BOOKING
+   ========================================================= */
 
-function executeNewSearch(type){
+function openBookingModal(){
 
-  const resDiv =
-    document.getElementById("search-results");
+  const modal=$("bookingModal");
 
-  const listDiv =
-    document.getElementById("res-list");
+  if(!modal){
+    addDynamicBookingModal();
+  }
 
-  const title =
-    document.getElementById("res-title");
+  renderBookingSummary();
 
-  if(!resDiv || !listDiv)
+  $("bookingModal").classList.add("show");
+}
+
+function closeBookingModal(){
+
+  $("bookingModal")?.classList.remove("show");
+}
+
+function renderBookingSummary(){
+
+  const target=$("bookingSummary");
+
+  if(!target){
     return;
-
-  let arr = [];
-
-  if(type === "hotel"){
-
-    const destination =
-      (
-        document.getElementById(
-          "hotelDestination"
-        )?.value || ""
-      ).toLowerCase();
-
-    arr =
-      products.filter(p =>
-        p[2] === "Hotels" &&
-        (
-          !destination ||
-          p[3].toLowerCase().includes(destination) ||
-          p[1].toLowerCase().includes(destination)
-        )
-      );
-
-    title.innerText =
-      "Hotel Results";
-
   }
 
-  else{
+  const subtotal=cartSubtotal();
+  const fee=Math.round(subtotal*.05);
+  const total=subtotal+fee;
 
-    arr =
-      products.filter(
-        p => p[2] === "Flights"
-      );
+  target.innerHTML=`
 
-    title.innerText =
-      "Flight Results";
+    <div class="summary-row">
+      <span>Items</span>
+      <strong>${HBG.cart.length}</strong>
+    </div>
 
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <strong>${formatIDR(subtotal)}</strong>
+    </div>
+
+    <div class="summary-row">
+      <span>Service Fee</span>
+      <strong>${formatIDR(fee)}</strong>
+    </div>
+
+    <div class="summary-row total">
+      <span>Total</span>
+      <span>${formatIDR(total)}</span>
+    </div>
+
+  `;
+}
+
+function selectPayment(method,element){
+
+  HBG.paymentMethod=method;
+
+  if(element){
+    setActive(
+      qsa(".payment-option"),
+      element
+    );
   }
 
-
-  resDiv.style.display = "block";
-
-  listDiv.innerHTML =
-    arr.length
-      ? arr.map(renderProductCard).join("")
-      : `
-        <div class="emptyState">
-          <h3>No results found</h3>
-          <p>
-            Coba destination atau kategori lainnya.
-          </p>
-        </div>
-      `;
-
+  showToast(`Payment method: ${method}`);
 }
 
+function completeBooking(){
 
-/* =========================================================
-   MARKETPLACE CHIPS
-========================================================= */
+  if(!HBG.cart.length){
+    showToast("Cart masih kosong","error");
+    return;
+  }
 
-function renderChips(){
+  const name=$("customerName")?.value?.trim();
+  const email=$("customerEmail")?.value?.trim();
+  const phone=$("customerPhone")?.value?.trim();
 
-  const el =
-    document.getElementById("chips");
+  if(!name || !email || !phone){
 
-  if(!el) return;
+    showToast(
+      "Lengkapi nama, email dan nomor telepon",
+      "error"
+    );
 
-  el.innerHTML =
-    cats.map(c => `
+    return;
+  }
 
-      <button
-        class="chip ${activeCat===c ? "active" : ""}"
-        onclick="setCat('${c}')"
-      >
-        ${categoryIcon(c)}
-        ${c}
-      </button>
+  const terms=$("bookingTerms");
 
-    `).join("");
+  if(terms && !terms.checked){
 
-}
+    showToast(
+      "Setujui syarat dan ketentuan terlebih dahulu",
+      "error"
+    );
 
+    return;
+  }
 
-function categoryIcon(category){
+  const subtotal=cartSubtotal();
+  const fee=Math.round(subtotal*.05);
 
-  const icons = {
-
-    "All":"🌐",
-    "Hotels":"🏨",
-    "Villa":"🏡",
-    "Home Rental":"🏠",
-    "Flights":"✈️",
-    "Cars":"🚗",
-    "Tour":"🗺️",
-    "Attraction":"🎯",
-    "Activity":"🎯",
-    "Hobby":"🎨",
-    "Restaurant":"🍜",
-    "Boat":"🚤",
-    "Meeting Point":"🏢"
-
+  const booking={
+    id:"HBG-"+Date.now(),
+    date:new Date().toISOString(),
+    customer:{
+      name,
+      email,
+      phone
+    },
+    payment:HBG.paymentMethod,
+    status:"CONFIRMED",
+    items:[...HBG.cart],
+    subtotal,
+    fee,
+    total:subtotal+fee
   };
 
-  return icons[category] || "•";
+  HBG.bookings.unshift(booking);
 
+  HBG.currentBooking=booking;
+
+  HBG.cart=[];
+
+  saveState();
+
+  updateCartUI();
+
+  closeBookingModal();
+
+  showSuccessModal(booking);
+
+  renderBookings();
+
+  showToast("Booking berhasil dibuat");
 }
 
+function showSuccessModal(booking){
 
-function setCat(c){
+  const modal=$("successModal");
 
-  activeCat = c;
+  if(!modal){
+    addDynamicSuccessModal();
+  }
 
-  renderChips();
+  $("successBookingId").textContent=booking.id;
 
-  renderProducts();
+  $("successBookingTotal").textContent=
+    formatIDR(booking.total);
 
+  $("successModal").classList.add("show");
 }
 
+function closeSuccessModal(){
+
+  $("successModal")?.classList.remove("show");
+}
+
+function printVoucher(){
+
+  if(!HBG.currentBooking){
+    return;
+  }
+
+  const booking=HBG.currentBooking;
+
+  const win=window.open(
+    "",
+    "_blank",
+    "width=800,height=900"
+  );
+
+  if(!win){
+    showToast("Browser memblokir popup","error");
+    return;
+  }
+
+  win.document.write(`
+    <html>
+      <head>
+        <title>HobbiGo Voucher ${booking.id}</title>
+        <style>
+          body{
+            font-family:Arial;
+            padding:40px;
+          }
+          h1{color:#16a085}
+          .box{
+            border:1px solid #ddd;
+            padding:20px;
+            border-radius:12px;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>HOBBIGO</h1>
+        <h2>Booking Confirmation</h2>
+
+        <div class="box">
+
+          <p><b>Booking ID:</b> ${escapeHTML(booking.id)}</p>
+          <p><b>Customer:</b> ${escapeHTML(booking.customer.name)}</p>
+          <p><b>Email:</b> ${escapeHTML(booking.customer.email)}</p>
+          <p><b>Payment:</b> ${escapeHTML(booking.payment)}</p>
+          <p><b>Total:</b> ${formatIDR(booking.total)}</p>
+
+          <hr>
+
+          ${booking.items.map(item=>`
+            <p>
+              ${escapeHTML(item.name)}
+              × ${item.quantity||1}
+            </p>
+          `).join("")}
+
+        </div>
+
+        <script>
+          window.onload=function(){
+            window.print();
+          }
+        <\/script>
+      </body>
+    </html>
+  `);
+
+  win.document.close();
+}
 
 /* =========================================================
-   PRODUCT CARD
-========================================================= */
+   MY TRIP
+   ========================================================= */
 
-function renderProductCard(p){
+function showTripTab(tab,element){
 
-  return `
+  if(element){
+    setActive(
+      qsa(".trip-tab"),
+      element
+    );
+  }
 
-    <div class="card">
+  qsa(".trip-content").forEach(el=>{
+    el.classList.add("hidden");
+  });
 
-      <div
-        class="cardImage"
-        style="
-          background-image:url('${p[5]}')
-        "
-      >
+  const target=$(`trip-${tab}`);
 
-        <span class="tag">
-          ${p[2]}
+  if(target){
+    target.classList.remove("hidden");
+  }
+
+  if(tab==="bookings"){
+    renderBookings();
+  }
+
+  if(tab==="live"){
+    openLiveJourney();
+  }
+}
+
+function renderBookings(){
+
+  const target=$("tripBookings");
+
+  if(!target){
+    return;
+  }
+
+  if(!HBG.bookings.length){
+
+    target.innerHTML=`
+      <div class="empty-state">
+        <div class="empty-icon">🎫</div>
+        <strong>Belum ada booking</strong>
+        <p>Booking perjalanan akan muncul di sini.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  target.innerHTML=HBG.bookings.map(booking=>`
+
+    <div class="booking-card">
+
+      <div class="booking-card-head">
+
+        <div>
+          <span class="badge">BOOKING</span>
+          <h3>${escapeHTML(booking.id)}</h3>
+        </div>
+
+        <span class="status success">
+          ${escapeHTML(booking.status)}
         </span>
 
       </div>
 
+      <p class="text-muted">
+        ${escapeHTML(booking.customer.name)}
+      </p>
 
-      <div class="cardBody">
+      <div class="summary-row">
+        <span>Items</span>
+        <strong>${booking.items.length}</strong>
+      </div>
 
-        <h3>
-          ${p[1]}
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>${formatIDR(booking.total)}</span>
+      </div>
+
+      <div class="travel-actions">
+
+        <button class="btn btn-secondary btn-sm"
+          onclick="viewBooking('${booking.id}')">
+          View Booking
+        </button>
+
+        <button class="btn btn-primary btn-sm"
+          onclick="openLiveJourney()">
+          Live Journey
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+function viewBooking(id){
+
+  const booking=HBG.bookings.find(
+    b=>b.id===id
+  );
+
+  if(!booking){
+    return;
+  }
+
+  HBG.currentBooking=booking;
+
+  showSuccessModal(booking);
+}
+
+/* =========================================================
+   LIVE JOURNEY
+   ========================================================= */
+
+function openLiveJourney(){
+
+  const target=$("liveJourneyContent");
+
+  if(target){
+
+    target.innerHTML=`
+
+      <div class="live-dashboard">
+
+        <div class="live-card">
+
+          <div class="live-status">
+            <span class="live-dot"></span>
+            LIVE JOURNEY
+          </div>
+
+          <div class="next-stop">
+            Ubud Experience
+          </div>
+
+          <div class="eta">
+            ETA 10:35 · AI Route Active
+          </div>
+
+          <div class="travel-actions">
+            <button class="btn btn-primary btn-sm"
+              onclick="buildSmartRoute()">
+              🗺️ View Route
+            </button>
+
+            <button class="btn btn-secondary btn-sm"
+              onclick="aiOptimize()">
+              ✨ Re-optimize
+            </button>
+          </div>
+
+        </div>
+
+        <div class="live-card">
+
+          <div class="live-status">
+            <span class="live-dot"></span>
+            NEXT EXPERIENCE
+          </div>
+
+          <div class="next-stop">
+            Local Culinary
+          </div>
+
+          <div class="eta">
+            Dinner recommendation based on route.
+          </div>
+
+          <div class="travel-actions">
+            <button class="btn btn-purple btn-sm"
+              onclick="go('experience')">
+              Open Experience
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+    target.classList.remove("hidden");
+  }
+
+  showToast("Live Journey aktif");
+}
+
+function addJourneyMedia(){
+
+  showToast(
+    "Media capture siap. Integrasi kamera/cloud storage dapat ditambahkan."
+  );
+}
+
+/* =========================================================
+   JOURNEY VIDEO
+   ========================================================= */
+
+function generateJourneyVideo(){
+
+  const target=$("videoPreview");
+
+  if(target){
+
+    target.innerHTML=`
+
+      <div>
+
+        <div class="play-button">▶</div>
+
+        <h3>AI Journey Video Preview</h3>
+
+        <p class="text-muted">
+          Storyboard perjalanan berhasil dibuat.
+          Video generation API dapat dihubungkan pada tahap berikutnya.
+        </p>
+
+        <div class="travel-actions"
+          style="justify-content:center">
+
+          <button class="btn btn-primary"
+            onclick="shareJourney('link')">
+            Share Preview
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+  showToast("AI Journey Video storyboard berhasil dibuat");
+}
+
+function shareJourney(platform){
+
+  const url=window.location.href;
+
+  if(platform==="link"){
+
+    if(navigator.clipboard){
+
+      navigator.clipboard.writeText(url)
+        .then(()=>{
+          showToast("Journey link berhasil disalin");
+        })
+        .catch(()=>{
+          showToast("Link siap dibagikan");
+        });
+
+    }else{
+      showToast("Link Journey siap dibagikan");
+    }
+
+    return;
+  }
+
+  if(platform==="tiktok"){
+    showToast("TikTok sharing API siap diintegrasikan");
+    return;
+  }
+
+  if(platform==="youtube"){
+    showToast("YouTube sharing API siap diintegrasikan");
+    return;
+  }
+
+  if(platform==="facebook"){
+    showToast("Facebook sharing API siap diintegrasikan");
+  }
+}
+
+/* =========================================================
+   CORPORATE / MICE
+   ========================================================= */
+
+function getCorporateData(){
+
+  return {
+    eventType:$("eventType")?.value || "Meeting",
+    city:$("eventCity")?.value || "Bali",
+    date:$("eventDate")?.value || "",
+    duration:Number($("eventDuration")?.value || 2),
+    participants:Number($("eventParticipants")?.value || 20),
+    budget:Number($("eventBudget")?.value || 50000000),
+    venue:$("eventVenue")?.value || "Hotel",
+    layout:$("eventLayout")?.value || "Theater",
+    food:$("eventFood")?.value || "Indonesian",
+    coffee:$("eventCoffee")?.value || "2x Coffee Break",
+    accommodation:$("eventAccommodation")?.value || "No Accommodation",
+    transport:$("eventTransport")?.value || "Self Arranged",
+    activity:$("eventActivity")?.checked || false,
+    av:$("eventAV")?.checked || false,
+    parking:$("eventParking")?.checked || false,
+    wifi:$("eventWifi")?.checked || false
+  };
+}
+
+function generateCorporateEvent(){
+
+  const data=getCorporateData();
+
+  const participants=Math.max(
+    1,
+    data.participants
+  );
+
+  const duration=Math.max(
+    1,
+    data.duration
+  );
+
+  let venueCost=8500000*duration;
+  let foodCost=350000*participants*duration;
+  let coffeeCost=100000*participants*duration;
+  let transportCost=0;
+
+  if(
+    data.transport!=="Self Arranged" &&
+    data.transport!==""
+  ){
+    transportCost=5000000;
+  }
+
+  let activityCost=data.activity
+    ? 350000*participants
+    : 0;
+
+  let avCost=data.av
+    ? 2500000*duration
+    : 0;
+
+  let accommodationCost=0;
+
+  if(data.accommodation!=="No Accommodation"){
+    accommodationCost=700000*participants;
+  }
+
+  let base=
+    venueCost+
+    foodCost+
+    coffeeCost+
+    transportCost+
+    activityCost+
+    avCost+
+    accommodationCost;
+
+  const best=Math.round(base*.9);
+  const comfort=Math.round(base);
+  const premium=Math.round(base*1.3);
+
+  HBG.selectedCorporatePackage={
+    data,
+    best,
+    comfort,
+    premium
+  };
+
+  const target=$("corporatePackages");
+
+  if(target){
+
+    target.innerHTML=`
+
+      ${corporatePackageHTML(
+        "Best Value",
+        best,
+        data,
+        "best"
+      )}
+
+      ${corporatePackageHTML(
+        "Comfort",
+        comfort,
+        data,
+        "comfort",
+        true
+      )}
+
+      ${corporatePackageHTML(
+        "Premium",
+        premium,
+        data,
+        "premium"
+      )}
+
+    `;
+
+    target.classList.remove("hidden");
+  }
+
+  showToast("Corporate package berhasil dibuat");
+}
+
+function corporatePackageHTML(
+  title,
+  price,
+  data,
+  key,
+  featured=false
+){
+
+  return `
+    <div class="corp-package ${featured?"featured":""}">
+
+      ${featured
+        ? `<span class="badge">AI RECOMMENDED</span>`
+        : ""
+      }
+
+      <h3>${title}</h3>
+
+      <p class="text-muted">
+        ${escapeHTML(data.eventType)}
+        · ${data.participants} pax
+      </p>
+
+      <div class="corp-price">
+        ${formatIDR(price)}
+      </div>
+
+      <ul class="package-list">
+
+        <li>${escapeHTML(data.venue)}</li>
+        <li>${escapeHTML(data.layout)}</li>
+        <li>${escapeHTML(data.food)}</li>
+        <li>${escapeHTML(data.coffee)}</li>
+        <li>${escapeHTML(data.accommodation)}</li>
+        <li>${escapeHTML(data.transport)}</li>
+
+        ${data.activity
+          ? "<li>Team Building / Activity</li>"
+          : ""
+        }
+
+        ${data.av
+          ? "<li>AV Equipment</li>"
+          : ""
+        }
+
+        ${data.parking
+          ? "<li>Parking</li>"
+          : ""
+        }
+
+        ${data.wifi
+          ? "<li>Wi-Fi</li>"
+          : ""
+        }
+
+      </ul>
+
+      <button class="btn btn-primary full"
+        onclick="addEventToCart('${key}')">
+        Add Event Package
+      </button>
+
+    </div>
+  `;
+}
+
+function optimizeCorporateEvent(){
+
+  const budget=Number(
+    $("eventBudget")?.value || 0
+  );
+
+  if(!HBG.selectedCorporatePackage){
+    generateCorporateEvent();
+  }
+
+  const pkg=HBG.selectedCorporatePackage;
+
+  let recommended="comfort";
+  let price=pkg.comfort;
+
+  if(budget>0){
+
+    if(pkg.best<=budget){
+      recommended="best";
+      price=pkg.best;
+    }else if(pkg.comfort<=budget){
+      recommended="comfort";
+      price=pkg.comfort;
+    }else if(pkg.premium<=budget){
+      recommended="premium";
+      price=pkg.premium;
+    }else{
+      recommended="best";
+      price=pkg.best;
+    }
+  }
+
+  showToast(
+    `AI memilih ${recommended} · ${formatIDR(price)}`
+  );
+}
+
+function addEventToCart(style="comfort"){
+
+  if(!HBG.selectedCorporatePackage){
+    generateCorporateEvent();
+  }
+
+  const pkg=HBG.selectedCorporatePackage;
+
+  const price=
+    style==="best"
+      ? pkg.best
+      : style==="premium"
+        ? pkg.premium
+        : pkg.comfort;
+
+  const item={
+    id:"EVENT-"+Date.now(),
+    category:"Corporate Event",
+    name:`${pkg.data.eventType} · ${pkg.data.city}`,
+    location:pkg.data.city,
+    price,
+    quantity:1,
+    icon:"🏢",
+    metadata:{
+      ...pkg.data,
+      package:style
+    }
+  };
+
+  HBG.cart.push(item);
+
+  saveState();
+  updateCartUI();
+
+  showToast("Corporate Event Package masuk ke cart");
+}
+
+/* =========================================================
+   ADMIN
+   ========================================================= */
+
+function adminFeature(feature){
+
+  const messages={
+    products:"Product management module siap dikembangkan.",
+    partners:"Partner onboarding & contract module siap.",
+    bookings:"Booking management module siap.",
+    api:"API integration layer siap untuk provider eksternal.",
+    marketplace:"Marketplace inventory management siap."
+  };
+
+  showToast(
+    messages[feature] ||
+    "Admin feature siap dikembangkan."
+  );
+}
+
+/* =========================================================
+   DYNAMIC MODALS
+   ========================================================= */
+
+function addDynamicProductModal(){
+
+  if($("productModal")){
+    return;
+  }
+
+  const modal=document.createElement("div");
+
+  modal.id="productModal";
+  modal.className="modal-overlay";
+
+  modal.innerHTML=`
+
+    <div class="modal">
+
+      <div class="modal-head">
+
+        <h3 id="productModalTitle">
+          Product Detail
         </h3>
 
-        <p class="muted">
-          <i class="fa-solid fa-location-dot"></i>
-          ${p[3]}
-        </p>
+        <button class="close-btn"
+          onclick="closeProductModal()">
+          ×
+        </button>
 
-        <p class="muted">
-          ⭐ ${p[9] || "-"}
-          &nbsp; • &nbsp;
-          ${p[10] || ""}
-        </p>
+      </div>
 
-        <div class="price">
-          ${money(p[4])}
-        </div>
+      <div class="modal-body"
+        id="productModalBody">
+      </div>
 
-        <small class="muted">
-          Provider: ${p[8] || "HobbiGo"}
-        </small>
+      <div class="modal-footer">
 
-        <div class="cardActions">
+        <button class="btn btn-secondary"
+          onclick="closeProductModal()">
+          Close
+        </button>
 
-          <button
-            class="small"
-            onclick="add('${p[0]}')"
-          >
-            + Add
-          </button>
-
-          <button
-            class="small"
-            onclick="viewProduct('${p[0]}')"
-          >
-            Details
-          </button>
-
-        </div>
+        <button class="btn btn-primary"
+          onclick="addProductToCart()">
+          Add to Cart
+        </button>
 
       </div>
 
@@ -900,2589 +2140,483 @@ function renderProductCard(p){
 
   `;
 
+  document.body.appendChild(modal);
 }
 
+function addDynamicBookingModal(){
 
-/* =========================================================
-   RENDER PRODUCTS
-========================================================= */
-
-function renderProducts(){
-
-  const el =
-    document.getElementById("products");
-
-  if(!el) return;
-
-  const q =
-    (
-      document.getElementById(
-        "marketSearch"
-      )?.value || ""
-    ).toLowerCase();
-
-  let arr =
-    products.filter(p => {
-
-      const categoryMatch =
-        activeCat === "All" ||
-        p[2] === activeCat;
-
-      const searchMatch =
-        p.join(" ")
-          .toLowerCase()
-          .includes(q);
-
-      return categoryMatch &&
-        searchMatch;
-
-    });
-
-
-  const sort =
-    document.getElementById(
-      "sort"
-    )?.value || "default";
-
-
-  if(sort === "low"){
-
-    arr.sort(
-      (a,b) => Number(a[4]) - Number(b[4])
-    );
-
+  if($("bookingModal")){
+    return;
   }
 
-  if(sort === "high"){
+  const modal=document.createElement("div");
 
-    arr.sort(
-      (a,b) => Number(b[4]) - Number(a[4])
-    );
+  modal.id="bookingModal";
+  modal.className="modal-overlay";
 
-  }
+  modal.innerHTML=`
 
+    <div class="modal large">
 
-  el.innerHTML =
-    arr.length
-      ? arr.map(renderProductCard).join("")
-      : `
-        <div class="emptyState">
-          <h3>No product found</h3>
-          <p>
-            Coba ubah pencarian atau kategori.
-          </p>
-        </div>
-      `;
+      <div class="modal-head">
 
+        <h3>Review & Booking</h3>
 
-  updateCart();
-
-}
-
-
-/* =========================================================
-   PRODUCT DETAIL
-========================================================= */
-
-function viewProduct(id){
-
-  const p = getProduct(id);
-
-  if(!p) return;
-
-  openModal(`
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <img
-      src="${p[5]}"
-      style="
-        width:100%;
-        max-height:300px;
-        object-fit:cover;
-        border-radius:15px;
-      "
-    >
-
-    <h2>
-      ${p[1]}
-    </h2>
-
-    <p class="muted">
-      ${p[2]} • ${p[3]}
-    </p>
-
-    <div class="resultGrid">
-
-      <div class="resultStat">
-        <span>Price</span>
-        <b>${money(p[4])}</b>
-      </div>
-
-      <div class="resultStat">
-        <span>Rating</span>
-        <b>⭐ ${p[9]}</b>
-      </div>
-
-      <div class="resultStat">
-        <span>Duration</span>
-        <b>${p[10]}</b>
-      </div>
-
-      <div class="resultStat">
-        <span>Capacity</span>
-        <b>${p[11]}</b>
-      </div>
-
-    </div>
-
-    <div class="notice">
-
-      <b>Provider</b>
-
-      <p>
-        ${p[8]}
-      </p>
-
-      <b>Source</b>
-
-      <p>
-        ${p[12]}
-      </p>
-
-      <p>
-        ${p[13]}
-      </p>
-
-    </div>
-
-    <button
-      class="primary"
-      onclick="
-        add('${p[0]}');
-        closeModal();
-      "
-    >
-      <i class="fa-solid fa-cart-plus"></i>
-      Add to My Cart
-    </button>
-
-  `);
-
-}
-
-
-/* =========================================================
-   CART
-========================================================= */
-
-function add(id){
-
-  const item =
-    cart.find(x => x.id === id);
-
-  if(item){
-
-    item.qty++;
-
-  }else{
-
-    cart.push({
-      id:id,
-      qty:1
-    });
-
-  }
-
-  save();
-
-  updateCart();
-
-  toast("Added to My Cart");
-
-}
-
-
-function removeCartItem(id){
-
-  cart =
-    cart.filter(
-      x => x.id !== id
-    );
-
-  save();
-
-  updateCart();
-
-  openCart();
-
-}
-
-
-function changeQty(id,delta){
-
-  const item =
-    cart.find(
-      x => x.id === id
-    );
-
-  if(!item) return;
-
-  item.qty += delta;
-
-  if(item.qty <= 0){
-
-    cart =
-      cart.filter(
-        x => x.id !== id
-      );
-
-  }
-
-  save();
-
-  updateCart();
-
-  openCart();
-
-}
-
-
-/* =========================================================
-   UPDATE CART
-========================================================= */
-
-function updateCart(){
-
-  const count =
-    cartCount();
-
-  const subtotal =
-    cartSubtotal();
-
-  const final =
-    subtotal * 1.05;
-
-
-  const cartCountEl =
-    document.getElementById(
-      "cartCount"
-    );
-
-  if(cartCountEl)
-    cartCountEl.textContent = count;
-
-
-  const pkgItems =
-    document.getElementById(
-      "pkgItems"
-    );
-
-  if(pkgItems)
-    pkgItems.textContent = count;
-
-
-  const pkgTotal =
-    document.getElementById(
-      "pkgTotal"
-    );
-
-  if(pkgTotal)
-    pkgTotal.textContent =
-      money(subtotal);
-
-
-  const pkgFinal =
-    document.getElementById(
-      "pkgFinal"
-    );
-
-  if(pkgFinal)
-    pkgFinal.textContent =
-      money(final);
-
-
-  const adminCart =
-    document.getElementById(
-      "adminCart"
-    );
-
-  if(adminCart)
-    adminCart.textContent =
-      count;
-
-}
-
-
-/* =========================================================
-   OPEN CART
-========================================================= */
-
-function openCart(){
-
-  const list =
-    cart.map(item => {
-
-      const p =
-        getProduct(item.id);
-
-      if(!p) return "";
-
-      return `
-
-        <div class="summaryItem">
-
-          <span>
-
-            <b>
-              ${p[1]}
-            </b>
-
-            <br>
-
-            <small class="muted">
-              ${p[2]} • ${p[3]}
-            </small>
-
-            <br>
-
-            <button
-              class="small"
-              onclick="changeQty('${item.id}',-1)"
-            >
-              −
-            </button>
-
-            <strong>
-              ${item.qty}
-            </strong>
-
-            <button
-              class="small"
-              onclick="changeQty('${item.id}',1)"
-            >
-              +
-            </button>
-
-            <button
-              class="small"
-              onclick="removeCartItem('${item.id}')"
-            >
-              Remove
-            </button>
-
-          </span>
-
-          <span>
-            ${money(p[4] * item.qty)}
-          </span>
-
-        </div>
-
-      `;
-
-    }).join("");
-
-
-  const subtotal =
-    cartSubtotal();
-
-  const total =
-    subtotal * 1.05;
-
-
-  openModal(`
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <h2>
-      🛒 My Cart
-    </h2>
-
-    ${
-      list ||
-      `
-      <div class="emptyState">
-        <h3>Your cart is empty</h3>
-        <p>
-          Tambahkan hotel, flight,
-          activity atau produk lainnya.
-        </p>
-      </div>
-      `
-    }
-
-
-    ${
-      cart.length
-      ? `
-
-        <div class="summary">
-
-          <div class="summaryItem">
-
-            <b>
-              Subtotal
-            </b>
-
-            <b class="price">
-              ${money(subtotal)}
-            </b>
-
-          </div>
-
-          <div class="summaryItem">
-
-            <span>
-              Service Demo 5%
-            </span>
-
-            <span>
-              ${money(subtotal * .05)}
-            </span>
-
-          </div>
-
-          <div class="summaryItem">
-
-            <b>
-              Estimated Final
-            </b>
-
-            <b class="price">
-              ${money(total)}
-            </b>
-
-          </div>
-
-        </div>
-
-        <button
-          class="primary full-width"
-          onclick="startCheckout()"
-        >
-          Checkout & Pay →
+        <button class="close-btn"
+          onclick="closeBookingModal()">
+          ×
         </button>
 
-      `
-      : ""
-    }
+      </div>
 
-  `);
+      <div class="modal-body">
 
-}
+        <div class="booking-layout">
 
+          <div>
 
-/* =========================================================
-   AI TRIP PLANNER
-========================================================= */
+            <div class="form-grid">
 
-function generateTrip(){
+              <div class="field">
+                <label>Customer Name</label>
+                <input id="customerName"
+                  placeholder="Full name">
+              </div>
 
-  const destination =
-    document.getElementById(
-      "dest"
-    )?.value || "Bali";
+              <div class="field">
+                <label>Email</label>
+                <input id="customerEmail"
+                  type="email"
+                  placeholder="email@example.com">
+              </div>
 
-  const people =
-    Number(
-      document.getElementById(
-        "people"
-      )?.value || 1
-    );
+              <div class="field">
+                <label>Phone</label>
+                <input id="customerPhone"
+                  placeholder="+62">
+              </div>
 
-  const duration =
-    Number(
-      document.getElementById(
-        "duration"
-      )?.value || 3
-    );
+              <div class="field">
+                <label>Company</label>
+                <input id="customerCompany"
+                  placeholder="Optional">
+              </div>
 
-  const style =
-    document.getElementById(
-      "tripStyle"
-    )?.value || packageStyle;
+            </div>
 
-  const interest =
-    document.getElementById(
-      "interest"
-    )?.value || "Beach";
+            <h3 class="mt-20">
+              Payment
+            </h3>
 
+            <div class="payment-options">
 
-  currentTrip = {
+              <button class="payment-option active"
+                onclick="selectPayment('Demo Payment',this)">
+                💳 Demo Payment
+              </button>
 
-    destination,
-    people,
-    duration,
-    style,
-    interest,
-    customerType,
-    planningMode
+              <button class="payment-option"
+                onclick="selectPayment('Bank Transfer',this)">
+                🏦 Bank Transfer
+              </button>
 
-  };
+              <button class="payment-option"
+                onclick="selectPayment('Company Billing',this)">
+                🧾 Company Billing
+              </button>
 
+            </div>
 
-  const recommended =
-    buildAIRecommendations(
-      destination,
-      interest,
-      style,
-      people,
-      duration
-    );
-
-
-  const estimated =
-    recommended.reduce(
-      (sum,p) =>
-        sum + Number(p[4]),
-      0
-    );
-
-
-  const tripResult =
-    document.getElementById(
-      "tripResult"
-    );
-
-
-  if(tripResult){
-
-    tripResult.innerHTML = `
-
-      <div class="result">
-
-        <h3>
-          ✨ AI Recommended Trip:
-          ${destination}
-        </h3>
-
-        <p class="muted">
-
-          ${customerType}
-          •
-          ${planningMode}
-          •
-          ${duration} Days
-          •
-          ${style}
-          •
-          ${interest}
-
-        </p>
-
-
-        <div class="resultGrid">
-
-          <div class="resultStat">
-
-            <span>
-              Travelers
-            </span>
-
-            <b>
-              ${people}
-            </b>
+            <label class="checkbox-row">
+              <input type="checkbox" id="bookingTerms">
+              <span>
+                Saya menyetujui syarat booking, cancellation,
+                refund dan ketentuan HobbiGo.
+              </span>
+            </label>
 
           </div>
 
+          <div class="summary-box">
 
-          <div class="resultStat">
+            <h3>Order Summary</h3>
 
-            <span>
-              Duration
-            </span>
-
-            <b>
-              ${duration} Days
-            </b>
-
-          </div>
-
-
-          <div class="resultStat">
-
-            <span>
-              Interest
-            </span>
-
-            <b>
-              ${interest}
-            </b>
-
-          </div>
-
-
-          <div class="resultStat">
-
-            <span>
-              Estimated
-            </span>
-
-            <b>
-              ${money(estimated * people)}
-            </b>
+            <div id="bookingSummary"
+              class="mt-15">
+            </div>
 
           </div>
 
         </div>
 
+      </div>
 
-        <h4>
-          Recommended Experience
-        </h4>
+      <div class="modal-footer">
+
+        <button class="btn btn-secondary"
+          onclick="closeBookingModal()">
+          Cancel
+        </button>
+
+        <button class="btn btn-primary"
+          onclick="completeBooking()">
+          Confirm & Book
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+}
+
+function addDynamicSuccessModal(){
+
+  if($("successModal")){
+    return;
+  }
+
+  const modal=document.createElement("div");
+
+  modal.id="successModal";
+  modal.className="modal-overlay";
+
+  modal.innerHTML=`
+
+    <div class="modal">
+
+      <div class="modal-head">
+
+        <h3>Booking Success</h3>
+
+        <button class="close-btn"
+          onclick="closeSuccessModal()">
+          ×
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <div class="success-box">
+
+          <div class="success-icon">
+            ✓
+          </div>
+
+          <h2>Booking Confirmed</h2>
+
+          <p class="text-muted mt-10">
+            Perjalanan Anda berhasil dibuat.
+          </p>
+
+          <div class="voucher">
+
+            <div class="text-muted">
+              Booking ID
+            </div>
+
+            <div class="voucher-code"
+              id="successBookingId">
+            </div>
+
+            <div class="summary-row mt-15">
+
+              <span>Total</span>
+
+              <strong id="successBookingTotal">
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button class="btn btn-secondary"
+          onclick="printVoucher()">
+          🖨️ Print Voucher
+        </button>
+
+        <button class="btn btn-primary"
+          onclick="closeSuccessModal()">
+          Done
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+}
+
+/* =========================================================
+   PACKAGE BUILDER UI
+   ========================================================= */
+
+function renderPackageBuilder(){
+
+  const target=$("selectedItems");
+
+  if(!target){
+    return;
+  }
+
+  if(!HBG.cart.length){
+
+    target.innerHTML=`
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <strong>Belum ada komponen</strong>
+        <p>Pilih produk dari Marketplace.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  target.innerHTML=HBG.cart.map((item,index)=>`
+
+    <div class="selected-item">
+
+      <div class="selected-item-info">
+
+        <div class="selected-item-icon">
+          ${escapeHTML(item.icon||"🌍")}
+        </div>
 
         <div>
+          <strong>
+            ${escapeHTML(item.name)}
+          </strong>
 
-          ${
-            recommended
-              .map(
-                p => `
-                  <div class="summaryItem">
-
-                    <span>
-                      ${p[1]}
-                      <small class="muted">
-                        (${p[2]})
-                      </small>
-                    </span>
-
-                    <b>
-                      ${money(p[4])}
-                    </b>
-
-                  </div>
-                `
-              )
-              .join("")
-          }
-
+          <div class="text-muted"
+            style="font-size:11px">
+            ${escapeHTML(item.category)}
+          </div>
         </div>
-
-
-        <button
-          class="primary"
-          onclick="aiAdd()"
-        >
-          Add AI Package to Cart
-        </button>
-
-
-        <button
-          class="secondary"
-          onclick="buildSmartRoute()"
-          style="margin-left:8px;"
-        >
-          <i class="fa-solid fa-route"></i>
-          Build Smart Route
-        </button>
 
       </div>
 
-    `;
+      <strong class="text-primary">
+        ${formatIDR(item.price)}
+      </strong>
 
-  }
+      <button class="btn btn-danger btn-sm"
+        onclick="removeFromCart(${index});renderPackageBuilder();">
+        ×
+      </button>
 
+    </div>
 
-  document.getElementById(
-    "map"
-  ).style.display = "block";
+  `).join("");
 
-
-  buildSmartRoute();
-
-
-  toast(
-    "AI Trip generated"
-  );
-
+  updatePackageSummary();
 }
 
-
 /* =========================================================
-   AI RECOMMENDATION ENGINE
-========================================================= */
+   DOM EVENTS
+   ========================================================= */
 
-function buildAIRecommendations(
-  destination,
-  interest,
-  style,
-  people,
-  duration
-){
+function bindEvents(){
 
-  let result = [];
+  const search=
+    $("marketplaceSearch") ||
+    $("marketSearch");
 
+  if(search){
 
-  /* HOTEL */
-
-  let hotels =
-    products.filter(
-      p =>
-        p[2] === "Hotels" ||
-        p[2] === "Villa" ||
-        p[2] === "Home Rental"
-    );
-
-
-  if(style === "Exclusive"){
-
-    hotels =
-      hotels.sort(
-        (a,b) =>
-          Number(b[4]) -
-          Number(a[4])
-      );
-
-  }else{
-
-    hotels =
-      hotels.sort(
-        (a,b) =>
-          Number(a[4]) -
-          Number(b[4])
-      );
+    search.addEventListener("input",()=>{
+      renderMarketplace();
+    });
 
   }
 
+  const sort=$("marketplaceSort");
 
-  if(hotels.length)
-    result.push(hotels[0]);
+  if(sort){
 
-
-  /* ACTIVITY */
-
-  let activities =
-    products.filter(
-      p =>
-        p[2] === "Activity" ||
-        p[2] === "Hobby"
-    );
-
-
-  if(interest === "Yoga"){
-
-    activities =
-      activities.filter(
-        p =>
-          p[1]
-            .toLowerCase()
-            .includes("yoga")
-      );
+    sort.addEventListener("change",()=>{
+      renderMarketplace();
+    });
 
   }
 
-  if(interest === "Culinary"){
-
-    activities =
-      products.filter(
-        p =>
-          p[2] === "Restaurant"
-      );
-
-  }
-
-  if(interest === "Adventure"){
-
-    activities =
-      activities.filter(
-        p =>
-          p[1]
-            .toLowerCase()
-            .includes("diving")
-      );
-
-  }
-
-
-  if(activities.length)
-    result.push(activities[0]);
-
-
-  /* ATTRACTION */
-
-  const attraction =
-    products.find(
-      p =>
-        p[2] === "Attraction"
-    );
-
-  if(attraction)
-    result.push(attraction);
-
-
-  /* RESTAURANT */
-
-  const restaurant =
-    products.find(
-      p =>
-        p[2] === "Restaurant"
-    );
-
-  if(restaurant)
-    result.push(restaurant);
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   ADD AI PACKAGE
-========================================================= */
-
-function aiAdd(){
-
-  if(!currentTrip){
-
-    generateTrip();
-
-    return;
-
-  }
-
-
-  const recommendations =
-    buildAIRecommendations(
-      currentTrip.destination,
-      currentTrip.interest,
-      currentTrip.style,
-      currentTrip.people,
-      currentTrip.duration
-    );
-
-
-  recommendations.forEach(
-    p => {
-
-      if(
-        !cart.find(
-          x => x.id === p[0]
-        )
-      ){
-
-        cart.push({
-          id:p[0],
-          qty:1
-        });
-
-      }
-
-    }
-  );
-
-
-  save();
-
-  updateCart();
-
-  go("package");
-
-  toast(
-    "AI package added to cart"
-  );
-
-}
-
-
-/* =========================================================
-   SMART ROUTE
-========================================================= */
-
-async function buildSmartRoute(){
-
-  const destination =
-    document.getElementById(
-      "dest"
-    )?.value || "Bali";
-
-
-  const routeProducts =
-    getRouteProducts();
-
-
-  if(!routeProducts.length){
-
-    toast(
-      "Belum ada titik route."
-    );
-
-    return;
-
-  }
-
-
-  const map =
-    document.getElementById(
-      "map"
-    );
-
-
-  if(!map)
-    return;
-
-
-  map.style.display =
-    "block";
-
-
-  if(mapInstance){
-
-    mapInstance.remove();
-
-    mapInstance = null;
-
-  }
-
-
-  mapInstance =
-    L.map(
-      "map"
-    ).setView(
-      [
-        -8.7486,
-        115.1672
-      ],
-      11
-    );
-
-
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      maxZoom:19,
-      attribution:
-        '&copy; OpenStreetMap contributors'
-    }
-  ).addTo(
-    mapInstance
-  );
-
-
-  const coordinates =
-    routeProducts.map(
-      p => [
-        Number(p[6]),
-        Number(p[7])
-      ]
-    );
-
-
-  routeProducts.forEach(
-    (p,index) => {
-
-      L.marker(
-        [
-          Number(p[6]),
-          Number(p[7])
-        ]
-      )
-      .addTo(mapInstance)
-      .bindPopup(`
-        <b>
-          ${index + 1}. ${p[1]}
-        </b>
-        <br>
-        ${p[2]}
-        <br>
-        ${p[3]}
-      `);
-
-    }
-  );
-
-
-  try{
-
-    const coordString =
-      coordinates
-        .map(
-          c => `${c[1]},${c[0]}`
-        )
-        .join(";");
-
-
-    const url =
-      `https://router.project-osrm.org/route/v1/driving/${coordString}?overview=full&geometries=geojson&steps=true`;
-
-
-    const response =
-      await fetch(url);
-
-
-    if(!response.ok)
-      throw new Error(
-        "Routing unavailable"
-      );
-
-
-    const data =
-      await response.json();
-
+  document.addEventListener("click",event=>{
 
     if(
-      data.routes &&
-      data.routes.length
+      event.target.classList.contains("modal-overlay")
     ){
-
-      const route =
-        data.routes[0];
-
-
-      if(routeLayer)
-        routeLayer.remove();
-
-
-      routeLayer =
-        L.geoJSON(
-          route.geometry,
-          {
-            style:{
-              color:"#087f5b",
-              weight:6,
-              opacity:.85
-            }
-          }
-        ).addTo(
-          mapInstance
-        );
-
-
-      mapInstance.fitBounds(
-        routeLayer.getBounds(),
-        {
-          padding:[30,30]
-        }
-      );
-
-
-      const distanceKm =
-        route.distance / 1000;
-
-
-      const minutes =
-        Math.round(
-          route.duration / 60
-        );
-
-
-      updateRouteSummary(
-        distanceKm,
-        minutes,
-        routeProducts.length,
-        "LIVE ROUTE"
-      );
-
-
-    }else{
-
-      fallbackRoute(
-        coordinates,
-        routeProducts
-      );
-
+      event.target.classList.remove("show");
     }
-
-  }catch(error){
-
-    console.warn(
-      "OSRM unavailable:",
-      error
-    );
-
-
-    fallbackRoute(
-      coordinates,
-      routeProducts
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ROUTE PRODUCTS
-========================================================= */
-
-function getRouteProducts(){
-
-  let selected =
-    cart
-      .map(
-        item =>
-          getProduct(item.id)
-      )
-      .filter(Boolean);
-
-
-  if(
-    selected.length >= 2
-  ){
-
-    return selected;
-
-  }
-
-
-  if(currentTrip){
-
-    const rec =
-      buildAIRecommendations(
-        currentTrip.destination,
-        currentTrip.interest,
-        currentTrip.style,
-        currentTrip.people,
-        currentTrip.duration
-      );
-
-    return rec;
-
-  }
-
-
-  return [
-
-    getProduct("P07"),
-    getProduct("P01"),
-    getProduct("P20")
-
-  ].filter(Boolean);
-
-}
-
-
-/* =========================================================
-   FALLBACK ROUTE
-========================================================= */
-
-function fallbackRoute(
-  coordinates,
-  routeProducts
-){
-
-  if(routeLayer)
-    routeLayer.remove();
-
-
-  routeLayer =
-    L.polyline(
-      coordinates,
-      {
-        color:"#087f5b",
-        weight:5,
-        dashArray:"10,10"
-      }
-    ).addTo(
-      mapInstance
-    );
-
-
-  if(coordinates.length){
-
-    mapInstance.fitBounds(
-      routeLayer.getBounds(),
-      {
-        padding:[30,30]
-      }
-    );
-
-  }
-
-
-  let totalDistance = 0;
-
-
-  for(
-    let i=1;
-    i<coordinates.length;
-    i++
-  ){
-
-    totalDistance +=
-      haversine(
-        coordinates[i-1][0],
-        coordinates[i-1][1],
-        coordinates[i][0],
-        coordinates[i][1]
-      );
-
-  }
-
-
-  const estimatedMinutes =
-    Math.round(
-      totalDistance / 35 * 60
-    );
-
-
-  updateRouteSummary(
-    totalDistance,
-    estimatedMinutes,
-    routeProducts.length,
-    "ESTIMATED ROUTE"
-  );
-
-}
-
-
-/* =========================================================
-   HAVERSINE
-========================================================= */
-
-function haversine(
-  lat1,
-  lon1,
-  lat2,
-  lon2
-){
-
-  const R =
-    6371;
-
-  const dLat =
-    (lat2-lat1)
-    * Math.PI / 180;
-
-  const dLon =
-    (lon2-lon1)
-    * Math.PI / 180;
-
-
-  const a =
-    Math.sin(dLat/2) *
-    Math.sin(dLat/2) +
-
-    Math.cos(
-      lat1 * Math.PI / 180
-    ) *
-
-    Math.cos(
-      lat2 * Math.PI / 180
-    ) *
-
-    Math.sin(dLon/2) *
-    Math.sin(dLon/2);
-
-
-  return R *
-    2 *
-    Math.atan2(
-      Math.sqrt(a),
-      Math.sqrt(1-a)
-    );
-
-}
-
-
-/* =========================================================
-   ROUTE SUMMARY
-========================================================= */
-
-function updateRouteSummary(
-  distanceKm,
-  minutes,
-  stops,
-  status
-){
-
-  const distanceText =
-    distanceKm < 1
-      ? distanceKm.toFixed(2) + " km"
-      : distanceKm.toFixed(1) + " km";
-
-
-  const timeText =
-    minutes < 60
-      ? minutes + " min"
-      : Math.floor(minutes/60) +
-        "h " +
-        (minutes%60) +
-        "m";
-
-
-  const distanceEl =
-    document.getElementById(
-      "journeyDistance"
-    );
-
-  const timeEl =
-    document.getElementById(
-      "journeyTime"
-    );
-
-  const stopsEl =
-    document.getElementById(
-      "journeyStops"
-    );
-
-  const statusEl =
-    document.getElementById(
-      "routeStatus"
-    );
-
-
-  if(distanceEl)
-    distanceEl.textContent =
-      distanceText;
-
-  if(timeEl)
-    timeEl.textContent =
-      timeText;
-
-  if(stopsEl)
-    stopsEl.textContent =
-      stops;
-
-  if(statusEl)
-    statusEl.textContent =
-      status;
-
-
-  const summary =
-    document.getElementById(
-      "routeSummary"
-    );
-
-
-  if(summary){
-
-    summary.innerHTML = `
-
-      <div class="routeInfo">
-
-        <div class="routeBox">
-
-          <small>
-            Distance
-          </small>
-
-          <strong>
-            ${distanceText}
-          </strong>
-
-        </div>
-
-        <div class="routeBox">
-
-          <small>
-            Travel Time
-          </small>
-
-          <strong>
-            ${timeText}
-          </strong>
-
-        </div>
-
-        <div class="routeBox">
-
-          <small>
-            Stops
-          </small>
-
-          <strong>
-            ${stops}
-          </strong>
-
-        </div>
-
-      </div>
-
-      <div
-        class="notice"
-        style="margin-top:12px;"
-      >
-
-        <b>
-          Smart Route Status:
-        </b>
-
-        ${status}
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-/* =========================================================
-   BUDGET ENGINE
-========================================================= */
-
-function checkBudget(){
-
-  const budget =
-    Number(
-      document.getElementById(
-        "budgetInput"
-      )?.value || 0
-    );
-
-
-  const status =
-    document.getElementById(
-      "budgetStatus"
-    );
-
-
-  if(!status)
-    return;
-
-
-  if(!budget){
-
-    status.textContent =
-      "Masukkan target budget.";
-
-    return;
-
-  }
-
-
-  const total =
-    cartSubtotal() * 1.05;
-
-
-  if(total <= budget){
-
-    status.innerHTML =
-      `
-      ✅ Within budget
-      <br>
-      ${money(
-        budget-total
-      )}
-      remaining
-      `;
-
-  }else{
-
-    status.innerHTML =
-      `
-      ⚠️ Over budget
-      <br>
-      ${money(
-        total-budget
-      )}
-      above target
-      `;
-
-  }
-
-}
-
-
-/* =========================================================
-   AI RE-OPTIMIZATION
-========================================================= */
-
-function aiOptimize(){
-
-  const budget =
-    Number(
-      document.getElementById(
-        "budgetInput"
-      )?.value || 0
-    );
-
-
-  if(!budget){
-
-    toast(
-      "Masukkan target budget terlebih dahulu."
-    );
-
-    return;
-
-  }
-
-
-  let total =
-    cartSubtotal() * 1.05;
-
-
-  if(total <= budget){
-
-    checkBudget();
-
-    toast(
-      "Package sudah sesuai budget."
-    );
-
-    return;
-
-  }
-
-
-  /* Remove expensive optional items first */
-
-  const sorted =
-    [...cart]
-      .sort(
-        (a,b) =>
-          productPrice(b.id) -
-          productPrice(a.id)
-      );
-
-
-  for(
-    const item of sorted
-  ){
-
-    if(total <= budget)
-      break;
-
-
-    const index =
-      cart.findIndex(
-        x => x.id === item.id
-      );
-
-
-    if(index >= 0){
-
-      cart.splice(
-        index,
-        1
-      );
-
-    }
-
-
-    total =
-      cartSubtotal() * 1.05;
-
-  }
-
-
-  save();
-
-  updateCart();
-
-  checkBudget();
-
-  toast(
-    "AI package berhasil dioptimalkan."
-  );
-
-}
-
-
-/* =========================================================
-   CHECKOUT
-========================================================= */
-
-function startCheckout(){
-
-  if(!cart.length){
-
-    toast(
-      "Cart masih kosong."
-    );
-
-    return;
-
-  }
-
-
-  const subtotal =
-    cartSubtotal();
-
-
-  const total =
-    subtotal * 1.05;
-
-
-  const trxId =
-    "HBG-" +
-    Date.now()
-      .toString()
-      .slice(-8);
-
-
-  const qrUrl =
-    `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PAY-${trxId}-${total}`;
-
-
-  openModal(`
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <h2>
-      💳 Pembayaran HobbiGo
-    </h2>
-
-    <p class="muted">
-      Demo payment gateway.
-      Integrasi payment provider dilakukan
-      pada tahap production.
-    </p>
-
-    <div style="
-      text-align:center;
-      margin:20px 0;
-    ">
-
-      <img
-        src="${qrUrl}"
-        style="
-          border-radius:10px;
-          border:2px solid #087f5b;
-          width:200px;
-        "
-      >
-
-    </div>
-
-
-    <div class="summary">
-
-      <div class="summaryItem">
-
-        <b>
-          ID Transaksi
-        </b>
-
-        <span>
-          ${trxId}
-        </span>
-
-      </div>
-
-      <div class="summaryItem">
-
-        <b>
-          Total
-        </b>
-
-        <b class="price">
-          ${money(total)}
-        </b>
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="primary full-width"
-      onclick="
-        simulatePayment(
-          '${trxId}',
-          ${total}
-        )
-      "
-    >
-      ✅ Simulasi Pembayaran Sukses
-    </button>
-
-  `);
-
-}
-
-
-/* =========================================================
-   PAYMENT
-========================================================= */
-
-function simulatePayment(
-  trxId,
-  total
-){
-
-  const qrVerify =
-    `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=VERIFIED-${trxId}`;
-
-
-  const items =
-    cart.map(
-      i => {
-
-        const p =
-          getProduct(i.id);
-
-        if(!p)
-          return "";
-
-        return `
-
-          <div class="receipt-row">
-
-            <span>
-              ${p[1]}
-              × ${i.qty}
-            </span>
-
-            <span>
-              ${money(
-                p[4] * i.qty
-              )}
-            </span>
-
-          </div>
-
-        `;
-
-      }
-    ).join("");
-
-
-  bookings.unshift({
-
-    no:trxId,
-
-    total:total,
-
-    date:
-      new Date()
-        .toLocaleDateString(
-          "id-ID"
-        ),
-
-    status:"PAID",
-
-    customerType,
-
-    planningMode,
-
-    packageStyle,
-
-    items:
-      [...cart]
 
   });
-
-
-  save();
-
-
-  cart = [];
-
-  save();
-
-  updateCart();
-
-  renderAccount();
-
-
-  openModal(`
-
-    <div
-      id="print-area"
-      style="
-        background:#fff;
-        color:#000;
-        padding:20px;
-        border-radius:10px;
-      "
-    >
-
-      <div
-        style="
-          text-align:center;
-          border-bottom:2px dashed #ccc;
-          padding-bottom:10px;
-          margin-bottom:10px;
-        "
-      >
-
-        <h2
-          style="
-            color:#087f5b;
-            margin:0;
-          "
-        >
-          HobbiGo E-Ticket
-        </h2>
-
-        <small>
-          Bukti Pembayaran Demo
-        </small>
-
-      </div>
-
-
-      <div class="receipt-row">
-
-        <b>
-          ID Transaksi
-        </b>
-
-        <span>
-          ${trxId}
-        </span>
-
-      </div>
-
-
-      <div class="receipt-row">
-
-        <b>
-          Tanggal
-        </b>
-
-        <span>
-          ${new Date().toLocaleString(
-            "id-ID"
-          )}
-        </span>
-
-      </div>
-
-
-      <div class="receipt-row">
-
-        <b>
-          Traveler Type
-        </b>
-
-        <span>
-          ${customerType}
-        </span>
-
-      </div>
-
-
-      <div class="receipt-row">
-
-        <b>
-          Status
-        </b>
-
-        <span
-          style="
-            color:green;
-            font-weight:bold;
-          "
-        >
-          LUNAS
-        </span>
-
-      </div>
-
-
-      <hr
-        style="
-          border-top:1px solid #ccc;
-          margin:10px 0;
-        "
-      >
-
-
-      ${items}
-
-
-      <hr
-        style="
-          border-top:1px solid #ccc;
-          margin:10px 0;
-        "
-      >
-
-
-      <div
-        class="receipt-row"
-        style="
-          font-size:18px;
-          font-weight:bold;
-        "
-      >
-
-        <b>
-          Total
-        </b>
-
-        <span>
-          ${money(total)}
-        </span>
-
-      </div>
-
-
-      <div
-        style="
-          text-align:center;
-          margin-top:20px;
-        "
-      >
-
-        <img
-          src="${qrVerify}"
-          style="width:120px;"
-        >
-
-        <p
-          style="
-            font-size:10px;
-            color:#666;
-          "
-        >
-          Tunjukkan E-Ticket ini saat check-in.
-        </p>
-
-      </div>
-
-    </div>
-
-
-    <button
-      class="primary full-width"
-      style="margin-top:15px;"
-      onclick="printTicket()"
-    >
-      <i class="fa-solid fa-print"></i>
-      Cetak Faktur
-    </button>
-
-
-    <button
-      class="secondary full-width"
-      style="margin-top:10px;"
-      onclick="
-        closeModal();
-        go('account');
-      "
-    >
-      Lihat My Trips
-    </button>
-
-  `);
-
-
-  toast(
-    "Payment berhasil — E-Ticket dibuat."
-  );
-
 }
-
 
 /* =========================================================
-   PRINT TICKET
-========================================================= */
+   DEFAULT DATE
+   ========================================================= */
 
-function printTicket(){
+function setDefaultDates(){
 
-  const printArea =
-    document.getElementById(
-      "print-area"
-    );
+  const today=new Date();
 
-  if(!printArea)
-    return;
+  const plusDays=(days)=>{
+    const date=new Date(today);
+    date.setDate(date.getDate()+days);
 
-
-  const printContent =
-    printArea.innerHTML;
-
-
-  const originalContent =
-    document.body.innerHTML;
-
-
-  document.body.innerHTML =
-    printContent;
-
-
-  window.print();
-
-
-  document.body.innerHTML =
-    originalContent;
-
-
-  location.reload();
-
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-function openModal(html){
-
-  const modal =
-    document.getElementById(
-      "modal"
-    );
-
-  const box =
-    document.getElementById(
-      "modalBox"
-    );
-
-
-  if(!modal || !box)
-    return;
-
-
-  box.innerHTML =
-    html;
-
-
-  modal.classList.add(
-    "show"
-  );
-
-}
-
-
-function closeModal(){
-
-  const modal =
-    document.getElementById(
-      "modal"
-    );
-
-  if(modal)
-    modal.classList.remove(
-      "show"
-    );
-
-}
-
-
-/* =========================================================
-   ACCOUNT / MY TRIPS
-========================================================= */
-
-function renderAccount(){
-
-  const el =
-    document.getElementById(
-      "accountContent"
-    );
-
-  if(!el)
-    return;
-
-
-  if(!bookings.length){
-
-    el.innerHTML = `
-
-      <div class="emptyState">
-
-        <h3>
-          No trips yet.
-        </h3>
-
-        <p>
-          Booking perjalanan Anda
-          akan muncul di sini.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  el.innerHTML =
-    bookings.map(
-      b => `
-
-        <div class="tripCard">
-
-          <div class="tripCardHeader">
-
-            <div>
-
-              <b>
-                ${b.no}
-              </b>
-
-              <br>
-
-              <small class="muted">
-                ${b.date}
-              </small>
-
-            </div>
-
-            <span class="tripStatus">
-              ${b.status || "CONFIRMED"}
-            </span>
-
-          </div>
-
-
-          <div
-            class="summary"
-            style="margin-bottom:0;"
-          >
-
-            <div class="summaryItem">
-
-              <span>
-                Traveler Type
-              </span>
-
-              <b>
-                ${b.customerType || "-"}
-              </b>
-
-            </div>
-
-            <div class="summaryItem">
-
-              <span>
-                Package
-              </span>
-
-              <b>
-                ${b.packageStyle || "-"}
-              </b>
-
-            </div>
-
-            <div class="summaryItem">
-
-              <span>
-                Total
-              </span>
-
-              <b class="price">
-                ${money(b.total)}
-              </b>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      `
-    ).join("");
-
-}
-
-
-/* =========================================================
-   LIVE JOURNEY
-========================================================= */
-
-function openLiveJourney(){
-
-  openModal(`
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <h2>
-      📍 Live Journey
-    </h2>
-
-    <p class="muted">
-      Modul Live Journey HobbiGo.
-    </p>
-
-    <div class="notice">
-
-      <b>
-        Journey Status
-      </b>
-
-      <p>
-        Ready
-      </p>
-
-    </div>
-
-
-    <div class="routeInfo">
-
-      <div class="routeBox">
-        <small>Destination</small>
-        <strong>
-          ${
-            currentTrip?.destination ||
-            "Your Trip"
-          }
-        </strong>
-      </div>
-
-      <div class="routeBox">
-        <small>Route</small>
-        <strong>
-          Smart Route
-        </strong>
-      </div>
-
-      <div class="routeBox">
-        <small>Status</small>
-        <strong>
-          READY
-        </strong>
-      </div>
-
-    </div>
-
-    <p class="muted">
-      Integrasi GPS/live location dan
-      real-time journey tracking akan
-      masuk pada tahap Live Journey.
-    </p>
-
-  `);
-
-}
-
-
-/* =========================================================
-   AI JOURNEY VIDEO
-========================================================= */
-
-function openJourneyVideo(){
-
-  openModal(`
-
-    <button
-      class="close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
-
-    <h2>
-      🎬 AI Journey Video
-    </h2>
-
-    <p class="muted">
-      Konsep generative travel video HobbiGo.
-    </p>
-
-
-    <div class="notice">
-
-      Destination
-      <br>↓<br>
-
-      Itinerary
-      <br>↓<br>
-
-      Scene
-      <br>↓<br>
-
-      Narration
-      <br>↓<br>
-
-      Cost
-      <br>↓<br>
-
-      AI Journey Video
-
-    </div>
-
-
-    <button
-      class="primary"
-      onclick="
-        toast('AI Journey Video module siap dikembangkan.');
-      "
-    >
-      Generate Concept
-    </button>
-
-  `);
-
-}
-
-
-/* =========================================================
-   SHARE JOURNEY
-========================================================= */
-
-function shareJourney(){
-
-  const shareData = {
-
-    title:
-      "My HobbiGo Journey",
-
-    text:
-      "My journey planned with HobbiGo."
-
+    return date.toISOString().split("T")[0];
   };
 
+  const start=$("tripStartDate");
 
-  if(
-    navigator.share
-  ){
-
-    navigator
-      .share(
-        shareData
-      )
-      .catch(
-        ()=>{}
-      );
-
-  }else{
-
-    toast(
-      "Share Journey siap diintegrasikan."
-    );
-
+  if(start && !start.value){
+    start.value=plusDays(7);
   }
 
-}
+  const heroDate=$("heroDate");
 
-
-/* =========================================================
-   ADMIN
-========================================================= */
-
-function adminFeature(category){
-
-  toast(
-    category +
-    " Partner Management siap dikembangkan."
-  );
-
-}
-
-
-function updateAdmin(){
-
-  const productEl =
-    document.getElementById(
-      "adminProducts"
-    );
-
-  const cartEl =
-    document.getElementById(
-      "adminCart"
-    );
-
-  const bookingEl =
-    document.getElementById(
-      "adminBookings"
-    );
-
-
-  if(productEl)
-    productEl.textContent =
-      products.length;
-
-  if(cartEl)
-    cartEl.textContent =
-      cartCount();
-
-  if(bookingEl)
-    bookingEl.textContent =
-      bookings.length;
-
-}
-
-
-/* =========================================================
-   HERO SEARCH
-========================================================= */
-
-function heroSearchGo(){
-
-  const value =
-    document.getElementById(
-      "heroSearch"
-    )?.value.trim();
-
-
-  if(value){
-
-    const dest =
-      document.getElementById(
-        "dest"
-      );
-
-    if(dest)
-      dest.value =
-        value;
-
+  if(heroDate && !heroDate.value){
+    heroDate.value=plusDays(7);
   }
 
+  const flightDeparture=$("flightDeparture");
 
-  go("planner");
-
-}
-
-
-/* =========================================================
-   CLOSE MODAL WHEN CLICK OUTSIDE
-========================================================= */
-
-document.addEventListener(
-  "click",
-  function(e){
-
-    const modal =
-      document.getElementById(
-        "modal"
-      );
-
-    if(
-      modal &&
-      e.target === modal
-    ){
-
-      closeModal();
-
-    }
-
+  if(flightDeparture && !flightDeparture.value){
+    flightDeparture.value=plusDays(7);
   }
-);
 
+  const hotelCheckin=$("hotelCheckin");
+
+  if(hotelCheckin && !hotelCheckin.value){
+    hotelCheckin.value=plusDays(7);
+  }
+
+  const hotelCheckout=$("hotelCheckout");
+
+  if(hotelCheckout && !hotelCheckout.value){
+    hotelCheckout.value=plusDays(10);
+  }
+
+  const eventDate=$("eventDate");
+
+  if(eventDate && !eventDate.value){
+    eventDate.value=plusDays(30);
+  }
+}
 
 /* =========================================================
    INITIALIZATION
-========================================================= */
+   ========================================================= */
 
 function initHobbiGo(){
 
-  /* Date */
+  setDefaultDates();
 
-  const today =
-    new Date()
-      .toISOString()
-      .slice(0,10);
+  bindEvents();
 
+  renderMarketplace();
 
-  const date =
-    document.getElementById(
-      "date"
-    );
+  updateCartUI();
 
-  const flightDate =
-    document.getElementById(
-      "flightDate"
-    );
+  renderBookings();
 
-  const checkin =
-    document.getElementById(
-      "hotelCheckin"
-    );
+  renderPackageBuilder();
 
+  addDynamicProductModal();
+  addDynamicBookingModal();
+  addDynamicSuccessModal();
 
-  if(date && !date.value)
-    date.value =
-      today;
-
-  if(
-    flightDate &&
-    !flightDate.value
-  )
-    flightDate.value =
-      today;
-
-  if(
-    checkin &&
-    !checkin.value
-  )
-    checkin.value =
-      today;
-
-
-  /* Marketplace */
-
-  renderChips();
-
-  renderProducts();
-
-
-  /* Cart */
-
-  updateCart();
-
-
-  /* Account */
-
-  renderAccount();
-
-
-  /* Admin */
-
-  updateAdmin();
-
-
-  /* Budget */
-
-  const budgetInput =
-    document.getElementById(
-      "budgetInput"
-    );
-
-  if(budgetInput){
-
-    budgetInput.addEventListener(
-      "input",
-      checkBudget
-    );
-
+  if($("successModal")){
+    $("successModal").classList.remove("show");
   }
 
+  if($("bookingModal")){
+    $("bookingModal").classList.remove("show");
+  }
 
-  /* Default route status */
+  if($("productModal")){
+    $("productModal").classList.remove("show");
+  }
 
-  const routeStatus =
-    document.getElementById(
-      "routeStatus"
-    );
-
-  if(routeStatus)
-    routeStatus.textContent =
-      "Ready";
-
-
-  console.log(
-    "HobbiGo V76.8 initialized."
-  );
-
+  showToast("HobbiGo V77 siap digunakan");
 }
 
+/* =========================================================
+   GLOBAL WINDOW EXPORT
+   ========================================================= */
+
+window.go=go;
+window.toggleLanguage=toggleLanguage;
+window.openCart=openCart;
+window.closeCart=closeCart;
+window.toggleMobileMenu=toggleMobileMenu;
+window.heroSearchGo=heroSearchGo;
+
+window.selectCustomerType=selectCustomerType;
+window.setTravelTab=setTravelTab;
+window.searchFlights=searchFlights;
+window.searchHotels=searchHotels;
+
+window.selectPlanningMode=selectPlanningMode;
+window.generateTrip=generateTrip;
+window.buildSmartRoute=buildSmartRoute;
+window.aiOptimize=aiOptimize;
+window.addAITripToCart=addAITripToCart;
+
+window.filterMarketplace=filterMarketplace;
+window.renderMarketplace=renderMarketplace;
+window.openProductModal=openProductModal;
+window.closeProductModal=closeProductModal;
+window.addProductToCart=addProductToCart;
+
+window.removeFromCart=removeFromCart;
+window.clearCart=clearCart;
+window.checkoutCart=checkoutCart;
+
+window.selectPackageStyle=selectPackageStyle;
+window.updatePackageSummary=updatePackageSummary;
+
+window.selectPayment=selectPayment;
+window.completeBooking=completeBooking;
+window.openBookingModal=openBookingModal;
+window.closeBookingModal=closeBookingModal;
+window.printVoucher=printVoucher;
+window.closeSuccessModal=closeSuccessModal;
+
+window.showTripTab=showTripTab;
+window.openLiveJourney=openLiveJourney;
+window.addJourneyMedia=addJourneyMedia;
+
+window.generateJourneyVideo=generateJourneyVideo;
+window.shareJourney=shareJourney;
+
+window.generateCorporateEvent=generateCorporateEvent;
+window.optimizeCorporateEvent=optimizeCorporateEvent;
+window.addEventToCart=addEventToCart;
+
+window.adminFeature=adminFeature;
+window.renderPackageBuilder=renderPackageBuilder;
 
 /* =========================================================
    START
-========================================================= */
+   ========================================================= */
 
 if(
-  document.readyState ===
-  "loading"
+  document.readyState==="loading"
 ){
-
   document.addEventListener(
     "DOMContentLoaded",
     initHobbiGo
   );
-
 }else{
-
   initHobbiGo();
-
 }
