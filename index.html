@@ -193,6 +193,31 @@
   }
   .tracking-step.active .step-label { color: var(--primary); font-weight: 800; }
 
+  /* FLOATING LIVE CHAT WIDGET */
+  .chat-float-btn {
+    position: fixed; bottom: 25px; right: 25px; z-index: 4000;
+    width: 58px; height: 58px; border-radius: 50%; background: var(--primary);
+    color: #04140f; border: none; font-size: 24px; display: flex; align-items: center;
+    justify-content: center; box-shadow: 0 10px 30px rgba(32,211,165,.4); cursor: pointer; transition: .2s;
+  }
+  .chat-float-btn:hover { transform: scale(1.08); background: var(--primary2); }
+  
+  .chat-box-modal {
+    position: fixed; bottom: 95px; right: 25px; z-index: 4000;
+    width: 350px; background: var(--bg2); border: 1px solid var(--line);
+    border-radius: 20px; box-shadow: var(--shadow); display: none; flex-direction: column; overflow: hidden;
+  }
+  .chat-box-modal.open { display: flex; }
+  .chat-header {
+    background: var(--card); padding: 15px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+  }
+  .chat-body { padding: 15px; height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
+  .chat-msg { padding: 10px 12px; border-radius: 12px; max-width: 80%; line-height: 1.4; }
+  .chat-msg.support { background: var(--card); color: var(--text); align-self: flex-start; border: 1px solid var(--line); }
+  .chat-msg.user { background: var(--primary); color: #04140f; align-self: flex-end; font-weight: 700; }
+  .chat-footer { padding: 12px; border-top: 1px solid var(--line); display: flex; gap: 8px; background: var(--card); }
+
   /* TABS */
   .travel-tabs{display:flex;gap:6px;padding:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;overflow-x:auto;margin-bottom:20px;}
   .travel-tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:800;white-space:nowrap;}
@@ -531,6 +556,25 @@
     </section>
   </main>
 
+  <!-- FLOATING LIVE CHAT WIDGET -->
+  <button class="chat-float-btn" onclick="toggleChatBox()">💬</button>
+  <div class="chat-box-modal" id="chatBoxModal">
+    <div class="chat-header">
+      <div>
+        <strong>Live Support HOBBIGO</strong>
+        <span style="display:block; font-size:10px; color:var(--primary);">● Tim online siap membantu</span>
+      </div>
+      <button class="btn btn-small" onclick="toggleChatBox()">✕</button>
+    </div>
+    <div class="chat-body" id="chatMessagesContainer">
+      <div class="chat-msg support">Halo! Selamat datang di HOBBIGO ONE. Ada yang bisa kami bantu terkait Travel, eSIM TELKU, atau Jastip CHELEA?</div>
+    </div>
+    <div class="chat-footer">
+      <input id="chatInputText" placeholder="Ketik pesan..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+      <button class="btn btn-primary btn-small" onclick="sendChatMessage()">Kirim</button>
+    </div>
+  </div>
+
   <!-- MODAL -->
   <div class="modal" id="globalModal" onclick="if(event.target===this)closeModal()">
     <div class="modal-content">
@@ -807,6 +851,27 @@
           <div style="text-align:right; font-weight:900; color:var(--primary);">Total: ${formatIDR(ord.total)}</div>
         </div>
       `).join('');
+    }
+
+    // LIVE CHAT LOGIC
+    function toggleChatBox() {
+      document.getElementById('chatBoxModal').classList.toggle('open');
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInputText');
+      const text = input.value.trim();
+      if(!text) return;
+
+      const container = document.getElementById('chatMessagesContainer');
+      container.innerHTML += `<div class="chat-msg user">${text}</div>`;
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      setTimeout(() => {
+        container.innerHTML += `<div class="chat-msg support">Terima kasih atas pesan Anda. Tim Support HOBBIGO akan segera membantu kendala transaksi atau pertanyaan Anda secara instan!</div>`;
+        container.scrollTop = container.scrollHeight;
+      }, 800);
     }
 
     // Inisialisasi awal
