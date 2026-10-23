@@ -3,370 +3,303 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HOBBIGO ONE — Master Ecosystem with CHELEA V2 Platform</title>
+<title>HOBBIGO V77.1 — Clean UI Ecosystem & Travel Engine</title>
 <style>
-  :root {
-    --bg-dark: #04101e;
-    --panel-bg: #0b1d35;
-    --panel-hover: #102948;
-    --border-color: #1a3a60;
-    --blue: #168cff;
-    --cyan: #27d9ff;
-    --orange: #ff9f1a;
-    --text: #f3f8ff;
-    --muted: #91a8c4;
-    --green: #27d17f;
-    --red: #ff5d6c;
-    --shadow: 0 10px 30px rgba(0,0,0,0.3);
+  /* =========================================================
+     HOBBIGO V77.1 — CLEAN UI CSS
+     ========================================================= */
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --bg:#07111f;--bg2:#0b1728;--bg3:#101e31;--card:#102238;--card2:#142943;--line:#223954;
+    --text:#f5f8fc;--muted:#91a4ba;--primary:#20d3a5;--primary2:#12b98e;
+    --blue:#4f9cff;--purple:#9b7cff;--orange:#ffad5c;--red:#ff667a;--white:#ffffff;
+    --shadow:0 14px 40px rgba(0,0,0,.24);--radius:18px;--radius-sm:12px;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-  body { background: var(--bg-dark); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
-  button, input, select, textarea { font: inherit; cursor: pointer; }
-
-  /* TOP NAVBAR */
-  header {
-    background: rgba(4, 16, 30, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky; top: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 30px; height: 70px;
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:radial-gradient(circle at 10% 0%,rgba(32,211,165,.08),transparent 28%),radial-gradient(circle at 90% 10%,rgba(79,156,255,.07),transparent 25%),var(--bg);
+    color:var(--text);min-height:100vh;line-height:1.5;
   }
-  .brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-  .brand-logo {
-    width: 40px; height: 40px; border-radius: 12px;
-    background: linear-gradient(135deg, var(--blue), var(--orange));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 900; font-size: 20px; color: white;
-  }
-  .brand-text strong { display: block; font-size: 15px; letter-spacing: 1px; }
-  .brand-text span { font-size: 9px; color: var(--muted); letter-spacing: 1.5px; }
+  button,input,select,textarea{font:inherit;}
+  button{cursor:pointer;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
 
-  .nav-menu { display: flex; gap: 6px; list-style: none; overflow-x: auto; padding: 5px; }
-  .nav-menu::-webkit-scrollbar { height: 4px; }
-  .nav-menu a { color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; padding: 6px 10px; border-radius: 8px; white-space: nowrap; }
-  .nav-menu a:hover, .nav-menu a.active { color: #fff; background: rgba(22, 140, 255, 0.15); border: 1px solid rgba(22, 140, 255, 0.3); }
+  /* HEADER */
+  .topbar{position:sticky;top:0;z-index:1000;height:72px;background:rgba(7,17,31,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;}
+  .header,.topbar-inner{width:100%;max-width:1280px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900;letter-spacing:-.5px;}
+  .logo span{color:var(--primary);}
+  .logo small{display:block;font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.7px;}
+  .nav{display:flex;align-items:center;gap:5px;}
+  .nav a,.nav button{border:0;background:transparent;color:var(--muted);padding:9px 13px;border-radius:10px;font-size:13px;font-weight:700;transition:.2s;}
+  .nav a:hover,.nav button:hover,.nav a.active{color:var(--white);background:rgba(255,255,255,.07);}
+  .header-actions{display:flex;align-items:center;gap:8px;}
+  .cart-count{min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--primary);color:#04140f;font-size:10px;font-weight:900;}
 
-  .top-actions { display: flex; gap: 10px; align-items: center; }
-  .icon-btn {
-    background: var(--panel-bg); border: 1px solid var(--border-color);
-    color: white; width: 40px; height: 40px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center; position: relative;
-  }
-  .badge {
-    position: absolute; top: -5px; right: -5px; background: var(--red);
-    color: white; font-size: 9px; min-width: 18px; height: 18px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-weight: 700;
-  }
+  /* MAIN & PAGES */
+  main,.page{width:100%;max-width:1280px;margin:auto;padding:0 22px 60px;display:none;}
+  main,.page.active{display:block;}
+  section{margin-top:34px;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:16px;}
+  .section-title{font-size:24px;font-weight:900;letter-spacing:-.5px;}
 
-  /* SUB-NAVBAR KHUSUS TRAVEL & CHELEA */
-  .sub-nav {
-    background: rgba(7, 22, 44, 0.8);
-    border-bottom: 1px solid var(--border-color);
-    padding: 8px 30px; display: flex; gap: 15px; overflow-x: auto;
-  }
-  .sub-nav button {
-    background: transparent; border: none; color: var(--muted); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; transition: 0.2s;
-  }
-  .sub-nav button:hover, .sub-nav button.active { color: var(--cyan); background: rgba(39, 217, 255, 0.1); }
+  /* BUTTONS */
+  .btn{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:11px 16px;border-radius:11px;font-size:13px;font-weight:800;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+  .btn:hover{transform:translateY(-1px);border-color:#365777;}
+  .btn-primary{background:var(--primary);border-color:var(--primary);color:#03130e;}
+  .btn-primary:hover{background:var(--primary2);}
+  .btn-blue{background:var(--blue);border-color:var(--blue);color:white;}
+  .btn-orange{background:var(--orange);border-color:var(--orange);color:#03130e;}
+  .btn-small{padding:8px 11px;font-size:11px;}
+  .btn.full{width:100%;}
 
-  /* MAIN LAYOUT */
-  main { flex: 1; max-width: 1300px; width: 100%; margin: 0 auto; padding: 30px 20px; }
-  .page { display: none; }
-  .page.active { display: block; }
+  /* CARDS & PANELS */
+  .card{background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.12);}
+  .panel{padding:22px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;margin-bottom:20px;}
+  .grid{display:grid;gap:16px;}
+  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .grid-4{grid-template-columns:repeat(4,minmax(0,1fr));}
 
-  .panel { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-  .btn {
-    border: 0; border-radius: 10px; padding: 10px 18px; color: white;
-    background: #183352; border: 1px solid #2a486b; font-weight: 600; font-size: 13px;
-    transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .btn:hover { transform: translateY(-1px); border-color: var(--blue); }
-  .btn.primary { background: linear-gradient(135deg, #087be9, #19a6ff); border-color: #1ca2ff; }
-  .btn.green { background: linear-gradient(135deg, #159d62, #28cf80); border-color: #2bd486; }
-  .btn.orange { background: linear-gradient(135deg, #e67e22, #f39c12); border-color: #f1c40f; }
-  .btn.full { width: 100%; }
+  /* FORMS */
+  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:15px;}
+  .form-group label{color:#b9c8d8;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;}
+  input,select,textarea{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--line);outline:none;background:#0a1829;color:var(--text);font-size:13px;transition:.2s;}
+  input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(32,211,165,.08);}
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  
-  .form-group { margin-bottom: 15px; }
-  .form-group label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color);
-    color: white; padding: 11px; border-radius: 9px; outline: none;
-  }
+  /* HERO */
+  .hero{position:relative;margin-top:24px;padding:52px 42px;border:1px solid rgba(255,255,255,.07);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(32,211,165,.12),rgba(79,156,255,.07) 45%,rgba(155,124,255,.08)),var(--bg2);box-shadow:var(--shadow);}
+  .hero h1{margin-top:16px;font-size:clamp(34px,5vw,50px);line-height:1.02;letter-spacing:-2px;font-weight:950;}
+  .hero h1 span{color:var(--primary);}
+  .hero p{margin-top:15px;max-width:650px;color:var(--muted);font-size:15px;}
 
-  /* MODAL */
-  .modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 15px; }
-  .modal-wrap.show { display: flex; }
-  .modal { width: min(600px, 100%); background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-  .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-  .modal-body { padding: 20px; max-height: 80vh; overflow-y: auto; }
-  .modal-footer { padding: 15px 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px; }
+  /* TABS */
+  .travel-tabs{display:flex;gap:6px;padding:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;overflow-x:auto;margin-bottom:20px;}
+  .travel-tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:800;white-space:nowrap;}
+  .travel-tabs button.active{background:var(--card2);color:var(--white);box-shadow:0 3px 12px rgba(0,0,0,.2);}
 
-  /* TOAST */
-  .toast { position: fixed; bottom: 25px; right: 25px; background: var(--panel-bg); border: 1px solid var(--blue); color: white; padding: 12px 20px; border-radius: 10px; box-shadow: var(--shadow); transform: translateY(100px); opacity: 0; transition: 0.3s; z-index: 300; font-size: 13px; }
-  .toast.show { transform: translateY(0); opacity: 1; }
+  /* PRODUCT CARDS */
+  .product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;}
+  .product-card{overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:17px;transition:.2s;display:flex;flex-direction:column;justify-content:space-between;}
+  .product-card:hover{transform:translateY(-3px);border-color:#365777;}
+  .product-image{height:140px;background-size:cover;background-position:center;}
+  .product-body{padding:15px;}
+  .product-category{color:var(--primary);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;}
+  .product-title{margin-top:5px;font-size:14px;font-weight:850;}
+  .product-desc{margin-top:5px;color:var(--muted);font-size:10px;}
+  .product-price{margin-top:12px;font-size:16px;font-weight:950;color:var(--cyan);display:flex;justify-content:space-between;align-items:center;}
+
+  /* MODAL & TOAST */
+  .modal{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px);}
+  .modal.show{display:flex;}
+  .modal-content{width:min(680px,100%);max-height:90vh;overflow:auto;padding:24px;background:var(--bg2);border:1px solid var(--line);border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.5);}
+  .toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);z-index:5000;padding:12px 17px;border:1px solid var(--line);background:#102238;color:var(--text);border-radius:12px;box-shadow:var(--shadow);font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;}
+  .toast.show{opacity:1;transform:translate(-50%,0);}
 </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
-  <header>
-    <div class="brand" onclick="switchPage('home')">
-      <div class="brand-logo">H</div>
-      <div class="brand-text">
-        <strong>HOBBIGO ONE</strong>
-        <span>TRAVEL + TELKU + CHELEA ECOSYSTEM</span>
+  <!-- TOPBAR / NAVBAR -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo" onclick="switchPage('home')" style="cursor:pointer;">
+        <div>
+          HOBBIGO <span>ONE</span>
+          <small>V77.1 CLEAN ECOSYSTEM</small>
+        </div>
       </div>
-    </div>
-
-    <ul class="nav-menu">
-      <li><a id="nav-home" class="active" onclick="switchPage('home')">Home</a></li>
-      <li><a id="nav-travel" onclick="switchPage('travel')">✈️ Travel</a></li>
-      <li><a id="nav-telku-v2-home" onclick="switchPage('telku-v2-home')">📶 TELKU eSIM</a></li>
-      <li><a id="nav-chelea-v2-home" onclick="switchPage('chelea-v2-home')">📦 CHELEA Commerce</a></li>
-      <li><a id="nav-cart" onclick="switchPage('cart')">🛒 Master Cart</a></li>
-      <li><a id="nav-orders" onclick="switchPage('orders')">📋 Master Orders</a></li>
-      <li><a id="nav-profile" onclick="switchPage('profile')">👤 Profile</a></li>
-    </ul>
-
-    <div class="top-actions">
-      <button class="icon-btn" onclick="switchPage('cart')" title="Keranjang">🛒<span class="badge" id="cartBadge">0</span></button>
-      <button class="btn primary" onclick="openAiPlannerModal()">✦ AI Journey</button>
+      <nav class="nav">
+        <button id="nav-home" class="active" onclick="switchPage('home')">Home</button>
+        <button id="nav-travel" onclick="switchPage('travel')">✈️ Travel Engine</button>
+        <button id="nav-telku" onclick="switchPage('telku')">📶 TELKU eSIM</button>
+        <button id="nav-chelea" onclick="switchPage('chelea')">📦 CHELEA Commerce</button>
+        <button id="nav-cart" onclick="switchPage('cart')">🛒 Cart <span class="cart-count" id="cartBadge">0</span></button>
+        <button id="nav-orders" onclick="switchPage('orders')">📋 Orders</button>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-primary btn-small" onclick="openAiPlannerModal()">✦ AI Planner</button>
+      </div>
     </div>
   </header>
 
-  <!-- SUB-NAVBAR KHUSUS TRAVEL -->
-  <div class="sub-nav" id="travelSubNav" style="display: none;">
-    <span style="color: var(--cyan); font-size: 11px; font-weight: 800; display: flex; align-items: center;">TRAVEL MENU:</span>
-    <button id="sub-overview" onclick="switchTravelTab('overview')" class="active">Overview & AI</button>
-    <button id="sub-flight" onclick="switchTravelTab('flight')">✈️ Flight Engine</button>
-    <button id="sub-hotel" onclick="switchTravelTab('hotel')">🏨 Hotel & Stay</button>
-    <button id="sub-rental" onclick="switchTravelTab('rental')">🚗 Rental Center</button>
-    <button id="sub-event" onclick="switchTravelTab('event')">🎉 Create Event / Trip</button>
-  </div>
-
-  <!-- SUB-NAVBAR KHUSUS CHELEA V2 -->
-  <div class="sub-nav" id="cheleaSubNav" style="display: none;">
-    <span style="color: var(--orange); font-size: 11px; font-weight: 800; display: flex; align-items: center;">CHELEA MENU:</span>
-    <button id="csub-home" onclick="switchCheleaTab('home')" class="active">1. Home</button>
-    <button id="csub-request" onclick="switchCheleaTab('request')">2. Request</button>
-    <button id="csub-traveler" onclick="switchCheleaTab('traveler')">3. Find Traveler</button>
-    <button id="csub-match" onclick="switchCheleaTab('match')">4. Match & Security</button>
-    <button id="csub-proof" onclick="switchCheleaTab('proof')">7. Proof of Purchase</button>
-    <button id="csub-cargo" onclick="switchCheleaTab('cargo')">10. Cargo Tracking</button>
-    <button id="csub-escrow" onclick="switchCheleaTab('escrow')">12. Escrow & Dispute</button>
-    <button id="csub-tmode" onclick="switchCheleaTab('tmode')">20. Traveler Mode</button>
-    <button id="csub-pmode" onclick="switchCheleaTab('pmode')">21. Partner Mode</button>
-  </div>
-
   <main>
-    <!-- 1. HOME / DASHBOARD EKOSISTEM -->
+    <!-- 1. HOME / DASHBOARD -->
     <section class="page active" id="page-home">
-      <div class="panel" style="background:linear-gradient(135deg, #0b1d35, #04101e); padding:40px;">
-        <span style="color:var(--cyan); font-size:11px; font-weight:800; letter-spacing:2px;">HOBBIGO ONE ECOSYSTEM</span>
-        <h1 style="font-size:36px; margin:10px 0 15px;">Your Journey. One Smart Ecosystem.</h1>
-        <p style="color:var(--muted); max-width:650px; margin-bottom:20px; font-size:13px; line-height:1.6;">
-          Platform terpadu HOBBIGO Travel, TELKU konektivitas eSIM global, dan CHELEA (Platform Traveler Personal Shopping, Pickup, Cargo, & Protected Escrow Delivery).
-        </p>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn primary" onclick="openAiPlannerModal()">✦ Buka AI Journey Planner</button>
-          <button class="btn green" onclick="switchPage('telku-v2-home')">📶 Buka TELKU Platform</button>
-          <button class="btn orange" onclick="switchPage('chelea-v2-home')">📦 Buka CHELEA Platform</button>
+      <div class="hero">
+        <span style="color:var(--primary); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Master Platform V77.1</span>
+        <h1>Your Journey. <span>One Smart Ecosystem.</span></h1>
+        <p>Integrasi penuh HOBBIGO Travel (Flight, Hotel, Rental), TELKU Connectivity eSIM, dan CHELEA Escrow Logistics & Personal Shopping dalam satu kendali.</p>
+        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="openAiPlannerModal()">✦ Buka AI Journey Planner</button>
+          <button class="btn btn-blue" onclick="switchPage('travel')">Eksplorasi Travel Engine</button>
+          <button class="btn btn-orange" onclick="switchPage('chelea')">Buka CHELEA Commerce</button>
         </div>
       </div>
 
-      <div class="grid-3" style="margin-top:25px;">
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('travel'); switchTravelTab('flight')">
-          <div style="font-size:24px; margin-bottom:10px;">✈️</div>
-          <h3>HOBBIGO Travel</h3>
-          <p style="color:var(--muted); font-size:12px; margin-top:8px;">Flight, Hotel, Villa, Rental Kendaraan, dan Event Planner terintegrasi.</p>
+      <div class="grid grid-3" style="margin-top:25px;">
+        <div class="panel" onclick="switchPage('travel')" style="cursor:pointer;">
+          <h3>✈️ HOBBIGO Travel</h3>
+          <p class="text-muted mt-1" style="font-size:12px;">Mesin master penerbangan, hotel bintang 5, villa privat, rental kendaraan, dan kustom event.</p>
         </div>
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('telku-v2-home')">
-          <div style="font-size:24px; margin-bottom:10px;">📶</div>
-          <h3>TELKU Connectivity</h3>
-          <p style="color:var(--muted); font-size:12px; margin-top:8px;">End-to-end eSIM platform: Negara, Paket, QR Aktivasi, Usage, hingga Top-Up.</p>
+        <div class="panel" onclick="switchPage('telku')" style="cursor:pointer;">
+          <h3>📶 TELKU Connectivity</h3>
+          <p class="text-muted mt-1" style="font-size:12px;">Platform eSIM global end-to-end: pencarian negara, kuota real-time, QR aktivasi & top-up.</p>
         </div>
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('chelea-v2-home')">
-          <div style="font-size:24px; margin-bottom:10px;">📦</div>
-          <h3>CHELEA Commerce</h3>
-          <p style="color:var(--muted); font-size:12px; margin-top:8px;">Personal shopping, match engine, video proof, escrow, cargo & traveler mode.</p>
+        <div class="panel" onclick="switchPage('chelea')" style="cursor:pointer;">
+          <h3>📦 CHELEA Escrow Commerce</h3>
+          <p class="text-muted mt-1" style="font-size:12px;">Jastip barang luar negeri dengan Match Engine, Security Engine, Video Proof & Escrow Payment.</p>
         </div>
       </div>
     </section>
 
     <!-- 2. HOBBIGO TRAVEL MASTER HUB -->
     <section class="page" id="page-travel">
-      <div class="travel-tab-content" id="tab-overview">
-        <div class="panel">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <div class="panel">
+        <div class="travel-tabs">
+          <button id="sub-overview" class="active" onclick="switchTravelTab('overview')">Marketplace Utama</button>
+          <button id="sub-flight" onclick="switchTravelTab('flight')">✈️ Flight Engine</button>
+          <button id="sub-hotel" onclick="switchTravelTab('hotel')">🏨 Hotel & Stay</button>
+          <button id="sub-rental" onclick="switchTravelTab('rental')">🚗 Rental Center</button>
+          <button id="sub-event" onclick="switchTravelTab('event')">🎉 Create Event / Trip</button>
+        </div>
+
+        <!-- Sub Tab: Overview -->
+        <div class="travel-tab-content" id="tab-overview">
+          <div class="section-head">
             <div>
-              <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO TRAVEL ENGINE</span>
-              <h2>Marketplace Pengalaman & Wisata Global</h2>
+              <h2 class="section-title">Marketplace Pengalaman & Wisata Global</h2>
+              <p class="text-muted" style="font-size:13px;">Pilihan destinasi dan paket perjalanan kurasi terbaik.</p>
             </div>
-            <button class="btn primary" onclick="openAiPlannerModal()">✦ AI Journey Planner</button>
+            <button class="btn btn-primary btn-small" onclick="openAiPlannerModal()">✦ Buat Paket AI</button>
           </div>
-          <div class="grid-3" id="travelCatalogGrid" style="margin-top:15px;"></div>
+          <div class="product-grid" id="travelCatalogGrid" style="margin-top:15px;"></div>
         </div>
-      </div>
 
-      <div class="travel-tab-content" id="tab-flight" style="display: none;">
-        <div class="panel">
-          <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO FLIGHT MARKETPLACE</span>
-          <h2>Cari & Bandingkan Penerbangan</h2>
-          <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-            <div class="grid-2">
-              <div class="form-group"><label>Kota Asal (Origin)</label><input id="flOrigin" value="Jakarta (CGK)"></div>
-              <div class="form-group"><label>Kota Tujuan (Destination)</label><input id="flDest" value="Bali (DPS)"></div>
+        <!-- Sub Tab: Flight -->
+        <div class="travel-tab-content" id="tab-flight" style="display:none;">
+          <h2>✈️ HOBBIGO Flight Marketplace</h2>
+          <div class="panel" style="margin-top:15px;">
+            <div class="form-grid">
+              <div class="form-group"><label>Kota Asal</label><input id="flOrigin" value="Jakarta (CGK)"></div>
+              <div class="form-group"><label>Kota Tujuan</label><input id="flDest" value="Bali (DPS)"></div>
             </div>
-            <div class="grid-2">
-              <div class="form-group"><label>Tanggal Keberangkatan</label><input type="date" value="2026-06-12"></div>
-              <div class="form-group"><label>Tipe Perjalanan</label><select><option>One Way (Sekali Jalan)</option><option>Round Trip (Pulang-Pergi)</option><option>Multi-City</option></select></div>
-            </div>
-            <button class="btn primary full" onclick="searchFlightAction()">Cari Penerbangan Terbaik</button>
+            <button class="btn btn-primary full" onclick="searchFlightAction()">Cari Penerbangan Terbaik</button>
           </div>
-          <div id="flightResultContainer" class="grid-3" style="margin-top:20px;"></div>
+          <div id="flightResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
         </div>
-      </div>
 
-      <div class="travel-tab-content" id="tab-hotel" style="display: none;">
-        <div class="panel">
-          <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO HOTEL & STAY</span>
-          <h2>Cari Akomodasi (Hotel, Villa, Resort, Apartment)</h2>
-          <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-            <div class="grid-2">
-              <div class="form-group"><label>Lokasi / Destinasi</label><input id="htLoc" value="Seminyak, Bali"></div>
-              <div class="form-group"><label>Tipe Properti</label><select><option>Semua Jenis</option><option>Villa</option><option>Hotel Bintang 5</option><option>Resort</option><option>Serviced Apartment</option></select></div>
-            </div>
-            <button class="btn primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
+        <!-- Sub Tab: Hotel -->
+        <div class="travel-tab-content" id="tab-hotel" style="display:none;">
+          <h2>🏨 Hotel, Villa & Stay</h2>
+          <div class="panel" style="margin-top:15px;">
+            <div class="form-group"><label>Destinasi / Nama Hotel</label><input id="htLoc" value="Seminyak, Bali"></div>
+            <button class="btn btn-primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
           </div>
-          <div id="hotelResultContainer" class="grid-3" style="margin-top:20px;"></div>
+          <div id="hotelResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
         </div>
-      </div>
 
-      <div class="travel-tab-content" id="tab-rental" style="display: none;">
-        <div class="panel">
-          <span style="color:var(--orange); font-size:11px; font-weight:800;">HOBBIGO RENTAL CENTER</span>
-          <h2>Sewa Kendaraan (Mobil, Motor, Bus, Boat & Driver)</h2>
-          <div class="grid-3" style="margin-top:15px;">
-            <div class="panel" style="background:var(--bg-dark)">
+        <!-- Sub Tab: Rental -->
+        <div class="travel-tab-content" id="tab-rental" style="display:none;">
+          <h2>🚗 Rental Center (Mobil, Motor, Boat)</h2>
+          <div class="grid grid-3" style="margin-top:15px;">
+            <div class="panel">
               <h4>🚗 Car Rental + Driver</h4>
-              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Alphard, Avanza, Innova dengan supir profesional & rute tracking.</p>
-              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 350.000 / hari</div>
-              <button class="btn primary full" onclick="addCustomToCart('Car Rental + Driver', 350000, 'Transport')">Sewa Mobil</button>
+              <p class="text-muted" style="font-size:12px; margin:8px 0;">Alphard / Avanza dengan supir profesional.</p>
+              <strong style="color:var(--primary);">Rp 350.000 / hari</strong>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Car Rental + Driver', 350000, 'Transport')">Sewa Mobil</button>
             </div>
-            <div class="panel" style="background:var(--bg-dark)">
+            <div class="panel">
               <h4>🛵 Motor Rental</h4>
-              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Lepas kunci atau antar langsung ke lokasi hotel Anda.</p>
-              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 75.000 / hari</div>
-              <button class="btn primary full" onclick="addCustomToCart('Motor Rental', 75000, 'Transport')">Sewa Motor</button>
+              <p class="text-muted" style="font-size:12px; margin:8px 0;">Lepas kunci antar langsung ke hotel.</p>
+              <strong style="color:var(--primary);">Rp 75.000 / hari</strong>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Motor Rental', 75000, 'Transport')">Sewa Motor</button>
             </div>
-            <div class="panel" style="background:var(--bg-dark)">
+            <div class="panel">
               <h4>🛥️ Boat & Yacht Charter</h4>
-              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Fast boat penyeberangan antar pulau atau private yacht charter.</p>
-              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 450.000</div>
-              <button class="btn primary full" onclick="addCustomToCart('Boat / Island Transfer', 450000, 'Transport')">Sewa Boat</button>
+              <p class="text-muted" style="font-size:12px; margin:8px 0;">Fast boat penyeberangan pulau privat.</p>
+              <strong style="color:var(--primary);">Rp 450.000</strong>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Boat / Island Transfer', 450000, 'Transport')">Sewa Boat</button>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="travel-tab-content" id="tab-event" style="display: none;">
-        <div class="panel" style="max-width:650px; margin:0 auto;">
-          <h2>🎉 Create Your Own Event, Group & Corporate Trip</h2>
-          <p style="color:var(--muted); font-size:12px; margin-bottom:20px;">Susun perjalanan kustom, atur shared budget untuk grup, atau kelola corporate event.</p>
-          <div class="form-group"><label>Nama Event / Destinasi</label><input id="customEventName" placeholder="Contoh: Annual Corporate Retreat Bali"></div>
-          <div class="grid-2">
-            <div class="form-group"><label>Tanggal Mulai</label><input type="date"></div>
-            <div class="form-group"><label>Jumlah Peserta</label><input type="number" value="10"></div>
-          </div>
-          <div class="form-group"><label>Tipe Kategori</label><select><option>Corporate Meeting & Retreat</option><option>Group Trip (Shared Budget & Voting)</option><option>Private Family Event</option></select></div>
-          <button class="btn primary full" onclick="showToast('Event / Trip Kustom Berhasil Dibuat!')">Publish & Masukkan Workspace</button>
+        <!-- Sub Tab: Event -->
+        <div class="travel-tab-content" id="tab-event" style="display:none; max-width:650px; margin:auto;">
+          <h2>🎉 Create Event, Group & Corporate Trip</h2>
+          <div class="form-group mt-2"><label>Nama Event / Perjalanan</label><input placeholder="Contoh: Annual Retreat Bali 2026"></div>
+          <div class="form-group"><label>Jumlah Peserta</label><input type="number" value="10"></div>
+          <button class="btn btn-primary full" onclick="showToast('Event berhasil dipublikasikan!')">Publish Event</button>
         </div>
       </div>
     </section>
 
-    <!-- 3. TELKU V2 END-TO-END PLATFORM -->
-    <section class="page" id="page-telku-v2-home">
-      <div class="panel" style="background:linear-gradient(135deg, #072a40, #04101e); padding:30px;">
-        <span style="color:var(--cyan); font-size:11px; font-weight:800; letter-spacing:2px;">TELKU END-TO-END CONNECTIVITY PLATFORM</span>
-        <h1 style="font-size:30px; margin:10px 0;">Stay Connected Anywhere in the World</h1>
-        <p style="color:var(--muted); font-size:13px; margin-bottom:20px;">Platform konektivitas utama: Pilih negara, beli eSIM, dapatkan QR code, aktivasi, monitor sisa kuota, top-up instan, hingga manajemen riwayat pesanan.</p>
-        <button class="btn primary" onclick="switchTelkuTab('country')">🌎 Pilih Negara Tujuan eSIM</button>
-      </div>
-
-      <div class="panel" style="padding: 12px; display:flex; gap:8px; overflow-x:auto; margin-top:20px;">
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('home')">1. Home</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('country')">2. Country</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('plans')">3. eSIM Plans</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('myesim')">6. My eSIM</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('usage')">7. Usage</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('topup')">8. Top Up</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('orders')">9. Orders</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchTelkuTab('support')">13. Support</button>
-      </div>
-
-      <div id="telkuTabContainer" class="panel" style="margin-top:20px;"></div>
-    </section>
-
-    <!-- 4. CHELEA V2 END-TO-END PLATFORM (21 FITUR UTAMA) -->
-    <section class="page" id="page-chelea-v2-home">
-      <div class="panel" style="background:linear-gradient(135deg, #402007, #04101e); padding:30px;">
-        <span style="color:var(--orange); font-size:11px; font-weight:800; letter-spacing:2px;">CHELEA COMMERCE & ESCROW LOGISTICS PLATFORM</span>
-        <h1 style="font-size:30px; margin:10px 0;">Traveler Personal Shopping & Protected Cargo</h1>
-        <p style="color:var(--muted); font-size:13px; margin-bottom:20px;">Kirim request belanjaan luar negeri, dicocokkan via AI Match Engine, verifikasi keamanan, Escrow Payment, Proof of Purchase video, hingga Traveler & Partner Mode.</p>
+    <!-- 3. TELKU ESIM PLATFORM -->
+    <section class="page" id="page-telku">
+      <div class="panel">
+        <h2>📶 TELKU End-to-End Connectivity Platform</h2>
+        <p class="text-muted" style="font-size:13px; margin-top:5px;">Pilih negara, dapatkan QR Code instan, aktivasi, dan pantau kuota secara real-time.</p>
         
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button class="btn orange" onclick="switchCheleaTab('request')">🛍️ Buat Request Barang</button>
-          <button class="btn primary" onclick="switchCheleaTab('match')">🤖 Match & Security Engine</button>
-          <button class="btn green" onclick="switchCheleaTab('escrow')">💳 Escrow & Dispute Center</button>
+        <div class="grid grid-3" style="margin-top:20px;">
+          <div class="panel" style="background:var(--card);">
+            <span style="font-size:10px; color:var(--primary); font-weight:900;">LOCAL eSIM PLAN</span>
+            <h4 class="mt-1">Japan 5GB (7 Days)</h4>
+            <p class="text-muted" style="font-size:12px; margin:6px 0;">NTT Docomo 5G • Hotspot Supported</p>
+            <strong style="color:var(--primary); font-size:16px;">Rp 120.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Japan 5GB', 120000, 'TELKU')">Beli & Checkout</button>
+          </div>
+          <div class="panel" style="background:var(--card);">
+            <span style="font-size:10px; color:var(--primary); font-weight:900;">REGIONAL PLAN</span>
+            <h4 class="mt-1">Asia Traveler 10GB</h4>
+            <p class="text-muted" style="font-size:12px; margin:6px 0;">Multi-Country Asia • 15 Days</p>
+            <strong style="color:var(--primary); font-size:16px;">Rp 250.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Asia 10GB', 250000, 'TELKU')">Beli & Checkout</button>
+          </div>
+          <div class="panel" style="background:var(--card);">
+            <span style="font-size:10px; color:var(--orange); font-weight:900;">UNLIMITED PLAN</span>
+            <h4 class="mt-1">Global Unlimited 30D</h4>
+            <p class="text-muted" style="font-size:12px; margin:6px 0;">130+ Negara • High Speed FUP</p>
+            <strong style="color:var(--primary); font-size:16px;">Rp 550.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Global Unlimited', 550000, 'TELKU')">Beli & Checkout</button>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- 21 SUB-MENU CHELEA -->
-      <div class="panel" style="padding: 12px; display:flex; gap:8px; overflow-x:auto; margin-top:20px;">
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('home')">1. Home</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('request')">2. Request</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('traveler')">3. Find Traveler</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('match')">4. Match Engine</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('security')">5. Security</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('quote')">6. Quote & Price</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('proof')">7. Proof of Purchase</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('pickup')">8. Pickup</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('handover')">9. Handover</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('cargo')">10. Cargo</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('insurance')">11. Insurance</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('escrow')">12. Escrow Payment</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('tracking')">13. Tracking</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('document')">14. Documents</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('signature')">15. E-Signature</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('dispute')">17. Dispute Center</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('tmode')">20. Traveler Mode</button>
-        <button class="btn" style="padding:6px 12px; font-size:11px;" onclick="switchCheleaTab('pmode')">21. Partner Mode</button>
+    <!-- 4. CHELEA COMMERCE PLATFORM -->
+    <section class="page" id="page-chelea">
+      <div class="panel">
+        <h2>📦 CHELEA Commerce & Escrow Logistics</h2>
+        <p class="text-muted" style="font-size:13px; margin-top:5px;">Platform jastip aman dengan Match Engine, Security Engine, Proof of Purchase, dan Escrow Payment.</p>
+        
+        <div class="panel mt-2" style="background:var(--card); max-width:650px;">
+          <h4>Buat Request Personal Shopping (Jastip)</h4>
+          <div class="form-group mt-2"><label>Nama Barang</label><input id="chItem" placeholder="Contoh: Matcha Kyoto Authentic / Merchandise Eksklusif"></div>
+          <div class="form-grid">
+            <div class="form-group"><label>Negara Asal</label><input id="chOrigin" value="Jepang"></div>
+            <div class="form-group"><label>Estimasi Harga (IDR)</label><input type="number" id="chPrice" value="750000"></div>
+          </div>
+          <button class="btn btn-orange full" onclick="submitCheleaRequest()">Kirim Request ke Match Engine</button>
+        </div>
       </div>
-
-      <!-- KONTEN DINAMIS CHELEA TABS -->
-      <div id="cheleaTabContainer" class="panel" style="margin-top:20px;"></div>
     </section>
 
     <!-- 5. MASTER CART -->
     <section class="page" id="page-cart">
-      <div class="panel grid-2">
-        <div>
+      <div class="grid grid-2">
+        <div class="panel">
           <h2>Master Cart (Keranjang Terpadu)</h2>
-          <p style="color:var(--muted); font-size:12px; margin-bottom:15px;">Semua komponen dari berbagai pilar digabung dalam satu keranjang terpusat.</p>
-          <div id="cartItemsContainer"></div>
+          <div id="cartItemsContainer" class="mt-2"></div>
         </div>
-        <div class="panel" style="background:var(--bg-dark)">
+        <div class="panel">
           <h3>Ringkasan Pembayaran</h3>
-          <div style="display:flex; justify-content:space-between; margin:15px 0; color:var(--muted);"><span>Total Item</span><strong id="cartSummaryQty">0</strong></div>
-          <div style="display:flex; justify-content:space-between; margin:15px 0; color:var(--muted);"><span>Subtotal</span><strong id="cartSummarySubtotal">Rp 0</strong></div>
-          <hr style="border-color:var(--border-color); margin:15px 0;">
-          <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:800; color:var(--cyan); margin-bottom:20px;"><span>Total Bayar</span><strong id="cartSummaryTotal">Rp 0</strong></div>
-          <button class="btn green full" onclick="proceedToPayment()">Proses Pembayaran (Master Checkout)</button>
+          <div class="flex-between mt-2 text-muted"><span>Total Item</span><strong id="cartSummaryQty" style="color:var(--text);">0</strong></div>
+          <div class="flex-between mt-1 text-muted"><span>Subtotal</span><strong id="cartSummarySubtotal" style="color:var(--text);">Rp 0</strong></div>
+          <hr style="border-color:var(--line); margin:15px 0;">
+          <div class="flex-between" style="font-size:18px; font-weight:900;"><span>Total Bayar</span><strong id="cartSummaryTotal" style="color:var(--primary);">Rp 0</strong></div>
+          <button class="btn btn-primary full mt-3" onclick="proceedToPayment()">Proses Pembayaran (Escrow Protected)</button>
         </div>
       </div>
     </section>
@@ -375,60 +308,40 @@
     <section class="page" id="page-orders">
       <div class="panel">
         <h2>Master Orders & Struk Digital</h2>
-        <p style="color:var(--muted); font-size:12px; margin-bottom:15px;">Satu pusat pesanan untuk melacak seluruh status layanan perjalanan, eSIM, dan jastip Anda.</p>
-        <div id="ordersListContainer"></div>
-      </div>
-    </section>
-
-    <!-- 7. MASTER PROFILE -->
-    <section class="page" id="page-profile">
-      <div class="panel grid-2">
-        <div>
-          <h2>Master Profile</h2>
-          <p style="color:var(--cyan); margin:10px 0; font-weight:700;">Customer ID: HBG-882910</p>
-          <p style="color:var(--muted); font-size:13px; line-height:1.6;">Satu akun terpusat untuk semua preferensi perjalanan, riwayat transaksi, dokumen verifikasi KYC, dan wallet.</p>
-        </div>
-        <div class="panel" style="background:var(--bg-dark)">
-          <h4>Statistik & Data Akun</h4>
-          <p style="color:var(--muted); font-size:12px; margin-top:10px; line-height:1.8;">
-            • Total Perjalanan: 3 Trip<br>
-            • Status Akun: Terverifikasi (KYC Secure)<br>
-            • Hobbipoints: 2.450 Poin
-          </p>
-        </div>
+        <p class="text-muted" style="font-size:13px;">Pusat riwayat pesanan seluruh layanan perjalanan, eSIM, dan jastip Anda.</p>
+        <div id="ordersListContainer" class="mt-2"></div>
       </div>
     </section>
   </main>
 
-  <!-- MODAL UMUM -->
-  <div class="modal-wrap" id="globalModal" onclick="if(event.target===this)closeModal()">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 id="modalTitleText">Informasi</h3>
-        <button class="btn" style="padding:4px 10px;" onclick="closeModal()">✕</button>
+  <!-- MODAL -->
+  <div class="modal" id="globalModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal-content">
+      <div class="flex-between mb-2">
+        <h2 id="modalTitleText">Informasi</h2>
+        <button class="btn btn-small" onclick="closeModal()">✕</button>
       </div>
-      <div class="modal-body" id="modalBodyContent"></div>
-      <div class="modal-footer" id="modalFooterContent"></div>
+      <div id="modalBodyContent"></div>
+      <div class="mt-3 flex" style="justify-content:flex-end;" id="modalFooterContent"></div>
     </div>
   </div>
 
-  <!-- TOAST -->
   <div class="toast" id="toastBox">Notifikasi berhasil</div>
 
   <script>
-    /* MASTER KATALOG LENGKAP */
+    /* =========================================================
+       HOBBIGO V77.1 — JAVASCRIPT ENGINE
+       ========================================================= */
     const masterCatalog = [
-      { id: 'tr1', type: 'Experience', name: 'Bali Ocean & Culture Experience', price: 1250000, desc: 'Transport + Guide + Snorkeling + Local Experience.', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80' },
+      { id: 'tr1', type: 'Experience', name: 'Bali Ocean & Culture', price: 1250000, desc: 'Transport + Guide + Snorkeling + Local Experience.', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80' },
       { id: 'tr2', type: 'Stay', name: 'Seminyak Private Villa & Pool', price: 1950000, desc: 'Villa mewah lengkap dengan fasilitas privat dan sarapan.', image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=600&q=80' },
       { id: 'tr3', type: 'Flight', name: 'Jakarta → Bali Flight (Economy)', price: 1250000, desc: 'Penerbangan langsung berkecepatan tinggi & bagasi kabin.', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80' }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('hbg_master_cart_v6') || '[]');
-    let orders = JSON.parse(localStorage.getItem('hbg_master_orders_v6') || '[]');
+    let cart = JSON.parse(localStorage.getItem('hbg_v77_cart') || '[]');
+    let orders = JSON.parse(localStorage.getItem('hbg_v77_orders') || '[]');
 
-    function formatIDR(val) {
-      return "Rp " + Number(val).toLocaleString("id-ID");
-    }
+    function formatIDR(val) { return "Rp " + Number(val).toLocaleString("id-ID"); }
 
     function showToast(msg) {
       const box = document.getElementById('toastBox');
@@ -439,25 +352,11 @@
 
     function switchPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
-
-      document.getElementById('page-' + pageId).classList.add('active');
-      const navEl = document.getElementById('nav-' + pageId);
-      if(navEl) navEl.classList.add('active');
-
-      const subNav = document.getElementById('travelSubNav');
-      const cheleaSubNav = document.getElementById('cheleaSubNav');
+      document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
       
-      if(pageId === 'travel') {
-        subNav.style.display = 'flex';
-        cheleaSubNav.style.display = 'none';
-      } else if(pageId === 'chelea-v2-home') {
-        subNav.style.display = 'none';
-        cheleaSubNav.style.display = 'flex';
-      } else {
-        subNav.style.display = 'none';
-        cheleaSubNav.style.display = 'none';
-      }
+      document.getElementById('page-' + pageId).classList.add('active');
+      const navBtn = document.getElementById('nav-' + pageId);
+      if(navBtn) navBtn.classList.add('active');
 
       window.scrollTo({top:0, behavior:'smooth'});
       renderAllData();
@@ -465,300 +364,110 @@
 
     function switchTravelTab(tabId) {
       document.querySelectorAll('.travel-tab-content').forEach(t => t.style.display = 'none');
-      document.querySelectorAll('#travelSubNav button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.travel-tabs button').forEach(b => b.classList.remove('active'));
 
       document.getElementById('tab-' + tabId).style.display = 'block';
       document.getElementById('sub-' + tabId).classList.add('active');
     }
 
-    function switchCheleaTab(tabName) {
-      document.querySelectorAll('#cheleaSubNav button').forEach(b => b.classList.remove('active'));
-      // Aktifkan tombol subnav yang sesuai jika ada id-nya
-      const btnEl = document.getElementById('csub-' + tabName);
-      if(btnEl) btnEl.classList.add('active');
-
-      const container = document.getElementById('cheleaTabContainer');
-      let html = '';
-
-      switch(tabName) {
-        case 'home':
-          html = `
-            <h3>1. 🏠 CHELEA Home Dashboard</h3>
-            <div class="grid-3" style="margin-top:15px;">
-              <div class="panel" style="background:var(--bg-dark)">
-                <h4>Buat Request Baru</h4>
-                <p style="color:var(--muted); font-size:12px; margin:8px 0;">Minta traveler belikan oleh-oleh atau barang luar negeri.</p>
-                <button class="btn orange full" onclick="switchCheleaTab('request')">Mulai Request</button>
-              </div>
-              <div class="panel" style="background:var(--bg-dark)">
-                <h4>Cari Traveler Aktif</h4>
-                <p style="color:var(--muted); font-size:12px; margin:8px 0;">Temukan rute traveler yang sesuai dengan kebutuhan Anda.</p>
-                <button class="btn primary full" onclick="switchCheleaTab('traveler')">Cari Traveler</button>
-              </div>
-              <div class="panel" style="background:var(--bg-dark)">
-                <h4>Track Active Order</h4>
-                <p style="color:var(--muted); font-size:12px; margin:8px 0;">Pantau status barang, escort payment, dan cargo delivery.</p>
-                <button class="btn green full" onclick="switchCheleaTab('tracking')">Lacak Pengiriman</button>
-              </div>
-            </div>
-          `;
-          break;
-
-        case 'request':
-          html = `
-            <h3>2. 🛍️ Request Barang (Personal Shopping)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px; max-width:600px;">
-              <div class="form-group"><label>Nama Barang / Produk</label><input id="reqItem" placeholder="Contoh: Matcha Authentic Kyoto / Sepatu Limited"></div>
-              <div class="grid-2">
-                <div class="form-group"><label>Negara / Kota Asal</label><input id="reqOrigin" placeholder="Contoh: Jepang (Tokyo)"></div>
-                <div class="form-group"><label>Estimasi Harga (IDR)</label><input type="number" id="reqPrice" placeholder="750000"></div>
-              </div>
-              <div class="form-group"><label>Toko / Lokasi Pembelian</label><input placeholder="Contoh: Kyoto Central Store"></div>
-              <div class="form-group"><label>Catatan Khusus untuk Traveler</label><textarea placeholder="Warna hitam ukuran 42, pastikan ada struk asli..."></textarea></div>
-              <button class="btn orange full" onclick="submitCheleaRequestAction()">Kirim Request ke Match Engine</button>
-            </div>
-          `;
-          break;
-
-        case 'traveler':
-          html = `
-            <h3>3. 🌎 Find Traveler (Cari Traveler Berdasarkan Rute)</h3>
-            <div class="grid-3" style="margin-top:15px;">
-              <div class="panel" style="background:var(--bg-dark)">
-                <h4>Traveler: Rian Arinata</h4>
-                <p style="color:var(--muted); font-size:12px; margin-top:5px;">Rute: Tokyo (Jepang) → Jakarta<br>Jadwal: 18 Jun 2026<br>Kapasitas Sisa: 3.5 Kg</p>
-                <button class="btn primary full" style="margin-top:10px;" onclick="showToast('Request dikirim ke Traveler Rian!')">Pilih Traveler Ini</button>
-              </div>
-              <div class="panel" style="background:var(--bg-dark)">
-                <h4>Traveler: Sarah Wijaya</h4>
-                <p style="color:var(--muted); font-size:12px; margin-top:5px;">Rute: Bangkok (Thailand) → Surabaya<br>Jadwal: 22 Jun 2026<br>Kapasitas Sisa: 5.0 Kg</p>
-                <button class="btn primary full" style="margin-top:10px;" onclick="showToast('Request dikirim ke Traveler Sarah!')">Pilih Traveler Ini</button>
-              </div>
-            </div>
-          `;
-          break;
-
-        case 'match':
-          html = `
-            <h3>4. 🤖 Match Engine & Security Engine</h3>
-            <p style="color:var(--muted); font-size:12px; margin-top:5px;">Sistem AI mencocokkan barang, rute, kapasitas, deadline, dan validasi keamanan secara otomatis.</p>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <h4 style="color:var(--green);">● MATCH STATUS: APPROVED (100% Secure)</h4>
-              <p style="color:var(--muted); font-size:12px; margin-top:8px;">
-                • Prohibited Item Check: Lolos (Bukan barang terlarang)<br>
-                • Country Regulation Check: Memenuhi aturan bea cukai<br>
-                • Traveler Verification: KYC Verified (Level 3)<br>
-                • Risk Assessment: Low Risk
-              </p>
-              <button class="btn orange" style="margin-top:10px;" onclick="switchCheleaTab('quote')">Lihat Quote & Kalkulasi Biaya</button>
-            </div>
-          `;
-          break;
-
-        case 'security':
-          html = `
-            <h3>5. 🔐 Security & Risk Engine</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px; line-height:1.6;">Menjaga transaksi dari barang terlarang, pelanggaran pabean, dan fraud identitas dengan enkripsi berlapis.</p>
-            </div>
-          `;
-          break;
-
-        case 'quote':
-          html = `
-            <h3>6. 💰 Quote & Price Breakdown</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px; max-width:500px;">
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:var(--muted);"><span>Harga Barang (Estimasi)</span><strong>Rp 750.000</strong></div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:var(--muted);"><span>Traveler Fee (Jasa Titip)</span><strong>Rp 150.000</strong></div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:var(--muted);"><span>Cargo & Protection</span><strong>Rp 75.000</strong></div>
-              <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:var(--muted);"><span>CHELEA Service Fee</span><strong>Rp 25.000</strong></div>
-              <hr style="border-color:var(--border-color); margin:10px 0;">
-              <div style="display:flex; justify-content:space-between; font-size:16px; font-weight:800; color:var(--cyan); margin-bottom:15px;"><span>TOTAL CHELEA</span><strong>Rp 1.000.000</strong></div>
-              <button class="btn green full" onclick="addCustomToCart('CHELEA Jastip: Matcha Tokyo', 1000000, 'CHELEA'); switchPage('cart');">Masukkan ke Master Cart</button>
-            </div>
-          `;
-          break;
-
-        case 'proof':
-          html = `
-            <h3>7. 📹 Proof of Purchase (Video & Digital Evidence)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <div style="background:#000; height:180px; border-radius:10px; display:flex; align-items:center; justify-content:center; border:1px solid var(--border-color); margin-bottom:15px;">
-                <span style="color:var(--muted);">▶ [ Video Bukti Pembelian & Kondisi Barang di Toko Asal ]</span>
-              </div>
-              <p style="color:var(--muted); font-size:12px;"><strong>Timestamp:</strong> 18 Jun 2026, 14:20 JST • <strong>Lokasi:</strong> Tokyo Store • <strong>Harga Aktual:</strong> ¥6,500 (Rp 750.000)</p>
-            </div>
-          `;
-          break;
-
-        case 'pickup':
-          html = `
-            <h3>8. 📦 Pickup & Handover Management</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px;">Status Pickup: <strong style="color:var(--green);">PICKED UP BY TRAVELER</strong><br>Barang telah diambil oleh traveler dan diverifikasi melalui barcode scanner gudang lokal.</p>
-            </div>
-          `;
-          break;
-
-        case 'handover':
-          html = `
-            <h3>9. ✈️ Traveler Handover (Serah Terima ke Cargo / Penerima)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px;">Scan QR / Digital Signature serah terima barang di bandara tujuan telah terekam secara transparan di sistem.</p>
-            </div>
-          `;
-          break;
-
-        case 'cargo':
-          html = `
-            <h3>10. 🚚 CHELEA Cargo Tracking</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <strong>Tracking Number: CHL-CARGO-992103</strong>
-              <p style="color:var(--muted); font-size:12px; margin-top:5px;">Status: In Transit (Customs Cleared) • Estimasi Sampai: 2 Hari</p>
-            </div>
-          `;
-          break;
-
-        case 'insurance':
-          html = `
-            <h3>11. 🛡️ Protection & Insurance Layer</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px;">Dilindungi Asuransi Perjalanan & Barang Rusak/Hilang senilai hingga Rp 10.000.000 dengan klaim instan.</p>
-            </div>
-          `;
-          break;
-
-        case 'escrow':
-          html = `
-            <h3>12. 💳 Escrow Payment & Dispute Center</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px; line-height:1.6;">
-                <strong>Sistem Dana Aman (Escrow):</strong> Dana Anda ditahan oleh sistem CHELEA dan baru akan diteruskan ke traveler setelah barang dikonfirmasi sampai di tangan Anda dengan selamat.<br><br>
-                Ada kendala? Gunakan tombol di bawah untuk melaporkan masalah:
-              </p>
-              <button class="btn" style="background:#3a1720; color:#ff8d99; margin-top:10px;" onclick="showToast('Laporan Dispute / Komplain dikirim ke Tim Investigasi CHELEA.')">Ajukan Dispute / Komplain</button>
-            </div>
-          `;
-          break;
-
-        case 'tracking':
-          html = `
-            <h3>13. 📍 Live Tracking</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px; text-align:center; padding:40px;">
-              <span style="font-size:35px;">🗺️ [ Visual Map Tracking Pengiriman Barang & Traveler ]</span>
-              <p style="color:var(--muted); font-size:12px; margin-top:15px;">Posisi Saat Ini: Gudang Transit Soekarno-Hatta (CGK)</p>
-            </div>
-          `;
-          break;
-
-        case 'document':
-          html = `
-            <h3>14. 📑 Digital Document & Agreement</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:12px; line-height:1.8;">
-                • Order Agreement ID: AG-CHL-9921<br>
-                • E-Invoice & Customs Declaration Form<br>
-                • Proof of Purchase Digital Hash Record
-              </p>
-            </div>
-          `;
-          break;
-
-        case 'signature':
-          html = `
-            <h3>15. ✍️ Digital Signature (TTE / PSrE Integration)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px;">Terintegrasi dengan Penyelenggara Sertifikasi Elektronik (PSrE) resmi seperti <strong>Privy</strong>, <strong>VIDA</strong>, dan <strong>Xignature</strong>.</p>
-            </div>
-          `;
-          break;
-
-        case 'dispute':
-          html = `
-            <h3>17. ⚠️ Dispute Center</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <p style="color:var(--muted); font-size:13px;">Pusat penyelesaian sengketa barang rusak, tidak sesuai pesanan, atau keterlambatan pengiriman.</p>
-            </div>
-          `;
-          break;
-
-        case 'tmode':
-          html = `
-            <h3>20. 🧳 Traveler Mode (Dashboard Khusus Traveler)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <h4>Dashboard Sampingan Traveler</h4>
-              <p style="color:var(--muted); font-size:12px; margin:8px 0;">• Rute Aktif: Tokyo → Jakarta (Sisa Kapasitas: 3.5 Kg)<br>• Total Pendapatan Titipan: Rp 1.450.000<br>• Permintaan Titipan Masuk: 3 Pending Request</p>
-              <button class="btn primary" onclick="showToast('Berhasil beralih ke Tampilan Traveler Mode!')">Kelola Titipan Saya</button>
-            </div>
-          `;
-          break;
-
-        case 'pmode':
-          html = `
-            <h3>21. 🚚 Partner Mode (Dashboard Cargo / Kurir Partner)</h3>
-            <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-              <h4>Dashboard Partner Logistik</h4>
-              <p style="color:var(--muted); font-size:12px; margin:8px 0;">• Paket Masuk Warehouse: 42 Paket<br>• Siap Dikirim ke Alamat Customer: 15 Paket<br>• Settlement Saldo Partner: Verified</p>
-            </div>
-          `;
-          break;
-      }
-
-      container.innerHTML = html;
+    function addToCart(id) {
+      const item = masterCatalog.find(x => x.id === id);
+      if(!item) return;
+      const exist = cart.find(x => x.id === id);
+      if(exist) { exist.qty++; } else { cart.push({...item, qty: 1}); }
+      saveAndSync();
+      showToast(item.name + " ditambahkan ke Master Cart!");
     }
 
-    function submitCheleaRequestAction() {
-      const item = document.getElementById('reqItem').value || 'Titipan Luar Negeri';
-      const price = Number(document.getElementById('reqPrice').value) || 750000;
-      addCustomToCart('CHELEA Request: ' + item, price, 'CHELEA');
-      switchPage('cart');
-      showToast("Request berhasil dibuat & masuk ke Master Cart!");
+    function addCustomToCart(name, price, type = 'Travel') {
+      const exist = cart.find(x => x.name === name);
+      if(exist) { exist.qty++; } else { cart.push({id: 'cust_'+Date.now(), type, name, price, qty: 1}); }
+      saveAndSync();
+      showToast(name + " ditambahkan ke Master Cart!");
     }
 
-    /* SIMULASI PENCARIAN FLIGHT */
+    function saveAndSync() {
+      localStorage.setItem('hbg_v77_cart', JSON.stringify(cart));
+      localStorage.setItem('hbg_v77_orders', JSON.stringify(orders));
+      const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('cartBadge').textContent = totalQty;
+    }
+
+    function renderAllData() {
+      document.getElementById('travelCatalogGrid').innerHTML = masterCatalog.map(i => cardHTML(i)).join('');
+      renderCartUI();
+      renderOrdersUI();
+    }
+
+    function cardHTML(item) {
+      let icon = '🌟';
+      if(item.type === 'Flight') icon = '✈️';
+      else if(item.type === 'Stay') icon = '🏨';
+      else if(item.type === 'Experience') icon = '🏄';
+
+      return `
+        <div class="product-card">
+          <div>
+            <div class="product-image" style="background-image:url('${item.image}');"></div>
+            <div class="product-body">
+              <span class="product-category">${item.type}</span>
+              <h4 class="product-title">${icon} ${item.name}</h4>
+              <p class="product-desc">${item.desc}</p>
+            </div>
+          </div>
+          <div class="product-body" style="padding-top:0;">
+            <div class="product-price">
+              <span>Harga</span>
+              <strong>${formatIDR(item.price)}</strong>
+            </div>
+            <button class="btn btn-primary full mt-2" onclick="addToCart('${item.id}')">+ Masukkan Keranjang</button>
+          </div>
+        </div>
+      `;
+    }
+
     function searchFlightAction() {
       showToast("Mencari penerbangan terbaik...");
       setTimeout(() => {
-        const container = document.getElementById('flightResultContainer');
-        container.innerHTML = `
-          <div class="panel" style="background:var(--bg-dark)">
+        document.getElementById('flightResultContainer').innerHTML = `
+          <div class="panel" style="background:var(--card);">
             <h4>Garuda Indonesia (GA-402)</h4>
-            <p style="color:var(--muted); font-size:12px; margin:5px 0;">CGK (08:00) → DPS (11:00) • Direct</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Rp 1.450.000</div>
-            <button class="btn primary full" onclick="addCustomToCart('Flight: Garuda GA-402', 1450000, 'Flight')">Booking Flight</button>
-          </div>
-          <div class="panel" style="background:var(--bg-dark)">
-            <h4>AirAsia (QZ-550)</h4>
-            <p style="color:var(--muted); font-size:12px; margin:5px 0;">CGK (10:30) → DPS (13:20) • Direct</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Rp 950.000</div>
-            <button class="btn primary full" onclick="addCustomToCart('Flight: AirAsia QZ-550', 950000, 'Flight')">Booking Flight</button>
+            <p class="text-muted" style="font-size:12px; margin:5px 0;">CGK (08:00) → DPS (11:00) • Direct</p>
+            <strong style="color:var(--primary); font-size:15px;">Rp 1.450.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Flight: Garuda GA-402', 1450000, 'Flight')">Booking Flight</button>
           </div>
         `;
-        showToast("Hasil pencarian penerbangan ditemukan!");
-      }, 800);
+        showToast("Hasil penerbangan ditemukan!");
+      }, 600);
     }
 
-    /* SIMULASI PENCARIAN HOTEL & STAY */
     function searchHotelAction() {
       showToast("Mencari akomodasi...");
       setTimeout(() => {
-        const container = document.getElementById('hotelResultContainer');
-        container.innerHTML = `
-          <div class="panel" style="background:var(--bg-dark)">
+        document.getElementById('hotelResultContainer').innerHTML = `
+          <div class="panel" style="background:var(--card);">
             <h4>The Seminyak Beach Resort</h4>
-            <p style="color:var(--muted); font-size:12px; margin:5px 0;">Hotel Bintang 5 • Dekat Pantai • Breakfast Included</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Rp 2.100.000 / malam</div>
-            <button class="btn primary full" onclick="addCustomToCart('Hotel: The Seminyak Resort', 2100000, 'Stay')">Pilih Kamar</button>
+            <p class="text-muted" style="font-size:12px; margin:5px 0;">Hotel Bintang 5 • Beachfront • Breakfast</p>
+            <strong style="color:var(--primary); font-size:15px;">Rp 2.100.000 / malam</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Hotel: Seminyak Resort', 2100000, 'Stay')">Pilih Kamar</button>
           </div>
         `;
         showToast("Akomodasi ditemukan!");
-      }, 800);
+      }, 600);
+    }
+
+    function submitCheleaRequest() {
+      const item = document.getElementById('chItem').value || 'Titipan Barang';
+      const price = Number(document.getElementById('chPrice').value) || 750000;
+      addCustomToCart('CHELEA Jastip: ' + item, price, 'CHELEA');
+      switchPage('cart');
+      showToast("Request CHELEA berhasil masuk ke Master Cart!");
     }
 
     function renderCartUI() {
       const container = document.getElementById('cartItemsContainer');
       if(!cart.length) {
-        container.innerHTML = `<p style="color:var(--muted); padding:20px 0;">Master Cart Anda masih kosong.</p>`;
+        container.innerHTML = `<p class="text-muted">Master Cart Anda masih kosong.</p>`;
         document.getElementById('cartSummaryQty').textContent = 0;
         document.getElementById('cartSummarySubtotal').textContent = formatIDR(0);
         document.getElementById('cartSummaryTotal').textContent = formatIDR(0);
@@ -770,12 +479,12 @@
         subtotal += item.price * item.qty;
         totalQty += item.qty;
         return `
-          <div class="panel" style="background:var(--bg-dark); display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div class="flex-between mb-2" style="padding:10px; background:var(--card); border-radius:10px; border:1px solid var(--line);">
             <div>
               <strong>${item.name}</strong>
-              <p style="color:var(--muted); font-size:11px;">${item.type} • ${formatIDR(item.price)} × ${item.qty}</p>
+              <div class="text-muted" style="font-size:11px;">[${item.type}] ${formatIDR(item.price)} × ${item.qty}</div>
             </div>
-            <button class="btn" style="background:#3a1720; color:#ff8d99; padding:5px 10px;" onclick="removeFromCart('${item.id || item.name}')">Hapus</button>
+            <button class="btn btn-small" style="background:rgba(255,102,122,.15); color:var(--red); border-color:transparent;" onclick="removeFromCart('${item.id || item.name}')">Hapus</button>
           </div>
         `;
       }).join('');
@@ -803,34 +512,21 @@
       document.getElementById('globalModal').classList.add('show');
     }
 
-    /* AI TRIP PLANNER MODAL */
     function openAiPlannerModal() {
       openModal("✦ AI Journey & Experience Planner", `
         <div class="form-group"><label>Destinasi Tujuan</label><input id="aiDest" value="Bali"></div>
-        <div class="form-group"><label>Durasi</label><select id="aiDur"><option>3 Hari</option><option>4 Hari 3 Malam</option><option>7 Hari</option></select></div>
-        <div class="form-group"><label>Budget (IDR)</label><input id="aiBudget" value="Rp 8.500.000"></div>
-        <div class="form-group"><label>Minat & Hobi (Contoh: Photography, Fine Dining, Beach)</label><input id="aiInt" value="Photography, Fine Dining, Beach"></div>
-      `, `<button class="btn primary" onclick="generateAiRoute()">Generate Smart Journey & Package</button>`);
-    }
-
-    function generateAiRoute() {
-      closeModal();
-      showToast("AI berhasil menyusun Smart Itinerary, eSIM & Request CHELEA!");
-      addToCart('tr1');
-      switchPage('cart');
+        <div class="form-group"><label>Durasi</label><select><option>3 Hari</option><option>5 Hari</option></select></div>
+        <div class="form-group"><label>Budget (IDR)</label><input value="Rp 8.500.000"></div>
+      `, `<button class="btn btn-primary" onclick="closeModal();showToast('AI berhasil menyusun Smart Itinerary!');addToCart('tr1');switchPage('cart');">Generate & Masukkan Cart</button>`);
     }
 
     function proceedToPayment() {
-      if(!cart.length) {
-        showToast("Master Cart masih kosong!");
-        return;
-      }
-      openModal("Master Payment & Escrow", `
-        <p style="color:var(--muted); font-size:12px; margin-bottom:15px;">Pilih metode pembayaran aman terintegrasi (Escrow Protected):</p>
+      if(!cart.length) return showToast("Master Cart kosong!");
+      openModal("Master Checkout & Escrow Payment", `
+        <p class="text-muted" style="font-size:12px; margin-bottom:15px;">Pilih metode pembayaran aman (Escrow Protected):</p>
         <div class="form-group"><label><input type="radio" name="pay" checked> QRIS (Instant)</label></div>
         <div class="form-group"><label><input type="radio" name="pay"> Virtual Account (BCA/Mandiri)</label></div>
-        <div class="form-group"><label><input type="radio" name="pay"> Kartu Kredit / Debit (Escrow)</label></div>
-      `, `<button class="btn green full" onclick="completePayment()">Konfirmasi & Bayar Sekarang</button>`);
+      `, `<button class="btn btn-primary" onclick="completePayment()">Konfirmasi & Bayar</button>`);
     }
 
     function completePayment() {
@@ -846,27 +542,27 @@
       cart = [];
       saveAndSync();
       closeModal();
-      showToast("Pembayaran Sukses! Dana ditahan di Escrow Aman.");
+      showToast("Pembayaran Sukses! Order diterbitkan.");
       switchPage('orders');
     }
 
     function renderOrdersUI() {
       const container = document.getElementById('ordersListContainer');
       if(!orders.length) {
-        container.innerHTML = `<p style="color:var(--muted); padding:20px 0;">Belum ada riwayat master order.</p>`;
+        container.innerHTML = `<p class="text-muted">Belum ada riwayat master order.</p>`;
         return;
       }
       container.innerHTML = orders.map(ord => `
-        <div class="panel" style="background:var(--bg-dark); margin-bottom:15px;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+        <div class="panel" style="background:var(--card);">
+          <div class="flex-between mb-1" style="border-bottom:1px solid var(--line); padding-bottom:8px;">
             <strong>Order ID: ${ord.id}</strong>
-            <span style="color:var(--green); font-weight:700;">${ord.status}</span>
+            <span style="color:var(--primary); font-size:11px; font-weight:800;">${ord.status}</span>
           </div>
-          <p style="color:var(--muted); font-size:12px; margin-bottom:8px;">Tanggal Transaksi: ${ord.date}</p>
-          <div style="font-size:13px; margin-bottom:10px;">
+          <div class="text-muted" style="font-size:11px; margin-bottom:8px;">Tanggal: ${ord.date}</div>
+          <div style="font-size:12px; margin-bottom:10px;">
             ${ord.items.map(i => `<div>• [${i.type}] ${i.name} (x${i.qty}) — ${formatIDR(i.price * i.qty)}</div>`).join('')}
           </div>
-          <div style="text-align:right; font-weight:800; color:var(--cyan);">Total Master Order: ${formatIDR(ord.total)}</div>
+          <div style="text-align:right; font-weight:900; color:var(--primary);">Total: ${formatIDR(ord.total)}</div>
         </div>
       `).join('');
     }
@@ -874,7 +570,6 @@
     // Inisialisasi awal
     saveAndSync();
     renderAllData();
-    setTimeout(() => { switchCheleaTab('home'); }, 200);
   </script>
 </body>
 </html>
