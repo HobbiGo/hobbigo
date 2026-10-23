@@ -60,6 +60,17 @@
     display: flex; align-items: center; justify-content: center; font-weight: 700;
   }
 
+  /* SUB-NAVBAR KHUSUS TRAVEL */
+  .sub-nav {
+    background: rgba(7, 22, 44, 0.8);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 30px; display: flex; gap: 15px; overflow-x: auto;
+  }
+  .sub-nav button {
+    background: transparent; border: none; color: var(--muted); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; transition: 0.2s;
+  }
+  .sub-nav button:hover, .sub-nav button.active { color: var(--cyan); background: rgba(39, 217, 255, 0.1); }
+
   /* MAIN LAYOUT */
   main { flex: 1; max-width: 1300px; width: 100%; margin: 0 auto; padding: 30px 20px; }
   .page { display: none; }
@@ -113,15 +124,12 @@
 
     <ul class="nav-menu">
       <li><a id="nav-home" class="active" onclick="switchPage('home')">Home</a></li>
-      <li><a id="nav-travel" onclick="switchPage('travel')">Travel</a></li>
-      <li><a id="nav-flight-engine" onclick="switchPage('flight-engine')">✈️ Flight</a></li>
-      <li><a id="nav-hotel-engine" onclick="switchPage('hotel-engine')">🏨 Hotel</a></li>
-      <li><a id="nav-rental-engine" onclick="switchPage('rental-engine')">🚗 Rental</a></li>
-      <li><a id="nav-telku" onclick="switchPage('telku')">TELKU eSIM</a></li>
-      <li><a id="nav-chelea" onclick="switchPage('chelea')">CHELEA Delivery</a></li>
-      <li><a id="nav-cart" onclick="switchPage('cart')">Master Cart</a></li>
-      <li><a id="nav-orders" onclick="switchPage('orders')">Master Orders</a></li>
-      <li><a id="nav-profile" onclick="switchPage('profile')">Profile</a></li>
+      <li><a id="nav-travel" onclick="switchPage('travel')">✈️ HOBBIGO Travel</a></li>
+      <li><a id="nav-telku" onclick="switchPage('telku')">📶 TELKU eSIM</a></li>
+      <li><a id="nav-chelea" onclick="switchPage('chelea')">📦 CHELEA Delivery</a></li>
+      <li><a id="nav-cart" onclick="switchPage('cart')">🛒 Master Cart</a></li>
+      <li><a id="nav-orders" onclick="switchPage('orders')">📋 Master Orders</a></li>
+      <li><a id="nav-profile" onclick="switchPage('profile')">👤 Profile</a></li>
     </ul>
 
     <div class="top-actions">
@@ -129,6 +137,16 @@
       <button class="btn primary" onclick="openAiPlannerModal()">✦ AI Journey</button>
     </div>
   </header>
+
+  <!-- SUB-NAVBAR TURUNAN HOBBIGO TRAVEL -->
+  <div class="sub-nav" id="travelSubNav" style="display: none;">
+    <span style="color: var(--cyan); font-size: 11px; font-weight: 800; display: flex; align-items: center;">TRAVEL MENU:</span>
+    <button id="sub-overview" onclick="switchTravelTab('overview')" class="active">Overview & AI</button>
+    <button id="sub-flight" onclick="switchTravelTab('flight')">✈️ Flight Engine</button>
+    <button id="sub-hotel" onclick="switchTravelTab('hotel')">🏨 Hotel & Stay</button>
+    <button id="sub-rental" onclick="switchTravelTab('rental')">🚗 Rental Center</button>
+    <button id="sub-event" onclick="switchTravelTab('event')">🎉 Create Event / Trip</button>
+  </div>
 
   <main>
     <!-- 1. HOME / DASHBOARD EKOSISTEM -->
@@ -141,23 +159,23 @@
         </p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
           <button class="btn primary" onclick="openAiPlannerModal()">✦ Buka AI Journey Planner</button>
-          <button class="btn" onclick="switchPage('flight-engine')">Cari Penerbangan (Flight)</button>
-          <button class="btn green" onclick="switchPage('rental-engine')">Pusat Rental (Rental Center)</button>
+          <button class="btn" onclick="switchPage('travel'); switchTravelTab('flight')">Cari Penerbangan (Flight)</button>
+          <button class="btn green" onclick="switchPage('travel'); switchTravelTab('rental')">Pusat Rental & Kendaraan</button>
         </div>
       </div>
 
       <div class="grid-3" style="margin-top:25px;">
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('flight-engine')">
+        <div class="panel" style="cursor:pointer;" onclick="switchPage('travel'); switchTravelTab('flight')">
           <div style="font-size:24px; margin-bottom:10px;">✈️</div>
           <h3>Flight Engine</h3>
           <p style="color:var(--muted); font-size:12px; margin-top:8px;">Cari, bandingkan, dan pesan penerbangan One Way, Round Trip, hingga Multi-City.</p>
         </div>
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('hotel-engine')">
+        <div class="panel" style="cursor:pointer;" onclick="switchPage('travel'); switchTravelTab('hotel')">
           <div style="font-size:24px; margin-bottom:10px;">🏨</div>
           <h3>Hotel & Stay</h3>
           <p style="color:var(--muted); font-size:12px; margin-top:8px;">Pesan hotel, villa, resort, apartemen, hingga serviced apartment terbaik.</p>
         </div>
-        <div class="panel" style="cursor:pointer;" onclick="switchPage('rental-engine')">
+        <div class="panel" style="cursor:pointer;" onclick="switchPage('travel'); switchTravelTab('rental')">
           <div style="font-size:24px; margin-bottom:10px;">🚗</div>
           <h3>Rental Center</h3>
           <p style="color:var(--muted); font-size:12px; margin-top:8px;">Sewa mobil dengan supir, motor lepas kunci, bus, hingga boat/yacht transfer.</p>
@@ -165,85 +183,103 @@
       </div>
     </section>
 
-    <!-- 2. HOBBIGO TRAVEL GENERAL MARKETPLACE -->
+    <!-- 2. HOBBIGO TRAVEL MASTER HUB (DENGAN SUB-TAB TURUNAN) -->
     <section class="page" id="page-travel">
-      <div class="panel">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-          <div>
-            <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO TRAVEL ENGINE</span>
-            <h2>Marketplace Pengalaman & Wisata</h2>
+      <!-- Tab 1: Overview & Marketplace -->
+      <div class="travel-tab-content" id="tab-overview">
+        <div class="panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div>
+              <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO TRAVEL ENGINE</span>
+              <h2>Marketplace Pengalaman & Wisata Global</h2>
+            </div>
+            <button class="btn primary" onclick="openAiPlannerModal()">✦ AI Journey Planner</button>
           </div>
-          <button class="btn primary" onclick="openAiPlannerModal()">✦ AI Journey Planner</button>
+          <div class="grid-3" id="travelCatalogGrid" style="margin-top:15px;"></div>
         </div>
-        <div class="grid-3" id="travelCatalogGrid" style="margin-top:15px;"></div>
       </div>
-    </section>
 
-    <!-- 3. FLIGHT ENGINE MODULE (TAMBAHAN BARU) -->
-    <section class="page" id="page-flight-engine">
-      <div class="panel">
-        <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO FLIGHT MARKETPLACE</span>
-        <h2>Cari & Bandingkan Penerbangan</h2>
-        <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
+      <!-- Tab 2: Flight Engine -->
+      <div class="travel-tab-content" id="tab-flight" style="display: none;">
+        <div class="panel">
+          <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO FLIGHT MARKETPLACE</span>
+          <h2>Cari & Bandingkan Penerbangan</h2>
+          <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
+            <div class="grid-2">
+              <div class="form-group"><label>Kota Asal (Origin)</label><input id="flOrigin" value="Jakarta (CGK)"></div>
+              <div class="form-group"><label>Kota Tujuan (Destination)</label><input id="flDest" value="Bali (DPS)"></div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group"><label>Tanggal Keberangkatan</label><input type="date" value="2026-06-12"></div>
+              <div class="form-group"><label>Tipe Perjalanan</label><select><option>One Way (Sekali Jalan)</option><option>Round Trip (Pulang-Pergi)</option><option>Multi-City</option></select></div>
+            </div>
+            <button class="btn primary full" onclick="searchFlightAction()">Cari Penerbangan Terbaik</button>
+          </div>
+          <div id="flightResultContainer" class="grid-3" style="margin-top:20px;"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Hotel & Stay -->
+      <div class="travel-tab-content" id="tab-hotel" style="display: none;">
+        <div class="panel">
+          <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO HOTEL & STAY</span>
+          <h2>Cari Akomodasi (Hotel, Villa, Resort, Apartment)</h2>
+          <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
+            <div class="grid-2">
+              <div class="form-group"><label>Lokasi / Destinasi</label><input id="htLoc" value="Seminyak, Bali"></div>
+              <div class="form-group"><label>Tipe Properti</label><select><option>Semua Jenis</option><option>Villa</option><option>Hotel Bintang 5</option><option>Resort</option><option>Serviced Apartment</option></select></div>
+            </div>
+            <button class="btn primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
+          </div>
+          <div id="hotelResultContainer" class="grid-3" style="margin-top:20px;"></div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Rental Center -->
+      <div class="travel-tab-content" id="tab-rental" style="display: none;">
+        <div class="panel">
+          <span style="color:var(--orange); font-size:11px; font-weight:800;">HOBBIGO RENTAL CENTER</span>
+          <h2>Sewa Kendaraan (Mobil, Motor, Bus, Boat & Driver)</h2>
+          <div class="grid-3" style="margin-top:15px;">
+            <div class="panel" style="background:var(--bg-dark)">
+              <h4>🚗 Car Rental + Driver</h4>
+              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Alphard, Avanza, Innova dengan supir profesional & rute tracking.</p>
+              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 350.000 / hari</div>
+              <button class="btn primary full" onclick="addCustomToCart('Car Rental + Driver', 350000, 'Transport')">Sewa Mobil</button>
+            </div>
+            <div class="panel" style="background:var(--bg-dark)">
+              <h4>🛵 Motor Rental</h4>
+              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Lepas kunci atau antar langsung ke lokasi hotel Anda.</p>
+              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 75.000 / hari</div>
+              <button class="btn primary full" onclick="addCustomToCart('Motor Rental', 75000, 'Transport')">Sewa Motor</button>
+            </div>
+            <div class="panel" style="background:var(--bg-dark)">
+              <h4>🛥️ Boat & Yacht Charter</h4>
+              <p style="color:var(--muted); font-size:12px; margin:8px 0;">Fast boat penyeberangan antar pulau atau private yacht charter.</p>
+              <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 450.000</div>
+              <button class="btn primary full" onclick="addCustomToCart('Boat / Island Transfer', 450000, 'Transport')">Sewa Boat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Create Event / Trip -->
+      <div class="travel-tab-content" id="tab-event" style="display: none;">
+        <div class="panel" style="max-width:650px; margin:0 auto;">
+          <h2>🎉 Create Your Own Event, Group & Corporate Trip</h2>
+          <p style="color:var(--muted); font-size:12px; margin-bottom:20px;">Susun perjalanan kustom, atur shared budget untuk grup, atau kelola corporate event.</p>
+          <div class="form-group"><label>Nama Event / Destinasi</label><input id="customEventName" placeholder="Contoh: Annual Corporate Retreat Bali"></div>
           <div class="grid-2">
-            <div class="form-group"><label>Kota Asal (Origin)</label><input id="flOrigin" value="Jakarta (CGK)"></div>
-            <div class="form-group"><label>Kota Tujuan (Destination)</label><input id="flDest" value="Bali (DPS)"></div>
+            <div class="form-group"><label>Tanggal Mulai</label><input type="date"></div>
+            <div class="form-group"><label>Jumlah Peserta</label><input type="number" value="10"></div>
           </div>
-          <div class="grid-2">
-            <div class="form-group"><label>Tanggal Keberangkatan</label><input type="date" value="2026-06-12"></div>
-            <div class="form-group"><label>Tipe Perjalanan</label><select><option>One Way (Sekali Jalan)</option><option>Round Trip (Pulang-Pergi)</option><option>Multi-City</option></select></div>
-          </div>
-          <button class="btn primary full" onclick="searchFlightAction()">Cari Penerbangan Terbaik</button>
-        </div>
-        <div id="flightResultContainer" class="grid-3" style="margin-top:20px;"></div>
-      </div>
-    </section>
-
-    <!-- 4. HOTEL & STAY ENGINE MODULE (TAMBAHAN BARU) -->
-    <section class="page" id="page-hotel-engine">
-      <div class="panel">
-        <span style="color:var(--cyan); font-size:11px; font-weight:800;">HOBBIGO HOTEL & STAY</span>
-        <h2>Cari Akomodasi (Hotel, Villa, Resort, Apartment)</h2>
-        <div class="panel" style="background:var(--bg-dark); margin-top:15px;">
-          <div class="grid-2">
-            <div class="form-group"><label>Lokasi / Destinasi</label><input id="htLoc" value="Seminyak, Bali"></div>
-            <div class="form-group"><label>Tipe Properti</label><select><option>Semua Jenis</option><option>Villa</option><option>Hotel Bintang 5</option><option>Resort</option><option>Serviced Apartment</option></select></div>
-          </div>
-          <button class="btn primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
-        </div>
-        <div id="hotelResultContainer" class="grid-3" style="margin-top:20px;"></div>
-      </div>
-    </section>
-
-    <!-- 5. RENTAL CENTER MODULE (TAMBAHAN BARU) -->
-    <section class="page" id="page-rental-engine">
-      <div class="panel">
-        <span style="color:var(--orange); font-size:11px; font-weight:800;">HOBBIGO RENTAL CENTER</span>
-        <h2>Sewa Kendaraan (Mobil, Motor, Bus, Boat & Driver)</h2>
-        <div class="grid-3" style="margin-top:15px;">
-          <div class="panel" style="background:var(--bg-dark)">
-            <h4>🚗 Car Rental + Driver</h4>
-            <p style="color:var(--muted); font-size:12px; margin:8px 0;">Alphard, Avanza, Innova dengan supir profesional & rute tracking.</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 350.000 / hari</div>
-            <button class="btn primary full" onclick="addCustomToCart('Car Rental + Driver', 350000, 'Transport')">Sewa Mobil</button>
-          </div>
-          <div class="panel" style="background:var(--bg-dark)">
-            <h4>🛵 Motor Rental</h4>
-            <p style="color:var(--muted); font-size:12px; margin:8px 0;">Lepas kunci atau antar langsung ke lokasi hotel Anda.</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 75.000 / hari</div>
-            <button class="btn primary full" onclick="addCustomToCart('Motor Rental', 75000, 'Transport')">Sewa Motor</button>
-          </div>
-          <div class="panel" style="background:var(--bg-dark)">
-            <h4>🛥️ Boat & Yacht Charter</h4>
-            <p style="color:var(--muted); font-size:12px; margin:8px 0;">Fast boat penyeberangan antar pulau atau private yacht charter.</p>
-            <div style="color:var(--cyan); font-weight:800; margin-bottom:10px;">Mulai Rp 450.000</div>
-            <button class="btn primary full" onclick="addCustomToCart('Boat / Island Transfer', 450000, 'Transport')">Sewa Boat</button>
-          </div>
+          <div class="form-group"><label>Tipe Kategori</label><select><option>Corporate Meeting & Retreat</option><option>Group Trip (Shared Budget & Voting)</option><option>Private Family Event</option></select></div>
+          <button class="btn primary full" onclick="showToast('Event / Trip Kustom Berhasil Dibuat!')">Publish & Masukkan Workspace</button>
         </div>
       </div>
     </section>
 
-    <!-- 6. TELKU ESIM LAYER -->
+    <!-- 3. TELKU ESIM LAYER -->
     <section class="page" id="page-telku">
       <div class="panel">
         <span style="color:var(--cyan); font-size:11px; font-weight:800;">TELKU CONNECTIVITY LAYER</span>
@@ -253,7 +289,7 @@
       </div>
     </section>
 
-    <!-- 7. CHELEA COMMERCE & LOGISTICS -->
+    <!-- 4. CHELEA COMMERCE & LOGISTICS -->
     <section class="page" id="page-chelea">
       <div class="panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
@@ -267,7 +303,7 @@
       </div>
     </section>
 
-    <!-- 8. MASTER CART -->
+    <!-- 5. MASTER CART -->
     <section class="page" id="page-cart">
       <div class="panel grid-2">
         <div>
@@ -286,7 +322,7 @@
       </div>
     </section>
 
-    <!-- 9. MASTER ORDERS -->
+    <!-- 6. MASTER ORDERS -->
     <section class="page" id="page-orders">
       <div class="panel">
         <h2>Master Orders & Struk Digital</h2>
@@ -295,7 +331,7 @@
       </div>
     </section>
 
-    <!-- 10. MASTER PROFILE -->
+    <!-- 7. MASTER PROFILE -->
     <section class="page" id="page-profile">
       <div class="panel grid-2">
         <div>
@@ -346,8 +382,8 @@
       { id: 'c2', type: 'CHELEA', name: 'Protected Cargo Delivery', price: 450000, desc: 'Pengiriman barang aman sampai ke rumah dengan asuransi.', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80' }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('hbg_master_cart_v4') || '[]');
-    let orders = JSON.parse(localStorage.getItem('hbg_master_orders_v4') || '[]');
+    let cart = JSON.parse(localStorage.getItem('hbg_master_cart_v5') || '[]');
+    let orders = JSON.parse(localStorage.getItem('hbg_master_orders_v5') || '[]');
 
     function formatIDR(val) {
       return "Rp " + Number(val).toLocaleString("id-ID");
@@ -368,8 +404,24 @@
       const navEl = document.getElementById('nav-' + pageId);
       if(navEl) navEl.classList.add('active');
 
+      // Tampilkan atau sembunyikan sub-navbar HOBBIGO Travel
+      const subNav = document.getElementById('travelSubNav');
+      if(pageId === 'travel') {
+        subNav.style.display = 'flex';
+      } else {
+        subNav.style.display = 'none';
+      }
+
       window.scrollTo({top:0, behavior:'smooth'});
       renderAllData();
+    }
+
+    function switchTravelTab(tabId) {
+      document.querySelectorAll('.travel-tab-content').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.sub-nav button').forEach(b => b.classList.remove('active'));
+
+      document.getElementById('tab-' + tabId).style.display = 'block';
+      document.getElementById('sub-' + tabId).classList.add('active');
     }
 
     function addToCart(id) {
@@ -389,8 +441,8 @@
     }
 
     function saveAndSync() {
-      localStorage.setItem('hbg_master_cart_v4', JSON.stringify(cart));
-      localStorage.setItem('hbg_master_orders_v4', JSON.stringify(orders));
+      localStorage.setItem('hbg_master_cart_v5', JSON.stringify(cart));
+      localStorage.setItem('hbg_master_orders_v5', JSON.stringify(orders));
       const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
       document.getElementById('cartBadge').textContent = totalQty;
     }
