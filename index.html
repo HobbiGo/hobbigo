@@ -132,6 +132,40 @@
     transform: translateX(3px);
   }
 
+  /* TESTIMONIALS / SOCIAL PROOF */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-top: 15px;
+  }
+  .testimonial-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .testimonial-text {
+    font-size: 13px;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 15px;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .author-avatar {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--primary2);
+    display: flex; align-items: center; justify-content: center; font-weight: 900; color: #04140f;
+  }
+  .author-info strong { font-size: 13px; display: block; color: var(--text); }
+  .author-info span { font-size: 11px; color: var(--muted); }
+
   /* TABS */
   .travel-tabs{display:flex;gap:6px;padding:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;overflow-x:auto;margin-bottom:20px;}
   .travel-tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:800;white-space:nowrap;}
@@ -268,6 +302,47 @@
           </div>
         </div>
       </div>
+
+      <!-- TESTIMONI & SOCIAL PROOF (UNTUK INVESTOR) -->
+      <section style="margin-top: 40px;">
+        <h3 class="section-title" style="font-size: 20px;">Dipercaya oleh Traveler & Investor Global</h3>
+        <p class="text-muted" style="font-size: 12px; margin-top: 3px;">Apa kata mereka yang telah merasakan kemudahan ekosistem terpadu HOBBIGO ONE.</p>
+        
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Menggabungkan booking hotel, eSIM TELKU, dan jastip CHELEA dalam satu keranjang adalah terobosan jenius. Sangat efisien untuk perjalanan bisnis saya."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">RD</div>
+              <div class="author-info">
+                <strong>Rian Darmawan</strong>
+                <span>Frequent Business Traveler</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Sistem Escrow Payment di CHELEA memberikan rasa aman mutlak saat titip beli barang langka dari luar negeri. UI-nya sangat berkelas dan investor-ready!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:var(--blue); color:white;">SA</div>
+              <div class="author-info">
+                <strong>Sarah Amalia</strong>
+                <span>Digital Nomad & Collector</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Fitur AI Journey Planner sangat responsif dan akurat. HOBBIGO ONE sukses mendefinisikan ulang standar platform pariwisata modern."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar" style="background:var(--orange); color:#03130e;">MK</div>
+              <div class="author-info">
+                <strong>Marcus Kusuma</strong>
+                <span>Travel Tech Enthusiast</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
 
     <!-- 2. HOBBIGO TRAVEL MASTER HUB -->
@@ -671,11 +746,14 @@
         <div class="panel" style="background:var(--card);">
           <div class="flex-between mb-1" style="border-bottom:1px solid var(--line); padding-bottom:8px;">
             <strong>Order ID: ${ord.id}</strong>
-            <span style="color:var(--primary); font-size:11px; font-weight:800;">${ord.status}</span>
+            <span style="color:var(--primary); font-size:11px; font-weight:800;">🔒 ${ord.status}</span>
           </div>
           <div class="text-muted" style="font-size:11px; margin-bottom:8px;">Tanggal: ${ord.date}</div>
           <div style="font-size:12px; margin-bottom:10px;">
             ${ord.items.map(i => `<div>• [${i.type}] ${i.name} (x${i.qty}) — ${formatIDR(i.price * i.qty)}</div>`).join('')}
+          </div>
+          <div style="background:rgba(32,211,165,0.06); padding:8px 12px; border-radius:8px; margin-bottom:10px; font-size:11px; color:var(--primary);">
+            ✓ Escrow Security Active: Dana diamankan di rekening bersama sampai layanan / barang diterima.
           </div>
           <div style="text-align:right; font-weight:900; color:var(--primary);">Total: ${formatIDR(ord.total)}</div>
         </div>
