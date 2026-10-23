@@ -166,6 +166,33 @@
   .author-info strong { font-size: 13px; display: block; color: var(--text); }
   .author-info span { font-size: 11px; color: var(--muted); }
 
+  /* TRACKING TIMELINE STYLES */
+  .tracking-steps {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0;
+    position: relative;
+    padding: 0 10px;
+  }
+  .tracking-step {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .step-dot {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--line);
+    color: var(--muted); font-size: 10px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; margin: auto;
+    border: 2px solid var(--bg2);
+  }
+  .tracking-step.active .step-dot {
+    background: var(--primary); color: #04140f;
+  }
+  .step-label {
+    font-size: 10px; color: var(--muted); margin-top: 5px; display: block; max-width: 80px;
+  }
+  .tracking-step.active .step-label { color: var(--primary); font-weight: 800; }
+
   /* TABS */
   .travel-tabs{display:flex;gap:6px;padding:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;overflow-x:auto;margin-bottom:20px;}
   .travel-tabs button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);padding:10px 14px;border-radius:9px;font-size:12px;font-weight:800;white-space:nowrap;}
@@ -497,8 +524,8 @@
     <!-- 6. MASTER ORDERS -->
     <section class="page" id="page-orders">
       <div class="panel">
-        <h2>Master Orders & Struk Digital</h2>
-        <p class="text-muted" style="font-size:13px;">Pusat riwayat pesanan seluruh layanan perjalanan, eSIM, dan jastip Anda.</p>
+        <h2>Master Orders & Live Tracking Struk</h2>
+        <p class="text-muted" style="font-size:13px;">Pusat riwayat pesanan lintas pilar lengkap dengan status Escrow & Live Tracking Logistik.</p>
         <div id="ordersListContainer" class="mt-2"></div>
       </div>
     </section>
@@ -748,13 +775,35 @@
             <strong>Order ID: ${ord.id}</strong>
             <span style="color:var(--primary); font-size:11px; font-weight:800;">🔒 ${ord.status}</span>
           </div>
-          <div class="text-muted" style="font-size:11px; margin-bottom:8px;">Tanggal: ${ord.date}</div>
-          <div style="font-size:12px; margin-bottom:10px;">
+          <div class="text-muted" style="font-size:11px; margin-bottom:10px;">Tanggal Pesanan: ${ord.date}</div>
+          
+          <div style="font-size:12px; margin-bottom:12px;">
             ${ord.items.map(i => `<div>• [${i.type}] ${i.name} (x${i.qty}) — ${formatIDR(i.price * i.qty)}</div>`).join('')}
           </div>
-          <div style="background:rgba(32,211,165,0.06); padding:8px 12px; border-radius:8px; margin-bottom:10px; font-size:11px; color:var(--primary);">
-            ✓ Escrow Security Active: Dana diamankan di rekening bersama sampai layanan / barang diterima.
+
+          <!-- LIVE TRACKING & ESCROW TIMELINE -->
+          <div style="background:var(--bg3); padding:12px; border-radius:12px; border:1px solid var(--line); margin-bottom:12px;">
+            <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:8px;">📍 Live Tracking & Escrow Progress</div>
+            <div class="tracking-steps">
+              <div class="tracking-step active">
+                <div class="step-dot">✓</div>
+                <span class="step-label">Escrow Secured</span>
+              </div>
+              <div class="tracking-step active">
+                <div class="step-dot">2</div>
+                <span class="step-label">Item / eSIM Processed</span>
+              </div>
+              <div class="tracking-step">
+                <div class="step-dot">3</div>
+                <span class="step-label">Air Shipping / Active</span>
+              </div>
+              <div class="tracking-step">
+                <div class="step-dot">4</div>
+                <span class="step-label">Delivered & Released</span>
+              </div>
+            </div>
           </div>
+
           <div style="text-align:right; font-weight:900; color:var(--primary);">Total: ${formatIDR(ord.total)}</div>
         </div>
       `).join('');
