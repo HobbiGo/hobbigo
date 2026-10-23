@@ -55,6 +55,10 @@
   .btn-small{padding:8px 11px;font-size:11px;}
   .btn.full{width:100%;}
 
+  /* SOCIAL AUTH BUTTONS */
+  .btn-social{background:#0a1829;border:1px solid var(--line);color:var(--white);width:100%;padding:11px;border-radius:10px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;transition:.2s;}
+  .btn-social:hover{background:var(--card);border-color:var(--primary);}
+
   /* CARDS & PANELS */
   .card{background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.12);}
   .panel{padding:22px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;margin-bottom:20px;}
@@ -285,6 +289,7 @@
       </div>
       <nav class="nav">
         <button id="nav-home" class="active" onclick="switchPage('home')">Home</button>
+        <button id="nav-profile" onclick="handleProfileNavClick()">👤 Profil</button>
         <button id="nav-travel" onclick="switchPage('travel')">✈️ Travel Engine</button>
         <button id="nav-telku" onclick="switchPage('telku')">📶 TELKU eSIM</button>
         <button id="nav-chelea" onclick="switchPage('chelea')">📦 CHELEA Commerce</button>
@@ -457,6 +462,47 @@
           </div>
         </div>
       </section>
+    </section>
+
+    <!-- 1.5. USER PROFILE PAGE -->
+    <section class="page" id="page-profile">
+      <div class="panel" style="max-width: 800px; margin: auto;">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 20px;">
+          <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--primary); color: #04140f; font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center;">
+              VIP
+            </div>
+            <div>
+              <h2 class="section-title" id="profileNameText">Alexandro Hobbigo</h2>
+              <p class="text-muted" style="font-size: 13px;" id="profileEmailText">alexandro@hobbigo.one • Status: Verified VIP Traveler</p>
+            </div>
+          </div>
+          <button class="btn btn-small" style="background:rgba(255,102,122,.15); color:var(--red); border-color:transparent;" onclick="handleLogout()">Logout</button>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card" style="padding: 18px;">
+            <span style="font-size: 10px; color: var(--primary); font-weight: 900; text-transform: uppercase;">Total Pesanan Aktif</span>
+            <h3 style="margin-top: 5px; font-size: 22px;" id="profileOrderCount">0 Order</h3>
+            <p class="text-muted" style="font-size: 11px; margin-top: 4px;">Dilindungi sistem Escrow HOBBIGO</p>
+          </div>
+          <div class="card" style="padding: 18px;">
+            <span style="font-size: 10px; color: var(--blue); font-weight: 900; text-transform: uppercase;">eSIM & Jastip Terdaftar</span>
+            <h3 style="margin-top: 5px; font-size: 22px;" id="profileCartCount">0 Item di Cart</h3>
+            <p class="text-muted" style="font-size: 11px; margin-top: 4px;">Siap diproses instan</p>
+          </div>
+        </div>
+
+        <div class="panel mt-3" style="background: var(--card);">
+          <h4 style="margin-bottom: 12px;">Pengaturan Akun & Preferensi</h4>
+          <div class="form-grid">
+            <div class="form-group"><label>Nama Lengkap</label><input id="inputProfileName" value="Alexandro Hobbigo"></div>
+            <div class="form-group"><label>Nomor WhatsApp / Kontak</label><input id="inputProfilePhone" value="+62 812-3456-7890"></div>
+          </div>
+          <div class="form-group"><label>Mata Utama Pilihan</label><select><option>IDR (Indonesian Rupiah)</option><option>USD (US Dollar)</option></select></div>
+          <button class="btn btn-primary mt-2" onclick="saveProfileChanges()">Simpan Perubahan</button>
+        </div>
+      </div>
     </section>
 
     <!-- 2. HOBBIGO TRAVEL MASTER HUB -->
@@ -663,6 +709,7 @@
 
     let cart = JSON.parse(localStorage.getItem('hbg_v77_cart') || '[]');
     let orders = JSON.parse(localStorage.getItem('hbg_v77_orders') || '[]');
+    let currentUser = JSON.parse(localStorage.getItem('hbg_v77_user') || 'null');
 
     function formatIDR(val) { return "Rp " + Number(val).toLocaleString("id-ID"); }
 
@@ -683,6 +730,83 @@
 
       window.scrollTo({top:0, behavior:'smooth'});
       renderAllData();
+    }
+
+    function handleProfileNavClick() {
+      if(!currentUser) {
+        openAuthModal();
+      } else {
+        switchPage('profile');
+      }
+    }
+
+    function openAuthModal() {
+      openModal("Autentikasi HOBBIGO ONE", `
+        <p class="text-muted" style="font-size:12px; margin-bottom:15px;">Masuk atau Daftar akun baru untuk mulai menikmati ekosistem perjalanan & jastip global.</p>
+        
+        <button class="btn-social" onclick="socialLogin('Google')">
+          <span>🌐</span> Masuk dengan Google
+        </button>
+        <button class="btn-social" onclick="socialLogin('Apple')">
+          <span>🍏</span> Masuk dengan Apple ID
+        </button>
+
+        <div style="text-align:center; margin:15px 0; color:var(--muted); font-size:11px;">ATAU DAFTAR DENGAN EMAIL</div>
+
+        <div class="form-group"><label>Nama Lengkap</label><input id="authName" placeholder="Alexandro"></div>
+        <div class="form-group"><label>Alamat Email</label><input id="authEmail" placeholder="alex@domain.com" type="email"></div>
+        <div class="form-group"><label>Password</label><input id="authPass" type="password" placeholder="••••••••"></div>
+      `, `<button class="btn btn-primary full" onclick="submitManualAuth()">Daftar / Masuk Akun</button>`);
+    }
+
+    function socialLogin(provider) {
+      currentUser = {
+        name: 'User ' + provider,
+        email: 'user.' + provider.toLowerCase() + '@hobbigo.one'
+      };
+      localStorage.setItem('hbg_v77_user', JSON.stringify(currentUser));
+      closeModal();
+      showToast("Berhasil masuk via " + provider + "!");
+      updateProfileUI();
+      switchPage('profile');
+    }
+
+    function submitManualAuth() {
+      const name = document.getElementById('authName').value.trim() || 'Traveler HOBBIGO';
+      const email = document.getElementById('authEmail').value.trim() || 'traveler@hobbigo.one';
+      
+      currentUser = { name, email };
+      localStorage.setItem('hbg_v77_user', JSON.stringify(currentUser));
+      closeModal();
+      showToast("Registrasi & Login Berhasil!");
+      updateProfileUI();
+      switchPage('profile');
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      localStorage.removeItem('hbg_v77_user');
+      showToast("Berhasil logout.");
+      switchPage('home');
+    }
+
+    function updateProfileUI() {
+      if(currentUser) {
+        document.getElementById('profileNameText').textContent = currentUser.name;
+        document.getElementById('profileEmailText').textContent = currentUser.email + " • Status: Verified VIP Traveler";
+        const inputName = document.getElementById('inputProfileName');
+        if(inputName) inputName.value = currentUser.name;
+      }
+    }
+
+    function saveProfileChanges() {
+      const newName = document.getElementById('inputProfileName').value.trim();
+      if(currentUser) {
+        currentUser.name = newName;
+        localStorage.setItem('hbg_v77_user', JSON.stringify(currentUser));
+        updateProfileUI();
+      }
+      showToast("Perubahan profil berhasil disimpan!");
     }
 
     function switchTravelTab(tabId) {
@@ -714,12 +838,18 @@
       localStorage.setItem('hbg_v77_orders', JSON.stringify(orders));
       const totalQty = cart.reduce((sum, i) => sum + i.qty, 0);
       document.getElementById('cartBadge').textContent = totalQty;
+
+      const pCart = document.getElementById('profileCartCount');
+      const pOrder = document.getElementById('profileOrderCount');
+      if(pCart) pCart.textContent = totalQty + " Item di Cart";
+      if(pOrder) pOrder.textContent = orders.length + " Order";
     }
 
     function renderAllData() {
       document.getElementById('travelCatalogGrid').innerHTML = masterCatalog.map(i => cardHTML(i)).join('');
       renderCartUI();
       renderOrdersUI();
+      updateProfileUI();
     }
 
     function cardHTML(item) {
