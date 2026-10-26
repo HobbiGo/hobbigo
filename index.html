@@ -1346,5 +1346,42 @@ function tick(time){const elapsed=last?Math.min(time-last,50):0;last=time;if(cyc
 })();
 </script>
 
+
+<style>
+#hbgGlobalFlights{padding:20px;margin-bottom:24px;border:1px solid var(--line);border-radius:14px;background:var(--card)}#hbgGlobalFlights label{display:block;margin:12px 0}#hbgGlobalFlights input,#hbgGlobalFlights select{width:100%;padding:11px;margin-top:6px;border:1px solid var(--line);border-radius:8px;color:var(--text);background:var(--bg);font:inherit}#hbgGlobalFlights button{padding:11px 14px;border:1px solid var(--line);border-radius:8px;margin-top:10px;background:var(--primary);color:#07111f;font-weight:700;cursor:pointer}#hbgGlobalFlights .gf-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}#hbgGlobalFlights article{padding:16px;border:1px solid var(--line);border-radius:12px;margin-top:14px;background:var(--bg2)}#hbgGlobalFlights p{margin:10px 0;line-height:1.6}.gf-logo{width:115px;height:46px;object-fit:contain;background:white;border-radius:8px;padding:6px;display:block;margin-bottom:10px}#hbgGlobalFlights .gf-note{font-size:13px;color:var(--muted)}
+</style>
+<script>
+(()=>{'use strict';const tab=document.getElementById('tab-flight');if(!tab||document.getElementById('hbgGlobalFlights'))return;
+const airlines={GA:'Garuda Indonesia',QZ:'Indonesia AirAsia',SQ:'Singapore Airlines',TR:'Scoot',MH:'Malaysia Airlines',AK:'AirAsia',JL:'Japan Airlines',NH:'ANA',KE:'Korean Air',OZ:'Asiana Airlines',EK:'Emirates',QR:'Qatar Airways',TK:'Turkish Airlines',LH:'Lufthansa',BA:'British Airways',AF:'Air France',QF:'Qantas',CX:'Cathay Pacific',AA:'American Airlines',DL:'Delta Air Lines',UA:'United Airlines',SA:'South African Airways',ET:'Ethiopian Airlines'};
+const routes=[
+['Asia','Jakarta (CGK)','Bali (DPS)',['GA','QZ'],850000],
+['Asia','Jakarta (CGK)','Singapura (SIN)',['SQ','GA'],2100000],
+['Asia','Jakarta (CGK)','Kuala Lumpur (KUL)',['MH','AK'],1800000],
+['Asia','Jakarta (CGK)','Tokyo (HND)',['JL','NH'],8200000],
+['Asia','Jakarta (CGK)','Seoul (ICN)',['KE','GA'],7200000],
+['Timur Tengah','Jakarta (CGK)','Dubai (DXB)',['EK','QR'],9800000],
+['Timur Tengah','Jakarta (CGK)','Istanbul (IST)',['TK','QR'],11500000],
+['Eropa','Singapura (SIN)','London (LHR)',['SQ','BA'],14200000],
+['Eropa','Singapura (SIN)','Paris (CDG)',['SQ','AF'],13500000],
+['Eropa','Singapura (SIN)','Frankfurt (FRA)',['SQ','LH'],13200000],
+['Oseania','Jakarta (CGK)','Sydney (SYD)',['GA','QF'],8900000],
+['Amerika Utara','Tokyo (HND)','Los Angeles (LAX)',['NH','AA'],12800000],
+['Amerika Selatan','Miami (MIA)','Sao Paulo (GRU)',['AA','UA'],10400000],
+['Afrika','Johannesburg (JNB)','Cape Town (CPT)',['SA','ET'],2800000]
+];
+function logo(code){return `<img class="gf-logo" src="https://pics.avs.io/200/80/${code}.png" alt="Logo ${airlines[code]}" width="200" height="80" loading="lazy" onerror="this.hidden=true">`;}
+const root=document.createElement('section');root.id='hbgGlobalFlights';tab.prepend(root);
+root.innerHTML=`<h2>Maskapai & Rute Global</h2><p class="gf-note">Nama dan logo adalah identitas maskapai masing-masing, bukan bukti kemitraan. Logo dimuat dari layanan pihak ketiga. Pilihan maskapai di bawah adalah contoh untuk rancangan antarmuka, BUKAN konfirmasi bahwa maskapai melayani rute tersebut. Penerbangan bisa memerlukan transit. Harga simulasi bukan tarif aktif; jadwal, bagasi, transit dan ketersediaan belum terhubung penyedia tiket.</p><form id="gfForm" novalidate><div class="gf-fields"><label>Wilayah tujuan<select id="gfRegion"><option value="">Semua wilayah</option>${[...new Set(routes.map(r=>r[0]))].map(x=>`<option>${x}</option>`).join('')}</select></label><label>Contoh rute<select id="gfRoute"></select></label><label>Berangkat<input id="gfDepart" type="date" required></label><label>Jenis perjalanan<select id="gfTrip"><option value="one">Sekali jalan</option><option value="return">Pulang-pergi</option></select></label><label>Pulang<input id="gfReturn" type="date" disabled></label><label>Peserta dewasa<input id="gfGuests" type="number" min="1" max="9" step="1" value="1" required></label><label>Kelas<select id="gfCabin"><option value="economy">Economy</option><option value="business">Business</option></select></label></div><button type="submit">Lihat Pilihan Demo Global</button></form><p id="gfError" role="alert"></p><div id="gfResults"></div><p class="gf-note">Pencarian penerbangan demo sebelumnya tetap tersedia di bawah. Tidak ada tiket yang dapat diterbitkan dari simulasi ini.</p>`;
+const $=id=>root.querySelector('#'+id),money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);const now=new Date(),today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');$('gfDepart').min=today;$('gfDepart').value=today;$('gfReturn').min=today;let search=null;
+function listRoutes(){$('gfRoute').innerHTML=routes.map((r,i)=>({r,i})).filter(x=>!$('gfRegion').value||x.r[0]===$('gfRegion').value).map(x=>`<option value="${x.i}">${x.r[1]} → ${x.r[2]}</option>`).join('');search=null;$('gfResults').replaceChildren();}listRoutes();$('gfRegion').onchange=listRoutes;$('gfTrip').onchange=()=>{$('gfReturn').disabled=$('gfTrip').value!=='return';};$('gfDepart').onchange=()=>{$('gfReturn').min=$('gfDepart').value||today;};
+$('gfForm').addEventListener('input',()=>{search=null;$('gfResults').replaceChildren();});$('gfForm').addEventListener('change',()=>{search=null;$('gfResults').replaceChildren();});
+$('gfForm').onsubmit=e=>{e.preventDefault();const n=Number($('gfGuests').value),date=$('gfDepart').value,back=$('gfReturn').value,round=$('gfTrip').value==='return';if(!date||date<today||!$('gfDepart').checkValidity()||!Number.isInteger(n)||n<1||n>9||(round&&(!back||back<date||!$('gfReturn').checkValidity()))){$('gfError').textContent='Periksa tanggal dan jumlah peserta dewasa (1–9 orang).';return;}$('gfError').textContent='';const r=routes[Number($('gfRoute').value)],business=$('gfCabin').value==='business';search={r,n,date,back,round,business};$('gfResults').innerHTML=`<p>${r[1]} → ${r[2]} · ${date}${round?' / kembali '+back:''} · ${n} dewasa · ${business?'Business':'Economy'}</p>`+r[3].map((code,i)=>{const total=Math.round((r[4]+i*350000)*n*(business?2.4:1)*(round?2:1));return `<article>${logo(code)}<h3>${airlines[code]} · ${code}</h3><p>Contoh pilihan maskapai, rute belum diverifikasi.</p><strong>${money(total)} · Total simulasi</strong><p class="gf-note">${n} dewasa · ${round?'Pulang-pergi':'Sekali jalan'} · Jadwal dan transit belum tersedia. Bukan penawaran yang dapat dibeli.</p><details><summary>Lihat detail perhitungan</summary><p>Tarif dasar contoh ${money(r[4]+i*350000)} / dewasa / arah. Business dalam demo memakai pengali 2,4. Pulang-pergi memakai dua kali tarif dasar, bukan tarif aktual maskapai. Biaya tambahan belum dihitung. Bagasi, bandara transit, waktu lokal, nomor penerbangan serta ketentuan refund perlu data penyedia.</p></details><button type="button" data-gf="${i}">Tambah Pilihan ke Cart Demo</button></article>`;}).join('');};
+$('gfResults').onclick=e=>{const b=e.target.closest('[data-gf]');if(!b||!search)return;const s=search,i=Number(b.dataset.gf),code=s.r[3][i],total=Math.round((s.r[4]+i*350000)*s.n*(s.business?2.4:1)*(s.round?2:1));if(typeof addCustomToCart!=='function'){$('gfError').textContent='Master Cart tidak tersedia.';return;}addCustomToCart(`GLOBAL DEMO | ${airlines[code]} (${code}) | ${s.r[1]} → ${s.r[2]} | ${s.date}${s.round?' / '+s.back:''} | ${s.n} dewasa | ${s.business?'Business':'Economy'} | Bukan tiket`,total,'Flight Demo');};
+// Add airline logos to the pre-existing domestic demo results as well.
+const domestic=document.getElementById('flightResultContainer');const nameCodes={'Garuda Indonesia':'GA','Citilink':'QG','Batik Air':'ID','Lion Air':'JT','Indonesia AirAsia':'QZ','Pelita Air':'IP'};
+if(domestic){const observer=new MutationObserver(decorate);function decorate(){observer.disconnect();domestic.querySelectorAll('article').forEach(card=>{if(card.querySelector('.gf-logo'))return;const title=card.querySelector('h3');if(!title)return;const pair=Object.entries(nameCodes).find(([name])=>title.textContent.includes(name));if(pair){const img=document.createElement('img');img.className='gf-logo';img.src='https://pics.avs.io/200/80/'+pair[1]+'.png';img.alt='Logo '+pair[0];img.loading='lazy';img.onerror=()=>img.hidden=true;title.before(img);}});observer.observe(domestic,{childList:true,subtree:true});}decorate();}
+})();
+</script>
+
 </body>
 </html>
