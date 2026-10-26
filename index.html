@@ -5,218 +5,1677 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HOBBIGO V77.1 — Clean UI Ecosystem & Travel Engine</title>
 <style>
-  /* =========================================================
-     HOBBIGO V77.1 — CLEAN UI CSS
-     ========================================================= */
-  *{box-sizing:border-box;margin:0;padding:0;}
-  :root{
-    --bg:#07111f;--bg2:#0b1728;--bg3:#101e31;--card:#102238;--card2:#142943;--line:#223954;
-    --text:#f5f8fc;--muted:#91a4ba;--primary:#20d3a5;--primary2:#12b98e;
-    --blue:#4f9cff;--purple:#9b7cff;--orange:#ffad5c;--red:#ff667a;--white:#ffffff;
-    --shadow:0 14px 40px rgba(0,0,0,.24);--radius:18px;--radius-sm:12px;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07111f;--bg2:#0b1728;--bg3:#101e31;
+  --card:#102238;--card2:#142943;--line:#223954;
+  --text:#f5f8fc;--muted:#91a4ba;--primary:#20d3a5;--primary2:#12b98e;
+  --blue:#4f9cff;--purple:#9b7cff;--orange:#ffad5c;--red:#ff667a;
+  --white:#ffffff;--cyan:#20d3a5;
+  --shadow:0 14px 40px rgba(0,0,0,.24);--radius:18px;--radius-sm:12px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(32,211,165,.08),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(79,156,255,.07),transparent 25%),
+    var(--bg);
+  color:var(--text);min-height:100vh;line-height:1.5;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.text-muted{color:var(--muted)}
+.mt-1{margin-top:8px}
+.mt-2{margin-top:16px}
+.mt-3{margin-top:24px}
+.mb-1{margin-bottom:8px}
+.mb-2{margin-bottom:16px}
+.flex{display:flex;gap:10px}
+.flex-between{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+.topbar{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(7,17,31,.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;
+}
+.topbar-inner{
+  width:100%;max-width:1280px;margin:auto;
+  padding:12px 22px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;
+  position:relative;flex-wrap:wrap;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:22px;font-weight:900;letter-spacing:-.5px;
+}
+.logo small{
+  display:block;font-size:9px;color:var(--muted);
+  font-weight:600;letter-spacing:.7px;
+}
+.brand-home{
+  border:0;background:transparent;text-align:left;
+  color:var(--white);padding:0;min-width:0;
+}
+.brand-home .brand-wordmark{
+  color:var(--white);font-size:23px;letter-spacing:.2px;
+}
+.brand-wordmark small{
+  max-width:230px;line-height:1.4;
+  font-size:9px;letter-spacing:.25px;
+}
+.brand-symbol{
+  display:block;width:50px;height:50px;flex:0 0 50px;
+  background-image:url('hobbigo-brand.png');
+  background-repeat:no-repeat;background-size:110px 110px;
+  background-position:center -7px;border-radius:10px;
+}
+.nav{display:flex;align-items:center;gap:5px}
+.nav a,.nav button{
+  border:0;background:transparent;color:var(--muted);
+  padding:9px 13px;border-radius:10px;
+  font-size:13px;font-weight:700;transition:.2s;
+}
+.nav a:hover,.nav button:hover{
+  color:var(--white);background:rgba(255,255,255,.07);
+}
+.primary-nav{margin-left:auto;min-width:0}
+.header-actions{display:flex;align-items:center;gap:8px;min-width:0}
+.header-actions button{white-space:nowrap;min-height:44px}
+.cart-count{
+  min-width:20px;height:20px;display:inline-flex;
+  align-items:center;justify-content:center;border-radius:50%;
+  background:var(--primary);color:#04140f;
+  font-size:10px;font-weight:900;
+}
+.menu-toggle{font-size:22px;width:44px;padding:6px}
+.services-menu[hidden]{display:none}
+.services-menu{
+  position:absolute;right:22px;top:calc(100% + 8px);
+  width:min(360px,calc(100vw - 32px));max-height:70vh;
+  overflow-y:auto;display:grid;gap:6px;background:var(--bg2);
+  padding:16px;border:1px solid var(--line);
+  border-radius:18px;box-shadow:var(--shadow);
+}
+.services-menu p{font-size:11px;color:var(--muted);padding:4px 10px 10px}
+.services-menu button{
+  border:0;background:transparent;color:var(--text);
+  padding:14px 12px;text-align:left;border-radius:10px;
+  font-weight:800;min-height:48px;
+}
+.services-menu button span{
+  display:block;color:var(--muted);font-size:12px;
+  font-weight:400;margin-top:4px;
+}
+.services-menu button:hover,.services-menu button.active,
+.nav button.active,.header-actions button.active{
+  background:var(--card2);color:var(--primary);
+}
+button:focus-visible,a:focus-visible{
+  outline:2px solid var(--primary);outline-offset:3px;
+}
+
+main{width:100%;max-width:1280px;margin:auto;padding:0 22px 60px}
+.page{display:none;min-width:0;margin-top:24px}
+.page.active{display:block}
+section{margin-top:34px}
+.section-head{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;gap:20px;margin-bottom:16px;
+}
+.section-title{font-size:24px;font-weight:900;letter-spacing:-.5px}
+
+.btn{
+  border:1px solid var(--line);background:var(--card2);
+  color:var(--text);padding:11px 16px;border-radius:11px;
+  font-size:13px;font-weight:800;transition:.2s;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn:hover{transform:translateY(-1px);border-color:#365777}
+.btn-primary{background:var(--primary);border-color:var(--primary);color:#03130e}
+.btn-primary:hover{background:var(--primary2)}
+.btn-blue{background:var(--blue);border-color:var(--blue);color:white}
+.btn-orange{background:var(--orange);border-color:var(--orange);color:#03130e}
+.btn-small{padding:8px 11px;font-size:11px}
+.btn.full{width:100%}
+.btn-social{
+  background:#0a1829;border:1px solid var(--line);
+  color:var(--white);width:100%;padding:11px;
+  border-radius:10px;font-weight:700;display:flex;
+  align-items:center;justify-content:center;gap:10px;
+  margin-bottom:10px;transition:.2s;
+}
+.btn-social:hover{background:var(--card);border-color:var(--primary)}
+
+.card{
+  background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+.panel{
+  padding:22px;background:var(--bg2);
+  border:1px solid var(--line);border-radius:20px;margin-bottom:20px;
+}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid>*,.form-grid>*,.product-grid>*,.spotlight-grid>*,
+.testimonial-grid>*,.explore-grid>*{min-width:0}
+
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
+.form-group label{
+  color:#b9c8d8;font-size:11px;font-weight:800;
+  text-transform:uppercase;letter-spacing:.45px;
+}
+input,select,textarea{
+  width:100%;padding:12px 13px;border-radius:10px;
+  border:1px solid var(--line);outline:none;background:#0a1829;
+  color:var(--text);font-size:13px;transition:.2s;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--primary);box-shadow:0 0 0 3px rgba(32,211,165,.08);
+}
+input[type=radio]{width:auto}
+
+.hero{
+  position:relative;padding:52px 42px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:28px;overflow:hidden;
+  background:linear-gradient(135deg,rgba(32,211,165,.12),rgba(79,156,255,.07) 45%,rgba(155,124,255,.08)),var(--bg2);
+  box-shadow:var(--shadow);
+}
+.hero h1{
+  margin-top:16px;font-size:clamp(34px,5vw,50px);
+  line-height:1.02;letter-spacing:-2px;font-weight:950;
+}
+.hero h1 span{color:var(--primary)}
+.hero p{margin-top:15px;max-width:650px;color:var(--muted);font-size:15px}
+
+.explore-section{margin-top:30px}
+.explore-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:12px;margin-top:15px;
+}
+.explore-card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px 20px;display:flex;
+  align-items:center;justify-content:space-between;
+  cursor:pointer;transition:all .2s ease;
+}
+.explore-card:hover{
+  border-color:var(--primary);transform:translateY(-2px);
+  background:rgba(32,211,165,.04);
+}
+.explore-card-left{display:flex;align-items:center;gap:14px}
+.explore-icon{
+  font-size:20px;width:36px;height:36px;border-radius:10px;
+  background:rgba(255,255,255,.05);display:flex;
+  align-items:center;justify-content:center;
+}
+.explore-card strong{font-size:14px;color:var(--text);display:block}
+.explore-card span{font-size:11px;color:var(--muted)}
+.explore-arrow{color:var(--muted);font-size:16px;font-weight:800;transition:.2s}
+.explore-card:hover .explore-arrow{color:var(--primary);transform:translateX(3px)}
+
+.spotlight-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;margin-top:15px;
+}
+.spotlight-card{
+  height:220px;border-radius:16px;overflow:hidden;position:relative;
+  background-size:cover;background-position:center;display:flex;
+  flex-direction:column;justify-content:flex-end;padding:20px;
+  border:1px solid var(--line);transition:.3s;cursor:pointer;
+}
+.spotlight-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 30%,rgba(7,17,31,.88) 95%);
+}
+.spotlight-card:hover{transform:translateY(-4px);border-color:var(--primary)}
+.spotlight-content{position:relative;z-index:2}
+.spotlight-badge{
+  background:var(--primary);color:#04140f;font-size:9px;
+  font-weight:900;padding:3px 8px;border-radius:6px;
+  display:inline-block;margin-bottom:6px;text-transform:uppercase;
+}
+
+.testimonial-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:16px;margin-top:15px;
+}
+.testimonial-card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:16px;padding:20px;display:flex;
+  flex-direction:column;justify-content:space-between;
+}
+.testimonial-text{font-size:13px;color:var(--text);font-style:italic;margin-bottom:15px}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.author-avatar{
+  width:38px;height:38px;border-radius:50%;background:var(--primary2);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;color:#04140f;
+}
+.author-info strong{font-size:13px;display:block;color:var(--text)}
+.author-info span{font-size:11px;color:var(--muted)}
+
+.tracking-steps{
+  display:flex;justify-content:space-between;
+  margin:14px 0;position:relative;padding:0 10px;
+}
+.tracking-step{text-align:center;position:relative;z-index:2}
+.step-dot{
+  width:24px;height:24px;border-radius:50%;background:var(--line);
+  color:var(--muted);font-size:10px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
+  margin:auto;border:2px solid var(--bg2);
+}
+.tracking-step.active .step-dot{background:var(--primary);color:#04140f}
+.step-label{
+  font-size:10px;color:var(--muted);margin-top:5px;
+  display:block;max-width:80px;
+}
+.tracking-step.active .step-label{color:var(--primary);font-weight:800}
+
+.chat-float-btn{
+  position:fixed;bottom:25px;right:25px;z-index:4000;
+  width:58px;height:58px;border-radius:50%;background:var(--primary);
+  color:#04140f;border:none;font-size:24px;display:flex;
+  align-items:center;justify-content:center;
+  box-shadow:0 10px 30px rgba(32,211,165,.4);cursor:pointer;transition:.2s;
+}
+.chat-float-btn:hover{transform:scale(1.08);background:var(--primary2)}
+.chat-box-modal{
+  position:fixed;bottom:95px;right:25px;z-index:4000;
+  width:350px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:20px;box-shadow:var(--shadow);display:none;
+  flex-direction:column;overflow:hidden;
+}
+.chat-box-modal.open{display:flex}
+.chat-header{
+  background:var(--card);padding:15px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--line);
+}
+.chat-body{
+  padding:15px;height:260px;overflow-y:auto;display:flex;
+  flex-direction:column;gap:10px;font-size:12px;
+}
+.chat-msg{padding:10px 12px;border-radius:12px;max-width:80%;line-height:1.4;overflow-wrap:anywhere}
+.chat-msg.support{background:var(--card);color:var(--text);align-self:flex-start;border:1px solid var(--line)}
+.chat-msg.user{background:var(--primary);color:#04140f;align-self:flex-end;font-weight:700}
+.chat-footer{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px;background:var(--card)}
+
+.travel-tabs{
+  display:flex;gap:6px;padding:5px;background:var(--bg2);
+  border:1px solid var(--line);border-radius:13px;
+  overflow-x:auto;margin-bottom:20px;
+}
+.travel-tabs button{
+  flex:0 0 auto;border:0;background:transparent;color:var(--muted);
+  padding:10px 14px;border-radius:9px;font-size:12px;
+  font-weight:800;white-space:nowrap;
+}
+.travel-tabs button.active{background:var(--card2);color:var(--white);box-shadow:0 3px 12px rgba(0,0,0,.2)}
+
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.product-card{
+  overflow:hidden;background:var(--card);border:1px solid var(--line);
+  border-radius:17px;transition:.2s;display:flex;
+  flex-direction:column;justify-content:space-between;
+}
+.product-card:hover{transform:translateY(-3px);border-color:#365777}
+.product-image{height:140px;background-size:cover;background-position:center}
+.product-body{padding:15px}
+.product-category{color:var(--primary);font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.product-title{margin-top:5px;font-size:14px;font-weight:850}
+.product-desc{margin-top:5px;color:var(--muted);font-size:10px}
+.product-price{
+  margin-top:12px;font-size:16px;font-weight:950;color:var(--cyan);
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+.modal{
+  position:fixed;inset:0;z-index:3000;display:none;
+  align-items:center;justify-content:center;padding:20px;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(7px);
+}
+.modal.show{display:flex}
+.modal-content{
+  width:min(680px,100%);max-height:90vh;overflow:auto;
+  padding:24px;background:var(--bg2);border:1px solid var(--line);
+  border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.5);
+}
+.toast{
+  position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);
+  z-index:5000;padding:12px 17px;border:1px solid var(--line);
+  background:#102238;color:var(--text);border-radius:12px;
+  box-shadow:var(--shadow);font-size:12px;font-weight:700;
+  opacity:0;pointer-events:none;transition:.25s;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.about-intro{
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+  align-items:center;gap:32px;padding:32px;
+}
+.about-eyebrow{color:var(--primary);font-weight:800;font-size:12px;letter-spacing:1px}
+.about-intro h1{font-size:clamp(30px,4vw,48px);line-height:1.15;margin:14px 0;letter-spacing:-1px}
+.about-lead{font-size:18px;color:var(--muted);margin-bottom:24px}
+.about-art{
+  display:block;width:100%;max-width:540px;height:auto;
+  max-height:560px;object-fit:contain;justify-self:center;border-radius:16px;
+}
+.about-values{align-items:start}
+.about-values p,.about-purpose p{color:var(--muted);line-height:1.8;margin-top:16px}
+.about-values h2,.about-purpose h2{font-size:24px}
+.about-purpose h3{font-size:clamp(22px,3vw,32px);margin-top:12px;line-height:1.35}
+.journey-flow{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:24px 0;padding:0}
+.journey-flow li{
+  border:1px solid var(--line);border-radius:10px;padding:10px 14px;
+  color:var(--primary);background:var(--bg3);
+}
+
+@media(max-width:1100px){
+  .topbar-inner{gap:12px;padding:12px 16px}
+  .primary-nav{order:3;flex:1 1 100%;margin:0;justify-content:center}
+  .brand-home{margin-right:auto}
+  .services-menu{right:16px}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:767px){
+  .topbar-inner{gap:8px;padding:10px 12px}
+  .brand-home{gap:6px}
+  .brand-home .brand-wordmark{font-size:18px}
+  .brand-wordmark small{display:none}
+  .brand-symbol{width:32px;height:36px;flex-basis:32px;background-size:80px 80px;background-position:center -5px}
+  .header-actions{gap:5px}
+  .header-actions .btn{padding:7px;font-size:11px;gap:4px}
+  .header-actions .menu-toggle{width:40px;font-size:22px}
+  .primary-nav{border-top:1px solid var(--line);padding-top:8px;gap:8px}
+  .primary-nav button{flex:1;min-height:44px;font-size:13px}
+  main{padding:0 16px 40px}
+  .page{margin-top:20px}
+  .hero{padding:28px 20px;border-radius:20px}
+  .hero h1{font-size:clamp(30px,8vw,40px);line-height:1.12;letter-spacing:-1px;overflow-wrap:break-word}
+  .hero p{font-size:15px;line-height:1.7}
+  .hero>div{flex-direction:column;align-items:stretch}
+  .hero .btn{width:100%;min-height:48px;white-space:normal}
+  .grid-2,.grid-3,.grid-4,.form-grid,.explore-grid,
+  .spotlight-grid,.testimonial-grid,.product-grid,.about-intro{
+    grid-template-columns:minmax(0,1fr);
   }
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-    background:radial-gradient(circle at 10% 0%,rgba(32,211,165,.08),transparent 28%),radial-gradient(circle at 90% 10%,rgba(79,156,255,.07),transparent 25%),var(--bg);
-    color:var(--text);min-height:100vh;line-height:1.5;
-  }
-  button,input,select,textarea{font:inherit;}
-  button{cursor:pointer;}
-  img{max-width:100%;display:block;}
-  a{color:inherit;text-decoration:none;}
-
-  /* HEADER */
-  .topbar{position:sticky;top:0;z-index:1000;height:72px;background:rgba(7,17,31,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;}
-  .header,.topbar-inner{width:100%;max-width:1280px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
-  .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:900;letter-spacing:-.5px;}
-  .logo span{color:var(--primary);}
-  .logo small{display:block;font-size:9px;color:var(--muted);font-weight:600;letter-spacing:.7px;}
-  .nav{display:flex;align-items:center;gap:5px;}
-  .nav a,.nav button{border:0;background:transparent;color:var(--muted);padding:9px 13px;border-radius:10px;font-size:13px;font-weight:700;transition:.2s;}
-  .nav a:hover,.nav button:hover,.nav a.active{color:var(--white);background:rgba(255,255,255,.07);}
-  .header-actions{display:flex;align-items:center;gap:8px;}
-  .cart-count{min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:var(--primary);color:#04140f;font-size:10px;font-weight:900;}
-
-  /* MAIN & PAGES */
-  main,.page{width:100%;max-width:1280px;margin:auto;padding:0 22px 60px;display:none;}
-  main,.page.active{display:block;}
-  section{margin-top:34px;}
-  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:16px;}
-  .section-title{font-size:24px;font-weight:900;letter-spacing:-.5px;}
-
-  /* BUTTONS */
-  .btn{border:1px solid var(--line);background:var(--card2);color:var(--text);padding:11px 16px;border-radius:11px;font-size:13px;font-weight:800;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-  .btn:hover{transform:translateY(-1px);border-color:#365777;}
-  .btn-primary{background:var(--primary);border-color:var(--primary);color:#03130e;}
-  .btn-primary:hover{background:var(--primary2);}
-  .btn-blue{background:var(--blue);border-color:var(--blue);color:white;}
-  .btn-orange{background:var(--orange);border-color:var(--orange);color:#03130e;}
-  .btn-small{padding:8px 11px;font-size:11px;}
-  .btn.full{width:100%;}
-
-  /* SOCIAL AUTH BUTTONS */
-  .btn-social{background:#0a1829;border:1px solid var(--line);color:var(--white);width:100%;padding:11px;border-radius:10px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;}
-  .btn-social:hover{background:var(--card);border-color:var(--primary);}
-
-  /* CARDS & PANELS */
-  .card{background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.01)),var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.12);padding:20px;}
-  .panel{padding:22px;background:var(--bg2);border:1px solid var(--line);border-radius:20px;margin-bottom:20px;}
-  .grid{display:grid;gap:16px;}
-  .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .grid-4{grid-template-columns:repeat(4,minmax(0,1fr));}
-
-  /* FORMS */
-  .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
-  .form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:15px;}
-  .form-group label{color:#b9c8d8;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.45px;}
-  input,select,textarea{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--line);outline:none;background:#0a1829;color:var(--text);font-size:13px;transition:.2s;}
-  input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(32,211,165,.08);}
-
-  /* HERO */
-  .hero{position:relative;margin-top:24px;padding:52px 42px;border:1px solid rgba(255,255,255,.07);border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(32,211,165,.12),rgba(79,156,255,.08),rgba(7,17,31,.95));}
-  .hero h1{margin-top:16px;font-size:clamp(34px,5vw,50px);line-height:1.02;letter-spacing:-2px;font-weight:950;}
-  .hero h1 span{color:var(--primary);}
-  .hero p{margin-top:15px;max-width:650px;color:var(--muted);font-size:15px;}
-
-  /* HOBBIGO desktop and mobile layout */
-  .topbar{height:auto;}
-  .topbar-inner{position:relative;flex-wrap:wrap;padding:12px 22px;gap:16px;}
-  .brand-home{border:0;background:transparent;text-align:left;color:var(--white);padding:0;min-width:0;}
-  .brand-home .brand-wordmark{color:var(--white);font-size:23px;letter-spacing:.2px;}
-  .brand-wordmark small{max-width:230px;line-height:1.4;font-size:9px;letter-spacing:.25px;}
-  .brand-symbol{display:block;width:50px;height:50px;flex:0 0 50px;background-image:url('hobbigo-brand.png');background-repeat:no-repeat;background-size:110px 110px;background-position:center -7px;}
-  .primary-nav{margin-left:auto;min-width:0;}
-  .header-actions{min-width:0;}
-  .header-actions button{white-space:nowrap;min-height:44px;}
-  .menu-toggle{font-size:22px;width:44px;padding:6px;}
-  .services-menu[hidden]{display:none;}
-  .services-menu{position:absolute;right:22px;top:calc(100% + 8px);width:min(360px,calc(100vw - 32px));max-height:70vh;overflow-y:auto;display:grid;gap:6px;background:var(--bg2);padding:16px;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);z-index:20;}
-  .services-menu p{font-size:11px;color:var(--muted);padding:4px 10px 10px;}
-  .services-menu button{border:0;background:transparent;color:var(--text);padding:14px 12px;text-align:left;border-radius:10px;font-weight:800;min-height:48px;}
-  .services-menu button span{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:4px;}
-  .services-menu button:hover,.services-menu button.active,.nav button.active,.header-actions button.active{background:var(--card2);color:var(--primary);}
-  button:focus-visible,a:focus-visible{outline:2px solid var(--primary);outline-offset:3px;}
-  main{padding:0 22px 60px;}
-  main>.page{padding:0;margin-top:24px;}
-  main>.page .hero{margin-top:0;}
-  .page,.grid>*,.form-grid>*,.product-grid>*,.spotlight-grid>*,.testimonial-grid>*,.explore-grid>*{min-width:0;}
-  .about-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;gap:32px;padding:32px;}
-  .about-eyebrow{color:var(--primary);font-weight:800;font-size:12px;letter-spacing:1px;}
-  .about-intro h1{font-size:clamp(30px,4vw,48px);line-height:1.15;margin:14px 0;letter-spacing:-1px;}
-  .about-lead{font-size:18px;color:var(--muted);margin-bottom:24px;}
-  .about-art{display:block;width:100%;max-width:540px;height:auto;object-fit:contain;object-position:center;justify-self:end;border-radius:16px;}
-  .about-values{align-items:start;}
-  .about-values p,.about-purpose p{color:var(--muted);line-height:1.8;margin-top:16px;}
-  .about-values h2,.about-purpose h2{font-size:24px;}
-  .about-purpose h3{font-size:clamp(22px,3vw,32px);margin-top:12px;line-height:1.35;}
-  .journey-flow{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:24px 0;padding:0;}
-  .journey-flow li{border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--primary);background:var(--bg3);}
-  @media(max-width:1100px){
-    .topbar-inner{gap:12px;padding:12px 16px;}
-    .primary-nav{order:3;flex:1 1 100%;margin:0;justify-content:center;}
-    .brand-home{margin-right:auto;}
-    .services-menu{right:16px;}
-    .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  }
-  @media(max-width:767px){
-    .topbar-inner{gap:8px;padding:10px 12px;}
-    .brand-home{gap:6px;}
-    .brand-home .brand-wordmark{font-size:18px;}
-    .brand-wordmark small{display:none;}
-    .brand-symbol{width:32px;height:36px;flex-basis:32px;background-size:80px 80px;background-position:center -5px;}
-    .header-actions{gap:5px;}
-    .header-actions .btn{padding:7px;font-size:11px;gap:4px;}
-    .header-actions .menu-toggle{width:40px;font-size:22px;}
-    .primary-nav{border-top:1px solid var(--line);padding-top:8px;gap:8px;}
-    .primary-nav button{flex:1;min-height:44px;font-size:13px;}
-    main{padding:0 16px 40px;}
-    main>.page{padding:0;margin-top:20px;}
-    .hero{padding:28px 20px;border-radius:20px;}
-    .hero h1{font-size:clamp(30px,8vw,40px);line-height:1.12;letter-spacing:-1px;overflow-wrap:break-word;}
-    .hero p{font-size:15px;line-height:1.7;}
-    .hero>div{flex-direction:column;align-items:stretch;}
-    .hero .btn{width:100%;min-height:48px;white-space:normal;}
-    .grid-2,.grid-3,.grid-4,.form-grid,.explore-grid,.spotlight-grid,.testimonial-grid,.product-grid,.about-intro{grid-template-columns:minmax(0,1fr);}
-    .section-head{flex-direction:column;align-items:flex-start;gap:12px;}
-    .section-head>.btn{width:100%;}
-    .section-title{line-height:1.35;}
-    .panel{padding:18px;}
-    .panel h2{font-size:clamp(21px,6vw,28px);line-height:1.35;overflow-wrap:break-word;}
-    .about-intro{gap:24px;padding:20px;}
-    .about-intro h1{font-size:32px;}
-    .about-lead{font-size:16px;}
-    .journey-flow{gap:8px;}
-    .journey-flow li{font-size:12px;padding:8px 10px;}
-    .about-art{width:100%;max-width:100%;height:auto;justify-self:center;}
-  }
-  @media(max-width:359px){
-    .brand-symbol{display:none;}
-    .brand-home .brand-wordmark{font-size:16px;}
-    .header-actions .btn{padding:6px;font-size:10px;}
-  }
+  .section-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .section-head>.btn{width:100%}
+  .section-title{line-height:1.35}
+  .panel{padding:18px}
+  .panel h2{font-size:clamp(21px,6vw,28px);line-height:1.35;overflow-wrap:break-word}
+  .explore-card{padding:16px;gap:12px}
+  .explore-card-left{min-width:0}
+  .explore-card-left>div:last-child{min-width:0;overflow-wrap:anywhere}
+  .explore-icon,.explore-arrow,.author-avatar{flex-shrink:0}
+  .spotlight-card{height:240px;padding:20px}
+  .testimonial-card{padding:20px}
+  .testimonial-author,.author-info{min-width:0}
+  .author-info{overflow-wrap:anywhere}
+  .product-image{height:190px}
+  .product-price{flex-wrap:wrap;gap:10px}
+  input,select,textarea{min-width:0;font-size:16px}
+  .btn{min-height:44px}
+  .travel-tabs{max-width:100%}
+  .modal{padding:12px}
+  .modal-content{padding:20px;max-height:85vh;max-height:85dvh}
+  .chat-box-modal{width:calc(100% - 32px);max-width:350px;right:16px;bottom:86px}
+  .chat-float-btn{right:16px;bottom:16px}
+  .toast{max-width:calc(100% - 32px);overflow-wrap:anywhere}
+  #page-profile>.panel>div:first-child{flex-wrap:wrap;gap:16px}
+  #page-profile>.panel>div:first-child>div{flex-wrap:wrap;min-width:0}
+  #profileEmailText{overflow-wrap:anywhere}
+  .about-intro{gap:24px;padding:20px}
+  .about-intro h1{font-size:32px}
+  .about-lead{font-size:16px}
+  .about-art{max-width:100%}
+  .journey-flow{gap:8px}
+  .journey-flow li{font-size:12px;padding:8px 10px}
+  .tracking-steps{flex-wrap:wrap;gap:14px;padding:0}
+  .tracking-step{flex:1 1 40%}
+  .step-label{margin:5px auto 0}
+}
+@media(max-width:359px){
+  .brand-symbol{display:none}
+  .brand-home .brand-wordmark{font-size:16px}
+  .header-actions .btn{padding:6px;font-size:10px}
+}
 </style>
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="topbar-inner">
-      <button class="logo brand-home" type="button" onclick="switchPage('home')" aria-label="HOBBIGO home">
-        <span class="brand-symbol" aria-hidden="true"></span>
-        <span class="brand-wordmark">HOBBIGO<small>AI Journey & Experience Marketplace</small></span>
-      </button>
-      <nav class="nav primary-nav" aria-label="Main navigation">
-        <button id="nav-home" class="active" onclick="switchPage('home')">Home</button>
-        <button id="nav-profile" onclick="handleProfileNavClick()">Profile</button>
-        <button id="nav-about" onclick="switchPage('about')">About</button>
-      </nav>
-      <div class="header-actions">
-        <button id="nav-cart" class="btn btn-small" onclick="switchPage('cart')">🛒 <span>Cart</span> <span class="cart-count" id="cartBadge">0</span></button>
-        <button id="nav-orders" class="btn btn-small" onclick="switchPage('orders')">📋 <span>Orders</span></button>
-        <button id="servicesToggle" class="btn menu-toggle" type="button" aria-expanded="false" aria-controls="servicesMenu" aria-label="Open services menu">☰</button>
-      </div>
-      <nav id="servicesMenu" class="services-menu" aria-label="Services" hidden>
-        <p>Explore our ecosystem</p>
-        <button id="nav-travel" onclick="switchPage('travel')">✈️ Travel Agency <span>Flights, stays & experiences</span></button>
-        <button id="nav-telku" onclick="switchPage('telku')">📶 TELKU eSIM <span>Global connectivity</span></button>
-        <button id="nav-chelea" onclick="switchPage('chelea')">📦 CHELEA Commerce <span>Personal shopping & delivery</span></button>
-      </nav>
-    </div>
-  </header>
+<header class="topbar">
+  <div class="topbar-inner">
+    <button class="logo brand-home" type="button"
+      onclick="switchPage('home')" aria-label="HOBBIGO home">
+      <span class="brand-symbol" aria-hidden="true"></span>
+      <span class="brand-wordmark">
+        HOBBIGO
+        <small>AI Journey &amp; Experience Marketplace</small>
+      </span>
+    </button>
 
-  <main>
-    <section class="page" id="page-about" aria-labelledby="aboutTitle">
-      <div class="about-intro panel">
-        <div>
-          <p class="about-eyebrow">ABOUT HOBBIGO</p>
-          <h1 id="aboutTitle">AI Journey &amp; Experience Marketplace</h1>
-          <p class="about-lead">One Platform. One Journey. Endless Experiences.</p>
-          <button class="btn btn-primary" onclick="switchPage('travel')">Explore HOBBIGO Travel</button>
-        </div>
-        <img class="about-art" src="hobbiGo_cover_1.png" alt="HobbiGo AI Travel Agent, a traveler exploring a connected world of destinations" loading="lazy" style="display:block;width:100%;max-width:540px;height:auto;object-fit:contain;object-position:center;justify-self:end;border-radius:16px;">
+    <nav class="nav primary-nav" aria-label="Main navigation">
+      <button id="nav-home" class="active" onclick="switchPage('home')">Home</button>
+      <button id="nav-profile" onclick="handleProfileNavClick()">Profile</button>
+      <button id="nav-about" onclick="switchPage('about')">About</button>
+    </nav>
+
+    <div class="header-actions">
+      <button id="nav-cart" class="btn btn-small" onclick="switchPage('cart')">
+        🛒 <span>Cart</span>
+        <span class="cart-count" id="cartBadge">0</span>
+      </button>
+      <button id="nav-orders" class="btn btn-small" onclick="switchPage('orders')">
+        📋 <span>Orders</span>
+      </button>
+      <button id="servicesToggle" class="btn menu-toggle" type="button"
+        aria-expanded="false" aria-controls="servicesMenu"
+        aria-label="Open services menu">☰</button>
+    </div>
+
+    <nav id="servicesMenu" class="services-menu" aria-label="Services" hidden>
+      <p>Explore our ecosystem</p>
+      <button id="nav-travel" onclick="switchPage('travel')">
+        ✈️ Travel Agency
+        <span>Flights, stays &amp; experiences</span>
+      </button>
+      <button id="nav-telku" onclick="switchPage('telku')">
+        📶 TELKU eSIM
+        <span>Global connectivity</span>
+      </button>
+      <button id="nav-chelea" onclick="switchPage('chelea')">
+        📦 CHELEA Commerce
+        <span>Personal shopping &amp; delivery</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section class="page active" id="page-home">
+    <div class="hero">
+      <span style="color:var(--primary);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;">
+        Master Platform V77.1
+      </span>
+      <h1>Your Journey. <span>One Smart Ecosystem.</span></h1>
+      <p>
+        Integrasi penuh HOBBIGO Travel (Flight, Hotel, Rental),
+        TELKU Connectivity eSIM, dan CHELEA Escrow Logistics &amp;
+        Personal Shopping dalam satu kendali.
+      </p>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="openAiPlannerModal()">
+          ✦ Buka AI Journey Planner
+        </button>
+        <button class="btn btn-blue" onclick="switchPage('travel')">
+          Eksplorasi Travel Engine
+        </button>
+        <button class="btn btn-orange" onclick="switchPage('chelea')">
+          Buka CHELEA Commerce
+        </button>
+        <button class="btn btn-blue" onclick="switchPage('telku')">
+          📶 Buka TELKU eSIM
+        </button>
       </div>
-      <div class="grid grid-2 about-values">
-        <article class="panel">
-          <h2>Our Vision</h2>
-          <p>To become the world’s leading AI-powered travel and experience marketplace, connecting people, businesses, destinations, and experiences in one intelligent global ecosystem.</p>
-          <p>We envision a world where every journey can be discovered, planned, personalized, booked, experienced, and continuously optimized through one seamless platform.</p>
-        </article>
-        <article class="panel">
-          <h2>Our Mission</h2>
-          <p>HOBBIGO’s mission is to transform the way people travel by combining AI, global marketplace technology, and local experiences into one connected ecosystem.</p>
-          <p>We empower travelers to create journeys that match their interests, needs, time, and budget, while helping hotels, transportation providers, restaurants, attractions, and local businesses reach travelers from around the world.</p>
-        </article>
-      </div>
-      <article class="panel about-purpose">
-        <h2>Our Purpose</h2>
-        <h3>One Platform. One Journey. Endless Experiences.</h3>
-        <ol class="journey-flow" aria-label="The Hobbigo journey">
-          <li>Discover</li><li>Plan</li><li>Configure</li><li>Package</li><li>Book</li><li>Experience</li><li>Re-optimize</li>
-        </ol>
-        <p>HOBBIGO is building the infrastructure for the next generation of global travel — where AI meets experiences, marketplaces, and people.</p>
-      </article>
+    </div>
+
+    <section class="home-brand-panel panel" aria-label="Hobbigo ecosystem">
+      <img src="hobbigo-brand.png"
+        alt="Hobbigo travel, TELKU connectivity and CHELEA delivery ecosystem"
+        width="1000" height="1000" loading="lazy"
+        style="width:100%;max-width:460px;height:auto;margin:auto;border-radius:16px;">
     </section>
-  </main>
-</body>
-</html>
+
+    <div class="explore-section">
+      <h3 class="section-title" style="font-size:20px;">Eksplorasi Ekosistem HOBBIGO</h3>
+      <p class="text-muted" style="font-size:12px;margin-top:3px;">
+        Akses cepat ke seluruh fitur utama perjalanan, konektivitas, dan jastip aman.
+      </p>
+
+      <div class="explore-grid">
+        <div class="explore-card" onclick="switchPage('travel')">
+          <div class="explore-card-left">
+            <div class="explore-icon">✈️</div>
+            <div>
+              <strong>Flights &amp; Stays</strong>
+              <span>Penerbangan &amp; Akomodasi Hotel</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+
+        <div class="explore-card" onclick="switchPage('telku')">
+          <div class="explore-card-left">
+            <div class="explore-icon">📶</div>
+            <div>
+              <strong>TELKU eSIM Hub</strong>
+              <span>Konektivitas global 130+ negara</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+
+        <div class="explore-card" onclick="switchPage('chelea')">
+          <div class="explore-card-left">
+            <div class="explore-icon">📦</div>
+            <div>
+              <strong>CHELEA Commerce</strong>
+              <span>Jastip &amp; Escrow Logistics aman</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+
+        <div class="explore-card" onclick="openAiPlannerModal()">
+          <div class="explore-card-left">
+            <div class="explore-icon">✦</div>
+            <div>
+              <strong>AI Journey Planner</strong>
+              <span>Susun itinerary otomatis dengan AI</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+
+        <div class="explore-card" onclick="switchPage('cart')">
+          <div class="explore-card-left">
+            <div class="explore-icon">🛒</div>
+            <div>
+              <strong>Master Cart</strong>
+              <span>Kelola keranjang &amp; checkout aman</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+
+        <div class="explore-card" onclick="switchPage('orders')">
+          <div class="explore-card-left">
+            <div class="explore-icon">📋</div>
+            <div>
+              <strong>Struk &amp; Orders</strong>
+              <span>Riwayat pesanan &amp; Escrow status</span>
+            </div>
+          </div>
+          <div class="explore-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <section style="margin-top:40px;">
+      <h3 class="section-title" style="font-size:20px;">Destinasi Spotlight Global</h3>
+      <p class="text-muted" style="font-size:12px;margin-top:3px;">
+        Pilihan destinasi terpopuler dengan kurasi eksklusif untuk pengalaman terbaik.
+      </p>
+
+      <div class="spotlight-grid">
+        <div class="spotlight-card"
+          style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80')"
+          onclick="switchPage('travel')">
+          <div class="spotlight-content">
+            <span class="spotlight-badge">Trending 2026</span>
+            <h4 style="font-size:18px;font-weight:900;">Tokyo, Jepang</h4>
+            <p class="text-muted" style="font-size:11px;">Mulai dari Rp 1.850.000 / paket</p>
+          </div>
+        </div>
+
+        <div class="spotlight-card"
+          style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80')"
+          onclick="switchPage('travel')">
+          <div class="spotlight-content">
+            <span class="spotlight-badge" style="background:var(--blue);color:white;">Editor Choice</span>
+            <h4 style="font-size:18px;font-weight:900;">Bali, Indonesia</h4>
+            <p class="text-muted" style="font-size:11px;">Mulai dari Rp 1.250.000 / paket</p>
+          </div>
+        </div>
+
+        <div class="spotlight-card"
+          style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80')"
+          onclick="switchPage('travel')">
+          <div class="spotlight-content">
+            <span class="spotlight-badge" style="background:var(--orange);color:#03130e;">Luxury Stay</span>
+            <h4 style="font-size:18px;font-weight:900;">Paris, Prancis</h4>
+            <p class="text-muted" style="font-size:11px;">Mulai dari Rp 3.400.000 / paket</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:40px;">
+      <h3 class="section-title" style="font-size:20px;">Dipercaya oleh Traveler &amp; Investor Global</h3>
+      <p class="text-muted" style="font-size:12px;margin-top:3px;">
+        Apa kata mereka yang telah merasakan kemudahan ekosistem terpadu HOBBIGO ONE.
+      </p>
+
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Menggabungkan booking hotel, eSIM TELKU, dan jastip CHELEA dalam satu
+            keranjang adalah terobosan jenius. Sangat efisien untuk perjalanan bisnis saya."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RD</div>
+            <div class="author-info">
+              <strong>Rian Darmawan</strong>
+              <span>Frequent Business Traveler</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Sistem Escrow Payment di CHELEA memberikan rasa aman mutlak saat titip
+            beli barang langka dari luar negeri. UI-nya sangat berkelas dan investor-ready!"
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:var(--blue);color:white;">SA</div>
+            <div class="author-info">
+              <strong>Sarah Amalia</strong>
+              <span>Digital Nomad &amp; Collector</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Fitur AI Journey Planner sangat responsif dan akurat. HOBBIGO ONE
+            sukses mendefinisikan ulang standar platform pariwisata modern."
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:var(--orange);color:#03130e;">MK</div>
+            <div class="author-info">
+              <strong>Marcus Kusuma</strong>
+              <span>Travel Tech Enthusiast</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="page" id="page-about" aria-labelledby="aboutTitle">
+    <div class="about-intro panel">
+      <div>
+        <p class="about-eyebrow">ABOUT HOBBIGO</p>
+        <h1 id="aboutTitle">AI Journey &amp; Experience Marketplace</h1>
+        <p class="about-lead">One Platform. One Journey. Endless Experiences.</p>
+        <button class="btn btn-primary" onclick="switchPage('travel')">
+          Explore HOBBIGO Travel
+        </button>
+      </div>
+
+      <img class="about-art"
+        src="hobbiGo_cover_1.png"
+        alt="HobbiGo AI Travel Agent, a traveler exploring a connected world of destinations"
+        loading="lazy">
+    </div>
+
+    <div class="grid grid-2 about-values">
+      <article class="panel">
+        <h2>Our Vision</h2>
+        <p>
+          To become the world’s leading AI-powered travel and experience marketplace,
+          connecting people, businesses, destinations, and experiences in one
+          intelligent global ecosystem.
+        </p>
+        <p>
+          We envision a world where every journey can be discovered, planned,
+          personalized, booked, experienced, and continuously optimized through
+          one seamless platform.
+        </p>
+      </article>
+
+      <article class="panel">
+        <h2>Our Mission</h2>
+        <p>
+          HOBBIGO’s mission is to transform the way people travel by combining AI,
+          global marketplace technology, and local experiences into one connected ecosystem.
+        </p>
+        <p>
+          We empower travelers to create journeys that match their interests, needs,
+          time, and budget, while helping hotels, transportation providers, restaurants,
+          attractions, activity providers, and local businesses reach travelers from
+          around the world.
+        </p>
+        <p>
+          Through intelligent recommendations, seamless booking, integrated travel
+          services, and continuous journey optimization, HOBBIGO makes travel simpler,
+          smarter, more personalized, and more rewarding — for both travelers and businesses.
+        </p>
+      </article>
+    </div>
+
+    <article class="panel about-purpose">
+      <h2>Our Purpose</h2>
+      <h3>One Platform. One Journey. Endless Experiences.</h3>
+      <ol class="journey-flow" aria-label="The Hobbigo journey">
+        <li>Discover</li>
+        <li>Plan</li>
+        <li>Configure</li>
+        <li>Package</li>
+        <li>Book</li>
+        <li>Experience</li>
+        <li>Re-optimize</li>
+      </ol>
+      <p>
+        HOBBIGO is building the infrastructure for the next generation of global travel —
+        where AI meets experiences, marketplaces, and people.
+      </p>
+    </article>
+  </section>
+
+  <!-- PROFILE -->
+  <section class="page" id="page-profile">
+    <div class="panel" style="max-width:800px;margin:auto;">
+      <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:20px;">
+          <div style="width:70px;height:70px;border-radius:50%;background:var(--primary);color:#04140f;font-size:26px;font-weight:900;display:flex;align-items:center;justify-content:center;">
+            VIP
+          </div>
+          <div>
+            <h2 class="section-title" id="profileNameText">Alexandro Hobbigo</h2>
+            <p class="text-muted" style="font-size:13px;" id="profileEmailText">
+              alexandro@hobbigo.one • Status: Verified VIP Traveler
+            </p>
+          </div>
+        </div>
+        <button class="btn btn-small"
+          style="background:rgba(255,102,122,.15);color:var(--red);border-color:transparent;"
+          onclick="handleLogout()">Logout</button>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card" style="padding:18px;">
+          <span style="font-size:10px;color:var(--primary);font-weight:900;text-transform:uppercase;">
+            Total Pesanan Aktif
+          </span>
+          <h3 style="margin-top:5px;font-size:22px;" id="profileOrderCount">0 Order</h3>
+          <p class="text-muted" style="font-size:11px;margin-top:4px;">
+            Dilindungi sistem Escrow HOBBIGO
+          </p>
+        </div>
+        <div class="card" style="padding:18px;">
+          <span style="font-size:10px;color:var(--blue);font-weight:900;text-transform:uppercase;">
+            eSIM &amp; Jastip Terdaftar
+          </span>
+          <h3 style="margin-top:5px;font-size:22px;" id="profileCartCount">0 Item di Cart</h3>
+          <p class="text-muted" style="font-size:11px;margin-top:4px;">Siap diproses instan</p>
+        </div>
+      </div>
+
+      <div class="panel mt-3" style="background:var(--card);">
+        <h4 style="margin-bottom:12px;">Pengaturan Akun &amp; Preferensi</h4>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input id="inputProfileName" value="Alexandro Hobbigo">
+          </div>
+          <div class="form-group">
+            <label>Nomor WhatsApp / Kontak</label>
+            <input id="inputProfilePhone" value="+62 812-3456-7890">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mata Utama Pilihan</label>
+          <select>
+            <option>IDR (Indonesian Rupiah)</option>
+            <option>USD (US Dollar)</option>
+          </select>
+        </div>
+        <button class="btn btn-primary mt-2" onclick="saveProfileChanges()">
+          Simpan Perubahan
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAVEL -->
+  <section class="page" id="page-travel">
+    <div class="panel">
+      <div class="travel-tabs">
+        <button id="sub-overview" class="active" onclick="switchTravelTab('overview')">
+          Marketplace Utama
+        </button>
+        <button id="sub-flight" onclick="switchTravelTab('flight')">✈️ Flight Engine</button>
+        <button id="sub-hotel" onclick="switchTravelTab('hotel')">🏨 Hotel &amp; Stay</button>
+        <button id="sub-rental" onclick="switchTravelTab('rental')">🚗 Rental Center</button>
+        <button id="sub-event" onclick="switchTravelTab('event')">🎉 Create Event / Trip</button>
+      </div>
+
+      <div class="travel-tab-content" id="tab-overview">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Marketplace Pengalaman &amp; Wisata Global</h2>
+            <p class="text-muted" style="font-size:13px;">
+              Pilihan destinasi dan paket perjalanan kurasi terbaik.
+            </p>
+          </div>
+          <button class="btn btn-primary btn-small" onclick="openAiPlannerModal()">✦ Buat Paket AI</button>
+        </div>
+        <div class="product-grid" id="travelCatalogGrid" style="margin-top:15px;"></div>
+      </div>
+
+      <div class="travel-tab-content" id="tab-flight" style="display:none;">
+        <h2>✈️ HOBBIGO Flight Marketplace</h2>
+        <div class="panel" style="margin-top:15px;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Kota Asal</label>
+              <input id="flOrigin" value="Jakarta (CGK)">
+            </div>
+            <div class="form-group">
+              <label>Kota Tujuan</label>
+              <input id="flDest" value="Bali (DPS)">
+            </div>
+          </div>
+          <button class="btn btn-primary full" onclick="searchFlightAction()">
+            Cari Penerbangan Terbaik
+          </button>
+        </div>
+        <div id="flightResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
+      </div>
+
+      <div class="travel-tab-content" id="tab-hotel" style="display:none;">
+        <h2>🏨 Hotel, Villa &amp; Stay</h2>
+        <div class="panel" style="margin-top:15px;">
+          <div class="form-group">
+            <label>Destinasi / Nama Hotel</label>
+            <input id="htLoc" value="Seminyak, Bali">
+          </div>
+          <button class="btn btn-primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
+        </div>
+        <div id="hotelResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
+      </div>
+
+      <div class="travel-tab-content" id="tab-rental" style="display:none;">
+        <h2>🚗 Rental Center (Mobil, Motor, Boat)</h2>
+        <div class="grid grid-3" style="margin-top:15px;">
+          <div class="panel">
+            <h4>🚗 Car Rental + Driver</h4>
+            <p class="text-muted" style="font-size:12px;margin:8px 0;">
+              Alphard / Avanza dengan supir profesional.
+            </p>
+            <strong style="color:var(--primary);">Rp 350.000 / hari</strong>
+            <button class="btn btn-primary full mt-2"
+              onclick="addCustomToCart('Car Rental + Driver',350000,'Transport')">Sewa Mobil</button>
+          </div>
+
+          <div class="panel">
+            <h4>🛵 Motor Rental</h4>
+            <p class="text-muted" style="font-size:12px;margin:8px 0;">
+              Lepas kunci antar langsung ke hotel.
+            </p>
+            <strong style="color:var(--primary);">Rp 75.000 / hari</strong>
+            <button class="btn btn-primary full mt-2"
+              onclick="addCustomToCart('Motor Rental',75000,'Transport')">Sewa Motor</button>
+          </div>
+
+          <div class="panel">
+            <h4>🛥️ Boat &amp; Yacht Charter</h4>
+            <p class="text-muted" style="font-size:12px;margin:8px 0;">
+              Fast boat penyeberangan pulau privat.
+            </p>
+            <strong style="color:var(--primary);">Rp 450.000</strong>
+            <button class="btn btn-primary full mt-2"
+              onclick="addCustomToCart('Boat / Island Transfer',450000,'Transport')">Sewa Boat</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="travel-tab-content" id="tab-event"
+        style="display:none;max-width:650px;margin:auto;">
+        <h2>🎉 Create Event, Group &amp; Corporate Trip</h2>
+        <div class="form-group mt-2">
+          <label>Nama Event / Perjalanan</label>
+          <input placeholder="Contoh: Annual Retreat Bali 2026">
+        </div>
+        <div class="form-group">
+          <label>Jumlah Peserta</label>
+          <input type="number" value="10">
+        </div>
+        <button class="btn btn-primary full"
+          onclick="showToast('Event berhasil dipublikasikan!')">Publish Event</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TELKU -->
+  <section class="page" id="page-telku">
+    <div class="panel">
+      <h2>📶 TELKU End-to-End Connectivity Platform</h2>
+      <p class="text-muted" style="font-size:13px;margin-top:5px;">
+        Pilih negara, dapatkan QR Code instan, aktivasi, dan pantau kuota secara real-time.
+      </p>
+
+      <div class="grid grid-3" style="margin-top:20px;">
+        <div class="panel" style="background:var(--card);">
+          <span style="font-size:10px;color:var(--primary);font-weight:900;">LOCAL eSIM PLAN</span>
+          <h4 class="mt-1">Japan 5GB (7 Days)</h4>
+          <p class="text-muted" style="font-size:12px;margin:6px 0;">NTT Docomo 5G • Hotspot Supported</p>
+          <strong style="color:var(--primary);font-size:16px;">Rp 120.000</strong>
+          <button class="btn btn-primary full mt-2"
+            onclick="addCustomToCart('TELKU eSIM: Japan 5GB',120000,'TELKU')">
+            Beli &amp; Checkout
+          </button>
+        </div>
+
+        <div class="panel" style="background:var(--card);">
+          <span style="font-size:10px;color:var(--primary);font-weight:900;">REGIONAL PLAN</span>
+          <h4 class="mt-1">Asia Traveler 10GB</h4>
+          <p class="text-muted" style="font-size:12px;margin:6px 0;">Multi-Country Asia • 15 Days</p>
+          <strong style="color:var(--primary);font-size:16px;">Rp 250.000</strong>
+          <button class="btn btn-primary full mt-2"
+            onclick="addCustomToCart('TELKU eSIM: Asia 10GB',250000,'TELKU')">
+            Beli &amp; Checkout
+          </button>
+        </div>
+
+        <div class="panel" style="background:var(--card);">
+          <span style="font-size:10px;color:var(--orange);font-weight:900;">UNLIMITED PLAN</span>
+          <h4 class="mt-1">Global Unlimited 30D</h4>
+          <p class="text-muted" style="font-size:12px;margin:6px 0;">130+ Negara • High Speed FUP</p>
+          <strong style="color:var(--primary);font-size:16px;">Rp 550.000</strong>
+          <button class="btn btn-primary full mt-2"
+            onclick="addCustomToCart('TELKU eSIM: Global Unlimited',550000,'TELKU')">
+            Beli &amp; Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHELEA -->
+  <section class="page" id="page-chelea">
+    <div class="panel">
+      <h2>📦 CHELEA Commerce &amp; Escrow Logistics</h2>
+      <p class="text-muted" style="font-size:13px;margin-top:5px;">
+        Platform jastip aman dengan Match Engine, Security Engine,
+        Proof of Purchase, dan Escrow Payment.
+      </p>
+
+      <div class="panel mt-2" style="background:var(--card);max-width:650px;">
+        <h4>Buat Request Personal Shopping (Jastip)</h4>
+        <div class="form-group mt-2">
+          <label>Nama Barang</label>
+          <input id="chItem" placeholder="Contoh: Matcha Kyoto Authentic / Merchandise Eksklusif">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Negara Asal</label>
+            <input id="chOrigin" value="Jepang">
+          </div>
+          <div class="form-group">
+            <label>Estimasi Harga (IDR)</label>
+            <input type="number" id="chPrice" value="750000">
+          </div>
+        </div>
+        <button class="btn btn-orange full" onclick="submitCheleaRequest()">
+          Kirim Request ke Match Engine
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART -->
+  <section class="page" id="page-cart">
+    <div class="grid grid-2">
+      <div class="panel">
+        <h2>Master Cart (Keranjang Terpadu)</h2>
+        <div id="cartItemsContainer" class="mt-2"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Ringkasan Pembayaran</h3>
+        <div class="flex-between mt-2 text-muted">
+          <span>Total Item</span>
+          <strong id="cartSummaryQty" style="color:var(--text);">0</strong>
+        </div>
+        <div class="flex-between mt-1 text-muted">
+          <span>Subtotal</span>
+          <strong id="cartSummarySubtotal" style="color:var(--text);">Rp 0</strong>
+        </div>
+        <hr style="border-color:var(--line);margin:15px 0;">
+        <div class="flex-between" style="font-size:18px;font-weight:900;">
+          <span>Total Bayar</span>
+          <strong id="cartSummaryTotal" style="color:var(--primary);">Rp 0</strong>
+        </div>
+        <button class="btn btn-primary full mt-3" onclick="proceedToPayment()">
+          Proses Pembayaran (Escrow Protected)
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDERS -->
+  <section class="page" id="page-orders">
+    <div class="panel">
+      <h2>Master Orders &amp; Live Tracking Struk</h2>
+      <p class="text-muted" style="font-size:13px;">
+        Pusat riwayat pesanan lintas pilar lengkap dengan status Escrow &amp; Live Tracking Logistik.
+      </p>
+      <div id="ordersListContainer" class="mt-2"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CHAT -->
+<button class="chat-float-btn" onclick="toggleChatBox()" aria-label="Buka chat">💬</button>
+<div class="chat-box-modal" id="chatBoxModal">
+  <div class="chat-header">
+    <div>
+      <strong>Live Support HOBBIGO</strong>
+      <span style="display:block;font-size:10px;color:var(--primary);">
+        ● Tim online siap membantu
+      </span>
+    </div>
+    <button class="btn btn-small" onclick="toggleChatBox()" aria-label="Tutup chat">✕</button>
+  </div>
+  <div class="chat-body" id="chatMessagesContainer">
+    <div class="chat-msg support">
+      Halo! Selamat datang di HOBBIGO ONE. Ada yang bisa kami bantu terkait
+      Travel, eSIM TELKU, atau Jastip CHELEA?
+    </div>
+  </div>
+  <div class="chat-footer">
+    <input id="chatInputText" placeholder="Ketik pesan..."
+      onkeypress="if(event.key==='Enter')sendChatMessage()">
+    <button class="btn btn-primary btn-small" onclick="sendChatMessage()">Kirim</button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="globalModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <div class="flex-between mb-2">
+      <h2 id="modalTitleText">Informasi</h2>
+      <button class="btn btn-small" onclick="closeModal()" aria-label="Tutup">✕</button>
+    </div>
+    <div id="modalBodyContent"></div>
+    <div class="mt-3 flex" style="justify-content:flex-end;" id="modalFooterContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toastBox" role="status">Notifikasi berhasil</div>
+
+<script>
+const masterCatalog = [
+  {
+    id:'tr1',
+    type:'Experience',
+    name:'Bali Ocean & Culture',
+    price:1250000,
+    desc:'Transport + Guide + Snorkeling + Local Experience.',
+    image:'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id:'tr2',
+    type:'Stay',
+    name:'Seminyak Private Villa & Pool',
+    price:1950000,
+    desc:'Villa mewah lengkap dengan fasilitas privat dan sarapan.',
+    image:'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    id:'tr3',
+    type:'Flight',
+    name:'Jakarta → Bali Flight (Economy)',
+    price:1250000,
+    desc:'Penerbangan langsung berkecepatan tinggi & bagasi kabin.',
+    image:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80'
+  }
+];
+
+function readStoredJSON(key,fallback){
+  try{
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  }catch(error){
+    return fallback;
+  }
+}
+
+function writeStoredJSON(key,value){
+  try{
+    localStorage.setItem(key,JSON.stringify(value));
+  }catch(error){
+    console.warn('Penyimpanan lokal tidak tersedia.',error);
+  }
+}
+
+let cart = readStoredJSON('hbg_v77_cart',[]);
+let orders = readStoredJSON('hbg_v77_orders',[]);
+let currentUser = readStoredJSON('hbg_v77_user',null);
+
+if(!Array.isArray(cart)) cart = [];
+if(!Array.isArray(orders)) orders = [];
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,char => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[char]));
+}
+
+function formatIDR(value){
+  return 'Rp ' + Number(value).toLocaleString('id-ID');
+}
+
+let toastTimer;
+
+function showToast(message){
+  const box = document.getElementById('toastBox');
+  box.textContent = message;
+  box.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => box.classList.remove('show'),2500);
+}
+
+function setServicesMenu(open){
+  const toggle = document.getElementById('servicesToggle');
+  const menu = document.getElementById('servicesMenu');
+  menu.hidden = !open;
+  toggle.setAttribute('aria-expanded',String(open));
+  toggle.setAttribute('aria-label',open ? 'Close services menu' : 'Open services menu');
+  toggle.textContent = open ? '✕' : '☰';
+}
+
+function switchPage(pageId){
+  const target = document.getElementById('page-' + pageId);
+  if(!target) return;
+
+  document.querySelectorAll('main > .page').forEach(page => {
+    page.classList.remove('active');
+  });
+
+  document.querySelectorAll('[id^="nav-"]').forEach(button => {
+    button.classList.remove('active');
+  });
+
+  target.classList.add('active');
+
+  const navButton = document.getElementById('nav-' + pageId);
+  if(navButton) navButton.classList.add('active');
+
+  setServicesMenu(false);
+  window.scrollTo({top:0,behavior:'smooth'});
+  renderAllData();
+}
+
+function handleProfileNavClick(){
+  if(!currentUser){
+    openAuthModal();
+  }else{
+    switchPage('profile');
+  }
+}
+
+function openAuthModal(){
+  openModal('Autentikasi HOBBIGO ONE',`
+    <p class="text-muted" style="font-size:12px;margin-bottom:15px;">
+      Masuk atau Daftar akun baru untuk mulai menikmati ekosistem
+      perjalanan &amp; jastip global.
+    </p>
+
+    <button class="btn-social" onclick="socialLogin('Google')">
+      <span>🌐</span> Masuk dengan Google
+    </button>
+    <button class="btn-social" onclick="socialLogin('Apple')">
+      <span>🍏</span> Masuk dengan Apple ID
+    </button>
+
+    <div style="text-align:center;margin:15px 0;color:var(--muted);font-size:11px;">
+      ATAU DAFTAR DENGAN EMAIL
+    </div>
+
+    <div class="form-group">
+      <label>Nama Lengkap</label>
+      <input id="authName" placeholder="Alexandro">
+    </div>
+    <div class="form-group">
+      <label>Alamat Email</label>
+      <input id="authEmail" placeholder="alex@domain.com" type="email">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input id="authPass" type="password" placeholder="••••••••">
+    </div>
+  `,`
+    <button class="btn btn-primary full" onclick="submitManualAuth()">
+      Daftar / Masuk Akun
+    </button>
+  `);
+}
+
+function socialLogin(provider){
+  currentUser = {
+    name:'User ' + provider,
+    email:'user.' + provider.toLowerCase() + '@hobbigo.one'
+  };
+  writeStoredJSON('hbg_v77_user',currentUser);
+  closeModal();
+  showToast('Berhasil masuk via ' + provider + '!');
+  updateProfileUI();
+  switchPage('profile');
+}
+
+function submitManualAuth(){
+  const name = document.getElementById('authName').value.trim() || 'Traveler HOBBIGO';
+  const email = document.getElementById('authEmail').value.trim() || 'traveler@hobbigo.one';
+
+  currentUser = {name,email};
+  writeStoredJSON('hbg_v77_user',currentUser);
+  closeModal();
+  showToast('Registrasi & Login Berhasil!');
+  updateProfileUI();
+  switchPage('profile');
+}
+
+function handleLogout(){
+  currentUser = null;
+  try{
+    localStorage.removeItem('hbg_v77_user');
+  }catch(error){
+    console.warn(error);
+  }
+  showToast('Berhasil logout.');
+  switchPage('home');
+}
+
+function updateProfileUI(){
+  if(!currentUser) return;
+
+  document.getElementById('profileNameText').textContent = currentUser.name;
+  document.getElementById('profileEmailText').textContent =
+    currentUser.email + ' • Status: Verified VIP Traveler';
+
+  const inputName = document.getElementById('inputProfileName');
+  if(inputName) inputName.value = currentUser.name;
+}
+
+function saveProfileChanges(){
+  const newName = document.getElementById('inputProfileName').value.trim();
+
+  if(currentUser){
+    currentUser.name = newName;
+    writeStoredJSON('hbg_v77_user',currentUser);
+    updateProfileUI();
+  }
+
+  showToast('Perubahan profil berhasil disimpan!');
+}
+
+function switchTravelTab(tabId){
+  const target = document.getElementById('tab-' + tabId);
+  if(!target) return;
+
+  document.querySelectorAll('.travel-tab-content').forEach(tab => {
+    tab.style.display = 'none';
+  });
+
+  document.querySelectorAll('.travel-tabs button').forEach(button => {
+    button.classList.remove('active');
+  });
+
+  target.style.display = 'block';
+  document.getElementById('sub-' + tabId).classList.add('active');
+}
+
+function addToCart(id){
+  const item = masterCatalog.find(product => product.id === id);
+  if(!item) return;
+
+  const existing = cart.find(product => product.id === id);
+
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({...item,qty:1});
+  }
+
+  saveAndSync();
+  showToast(item.name + ' ditambahkan ke Master Cart!');
+}
+
+function addCustomToCart(name,price,type='Travel'){
+  const existing = cart.find(product => product.name === name);
+
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({
+      id:'cust_' + Date.now(),
+      type,
+      name,
+      price,
+      qty:1
+    });
+  }
+
+  saveAndSync();
+  showToast(name + ' ditambahkan ke Master Cart!');
+}
+
+function saveAndSync(){
+  writeStoredJSON('hbg_v77_cart',cart);
+  writeStoredJSON('hbg_v77_orders',orders);
+
+  const totalQty = cart.reduce((sum,item) => sum + item.qty,0);
+  document.getElementById('cartBadge').textContent = totalQty;
+
+  const profileCart = document.getElementById('profileCartCount');
+  const profileOrders = document.getElementById('profileOrderCount');
+
+  if(profileCart) profileCart.textContent = totalQty + ' Item di Cart';
+  if(profileOrders) profileOrders.textContent = orders.length + ' Order';
+}
+
+function renderAllData(){
+  document.getElementById('travelCatalogGrid').innerHTML =
+    masterCatalog.map(item => cardHTML(item)).join('');
+
+  renderCartUI();
+  renderOrdersUI();
+  updateProfileUI();
+}
+
+function cardHTML(item){
+  let icon = '🌟';
+  if(item.type === 'Flight') icon = '✈️';
+  else if(item.type === 'Stay') icon = '🏨';
+  else if(item.type === 'Experience') icon = '🏄';
+
+  return `
+    <div class="product-card">
+      <div>
+        <div class="product-image" style="background-image:url('${item.image}');"></div>
+        <div class="product-body">
+          <span class="product-category">${escapeHTML(item.type)}</span>
+          <h4 class="product-title">${icon} ${escapeHTML(item.name)}</h4>
+          <p class="product-desc">${escapeHTML(item.desc)}</p>
+        </div>
+      </div>
+      <div class="product-body" style="padding-top:0;">
+        <div class="product-price">
+          <span>Harga</span>
+          <strong>${formatIDR(item.price)}</strong>
+        </div>
+        <button class="btn btn-primary full mt-2" onclick="addToCart('${item.id}')">
+          + Masukkan Keranjang
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function searchFlightAction(){
+  showToast('Mencari penerbangan terbaik...');
+
+  setTimeout(() => {
+    document.getElementById('flightResultContainer').innerHTML = `
+      <div class="panel" style="background:var(--card);">
+        <h4>Garuda Indonesia (GA-402)</h4>
+        <p class="text-muted" style="font-size:12px;margin:5px 0;">
+          CGK (08:00) → DPS (11:00) • Direct
+        </p>
+        <strong style="color:var(--primary);font-size:15px;">Rp 1.450.000</strong>
+        <button class="btn btn-primary full mt-2"
+          onclick="addCustomToCart('Flight: Garuda GA-402',1450000,'Flight')">
+          Booking Flight
+        </button>
+      </div>
+    `;
+    showToast('Hasil penerbangan ditemukan!');
+  },600);
+}
+
+function searchHotelAction(){
+  showToast('Mencari akomodasi...');
+
+  setTimeout(() => {
+    document.getElementById('hotelResultContainer').innerHTML = `
+      <div class="panel" style="background:var(--card);">
+        <h4>The Seminyak Beach Resort</h4>
+        <p class="text-muted" style="font-size:12px;margin:5px 0;">
+          Hotel Bintang 5 • Beachfront • Breakfast
+        </p>
+        <strong style="color:var(--primary);font-size:15px;">
+          Rp 2.100.000 / malam
+        </strong>
+        <button class="btn btn-primary full mt-2"
+          onclick="addCustomToCart('Hotel: Seminyak Resort',2100000,'Stay')">
+          Pilih Kamar
+        </button>
+      </div>
+    `;
+    showToast('Akomodasi ditemukan!');
+  },600);
+}
+
+function submitCheleaRequest(){
+  const item = document.getElementById('chItem').value || 'Titipan Barang';
+  const price = Number(document.getElementById('chPrice').value) || 750000;
+
+  addCustomToCart('CHELEA Jastip: ' + item,price,'CHELEA');
+  switchPage('cart');
+  showToast('Request CHELEA berhasil masuk ke Master Cart!');
+}
+
+function renderCartUI(){
+  const container = document.getElementById('cartItemsContainer');
+
+  if(!cart.length){
+    container.innerHTML = '<p class="text-muted">Master Cart Anda masih kosong.</p>';
+    document.getElementById('cartSummaryQty').textContent = 0;
+    document.getElementById('cartSummarySubtotal').textContent = formatIDR(0);
+    document.getElementById('cartSummaryTotal').textContent = formatIDR(0);
+    return;
+  }
+
+  let subtotal = 0;
+  let totalQty = 0;
+
+  container.innerHTML = cart.map((item,index) => {
+    subtotal += item.price * item.qty;
+    totalQty += item.qty;
+
+    return `
+      <div class="flex-between mb-2"
+        style="padding:10px;background:var(--card);border-radius:10px;border:1px solid var(--line);">
+        <div>
+          <strong>${escapeHTML(item.name)}</strong>
+          <div class="text-muted" style="font-size:11px;">
+            [${escapeHTML(item.type)}] ${formatIDR(item.price)} × ${item.qty}
+          </div>
+        </div>
+        <button class="btn btn-small"
+          style="background:rgba(255,102,122,.15);color:var(--red);border-color:transparent;"
+          onclick="removeCartItemAt(${index})">
+          Hapus
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('cartSummaryQty').textContent = totalQty;
+  document.getElementById('cartSummarySubtotal').textContent = formatIDR(subtotal);
+  document.getElementById('cartSummaryTotal').textContent = formatIDR(subtotal);
+}
+
+function removeCartItemAt(index){
+  cart.splice(index,1);
+  saveAndSync();
+  renderCartUI();
+  showToast('Item dihapus dari keranjang');
+}
+
+function removeFromCart(identifier){
+  cart = cart.filter(item => item.id !== identifier && item.name !== identifier);
+  saveAndSync();
+  renderCartUI();
+  showToast('Item dihapus dari keranjang');
+}
+
+function closeModal(){
+  document.getElementById('globalModal').classList.remove('show');
+}
+
+function openModal(title,bodyHTML,footerHTML=''){
+  document.getElementById('modalTitleText').textContent = title;
+  document.getElementById('modalBodyContent').innerHTML = bodyHTML;
+  document.getElementById('modalFooterContent').innerHTML = footerHTML;
+  document.getElementById('globalModal').classList.add('show');
+}
+
+function openAiPlannerModal(){
+  openModal('✦ AI Journey & Experience Planner',`
+    <div class="form-group">
+      <label>Destinasi Tujuan</label>
+      <input id="aiDest" value="Bali">
+    </div>
+    <div class="form-group">
+      <label>Durasi</label>
+      <select>
+        <option>3 Hari</option>
+        <option>5 Hari</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Budget (IDR)</label>
+      <input value="Rp 8.500.000">
+    </div>
+  `,`
+    <button class="btn btn-primary"
+      onclick="closeModal();showToast('AI berhasil menyusun Smart Itinerary!');addToCart('tr1');switchPage('cart');">
+      Generate &amp; Masukkan Cart
+    </button>
+  `);
+}
+
+function proceedToPayment(){
+  if(!cart.length){
+    showToast('Master Cart kosong!');
+    return;
+  }
+
+  openModal('Master Checkout & Escrow Payment',`
+    <p class="text-muted" style="font-size:12px;margin-bottom:15px;">
+      Pilih metode pembayaran aman (Escrow Protected):
+    </p>
+    <div class="form-group">
+      <label><input type="radio" name="pay" checked> QRIS (Instant)</label>
+    </div>
+    <div class="form-group">
+      <label><input type="radio" name="pay"> Virtual Account (BCA/Mandiri)</label>
+    </div>
+  `,`
+    <button class="btn btn-primary" onclick="completePayment()">
+      Konfirmasi &amp; Bayar
+    </button>
+  `);
+}
+
+function completePayment(){
+  if(!cart.length) return;
+
+  const total = cart.reduce((sum,item) => sum + item.price * item.qty,0);
+
+  const newOrder = {
+    id:'HBG-' + Math.floor(100000 + Math.random() * 900000),
+    date:new Date().toLocaleDateString('id-ID'),
+    items:cart.map(item => ({...item})),
+    total,
+    status:'Paid & Escrow Held'
+  };
+
+  orders.unshift(newOrder);
+  cart = [];
+  saveAndSync();
+  closeModal();
+  showToast('Pembayaran Sukses! Order diterbitkan.');
+  switchPage('orders');
+}
+
+function renderOrdersUI(){
+  const container = document.getElementById('ordersListContainer');
+
+  if(!orders.length){
+    container.innerHTML = '<p class="text-muted">Belum ada riwayat master order.</p>';
+    return;
+  }
+
+  container.innerHTML = orders.map(order => `
+    <div class="panel" style="background:var(--card);">
+      <div class="flex-between mb-1"
+        style="border-bottom:1px solid var(--line);padding-bottom:8px;">
+        <strong>Order ID: ${escapeHTML(order.id)}</strong>
+        <span style="color:var(--primary);font-size:11px;font-weight:800;">
+          🔒 ${escapeHTML(order.status)}
+        </span>
+      </div>
+
+      <div class="text-muted" style="font-size:11px;margin-bottom:10px;">
+        Tanggal Pesanan: ${escapeHTML(order.date)}
+      </div>
+
+      <div style="font-size:12px;margin-bottom:12px;">
+        ${order.items.map(item => `
+          <div>
+            • [${escapeHTML(item.type)}] ${escapeHTML(item.name)}
+            (x${item.qty}) — ${formatIDR(item.price * item.qty)}
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="background:var(--bg3);padding:12px;border-radius:12px;border:1px solid var(--line);margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:800;color:var(--primary);margin-bottom:8px;">
+          📍 Live Tracking &amp; Escrow Progress
+        </div>
+        <div class="tracking-steps">
+          <div class="tracking-step active">
+            <div class="step-dot">✓</div>
+            <span class="step-label">Escrow Secured</span>
+          </div>
+          <div class="tracking-step active">
+            <div class="step-dot">2</div>
+            <span class="step-label">Item / eSIM Processed</span>
+          </div>
+          <div class="tracking-step">
+            <div class="step-dot">3</div>
+            <span class="step-label">Air Shipping / Active</span>
+          </div>
+          <div class="tracking-step">
+            <div class="step-dot">4</div>
+            <span class="step-label">Delivered &amp; Released</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:right;font-weight:900;color:var(--primary);">
+        Total: ${formatIDR(order.total)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleChatBox(){
+  document.getElementById('chatBoxModal').classList.toggle('open');
+}
+
+function appendChatMessage(text,
