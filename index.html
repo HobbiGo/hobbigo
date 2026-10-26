@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HOBBIGO V77.1 — Clean UI Ecosystem & Travel Engine</title>
 <style>
-  /* =========================================================
-     HOBBIGO V77.1 — CLEAN UI CSS
-     ========================================================= */
   *{box-sizing:border-box;margin:0;padding:0;}
   :root{
     --bg:#07111f;--bg2:#0b1728;--bg3:#101e31;--card:#102238;--card2:#142943;--line:#223954;
@@ -80,177 +77,93 @@
   .hero h1 span{color:var(--primary);}
   .hero p{margin-top:15px;max-width:650px;color:var(--muted);font-size:15px;}
 
-  /* EXPEDIA-STYLE EXPLORE MENU */
-  .explore-section { margin-top: 30px; }
-  .explore-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-    margin-top: 15px;
+  /* EXPLORE MENU */
+  .explore-section{margin-top:30px;}
+  .explore-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:15px;}
+  .explore-card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+    cursor:pointer;transition:all .2s ease;
   }
-  .explore-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  .explore-card:hover{border-color:var(--primary);transform:translateY(-2px);background:rgba(32,211,165,.04);}
+  .explore-card-left{display:flex;align-items:center;gap:14px;}
+  .explore-icon{
+    font-size:20px;width:36px;height:36px;border-radius:10px;
+    background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;
   }
-  .explore-card:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    background: rgba(32, 211, 165, 0.04);
+  .explore-card strong{font-size:14px;color:var(--text);display:block;}
+  .explore-card span{font-size:11px;color:var(--muted);}
+  .explore-arrow{color:var(--muted);font-size:16px;font-weight:800;transition:.2s;}
+  .explore-card:hover .explore-arrow{color:var(--primary);transform:translateX(3px);}
+
+  /* SPOTLIGHT DESTINATIONS */
+  .spotlight-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:15px;}
+  .spotlight-card{
+    height:220px;border-radius:16px;overflow:hidden;position:relative;
+    background-size:cover;background-position:center;display:flex;flex-direction:column;
+    justify-content:flex-end;padding:20px;border:1px solid var(--line);transition:.3s;cursor:pointer;
   }
-  .explore-card-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  .spotlight-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 30%,rgba(7,17,31,.88) 95%);
   }
-  .explore-icon {
-    font-size: 20px;
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.05);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .explore-card strong {
-    font-size: 14px;
-    color: var(--text);
-    display: block;
-  }
-  .explore-card span {
-    font-size: 11px;
-    color: var(--muted);
-  }
-  .explore-arrow {
-    color: var(--muted);
-    font-size: 16px;
-    font-weight: 800;
-    transition: 0.2s;
-  }
-  .explore-card:hover .explore-arrow {
-    color: var(--primary);
-    transform: translateX(3px);
+  .spotlight-card:hover{transform:translateY(-4px);border-color:var(--primary);}
+  .spotlight-content{position:relative;z-index:2;}
+  .spotlight-badge{
+    background:var(--primary);color:#04140f;font-size:9px;font-weight:900;
+    padding:3px 8px;border-radius:6px;display:inline-block;margin-bottom:6px;text-transform:uppercase;
   }
 
-  /* SPOTLIGHT DESTINATIONS (READDY STYLE) */
-  .spotlight-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-    margin-top: 15px;
+  /* TESTIMONIALS */
+  .testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:15px;}
+  .testimonial-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:20px;display:flex;flex-direction:column;justify-content:space-between;
   }
-  .spotlight-card {
-    height: 220px;
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    border: 1px solid var(--line);
-    transition: .3s;
-    cursor: pointer;
+  .testimonial-text{font-size:13px;color:var(--text);font-style:italic;margin-bottom:15px;}
+  .testimonial-author{display:flex;align-items:center;gap:10px;}
+  .author-avatar{
+    width:38px;height:38px;border-radius:50%;background:var(--primary2);
+    display:flex;align-items:center;justify-content:center;font-weight:900;color:#04140f;
   }
-  .spotlight-card::before {
-    content:''; position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 30%, rgba(7,17,31,.88) 95%);
-  }
-  .spotlight-card:hover { transform: translateY(-4px); border-color: var(--primary); }
-  .spotlight-content { position: relative; z-index: 2; }
-  .spotlight-badge { background: var(--primary); color: #04140f; font-size: 9px; font-weight: 900; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; text-transform: uppercase; }
+  .author-info strong{font-size:13px;display:block;color:var(--text);}
+  .author-info span{font-size:11px;color:var(--muted);}
 
-  /* TESTIMONIALS / SOCIAL PROOF */
-  .testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
-    margin-top: 15px;
+  /* TRACKING TIMELINE */
+  .tracking-steps{display:flex;justify-content:space-between;margin:14px 0;position:relative;padding:0 10px;}
+  .tracking-step{text-align:center;position:relative;z-index:2;}
+  .step-dot{
+    width:24px;height:24px;border-radius:50%;background:var(--line);color:var(--muted);
+    font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;
+    margin:auto;border:2px solid var(--bg2);
   }
-  .testimonial-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .testimonial-text {
-    font-size: 13px;
-    color: var(--text);
-    font-style: italic;
-    margin-bottom: 15px;
-  }
-  .testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .author-avatar {
-    width: 38px; height: 38px; border-radius: 50%; background: var(--primary2);
-    display: flex; align-items: center; justify-content: center; font-weight: 900; color: #04140f;
-  }
-  .author-info strong { font-size: 13px; display: block; color: var(--text); }
-  .author-info span { font-size: 11px; color: var(--muted); }
+  .tracking-step.active .step-dot{background:var(--primary);color:#04140f;}
+  .step-label{font-size:10px;color:var(--muted);margin-top:5px;display:block;max-width:80px;}
+  .tracking-step.active .step-label{color:var(--primary);font-weight:800;}
 
-  /* TRACKING TIMELINE STYLES */
-  .tracking-steps {
-    display: flex;
-    justify-content: space-between;
-    margin: 14px 0;
-    position: relative;
-    padding: 0 10px;
+  /* LIVE CHAT */
+  .chat-float-btn{
+    position:fixed;bottom:25px;right:25px;z-index:4000;width:58px;height:58px;
+    border-radius:50%;background:var(--primary);color:#04140f;border:none;font-size:24px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(32,211,165,.4);cursor:pointer;transition:.2s;
   }
-  .tracking-step {
-    text-align: center;
-    position: relative;
-    z-index: 2;
+  .chat-float-btn:hover{transform:scale(1.08);background:var(--primary2);}
+  .chat-box-modal{
+    position:fixed;bottom:95px;right:25px;z-index:4000;width:350px;
+    background:var(--bg2);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow);display:none;flex-direction:column;overflow:hidden;
   }
-  .step-dot {
-    width: 24px; height: 24px; border-radius: 50%; background: var(--line);
-    color: var(--muted); font-size: 10px; font-weight: 900;
-    display: flex; align-items: center; justify-content: center; margin: auto;
-    border: 2px solid var(--bg2);
+  .chat-box-modal.open{display:flex;}
+  .chat-header{
+    background:var(--card);padding:15px;display:flex;align-items:center;
+    justify-content:space-between;border-bottom:1px solid var(--line);
   }
-  .tracking-step.active .step-dot {
-    background: var(--primary); color: #04140f;
-  }
-  .step-label {
-    font-size: 10px; color: var(--muted); margin-top: 5px; display: block; max-width: 80px;
-  }
-  .tracking-step.active .step-label { color: var(--primary); font-weight: 800; }
-
-  /* FLOATING LIVE CHAT WIDGET */
-  .chat-float-btn {
-    position: fixed; bottom: 25px; right: 25px; z-index: 4000;
-    width: 58px; height: 58px; border-radius: 50%; background: var(--primary);
-    color: #04140f; border: none; font-size: 24px; display: flex; align-items: center;
-    justify-content: center; box-shadow: 0 10px 30px rgba(32,211,165,.4); cursor: pointer; transition: .2s;
-  }
-  .chat-float-btn:hover { transform: scale(1.08); background: var(--primary2); }
-  
-  .chat-box-modal {
-    position: fixed; bottom: 95px; right: 25px; z-index: 4000;
-    width: 350px; background: var(--bg2); border: 1px solid var(--line);
-    border-radius: 20px; box-shadow: var(--shadow); display: none; flex-direction: column; overflow: hidden;
-  }
-  .chat-box-modal.open { display: flex; }
-  .chat-header {
-    background: var(--card); padding: 15px; display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-  }
-  .chat-body { padding: 15px; height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 12px; }
-  .chat-msg { padding: 10px 12px; border-radius: 12px; max-width: 80%; line-height: 1.4; }
-  .chat-msg.support { background: var(--card); color: var(--text); align-self: flex-start; border: 1px solid var(--line); }
-  .chat-msg.user { background: var(--primary); color: #04140f; align-self: flex-end; font-weight: 700; }
-  .chat-footer { padding: 12px; border-top: 1px solid var(--line); display: flex; gap: 8px; background: var(--card); }
+  .chat-body{padding:15px;height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;font-size:12px;}
+  .chat-msg{padding:10px 12px;border-radius:12px;max-width:80%;line-height:1.4;}
+  .chat-msg.support{background:var(--card);color:var(--text);align-self:flex-start;border:1px solid var(--line);}
+  .chat-msg.user{background:var(--primary);color:#04140f;align-self:flex-end;font-weight:700;}
+  .chat-footer{padding:12px;border-top:1px solid var(--line);display:flex;gap:8px;background:var(--card);}
 
   /* TABS */
   .travel-tabs{display:flex;gap:6px;padding:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;overflow-x:auto;margin-bottom:20px;}
@@ -274,6 +187,69 @@
   .modal-content{width:min(680px,100%);max-height:90vh;overflow:auto;padding:24px;background:var(--bg2);border:1px solid var(--line);border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.5);}
   .toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);z-index:5000;padding:12px 17px;border:1px solid var(--line);background:#102238;color:var(--text);border-radius:12px;box-shadow:var(--shadow);font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:.25s;}
   .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  /* PERBAIKAN RESPONSIVE: hanya tampilan, tanpa perubahan logika */
+  @media (max-width:1100px){
+    .topbar{height:auto;}
+    .topbar-inner{flex-wrap:wrap;gap:12px;padding:12px 16px;}
+    .logo{flex:1 1 auto;min-width:0;}
+    .header-actions{flex:0 0 auto;}
+    .nav{
+      order:3;flex:1 1 100%;width:100%;min-width:0;
+      overflow-x:auto;padding-bottom:6px;
+    }
+    .nav button,.nav a{flex:0 0 auto;white-space:nowrap;min-height:44px;}
+    .nav button.active{color:var(--white);background:rgba(255,255,255,.07);}
+  }
+
+  @media (max-width:767px){
+    main{padding:0 16px 40px;}
+    main > .page{padding:0;margin-top:20px;}
+    .page,.grid > *,.form-grid > *,.explore-grid > *,
+    .testimonial-grid > *,.product-grid > *,.spotlight-grid > *{min-width:0;}
+
+    .hero{margin-top:0;padding:28px 20px;border-radius:20px;}
+    .hero h1{
+      font-size:clamp(30px,8vw,40px);line-height:1.12;
+      letter-spacing:-1px;overflow-wrap:break-word;
+    }
+    .hero p{font-size:15px;line-height:1.7;}
+    .hero > div{flex-direction:column;align-items:stretch;}
+    .hero .btn{width:100%;min-height:48px;white-space:normal;}
+
+    .grid-2,.grid-3,.grid-4,.form-grid,.explore-grid,
+    .spotlight-grid,.testimonial-grid,.product-grid{
+      grid-template-columns:minmax(0,1fr);
+    }
+
+    .section-head{flex-direction:column;align-items:flex-start;gap:12px;}
+    .section-title{line-height:1.35;}
+    .panel{padding:18px;}
+    .explore-card{padding:16px;gap:12px;}
+    .explore-card-left{min-width:0;}
+    .explore-card-left > div:last-child{min-width:0;overflow-wrap:anywhere;}
+    .explore-icon,.explore-arrow,.author-avatar{flex-shrink:0;}
+    .spotlight-card{height:240px;padding:20px;}
+    .testimonial-card{padding:20px;}
+    .testimonial-author{min-width:0;}
+    .author-info{min-width:0;overflow-wrap:anywhere;}
+    .product-image{height:190px;}
+    .product-price{flex-wrap:wrap;gap:10px;}
+
+    input,select,textarea{min-width:0;font-size:16px;}
+    .btn{min-height:44px;}
+    .modal{padding:12px;}
+    .modal-content{padding:20px;max-height:85vh;max-height:85dvh;}
+    .chat-box-modal{
+      width:calc(100% - 32px);max-width:350px;right:16px;bottom:86px;
+    }
+    .chat-float-btn{right:16px;bottom:16px;}
+    .toast{max-width:calc(100% - 32px);overflow-wrap:anywhere;}
+
+    #page-profile > .panel > div:first-child{flex-wrap:wrap;gap:16px;}
+    #page-profile > .panel > div:first-child > div{flex-wrap:wrap;min-width:0;}
+    #profileEmailText{overflow-wrap:anywhere;}
+  }
 </style>
 </head>
 <body>
@@ -306,21 +282,21 @@
     <!-- 1. HOME / DASHBOARD -->
     <section class="page active" id="page-home">
       <div class="hero">
-        <span style="color:var(--primary); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">Master Platform V77.1</span>
+        <span style="color:var(--primary);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Master Platform V77.1</span>
         <h1>Your Journey. <span>One Smart Ecosystem.</span></h1>
         <p>Integrasi penuh HOBBIGO Travel (Flight, Hotel, Rental), TELKU Connectivity eSIM, dan CHELEA Escrow Logistics & Personal Shopping dalam satu kendali.</p>
-        <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
           <button class="btn btn-primary" onclick="openAiPlannerModal()">✦ Buka AI Journey Planner</button>
           <button class="btn btn-blue" onclick="switchPage('travel')">Eksplorasi Travel Engine</button>
           <button class="btn btn-orange" onclick="switchPage('chelea')">Buka CHELEA Commerce</button>
         </div>
       </div>
 
-      <!-- EKSPLORASI LAYANAN ALA EXPEDIA -->
+      <!-- EKSPLORASI LAYANAN -->
       <div class="explore-section">
-        <h3 class="section-title" style="font-size: 20px;">Eksplorasi Ekosistem HOBBIGO</h3>
-        <p class="text-muted" style="font-size: 12px; margin-top: 3px;">Akses cepat ke seluruh fitur utama perjalanan, konektivitas, dan jastip aman.</p>
-        
+        <h3 class="section-title" style="font-size:20px;">Eksplorasi Ekosistem HOBBIGO</h3>
+        <p class="text-muted" style="font-size:12px;margin-top:3px;">Akses cepat ke seluruh fitur utama perjalanan, konektivitas, dan jastip aman.</p>
+
         <div class="explore-grid">
           <div class="explore-card" onclick="switchPage('travel')">
             <div class="explore-card-left">
@@ -390,43 +366,43 @@
         </div>
       </div>
 
-      <!-- SPOTLIGHT DESTINATIONS (READDY STYLE) -->
-      <section style="margin-top: 40px;">
-        <h3 class="section-title" style="font-size: 20px;">Destinasi Spotlight Global</h3>
-        <p class="text-muted" style="font-size: 12px; margin-top: 3px;">Pilihan destinasi terpopuler dengan kurasi eksklusif untuk pengalaman terbaik.</p>
-        
+      <!-- SPOTLIGHT DESTINATIONS -->
+      <section style="margin-top:40px;">
+        <h3 class="section-title" style="font-size:20px;">Destinasi Spotlight Global</h3>
+        <p class="text-muted" style="font-size:12px;margin-top:3px;">Pilihan destinasi terpopuler dengan kurasi eksklusif untuk pengalaman terbaik.</p>
+
         <div class="spotlight-grid">
           <div class="spotlight-card" style="background-image:url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=600&q=80')" onclick="switchPage('travel')">
             <div class="spotlight-content">
               <span class="spotlight-badge">Trending 2026</span>
-              <h4 style="font-size:18px; font-weight:900;">Tokyo, Jepang</h4>
+              <h4 style="font-size:18px;font-weight:900;">Tokyo, Jepang</h4>
               <p class="text-muted" style="font-size:11px;">Mulai dari Rp 1.850.000 / paket</p>
             </div>
           </div>
 
           <div class="spotlight-card" style="background-image:url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&q=80')" onclick="switchPage('travel')">
             <div class="spotlight-content">
-              <span class="spotlight-badge" style="background:var(--blue); color:white;">Editor Choice</span>
-              <h4 style="font-size:18px; font-weight:900;">Bali, Indonesia</h4>
+              <span class="spotlight-badge" style="background:var(--blue);color:white;">Editor Choice</span>
+              <h4 style="font-size:18px;font-weight:900;">Bali, Indonesia</h4>
               <p class="text-muted" style="font-size:11px;">Mulai dari Rp 1.250.000 / paket</p>
             </div>
           </div>
 
           <div class="spotlight-card" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80')" onclick="switchPage('travel')">
             <div class="spotlight-content">
-              <span class="spotlight-badge" style="background:var(--orange); color:#03130e;">Luxury Stay</span>
-              <h4 style="font-size:18px; font-weight:900;">Paris, Prancis</h4>
+              <span class="spotlight-badge" style="background:var(--orange);color:#03130e;">Luxury Stay</span>
+              <h4 style="font-size:18px;font-weight:900;">Paris, Prancis</h4>
               <p class="text-muted" style="font-size:11px;">Mulai dari Rp 3.400.000 / paket</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- TESTIMONI & SOCIAL PROOF (UNTUK INVESTOR) -->
-      <section style="margin-top: 40px;">
-        <h3 class="section-title" style="font-size: 20px;">Dipercaya oleh Traveler & Investor Global</h3>
-        <p class="text-muted" style="font-size: 12px; margin-top: 3px;">Apa kata mereka yang telah merasakan kemudahan ekosistem terpadu HOBBIGO ONE.</p>
-        
+      <!-- TESTIMONI & SOCIAL PROOF -->
+      <section style="margin-top:40px;">
+        <h3 class="section-title" style="font-size:20px;">Dipercaya oleh Traveler & Investor Global</h3>
+        <p class="text-muted" style="font-size:12px;margin-top:3px;">Apa kata mereka yang telah merasakan kemudahan ekosistem terpadu HOBBIGO ONE.</p>
+
         <div class="testimonial-grid">
           <div class="testimonial-card">
             <p class="testimonial-text">"Menggabungkan booking hotel, eSIM TELKU, dan jastip CHELEA dalam satu keranjang adalah terobosan jenius. Sangat efisien untuk perjalanan bisnis saya."</p>
@@ -442,7 +418,7 @@
           <div class="testimonial-card">
             <p class="testimonial-text">"Sistem Escrow Payment di CHELEA memberikan rasa aman mutlak saat titip beli barang langka dari luar negeri. UI-nya sangat berkelas dan investor-ready!"</p>
             <div class="testimonial-author">
-              <div class="author-avatar" style="background:var(--blue); color:white;">SA</div>
+              <div class="author-avatar" style="background:var(--blue);color:white;">SA</div>
               <div class="author-info">
                 <strong>Sarah Amalia</strong>
                 <span>Digital Nomad & Collector</span>
@@ -453,7 +429,7 @@
           <div class="testimonial-card">
             <p class="testimonial-text">"Fitur AI Journey Planner sangat responsif dan akurat. HOBBIGO ONE sukses mendefinisikan ulang standar platform pariwisata modern."</p>
             <div class="testimonial-author">
-              <div class="author-avatar" style="background:var(--orange); color:#03130e;">MK</div>
+              <div class="author-avatar" style="background:var(--orange);color:#03130e;">MK</div>
               <div class="author-info">
                 <strong>Marcus Kusuma</strong>
                 <span>Travel Tech Enthusiast</span>
@@ -466,40 +442,52 @@
 
     <!-- 1.5. USER PROFILE PAGE -->
     <section class="page" id="page-profile">
-      <div class="panel" style="max-width: 800px; margin: auto;">
-        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 20px;">
-          <div style="display: flex; align-items: center; gap: 20px;">
-            <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--primary); color: #04140f; font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center;">
+      <div class="panel" style="max-width:800px;margin:auto;">
+        <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;gap:20px;">
+            <div style="width:70px;height:70px;border-radius:50%;background:var(--primary);color:#04140f;font-size:26px;font-weight:900;display:flex;align-items:center;justify-content:center;">
               VIP
             </div>
             <div>
               <h2 class="section-title" id="profileNameText">Alexandro Hobbigo</h2>
-              <p class="text-muted" style="font-size: 13px;" id="profileEmailText">alexandro@hobbigo.one • Status: Verified VIP Traveler</p>
+              <p class="text-muted" style="font-size:13px;" id="profileEmailText">alexandro@hobbigo.one • Status: Verified VIP Traveler</p>
             </div>
           </div>
-          <button class="btn btn-small" style="background:rgba(255,102,122,.15); color:var(--red); border-color:transparent;" onclick="handleLogout()">Logout</button>
+          <button class="btn btn-small" style="background:rgba(255,102,122,.15);color:var(--red);border-color:transparent;" onclick="handleLogout()">Logout</button>
         </div>
 
         <div class="grid grid-2">
-          <div class="card" style="padding: 18px;">
-            <span style="font-size: 10px; color: var(--primary); font-weight: 900; text-transform: uppercase;">Total Pesanan Aktif</span>
-            <h3 style="margin-top: 5px; font-size: 22px;" id="profileOrderCount">0 Order</h3>
-            <p class="text-muted" style="font-size: 11px; margin-top: 4px;">Dilindungi sistem Escrow HOBBIGO</p>
+          <div class="card" style="padding:18px;">
+            <span style="font-size:10px;color:var(--primary);font-weight:900;text-transform:uppercase;">Total Pesanan Aktif</span>
+            <h3 style="margin-top:5px;font-size:22px;" id="profileOrderCount">0 Order</h3>
+            <p class="text-muted" style="font-size:11px;margin-top:4px;">Dilindungi sistem Escrow HOBBIGO</p>
           </div>
-          <div class="card" style="padding: 18px;">
-            <span style="font-size: 10px; color: var(--blue); font-weight: 900; text-transform: uppercase;">eSIM & Jastip Terdaftar</span>
-            <h3 style="margin-top: 5px; font-size: 22px;" id="profileCartCount">0 Item di Cart</h3>
-            <p class="text-muted" style="font-size: 11px; margin-top: 4px;">Siap diproses instan</p>
+          <div class="card" style="padding:18px;">
+            <span style="font-size:10px;color:var(--blue);font-weight:900;text-transform:uppercase;">eSIM & Jastip Terdaftar</span>
+            <h3 style="margin-top:5px;font-size:22px;" id="profileCartCount">0 Item di Cart</h3>
+            <p class="text-muted" style="font-size:11px;margin-top:4px;">Siap diproses instan</p>
           </div>
         </div>
 
-        <div class="panel mt-3" style="background: var(--card);">
-          <h4 style="margin-bottom: 12px;">Pengaturan Akun & Preferensi</h4>
+        <div class="panel mt-3" style="background:var(--card);">
+          <h4 style="margin-bottom:12px;">Pengaturan Akun & Preferensi</h4>
           <div class="form-grid">
-            <div class="form-group"><label>Nama Lengkap</label><input id="inputProfileName" value="Alexandro Hobbigo"></div>
-            <div class="form-group"><label>Nomor WhatsApp / Kontak</label><input id="inputProfilePhone" value="+62 812-3456-7890"></div>
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input id="inputProfileName" value="Alexandro Hobbigo">
+            </div>
+            <div class="form-group">
+              <label>Nomor WhatsApp / Kontak</label>
+              <input id="inputProfilePhone" value="+62 812-3456-7890">
+            </div>
           </div>
-          <div class="form-group"><label>Mata Utama Pilihan</label><select><option>IDR (Indonesian Rupiah)</option><option>USD (US Dollar)</option></select></div>
+          <div class="form-group">
+            <label>Mata Utama Pilihan</label>
+            <select>
+              <option>IDR (Indonesian Rupiah)</option>
+              <option>USD (US Dollar)</option>
+            </select>
+          </div>
           <button class="btn btn-primary mt-2" onclick="saveProfileChanges()">Simpan Perubahan</button>
         </div>
       </div>
@@ -516,7 +504,7 @@
           <button id="sub-event" onclick="switchTravelTab('event')">🎉 Create Event / Trip</button>
         </div>
 
-        <!-- Sub Tab: Overview -->
+        <!-- Overview -->
         <div class="travel-tab-content" id="tab-overview">
           <div class="section-head">
             <div>
@@ -528,59 +516,74 @@
           <div class="product-grid" id="travelCatalogGrid" style="margin-top:15px;"></div>
         </div>
 
-        <!-- Sub Tab: Flight -->
+        <!-- Flight -->
         <div class="travel-tab-content" id="tab-flight" style="display:none;">
           <h2>✈️ HOBBIGO Flight Marketplace</h2>
           <div class="panel" style="margin-top:15px;">
             <div class="form-grid">
-              <div class="form-group"><label>Kota Asal</label><input id="flOrigin" value="Jakarta (CGK)"></div>
-              <div class="form-group"><label>Kota Tujuan</label><input id="flDest" value="Bali (DPS)"></div>
+              <div class="form-group">
+                <label>Kota Asal</label>
+                <input id="flOrigin" value="Jakarta (CGK)">
+              </div>
+              <div class="form-group">
+                <label>Kota Tujuan</label>
+                <input id="flDest" value="Bali (DPS)">
+              </div>
             </div>
             <button class="btn btn-primary full" onclick="searchFlightAction()">Cari Penerbangan Terbaik</button>
           </div>
           <div id="flightResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
         </div>
 
-        <!-- Sub Tab: Hotel -->
+        <!-- Hotel -->
         <div class="travel-tab-content" id="tab-hotel" style="display:none;">
           <h2>🏨 Hotel, Villa & Stay</h2>
           <div class="panel" style="margin-top:15px;">
-            <div class="form-group"><label>Destinasi / Nama Hotel</label><input id="htLoc" value="Seminyak, Bali"></div>
+            <div class="form-group">
+              <label>Destinasi / Nama Hotel</label>
+              <input id="htLoc" value="Seminyak, Bali">
+            </div>
             <button class="btn btn-primary full" onclick="searchHotelAction()">Cari Akomodasi</button>
           </div>
           <div id="hotelResultContainer" class="grid grid-3" style="margin-top:15px;"></div>
         </div>
 
-        <!-- Sub Tab: Rental -->
+        <!-- Rental -->
         <div class="travel-tab-content" id="tab-rental" style="display:none;">
           <h2>🚗 Rental Center (Mobil, Motor, Boat)</h2>
           <div class="grid grid-3" style="margin-top:15px;">
             <div class="panel">
               <h4>🚗 Car Rental + Driver</h4>
-              <p class="text-muted" style="font-size:12px; margin:8px 0;">Alphard / Avanza dengan supir profesional.</p>
+              <p class="text-muted" style="font-size:12px;margin:8px 0;">Alphard / Avanza dengan supir profesional.</p>
               <strong style="color:var(--primary);">Rp 350.000 / hari</strong>
-              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Car Rental + Driver', 350000, 'Transport')">Sewa Mobil</button>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Car Rental + Driver',350000,'Transport')">Sewa Mobil</button>
             </div>
             <div class="panel">
               <h4>🛵 Motor Rental</h4>
-              <p class="text-muted" style="font-size:12px; margin:8px 0;">Lepas kunci antar langsung ke hotel.</p>
+              <p class="text-muted" style="font-size:12px;margin:8px 0;">Lepas kunci antar langsung ke hotel.</p>
               <strong style="color:var(--primary);">Rp 75.000 / hari</strong>
-              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Motor Rental', 75000, 'Transport')">Sewa Motor</button>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Motor Rental',75000,'Transport')">Sewa Motor</button>
             </div>
             <div class="panel">
               <h4>🛥️ Boat & Yacht Charter</h4>
-              <p class="text-muted" style="font-size:12px; margin:8px 0;">Fast boat penyeberangan pulau privat.</p>
+              <p class="text-muted" style="font-size:12px;margin:8px 0;">Fast boat penyeberangan pulau privat.</p>
               <strong style="color:var(--primary);">Rp 450.000</strong>
-              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Boat / Island Transfer', 450000, 'Transport')">Sewa Boat</button>
+              <button class="btn btn-primary full mt-2" onclick="addCustomToCart('Boat / Island Transfer',450000,'Transport')">Sewa Boat</button>
             </div>
           </div>
         </div>
 
-        <!-- Sub Tab: Event -->
-        <div class="travel-tab-content" id="tab-event" style="display:none; max-width:650px; margin:auto;">
+        <!-- Event -->
+        <div class="travel-tab-content" id="tab-event" style="display:none;max-width:650px;margin:auto;">
           <h2>🎉 Create Event, Group & Corporate Trip</h2>
-          <div class="form-group mt-2"><label>Nama Event / Perjalanan</label><input placeholder="Contoh: Annual Retreat Bali 2026"></div>
-          <div class="form-group"><label>Jumlah Peserta</label><input type="number" value="10"></div>
+          <div class="form-group mt-2">
+            <label>Nama Event / Perjalanan</label>
+            <input placeholder="Contoh: Annual Retreat Bali 2026">
+          </div>
+          <div class="form-group">
+            <label>Jumlah Peserta</label>
+            <input type="number" value="10">
+          </div>
           <button class="btn btn-primary full" onclick="showToast('Event berhasil dipublikasikan!')">Publish Event</button>
         </div>
       </div>
@@ -590,29 +593,29 @@
     <section class="page" id="page-telku">
       <div class="panel">
         <h2>📶 TELKU End-to-End Connectivity Platform</h2>
-        <p class="text-muted" style="font-size:13px; margin-top:5px;">Pilih negara, dapatkan QR Code instan, aktivasi, dan pantau kuota secara real-time.</p>
-        
+        <p class="text-muted" style="font-size:13px;margin-top:5px;">Pilih negara, dapatkan QR Code instan, aktivasi, dan pantau kuota secara real-time.</p>
+
         <div class="grid grid-3" style="margin-top:20px;">
           <div class="panel" style="background:var(--card);">
-            <span style="font-size:10px; color:var(--primary); font-weight:900;">LOCAL eSIM PLAN</span>
+            <span style="font-size:10px;color:var(--primary);font-weight:900;">LOCAL eSIM PLAN</span>
             <h4 class="mt-1">Japan 5GB (7 Days)</h4>
-            <p class="text-muted" style="font-size:12px; margin:6px 0;">NTT Docomo 5G • Hotspot Supported</p>
-            <strong style="color:var(--primary); font-size:16px;">Rp 120.000</strong>
-            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Japan 5GB', 120000, 'TELKU')">Beli & Checkout</button>
+            <p class="text-muted" style="font-size:12px;margin:6px 0;">NTT Docomo 5G • Hotspot Supported</p>
+            <strong style="color:var(--primary);font-size:16px;">Rp 120.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Japan 5GB',120000,'TELKU')">Beli & Checkout</button>
           </div>
           <div class="panel" style="background:var(--card);">
-            <span style="font-size:10px; color:var(--primary); font-weight:900;">REGIONAL PLAN</span>
+            <span style="font-size:10px;color:var(--primary);font-weight:900;">REGIONAL PLAN</span>
             <h4 class="mt-1">Asia Traveler 10GB</h4>
-            <p class="text-muted" style="font-size:12px; margin:6px 0;">Multi-Country Asia • 15 Days</p>
-            <strong style="color:var(--primary); font-size:16px;">Rp 250.000</strong>
-            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Asia 10GB', 250000, 'TELKU')">Beli & Checkout</button>
+            <p class="text-muted" style="font-size:12px;margin:6px 0;">Multi-Country Asia • 15 Days</p>
+            <strong style="color:var(--primary);font-size:16px;">Rp 250.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Asia 10GB',250000,'TELKU')">Beli & Checkout</button>
           </div>
           <div class="panel" style="background:var(--card);">
-            <span style="font-size:10px; color:var(--orange); font-weight:900;">UNLIMITED PLAN</span>
+            <span style="font-size:10px;color:var(--orange);font-weight:900;">UNLIMITED PLAN</span>
             <h4 class="mt-1">Global Unlimited 30D</h4>
-            <p class="text-muted" style="font-size:12px; margin:6px 0;">130+ Negara • High Speed FUP</p>
-            <strong style="color:var(--primary); font-size:16px;">Rp 550.000</strong>
-            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Global Unlimited', 550000, 'TELKU')">Beli & Checkout</button>
+            <p class="text-muted" style="font-size:12px;margin:6px 0;">130+ Negara • High Speed FUP</p>
+            <strong style="color:var(--primary);font-size:16px;">Rp 550.000</strong>
+            <button class="btn btn-primary full mt-2" onclick="addCustomToCart('TELKU eSIM: Global Unlimited',550000,'TELKU')">Beli & Checkout</button>
           </div>
         </div>
       </div>
@@ -622,14 +625,23 @@
     <section class="page" id="page-chelea">
       <div class="panel">
         <h2>📦 CHELEA Commerce & Escrow Logistics</h2>
-        <p class="text-muted" style="font-size:13px; margin-top:5px;">Platform jastip aman dengan Match Engine, Security Engine, Proof of Purchase, dan Escrow Payment.</p>
-        
-        <div class="panel mt-2" style="background:var(--card); max-width:650px;">
+        <p class="text-muted" style="font-size:13px;margin-top:5px;">Platform jastip aman dengan Match Engine, Security Engine, Proof of Purchase, dan Escrow Payment.</p>
+
+        <div class="panel mt-2" style="background:var(--card);max-width:650px;">
           <h4>Buat Request Personal Shopping (Jastip)</h4>
-          <div class="form-group mt-2"><label>Nama Barang</label><input id="chItem" placeholder="Contoh: Matcha Kyoto Authentic / Merchandise Eksklusif"></div>
+          <div class="form-group mt-2">
+            <label>Nama Barang</label>
+            <input id="chItem" placeholder="Contoh: Matcha Kyoto Authentic / Merchandise Eksklusif">
+          </div>
           <div class="form-grid">
-            <div class="form-group"><label>Negara Asal</label><input id="chOrigin" value="Jepang"></div>
-            <div class="form-group"><label>Estimasi Harga (IDR)</label><input type="number" id="chPrice" value="750000"></div>
+            <div class="form-group">
+              <label>Negara Asal</label>
+              <input id="chOrigin" value="Jepang">
+            </div>
+            <div class="form-group">
+              <label>Estimasi Harga (IDR)</label>
+              <input type="number" id="chPrice" value="750000">
+            </div>
           </div>
           <button class="btn btn-orange full" onclick="submitCheleaRequest()">Kirim Request ke Match Engine</button>
         </div>
@@ -645,10 +657,19 @@
         </div>
         <div class="panel">
           <h3>Ringkasan Pembayaran</h3>
-          <div class="flex-between mt-2 text-muted"><span>Total Item</span><strong id="cartSummaryQty" style="color:var(--text);">0</strong></div>
-          <div class="flex-between mt-1 text-muted"><span>Subtotal</span><strong id="cartSummarySubtotal" style="color:var(--text);">Rp 0</strong></div>
-          <hr style="border-color:var(--line); margin:15px 0;">
-          <div class="flex-between" style="font-size:18px; font-weight:900;"><span>Total Bayar</span><strong id="cartSummaryTotal" style="color:var(--primary);">Rp 0</strong></div>
+          <div class="flex-between mt-2 text-muted">
+            <span>Total Item</span>
+            <strong id="cartSummaryQty" style="color:var(--text);">0</strong>
+          </div>
+          <div class="flex-between mt-1 text-muted">
+            <span>Subtotal</span>
+            <strong id="cartSummarySubtotal" style="color:var(--text);">Rp 0</strong>
+          </div>
+          <hr style="border-color:var(--line);margin:15px 0;">
+          <div class="flex-between" style="font-size:18px;font-weight:900;">
+            <span>Total Bayar</span>
+            <strong id="cartSummaryTotal" style="color:var(--primary);">Rp 0</strong>
+          </div>
           <button class="btn btn-primary full mt-3" onclick="proceedToPayment()">Proses Pembayaran (Escrow Protected)</button>
         </div>
       </div>
@@ -670,7 +691,7 @@
     <div class="chat-header">
       <div>
         <strong>Live Support HOBBIGO</strong>
-        <span style="display:block; font-size:10px; color:var(--primary);">● Tim online siap membantu</span>
+        <span style="display:block;font-size:10px;color:var(--primary);">● Tim online siap membantu</span>
       </div>
       <button class="btn btn-small" onclick="toggleChatBox()">✕</button>
     </div>
@@ -698,20 +719,44 @@
   <div class="toast" id="toastBox">Notifikasi berhasil</div>
 
   <script>
-    /* =========================================================
-       HOBBIGO V77.1 — JAVASCRIPT ENGINE
-       ========================================================= */
+    /*
+     * LOGIKA ASLI DIPERTAHANKAN.
+     * Perubahan pada versi ini berada pada CSS responsive.
+     */
     const masterCatalog = [
-      { id: 'tr1', type: 'Experience', name: 'Bali Ocean & Culture', price: 1250000, desc: 'Transport + Guide + Snorkeling + Local Experience.', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80' },
-      { id: 'tr2', type: 'Stay', name: 'Seminyak Private Villa & Pool', price: 1950000, desc: 'Villa mewah lengkap dengan fasilitas privat dan sarapan.', image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=600&q=80' },
-      { id: 'tr3', type: 'Flight', name: 'Jakarta → Bali Flight (Economy)', price: 1250000, desc: 'Penerbangan langsung berkecepatan tinggi & bagasi kabin.', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80' }
+      {
+        id: 'tr1',
+        type: 'Experience',
+        name: 'Bali Ocean & Culture',
+        price: 1250000,
+        desc: 'Transport + Guide + Snorkeling + Local Experience.',
+        image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'tr2',
+        type: 'Stay',
+        name: 'Seminyak Private Villa & Pool',
+        price: 1950000,
+        desc: 'Villa mewah lengkap dengan fasilitas privat dan sarapan.',
+        image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=600&q=80'
+      },
+      {
+        id: 'tr3',
+        type: 'Flight',
+        name: 'Jakarta → Bali Flight (Economy)',
+        price: 1250000,
+        desc: 'Penerbangan langsung berkecepatan tinggi & bagasi kabin.',
+        image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80'
+      }
     ];
 
     let cart = JSON.parse(localStorage.getItem('hbg_v77_cart') || '[]');
     let orders = JSON.parse(localStorage.getItem('hbg_v77_orders') || '[]');
     let currentUser = JSON.parse(localStorage.getItem('hbg_v77_user') || 'null');
 
-    function formatIDR(val) { return "Rp " + Number(val).toLocaleString("id-ID"); }
+    function formatIDR(val) {
+      return "Rp " + Number(val).toLocaleString("id-ID");
+    }
 
     function showToast(msg) {
       const box = document.getElementById('toastBox');
@@ -723,7 +768,7 @@
     function switchPage(pageId) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-      
+
       document.getElementById('page-' + pageId).classList.add('active');
       const navBtn = document.getElementById('nav-' + pageId);
       if(navBtn) navBtn.classList.add('active');
@@ -743,7 +788,7 @@
     function openAuthModal() {
       openModal("Autentikasi HOBBIGO ONE", `
         <p class="text-muted" style="font-size:12px; margin-bottom:15px;">Masuk atau Daftar akun baru untuk mulai menikmati ekosistem perjalanan & jastip global.</p>
-        
+
         <button class="btn-social" onclick="socialLogin('Google')">
           <span>🌐</span> Masuk dengan Google
         </button>
@@ -774,7 +819,7 @@
     function submitManualAuth() {
       const name = document.getElementById('authName').value.trim() || 'Traveler HOBBIGO';
       const email = document.getElementById('authEmail').value.trim() || 'traveler@hobbigo.one';
-      
+
       currentUser = { name, email };
       localStorage.setItem('hbg_v77_user', JSON.stringify(currentUser));
       closeModal();
@@ -821,14 +866,22 @@
       const item = masterCatalog.find(x => x.id === id);
       if(!item) return;
       const exist = cart.find(x => x.id === id);
-      if(exist) { exist.qty++; } else { cart.push({...item, qty: 1}); }
+      if(exist) {
+        exist.qty++;
+      } else {
+        cart.push({...item, qty: 1});
+      }
       saveAndSync();
       showToast(item.name + " ditambahkan ke Master Cart!");
     }
 
     function addCustomToCart(name, price, type = 'Travel') {
       const exist = cart.find(x => x.name === name);
-      if(exist) { exist.qty++; } else { cart.push({id: 'cust_'+Date.now(), type, name, price, qty: 1}); }
+      if(exist) {
+        exist.qty++;
+      } else {
+        cart.push({id: 'cust_'+Date.now(), type, name, price, qty: 1});
+      }
       saveAndSync();
       showToast(name + " ditambahkan ke Master Cart!");
     }
@@ -1012,12 +1065,11 @@
             <span style="color:var(--primary); font-size:11px; font-weight:800;">🔒 ${ord.status}</span>
           </div>
           <div class="text-muted" style="font-size:11px; margin-bottom:10px;">Tanggal Pesanan: ${ord.date}</div>
-          
+
           <div style="font-size:12px; margin-bottom:12px;">
             ${ord.items.map(i => `<div>• [${i.type}] ${i.name} (x${i.qty}) — ${formatIDR(i.price * i.qty)}</div>`).join('')}
           </div>
 
-          <!-- LIVE TRACKING & ESCROW TIMELINE -->
           <div style="background:var(--bg3); padding:12px; border-radius:12px; border:1px solid var(--line); margin-bottom:12px;">
             <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:8px;">📍 Live Tracking & Escrow Progress</div>
             <div class="tracking-steps">
