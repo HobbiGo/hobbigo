@@ -1613,5 +1613,14 @@ let resume;root.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')r
 })();
 </script>
 
+
+<script>
+/* Align the right Spotlight panel to the left tour-card row on desktop only. */
+(()=>{'use strict';const spot=document.getElementById('hbgVerticalSpotlight'),home=document.getElementById('page-home'),cards=document.getElementById('wtCards');if(!spot||!home||!cards)return;let pending=0;
+function align(){pending=0;if(!home.classList.contains('active'))return;spot.style.marginTop='22px';if(!window.matchMedia('(min-width:1200px)').matches)return;const first=cards.querySelector('article');if(!first)return;const difference=first.getBoundingClientRect().top-spot.getBoundingClientRect().top;if(difference>1)spot.style.marginTop=Math.round(22+difference)+'px';}
+function schedule(){if(!pending)pending=requestAnimationFrame(align);}window.addEventListener('resize',schedule);window.addEventListener('load',schedule);new MutationObserver(schedule).observe(home,{attributes:true,attributeFilter:['class']});new MutationObserver(schedule).observe(cards,{childList:true});schedule();
+})();
+</script>
+
 </body>
 </html>
