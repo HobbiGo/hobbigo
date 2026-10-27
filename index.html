@@ -3125,5 +3125,9 @@ function refresh(){const form=document.getElementById('wtForm');if(form){let box
 let queued=false;function schedule(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;refresh();});}new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});let previous=language();new MutationObserver(()=>{const next=language();if(next===previous)return;previous=next;schedule();}).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});refresh();
 })();
 </script>
+<style>@media(max-width:767px){#hbgCurrencyInfo.hbg-currency-bottom{box-sizing:border-box;max-height:none;overflow:visible;margin:18px 12px 12px;padding:12px 14px;font-size:12px;line-height:1.7;border-radius:12px}#hbgCurrencyInfo.hbg-currency-bottom a{display:inline-block;padding:5px 0;min-height:24px}}</style>
+<script>
+(()=>{'use strict';const info=document.getElementById('hbgCurrencyInfo'),main=document.querySelector('main');if(!info||!main||info.dataset.hbgMobilePlacement)return;info.dataset.hbgMobilePlacement='1';const original=document.createComment('Currency notice desktop position');info.parentNode.insertBefore(original,info);let mobile=null;function position(){const next=window.innerWidth<=767;if(next===mobile)return;mobile=next;if(next){main.after(info);info.classList.add('hbg-currency-bottom');}else{original.parentNode.insertBefore(info,original.nextSibling);info.classList.remove('hbg-currency-bottom');}}window.addEventListener('resize',position);position();})();
+</script>
 </body>
 </html>
