@@ -46,7 +46,7 @@ export default {
 
       userMessage = extractMessage(body);
       if (!userMessage) {
-        const emptyMsg = "Silakan ketik pesan terlebih dahulu.";
+        const emptyMsg = "Silakan ketik pesan terlebih dahulu agar saya bisa membantu.";
         return jsonResponse({
           error: "Pesan kosong",
           reply: emptyMsg,
@@ -110,11 +110,27 @@ function buildFallbackReply(userMessage) {
     lower.includes("pesawat") ||
     lower.includes("hotel") ||
     lower.includes("kereta") ||
-    lower.includes("tour")
+    lower.includes("tour") ||
+    lower.includes("wisata") ||
+    lower.includes("perjalanan")
   ) {
-    return "Halo! Ini versi demo HOBBIGO. Layanan Pesawat, Hotel & Penginapan, Pusat Sewa, Kereta, Acara & Grup, Paket Tour, TELKU eSIM, dan CHELEA Commerce masih dalam mode demo dan belum memproses pemesanan/pembayaran nyata.";
+    return "Halo! Asisten HOBBIGO siap membantu informasi seputar perjalanan, Pesawat, Hotel & Penginapan, Pusat Sewa, Kereta, Acara & Grup, Paket Tour, TELKU eSIM, maupun CHELEA Commerce. Silakan sampaikan rencana atau pertanyaan Anda.";
   }
-  return "Halo! Selamat datang di Bantuan HOBBIGO (mode demo). Silakan tanyakan informasi seputar layanan HOBBIGO seperti Pesawat, Hotel & Penginapan, Pusat Sewa, Kereta, Acara & Grup, Paket Tour, TELKU eSIM, atau CHELEA Commerce.";
+  return "Halo! Selamat datang di Support HOBBIGO. Silakan tanyakan bantuan terkait layanan HOBBIGO seperti Travel, TELKU eSIM, atau CHELEA Commerce.";
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithTimeout(url, options, timeoutMs = 8500) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function askGemini(apiKey, prompt, history) {
@@ -142,7 +158,7 @@ async function askGemini(apiKey, prompt, history) {
     systemInstruction: {
       parts: [
         {
-          text: "Anda adalah asisten bantuan pelanggan HOBBIGO. Jawablah dengan ramah, jelas, dan ringkas dalam bahasa Indonesia. Jika ditanya soal transaksi atau pembayaran, jelaskan bahwa ini adalah versi demo tanpa pemesanan atau pembayaran nyata."
+          text: "Anda adalah asisten bantuan pelanggan resmi HOBBIGO yang mencakup layanan Travel (pesawat, hotel, kereta, sewa, paket tour, acara & grup, penyusunan itinerary dan estimasi budget), TELKU eSIM, dan CHELEA Commerce. Jawablah dengan ramah, terstruktur, jelas, dan membantu dalam bahasa Indonesia tanpa menambahkan catatan penutup bernada demo."
         }
       ]
     },
@@ -150,44 +166,62 @@ async function askGemini(apiKey, prompt, history) {
   });
 
   const models = [
-    "gemini-2.5-flash",
-    "gemini-2.5-flash-lite",
-    "gemini-2.0-flash-lite",
-    "gemini-2.0-flash"
+    "gemini-3.8-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.5-flash"
   ];
   const errors = [];
 
   for (const model of models) {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-goog-api-key": apiKey
-      },
-      body: requestBody
-    });
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        const res = await fetchWithTimeout(
+          endpoint,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": apiKey
+            },
+            body: requestBody
+          },
+          8500
+        );
 
-    if (!res.ok) {
-      const errText = await res.text();
-      errors.push(`${model} HTTP ${res.status}: ${errText.slice(0, 180)}`);
-      continue;
+        if (!res.ok) {
+          const errText = await res.text();
+          errors.push(`${model} (try ${attempt}) HTTP ${res.status}: ${errText.slice(0, 140)}`);
+
+          if ((res.status === 503 || res.status === 429) && attempt < 2) {
+            await sleep(700);
+            continue;
+          }
+          break;
+        }
+
+        const data = await res.json();
+        const replyText =
+          data?.candidates?.[0]?.content?.parts
+            ?.map((p) => p?.text || "")
+            .join("")
+            .trim() || "";
+
+        if (!replyText) {
+          errors.push(`${model} (try ${attempt}): respons kosong`);
+          break;
+        }
+
+        return replyText;
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        errors.push(`${model} (try ${attempt}) err: ${msg.slice(0, 120)}`);
+        if (attempt < 2) {
+          await sleep(700);
+        }
+      }
     }
-
-    const data = await res.json();
-    const replyText =
-      data?.candidates?.[0]?.content?.parts
-        ?.map((p) => p?.text || "")
-        .join("")
-        .trim() || "";
-
-    if (!replyText) {
-      errors.push(`${model}: respons kosong`);
-      continue;
-    }
-
-    return replyText;
   }
 
   throw new Error(errors.join(" | ") || "Semua model Gemini gagal merespons");
