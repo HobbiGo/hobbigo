@@ -3639,6 +3639,156 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     renderCategoryItems(HOBBIGO_BRIDGE_STATE.activeCategory, "");
   });
 })();
+(() => {
+  // 1. Paksa gaya & warna panel katalog agar menyatu dengan tema gelap HOBBIGO
+  const styleId = "hb-catalog-theme-fix";
+  if (!document.getElementById(styleId)) {
+    const styleEl = document.createElement("style");
+    styleEl.id = styleId;
+    styleEl.textContent = `
+      #hb-catalog-explorer {
+        max-width: 1100px !important;
+        margin: 24px auto !important;
+        padding: 18px !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        background: #0d1629 !important;
+        color: #f8fafc !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
+      }
+      #hb-catalog-explorer .hb-cat-btn,
+      #hb-catalog-explorer #hb-catalog-reset {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        font-weight: 600 !important;
+      }
+      #hb-catalog-explorer .hb-cat-btn:hover,
+      #hb-catalog-explorer #hb-catalog-reset:hover {
+        background: #2563eb !important;
+        border-color: #3b82f6 !important;
+        color: #ffffff !important;
+      }
+      #hb-catalog-explorer #hb-catalog-search {
+        background: #091120 !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      }
+      #hb-catalog-explorer #hb-catalog-search::placeholder {
+        color: #94a3b8 !important;
+      }
+      #hb-catalog-explorer .hb-live-card {
+        background: #13203b !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
+      }
+    `;
+    document.head.appendChild(styleEl);
+  }
+
+  // 2. Aktifkan input teks ketika opsi "ketik" / "lainnya" dipilih pada dropdown
+  document.addEventListener("change", (e) => {
+    const target = e.target;
+    if (!(target instanceof HTMLSelectElement)) return;
+    const selectedText = (
+      target.options[target.selectedIndex]?.text ||
+      target.value ||
+      ""
+    ).toLowerCase();
+
+    if (selectedText.includes("ketik") || selectedText.includes("lainnya")) {
+      const container = target.closest("form, section, div") || document;
+      const textInputs = Array.from(
+        container.querySelectorAll('input[type="text"], input[type="search"]')
+      );
+      const freeInput =
+        textInputs.find((inp) => {
+          const ph = (inp.getAttribute("placeholder") || "").toLowerCase();
+          return (
+            ph.includes("kota") ||
+            ph.includes("penginapan") ||
+            ph.includes("lokasi") ||
+            ph.includes("cari")
+          );
+        }) || textInputs[0];
+
+      if (freeInput instanceof HTMLInputElement) {
+        freeInput.disabled = false;
+        freeInput.readOnly = false;
+        freeInput.style.pointerEvents = "auto";
+        freeInput.style.opacity = "1";
+        freeInput.focus();
+      }
+    }
+  });
+
+  // 3. Pulihkan input yang terkunci & bersihkan overlay tak terlihat yang memblokir klik
+  function unlockAllInputsAndOverlays() {
+    const fields = document.querySelectorAll(
+      'input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]), textarea, select'
+    );
+    fields.forEach((el) => {
+      if (el.dataset.hbLockedByRule === "true") return;
+      el.disabled = false;
+      if (el.tagName !== "SELECT") {
+        el.readOnly = false;
+      }
+      el.style.pointerEvents = "auto";
+      el.style.userSelect = "text";
+      el.style.webkitUserSelect = "text";
+      if (getComputedStyle(el).opacity === "0") {
+        el.style.opacity = "1";
+      }
+    });
+
+    const allEls = document.querySelectorAll("div, section, aside");
+    allEls.forEach((box) => {
+      const st = getComputedStyle(box);
+      const isFullScreenOverlay =
+        (st.position === "fixed" || st.position === "absolute") &&
+        parseFloat(st.zIndex || "0") >= 50;
+      const isHiddenVisual =
+        st.display === "none" ||
+        st.visibility === "hidden" ||
+        parseFloat(st.opacity || "1") === 0;
+
+      if (isFullScreenOverlay && isHiddenVisual) {
+        box.style.pointerEvents = "none";
+      }
+    });
+  }
+
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+        e.stopPropagation();
+      }
+    },
+    true
+  );
+
+  window.addEventListener("DOMContentLoaded", () => {
+    unlockAllInputsAndOverlays();
+    setTimeout(unlockAllInputsAndOverlays, 400);
+    setTimeout(unlockAllInputsAndOverlays, 1200);
+  });
+
+  document.addEventListener("click", () => {
+    setTimeout(unlockAllInputsAndOverlays, 80);
+  });
+
+  const observer = new MutationObserver(() => {
+    unlockAllInputsAndOverlays();
+  });
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["disabled", "readonly", "style", "class"]
+  });
+})();
 </script>
 </body>
 </html>
