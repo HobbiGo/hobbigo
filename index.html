@@ -1166,15 +1166,38 @@ container.appendChild(message);
 container.scrollTop = container.scrollHeight;
 }
 
-function sendChatMessage(){
-const input = document.getElementById("chatInputText");
-const text = input.value.trim();
-if(!text) return;
-appendChatMessage(text,"user");
-input.value = "";
-setTimeout(() => {
-appendChatMessage("Terima kasih! Ini balasan otomatis demo. Pesan belum dikirim ke tim support sungguhan.","support");
-},600);
+async function sendChatMessage() {
+  const input = document.getElementById("chatInputText");
+  const text = input.value.trim();
+  if (!text) return;
+  appendChatMessage(text, "user");
+  input.value = "";
+
+  if (typeof window.hobbiGoAskSupport === "function") {
+    try {
+      const data = await window.hobbiGoAskSupport(text);
+      const reply =
+        data?.reply ||
+        data?.message ||
+        data?.answer ||
+        "Balasan diterima dari Bantuan Worker.";
+      appendChatMessage(reply, "support");
+      return;
+    } catch (err) {
+      appendChatMessage(
+        err?.message || "Gagal menghubungi Bantuan Worker",
+        "support"
+      );
+      return;
+    }
+  }
+
+  setTimeout(() => {
+    appendChatMessage(
+      "Terima kasih! Ini balasan otomatis demo. Pesan belum dikirim ke tim support sungguhan.",
+      "support"
+    );
+  }, 400);
 }
 
 document.getElementById("servicesToggle").addEventListener("click",() => {
