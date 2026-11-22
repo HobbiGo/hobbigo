@@ -13,7 +13,6 @@ export default {
       });
     }
 
-    // Jika bukan permintaan /api/*, serahkan ke aset statis bila binding ASSETS tersedia
     if (!url.pathname.startsWith("/api/")) {
       if (env.ASSETS && typeof env.ASSETS.fetch === "function") {
         return env.ASSETS.fetch(request);
@@ -29,8 +28,10 @@ export default {
       return jsonResponse({ error: "Method Not Allowed" }, 405);
     }
 
+    let userMessage = "";
+    let body = {};
+
     try {
-      let body = {};
       const contentType = request.headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
         body = await request.json().catch(() => ({}));
@@ -43,12 +44,13 @@ export default {
         }
       }
 
-      const userMessage = extractMessage(body);
+      userMessage = extractMessage(body);
       if (!userMessage) {
         return jsonResponse(
           {
             error: "Pesan kosong",
-            reply: "Silakan ketik pesan terlebih dahulu."
+            reply: "Silakan ketik pesan terlebih dahulu.",
+            message: "Silakan ketik pesan terlebih dahulu."
           },
           400
         );
@@ -71,17 +73,14 @@ export default {
         response: geminiReply
       });
     } catch (err) {
-      const detail = err instanceof Error ? err.message : String(err);
-      const fallback = buildFallbackReply("");
-      return jsonResponse(
-        {
-          error: "Gagal menghubungi layanan bantuan",
-          detail,
-          reply: fallback,
-          message: fallback
-        },
-        502
-      );
+      const fallback = buildFallbackReply(userMessage);
+      return jsonResponse({
+        reply: fallback,
+        message: fallback,
+        response: fallback,
+        fallback: true,
+        warning: err instanceof Error ? err.message : String(err)
+      });
     }
   }
 };
@@ -107,7 +106,7 @@ function buildFallbackReply(userMessage) {
   if (lower.includes("pesawat") || lower.includes("hotel") || lower.includes("kereta") || lower.includes("tour")) {
     return "Halo! Ini versi demo HOBBIGO. Layanan Pesawat, Hotel & Penginapan, Pusat Sewa, Kereta, Acara & Grup, Paket Tour, TELKU eSIM, dan CHELEA Commerce masih dalam mode demo dan belum memproses pemesanan/pembayaran nyata.";
   }
-  return "Halo! Bantuan HOBBIGO saat ini berjalan dalam mode demo. Silakan sampaikan pertanyaan Anda terkait layanan HOBBIGO (Pesawat, Hotel, Kereta, Pusat Sewa, Acara & Grup, Paket Tour, TELKU eSIM, atau CHELEA Commerce).";
+  return "Halo! Selamat datang di Bantuan HOBBIGO (mode demo). Silakan tanyakan informasi seputar layanan HOBBIGO seperti Pesawat, Hotel & Penginapan, Pusat Sewa, Kereta, Acara & Grup, Paket Tour, TELKU eSIM, atau CHELEA Commerce.";
 }
 
 async function askGemini(apiKey, prompt, history) {
