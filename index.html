@@ -3833,6 +3833,136 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     true
   );
 })();
+(() => {
+  function formatIDR(val) {
+    return Number(val || 0).toLocaleString("id-ID");
+  }
+
+  function renderApiCards(items, mode) {
+    return items
+      .map((item) => {
+        if (mode === "hotels") {
+          const facilities = Array.isArray(item.facilities) ? item.facilities.join(" · ") : "";
+          return `
+            <div class="hb-live-card" style="padding:14px;border-radius:12px;margin-top:10px;border:1px solid rgba(148,163,184,0.35);">
+              <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <strong>${item.name || "Hotel"} (${item.stars || ""}★)</strong>
+                <strong>IDR ${formatIDR(item.pricePerNightIDR)} / malam</strong>
+              </div>
+              <div style="font-size:13px;opacity:0.88;margin-top:4px;">${item.city || ""} · ${item.roomType || ""}</div>
+              ${facilities ? `<div style="font-size:12px;opacity:0.78;margin-top:4px;">${facilities}</div>` : ""}
+            </div>
+          `;
+        }
+
+        if (mode === "carRentals") {
+          return `
+            <div class="hb-live-card" style="padding:14px;border-radius:12px;margin-top:10px;border:1px solid rgba(148,163,184,0.35);">
+              <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <strong>${item.vehicleName || item.name || "Kendaraan"} (${item.category || ""})</strong>
+                <strong>IDR ${formatIDR(item.pricePerDayIDR)} / hari</strong>
+              </div>
+              <div style="font-size:13px;opacity:0.88;margin-top:4px;">${item.city || ""} · ${item.transmission || ""} · ${item.seats || ""} kursi</div>
+              <div style="font-size:12px;opacity:0.78;margin-top:4px;">${item.driverOption || ""}</div>
+            </div>
+          `;
+        }
+
+        // Mode event / attractions / dining / esimAndCommerce
+        const priceVal =
+          item.pricePerPaxIDR ?? item.averageSpendPerPaxIDR ?? item.priceIDR ?? 0;
+        const unitLabel = item.averageSpendPerPaxIDR
+          ? "/ orang (est.)"
+          : item.pricePerPaxIDR
+          ? "/ orang"
+          : "";
+        const extraInfo =
+          item.openHours || item.ticketType || item.activation || item.delivery || item.cuisine || "";
+        const highlights = Array.isArray(item.highlights)
+          ? item.highlights.join(" · ")
+          : Array.isArray(item.signatureMenu)
+          ? item.signatureMenu.join(" · ")
+          : "";
+
+        return `
+          <div class="hb-live-card" style="padding:14px;border-radius:12px;margin-top:10px;border:1px solid rgba(148,163,184,0.35);">
+            <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <strong>${item.name || "Layanan HOBBIGO"}</strong>
+              <strong>IDR ${formatIDR(priceVal)} ${unitLabel}</strong>
+            </div>
+            <div style="font-size:13px;opacity:0.88;margin-top:4px;">${item.city || item.service || ""} ${item.category ? `· ${item.category}` : ""}</div>
+            ${extraInfo ? `<div style="font-size:12px;opacity:0.78;margin-top:4px;">${extraInfo}</div>` : ""}
+            ${highlights ? `<div style="font-size:12px;opacity:0.78;margin-top:4px;">${highlights}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function detectSearchMode(label) {
+    const txt = (label || "").toLowerCase();
+    if (txt.includes("penginapan") || txt.includes("hotel")) return "hotels";
+    if (txt.includes("sewa") || txt.includes("mobil") || txt.includes("kendaraan")) return "carRentals";
+    if (
+      txt.includes("acara") ||
+      txt.includes("event") ||
+      txt.includes("perjalanan") ||
+      txt.includes("wisata") ||
+      txt.includes("tour")
+    ) {
+      return "attractions";
+    }
+    return null;
+  }
+
+  document.addEventListener(
+    "click",
+    async (e) => {
+      const btn = e.target instanceof Element ? e.target.closest("button") : null;
+      if (!btn) return;
+
+      const mode = detectSearchMode(btn.textContent || "");
+      if (!mode) return;
+
+      const wrap = btn.closest("section, form, div") || document;
+      const queryInput = wrap.querySelector(
+        'input[placeholder*="kota" i], input[placeholder*="penginapan" i], input[placeholder*="lokasi" i], input[placeholder*="acara" i], input[placeholder*="cari" i], input[type="text"], input[type="search"]'
+      );
+      const selectEl = wrap.querySelector("select");
+      const qVal = (
+        queryInput?.value ||
+        (selectEl && !/ketik|lainnya/i.test(selectEl.value) ? selectEl.value : "") ||
+        ""
+      ).trim();
+
+      setTimeout(async () => {
+        try {
+          const url = `/api/search?category=${encodeURIComponent(mode)}&q=${encodeURIComponent(qVal)}`;
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          const items = Array.isArray(data?.items) ? data.items : [];
+          if (!items.length) return;
+
+          const boxId = `hb-live-results-${mode}`;
+          const cardHtml = renderApiCards(items, mode);
+          const existingBox = wrap.querySelector(`#${boxId}`);
+
+          if (existingBox) {
+            existingBox.innerHTML = cardHtml;
+          } else {
+            const box = document.createElement("div");
+            box.id = boxId;
+            box.style.marginTop = "14px";
+            box.innerHTML = cardHtml;
+            btn.insertAdjacentElement("afterend", box);
+          }
+        } catch (_) {}
+      }, 250);
+    },
+    true
+  );
+})();
 </script>
 </body>
 </html>
