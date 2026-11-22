@@ -9,16 +9,17 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error(errorMessage);
-    return res.json();
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || errorMessage);
+    }
+    return data;
   }
 
-  // 1. Support Chat (/api/support)
   window.hobbiGoAskSupport = function (message) {
     return postJson("/api/support", { message }, "Gagal menghubungi Support Worker");
   };
 
-  // 2. AI Journey Planner (/api/planner)
   window.hobbiGoGeneratePlan = function ({ destination, days, mood }) {
     return postJson(
       "/api/planner",
@@ -27,30 +28,51 @@
     );
   };
 
-  // 3. Kurs Referensi (/api/rates)
   window.hobbiGoGetRates = async function () {
     const res = await fetch(`${WORKER_BASE_URL}/api/rates`);
-    if (!res.ok) throw new Error("Gagal mengambil data kurs");
-    return res.json();
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || "Gagal mengambil data kurs");
+    }
+    return data;
   };
 
+  function appendChatBubble(container, text, isError = false) {
+    if (!container) return;
+    const bubble = document.createElement("div");
+    bubble.style.cssText = isError
+      ? "margin-top:8px;padding:8px 10px;border-radius:8px;background:#fee2e2;color:#991b1b;font-size:12px;"
+      : "margin-top:8px;padding:8px 10px;border-radius:8px;background:#f1f5f9;color:#0f172a;font-size:12px;";
+    bubble.textContent = text;
+    container.appendChild(bubble);
+    container.scrollTop = container.scrollHeight;
+  }
+
   function bindSupportChat() {
+    if (document.getElementById("chatInputText")) return;
+
     const chatInput = document.querySelector(
       'input[placeholder*="Ketik pesan"], textarea[placeholder*="Ketik pesan"], #support-input, [data-support-input]'
     );
+    if (!chatInput || chatInput.dataset.workerBound) return;
+
     const sendBtn =
-      chatInput?.closest("form, div")?.querySelector('button[type="submit"], button') ||
+      chatInput.closest("form, div")?.querySelector('button[type="submit"], button') ||
       Array.from(document.querySelectorAll("button")).find((btn) =>
         btn.textContent.trim().toLowerCase().includes("kirim")
       );
 
-    if (!chatInput || !sendBtn || chatInput.dataset.workerBound) return;
+    if (!sendBtn) return;
     chatInput.dataset.workerBound = "true";
 
     const handleSend = async (e) => {
       if (e) e.preventDefault();
       const text = chatInput.value.trim();
       if (!text) return;
+
+      const container =
+        chatInput.closest('[class*="chat"], [id*="chat"], [class*="support"]') ||
+        chatInput.parentElement;
 
       chatInput.disabled = true;
       sendBtn.disabled = true;
@@ -59,19 +81,14 @@
 
       try {
         const data = await window.hobbiGoAskSupport(text);
-        const container =
-          chatInput.closest('[class*="chat"], [id*="chat"], [class*="support"]') ||
-          chatInput.parentElement;
-
-        const replyBox = document.createElement("div");
-        replyBox.style.cssText =
-          "margin-top:8px;padding:8px 10px;border-radius:8px;background:#f1f5f9;color:#0f172a;font-size:12px;";
-        replyBox.textContent = data.reply || "Balasan diterima.";
-        container?.insertBefore(replyBox, chatInput.closest("form") || chatInput);
-
+        appendChatBubble(container, data.reply || "Balasan diterima.", false);
         chatInput.value = "";
       } catch (err) {
-        console.error(err);
+        appendChatBubble(
+          container,
+          err?.message || "Maaf, layanan chat sedang gangguan.",
+          true
+        );
       } finally {
         chatInput.disabled = false;
         sendBtn.disabled = false;
@@ -89,6 +106,8 @@
   }
 
   function bindPlannerButton() {
+    if (typeof window.openAiPlannerModal === "function") return;
+
     const plannerBtn = Array.from(document.querySelectorAll("button, a")).find((el) =>
       el.textContent.toLowerCase().includes("ai journey planner")
     );
@@ -116,8 +135,14 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function initBindings() {
     bindSupportChat();
     bindPlannerButton();
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initBindings();
+    const observer = new MutationObserver(() => initBindings());
+    observer.observe(document.body, { childList: true, subtree: true });
   });
 })();
