@@ -16,14 +16,61 @@ async function readJsonBody(request) {
   }
 }
 
-function buildChatReply(message = "") {
+async function buildChatReply(message = "", env) {
   const clean = String(message).trim();
   if (!clean) {
     return { error: "Pesan tidak boleh kosong" };
   }
-  return {
-    reply: `Halo Traveler! Pesan "${clean}" sudah diterima oleh HobbiGo Worker. Ada yang bisa kami bantu terkait perjalanan, eSIM, atau pesanan kamu?`,
-  };
+
+  const apiKey = env?.GEMINI_API_KEY;
+  if (!apiKey) {
+    return {
+      reply: `Halo Traveler! Pesan "${clean}" sudah diterima oleh HobbiGo Worker, tetapi GEMINI_API_KEY belum diatur di environment Worker.`,
+    };
+  }
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [
+              {
+                text: "Kamu adalah asisten AI customer support dan travel planner untuk HobbiGo. Jawab dalam bahasa Indonesia yang ramah, ringkas, dan jelas terkait perjalanan, estimasi budget perjalanan, eSIM, dan pesanan.",
+              },
+            ],
+          },
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: clean }],
+            },
+          ],
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json();
+    const aiText =
+      data?.candidates?.[0]?.content?.parts
+        ?.map((p) => p?.text || "")
+        .join("")
+        .trim() || "Maaf, saya belum bisa memberikan jawaban saat ini.";
+
+    return { reply: aiText };
+  } catch (err) {
+    return {
+      reply: `Maaf, asisten AI sedang gangguan (${err?.message || "unknown error"}). Silakan coba lagi sebentar.`,
+    };
+  }
 }
 
 function buildItineraryDays(destination, days, mood) {
@@ -104,7 +151,7 @@ export default {
       if (!parsed.ok) {
         return jsonResponse({ error: parsed.error }, 400);
       }
-      const result = buildChatReply(parsed.data.message);
+      const result = await buildChatReply(parsed.data.message, env);
       if (result.error) {
         return jsonResponse({ error: result.error }, 400);
       }
