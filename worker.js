@@ -55,30 +55,34 @@ export default {
         });
       }
 
-      if (!env.GEMINI_API_KEY) {
+      const apiKey = typeof env.GEMINI_API_KEY === "string" ? env.GEMINI_API_KEY.trim() : "";
+      if (!apiKey) {
         const fallback = buildFallbackReply(userMessage);
         return jsonResponse({
           reply: fallback,
           message: fallback,
           response: fallback,
-          fallback: true
+          fallback: true,
+          warning: "GEMINI_API_KEY belum terpasang"
         });
       }
 
-      const geminiReply = await askGemini(env.GEMINI_API_KEY, userMessage, body.history);
+      const geminiReply = await askGemini(apiKey, userMessage, body.history);
       return jsonResponse({
         reply: geminiReply,
         message: geminiReply,
         response: geminiReply
       });
     } catch (err) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      console.error("askGemini error:", errMsg);
       const fallback = buildFallbackReply(userMessage);
       return jsonResponse({
         reply: fallback,
         message: fallback,
         response: fallback,
         fallback: true,
-        warning: err instanceof Error ? err.message : String(err)
+        warning: errMsg
       });
     }
   }
@@ -134,46 +138,66 @@ async function askGemini(apiKey, prompt, history) {
 
   contents.push({ role: "user", parts: [{ text: prompt }] });
 
+  const requestBody = JSON.stringify({
+    systemInstruction: {
+      parts: [
+        {
+          text: "Anda adalah asisten bantuan pelanggan HOBBIGO. Jawablah dengan ramah, jelas, dan ringkas dalam bahasa Indonesia. Jika ditanya soal transaksi atau pembayaran, jelaskan bahwa ini adalah versi demo tanpa pemesanan atau pembayaran nyata."
+        }
+      ]
+    },
+    contents
+  });
+
   const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
   let lastError = null;
 
   for (const model of models) {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+    const authModes = [
+      {
+        label: "header",
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey
+        }
+      },
+      {
+        label: "query",
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    ];
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [
-            {
-              text: "Anda adalah asisten bantuan pelanggan HOBBIGO. Jawablah dengan ramah, jelas, dan ringkas dalam bahasa Indonesia. Jika ditanya soal transaksi atau pembayaran, jelaskan bahwa ini adalah versi demo tanpa pemesanan atau pembayaran nyata."
-            }
-          ]
-        },
-        contents
-      })
-    });
+    for (const mode of authModes) {
+      const res = await fetch(mode.url, {
+        method: "POST",
+        headers: mode.headers,
+        body: requestBody
+      });
 
-    if (!res.ok) {
-      const errText = await res.text();
-      lastError = new Error(`Model ${model} HTTP ${res.status}: ${errText}`);
-      continue;
+      if (!res.ok) {
+        const errText = await res.text();
+        lastError = new Error(`Model ${model} (${mode.label}) HTTP ${res.status}: ${errText.slice(0, 300)}`);
+        continue;
+      }
+
+      const data = await res.json();
+      const replyText =
+        data?.candidates?.[0]?.content?.parts
+          ?.map((p) => p?.text || "")
+          .join("")
+          .trim() || "";
+
+      if (!replyText) {
+        lastError = new Error(`Respons kosong dari model ${model} (${mode.label})`);
+        continue;
+      }
+
+      return replyText;
     }
-
-    const data = await res.json();
-    const replyText =
-      data?.candidates?.[0]?.content?.parts
-        ?.map((p) => p?.text || "")
-        .join("")
-        .trim() || "";
-
-    if (!replyText) {
-      lastError = new Error(`Respons kosong dari model ${model}`);
-      continue;
-    }
-
-    return replyText;
   }
 
   throw lastError || new Error("Semua model Gemini gagal merespons");
