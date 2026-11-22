@@ -4082,6 +4082,313 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     true
   );
 })();
+(() => {
+  if (window.__HOBBIGO_UNIFIED_BRIDGE__) return;
+  window.__HOBBIGO_UNIFIED_BRIDGE__ = true;
+
+  const formatIDR = (val) => Number(val || 0).toLocaleString("id-ID");
+
+  // 1. Gaya tampilan seragam untuk panel katalog & hasil API
+  if (!document.getElementById("hb-unified-style")) {
+    const st = document.createElement("style");
+    st.id = "hb-unified-style";
+    st.textContent = `
+      #hb-catalog-explorer {
+        max-width: 1100px !important;
+        margin: 24px auto !important;
+        padding: 18px !important;
+        border-radius: 16px !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        background: #0d1629 !important;
+        color: #f8fafc !important;
+      }
+      #hb-catalog-explorer .hb-cat-btn,
+      #hb-catalog-explorer #hb-catalog-reset {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      }
+      #hb-catalog-explorer #hb-catalog-search {
+        background: #091120 !important;
+        color: #f8fafc !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      }
+      .hb-api-result-wrap {
+        margin-top: 14px;
+        display: grid;
+        gap: 10px;
+      }
+      .hb-api-card {
+        padding: 14px 16px;
+        border-radius: 12px;
+        background: #13203b;
+        color: #f8fafc;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .hb-api-card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .hb-api-card-sub {
+        font-size: 13px;
+        color: #cbd5e1;
+        margin-top: 4px;
+      }
+      .hb-api-card-meta {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-top: 4px;
+      }
+    `;
+    document.head.appendChild(st);
+  }
+
+  // 2. Buka kunci input yang memang disabled/readonly saat difokuskan (tanpa mengganggu dropdown)
+  document.addEventListener(
+    "focusin",
+    (e) => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+        if (t.dataset.hbLockedByRule === "true") return;
+        t.disabled = false;
+        t.readOnly = false;
+        t.style.pointerEvents = "auto";
+      }
+    },
+    true
+  );
+
+  // 3. Pemetaan tombol ke fitur (Penerbangan, Hotel, Sewa, Event, AI Journey)
+  function resolveFeature(text) {
+    const s = (text || "").toLowerCase();
+    if (s.includes("ai") || s.includes("journey") || s.includes("rencana") || s.includes("itinerary")) {
+      return "aiJourney";
+    }
+    if (s.includes("penginapan") || s.includes("hotel")) {
+      return "hotels";
+    }
+    if (s.includes("sewa") || s.includes("mobil") || s.includes("kendaraan")) {
+      return "carRentals";
+    }
+    if (s.includes("acara") || s.includes("event") || s.includes("wisata") || s.includes("perjalanan")) {
+      return "attractions";
+    }
+    if (s.includes("penerbangan") || s.includes("pesawat") || s.includes("flight")) {
+      return "flights";
+    }
+    return null;
+  }
+
+  // Ambil kata kunci dari input/select terdekat yang terlihat
+  function getQueryForButton(btn) {
+    const scope = btn.closest("section, form, article, [class*='tab'], [class*='panel']") || document;
+    const inputs = Array.from(
+      scope.querySelectorAll('input[type="text"], input[type="search"], textarea')
+    ).filter((el) => el.offsetParent !== null);
+
+    const priorityInput = inputs.find((el) => {
+      const ph = (el.getAttribute("placeholder") || "").toLowerCase();
+      return (
+        ph.includes("kota") ||
+        ph.includes("tujuan") ||
+        ph.includes("penginapan") ||
+        ph.includes("lokasi") ||
+        ph.includes("acara") ||
+        ph.includes("cari") ||
+        ph.includes("destinasi")
+      );
+    });
+
+    const chosenInput = priorityInput || inputs[0];
+    if (chosenInput && chosenInput.value.trim()) {
+      return chosenInput.value.trim();
+    }
+
+    const selects = Array.from(scope.querySelectorAll("select")).filter((el) => el.offsetParent !== null);
+    for (const sel of selects) {
+      const lbl = sel.options[sel.selectedIndex]?.text || sel.value || "";
+      if (lbl && !/ketik|lainnya|harga|urutkan|semua|pilih|indonesia|hotel|kamar|dewasa|anak/i.test(lbl)) {
+        return lbl.trim();
+      }
+    }
+    return "";
+  }
+
+  function renderCardsByFeature(feature, items, query) {
+    if (feature === "flights") {
+      return items
+        .map((f) => {
+          const route = `${f.from || ""} → ${f.to || ""}`.trim();
+          const timeInfo = [f.depart, f.arrive, f.duration, f.stops].filter(Boolean).join(" · ");
+          return `
+            <div class="hb-api-card">
+              <div class="hb-api-card-head">
+                <strong>${f.airline || "Penerbangan"} (${f.flightCode || ""})</strong>
+                <strong>IDR ${formatIDR(f.priceIDR)} / penumpang</strong>
+              </div>
+              <div class="hb-api-card-sub">${route}</div>
+              <div class="hb-api-card-meta">${timeInfo}${f.baggage ? ` · Bagasi: ${f.baggage}` : ""}</div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    if (feature === "hotels") {
+      return items
+        .map((h) => {
+          const fac = Array.isArray(h.facilities) ? h.facilities.join(" · ") : "";
+          return `
+            <div class="hb-api-card">
+              <div class="hb-api-card-head">
+                <strong>${h.name || "Hotel"} ${h.stars ? `(${h.stars}★)` : ""}</strong>
+                <strong>IDR ${formatIDR(h.pricePerNightIDR)} / malam</strong>
+              </div>
+              <div class="hb-api-card-sub">${h.city || ""}${h.roomType ? ` · ${h.roomType}` : ""}</div>
+              ${fac ? `<div class="hb-api-card-meta">${fac}</div>` : ""}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    if (feature === "carRentals") {
+      return items
+        .map((c) => {
+          const spec = [c.city, c.transmission, c.seats ? `${c.seats} kursi` : ""].filter(Boolean).join(" · ");
+          return `
+            <div class="hb-api-card">
+              <div class="hb-api-card-head">
+                <strong>${c.vehicleName || c.name || "Kendaraan"} ${c.category ? `(${c.category})` : ""}</strong>
+                <strong>IDR ${formatIDR(c.pricePerDayIDR)} / hari</strong>
+              </div>
+              <div class="hb-api-card-sub">${spec}</div>
+              ${c.driverOption ? `<div class="hb-api-card-meta">${c.driverOption}</div>` : ""}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    if (feature === "attractions") {
+      return items
+        .map((a) => {
+          const price = a.pricePerPaxIDR ?? a.priceIDR ?? 0;
+          const meta = [a.openHours, a.ticketType, Array.isArray(a.highlights) ? a.highlights.join(" · ") : ""]
+            .filter(Boolean)
+            .join(" · ");
+          return `
+            <div class="hb-api-card">
+              <div class="hb-api-card-head">
+                <strong>${a.name || "Event & Wisata"}</strong>
+                <strong>IDR ${formatIDR(price)} / orang</strong>
+              </div>
+              <div class="hb-api-card-sub">${a.city || ""}${a.category ? ` · ${a.category}` : ""}</div>
+              ${meta ? `<div class="hb-api-card-meta">${meta}</div>` : ""}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    // AI Journey: rangkuman rekomendasi lintas kategori dari data katalog nyata
+    return `
+      <div class="hb-api-card">
+        <div class="hb-api-card-head">
+          <strong>Rekomendasi AI Journey${query ? ` — ${query}` : ""}</strong>
+          <span>${items.length} opsi terhubung</span>
+        </div>
+        <div class="hb-api-card-sub">
+          ${items
+            .slice(0, 5)
+            .map((it) => {
+              const title = it.name || it.vehicleName || it.airline || "Item";
+              const p =
+                it.pricePerNightIDR ??
+                it.pricePerDayIDR ??
+                it.pricePerPaxIDR ??
+                it.priceIDR ??
+                it.averageSpendPerPaxIDR;
+              return `• <strong>${title}</strong>${it.city ? ` (${it.city})` : ""}${p ? ` — IDR ${formatIDR(p)}` : ""}`;
+            })
+            .join("<br>")}
+        </div>
+      </div>
+    `;
+  }
+
+  async function fetchFeatureItems(feature, query) {
+    if (feature !== "aiJourney") {
+      const res = await fetch(
+        `/api/search?category=${encodeURIComponent(feature)}&q=${encodeURIComponent(query)}`,
+        { cache: "no-store" }
+      );
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data?.items) ? data.items : [];
+    }
+
+    const cats = ["hotels", "carRentals", "attractions", "flights"];
+    const responses = await Promise.all(
+      cats.map(async (cat) => {
+        try {
+          const r = await fetch(
+            `/api/search?category=${encodeURIComponent(cat)}&q=${encodeURIComponent(query)}`,
+            { cache: "no-store" }
+          );
+          if (!r.ok) return [];
+          const j = await r.json();
+          return Array.isArray(j?.items) ? j.items : [];
+        } catch (_) {
+          return [];
+        }
+      })
+    );
+    return responses.flat();
+  }
+
+  document.addEventListener(
+    "click",
+    async (e) => {
+      const btn = e.target instanceof Element ? e.target.closest("button, [role='button']") : null;
+      if (!btn) return;
+
+      // Jangan cegah klik pada tab navigasi utama atau dropdown menu
+      if (btn.closest("nav, header, [aria-haspopup='menu'], [aria-expanded]")) return;
+
+      const feature = resolveFeature(btn.textContent || "");
+      if (!feature) return;
+
+      const query = getQueryForButton(btn);
+      const containerId = `hb-live-panel-${feature}`;
+
+      setTimeout(async () => {
+        try {
+          const items = await fetchFeatureItems(feature, query);
+          if (!items.length) return;
+
+          const html = renderCardsByFeature(feature, items, query);
+          const host = btn.parentElement || document.body;
+          let box = document.getElementById(containerId);
+
+          if (!box) {
+            box = document.createElement("div");
+            box.id = containerId;
+            box.className = "hb-api-result-wrap";
+            btn.insertAdjacentElement("afterend", box);
+          } else if (box.parentElement !== host) {
+            btn.insertAdjacentElement("afterend", box);
+          }
+          box.innerHTML = html;
+        } catch (_) {}
+      }, 250);
+    },
+    true
+  );
+})();
 </script>
 </body>
 </html>
