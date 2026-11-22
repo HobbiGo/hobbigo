@@ -1716,7 +1716,7 @@ const rows=[
 ['Buka Checkout Demo','Open Demo Checkout','デモチェックアウトを開く','打开演示结账','Ouvrir le paiement démo','Abrir pago de demostración'],
 ['Support HOBBIGO','HOBBIGO Support','HOBBIGO サポート','HOBBIGO 帮助','Assistance HOBBIGO','Ayuda HOBBIGO'],
 ['Demo chat • Balasan otomatis','Demo chat • Automated replies','デモチャット • 自動返信','演示聊天 • 自动回复','Chat démo • Réponses automatiques','Chat de demostración • Respuestas automáticas'],
-['Halo! Selamat datang di HOBBIGO ONE. Ini demonstrasi chat otomatis untuk Travel, TELKU, dan CHELEA.','Hello! Welcome to HOBBIGO ONE. This is an automated chat demonstration for Travel, TELKU, and CHELEA.','こんにちは！HOBBIGO ONEへようこそ。旅行、TELKU、CHELEA向けの自動チャットのデモです。','你好！欢迎来到 HOBBIGO ONE。这是旅行、TELKU 和 CHELEA 的自动聊天演示。','Bonjour ! Bienvenue sur HOBBIGO ONE. Ceci est une démonstration de chat automatique pour Travel, TELKU et CHELEA.','¡Hola! Bienvenido a HOBBIGO ONE. Esta es una demostración de chat automático para Travel, TELKU y CHELEA.'],
+['Halo! Selamat datang di HOBBIGO ONE. Ini chat otomatis untuk Travel, TELKU, dan CHELEA.','Hello! Welcome to HOBBIGO ONE. This is an automated chat demonstration for Travel, TELKU, and CHELEA.','こんにちは！HOBBIGO ONEへようこそ。旅行、TELKU、CHELEA向けの自動チャットのデモです。','你好！欢迎来到 HOBBIGO ONE。这是旅行、TELKU 和 CHELEA 的自动聊天演示。','Bonjour ! Bienvenue sur HOBBIGO ONE. Ceci est une démonstration de chat automatique pour Travel, TELKU et CHELEA.','¡Hola! Bienvenido a HOBBIGO ONE. Esta es una demostración de chat automático para Travel, TELKU y CHELEA.'],
 ['Ketik pesan...','Type a message...','メッセージを入力…','输入消息…','Écrivez un message…','Escribe un mensaje…'],
 ['Kirim','Send','送信','发送','Envoyer','Enviar'],
 ['Buka chat','Open chat','チャットを開く','打开聊天','Ouvrir le chat','Abrir chat'],
@@ -3428,5 +3428,217 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
 
 </script>
 <script src="worker-bridge.js" defer></script>
+<script>
+(() => {
+  "use strict";
+
+  const HOBBIGO_BRIDGE_STATE = {
+    catalog: null,
+    activeCategory: "flights"
+  };
+
+  function formatIDR(amount) {
+    const num = Number(amount || 0);
+    return "IDR " + num.toLocaleString("id-ID");
+  }
+
+  async function fetchCatalogData(category = "") {
+    const query = category ? `?category=${encodeURIComponent(category)}` : "";
+    const res = await fetch(`/api/catalog${query}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Gagal memuat /api/catalog");
+    return res.json();
+  }
+
+  async function searchCatalogData(category = "all", q = "") {
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (q) params.set("q", q);
+    const res = await fetch(`/api/search?${params.toString()}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Gagal memuat /api/search");
+    return res.json();
+  }
+
+  function buildItemCardHTML(category, item) {
+    if (category === "flights") {
+      return `
+        <div class="hb-live-card" style="border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:12px;margin-top:10px;background:rgba(255,255,255,0.04);">
+          <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+            <strong>${item.airline} (${item.flightNumber})</strong>
+            <span><strong>${formatIDR(item.pricePerPaxIDR)}</strong> / penumpang</span>
+          </div>
+          <div style="margin-top:4px;opacity:0.9;">
+            ${item.origin?.city} (${item.origin?.code}) → ${item.destination?.city} (${item.destination?.code})
+          </div>
+          <div style="margin-top:4px;font-size:0.9em;opacity:0.85;">
+            Berangkat: ${item.departureTime} · Tiba: ${item.arrivalTime} · Durasi: ${item.duration} · ${item.transit} · Bagasi: ${item.baggageKg} kg
+          </div>
+        </div>
+      `;
+    }
+
+    if (category === "hotels") {
+      const fasilitas = Array.isArray(item.facilities) ? item.facilities.join(", ") : "-";
+      return `
+        <div class="hb-live-card" style="border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:12px;margin-top:10px;background:rgba(255,255,255,0.04);">
+          <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+            <strong>${item.name} (${item.stars}★ · Rating ${item.rating})</strong>
+            <span><strong>${formatIDR(item.pricePerNightIDR)}</strong> / malam</span>
+          </div>
+          <div style="margin-top:4px;opacity:0.9;">${item.city} · Kamar: ${item.roomType} (${item.bedType})</div>
+          <div style="margin-top:4px;font-size:0.9em;opacity:0.85;">Fasilitas: ${fasilitas}</div>
+        </div>
+      `;
+    }
+
+    if (category === "carRentals") {
+      return `
+        <div class="hb-live-card" style="border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:12px;margin-top:10px;background:rgba(255,255,255,0.04);">
+          <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+            <strong>${item.vehicleName} (${item.category})</strong>
+            <span><strong>${formatIDR(item.pricePerDayIDR)}</strong> / hari</span>
+          </div>
+          <div style="margin-top:4px;opacity:0.9;">
+            Kota: ${item.city} · ${item.seats} kursi · Transmisi: ${item.transmission}
+          </div>
+          <div style="margin-top:4px;font-size:0.9em;opacity:0.85;">Paket: ${item.driverOption}</div>
+        </div>
+      `;
+    }
+
+    if (category === "attractions") {
+      return `
+        <div class="hb-live-card" style="border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:12px;margin-top:10px;background:rgba(255,255,255,0.04);">
+          <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+            <strong>${item.name} (${item.category})</strong>
+            <span><strong>${formatIDR(item.pricePerPaxIDR)}</strong> / orang</span>
+          </div>
+          <div style="margin-top:4px;opacity:0.9;">${item.city} · Buka: ${item.openHours} · Rating ${item.rating}</div>
+          <div style="margin-top:4px;font-size:0.9em;opacity:0.85;">Tiket: ${item.ticketType}</div>
+        </div>
+      `;
+    }
+
+    if (category === "dining") {
+      const menu = Array.isArray(item.signatureMenu) ? item.signatureMenu.join(", ") : "-";
+      return `
+        <div class="hb-live-card" style="border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:12px;margin-top:10px;background:rgba(255,255,255,0.04);">
+          <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;">
+            <strong>${item.name} (${item.cuisine})</strong>
+            <span>~<strong>${formatIDR(item.averageSpendPerPaxIDR)}</strong> / orang</span>
+          </div>
+          <div style="margin-top:4px;opacity:0.9;">${item.city} · Buka: ${item.openHours} · Rating ${item.rating}</div>
+          <div style="margin-top:4px;font-size:0.9em;opacity:0.85;">Menu andalan: ${menu}</div>
+        </div>
+      `;
+    }
+
+    return "";
+  }
+
+  function ensureCatalogPanel() {
+    let panel = document.getElementById("hb-catalog-explorer");
+    if (panel) return panel;
+
+    const anchor =
+      document.querySelector("main") ||
+      document.getElementById("page-home") ||
+      document.body;
+
+    panel = document.createElement("section");
+    panel.id = "hb-catalog-explorer";
+    panel.style.cssText =
+      "max-width:1100px;margin:24px auto;padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,0.14);background:rgba(15,23,42,0.55);";
+
+    panel.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div>
+          <h3 style="margin:0;font-size:1.15em;">Katalog Layanan HOBBIGO (Penerbangan, Hotel, Sewa, Wisata & Kuliner)</h3>
+          <small id="hb-catalog-status" style="opacity:0.8;">Memuat katalog dari Worker...</small>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" data-hb-cat="flights" class="hb-cat-btn" style="padding:6px 12px;border-radius:8px;cursor:pointer;">Pesawat</button>
+          <button type="button" data-hb-cat="hotels" class="hb-cat-btn" style="padding:6px 12px;border-radius:8px;cursor:pointer;">Hotel</button>
+          <button type="button" data-hb-cat="carRentals" class="hb-cat-btn" style="padding:6px 12px;border-radius:8px;cursor:pointer;">Sewa Kendaraan</button>
+          <button type="button" data-hb-cat="attractions" class="hb-cat-btn" style="padding:6px 12px;border-radius:8px;cursor:pointer;">Tempat Wisata</button>
+          <button type="button" data-hb-cat="dining" class="hb-cat-btn" style="padding:6px 12px;border-radius:8px;cursor:pointer;">Tempat Makan</button>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <input id="hb-catalog-search" type="text" placeholder="Cari kota, maskapai, hotel, mobil, wisata, atau kuliner (cth: Bali, Yogyakarta)..." style="flex:1;min-width:220px;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(0,0,0,0.25);color:inherit;" />
+        <button type="button" id="hb-catalog-reset" style="padding:8px 14px;border-radius:8px;cursor:pointer;">Reset</button>
+      </div>
+      <div id="hb-catalog-list" style="margin-top:10px;"></div>
+    `;
+
+    anchor.appendChild(panel);
+
+    panel.querySelectorAll(".hb-cat-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        HOBBIGO_BRIDGE_STATE.activeCategory = btn.getAttribute("data-hb-cat");
+        renderCategoryItems(
+          HOBBIGO_BRIDGE_STATE.activeCategory,
+          document.getElementById("hb-catalog-search")?.value || ""
+        );
+      });
+    });
+
+    const searchInput = document.getElementById("hb-catalog-search");
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        renderCategoryItems(HOBBIGO_BRIDGE_STATE.activeCategory, searchInput.value);
+      });
+    }
+
+    const resetBtn = document.getElementById("hb-catalog-reset");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        if (searchInput) searchInput.value = "";
+        renderCategoryItems(HOBBIGO_BRIDGE_STATE.activeCategory, "");
+      });
+    }
+
+    return panel;
+  }
+
+  async function renderCategoryItems(category, q = "") {
+    const listEl = document.getElementById("hb-catalog-list");
+    const statusEl = document.getElementById("hb-catalog-status");
+    if (!listEl) return;
+
+    try {
+      const data = q.trim()
+        ? await searchCatalogData(category, q.trim())
+        : await fetchCatalogData(category);
+
+      const items = Array.isArray(data.items) ? data.items : [];
+      if (statusEl) {
+        statusEl.textContent = `Kategori: ${category} · Menampilkan ${items.length} item (${data.source || "hobbigo_catalog"})`;
+      }
+
+      if (!items.length) {
+        listEl.innerHTML = `<p style="opacity:0.75;margin-top:10px;">Tidak ada data yang cocok untuk kata kunci tersebut.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = items.map((item) => buildItemCardHTML(category, item)).join("");
+    } catch (err) {
+      if (statusEl) {
+        statusEl.textContent = "Menampilkan katalog cadangan lokal";
+      }
+      const localItems = HOBBIGO_BRIDGE_STATE.catalog?.[category] || [];
+      listEl.innerHTML = localItems.map((item) => buildItemCardHTML(category, item)).join("");
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", async () => {
+    ensureCatalogPanel();
+    try {
+      const full = await fetchCatalogData();
+      HOBBIGO_BRIDGE_STATE.catalog = full.catalog || null;
+    } catch (_) {}
+    renderCategoryItems(HOBBIGO_BRIDGE_STATE.activeCategory, "");
+  });
+})();
+</script>
 </body>
 </html>
