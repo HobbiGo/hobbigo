@@ -3963,6 +3963,125 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     true
   );
 })();
+(() => {
+  function formatIDR(val) {
+    return Number(val || 0).toLocaleString("id-ID");
+  }
+
+  function renderHotelCards(items) {
+    return items
+      .map((h) => {
+        const facilities = Array.isArray(h.facilities) ? h.facilities.join(" · ") : "";
+        return `
+          <div class="hb-live-card" style="padding:14px;border-radius:12px;margin-top:10px;border:1px solid rgba(148,163,184,0.35);background:#13203b;color:#f8fafc;">
+            <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <strong>${h.name || "Hotel"} (${h.stars || ""}★)</strong>
+              <strong>IDR ${formatIDR(h.pricePerNightIDR)} / malam</strong>
+            </div>
+            <div style="font-size:13px;opacity:0.9;margin-top:4px;">${h.city || ""} · ${h.roomType || ""}</div>
+            ${facilities ? `<div style="font-size:12px;opacity:0.8;margin-top:4px;">${facilities}</div>` : ""}
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function getActiveQueryNearButton(btn) {
+    const inputs = Array.from(
+      document.querySelectorAll('input[type="text"], input[type="search"]')
+    ).filter((el) => el.offsetParent !== null);
+
+    const matchedInput = inputs.find((el) => {
+      const ph = (el.getAttribute("placeholder") || "").toLowerCase();
+      return (
+        ph.includes("kota") ||
+        ph.includes("penginapan") ||
+        ph.includes("lokasi") ||
+        ph.includes("acara") ||
+        ph.includes("cari")
+      );
+    });
+
+    if (matchedInput && matchedInput.value.trim()) {
+      return matchedInput.value.trim();
+    }
+
+    const visibleSelect = Array.from(document.querySelectorAll("select")).find(
+      (sel) =>
+        sel.offsetParent !== null &&
+        !/ketik|lainnya|harga|urutkan|indonesia|hotel|kamar|dewasa|anak/i.test(
+          sel.options[sel.selectedIndex]?.text || sel.value || ""
+        )
+    );
+    return (visibleSelect?.value || "").trim();
+  }
+
+  document.addEventListener(
+    "click",
+    async (e) => {
+      const btn = e.target instanceof Element ? e.target.closest("button") : null;
+      if (!btn) return;
+      const label = (btn.textContent || "").toLowerCase();
+
+      let category = null;
+      if (label.includes("penginapan") || label.includes("hotel")) category = "hotels";
+      else if (label.includes("sewa") || label.includes("mobil") || label.includes("kendaraan"))
+        category = "carRentals";
+      else if (label.includes("acara") || label.includes("event") || label.includes("perjalanan"))
+        category = "attractions";
+
+      if (!category) return;
+
+      const qVal = getActiveQueryNearButton(btn);
+
+      setTimeout(async () => {
+        try {
+          const url = `/api/search?category=${encodeURIComponent(category)}&q=${encodeURIComponent(qVal)}`;
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) return;
+          const data = await res.json();
+          const items = Array.isArray(data?.items) ? data.items : [];
+          if (!items.length) return;
+
+          const boxId = `hb-live-box-${category}`;
+          const html =
+            category === "hotels"
+              ? renderHotelCards(items)
+              : items
+                  .map((item) => {
+                    const title = item.vehicleName || item.name || "Layanan HOBBIGO";
+                    const price = formatIDR(
+                      item.pricePerDayIDR ?? item.pricePerPaxIDR ?? item.priceIDR ?? 0
+                    );
+                    const sub = item.city || item.category || "";
+                    return `
+                      <div class="hb-live-card" style="padding:14px;border-radius:12px;margin-top:10px;border:1px solid rgba(148,163,184,0.35);background:#13203b;color:#f8fafc;">
+                        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                          <strong>${title}</strong>
+                          <strong>IDR ${price}</strong>
+                        </div>
+                        <div style="font-size:13px;opacity:0.88;margin-top:4px;">${sub}</div>
+                      </div>
+                    `;
+                  })
+                  .join("");
+
+          const existing = document.getElementById(boxId);
+          if (existing) {
+            existing.innerHTML = html;
+          } else {
+            const box = document.createElement("div");
+            box.id = boxId;
+            box.style.marginTop = "12px";
+            box.innerHTML = html;
+            btn.insertAdjacentElement("afterend", box);
+          }
+        } catch (_) {}
+      }, 300);
+    },
+    true
+  );
+})();
 </script>
 </body>
 </html>
