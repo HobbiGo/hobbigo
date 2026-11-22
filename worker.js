@@ -149,58 +149,48 @@ async function askGemini(apiKey, prompt, history) {
     contents
   });
 
-  const models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
-  let lastError = null;
+  const models = [
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash-lite",
+    "gemini-2.0-flash"
+  ];
+  const errors = [];
 
   for (const model of models) {
-    const authModes = [
-      {
-        label: "header",
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": apiKey
-        }
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": apiKey
       },
-      {
-        label: "query",
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    ];
+      body: requestBody
+    });
 
-    for (const mode of authModes) {
-      const res = await fetch(mode.url, {
-        method: "POST",
-        headers: mode.headers,
-        body: requestBody
-      });
-
-      if (!res.ok) {
-        const errText = await res.text();
-        lastError = new Error(`Model ${model} (${mode.label}) HTTP ${res.status}: ${errText.slice(0, 300)}`);
-        continue;
-      }
-
-      const data = await res.json();
-      const replyText =
-        data?.candidates?.[0]?.content?.parts
-          ?.map((p) => p?.text || "")
-          .join("")
-          .trim() || "";
-
-      if (!replyText) {
-        lastError = new Error(`Respons kosong dari model ${model} (${mode.label})`);
-        continue;
-      }
-
-      return replyText;
+    if (!res.ok) {
+      const errText = await res.text();
+      errors.push(`${model} HTTP ${res.status}: ${errText.slice(0, 180)}`);
+      continue;
     }
+
+    const data = await res.json();
+    const replyText =
+      data?.candidates?.[0]?.content?.parts
+        ?.map((p) => p?.text || "")
+        .join("")
+        .trim() || "";
+
+    if (!replyText) {
+      errors.push(`${model}: respons kosong`);
+      continue;
+    }
+
+    return replyText;
   }
 
-  throw lastError || new Error("Semua model Gemini gagal merespons");
+  throw new Error(errors.join(" | ") || "Semua model Gemini gagal merespons");
 }
 
 function jsonResponse(payload, status = 200) {
