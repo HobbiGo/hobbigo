@@ -4389,6 +4389,36 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     true
   );
 })();
+function renderEmptyCityFallback(feature, query) {
+  const safeQuery = String(query || "").trim();
+  const catLabel =
+    feature === "hotels"
+      ? "Hotel & Penginapan"
+      : feature === "carRentals"
+      ? "Sewa Kendaraan"
+      : feature === "attractions"
+      ? "Event & Wisata"
+      : feature === "flights"
+      ? "Penerbangan"
+      : "AI Journey";
+
+  return `
+    <div class="hb-api-card" data-hb-feature="${feature}">
+      <div class="hb-api-card-head">
+        <strong>${catLabel} — "${safeQuery || "Kota Lainnya"}"</strong>
+        <span>Belum ada di katalog</span>
+      </div>
+      <div class="hb-api-card-sub">
+        Data katalog langsung HOBBIGO untuk <strong>${safeQuery || "tujuan ini"}</strong> belum terdaftar di database katalog saat ini (baik kota di Indonesia maupun luar negeri).
+      </div>
+      <div class="hb-api-card-meta" style="margin-top:8px;">
+        <button type="button" class="hb-show-all-cat" data-feature="${feature}" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.22);background:#1e293b;color:#f8fafc;cursor:pointer;font-size:12px;">
+          Tampilkan katalog ${catLabel} yang tersedia
+        </button>
+      </div>
+    </div>
+  `;
+}
 </script>
 </body>
 </html>
