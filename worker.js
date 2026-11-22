@@ -22,24 +22,49 @@ function buildChatReply(message = "") {
     return { error: "Pesan tidak boleh kosong" };
   }
   return {
-    reply: `Halo Traveler! Pesan "${clean}" sudah diterima oleh HobbiGo Worker. Ada yang bisa kami bantu?`,
+    reply: `Halo Traveler! Pesan "${clean}" sudah diterima oleh HobbiGo Worker. Ada yang bisa kami bantu terkait perjalanan, eSIM, atau pesanan kamu?`,
   };
+}
+
+function buildItineraryDays(destination, days, mood) {
+  const safeDays = Math.max(1, Math.min(Number(days) || 5, 14));
+  const templates = [
+    `Kedatangan di ${destination}, check-in akomodasi, dan eksplorasi kuliner lokal (${mood}).`,
+    `Eksplorasi destinasi ikonik & pengalaman budaya di ${destination} dengan nuansa ${mood}.`,
+    `Wisata alam, spot foto pilihan, dan waktu santai di sekitar ${destination}.`,
+    `Aktivitas pilihan tambahan, rekomendasi lokal, atau belanja kebutuhan perjalanan.`,
+    `Belanja oleh-oleh, check-out, dan persiapan perjalanan pulang dari ${destination}.`,
+  ];
+
+  const result = [];
+  for (let i = 0; i < safeDays; i++) {
+    if (i === safeDays - 1 && safeDays > 1) {
+      result.push(templates[4]);
+    } else {
+      result.push(templates[i] || templates[2]);
+    }
+  }
+  return result;
 }
 
 async function handlePlanner(request) {
   const parsed = await readJsonBody(request);
-  if (!parsed.ok) return jsonResponse({ error: parsed.error }, 400);
+  if (!parsed.ok) {
+    return jsonResponse({ error: parsed.error }, 400);
+  }
 
-  const destination = String(parsed.data.destination || "Jepang").trim() || "Jepang";
-  const days = Number(parsed.data.days) || 5;
+  const destination = String(parsed.data.destination || "Bali").trim() || "Bali";
+  const days = Math.max(1, Math.min(Number(parsed.data.days) || 5, 14));
   const mood = String(parsed.data.mood || "Budaya").trim() || "Budaya";
+  const planDays = buildItineraryDays(destination, days, mood);
 
   return jsonResponse({
     plan: {
       destination,
       days,
       mood,
-      summary: `Draft rencana ${days} hari ke ${destination} (${mood}) siap disesuaikan!`,
+      summary: `Rencana perjalanan ${days} hari ke ${destination} (tema: ${mood}) siap disesuaikan.`,
+      days: planDays,
     },
   });
 }
@@ -47,7 +72,13 @@ async function handlePlanner(request) {
 function handleRates() {
   return jsonResponse({
     base: "IDR",
-    rates: { USD: 0.00006, JPY: 0.009, SGD: 0.00008 },
+    rates: {
+      USD: 0.000055,
+      JPY: 0.00866,
+      SGD: 0.00008,
+      CNY: 0.00037,
+      EUR: 0.000049,
+    },
     updatedAt: new Date().toISOString(),
   });
 }
@@ -70,10 +101,13 @@ export default {
 
     if ((pathname === "/api/support" || pathname === "/api/chat") && request.method === "POST") {
       const parsed = await readJsonBody(request);
-      if (!parsed.ok) return jsonResponse({ error: parsed.error }, 400);
-
+      if (!parsed.ok) {
+        return jsonResponse({ error: parsed.error }, 400);
+      }
       const result = buildChatReply(parsed.data.message);
-      if (result.error) return jsonResponse({ error: result.error }, 400);
+      if (result.error) {
+        return jsonResponse({ error: result.error }, 400);
+      }
       return jsonResponse(result);
     }
 
