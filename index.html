@@ -3789,6 +3789,50 @@ main{width:100%!important;max-width:100%!important;padding-left:12px!important;p
     attributeFilter: ["disabled", "readonly", "style", "class"]
   });
 })();
+(() => {
+  function unlockDisabledFieldsOnly() {
+    const fields = document.querySelectorAll(
+      'input[disabled], input[readonly], textarea[disabled], textarea[readonly]'
+    );
+    fields.forEach((el) => {
+      if (el.dataset.hbLockedByRule === "true") return;
+      el.disabled = false;
+      el.readOnly = false;
+      el.style.pointerEvents = "auto";
+      el.style.userSelect = "text";
+      el.style.webkitUserSelect = "text";
+    });
+  }
+
+  // Jangan halangi ketikan normal di input/textarea, tapi biarkan klik/dropdown berjalan normal
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+        e.stopPropagation();
+      }
+    },
+    true
+  );
+
+  window.addEventListener("DOMContentLoaded", () => {
+    unlockDisabledFieldsOnly();
+    setTimeout(unlockDisabledFieldsOnly, 500);
+  });
+
+  // Hanya jalankan saat fokus masuk ke input/textarea, bukan setiap klik menu/dropdown
+  document.addEventListener(
+    "focusin",
+    (e) => {
+      const t = e.target;
+      if (t instanceof HTMLInputElement || t instanceof HTMLTextAreaElement) {
+        unlockDisabledFieldsOnly();
+      }
+    },
+    true
+  );
+})();
 </script>
 </body>
 </html>
